@@ -40,11 +40,13 @@ export default function Terminal() {
 
   useEffect(() => {
     if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+      const scrollToBottom = () => {
+        terminalRef.current!.scrollTop = terminalRef.current!.scrollHeight;
+      };
+      requestAnimationFrame(scrollToBottom);
     }
-  }, [commands]);
+  }, [commands, input]);
 
-  // Focus input on mount and when terminal is clicked
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -68,20 +70,202 @@ export default function Terminal() {
             </div>
           );
           break;
+
         case "about":
           output = (
-            <div className="mt-2">
+            <div className="mt-2 space-y-2">
               <p>👋 Hi! I&apos;m Mahdi Rashidi, a Senior Backend Engineer with 9+ years of experience.</p>
-              <p className="mt-2">
+              <p>
                 I specialize in building scalable backend systems, cloud architecture, and DevOps practices. Currently
                 working with Node.js, TypeScript, and various cloud technologies.
+              </p>
+              <p>
+                Based in Istanbul, Turkey, I focus on developing cloud-native applications and optimizing infrastructure
+                for performance and cost efficiency.
               </p>
             </div>
           );
           break;
+
+        case "skills":
+          output = (
+            <div className="mt-2 space-y-4">
+              <div>
+                <p className="text-orange-500 font-bold mb-2">Core Technologies:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <span className="text-green-400">• Node.js</span>
+                  <span className="text-green-400">• TypeScript</span>
+                  <span className="text-green-400">• NestJS</span>
+                  <span className="text-green-400">• Express.js</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold mb-2">Cloud & DevOps:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <span className="text-green-400">• Azure</span>
+                  <span className="text-green-400">• Kubernetes</span>
+                  <span className="text-green-400">• Docker</span>
+                  <span className="text-green-400">• Terraform</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold mb-2">Databases & Messaging:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <span className="text-green-400">• PostgreSQL</span>
+                  <span className="text-green-400">• MongoDB</span>
+                  <span className="text-green-400">• Redis</span>
+                  <span className="text-green-400">• RabbitMQ</span>
+                </div>
+              </div>
+            </div>
+          );
+          break;
+
+        case "projects":
+          output = (
+            <div className="mt-2 space-y-4">
+              <div>
+                <p className="text-orange-500 font-bold">E-Mobility Services Platform</p>
+                <p className="text-gray-400">Cloud-native platform managing 1,500+ European charging stations</p>
+                <p className="text-green-400 text-sm">Tech: Azure, Kubernetes, NestJS, TypeScript</p>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold">Flight Operations Platform</p>
+                <p className="text-gray-400">Real-time aviation operations management system</p>
+                <p className="text-green-400 text-sm">Tech: Node.js, MongoDB, Redis, WebSocket</p>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold">Open Banking System</p>
+                <p className="text-gray-400">Secure banking integration platform with enhanced authentication</p>
+                <p className="text-green-400 text-sm">Tech: NestJS, PostgreSQL, Redis, RabbitMQ</p>
+              </div>
+            </div>
+          );
+          break;
+
+        case "contact":
+          output = (
+            <div className="mt-2 space-y-2">
+              <p className="flex items-center gap-2">
+                <span className="text-orange-500">Email:</span>
+                <a href="mailto:m8rashidi@gmail.com" className="text-green-400 hover:underline">
+                  m8rashidi@gmail.com
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-orange-500">GitHub:</span>
+                <a href="https://github.com/mrdevx" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
+                  github.com/mrdevx
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-orange-500">LinkedIn:</span>
+                <a href="https://linkedin.com/in/mrdevx" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
+                  linkedin.com/in/mrdevx
+                </a>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-orange-500">Location:</span>
+                <span className="text-green-400">Istanbul, Turkey</span>
+              </p>
+            </div>
+          );
+          break;
+
+        case "experience":
+          output = (
+            <div className="mt-2 space-y-4">
+              <div>
+                <p className="text-orange-500 font-bold">Software Architect Technical Lead</p>
+                <p className="text-green-400">Fakir Technology Consultants GmbH (2022 - 2025)</p>
+                <p className="text-gray-400">Led development of microservices platform, reduced cloud costs by 45%</p>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold">Senior Backend Engineer</p>
+                <p className="text-green-400">Fakir Technology Consultants GmbH (2021 - 2025)</p>
+                <p className="text-gray-400">Built fleet analysis platform, improved system reliability by 30%</p>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold">Lead Backend Engineer</p>
+                <p className="text-green-400">Mehrpardaz (2020 - 2021)</p>
+                <p className="text-gray-400">Developed aviation operations platform and established engineering practices</p>
+              </div>
+            </div>
+          );
+          break;
+
+        case "view-source":
+          output = (
+            <div className="mt-2">
+              <p>View the source code of this website on GitHub:</p>
+              <a
+                href="https://github.com/mrdevx/mrashidi.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 hover:underline"
+              >
+                github.com/mrdevx/mrashidi.me
+              </a>
+            </div>
+          );
+          break;
+
+        case "achievements":
+          output = (
+            <div className="mt-2 space-y-4">
+              <div>
+                <p className="text-orange-500 font-bold mb-2">Recent Certifications:</p>
+                <ul className="space-y-1">
+                  <li className="text-green-400">• Introduction to Generative AI by Google Cloud (2024)</li>
+                  <li className="text-green-400">• Advanced Terraform (2024)</li>
+                  <li className="text-green-400">• Microservices: Security (2024)</li>
+                  <li className="text-green-400">• Azure Administration Essential Training (2024)</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold mb-2">Key Achievements:</p>
+                <ul className="space-y-1">
+                  <li className="text-gray-400">• Reduced cloud costs by 45% through infrastructure optimization</li>
+                  <li className="text-gray-400">• Scaled system to support 1,500+ European charging stations</li>
+                  <li className="text-gray-400">• Improved API response times by 35% using Kubernetes</li>
+                </ul>
+              </div>
+            </div>
+          );
+          break;
+
+        case "blog":
+          output = (
+            <div className="mt-2">
+              <p className="mb-4">Visit my blog for articles on backend development and cloud architecture:</p>
+              <a
+                href="/blog"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 hover:underline"
+              >
+                mrashidi.me/blog
+              </a>
+            </div>
+          );
+          break;
+
+        case "system-info":
+          output = (
+            <div className="mt-2 space-y-2">
+              <p className="text-orange-500 font-bold">System Information:</p>
+              <p><span className="text-green-400">OS:</span> <span className="text-gray-400">macOS 14.3.1</span></p>
+              <p><span className="text-green-400">Browser:</span> <span className="text-gray-400">{navigator.userAgent}</span></p>
+              <p><span className="text-green-400">Website:</span> <span className="text-gray-400">Next.js 14, TypeScript, Tailwind CSS</span></p>
+              <p><span className="text-green-400">Theme:</span> <span className="text-gray-400">Cyberpunk-inspired minimal</span></p>
+            </div>
+          );
+          break;
+
         case "clear":
           setCommands([]);
           return;
+
         default:
           if (command in AVAILABLE_COMMANDS) {
             output = "This command is not implemented yet. Try 'help' for available commands.";
@@ -126,7 +310,7 @@ export default function Terminal() {
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-0" />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col h-full">
         <div className="flex items-center gap-2 p-4 border-b border-orange-500/20">
           <div className="w-3 h-3 rounded-full bg-red-500/80" aria-hidden="true" />
           <div className="w-3 h-3 rounded-full bg-yellow-500/80" aria-hidden="true" />
@@ -136,7 +320,7 @@ export default function Terminal() {
 
         <div
           ref={terminalRef}
-          className="h-[calc(100%-4rem)] overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-orange-500/20 scrollbar-track-transparent"
+          className="flex-1 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-orange-500/20 scrollbar-track-transparent"
         >
           <AnimatePresence>
             {commands.map((cmd, index) => (

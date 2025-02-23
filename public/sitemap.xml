@@ -2,35 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mrashidi.me</loc>
-    <lastmod>2025-02-23T17:26:28.342Z</lastmod>
+    <lastmod>2025-02-23T17:33:01.572Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/about</loc>
-    <lastmod>2025-02-23T17:26:28.342Z</lastmod>
+    <lastmod>2025-02-23T17:33:01.572Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/blog</loc>
-    <lastmod>2025-02-23T17:26:28.342Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://mrashidi.me/projects</loc>
-    <lastmod>2025-02-23T17:26:28.342Z</lastmod>
+    <lastmod>2025-02-23T17:33:01.572Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/resume</loc>
-    <lastmod>2025-02-23T17:26:28.342Z</lastmod>
+    <lastmod>2025-02-23T17:33:01.572Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://mrashidi.me/projects</loc>
+    <lastmod>2025-02-23T17:33:01.572Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
