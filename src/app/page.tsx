@@ -2,8 +2,57 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const [currentCodeIndex, setCurrentCodeIndex] = useState(0);
+
+  const codeSnippets = [
+    {
+      language: "typescript",
+      code: `interface Engineer {
+  name: string;
+  role: string;
+  skills: string[];
+}
+
+const mahdi: Engineer = {
+  name: "Mahdi Rashidi",
+  role: "Senior Backend Engineer",
+  skills: ["Node.js", "TypeScript", "Cloud"]
+};`,
+    },
+    {
+      language: "python",
+      code: `class CloudArchitect:
+    def __init__(self):
+        self.services = ["AWS", "Azure", "K8s"]
+        self.passion = "Scalable Systems"
+        
+    def design_solution(self):
+        return "Enterprise-Grade Architecture"`,
+    },
+    {
+      language: "javascript",
+      code: `// Microservices Enthusiast
+const deployService = async () => {
+  await setupInfra();
+  await deployContainers();
+  monitor.start();
+  scale.auto();
+};`,
+    },
+  ];
+
+  useEffect(() => {
+    setMounted(true);
+    const interval = setInterval(() => {
+      setCurrentCodeIndex((prev) => (prev + 1) % codeSnippets.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -19,9 +68,24 @@ export default function Home() {
     show: { opacity: 1, y: 0 },
   };
 
+  const techStack = [
+    { name: "Node.js", color: "bg-green-500" },
+    { name: "TypeScript", color: "bg-blue-500" },
+    { name: "NestJS", color: "bg-red-500" },
+    { name: "Azure", color: "bg-blue-600" },
+    { name: "Kubernetes", color: "bg-blue-400" },
+    { name: "Docker", color: "bg-blue-700" },
+    { name: "PostgreSQL", color: "bg-indigo-500" },
+    { name: "MongoDB", color: "bg-green-600" },
+    { name: "Redis", color: "bg-red-600" },
+    { name: "RabbitMQ", color: "bg-orange-500" },
+  ];
+
+  if (!mounted) return null;
+
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-      <motion.div className="max-w-4xl mx-auto" initial="hidden" animate="show" variants={container}>
+      <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
         <motion.div className="text-center mb-12" variants={item}>
           <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
             Mahdi Rashidi
@@ -76,6 +140,37 @@ export default function Home() {
                 LinkedIn
               </span>
             </motion.a>
+          </div>
+        </motion.div>
+
+        {/* Animated Code Section */}
+        <motion.div
+          className="mb-12 overflow-hidden rounded-xl shadow-lg bg-gray-900 p-6"
+          variants={item}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <pre className="text-sm md:text-base overflow-x-auto">
+            <code className="text-gray-200 font-mono">{codeSnippets[currentCodeIndex].code}</code>
+          </pre>
+        </motion.div>
+
+        {/* Tech Stack Section */}
+        <motion.div className="mb-12" variants={item}>
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Tech Stack</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {techStack.map((tech, index) => (
+              <motion.div
+                key={tech.name}
+                className={`px-4 py-2 rounded-full ${tech.color} text-white font-medium`}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.1 }}
+              >
+                {tech.name}
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
