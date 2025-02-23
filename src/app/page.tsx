@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { githubService } from "@/services/githubService";
 import ContributionGraph from "@/components/ContributionGraph";
+import Terminal from "@/components/Terminal";
 
 interface GitHubRepo {
   name: string;
@@ -32,54 +33,13 @@ interface ContributionDay {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [currentCodeIndex, setCurrentCodeIndex] = useState(0);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [activities, setActivities] = useState<GitHubActivity[]>([]);
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const codeSnippets = [
-    {
-      language: "typescript",
-      code: `interface Engineer {
-  name: string;
-  role: string;
-  skills: string[];
-}
-
-const mahdi: Engineer = {
-  name: "Mahdi Rashidi",
-  role: "Senior Backend Engineer",
-  skills: ["Node.js", "TypeScript", "Cloud"]
-};`,
-    },
-    {
-      language: "python",
-      code: `class CloudArchitect:
-    def __init__(self):
-        self.services = ["AWS", "Azure", "K8s"]
-        self.passion = "Scalable Systems"
-        
-    def design_solution(self):
-        return "Enterprise-Grade Architecture"`,
-    },
-    {
-      language: "javascript",
-      code: `// Microservices Enthusiast
-const deployService = async () => {
-  await setupInfra();
-  await deployContainers();
-  monitor.start();
-  scale.auto();
-};`,
-    },
-  ];
-
   useEffect(() => {
     setMounted(true);
-    const interval = setInterval(() => {
-      setCurrentCodeIndex((prev) => (prev + 1) % codeSnippets.length);
-    }, 5000);
 
     async function fetchGitHubData() {
       try {
@@ -99,8 +59,7 @@ const deployService = async () => {
     }
 
     fetchGitHubData();
-    return () => clearInterval(interval);
-  }, [codeSnippets.length]);
+  }, []);
 
   const container = {
     hidden: { opacity: 0 },
@@ -133,16 +92,14 @@ const deployService = async () => {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
         <motion.div className="text-center mb-12" variants={item}>
-          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-purple-600 font-cyberpunk">
             Mahdi Rashidi
           </h1>
-          <p className="text-2xl text-gray-700 dark:text-gray-300 mb-3">
-            Senior Backend Engineer • Cloud & DevOps Practitioner
-          </p>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">Istanbul, Turkey</p>
+          <p className="text-2xl text-gray-300 mb-3 font-terminal">Senior Backend Engineer & Cloud Architect</p>
+          <p className="text-lg text-gray-400 mb-6">Istanbul, Turkey</p>
 
           <div className="flex justify-center space-x-6 mb-8">
             <motion.a
@@ -192,26 +149,20 @@ const deployService = async () => {
           </div>
         </motion.div>
 
-        {/* Animated Code Section */}
-        <motion.div
-          className="mb-12 overflow-hidden rounded-xl shadow-lg bg-gray-900 p-6"
-          variants={item}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <pre className="text-sm md:text-base overflow-x-auto">
-            <code className="text-gray-200 font-mono">{codeSnippets[currentCodeIndex].code}</code>
-          </pre>
-        </motion.div>
+        {/* Interactive Terminal */}
+        <motion.section className="mb-16" variants={item}>
+          <h2 className="text-2xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Interactive Terminal</h2>
+          <Terminal />
+        </motion.section>
 
         {/* Tech Stack Section */}
-        <motion.div className="mb-12" variants={item}>
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Tech Stack</h2>
+        <motion.div className="mb-16" variants={item}>
+          <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">Tech Stack</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {techStack.map((tech, index) => (
               <motion.div
                 key={tech.name}
-                className={`px-4 py-2 rounded-full ${tech.color} text-white font-medium`}
+                className="tech-badge"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
@@ -224,8 +175,8 @@ const deployService = async () => {
         </motion.div>
 
         {/* GitHub Section */}
-        <motion.div className="mb-12" variants={item}>
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">GitHub Activity</h2>
+        <motion.div className="mb-16" variants={item}>
+          <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">GitHub Activity</h2>
 
           {loading ? (
             <div className="flex justify-center">
@@ -238,8 +189,8 @@ const deployService = async () => {
           ) : (
             <div className="space-y-8">
               {/* Contribution Graph */}
-              <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8" variants={item}>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Contribution Activity</h3>
+              <motion.div className="glass-card p-6 mb-8" variants={item}>
+                <h3 className="text-lg font-semibold text-orange-500 mb-4">Contribution Activity</h3>
                 <ContributionGraph data={contributions} />
               </motion.div>
 
@@ -251,25 +202,25 @@ const deployService = async () => {
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                    className="glass-card p-6 hover:border-orange-500/40 transition-all duration-300"
                     whileHover={{ scale: 1.02 }}
                   >
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{repo.name}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{repo.description}</p>
+                    <h3 className="text-lg font-semibold text-orange-500 mb-2">{repo.name}</h3>
+                    <p className="text-gray-300 text-sm mb-4">{repo.description}</p>
                     <div className="flex items-center space-x-4 text-sm">
                       {repo.language && (
-                        <span className="flex items-center text-gray-600 dark:text-gray-400">
-                          <span className="w-3 h-3 rounded-full bg-indigo-500 mr-2"></span>
+                        <span className="flex items-center text-gray-400">
+                          <span className="w-3 h-3 rounded-full bg-green-400 mr-2"></span>
                           {repo.language}
                         </span>
                       )}
-                      <span className="flex items-center text-gray-600 dark:text-gray-400">
+                      <span className="flex items-center text-gray-400">
                         <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                         {repo.stargazers_count}
                       </span>
-                      <span className="flex items-center text-gray-600 dark:text-gray-400">
+                      <span className="flex items-center text-gray-400">
                         <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" />
                         </svg>
@@ -281,8 +232,8 @@ const deployService = async () => {
               </div>
 
               {/* Recent Activity */}
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Recent Activity</h3>
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold text-orange-500 mb-4">Recent Activity</h3>
                 <div className="space-y-4">
                   {activities.map((activity) => (
                     <motion.a
@@ -290,7 +241,7 @@ const deployService = async () => {
                       href={activity.repo.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-3 text-gray-600 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400"
+                      className="flex items-center space-x-3 text-gray-400 hover:text-orange-500"
                       whileHover={{ x: 10 }}
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -312,7 +263,8 @@ const deployService = async () => {
           )}
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
+        {/* Navigation Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
             {
               href: "/projects",
@@ -382,13 +334,10 @@ const deployService = async () => {
                 show: { opacity: 1, y: 0, transition: { delay: index * 0.1 } },
               }}
             >
-              <Link
-                href={item.href}
-                className="block p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="text-indigo-500 dark:text-indigo-400">{item.icon}</div>
-                <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{item.title} →</h2>
-                <p className="text-gray-600 dark:text-gray-400">{item.description}</p>
+              <Link href={item.href} className="glass-card p-6 hover:border-orange-500/40 transition-all duration-300 block">
+                <div className="text-orange-500">{item.icon}</div>
+                <h2 className="text-2xl font-bold mb-2 text-orange-500 font-cyberpunk">{item.title} →</h2>
+                <p className="text-gray-400">{item.description}</p>
               </Link>
             </motion.div>
           ))}

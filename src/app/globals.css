@@ -542,3 +542,93 @@ html {
     transform: translateY(0);
   }
 }
+
+@keyframes scanline {
+  0% {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 95, 31, 0) 0%,
+      rgba(255, 95, 31, 0.1) 10%,
+      rgba(255, 95, 31, 0.2) 20%,
+      rgba(255, 95, 31, 0.3) 30%,
+      rgba(255, 95, 31, 0.4) 40%,
+      rgba(255, 95, 31, 0.5) 50%,
+      rgba(255, 95, 31, 0.4) 60%,
+      rgba(255, 95, 31, 0.3) 70%,
+      rgba(255, 95, 31, 0.2) 80%,
+      rgba(255, 95, 31, 0.1) 90%,
+      rgba(255, 95, 31, 0) 100%
+    );
+    transform: translateY(-100%);
+  }
+  100% {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 95, 31, 0) 0%,
+      rgba(255, 95, 31, 0.1) 10%,
+      rgba(255, 95, 31, 0.2) 20%,
+      rgba(255, 95, 31, 0.3) 30%,
+      rgba(255, 95, 31, 0.4) 40%,
+      rgba(255, 95, 31, 0.5) 50%,
+      rgba(255, 95, 31, 0.4) 60%,
+      rgba(255, 95, 31, 0.3) 70%,
+      rgba(255, 95, 31, 0.2) 80%,
+      rgba(255, 95, 31, 0.1) 90%,
+      rgba(255, 95, 31, 0) 100%
+    );
+    transform: translateY(100%);
+  }
+}
+
+.scanline {
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+
+.glass-card {
+  @apply bg-white/10 dark:bg-gray-800/30 backdrop-blur-lg border border-gray-200/20 dark:border-gray-700/30 rounded-xl shadow-xl;
+}
+
+.feature-card {
+  @apply relative overflow-hidden rounded-xl p-6 glass-card;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 95, 31, 0.1), transparent 40%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3);
+  }
+}
+
+.glow-text {
+  @apply font-mono;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.tech-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all duration-300;
+  background: linear-gradient(45deg, rgba(255, 95, 31, 0.1), rgba(255, 95, 31, 0.2));
+  border: 1px solid rgba(255, 95, 31, 0.2);
+  &:hover {
+    transform: translateY(-2px) rotate(2deg);
+    background: linear-gradient(45deg, rgba(255, 95, 31, 0.2), rgba(255, 95, 31, 0.3));
+  }
+}

@@ -60,45 +60,26 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
     }
   });
 
-  const getContributionLevel = (count: number): number => {
-    if (count === 0) return 0;
-    if (count <= 3) return 1;
-    if (count <= 6) return 2;
-    if (count <= 10) return 3;
-    return 4;
+  const getContributionText = (count: number): string => {
+    if (count === 0) return "No contributions";
+    if (count === 1) return "1 contribution";
+    return `${count} contributions`;
   };
 
-  const getLevelColor = (level: number, isDark: boolean): string => {
-    if (isDark) {
-      switch (level) {
-        case 0:
-          return "bg-gray-800 hover:bg-gray-700";
-        case 1:
-          return "bg-emerald-900 hover:bg-emerald-800";
-        case 2:
-          return "bg-emerald-700 hover:bg-emerald-600";
-        case 3:
-          return "bg-emerald-500 hover:bg-emerald-400";
-        case 4:
-          return "bg-emerald-300 hover:bg-emerald-200";
-        default:
-          return "bg-gray-800 hover:bg-gray-700";
-      }
-    } else {
-      switch (level) {
-        case 0:
-          return "bg-gray-100 hover:bg-gray-200";
-        case 1:
-          return "bg-emerald-200 hover:bg-emerald-300";
-        case 2:
-          return "bg-emerald-300 hover:bg-emerald-400";
-        case 3:
-          return "bg-emerald-400 hover:bg-emerald-500";
-        case 4:
-          return "bg-emerald-500 hover:bg-emerald-600";
-        default:
-          return "bg-gray-100 hover:bg-gray-200";
-      }
+  const getLevelColor = (level: number): string => {
+    switch (level) {
+      case 0:
+        return "bg-gray-900 hover:bg-gray-800";
+      case 1:
+        return "bg-orange-900/50 hover:bg-orange-800/50";
+      case 2:
+        return "bg-orange-700/50 hover:bg-orange-600/50";
+      case 3:
+        return "bg-orange-500/50 hover:bg-orange-400/50";
+      case 4:
+        return "bg-orange-300/50 hover:bg-orange-200/50";
+      default:
+        return "bg-gray-900 hover:bg-gray-800";
     }
   };
 
@@ -109,12 +90,6 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
       day: "numeric",
       year: "numeric",
     });
-  };
-
-  const getContributionText = (count: number): string => {
-    if (count === 0) return "No contributions";
-    if (count === 1) return "1 contribution";
-    return `${count} contributions`;
   };
 
   return (
@@ -129,7 +104,7 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
                 const date = new Date();
                 date.setMonth(date.getMonth() - 5 + i);
                 return (
-                  <div key={i} className="flex-1 text-xs text-gray-400">
+                  <div key={i} className="flex-1 text-xs text-gray-500">
                     {date.toLocaleDateString("en-US", { month: "short" })}
                   </div>
                 );
@@ -139,7 +114,7 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
             {/* Contribution Grid with Day Labels */}
             <div className="flex">
               {/* Day Labels */}
-              <div className="flex flex-col gap-1 mr-2 text-xs text-gray-400 justify-between py-1">
+              <div className="flex flex-col gap-1 mr-2 text-xs text-gray-500 justify-between py-1">
                 <span>Mon</span>
                 <span>Wed</span>
                 <span>Fri</span>
@@ -161,26 +136,21 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
                               delay: (weekIndex * 7 + dayIndex) * 0.01,
                             }}
                             className={`w-4 h-4 rounded-sm ${getLevelColor(
-                              getContributionLevel(day.count),
-                              true
+                              day.level
                             )} cursor-pointer transition-all duration-200`}
                           />
                         </Tooltip.Trigger>
                         <AnimatePresence>
                           <Tooltip.Portal>
-                            <Tooltip.Content
-                              className="bg-gray-900 text-white px-3 py-2 rounded-lg shadow-lg text-sm z-50"
-                              sideOffset={5}
-                              asChild
-                            >
+                            <Tooltip.Content className="glass-card px-3 py-2 text-sm z-50" sideOffset={5} asChild>
                               <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 10 }}
                               >
-                                <div className="font-medium">{formatDate(day.date)}</div>
-                                <div className="text-gray-300">{getContributionText(day.count)}</div>
-                                <Tooltip.Arrow className="fill-gray-900" />
+                                <div className="font-medium text-orange-500">{formatDate(day.date)}</div>
+                                <div className="text-gray-400">{getContributionText(day.count)}</div>
+                                <Tooltip.Arrow className="fill-orange-500/20" />
                               </motion.div>
                             </Tooltip.Content>
                           </Tooltip.Portal>
@@ -201,11 +171,11 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
                     <Tooltip.Trigger asChild>
                       <motion.div
                         whileHover={{ scale: 1.2 }}
-                        className={`w-4 h-4 rounded-sm ${getLevelColor(level, true)} cursor-help`}
+                        className={`w-4 h-4 rounded-sm ${getLevelColor(level)} cursor-help`}
                       />
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
-                      <Tooltip.Content className="bg-gray-900 text-white px-2 py-1 rounded-md text-xs" sideOffset={5}>
+                      <Tooltip.Content className="glass-card px-2 py-1 text-xs" sideOffset={5}>
                         {level === 0
                           ? "No contributions"
                           : level === 1
@@ -215,7 +185,7 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
                           : level === 3
                           ? "7-10 contributions"
                           : "10+ contributions"}
-                        <Tooltip.Arrow className="fill-gray-900" />
+                        <Tooltip.Arrow className="fill-orange-500/20" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -226,40 +196,40 @@ const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
         </div>
 
         {/* Contribution Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-700">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gray-800 p-4 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-orange-500/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card p-4">
             <div className="text-gray-400 text-sm">Total Contributions</div>
-            <div className="text-2xl font-bold text-white">{totalContributions}</div>
+            <div className="text-2xl font-bold text-orange-500">{totalContributions}</div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-gray-800 p-4 rounded-lg"
+            className="glass-card p-4"
           >
             <div className="text-gray-400 text-sm">Contributing Days</div>
-            <div className="text-2xl font-bold text-white">{contributingDays}</div>
+            <div className="text-2xl font-bold text-orange-500">{contributingDays}</div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-gray-800 p-4 rounded-lg"
+            className="glass-card p-4"
           >
             <div className="text-gray-400 text-sm">Current Streak</div>
-            <div className="text-2xl font-bold text-white">{currentStreak} days</div>
+            <div className="text-2xl font-bold text-orange-500">{currentStreak} days</div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-gray-800 p-4 rounded-lg"
+            className="glass-card p-4"
           >
             <div className="text-gray-400 text-sm">Best Day</div>
-            <div className="text-2xl font-bold text-white">{bestDay.count} contributions</div>
+            <div className="text-2xl font-bold text-orange-500">{bestDay.count} contributions</div>
             <div className="text-xs text-gray-400 mt-1">
               {new Date(bestDay.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
             </div>
