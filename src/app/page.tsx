@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { githubService } from "@/services/githubService";
 import ContributionGraph from "@/components/ContributionGraph";
 import Terminal from "@/components/Terminal";
+import ContactForm from "@/components/ContactForm";
 
 interface GitHubRepo {
   name: string;
@@ -227,6 +228,13 @@ export default function Home() {
             </div>
           )}
         </motion.div>
+
+        {/* Contact Form Section */}
+        <motion.div className="mb-16" variants={item}>
+          <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">Get in Touch</h2>
+          <ContactForm />
+        </motion.div>
+
       </motion.div>
     </div>
   );
