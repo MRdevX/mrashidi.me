@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { githubService } from "@/services/githubService";
@@ -228,86 +227,6 @@ export default function Home() {
             </div>
           )}
         </motion.div>
-
-        {/* Navigation Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
-            {
-              href: "/projects",
-              title: "Projects",
-              description: "Cloud-native and scalable solutions I've built",
-              icon: (
-                <svg className="w-6 h-6 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                  />
-                </svg>
-              ),
-            },
-            {
-              href: "/blog",
-              title: "Blog",
-              description: "Articles on backend development, cloud architecture, and DevOps",
-              icon: (
-                <svg className="w-6 h-6 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-                  />
-                </svg>
-              ),
-            },
-            {
-              href: "/about",
-              title: "About",
-              description: "9+ years of experience in scalable backend development",
-              icon: (
-                <svg className="w-6 h-6 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              ),
-            },
-            {
-              href: "/resume",
-              title: "Resume",
-              description: "My professional journey and technical expertise",
-              icon: (
-                <svg className="w-6 h-6 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-              ),
-            },
-          ].map((item, index) => (
-            <motion.div
-              key={item.href}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { delay: index * 0.1 } },
-              }}
-            >
-              <Link href={item.href} className="glass-card p-6 hover:border-orange-500/40 transition-all duration-300 block">
-                <div className="text-orange-500">{item.icon}</div>
-                <h2 className="text-2xl font-bold mb-2 text-orange-500 font-cyberpunk">{item.title} →</h2>
-                <p className="text-gray-400">{item.description}</p>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
       </motion.div>
     </div>
   );
