@@ -1,58 +1,51 @@
 import { NextResponse } from "next/server";
-
-async function verifyRecaptcha(token: string) {
-  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
-  });
-
-  const data = await response.json();
-  return data.success;
-}
+import { EmailService } from "@/lib/email/email.service";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, subject, message, recaptchaToken } = body;
+    const { name, email, subject, message, recaptchaToken } = await request.json();
 
-    // Validate the request body
+    // Validate required fields
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "All fields are required" },
         { status: 400 }
       );
     }
 
-    // Verify reCAPTCHA token
-    if (!recaptchaToken) {
+    // Verify reCAPTCHA
+    const recaptchaResponse = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+      { method: "POST" }
+    );
+
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (!recaptchaData.success) {
       return NextResponse.json(
-        { error: "reCAPTCHA verification required" },
+        { error: "reCAPTCHA verification failed" },
         { status: 400 }
       );
     }
 
-    const isValidRecaptcha = await verifyRecaptcha(recaptchaToken);
-    if (!isValidRecaptcha) {
-      return NextResponse.json(
-        { error: "Invalid reCAPTCHA token" },
-        { status: 400 }
-      );
-    }
+    // Initialize email service
+    const emailService = new EmailService();
 
-    // Here you would typically send the email using your preferred email service
-    // For example, using nodemailer, SendGrid, or any other email service
-    // For now, we'll just log the data
-    console.log("Contact form submission:", {
+    // Send emails
+    const emailSent = await emailService.sendContactFormEmail({
       name,
       email,
       subject,
       message,
     });
 
-    // Return success response
+    if (!emailSent) {
+      return NextResponse.json(
+        { error: "Failed to send email" },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
       { message: "Message sent successfully" },
       { status: 200 }
@@ -60,7 +53,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error processing contact form:", error);
     return NextResponse.json(
-      { error: "Failed to process request" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
