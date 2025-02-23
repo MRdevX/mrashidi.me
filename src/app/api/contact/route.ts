@@ -1,6 +1,17 @@
 import { NextResponse } from "next/server";
 import { EmailService } from "@/lib/email/email.service";
 
+const RECAPTCHA_THRESHOLD = 0.5; // Minimum score to accept (0.0 to 1.0)
+
+interface RecaptchaResponse {
+  success: boolean;
+  score: number;
+  action: string;
+  challenge_ts: string;
+  hostname: string;
+  error_codes?: string[];
+}
+
 export async function POST(request: Request) {
   try {
     const { name, email, subject, message, recaptchaToken } = await request.json();
@@ -19,11 +30,19 @@ export async function POST(request: Request) {
       { method: "POST" }
     );
 
-    const recaptchaData = await recaptchaResponse.json();
+    const recaptchaData = await recaptchaResponse.json() as RecaptchaResponse;
 
     if (!recaptchaData.success) {
       return NextResponse.json(
         { error: "reCAPTCHA verification failed" },
+        { status: 400 }
+      );
+    }
+
+    // Check reCAPTCHA score
+    if (recaptchaData.score < RECAPTCHA_THRESHOLD) {
+      return NextResponse.json(
+        { error: "Suspicious activity detected. Please try again." },
         { status: 400 }
       );
     }
