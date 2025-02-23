@@ -3,10 +3,32 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { githubService } from "@/services/githubService";
+
+interface GitHubRepo {
+  name: string;
+  description: string;
+  html_url: string;
+  stargazers_count: number;
+  forks_count: number;
+  language: string;
+}
+
+interface GitHubActivity {
+  type: string;
+  repo: {
+    name: string;
+    url: string;
+  };
+  created_at: string;
+}
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [currentCodeIndex, setCurrentCodeIndex] = useState(0);
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [activities, setActivities] = useState<GitHubActivity[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const codeSnippets = [
     {
@@ -50,6 +72,23 @@ const deployService = async () => {
     const interval = setInterval(() => {
       setCurrentCodeIndex((prev) => (prev + 1) % codeSnippets.length);
     }, 5000);
+
+    async function fetchGitHubData() {
+      try {
+        const [reposData, activitiesData] = await Promise.all([
+          githubService.getTopRepositories(),
+          githubService.getRecentActivity(),
+        ]);
+        setRepos(reposData);
+        setActivities(activitiesData);
+      } catch (error) {
+        console.error("Error fetching GitHub data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchGitHubData();
     return () => clearInterval(interval);
   }, []);
 
@@ -172,6 +211,89 @@ const deployService = async () => {
               </motion.div>
             ))}
           </div>
+        </motion.div>
+
+        {/* GitHub Section */}
+        <motion.div className="mb-12" variants={item}>
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">GitHub Activity</h2>
+
+          {loading ? (
+            <div className="flex justify-center">
+              <div className="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-8">
+              {/* Top Repositories */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {repos.map((repo) => (
+                  <motion.a
+                    key={repo.name}
+                    href={repo.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{repo.name}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{repo.description}</p>
+                    <div className="flex items-center space-x-4 text-sm">
+                      {repo.language && (
+                        <span className="flex items-center text-gray-600 dark:text-gray-400">
+                          <span className="w-3 h-3 rounded-full bg-indigo-500 mr-2"></span>
+                          {repo.language}
+                        </span>
+                      )}
+                      <span className="flex items-center text-gray-600 dark:text-gray-400">
+                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        {repo.stargazers_count}
+                      </span>
+                      <span className="flex items-center text-gray-600 dark:text-gray-400">
+                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" />
+                        </svg>
+                        {repo.forks_count}
+                      </span>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+
+              {/* Recent Activity */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Recent Activity</h3>
+                <div className="space-y-4">
+                  {activities.map((activity) => (
+                    <motion.a
+                      key={activity.created_at}
+                      href={activity.repo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-3 text-gray-600 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400"
+                      whileHover={{ x: 10 }}
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm-1-5a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span className="flex-1">
+                        {activity.type.replace("Event", "")} on {activity.repo.name}
+                      </span>
+                      <span className="text-sm">{new Date(activity.created_at).toLocaleDateString()}</span>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
