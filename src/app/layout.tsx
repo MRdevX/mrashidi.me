@@ -8,7 +8,47 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Mahdi Rashidi - Senior Backend Engineer",
-  description: "Senior Backend Engineer and Cloud & DevOps Practitioner with 9+ years of experience",
+  description:
+    "Senior Backend Engineer and Cloud Architect with 9+ years of experience in scalable systems, cloud architecture, and DevOps practices.",
+  keywords: "Backend Engineer, Cloud Architect, Node.js, TypeScript, Azure, Kubernetes, DevOps",
+  authors: [{ name: "Mahdi Rashidi", url: "https://mrashidi.me" }],
+  creator: "Mahdi Rashidi",
+  openGraph: {
+    type: "website",
+    url: "https://mrashidi.me",
+    title: "Mahdi Rashidi - Senior Backend Engineer",
+    description: "Senior Backend Engineer and Cloud Architect with expertise in scalable systems and cloud architecture.",
+    siteName: "Mahdi Rashidi",
+    images: [
+      {
+        url: "/og-image.png", // You'll need to add this image
+        width: 1200,
+        height: 630,
+        alt: "Mahdi Rashidi - Senior Backend Engineer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mahdi Rashidi - Senior Backend Engineer",
+    description: "Senior Backend Engineer and Cloud Architect with expertise in scalable systems and cloud architecture.",
+    creator: "@mrdevx",
+    images: ["/og-image.png"], // You'll need to add this image
+  },
+  verification: {
+    google: "your-google-verification-code", // Add your Google verification code
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -60,6 +100,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </footer>
+
+        {/* Schema.org JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Mahdi Rashidi",
+              jobTitle: "Senior Backend Engineer",
+              url: "https://mrashidi.me",
+              sameAs: ["https://github.com/mrdevx", "https://linkedin.com/in/mrdevx"],
+              description: "Senior Backend Engineer and Cloud Architect with 9+ years of experience in scalable systems.",
+              knowsAbout: [
+                "Backend Development",
+                "Cloud Architecture",
+                "DevOps",
+                "Node.js",
+                "TypeScript",
+                "Kubernetes",
+                "Azure",
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );
