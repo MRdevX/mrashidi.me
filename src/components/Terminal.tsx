@@ -131,7 +131,7 @@ export default function Terminal() {
           <div className="w-3 h-3 rounded-full bg-red-500/80" aria-hidden="true" />
           <div className="w-3 h-3 rounded-full bg-yellow-500/80" aria-hidden="true" />
           <div className="w-3 h-3 rounded-full bg-green-500/80" aria-hidden="true" />
-          <span className="ml-2 text-orange-500/80 font-bold">guest@mrashidi.me:~$</span>
+          <span className="ml-2 text-orange-500/80 font-bold">Terminal</span>
         </div>
 
         <div
