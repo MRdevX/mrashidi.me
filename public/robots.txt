@@ -1,12 +1,12 @@
-# Allow all crawlers
+# https://mrashidi.me/robots.txt
 User-agent: *
 Allow: /
-
-# Sitemap location
-Sitemap: https://mrashidi.me/sitemap.xml
 
 # Disallow API routes
 Disallow: /api/
 
-# Rate limiting
+# Sitemap location
+Sitemap: https://mrashidi.me/sitemap.xml
+
+# Crawl delay
 Crawl-delay: 10 
