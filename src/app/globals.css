@@ -9,9 +9,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 249, 250, 251;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 10, 10, 10;
+  --background-end-rgb: 0, 0, 0;
   --neon-orange: #ff5f1f;
   --neon-blue: #00fff5;
   --neon-purple: #bc13fe;
@@ -23,8 +23,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 17, 24, 39;
-    --background-end-rgb: 11, 15, 25;
+    --background-start-rgb: 10, 10, 10;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
@@ -631,4 +631,13 @@ html {
     transform: translateY(-2px) rotate(2deg);
     background: linear-gradient(45deg, rgba(255, 95, 31, 0.2), rgba(255, 95, 31, 0.3));
   }
+}
+
+/* Update social media icon hover styles */
+.social-link {
+  @apply text-gray-400 hover:text-orange-500 transition-colors duration-300;
+}
+
+.social-link:hover svg {
+  filter: drop-shadow(0 0 8px var(--neon-orange));
 }
