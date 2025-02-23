@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -11,33 +12,63 @@ export default function ContactForm() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+
+  useEffect(() => {
+    // Set recaptcha as loaded when the component mounts
+    setRecaptchaLoaded(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
+    setErrorMessage("");
 
     try {
+      if (!recaptchaRef.current) {
+        throw new Error("reCAPTCHA not initialized");
+      }
+
+      const recaptchaValue = await recaptchaRef.current.executeAsync();
+      if (!recaptchaValue) {
+        throw new Error("reCAPTCHA verification failed");
+      }
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken: recaptchaValue,
+        }),
       });
 
-      if (!response.ok) throw new Error("Failed to send message");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       setStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
+      recaptchaRef.current.reset();
       
       // Reset success message after 5 seconds
       setTimeout(() => setStatus("idle"), 5000);
     } catch (error) {
       console.error("Error sending message:", error);
       setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Failed to send message");
       
       // Reset error message after 5 seconds
-      setTimeout(() => setStatus("idle"), 5000);
+      setTimeout(() => {
+        setStatus("idle");
+        setErrorMessage("");
+      }, 5000);
     }
   };
 
@@ -47,6 +78,18 @@ export default function ContactForm() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  if (!recaptchaLoaded) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -121,6 +164,14 @@ export default function ContactForm() {
           />
         </div>
 
+        <div className="hidden">
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            size="invisible"
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+          />
+        </div>
+
         <div className="flex items-center justify-between">
           <motion.button
             type="submit"
@@ -158,7 +209,7 @@ export default function ContactForm() {
               animate={{ opacity: 1, x: 0 }}
               className="text-red-500"
             >
-              Failed to send message. Please try again.
+              {errorMessage}
             </motion.p>
           )}
         </div>
