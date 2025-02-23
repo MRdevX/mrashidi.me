@@ -1699,6 +1699,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clone@npm:2.x":
+  version: 2.1.2
+  resolution: "clone@npm:2.1.2"
+  checksum: 10c0/ed0601cd0b1606bc7d82ee7175b97e68d1dd9b91fd1250a3617b38d34a095f8ee0431d40a1a611122dcccb4f93295b4fdb94942aa763392b5fe44effa50c2d5e
+  languageName: node
+  linkType: hard
+
 "clsx@npm:^2.0.0":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
@@ -3547,6 +3554,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^5.1.0"
     framer-motion: "npm:^12.4.7"
     next: "npm:^15.1.7"
+    node-cache: "npm:^5.1.2"
     postcss: "npm:8.4.31"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
@@ -3656,6 +3664,15 @@ __metadata:
   bin:
     next: dist/bin/next
   checksum: 10c0/9d0f26c3742fb4339b931124607f267558357f2a9cd1cde4ea7d5755cea56a2f751b5898e1babd686ae97ee1f6043c94177f1dcc9c69db50b61d27e441970dfe
+  languageName: node
+  linkType: hard
+
+"node-cache@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "node-cache@npm:5.1.2"
+  dependencies:
+    clone: "npm:2.x"
+  checksum: 10c0/2f91907510a1276415ae5898269d0765934d5a4f3682c8b1b19964694a9b841c8bd791e1a125d1f89050f412e1da5dd982179d714252b3a7223abb05b8cb24d5
   languageName: node
   linkType: hard
 
