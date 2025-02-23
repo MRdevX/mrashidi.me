@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { githubService } from "@/services/githubService";
+import ContributionGraph from "@/components/ContributionGraph";
 
 interface GitHubRepo {
   name: string;
@@ -23,11 +24,18 @@ interface GitHubActivity {
   created_at: string;
 }
 
+interface ContributionDay {
+  date: string;
+  count: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
+
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [currentCodeIndex, setCurrentCodeIndex] = useState(0);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [activities, setActivities] = useState<GitHubActivity[]>([]);
+  const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
 
   const codeSnippets = [
@@ -75,12 +83,14 @@ const deployService = async () => {
 
     async function fetchGitHubData() {
       try {
-        const [reposData, activitiesData] = await Promise.all([
+        const [reposData, activitiesData, contributionsData] = await Promise.all([
           githubService.getTopRepositories(),
           githubService.getRecentActivity(),
+          githubService.getContributions(),
         ]);
         setRepos(reposData);
         setActivities(activitiesData);
+        setContributions(contributionsData);
       } catch (error) {
         console.error("Error fetching GitHub data:", error);
       } finally {
@@ -90,7 +100,7 @@ const deployService = async () => {
 
     fetchGitHubData();
     return () => clearInterval(interval);
-  }, []);
+  }, [codeSnippets.length]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -227,6 +237,12 @@ const deployService = async () => {
             </div>
           ) : (
             <div className="space-y-8">
+              {/* Contribution Graph */}
+              <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8" variants={item}>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Contribution Activity</h3>
+                <ContributionGraph data={contributions} />
+              </motion.div>
+
               {/* Top Repositories */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {repos.map((repo) => (
