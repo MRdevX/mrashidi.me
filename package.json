@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.1.2",
+    "@fontsource/orbitron": "^5.1.1",
+    "@fontsource/press-start-2p": "^5.1.1",
+    "@fontsource/space-grotesk": "^5.1.1",
+    "@fontsource/vt323": "^5.1.1",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-tooltip": "^1.1.8",

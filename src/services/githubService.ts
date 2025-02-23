@@ -22,16 +22,42 @@ interface ContributionDay {
   level: 0 | 1 | 2 | 3 | 4;
 }
 
+interface GitHubGraphQLResponse {
+  data: {
+    user: {
+      contributionsCollection: {
+        contributionCalendar: {
+          totalContributions: number;
+          weeks: Array<{
+            contributionDays: Array<{
+              contributionCount: number;
+              date: string;
+            }>;
+          }>;
+        };
+      };
+    };
+  };
+}
+
+interface ContributionDayResponse {
+  contributionCount: number;
+  date: string;
+}
+
 class GitHubService {
   private readonly username = "mrdevx";
   private readonly baseUrl = "https://api.github.com";
+  private readonly graphqlUrl = "https://api.github.com/graphql";
+  private readonly headers = {
+    Accept: "application/vnd.github.v3+json",
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+  };
 
   async getTopRepositories(): Promise<GitHubRepo[]> {
     try {
       const response = await fetch(`${this.baseUrl}/users/${this.username}/repos?sort=stars&per_page=4`, {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-        },
+        headers: this.headers,
       });
 
       if (!response.ok) {
@@ -49,9 +75,7 @@ class GitHubService {
   async getRecentActivity(): Promise<GitHubActivity[]> {
     try {
       const response = await fetch(`${this.baseUrl}/users/${this.username}/events/public?per_page=5`, {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-        },
+        headers: this.headers,
       });
 
       if (!response.ok) {
@@ -68,30 +92,69 @@ class GitHubService {
 
   async getContributions(): Promise<ContributionDay[]> {
     try {
-      // This is a mock implementation since GitHub doesn't provide an API for contributions
-      // In a real implementation, you would need to use GitHub GraphQL API with authentication
-      const today = new Date();
-      const sixMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
-      const days: ContributionDay[] = [];
+      const query = `
+        query {
+          user(login: "${this.username}") {
+            contributionsCollection {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  contributionDays {
+                    contributionCount
+                    date
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
 
-      for (let d = new Date(sixMonthsAgo); d <= today; d.setDate(d.getDate() + 1)) {
-        const count = Math.floor(Math.random() * 10); // Mock contribution count
-        let level: 0 | 1 | 2 | 3 | 4;
+      const response = await fetch(this.graphqlUrl, {
+        method: "POST",
+        headers: {
+          ...this.headers,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
 
-        if (count === 0) level = 0;
-        else if (count <= 2) level = 1;
-        else if (count <= 4) level = 2;
-        else if (count <= 6) level = 3;
-        else level = 4;
-
-        days.push({
-          date: d.toISOString().split("T")[0],
-          count,
-          level,
-        });
+      if (!response.ok) {
+        throw new Error("Failed to fetch contributions");
       }
 
-      return days;
+      const data = (await response.json()) as GitHubGraphQLResponse;
+      const weeks = data.data.user.contributionsCollection.contributionCalendar.weeks;
+      const contributions: ContributionDay[] = [];
+
+      // Process the last 6 months of contributions
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+      weeks.forEach((week) => {
+        week.contributionDays.forEach((day: ContributionDayResponse) => {
+          const date = new Date(day.date);
+          if (date >= sixMonthsAgo) {
+            const count = day.contributionCount;
+            let level: 0 | 1 | 2 | 3 | 4;
+
+            // Determine level based on contribution count
+            if (count === 0) level = 0;
+            else if (count <= 3) level = 1;
+            else if (count <= 6) level = 2;
+            else if (count <= 10) level = 3;
+            else level = 4;
+
+            contributions.push({
+              date: day.date,
+              count,
+              level,
+            });
+          }
+        });
+      });
+
+      return contributions;
     } catch (error) {
       console.error("Error fetching GitHub contributions:", error);
       return [];

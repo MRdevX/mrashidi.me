@@ -145,6 +145,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/jetbrains-mono@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "@fontsource/jetbrains-mono@npm:5.1.2"
+  checksum: 10c0/8e83974206f6848f69eaf329ab920ffcebf933e2b526d575291f5efc2f0b07f5628524cec225bb7608ea1c67883f18e13ee2691d2b8874df013acd6f4987fb9d
+  languageName: node
+  linkType: hard
+
+"@fontsource/orbitron@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource/orbitron@npm:5.1.1"
+  checksum: 10c0/907afc16163eb70d47276a1559de5f9d7a7be03a402a263ed94bfa79cffb25c3f9aea894b409deda9c9e768c7e24b7607aca3d7c428130ff5a2f6d9d0834d810
+  languageName: node
+  linkType: hard
+
+"@fontsource/press-start-2p@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource/press-start-2p@npm:5.1.1"
+  checksum: 10c0/4ec0b38a77875744c55bdd9231a350317f79da7929bee2277461d43b33c4aea4a871d98b4f00ac8e4745ed26bb66957614146e8282a11c488b4a9a12adf43f10
+  languageName: node
+  linkType: hard
+
+"@fontsource/space-grotesk@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource/space-grotesk@npm:5.1.1"
+  checksum: 10c0/69b471baf076d4324d39ca4e65fe05ecd0129f233e4f8a82d28b2a67e71eff4d8edc53a593ab7db5737447e52196deae1298f46599f21494c3ade8961a814569
+  languageName: node
+  linkType: hard
+
+"@fontsource/vt323@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource/vt323@npm:5.1.1"
+  checksum: 10c0/d2af82f7bd7f378745c4deb97e4f746c5e58f535dd9c5d81bf1732cbdd8214782e753a133ad58bd50104a5dc72c9de5b149825fecfbe650368528f96d72d52ec
+  languageName: node
+  linkType: hard
+
 "@headlessui/react@npm:^2.2.0":
   version: 2.2.0
   resolution: "@headlessui/react@npm:2.2.0"
@@ -3493,6 +3528,11 @@ __metadata:
   resolution: "mrashidi.me@workspace:."
   dependencies:
     "@eslint/eslintrc": "npm:^3.3.0"
+    "@fontsource/jetbrains-mono": "npm:^5.1.2"
+    "@fontsource/orbitron": "npm:^5.1.1"
+    "@fontsource/press-start-2p": "npm:^5.1.1"
+    "@fontsource/space-grotesk": "npm:^5.1.1"
+    "@fontsource/vt323": "npm:^5.1.1"
     "@headlessui/react": "npm:^2.2.0"
     "@heroicons/react": "npm:^2.2.0"
     "@next/eslint-plugin-next": "npm:^15.1.7"
