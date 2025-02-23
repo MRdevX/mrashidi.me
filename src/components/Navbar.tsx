@@ -31,7 +31,7 @@ export default function Navbar() {
     <Disclosure
       as="nav"
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg" : "bg-transparent"
+        isScrolled ? "glass-card backdrop-blur-md" : "bg-transparent"
       }`}
     >
       {({ open }) => (
@@ -39,9 +39,9 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex justify-between w-full">
-                <Link href="/" className="flex items-center flex-shrink-0 text-gray-800 dark:text-white">
+                <Link href="/" className="flex items-center flex-shrink-0">
                   <motion.span
-                    className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600"
+                    className="text-xl font-bold text-orange-500 font-cyberpunk glow-text"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -56,8 +56,8 @@ export default function Navbar() {
                       href={item.href}
                       className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors duration-200 ${
                         pathname === item.href
-                          ? "border-indigo-500 text-gray-900 dark:text-white"
-                          : "border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300"
+                          ? "border-orange-500 text-orange-500"
+                          : "border-transparent text-gray-400 hover:text-orange-400 hover:border-orange-400"
                       }`}
                     >
                       {item.name}
@@ -66,7 +66,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="-mr-2 flex items-center sm:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-orange-500 hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -90,7 +90,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="sm:hidden"
+                className="sm:hidden glass-card"
               >
                 <div className="pt-2 pb-3 space-y-1">
                   {navigation.map((item) => (
@@ -100,8 +100,8 @@ export default function Navbar() {
                       href={item.href}
                       className={`block py-2 pl-3 pr-4 text-base font-medium border-l-4 ${
                         pathname === item.href
-                          ? "border-indigo-500 text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-800"
-                          : "border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300"
+                          ? "border-orange-500 text-orange-500 bg-gray-800/50"
+                          : "border-transparent text-gray-400 hover:text-orange-400 hover:border-orange-400 hover:bg-gray-800/30"
                       }`}
                     >
                       {item.name}

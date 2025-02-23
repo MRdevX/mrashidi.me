@@ -9,17 +9,15 @@ export default function About() {
   };
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <div className="max-w-4xl mx-auto px-4">
         <motion.div initial="hidden" animate="visible" variants={fadeIn} transition={{ duration: 0.5 }}>
-          <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
-            About Me
-          </h1>
+          <h1 className="text-4xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">About Me</h1>
         </motion.div>
 
         <div className="prose dark:prose-invert max-w-none">
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.2 }}>
-            <p className="text-lg mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
+            <p className="text-lg mb-6 leading-relaxed text-gray-300">
               Software Engineer with 9+ years of experience in scalable Backend Development, with a primary focus on Node.js
               and TypeScript for the past 5+ years. Specialized in cloud native applications, microservices architecture, and
               DevOps practices. Proven expertise in optimizing cloud infrastructure, improving system reliability, and
@@ -28,7 +26,7 @@ export default function About() {
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
-            <h2 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Technical Expertise</h2>
+            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Expertise</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
@@ -91,22 +89,24 @@ export default function About() {
               ].map((skill, index) => (
                 <motion.div
                   key={skill.title}
-                  className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="feature-card group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="text-indigo-500 dark:text-indigo-400 mb-4">{skill.icon}</div>
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-white">{skill.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{skill.skills}</p>
+                  <div className="text-orange-500 group-hover:text-orange-400 transition-colors mb-4">{skill.icon}</div>
+                  <h3 className="text-xl font-bold mb-3 text-orange-500 group-hover:text-orange-400 transition-colors">
+                    {skill.title}
+                  </h3>
+                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">{skill.skills}</p>
                 </motion.div>
               ))}
             </div>
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.8 }}>
-            <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Languages</h2>
+            <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Languages</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 { language: "Persian", level: "Native Proficiency", progress: 100 },
@@ -116,18 +116,20 @@ export default function About() {
               ].map((lang, index) => (
                 <motion.div
                   key={lang.language}
-                  className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow"
+                  className="feature-card group"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 1 + index * 0.1 }}
                 >
                   <div className="flex justify-between mb-2">
-                    <span className="font-semibold text-gray-800 dark:text-white">{lang.language}</span>
-                    <span className="text-gray-600 dark:text-gray-400">{lang.level}</span>
+                    <span className="font-semibold text-orange-500 group-hover:text-orange-400 transition-colors">
+                      {lang.language}
+                    </span>
+                    <span className="text-gray-400 group-hover:text-gray-300 transition-colors">{lang.level}</span>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div className="w-full bg-gray-800 rounded-full h-2.5">
                     <motion.div
-                      className="bg-indigo-600 h-2.5 rounded-full"
+                      className="bg-orange-500 h-2.5 rounded-full"
                       initial={{ width: 0 }}
                       animate={{ width: `${lang.progress}%` }}
                       transition={{ duration: 1, delay: 1.2 + index * 0.1 }}
@@ -139,11 +141,15 @@ export default function About() {
           </motion.section>
 
           <motion.section initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 1.2 }}>
-            <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Education</h2>
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white">B.Sc. in Computer Software Engineering</h3>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">Bu-Ali Sina University, Hamedan, Iran</p>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">Sep 2011 – Sep 2015</p>
+            <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Education</h2>
+            <div className="feature-card group">
+              <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
+                B.Sc. in Computer Software Engineering
+              </h3>
+              <p className="text-gray-400 group-hover:text-gray-300 transition-colors mt-2">
+                Bu-Ali Sina University, Hamedan, Iran
+              </p>
+              <p className="text-gray-500 mt-1">Sep 2011 – Sep 2015</p>
             </div>
           </motion.section>
         </div>

@@ -19,18 +19,15 @@ export default function Resume() {
   };
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
         <div className="flex justify-between items-center mb-12">
-          <motion.h1
-            className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600"
-            variants={item}
-          >
+          <motion.h1 className="text-4xl font-bold text-orange-500 font-cyberpunk glow-text" variants={item}>
             Professional Experience
           </motion.h1>
           <motion.a
             href="/Mahdi_Rashidi_Resume.pdf"
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+            className="px-6 py-3 glass-card text-orange-500 rounded-lg hover:text-orange-400 hover:border-orange-500/40 transition-all duration-300 flex items-center space-x-2"
             target="_blank"
             variants={item}
             whileHover={{ scale: 1.05 }}
@@ -50,7 +47,7 @@ export default function Resume() {
 
         <div className="prose dark:prose-invert max-w-none">
           <motion.section className="mb-16" variants={item}>
-            <h2 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Work Experience</h2>
+            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Work Experience</h2>
 
             <div className="space-y-12">
               {[
@@ -104,22 +101,17 @@ export default function Resume() {
                   ],
                 },
               ].map((job) => (
-                <motion.div
-                  key={job.title}
-                  className="p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  variants={item}
-                  whileHover={{ scale: 1.02 }}
-                >
+                <motion.div key={job.title} className="feature-card group" variants={item} whileHover={{ scale: 1.02 }}>
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{job.title}</h3>
-                      <p className="text-lg text-indigo-600 dark:text-indigo-400 mb-1">{job.company}</p>
-                      <p className="text-gray-600 dark:text-gray-400">{job.location}</p>
+                      <h3 className="text-2xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors mb-2">
+                        {job.title}
+                      </h3>
+                      <p className="text-lg text-orange-500/80 group-hover:text-orange-400/80 mb-1">{job.company}</p>
+                      <p className="text-gray-400 group-hover:text-gray-300">{job.location}</p>
                     </div>
                     <div className="mt-2 md:mt-0">
-                      <span className="inline-block px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-700 dark:text-gray-300">
-                        {job.period}
-                      </span>
+                      <span className="inline-block px-4 py-2 glass-card text-orange-500 rounded-full">{job.period}</span>
                     </div>
                   </div>
                   <ul className="mt-6 space-y-3">
@@ -132,7 +124,7 @@ export default function Resume() {
                         transition={{ delay: 0.1 * i }}
                       >
                         <svg
-                          className="w-6 h-6 text-indigo-500 mr-2 flex-shrink-0 mt-1"
+                          className="w-6 h-6 text-orange-500 mr-2 flex-shrink-0 mt-1"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -144,7 +136,7 @@ export default function Resume() {
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        <span className="text-gray-700 dark:text-gray-300">{achievement}</span>
+                        <span className="text-gray-300 group-hover:text-gray-200 transition-colors">{achievement}</span>
                       </motion.li>
                     ))}
                   </ul>
@@ -154,10 +146,12 @@ export default function Resume() {
           </motion.section>
 
           <motion.section className="mb-16" variants={item}>
-            <h2 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Recent Certifications</h2>
+            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Recent Certifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg" whileHover={{ scale: 1.02 }}>
-                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Cloud & DevOps</h3>
+              <motion.div className="feature-card group" whileHover={{ scale: 1.02 }}>
+                <h3 className="text-xl font-semibold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                  Cloud & DevOps
+                </h3>
                 <ul className="space-y-3">
                   {[
                     "Introduction to Generative AI by Google Cloud (2024)",
@@ -167,12 +161,12 @@ export default function Resume() {
                   ].map((cert, i) => (
                     <motion.li
                       key={i}
-                      className="flex items-center text-gray-700 dark:text-gray-300"
+                      className="flex items-center text-gray-300 group-hover:text-gray-200"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 * i }}
                     >
-                      <svg className="w-5 h-5 text-indigo-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -186,8 +180,10 @@ export default function Resume() {
                 </ul>
               </motion.div>
 
-              <motion.div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg" whileHover={{ scale: 1.02 }}>
-                <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Backend Development</h3>
+              <motion.div className="feature-card group" whileHover={{ scale: 1.02 }}>
+                <h3 className="text-xl font-semibold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                  Backend Development
+                </h3>
                 <ul className="space-y-3">
                   {[
                     "Building High-Throughput Data Microservices (2024)",
@@ -196,12 +192,12 @@ export default function Resume() {
                   ].map((cert, i) => (
                     <motion.li
                       key={i}
-                      className="flex items-center text-gray-700 dark:text-gray-300"
+                      className="flex items-center text-gray-300 group-hover:text-gray-200"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 * i }}
                     >
-                      <svg className="w-5 h-5 text-indigo-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"

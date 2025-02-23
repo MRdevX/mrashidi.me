@@ -36,10 +36,10 @@ export default function Blog() {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <div className="max-w-4xl mx-auto px-4">
         <motion.h1
-          className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600"
+          className="text-4xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -55,11 +55,7 @@ export default function Blog() {
             </div>
           </div>
         ) : error ? (
-          <motion.div
-            className="text-center text-red-500 dark:text-red-400 py-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          <motion.div className="text-center text-red-500 py-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {error}
           </motion.div>
         ) : (
@@ -81,7 +77,7 @@ export default function Blog() {
               {posts.map((post) => (
                 <motion.article
                   key={post.url}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  className="feature-card group"
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0 },
@@ -89,7 +85,7 @@ export default function Blog() {
                   whileHover={{ scale: 1.02 }}
                 >
                   {post.imageUrl && (
-                    <div className="relative w-full h-48">
+                    <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
                       <Image
                         src={post.imageUrl}
                         alt={post.title}
@@ -99,20 +95,23 @@ export default function Blog() {
                       />
                     </div>
                   )}
-                  <div className="p-6">
-                    <h2 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{post.title}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">{post.content}</p>
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
+                      {post.title}
+                    </h2>
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors line-clamp-3">{post.content}</p>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(post.publishedAt).toLocaleDateString()}
-                      </span>
+                      <span className="text-sm text-gray-500">{new Date(post.publishedAt).toLocaleDateString()}</span>
                       <a
                         href={post.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
+                        className="text-orange-500 hover:text-orange-400 transition-colors flex items-center gap-1"
                       >
-                        Read More →
+                        Read More
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                       </a>
                     </div>
                   </div>
@@ -125,17 +124,17 @@ export default function Blog() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors"
+                  className="px-4 py-2 glass-card text-orange-500 disabled:text-gray-500 disabled:cursor-not-allowed hover:border-orange-500/40 transition-all duration-300"
                 >
                   Previous
                 </button>
-                <span className="px-4 py-2 text-gray-700 dark:text-gray-300">
+                <span className="px-4 py-2 text-gray-400">
                   Page {page} of {totalPages}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors"
+                  className="px-4 py-2 glass-card text-orange-500 disabled:text-gray-500 disabled:cursor-not-allowed hover:border-orange-500/40 transition-all duration-300"
                 >
                   Next
                 </button>
