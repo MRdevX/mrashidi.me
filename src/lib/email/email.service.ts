@@ -25,7 +25,7 @@ export class EmailService {
     });
 
     this.fromEmail = process.env.EMAIL_FROM_ADDRESS || 'no-reply@mrashidi.me';
-    this.toEmail = process.env.EMAIL_TO_ADDRESS || 'm8rashidi@gmail.com';
+    this.toEmail = process.env.EMAIL_TO_ADDRESS || 'contact@mrashidi.me';
 
     this.templateConfig = {
       companyName: 'Mahdi Rashidi',

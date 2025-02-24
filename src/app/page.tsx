@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { githubService } from "@/services/githubService";
 import ContributionGraph from "@/components/ContributionGraph";
 import Terminal from "@/components/Terminal";
+import Link from "next/link";
 
 interface GitHubRepo {
   name: string;
@@ -88,7 +89,7 @@ export default function Home() {
 
           <div className="flex flex-wrap justify-center gap-4 relative z-10">
             <motion.a
-              href="mailto:m8rashidi@gmail.com"
+              href="mailto:contact@mrashidi.me"
               className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -310,6 +311,38 @@ export default function Home() {
               </div>
             </div>
           )}
+        </motion.div>
+
+        {/* Get in Touch Section */}
+        <motion.div className="text-center" variants={item}>
+          <div className="glass-card p-8 md:p-12 border border-orange-500/10 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <h2 className="text-2xl md:text-3xl font-bold text-orange-500 font-cyberpunk glow-text mb-6">
+              Ready to Discuss Your Next Project?
+            </h2>
+            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+              Looking for a backend engineer who can bring your ideas to life? Let&apos;s connect and discuss how we can work together to create scalable, efficient solutions for your business.
+            </p>
+            <Link
+              href="/contact"
+              className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group"
+            >
+              <span>Get in Touch</span>
+              <svg 
+                className="w-5 h-5 transform transition-transform group-hover:translate-x-1" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </Link>
+          </div>
         </motion.div>
 
       </motion.div>

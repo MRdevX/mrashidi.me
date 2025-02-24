@@ -133,5 +133,5 @@ You may not:
 
 Mahdi Rashidi
 - GitHub: [@mrdevx](https://github.com/mrdevx)
-- Email: m8rashidi@gmail.com
+- Email: contact@mrashidi.me
 - Location: Istanbul, Turkey

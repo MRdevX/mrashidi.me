@@ -148,8 +148,8 @@ export default function Terminal() {
             <div className="mt-2 space-y-2">
               <p className="flex items-center gap-2">
                 <span className="text-orange-500">Email:</span>
-                <a href="mailto:m8rashidi@gmail.com" className="text-green-400 hover:underline">
-                  m8rashidi@gmail.com
+                <a href="mailto:contact@mrashidi.me" className="text-green-400 hover:underline">
+                  contact@mrashidi.me
                 </a>
               </p>
               <p className="flex items-center gap-2">
