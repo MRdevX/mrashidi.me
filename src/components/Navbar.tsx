@@ -32,7 +32,7 @@ export default function Navbar() {
     <Disclosure
       as="nav"
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? "glass-card backdrop-blur-md" : "bg-transparent"
+        isScrolled ? "bg-black/20 backdrop-blur-md border-b border-orange-500/10" : "bg-transparent"
       }`}
     >
       {({ open }) => (
@@ -91,7 +91,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="sm:hidden glass-card"
+                className="sm:hidden bg-black/20 backdrop-blur-md border-b border-orange-500/10"
               >
                 <div className="pt-2 pb-3 space-y-1">
                   {navigation.map((item) => (
