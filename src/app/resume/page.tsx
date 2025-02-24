@@ -108,13 +108,13 @@ export default function Resume() {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
-        <div className="flex justify-between items-center mb-12">
-          <motion.h1 className="text-4xl font-bold text-orange-500 font-cyberpunk glow-text" variants={item}>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12">
+          <motion.h1 className="text-3xl sm:text-4xl font-bold text-orange-500 font-cyberpunk glow-text text-center sm:text-left" variants={item}>
             Professional Experience
           </motion.h1>
           <motion.a
             href="/cv/Mahdi_Rashidi_CV.pdf"
-            className="px-6 py-3 glass-card text-orange-500 rounded-lg hover:text-orange-400 hover:border-orange-500/40 transition-all duration-300 flex items-center space-x-2"
+            className="w-full sm:w-auto px-4 sm:px-6 py-3 glass-card text-orange-500 rounded-lg hover:text-orange-400 hover:border-orange-500/40 transition-all duration-300 flex items-center justify-center space-x-2"
             target="_blank"
             variants={item}
             whileHover={{ scale: 1.05 }}
