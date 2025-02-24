@@ -99,10 +99,10 @@ export default function Home() {
             Istanbul, Turkey
           </p>
 
-          <div className="flex justify-center space-x-4 relative z-10">
+          <div className="flex flex-wrap justify-center gap-4 relative z-10">
             <motion.a
               href="mailto:m8rashidi@gmail.com"
-              className="neon-button text-sm px-4 py-2"
+              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -116,7 +116,7 @@ export default function Home() {
               href="https://github.com/mrdevx"
               target="_blank"
               rel="noopener noreferrer"
-              className="neon-button text-sm px-4 py-2"
+              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -129,7 +129,7 @@ export default function Home() {
               href="https://linkedin.com/in/mrdevx"
               target="_blank"
               rel="noopener noreferrer"
-              className="neon-button text-sm px-4 py-2"
+              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -183,25 +183,27 @@ export default function Home() {
           ) : (
             <div className="space-y-8">
               {/* Contribution Graph */}
-              <motion.div className="glass-card p-6 mb-8" variants={item}>
+              <motion.div className="glass-card p-4 sm:p-6 mb-8 overflow-x-auto" variants={item}>
                 <h3 className="text-lg font-semibold text-orange-500 mb-4">Contribution Activity</h3>
-                <ContributionGraph data={contributions} />
+                <div className="min-w-[600px] sm:min-w-full">
+                  <ContributionGraph data={contributions} />
+                </div>
               </motion.div>
 
               {/* Top Repositories */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {repos.map((repo) => (
                   <motion.a
                     key={repo.name}
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="glass-card p-6 hover:border-orange-500/40 transition-all duration-300"
+                    className="glass-card p-4 sm:p-6 hover:border-orange-500/40 transition-all duration-300"
                     whileHover={{ scale: 1.02 }}
                   >
                     <h3 className="text-lg font-semibold text-orange-500 mb-2">{repo.name}</h3>
                     <p className="text-gray-300 text-sm mb-4">{repo.description}</p>
-                    <div className="flex items-center space-x-4 text-sm">
+                    <div className="flex flex-wrap items-center gap-4 text-sm">
                       {repo.language && (
                         <span className="flex items-center text-gray-400">
                           <span className="w-3 h-3 rounded-full bg-green-400 mr-2"></span>

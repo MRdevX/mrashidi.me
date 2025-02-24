@@ -297,7 +297,8 @@ html {
 /* Neon button */
 .neon-button {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 0.75rem 1.5rem;
   font-family: "Orbitron", sans-serif;
   text-transform: uppercase;
@@ -640,4 +641,35 @@ html {
 
 .social-link:hover svg {
   filter: drop-shadow(0 0 8px var(--neon-orange));
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .glass-card {
+    @apply p-4;
+  }
+
+  .neon-button {
+    @apply w-full justify-center;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  .feature-card {
+    @apply p-4;
+  }
+
+  .tech-badge {
+    @apply text-xs px-2 py-1;
+  }
 }
