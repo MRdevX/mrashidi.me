@@ -63,19 +63,6 @@ export default function Home() {
     show: { opacity: 1, y: 0 },
   };
 
-  const techStack = [
-    { name: "Node.js", color: "bg-green-500" },
-    { name: "TypeScript", color: "bg-blue-500" },
-    { name: "NestJS", color: "bg-red-500" },
-    { name: "Azure", color: "bg-blue-600" },
-    { name: "Kubernetes", color: "bg-blue-400" },
-    { name: "Docker", color: "bg-blue-700" },
-    { name: "PostgreSQL", color: "bg-indigo-500" },
-    { name: "MongoDB", color: "bg-green-600" },
-    { name: "Redis", color: "bg-red-600" },
-    { name: "RabbitMQ", color: "bg-orange-500" },
-  ];
-
   if (!mounted) return null;
 
   return (
@@ -151,20 +138,115 @@ export default function Home() {
 
         {/* Tech Stack Section */}
         <motion.div className="mb-16" variants={item}>
-          <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">Tech Stack</h2>
-          <div className="flex flex-wrap justify-center gap-3">
-            {techStack.map((tech, index) => (
-              <motion.div
-                key={tech.name}
-                className="tech-badge"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.1 }}
-              >
-                {tech.name}
-              </motion.div>
-            ))}
+          <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Tech Stack</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Backend Development
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["Node.js", "TypeScript", "NestJS", "Express.js", "RESTful APIs"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Cloud & DevOps
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["Azure", "Kubernetes", "Docker", "GitLab CI/CD", "Terraform"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Architecture
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["Microservices", "Event-Driven", "DDD", "API Gateway"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Databases & Caching
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["PostgreSQL", "MongoDB", "Redis", "TypeORM", "Mongoose"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Messaging & Integration
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["RabbitMQ", "Redis Pub/Sub", "Apache Kafka", "Service Bus"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Security & Testing
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["JWT", "OAuth2/OIDC", "Jest", "SonarQube", "Zero Trust"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </motion.div>
 
