@@ -18,6 +18,93 @@ export default function Resume() {
     show: { opacity: 1, y: 0 },
   };
 
+  const workExperience = [
+    {
+      title: "Software Architect Technical Lead",
+      company: "Fakir Technology Consultants GmbH (inno2fleet E-Mobility Services)",
+      location: "Berlin, Germany (Remote)",
+      period: "Mar 2022 – Jan 2025",
+      achievements: [
+        "Developed and maintained multiple backend microservices within the Inno2Fleet platform using NestJS and Typescript",
+        "Designed and implemented Azure cloud infrastructure (AKS) for inno2fleet services",
+        "Scaled system to support 1,500+ European charging stations, processing 20,000+ monthly charging sessions",
+        "Led GDPR-compliant cloud migration from GCP to Azure, ensuring data protection compliance",
+        "Optimized microservices architecture for 8 core systems, including Fleetbook and Tendergy",
+        "Improved deployment efficiency and scalability for enterprise-level performance",
+        "Reduced cloud costs by 45% (€5,000 → €2,720/month) through automated scaling and resource optimization",
+        "Implemented Kubernetes with GitOps workflows on AKS, achieving 35% faster API response times",
+        "Streamlined CI/CD pipelines using GitLab and Terraform, reaching 99% deployment success rate"
+      ]
+    },
+    {
+      title: "Senior Backend Engineer",
+      company: "Fakir Technology Consultants GmbH (inno2fleet E-Mobility Services)",
+      location: "Berlin, Germany (Remote)",
+      period: "Mar 2021 – Jan 2025",
+      achievements: [
+        "Built fleet eConsultant analysis platform using NestJS/TypeScript",
+        "Delivered real-time decision-making tools for clients",
+        "Improved system reliability 30% by transitioning message queue system from Redis to RabbitMQ",
+        "Enhanced code quality through test automation with Jest framework",
+        "Increased test coverage up to 65% across core services"
+      ]
+    },
+    {
+      title: "Lead Backend Engineer",
+      company: "Mehrpardaz (Flight Operations Platform)",
+      location: "Tehran, Iran (Remote)",
+      period: "May 2020 – Apr 2021",
+      achievements: [
+        "Developed backend system for aviation iPadOS app enabling real-time flight operations",
+        "Created modular architecture patterns for authentication, logging, and error handling",
+        "Integrated flight tracking and weather data services including OpenWeatherMap API",
+        "Established engineering best practices including code reviews and CI/CD workflows",
+        "Mentored and onboarded new backend engineers to improve team productivity"
+      ]
+    },
+    {
+      title: "Backend Developer",
+      company: "Finnotech (Open Banking Platform)",
+      location: "Tehran, Iran (Hybrid)",
+      period: "Feb 2020 – May 2020",
+      achievements: [
+        "Refactored authentication service for banking systems with enhanced security measures",
+        "Implemented rate limiting and error logging for improved system reliability"
+      ]
+    },
+    {
+      title: "Backend Developer",
+      company: "Iran Kish Credit Card Co (KICCC)",
+      location: "Tehran, Iran (On-Site)",
+      period: "Dec 2018 – Dec 2019",
+      achievements: [
+        "Modernized legacy systems by introducing Node.js stack for mobile banking APIs",
+        "Developed Express.js/MongoDB REST APIs with 15% performance improvement over legacy systems"
+      ]
+    },
+    {
+      title: "Backend Developer",
+      company: "Jahesh (ImenFood Startup)",
+      location: "Tehran, Iran (Hybrid)",
+      period: "Sep 2018 – Nov 2018",
+      achievements: [
+        "Created restaurant safety evaluation system using Python/Django",
+        "Sole backend developer responsible for API design and implementation"
+      ]
+    },
+    {
+      title: "Junior Software Developer",
+      company: "Baharan Sarv Gostar (Learning Management System)",
+      location: "Tehran, Iran (On-Site)",
+      period: "Oct 2015 – Sep 2018",
+      achievements: [
+        "Built C#/.NET modules for student enrollment and grading systems",
+        "Developed Android companion app for course management and student engagement",
+        "Improved system stability by implementing comprehensive error handling"
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
@@ -26,7 +113,7 @@ export default function Resume() {
             Professional Experience
           </motion.h1>
           <motion.a
-            href="/Mahdi_Rashidi_Resume.pdf"
+            href="/cv/Mahdi_Rashidi_CV.pdf"
             className="px-6 py-3 glass-card text-orange-500 rounded-lg hover:text-orange-400 hover:border-orange-500/40 transition-all duration-300 flex items-center space-x-2"
             target="_blank"
             variants={item}
@@ -50,58 +137,16 @@ export default function Resume() {
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Work Experience</h2>
 
             <div className="space-y-12">
-              {[
-                {
-                  title: "Software Architect Technical Lead",
-                  company: "Fakir Technology Consultants GmbH (inno2fleet E-Mobility Services)",
-                  location: "Berlin, Germany (Remote)",
-                  period: "Mar 2022 – Jan 2025",
-                  achievements: [
-                    "Developed and maintained multiple backend microservices within the Inno2Fleet platform using NestJS and Typescript",
-                    "Designed and implemented Azure cloud infrastructure (AKS) for inno2fleet services",
-                    "Scaled system to support 1,500+ European charging stations, processing 20,000+ monthly charging sessions",
-                    "Led GDPR-compliant cloud migration from GCP to Azure, ensuring data protection compliance",
-                    "Reduced cloud costs by 45% (€5,000 → €2,720/month) through automated scaling and resource optimization",
-                    "Implemented Kubernetes with GitOps workflows on AKS, achieving 35% faster API response times",
-                  ],
-                },
-                {
-                  title: "Senior Backend Engineer",
-                  company: "Fakir Technology Consultants GmbH (inno2fleet E-Mobility Services)",
-                  location: "Berlin, Germany (Remote)",
-                  period: "Mar 2021 – Jan 2025",
-                  achievements: [
-                    "Built fleet eConsultant analysis platform using NestJS/TypeScript",
-                    "Delivered real-time decision-making tools for clients",
-                    "Improved system reliability 30% by transitioning message queue system from Redis to RabbitMQ",
-                    "Enhanced code quality through test automation with Jest framework",
-                    "Increased test coverage up to 65% across core services",
-                  ],
-                },
-                {
-                  title: "Lead Backend Engineer",
-                  company: "Mehrpardaz (Flight Operations Platform)",
-                  location: "Tehran, Iran (Remote)",
-                  period: "May 2020 – Apr 2021",
-                  achievements: [
-                    "Developed backend system for aviation iPadOS app enabling real-time flight operations",
-                    "Created modular architecture patterns for authentication, logging, and error handling",
-                    "Integrated flight tracking and weather data services including OpenWeatherMap API",
-                    "Established engineering best practices including code reviews and CI/CD workflows",
-                  ],
-                },
-                {
-                  title: "Backend Developer",
-                  company: "Finnotech (Open Banking Platform)",
-                  location: "Tehran, Iran",
-                  period: "Feb 2020 – May 2020",
-                  achievements: [
-                    "Refactored authentication service for banking systems with enhanced security measures",
-                    "Implemented rate limiting and error logging for improved system reliability",
-                  ],
-                },
-              ].map((job) => (
-                <motion.div key={job.title} className="feature-card group" variants={item} whileHover={{ scale: 1.02 }}>
+              {workExperience.map((job, index) => (
+                <motion.div
+                  key={`${job.company}-${job.title}`}
+                  className="feature-card group"
+                  variants={item}
+                  whileHover={{ scale: 1.02 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                     <div>
                       <h3 className="text-2xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors mb-2">
