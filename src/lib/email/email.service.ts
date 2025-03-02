@@ -127,20 +127,93 @@ export class EmailService {
     return `
       <!DOCTYPE html>
       <html>
-        <body>
-          <h1>New Contact Form Submission</h1>
-          <div>
-            <p><strong>Name:</strong> ${data.name}</p>
-            <p><strong>Email:</strong> ${data.email}</p>
-            <p><strong>Subject:</strong> ${data.subject}</p>
-          </div>
-          <div>
-            <p><strong>Message:</strong></p>
-            <p>${data.message}</p>
-          </div>
-          <div>
-            <p>Submitted at: ${new Date().toISOString()}</p>
-          </div>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>New Contact Form Submission</title>
+          <style type="text/css">
+            body, p, div, td { 
+              color: #ffffff;
+              font-family: Arial, Helvetica, sans-serif;
+            }
+            body { 
+              background-color: #121212; 
+            }
+            a { 
+              color: #ff5f1f; 
+              text-decoration: none; 
+            }
+          </style>
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #121212;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #121212;">
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #1e1e1e; border-radius: 8px; border: 1px solid #333333; box-shadow: 0 4px 16px rgba(0,0,0,0.5);">
+                  <!-- Header -->
+                  <tr>
+                    <td align="center" style="padding: 20px; background-color: #111111; border-bottom: 2px solid #ff5f1f; border-radius: 8px 8px 0 0;">
+                      <h1 style="margin: 0; font-size: 22px; font-weight: 700; color: #ff5f1f;">New Contact Form Submission</h1>
+                    </td>
+                  </tr>
+                  
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding: 30px 25px; background-color: #1e1e1e;">
+                      <!-- Contact details -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Name:</span> ${data.name}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Email:</span> ${data.email}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Subject:</span> ${data.subject}
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Divider -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 20px 0;">
+                        <tr>
+                          <td height="1" style="background-color: #333333; font-size: 0; line-height: 0;">&nbsp;</td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Message section -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Message:</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="background-color: #2a2a2a; border: 1px solid #333333; border-radius: 4px; padding: 15px; color: #ffffff;">
+                            ${data.message.replace(/\n/g, '<br>')}
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Timestamp -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top: 20px;">
+                        <tr>
+                          <td align="right" style="font-size: 12px; color: #b0b0b0;">
+                            Submitted at: ${new Date().toISOString()}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
       </html>
     `;
@@ -154,149 +227,124 @@ export class EmailService {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Thank you for your message</title>
-          <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-          <style>
-            body {
-              font-family: 'Inter', Arial, sans-serif;
-              line-height: 1.6;
-              color: #f1f1f1;
-              background-color: #000000;
-              margin: 0;
-              padding: 0;
+          <style type="text/css">
+            body, p, div, td { 
+              color: #ffffff;
+              font-family: Arial, Helvetica, sans-serif;
             }
-            .email-container {
-              max-width: 600px;
-              margin: 0 auto;
-              background-color: #0a0a0a;
-              border: 1px solid rgba(255, 95, 31, 0.2);
-              border-radius: 12px;
-              overflow: hidden;
-              box-shadow: 0 4px 24px rgba(255, 95, 31, 0.15);
+            body { 
+              background-color: #121212; 
             }
-            .email-header {
-              background: linear-gradient(90deg, rgba(10,10,10,0.9) 0%, rgba(20,20,20,0.9) 50%, rgba(10,10,10,0.9) 100%), linear-gradient(180deg, #ff5f1f 0%, rgba(255, 95, 31, 0.8) 100%);
-              padding: 30px 20px;
-              text-align: center;
-              border-bottom: 1px solid rgba(255, 95, 31, 0.3);
+            a { 
+              color: #ff5f1f; 
+              text-decoration: none; 
             }
-            .email-header h1 {
-              color: #ff5f1f;
-              margin: 0;
-              font-size: 24px;
-              font-weight: 700;
-              letter-spacing: 0.5px;
-              text-shadow: 0 0 10px rgba(255, 95, 31, 0.5);
-            }
-            .email-body {
-              padding: 30px 25px;
-              background-color: rgba(15, 15, 15, 0.8);
-            }
-            .email-body p {
-              margin: 0 0 20px;
-              color: rgba(255, 255, 255, 0.9);
-            }
-            .message-box {
-              background-color: rgba(30, 30, 30, 0.6);
-              border: 1px solid rgba(255, 95, 31, 0.2);
-              border-radius: 8px;
-              padding: 20px;
-              margin: 20px 0;
-              white-space: pre-line;
-              color: rgba(255, 255, 255, 0.8);
-            }
-            .cta-button {
-              display: inline-block;
-              background-color: #ff5f1f;
-              color: white;
-              padding: 12px 25px;
-              text-decoration: none;
-              border-radius: 6px;
-              font-weight: 600;
-              margin: 20px 0;
-              text-align: center;
-              transition: background-color 0.3s;
-            }
-            .cta-button:hover {
-              background-color: #e65518;
-            }
-            .divider {
-              height: 1px;
-              background: linear-gradient(90deg, rgba(255, 95, 31, 0.01), rgba(255, 95, 31, 0.3), rgba(255, 95, 31, 0.01));
-              margin: 25px 0;
-            }
-            .email-footer {
-              background-color: rgba(10, 10, 10, 0.95);
-              padding: 25px;
-              text-align: center;
-              border-top: 1px solid rgba(255, 95, 31, 0.2);
-            }
-            .social-links {
-              margin: 15px 0;
-            }
-            .social-links a {
-              display: inline-block;
-              margin: 0 10px;
-              text-decoration: none;
-              color: rgba(255, 255, 255, 0.7);
-              font-size: 14px;
-            }
-            .social-links a:hover {
-              color: #ff5f1f;
-            }
-            .footnote {
-              font-size: 12px;
-              color: rgba(255, 255, 255, 0.5);
-              margin-top: 20px;
-            }
-            @media only screen and (max-width: 600px) {
-              .email-container {
-                width: 100%;
-                border-radius: 0;
-              }
-              .email-header h1 {
-                font-size: 20px;
-              }
-              .email-body {
-                padding: 20px 15px;
-              }
+            p {
+              margin: 0 0 16px 0;
+              line-height: 1.5;
             }
           </style>
         </head>
-        <body>
-          <div class="email-container">
-            <div class="email-header">
-              <h1>Message Received</h1>
-            </div>
-            <div class="email-body">
-              <p>Hi ${data.name},</p>
-              
-              <p>Thank you for reaching out! I've received your message about "${data.subject}" and wanted to confirm that it's safely in my inbox.</p>
-              
-              <p>I personally review every message and will get back to you as soon as possible, typically within 1-2 business days.</p>
-              
-              <div class="message-box">
-                ${data.message}
-              </div>
-              
-              <div class="divider"></div>
-              
-              <p>While you wait for my response, feel free to explore my portfolio.</p>
-              
-              <a href="${this.templateConfig.companyWebsite}" class="cta-button">Visit My Portfolio</a>
-              
-              <p>Best regards,<br>Mahdi Rashidi</p>
-            </div>
-            <div class="email-footer">
-              <div class="social-links">
-                <a href="${this.templateConfig.socialLinks.github}" target="_blank">GitHub</a> | 
-                <a href="${this.templateConfig.socialLinks.linkedin}" target="_blank">LinkedIn</a> | 
-                <a href="${this.templateConfig.companyWebsite}" target="_blank">Website</a>
-              </div>
-              <p class="footnote">This is an automated message. Please don't reply to this email.</p>
-            </div>
-          </div>
+        <body style="margin: 0; padding: 0; background-color: #121212;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #121212;">
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <!-- Email container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #1e1e1e; border-radius: 8px; border: 1px solid #333333; box-shadow: 0 4px 16px rgba(0,0,0,0.5);">
+                  <!-- Header -->
+                  <tr>
+                    <td align="center" style="padding: 25px 20px; background-color: #111111; border-bottom: 2px solid #ff5f1f; border-radius: 8px 8px 0 0;">
+                      <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ff5f1f;">Message Received</h1>
+                    </td>
+                  </tr>
+                  
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding: 30px 25px; background-color: #1e1e1e;">
+                      <!-- Greeting -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 20px; color: #ffffff;">
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">Hi ${data.name},</p>
+                            
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">Thank you for reaching out! I've received your message about "${data.subject}" and wanted to confirm that it's safely in my inbox.</p>
+                            
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">I personally review every message and will get back to you as soon as possible, typically within 1-2 business days.</p>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Message box -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 25px;">
+                        <tr>
+                          <td style="background-color: #2a2a2a; border: 1px solid #333333; border-radius: 4px; padding: 20px; color: #ffffff;">
+                            ${data.message.replace(/\n/g, '<br>')}
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Divider -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 20px 0;">
+                        <tr>
+                          <td height="1" style="background-color: #333333; font-size: 0; line-height: 0;">&nbsp;</td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Call to action -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <p style="margin: 0 0 20px 0; color: #ffffff;">While you wait for my response, feel free to explore my portfolio.</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="center" style="padding-bottom: 25px;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td align="center" style="border-radius: 4px; background-color: #ff5f1f;">
+                                  <a href="${this.templateConfig.companyWebsite}" target="_blank" style="display: inline-block; padding: 12px 24px; font-weight: bold; color: #ffffff; text-decoration: none; border: 1px solid #ff5f1f; border-radius: 4px;">Visit My Portfolio</a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-top: 10px;">
+                            <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td align="center" style="padding: 25px; background-color: #111111; border-top: 1px solid #333333; border-radius: 0 0 8px 8px;">
+                      <!-- Social links -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 15px;">
+                        <tr>
+                          <td align="center" style="color: #b0b0b0;">
+                            <a href="${this.templateConfig.socialLinks.github}" target="_blank" style="color: #b0b0b0; text-decoration: none; margin: 0 10px;">GitHub</a> | 
+                            <a href="${this.templateConfig.socialLinks.linkedin}" target="_blank" style="color: #b0b0b0; text-decoration: none; margin: 0 10px;">LinkedIn</a> | 
+                            <a href="${this.templateConfig.companyWebsite}" target="_blank" style="color: #b0b0b0; text-decoration: none; margin: 0 10px;">Website</a>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Footnote -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td align="center" style="color: #808080; font-size: 12px;">
+                            This is an automated message. Please don't reply to this email.
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
       </html>
     `;
