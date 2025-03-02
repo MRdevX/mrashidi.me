@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/MRdevX/mrashidi.me/compare/v0.1.2...v0.1.3) (2025-03-02)
+
+
+### Features
+
+* update sitemap with new lastmod timestamps and swap contact/resume URLs; enhance ContributionGraph with improved labels and grid layout ([f4760fd](https://github.com/MRdevX/mrashidi.me/commit/f4760fd6ccd2858c389c65e65ad545520620e5b7))
+
 ### [0.1.2](https://github.com/MRdevX/mrashidi.me/compare/v0.1.1...v0.1.2) (2025-03-02)
 
 
