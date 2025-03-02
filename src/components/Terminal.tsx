@@ -26,16 +26,10 @@ type CommandType = keyof typeof AVAILABLE_COMMANDS;
 export default function Terminal() {
   const [commands, setCommands] = useState<Command[]>([]);
   const [input, setInput] = useState("");
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyPosition, setHistoryPosition] = useState(-1);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      // Logic here could be used for something else
-    }, 500);
-
-    return () => clearInterval(cursorInterval);
-  }, []);
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -255,7 +249,7 @@ export default function Terminal() {
               <p className="text-orange-500 font-bold">System Information:</p>
               <p><span className="text-green-400">OS:</span> <span className="text-gray-400">macOS 14.3.1</span></p>
               <p><span className="text-green-400">Browser:</span> <span className="text-gray-400">{navigator.userAgent}</span></p>
-              <p><span className="text-green-400">Website:</span> <span className="text-gray-400">Next.js 14, TypeScript, Tailwind CSS</span></p>
+              <p><span className="text-green-400">Website:</span> <span className="text-gray-400">Next.js 15, TypeScript, Tailwind CSS</span></p>
               <p><span className="text-green-400">Theme:</span> <span className="text-gray-400">Cyberpunk-inspired minimal</span></p>
             </div>
           );
@@ -283,12 +277,33 @@ export default function Terminal() {
         timestamp: new Date(),
       },
     ]);
+    
+    // Add command to history
+    setCommandHistory((prev) => [cmd, ...prev.slice(0, 19)]);
+    setHistoryPosition(-1);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && input.trim()) {
       handleCommand(input);
       setInput("");
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const nextPosition = Math.min(historyPosition + 1, commandHistory.length - 1);
+      if (nextPosition >= 0 && commandHistory.length > 0) {
+        setHistoryPosition(nextPosition);
+        setInput(commandHistory[nextPosition]);
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const nextPosition = Math.max(historyPosition - 1, -1);
+      if (nextPosition >= 0) {
+        setHistoryPosition(nextPosition);
+        setInput(commandHistory[nextPosition]);
+      } else {
+        setHistoryPosition(-1);
+        setInput("");
+      }
     }
   };
 
@@ -304,69 +319,79 @@ export default function Terminal() {
       transition={{ duration: 0.5 }}
     >
       <div 
-        className="terminal-window w-full h-full overflow-hidden shadow-2xl rounded-xl"
+        className="glass-effect border border-orange-500/20 w-full h-full overflow-hidden shadow-2xl rounded-xl hover:shadow-orange-500/10 transition-all duration-300"
         role="region"
         aria-label="Interactive terminal"
         tabIndex={0}
         onClick={() => inputRef.current?.focus()}
       >
-        <div className="terminal-header flex items-center justify-between px-3 py-2 bg-gradient-to-b from-gray-700 to-gray-800 border-b border-gray-900">
+        <div className="terminal-header flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-black/80 via-black/90 to-black/80 border-b border-orange-500/20">
           <div className="flex items-center space-x-2">
-            <div className="window-control bg-red-500 hover:bg-red-600 rounded-full w-3 h-3 flex items-center justify-center">
-              <span className="opacity-0 hover:opacity-100 text-[9px] text-red-950">×</span>
+            <div className="window-control bg-red-500 hover:bg-red-600 rounded-full w-3 h-3 transition-colors duration-200 flex items-center justify-center">
+              <span className="opacity-0 hover:opacity-100 text-[8px] text-red-950 transition-opacity">×</span>
             </div>
-            <div className="window-control bg-yellow-500 hover:bg-yellow-600 rounded-full w-3 h-3 flex items-center justify-center">
-              <span className="opacity-0 hover:opacity-100 text-[9px] text-yellow-950">−</span>
+            <div className="window-control bg-yellow-500 hover:bg-yellow-600 rounded-full w-3 h-3 transition-colors duration-200 flex items-center justify-center">
+              <span className="opacity-0 hover:opacity-100 text-[8px] text-yellow-950 transition-opacity">−</span>
             </div>
-            <div className="window-control bg-green-500 hover:bg-green-600 rounded-full w-3 h-3 flex items-center justify-center">
-              <span className="opacity-0 hover:opacity-100 text-[9px] text-green-950">+</span>
+            <div className="window-control bg-green-500 hover:bg-green-600 rounded-full w-3 h-3 transition-colors duration-200 flex items-center justify-center">
+              <span className="opacity-0 hover:opacity-100 text-[8px] text-green-950 transition-opacity">+</span>
             </div>
           </div>
-          <div className="text-xs text-white font-medium">visitor@mrashidi.me — bash</div>
+          <div className="text-xs text-white/90 font-medium">guest@mrashidi.me:~</div>
           <div className="w-14"></div>
         </div>
         <div 
-          className="terminal-body p-4 h-96 overflow-y-auto font-mono text-sm bg-black text-white" 
+          className="terminal-body p-4 md:p-5 h-96 overflow-y-auto font-mono text-sm bg-black/80 backdrop-blur-sm text-white/90" 
           ref={terminalRef}
         >
           <AnimatePresence>
+            {commands.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-gray-400 mb-4"
+              >
+                <p className="text-orange-500 mb-2">Welcome to Mahdi Rashidi&apos;s terminal interface!</p>
+                <p>Type <span className="text-green-400 font-semibold">help</span> to see available commands.</p>
+              </motion.div>
+            )}
             {commands.map((cmd, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="mb-4"
+                className="mb-6"
                 aria-live={index === commands.length - 1 ? "polite" : "off"}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-green-400 font-bold">guest@mrashidi.me:~$</span>
-                  <span className="text-white">{cmd.input}</span>
+                  <span className="text-green-400 font-semibold">guest@mrashidi.me:~$</span>
+                  <span className="text-white/90">{cmd.input}</span>
                 </div>
                 <div className="mt-2 text-gray-300">{cmd.output}</div>
               </motion.div>
             ))}
           </AnimatePresence>
           <div className="flex items-start">
-            <span className="text-green-400 mr-2">guest@mrashidi.me:~$</span>
+            <span className="text-green-400 font-semibold mr-2">guest@mrashidi.me:~$</span>
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              className="bg-transparent border-none outline-none text-white w-full caret-white"
+              className="bg-transparent border-none outline-none text-white/90 w-full caret-orange-500 font-mono"
               spellCheck="false"
               autoComplete="off"
               aria-label="Terminal command input"
             />
           </div>
         </div>
-        <div className="terminal-footer px-3 py-1 bg-gradient-to-b from-gray-800 to-gray-900 border-t border-gray-700 text-xs text-gray-400 flex justify-between">
-          <span>Type <span className="text-green-400">help</span> for available commands</span>
+        <div className="terminal-footer px-4 py-2 bg-gradient-to-r from-black/80 via-black/90 to-black/80 border-t border-orange-500/20 text-xs text-gray-400 flex flex-col sm:flex-row justify-between gap-1">
+          <span>Type <span className="text-orange-500">help</span> for available commands</span>
           <span>
-            <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs mr-1">↑</kbd>
-            <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs">↓</kbd> 
+            <kbd className="px-1 py-0.5 bg-black/50 border border-gray-700/50 rounded text-xs mr-1">↑</kbd>
+            <kbd className="px-1 py-0.5 bg-black/50 border border-gray-700/50 rounded text-xs">↓</kbd> 
             <span className="ml-1">for command history</span>
           </span>
         </div>
