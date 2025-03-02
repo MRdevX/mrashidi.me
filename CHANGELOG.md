@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/MRdevX/mrashidi.me/compare/v0.1.1...v0.1.2) (2025-03-02)
+
+
+### Features
+
+* add loading animation component and update dependencies in package.json ([d96e95e](https://github.com/MRdevX/mrashidi.me/commit/d96e95e139e91b01760ee53c559c576c46b52224))
+* add release script to package.json for version management ([d7b439b](https://github.com/MRdevX/mrashidi.me/commit/d7b439b5204114355ba90ec4cec377b7d6722d06))
+* add subject field to contact form and implement validation ([c35410b](https://github.com/MRdevX/mrashidi.me/commit/c35410b7eccd4e1703317a4e23305e024cb04b93))
+* enhance email service with new template and social links, update sitemap entries ([56dc5d0](https://github.com/MRdevX/mrashidi.me/commit/56dc5d01963b77dd681f497aa93b5015fd43c748))
+* update email contact information throughout the application ([875415e](https://github.com/MRdevX/mrashidi.me/commit/875415e19445e502a7646a4028be7653fd13884d))
+* update lastmod timestamps in sitemap.xml for improved SEO ([db018a9](https://github.com/MRdevX/mrashidi.me/commit/db018a91bcecde2409042b49270349c5ef7d22f5))
+* update sitemap and enhance terminal component with command history and styling improvements ([969de6d](https://github.com/MRdevX/mrashidi.me/commit/969de6d00c75bdc2188f6021ad50c686841ea14a))
+
 ### 0.1.1 (2025-02-24)
 
 
