@@ -17,11 +17,13 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
   const [errors, setErrors] = useState<{
     name?: string;
     email?: string;
+    subject?: string;
     message?: string;
   }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,9 +44,7 @@ export default function ContactForm() {
     setRecaptchaLoaded(true);
   }, [siteKey]);
 
-  // Comment out the executeRecaptcha function as it's not currently being used
-  // This function may be needed in the future for reCAPTCHA implementation
-  /*
+  // Uncomment and implement the reCAPTCHA execution
   const executeRecaptcha = async (): Promise<string> => {
     try {
       await window.grecaptcha.ready(() => {});
@@ -55,12 +55,12 @@ export default function ContactForm() {
       throw new Error('Failed to verify reCAPTCHA');
     }
   };
-  */
 
   const validateForm = () => {
     const newErrors: {
       name?: string;
       email?: string;
+      subject?: string;
       message?: string;
     } = {};
     
@@ -75,6 +75,11 @@ export default function ContactForm() {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
+    }
+
+    // Subject validation
+    if (!formData.subject.trim()) {
+      newErrors.subject = "Subject is required";
     }
 
     // Message validation
@@ -113,17 +118,23 @@ export default function ContactForm() {
     setIsSubmitting(true);
     
     try {
+      // Execute reCAPTCHA and get token
+      const recaptchaToken = await executeRecaptcha();
+      
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken
+        }),
       });
 
       if (response.ok) {
         // Reset form on success
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", subject: "", message: "" });
         setSubmitStatus({
           type: "success",
           message: "Message sent successfully! I'll get back to you soon.",
@@ -246,6 +257,33 @@ export default function ContactForm() {
             {errors.email && (
               <p id="email-error" className="mt-1 text-sm text-red-500">
                 {errors.email}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="subject" className="block mb-2 text-sm font-medium text-gray-200">
+              Subject <span className="text-orange-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              className={`w-full p-3 bg-gray-900/50 border rounded-md focus:ring-2 focus:outline-none ${
+                errors.subject 
+                  ? "border-red-500 focus:ring-red-500/50" 
+                  : "border-gray-700 focus:ring-orange-500/50 focus:border-orange-500"
+              }`}
+              placeholder="What's this about?"
+              aria-required="true"
+              aria-invalid={errors.subject ? "true" : "false"}
+              aria-describedby={errors.subject ? "subject-error" : undefined}
+            />
+            {errors.subject && (
+              <p id="subject-error" className="mt-1 text-sm text-red-500">
+                {errors.subject}
               </p>
             )}
           </div>

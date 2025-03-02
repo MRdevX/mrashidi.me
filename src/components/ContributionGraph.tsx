@@ -228,7 +228,7 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
           <div className="flex">
             <div>
               {[0, 1, 2, 3, 4, 5, 6].map((rowIndex) => (
-                <div key={rowIndex} className="flex mb-1">
+                <div key={rowIndex} className="flex mb-2">
                   {weeks.map((week, colIndex) => {
                     const day = week[rowIndex];
                     const activityLevel = getActivityLabel(day.level);
@@ -241,7 +241,7 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
                       <button
                         id={`cell-${rowIndex}-${colIndex}`}
                         key={`${rowIndex}-${colIndex}`}
-                        className={`w-4 h-4 rounded-sm ${getActivityColor(
+                        className={`w-5 h-5 rounded-sm m-0.5 ${getActivityColor(
                           day.level
                         )} transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-gray-900 focus:ring-orange-500`}
                         aria-label={`${formattedDate}: ${day.count} contributions, ${activityLevel}`}
@@ -274,7 +274,7 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
         {[0, 1, 2, 3, 4].map((level) => (
           <div
             key={level}
-            className={`w-4 h-4 rounded-sm ${getActivityColor(level)} mr-1`}
+            className={`w-5 h-5 rounded-sm m-0.5 ${getActivityColor(level)} mr-1`}
             aria-label={getActivityLabel(level)}
           />
         ))}

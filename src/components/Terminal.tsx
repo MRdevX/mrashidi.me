@@ -304,22 +304,31 @@ export default function Terminal() {
       transition={{ duration: 0.5 }}
     >
       <div 
-        className="terminal-window w-full border border-orange-500/20 rounded-lg overflow-hidden backdrop-blur-sm"
+        className="terminal-window w-full h-full overflow-hidden shadow-2xl rounded-xl"
         role="region"
         aria-label="Interactive terminal"
         tabIndex={0}
         onClick={() => inputRef.current?.focus()}
       >
-        <div className="terminal-header flex items-center justify-between p-2 rounded-t-lg bg-gray-900 border-b border-orange-500/20">
-          <div className="flex items-center">
-            <div className="window-control bg-red-500 rounded-full w-3 h-3 mr-2"></div>
-            <div className="window-control bg-yellow-500 rounded-full w-3 h-3 mr-2"></div>
-            <div className="window-control bg-green-500 rounded-full w-3 h-3"></div>
+        <div className="terminal-header flex items-center justify-between px-3 py-2 bg-gradient-to-b from-gray-700 to-gray-800 border-b border-gray-900">
+          <div className="flex items-center space-x-2">
+            <div className="window-control bg-red-500 hover:bg-red-600 rounded-full w-3 h-3 flex items-center justify-center">
+              <span className="opacity-0 hover:opacity-100 text-[9px] text-red-950">×</span>
+            </div>
+            <div className="window-control bg-yellow-500 hover:bg-yellow-600 rounded-full w-3 h-3 flex items-center justify-center">
+              <span className="opacity-0 hover:opacity-100 text-[9px] text-yellow-950">−</span>
+            </div>
+            <div className="window-control bg-green-500 hover:bg-green-600 rounded-full w-3 h-3 flex items-center justify-center">
+              <span className="opacity-0 hover:opacity-100 text-[9px] text-green-950">+</span>
+            </div>
           </div>
-          <div className="text-xs text-gray-400">visitor@mrashidi.me</div>
-          <div className="w-12"></div>
+          <div className="text-xs text-white font-medium">visitor@mrashidi.me — bash</div>
+          <div className="w-14"></div>
         </div>
-        <div className="terminal-body p-4 h-96 overflow-y-auto font-mono text-sm" ref={terminalRef}>
+        <div 
+          className="terminal-body p-4 h-96 overflow-y-auto font-mono text-sm bg-black text-white" 
+          ref={terminalRef}
+        >
           <AnimatePresence>
             {commands.map((cmd, index) => (
               <motion.div
@@ -331,37 +340,35 @@ export default function Terminal() {
                 aria-live={index === commands.length - 1 ? "polite" : "off"}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-orange-500/80 font-bold">guest@mrashidi.me:~$</span>
-                  <span className="text-green-400">{cmd.input}</span>
+                  <span className="text-green-400 font-bold">guest@mrashidi.me:~$</span>
+                  <span className="text-white">{cmd.input}</span>
                 </div>
-                <div className="mt-2 text-gray-300/90">{cmd.output}</div>
+                <div className="mt-2 text-gray-300">{cmd.output}</div>
               </motion.div>
             ))}
           </AnimatePresence>
           <div className="flex items-start">
-            <span className="text-orange-500 mr-2">guest@mrashidi.me:~$</span>
+            <span className="text-green-400 mr-2">guest@mrashidi.me:~$</span>
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              className="bg-transparent border-none outline-none text-white w-full"
+              className="bg-transparent border-none outline-none text-white w-full caret-white"
               spellCheck="false"
               autoComplete="off"
               aria-label="Terminal command input"
             />
           </div>
         </div>
-        <div className="terminal-footer p-2 bg-gray-900 border-t border-orange-500/20 rounded-b-lg">
-          <div className="text-xs text-gray-400 flex justify-between">
-            <span>Type <span className="text-orange-500">help</span> for available commands</span>
-            <span>
-              <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs mr-1">↑</kbd>
-              <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs">↓</kbd> 
-              <span className="ml-1">for command history</span>
-            </span>
-          </div>
+        <div className="terminal-footer px-3 py-1 bg-gradient-to-b from-gray-800 to-gray-900 border-t border-gray-700 text-xs text-gray-400 flex justify-between">
+          <span>Type <span className="text-green-400">help</span> for available commands</span>
+          <span>
+            <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs mr-1">↑</kbd>
+            <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs">↓</kbd> 
+            <span className="ml-1">for command history</span>
+          </span>
         </div>
       </div>
     </motion.div>

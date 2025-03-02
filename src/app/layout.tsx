@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -15,6 +15,14 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
 });
+
+// Define the viewport configuration separately
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#ff5f1f", // Using your neon orange theme color
+};
 
 export const metadata: Metadata = {
   title: "Mahdi Rashidi | Full Stack Developer",
@@ -54,8 +62,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png", // Create this icon if you haven't already
   },
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
-  themeColor: "#ff5f1f", // Using your neon orange theme color
+  // viewport and themeColor have been moved to the viewport export above
 };
 
 export default function RootLayout({
