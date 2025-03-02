@@ -56,8 +56,8 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
   const graphRef = useRef<HTMLDivElement>(null);
   const focusedCellRef = useRef<HTMLButtonElement | null>(null);
   
-  // Generate days of the week for the y-axis labels
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  // Generate simplified vertical labels
+  const verticalLabels = ["Start", "", "Mid", "", "End"];
   
   // Process data for display
   const processedData = data.reduce((acc: { [key: string]: ContributionDay }, day) => {
@@ -67,8 +67,11 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
   
   // Organize data into a grid (7 rows for days of week, columns for weeks)
   const weeks: ContributionDay[][] = [];
+
+  // Number of weeks to display (9 months ≈ 39 weeks)
+  const numWeeksToShow = 39;
   
-  // Create a grid of the last 52 weeks
+  // Create a grid of the last 9 months
   if (data.length > 0) {
     // Sort data by date
     const sortedData = [...data].sort(
@@ -81,13 +84,15 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
       ? parseISO(latestDateStr)
       : new Date();
     
-    // Generate a 7x52 grid (days of week x weeks)
-    for (let weekIndex = 51; weekIndex >= 0; weekIndex--) {
+    // Generate a 7x39 grid (days of week x weeks) for the last 9 months
+    for (let weekIndex = 0; weekIndex < numWeeksToShow; weekIndex++) {
       const week: ContributionDay[] = [];
       
       for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-        // Calculate the date for this position
-        const dayOffset = weekIndex * 7 + dayIndex;
+        // Calculate the date for this position (oldest first)
+        // Start from 39 weeks ago and move forward
+        const weeksAgo = numWeeksToShow - weekIndex - 1;
+        const dayOffset = (weeksAgo * 7) + dayIndex;
         const currentDate = new Date(latestDate);
         currentDate.setDate(latestDate.getDate() - dayOffset);
         
@@ -101,9 +106,17 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
         week.push(contributionDay);
       }
       
-      weeks.unshift(week);
+      weeks.push(week);
     }
   }
+  
+  // Generate simplified time period labels for the x-axis
+  const timeLabels = [
+    { label: "9 months ago", position: 0 },
+    { label: "6 months ago", position: Math.floor(numWeeksToShow * 0.33) },
+    { label: "3 months ago", position: Math.floor(numWeeksToShow * 0.67) },
+    { label: "Now", position: numWeeksToShow - 1 }
+  ];
   
   // Handle keyboard navigation
   const handleKeyDown = (
@@ -179,89 +192,108 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
     }
   }, [tooltip]);
   
+  // Cell size calculation to fill available space
+  const cellSize = 18; // Increased from 14px to 18px for better visibility on desktop
+  const cellGap = 3;   // Slightly increased gap for better visual spacing with larger cells
+  
+  // Calculate the total height of 7 cells with gaps
+  const totalCellHeight = 7 * cellSize + 6 * cellGap;
+  
   return (
     <div
-      className="glass-card p-6 overflow-hidden relative"
+      className="glass-card p-4 lg:p-6 overflow-hidden relative w-full"
       ref={graphRef}
       aria-label="GitHub contribution activity graph"
       role="region"
     >
       <h3 className="text-lg font-semibold text-orange-500 mb-4">Contribution Activity</h3>
       
-      <div className="flex overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-        {/* Days of week labels (y-axis) */}
-        <div className="flex flex-col mr-2 pt-8">
-          {daysOfWeek.map((day, index) => (
-            <div
-              key={day}
-              className="h-4 text-xs text-gray-500 flex items-center mb-1"
-              aria-hidden="true"
-            >
-              {index % 2 === 0 ? day : ""}
-            </div>
-          ))}
-        </div>
-        
-        {/* Contribution grid */}
-        <div>
-          {/* Months labels (x-axis) */}
-          <div className="flex mb-1">
-            {weeks.map((week, weekIndex) => {
-              const date = parseISO(week[0].date);
-              const isFirstOfMonth = date.getDate() <= 7;
-              const showMonth = isFirstOfMonth || weekIndex === 0;
-              
-              return (
-                <div
-                  key={weekIndex}
-                  className="w-4 text-xs text-gray-500 text-center"
-                  style={{ height: "20px" }}
-                  aria-hidden="true"
-                >
-                  {showMonth ? format(date, "MMM") : ""}
-                </div>
-              );
-            })}
+      <div className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+        <div className="flex w-full">
+          {/* Vertical labels (y-axis) */}
+          <div 
+            className="flex flex-col justify-between pr-2 pt-7"
+            style={{ height: `${totalCellHeight}px` }}
+          > 
+            {verticalLabels.map((label, index) => (
+              <div
+                key={index}
+                className="text-xs text-gray-500 flex items-center"
+                style={{ height: `${cellSize}px` }}
+                aria-hidden="true"
+              >
+                {label}
+              </div>
+            ))}
           </div>
           
-          {/* Grid cells */}
-          <div className="flex">
-            <div>
-              {[0, 1, 2, 3, 4, 5, 6].map((rowIndex) => (
-                <div key={rowIndex} className="flex mb-2">
-                  {weeks.map((week, colIndex) => {
-                    const day = week[rowIndex];
-                    const activityLevel = getActivityLabel(day.level);
-                    const formattedDate = format(
-                      parseISO(day.date),
-                      "MMMM d, yyyy"
-                    );
-                    
-                    return (
-                      <button
-                        id={`cell-${rowIndex}-${colIndex}`}
-                        key={`${rowIndex}-${colIndex}`}
-                        className={`w-5 h-5 rounded-sm m-0.5 ${getActivityColor(
-                          day.level
-                        )} transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-gray-900 focus:ring-orange-500`}
-                        aria-label={`${formattedDate}: ${day.count} contributions, ${activityLevel}`}
-                        role="gridcell"
-                        onMouseEnter={(e) => showTooltip(day, e)}
-                        onMouseLeave={hideTooltip}
-                        onFocus={(e) => {
-                          focusedCellRef.current = e.currentTarget;
-                          showTooltip(day, e as unknown as React.MouseEvent<HTMLButtonElement>);
-                        }}
-                        onBlur={() => {
-                          focusedCellRef.current = null;
-                          hideTooltip();
-                        }}
-                        onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
-                        tabIndex={0}
-                      />
-                    );
-                  })}
+          <div className="flex-grow">
+            {/* Time period labels (x-axis) */}
+            <div className="flex h-7 relative">
+              {timeLabels.map((period, index) => (
+                <div
+                  key={index}
+                  className="text-xs text-gray-500 absolute whitespace-nowrap"
+                  style={{ 
+                    left: `${period.position * (cellSize + cellGap)}px`
+                  }}
+                  aria-hidden="true"
+                >
+                  {period.label}
                 </div>
+              ))}
+            </div>
+            
+            {/* Grid cells */}
+            <div
+              className="grid w-full"
+              style={{
+                gridTemplateRows: `repeat(7, ${cellSize}px)`,
+                gridTemplateColumns: `repeat(${weeks.length}, ${cellSize}px)`,
+                gap: `${cellGap}px`,
+                minWidth: `${weeks.length * (cellSize + cellGap)}px`,
+              }}
+              role="grid"
+            >
+              {weeks.map((week, colIndex) => (
+                // Render column by column instead of row by row
+                week.map((day, rowIndex) => {
+                  const activityLevel = getActivityLabel(day.level);
+                  const formattedDate = format(
+                    parseISO(day.date),
+                    "MMMM d, yyyy"
+                  );
+                  
+                  return (
+                    <button
+                      id={`cell-${rowIndex}-${colIndex}`}
+                      key={`${rowIndex}-${colIndex}`}
+                      className={`rounded-sm ${getActivityColor(
+                        day.level
+                      )} transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-gray-900 focus:ring-orange-500`}
+                      style={{ 
+                        width: `${cellSize}px`, 
+                        height: `${cellSize}px`,
+                        gridRow: rowIndex + 1,
+                        gridColumn: colIndex + 1
+                      }}
+                      aria-label={`${formattedDate}: ${day.count} contributions, ${activityLevel}`}
+                      role="gridcell"
+                      onMouseEnter={(e) => showTooltip(day, e)}
+                      onMouseLeave={hideTooltip}
+                      onFocus={(e) => {
+                        focusedCellRef.current = e.currentTarget;
+                        showTooltip(day, e as unknown as React.MouseEvent<HTMLButtonElement>);
+                      }}
+                      onBlur={() => {
+                        focusedCellRef.current = null;
+                        hideTooltip();
+                      }}
+                      onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
+                      tabIndex={0}
+                    />
+                  );
+                })
               ))}
             </div>
           </div>
@@ -269,12 +301,13 @@ const ContributionGraph = ({ data }: ContributionGraphProps) => {
       </div>
       
       {/* Activity level legend */}
-      <div className="flex items-center justify-end mt-4">
+      <div className="flex items-center justify-end mt-4 flex-wrap">
         <span className="text-xs text-gray-500 mr-2">Less</span>
         {[0, 1, 2, 3, 4].map((level) => (
           <div
             key={level}
-            className={`w-5 h-5 rounded-sm m-0.5 ${getActivityColor(level)} mr-1`}
+            className={`rounded-sm ${getActivityColor(level)} mr-1`}
+            style={{ width: `${cellSize - 4}px`, height: `${cellSize - 4}px` }}
             aria-label={getActivityLabel(level)}
           />
         ))}
