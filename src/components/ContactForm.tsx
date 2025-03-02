@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { motion } from "framer-motion";
 import Script from "next/script";
 
@@ -17,11 +17,18 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
     message: "",
   });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
@@ -29,12 +36,15 @@ export default function ContactForm() {
   useEffect(() => {
     if (!siteKey) {
       console.error("reCAPTCHA site key is not configured");
-      setErrorMessage("Contact form is temporarily unavailable");
+      setSubmitStatus({ type: "error", message: "Contact form is temporarily unavailable" });
       return;
     }
     setRecaptchaLoaded(true);
   }, [siteKey]);
 
+  // Comment out the executeRecaptcha function as it's not currently being used
+  // This function may be needed in the future for reCAPTCHA implementation
+  /*
   const executeRecaptcha = async (): Promise<string> => {
     try {
       await window.grecaptcha.ready(() => {});
@@ -45,60 +55,95 @@ export default function ContactForm() {
       throw new Error('Failed to verify reCAPTCHA');
     }
   };
+  */
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!siteKey) {
-      setErrorMessage("Contact form is temporarily unavailable");
-      return;
+  const validateForm = () => {
+    const newErrors: {
+      name?: string;
+      email?: string;
+      message?: string;
+    } = {};
+    
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
     }
 
-    setStatus("loading");
-    setErrorMessage("");
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
 
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message should be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    // Reset status
+    setSubmitStatus({ type: null, message: "" });
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
     try {
-      const recaptchaToken = await executeRecaptcha();
-      
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          recaptchaToken,
-        }),
+        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to send message");
+      if (response.ok) {
+        // Reset form on success
+        setFormData({ name: "", email: "", message: "" });
+        setSubmitStatus({
+          type: "success",
+          message: "Message sent successfully! I'll get back to you soon.",
+        });
+      } else {
+        const errorData = await response.json();
+        setSubmitStatus({
+          type: "error",
+          message: errorData.message || "Failed to send message. Please try again.",
+        });
       }
-
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setStatus("idle"), 5000);
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "Failed to send message");
-      
-      // Reset error message after 5 seconds
-      setTimeout(() => {
-        setStatus("idle");
-        setErrorMessage("");
-      }, 5000);
+    } catch (_error) {
+      // We use _error with underscore prefix to indicate it's intentionally unused
+      setSubmitStatus({
+        type: "error",
+        message: "Something went wrong. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
   };
 
   if (!siteKey) {
@@ -128,118 +173,128 @@ export default function ContactForm() {
         strategy="lazyOnload"
       />
       <motion.div
-        className="glass-card p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="glass-card p-6 sm:p-8"
       >
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block text-orange-500 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full bg-gray-900/50 border border-orange-500/20 rounded-lg px-4 py-2 text-gray-300 focus:outline-none focus:border-orange-500/40 transition-colors"
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-orange-500 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full bg-gray-900/50 border border-orange-500/20 rounded-lg px-4 py-2 text-gray-300 focus:outline-none focus:border-orange-500/40 transition-colors"
-                placeholder="your@email.com"
-              />
-            </div>
+        <h2 className="text-2xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">
+          Get In Touch
+        </h2>
+        
+        {submitStatus.type && (
+          <div
+            className={`mb-6 p-4 rounded-md ${
+              submitStatus.type === "success"
+                ? "bg-green-900/20 text-green-400 border border-green-500/30"
+                : "bg-red-900/20 text-red-400 border border-red-500/30"
+            }`}
+            role="alert"
+          >
+            {submitStatus.message}
           </div>
-
+        )}
+        
+        <form onSubmit={handleSubmit} noValidate className="space-y-6" aria-label="Contact form">
           <div>
-            <label htmlFor="subject" className="block text-orange-500 mb-2">
-              Subject
+            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-200">
+              Name <span className="text-orange-500">*</span>
             </label>
             <input
               type="text"
-              id="subject"
-              name="subject"
-              required
-              value={formData.subject}
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleChange}
-              className="w-full bg-gray-900/50 border border-orange-500/20 rounded-lg px-4 py-2 text-gray-300 focus:outline-none focus:border-orange-500/40 transition-colors"
-              placeholder="Message subject"
+              className={`w-full p-3 bg-gray-900/50 border rounded-md focus:ring-2 focus:outline-none ${
+                errors.name 
+                  ? "border-red-500 focus:ring-red-500/50" 
+                  : "border-gray-700 focus:ring-orange-500/50 focus:border-orange-500"
+              }`}
+              placeholder="Your name"
+              aria-required="true"
+              aria-invalid={errors.name ? "true" : "false"}
+              aria-describedby={errors.name ? "name-error" : undefined}
             />
+            {errors.name && (
+              <p id="name-error" className="mt-1 text-sm text-red-500">
+                {errors.name}
+              </p>
+            )}
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-orange-500 mb-2">
-              Message
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-200">
+              Email <span className="text-orange-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={`w-full p-3 bg-gray-900/50 border rounded-md focus:ring-2 focus:outline-none ${
+                errors.email 
+                  ? "border-red-500 focus:ring-red-500/50" 
+                  : "border-gray-700 focus:ring-orange-500/50 focus:border-orange-500"
+              }`}
+              placeholder="your.email@example.com"
+              aria-required="true"
+              aria-invalid={errors.email ? "true" : "false"}
+              aria-describedby={errors.email ? "email-error" : undefined}
+            />
+            {errors.email && (
+              <p id="email-error" className="mt-1 text-sm text-red-500">
+                {errors.email}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-200">
+              Message <span className="text-orange-500">*</span>
             </label>
             <textarea
               id="message"
               name="message"
-              required
               value={formData.message}
               onChange={handleChange}
               rows={5}
-              className="w-full bg-gray-900/50 border border-orange-500/20 rounded-lg px-4 py-2 text-gray-300 focus:outline-none focus:border-orange-500/40 transition-colors resize-none"
-              placeholder="Your message..."
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <motion.button
-              type="submit"
-              className="neon-button px-6 py-2 relative"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={status === "loading"}
-            >
-              {status === "loading" ? (
-                <div className="flex items-center">
-                  <div className="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-              ) : (
-                "Send Message"
-              )}
-            </motion.button>
-
-            {status === "success" && (
-              <motion.p
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-green-500"
-              >
-                Message sent successfully!
-              </motion.p>
-            )}
-
-            {status === "error" && (
-              <motion.p
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-red-500"
-              >
-                {errorMessage}
-              </motion.p>
+              className={`w-full p-3 bg-gray-900/50 border rounded-md focus:ring-2 focus:outline-none ${
+                errors.message 
+                  ? "border-red-500 focus:ring-red-500/50" 
+                  : "border-gray-700 focus:ring-orange-500/50 focus:border-orange-500"
+              }`}
+              placeholder="Your message here..."
+              aria-required="true"
+              aria-invalid={errors.message ? "true" : "false"}
+              aria-describedby={errors.message ? "message-error" : undefined}
+            ></textarea>
+            {errors.message && (
+              <p id="message-error" className="mt-1 text-sm text-red-500">
+                {errors.message}
+              </p>
             )}
           </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-3 px-6 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-md transition-colors duration-300 flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-70 disabled:cursor-not-allowed"
+            aria-busy={isSubmitting ? "true" : "false"}
+          >
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </>
+            ) : (
+              "Send Message"
+            )}
+          </button>
         </form>
       </motion.div>
     </>

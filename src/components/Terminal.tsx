@@ -26,13 +26,12 @@ type CommandType = keyof typeof AVAILABLE_COMMANDS;
 export default function Terminal() {
   const [commands, setCommands] = useState<Command[]>([]);
   const [input, setInput] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
+      // Logic here could be used for something else
     }, 500);
 
     return () => clearInterval(cursorInterval);
@@ -297,31 +296,30 @@ export default function Terminal() {
     setInput(e.target.value);
   };
 
-  const handleTerminalClick = () => {
-    inputRef.current?.focus();
-  };
-
   return (
-    <div
-      className="glass-card h-[400px] font-mono text-sm relative overflow-hidden border border-orange-500/20 hover:border-orange-500/40 transition-colors duration-300"
-      onClick={handleTerminalClick}
-      role="region"
-      aria-label="Terminal interface"
+    <motion.div
+      className="terminal-container w-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-0" />
-
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center gap-2 p-4 border-b border-orange-500/20">
-          <div className="w-3 h-3 rounded-full bg-red-500/80" aria-hidden="true" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/80" aria-hidden="true" />
-          <div className="w-3 h-3 rounded-full bg-green-500/80" aria-hidden="true" />
-          <span className="ml-2 text-orange-500/80 font-bold">Terminal</span>
+      <div 
+        className="terminal-window w-full border border-orange-500/20 rounded-lg overflow-hidden backdrop-blur-sm"
+        role="region"
+        aria-label="Interactive terminal"
+        tabIndex={0}
+        onClick={() => inputRef.current?.focus()}
+      >
+        <div className="terminal-header flex items-center justify-between p-2 rounded-t-lg bg-gray-900 border-b border-orange-500/20">
+          <div className="flex items-center">
+            <div className="window-control bg-red-500 rounded-full w-3 h-3 mr-2"></div>
+            <div className="window-control bg-yellow-500 rounded-full w-3 h-3 mr-2"></div>
+            <div className="window-control bg-green-500 rounded-full w-3 h-3"></div>
+          </div>
+          <div className="text-xs text-gray-400">visitor@mrashidi.me</div>
+          <div className="w-12"></div>
         </div>
-
-        <div
-          ref={terminalRef}
-          className="flex-1 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-orange-500/20 scrollbar-track-transparent"
-        >
+        <div className="terminal-body p-4 h-96 overflow-y-auto font-mono text-sm" ref={terminalRef}>
           <AnimatePresence>
             {commands.map((cmd, index) => (
               <motion.div
@@ -330,6 +328,7 @@ export default function Terminal() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 className="mb-4"
+                aria-live={index === commands.length - 1 ? "polite" : "off"}
               >
                 <div className="flex items-center gap-2">
                   <span className="text-orange-500/80 font-bold">guest@mrashidi.me:~$</span>
@@ -339,31 +338,32 @@ export default function Terminal() {
               </motion.div>
             ))}
           </AnimatePresence>
-
-          <div className="flex items-center gap-2">
-            <span className="text-orange-500/80 font-bold">guest@mrashidi.me:~$</span>
-            <span className="text-green-400">{input}</span>
-            <span
-              className={`w-2 h-5 bg-green-400 ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}
-              aria-hidden="true"
+          <div className="flex items-start">
+            <span className="text-orange-500 mr-2">guest@mrashidi.me:~$</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              className="bg-transparent border-none outline-none text-white w-full"
+              spellCheck="false"
+              autoComplete="off"
+              aria-label="Terminal command input"
             />
           </div>
         </div>
+        <div className="terminal-footer p-2 bg-gray-900 border-t border-orange-500/20 rounded-b-lg">
+          <div className="text-xs text-gray-400 flex justify-between">
+            <span>Type <span className="text-orange-500">help</span> for available commands</span>
+            <span>
+              <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs mr-1">↑</kbd>
+              <kbd className="px-1 py-0.5 bg-gray-700 rounded text-xs">↓</kbd> 
+              <span className="ml-1">for command history</span>
+            </span>
+          </div>
+        </div>
       </div>
-
-      <div className="scanline absolute inset-0 pointer-events-none" />
-
-      <input
-        ref={inputRef}
-        type="text"
-        className="sr-only"
-        value={input}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        aria-label="Terminal input"
-        autoComplete="off"
-        autoFocus
-      />
-    </div>
+    </motion.div>
   );
 }

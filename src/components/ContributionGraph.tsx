@@ -1,5 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
-import * as Tooltip from "@radix-ui/react-tooltip";
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { format, parseISO, isValid } from "date-fns";
 
 interface ContributionDay {
   date: string;
@@ -11,232 +12,293 @@ interface ContributionGraphProps {
   data: ContributionDay[];
 }
 
-const ContributionGraph: React.FC<ContributionGraphProps> = ({ data }) => {
-  const weeks: ContributionDay[][] = [];
-  let currentWeek: ContributionDay[] = [];
+const getActivityLabel = (level: number): string => {
+  if (level === 0) return "No activity";
+  if (level === 1) return "Low activity";
+  if (level === 2) return "Medium activity";
+  if (level === 3) return "High activity";
+  return "Very high activity";
+};
 
-  // Calculate contribution statistics
-  const totalContributions = data.reduce((sum, day) => sum + day.count, 0);
-  const contributingDays = data.filter((day) => day.count > 0).length;
-  const bestDay = data.reduce((best, day) => (day.count > best.count ? day : best), data[0]);
-  const currentStreak = (() => {
-    let streak = 0;
-    for (let i = data.length - 1; i >= 0; i--) {
-      if (data[i].count > 0) streak++;
-      else break;
-    }
-    return streak;
-  })();
-
-  // Fill data for exactly 6 months
-  const today = new Date();
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(today.getMonth() - 6);
-
-  // Calculate weeks needed (26 weeks = 6 months)
-  const daysNeeded = 26 * 7;
-  const currentDays = data.length;
-
-  if (currentDays < daysNeeded) {
-    const additionalDays = daysNeeded - currentDays;
-    const fillerDays: ContributionDay[] = Array.from({ length: additionalDays }, (_, i) => {
-      const date = new Date(sixMonthsAgo);
-      date.setDate(date.getDate() + i);
-      return {
-        date: date.toISOString().split("T")[0],
-        count: 0,
-        level: 0,
-      };
-    });
-    data = [...fillerDays, ...data].slice(-daysNeeded);
+const getActivityColor = (level: number): string => {
+  switch (level) {
+    case 0:
+      return "bg-gray-800 hover:bg-gray-700";
+    case 1:
+      return "bg-green-900 hover:bg-green-800";
+    case 2:
+      return "bg-green-700 hover:bg-green-600";
+    case 3:
+      return "bg-green-500 hover:bg-green-400";
+    case 4:
+      return "bg-green-300 hover:bg-green-200";
+    default:
+      return "bg-gray-800 hover:bg-gray-700";
   }
+};
 
-  // Group days into weeks
-  data.forEach((day, index) => {
-    currentWeek.push(day);
-    if (currentWeek.length === 7 || index === data.length - 1) {
-      weeks.push(currentWeek);
-      currentWeek = [];
-    }
+const ContributionGraph = ({ data }: ContributionGraphProps) => {
+  const [tooltip, setTooltip] = useState<{
+    visible: boolean;
+    date: string;
+    count: number;
+    x: number;
+    y: number;
+  }>({
+    visible: false,
+    date: "",
+    count: 0,
+    x: 0,
+    y: 0,
   });
-
-  const getContributionText = (count: number): string => {
-    if (count === 0) return "No contributions";
-    if (count === 1) return "1 contribution";
-    return `${count} contributions`;
-  };
-
-  const getLevelColor = (level: number): string => {
-    switch (level) {
-      case 0:
-        return "bg-gray-900 hover:bg-gray-800";
-      case 1:
-        return "bg-orange-900/50 hover:bg-orange-800/50";
-      case 2:
-        return "bg-orange-700/50 hover:bg-orange-600/50";
-      case 3:
-        return "bg-orange-500/50 hover:bg-orange-400/50";
-      case 4:
-        return "bg-orange-300/50 hover:bg-orange-200/50";
-      default:
-        return "bg-gray-900 hover:bg-gray-800";
+  
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const graphRef = useRef<HTMLDivElement>(null);
+  const focusedCellRef = useRef<HTMLButtonElement | null>(null);
+  
+  // Generate days of the week for the y-axis labels
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  
+  // Process data for display
+  const processedData = data.reduce((acc: { [key: string]: ContributionDay }, day) => {
+    acc[day.date] = day;
+    return acc;
+  }, {});
+  
+  // Organize data into a grid (7 rows for days of week, columns for weeks)
+  const weeks: ContributionDay[][] = [];
+  
+  // Create a grid of the last 52 weeks
+  if (data.length > 0) {
+    // Sort data by date
+    const sortedData = [...data].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+    
+    // Get the latest date
+    const latestDateStr = sortedData[sortedData.length - 1]?.date;
+    const latestDate = isValid(parseISO(latestDateStr))
+      ? parseISO(latestDateStr)
+      : new Date();
+    
+    // Generate a 7x52 grid (days of week x weeks)
+    for (let weekIndex = 51; weekIndex >= 0; weekIndex--) {
+      const week: ContributionDay[] = [];
+      
+      for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+        // Calculate the date for this position
+        const dayOffset = weekIndex * 7 + dayIndex;
+        const currentDate = new Date(latestDate);
+        currentDate.setDate(latestDate.getDate() - dayOffset);
+        
+        const dateStr = format(currentDate, "yyyy-MM-dd");
+        const contributionDay = processedData[dateStr] || {
+          date: dateStr,
+          count: 0,
+          level: 0,
+        };
+        
+        week.push(contributionDay);
+      }
+      
+      weeks.unshift(week);
+    }
+  }
+  
+  // Handle keyboard navigation
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLButtonElement>,
+    rowIndex: number,
+    colIndex: number
+  ) => {
+    e.preventDefault();
+    
+    if (e.key === "ArrowRight" && colIndex < weeks.length - 1) {
+      const nextCell = document.getElementById(`cell-${rowIndex}-${colIndex + 1}`);
+      nextCell?.focus();
+    } else if (e.key === "ArrowLeft" && colIndex > 0) {
+      const prevCell = document.getElementById(`cell-${rowIndex}-${colIndex - 1}`);
+      prevCell?.focus();
+    } else if (e.key === "ArrowUp" && rowIndex > 0) {
+      const aboveCell = document.getElementById(`cell-${rowIndex - 1}-${colIndex}`);
+      aboveCell?.focus();
+    } else if (e.key === "ArrowDown" && rowIndex < 6) {
+      const belowCell = document.getElementById(`cell-${rowIndex + 1}-${colIndex}`);
+      belowCell?.focus();
+    } else if (e.key === "Home") {
+      const firstCell = document.getElementById(`cell-${rowIndex}-0`);
+      firstCell?.focus();
+    } else if (e.key === "End") {
+      const lastCell = document.getElementById(`cell-${rowIndex}-${weeks.length - 1}`);
+      lastCell?.focus();
     }
   };
-
-  const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
+  
+  const showTooltip = (
+    day: ContributionDay,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const graphRect = graphRef.current?.getBoundingClientRect();
+    
+    if (!graphRect) return;
+    
+    setTooltip({
+      visible: true,
+      date: day.date,
+      count: day.count,
+      x: rect.left - graphRect.left + rect.width / 2,
+      y: rect.top - graphRect.top,
     });
   };
-
+  
+  const hideTooltip = () => {
+    setTooltip((prev) => ({ ...prev, visible: false }));
+  };
+  
+  // Adjust tooltip position when it changes
+  useEffect(() => {
+    if (tooltip.visible && tooltipRef.current) {
+      const tooltipWidth = tooltipRef.current.offsetWidth;
+      const tooltipHeight = tooltipRef.current.offsetHeight;
+      
+      // Adjust horizontal position to keep tooltip within container
+      tooltipRef.current.style.left = `${Math.max(
+        0,
+        Math.min(
+          tooltip.x - tooltipWidth / 2,
+          (graphRef.current?.offsetWidth || 0) - tooltipWidth
+        )
+      )}px`;
+      
+      // Position above the cell
+      tooltipRef.current.style.top = `${Math.max(
+        0,
+        tooltip.y - tooltipHeight - 10
+      )}px`;
+    }
+  }, [tooltip]);
+  
   return (
-    <Tooltip.Provider delayDuration={0}>
-      <div className="w-full space-y-6">
-        <div className="overflow-x-auto">
-          <div className="min-w-max">
-            {/* Month Labels */}
-            <div className="flex mb-2">
-              <div className="w-8" /> {/* Offset for day labels */}
-              {Array.from({ length: 6 }, (_, i) => {
-                const date = new Date();
-                date.setMonth(date.getMonth() - 5 + i);
-                return (
-                  <div key={i} className="flex-1 text-xs text-gray-500">
-                    {date.toLocaleDateString("en-US", { month: "short" })}
-                  </div>
-                );
-              })}
+    <div
+      className="glass-card p-6 overflow-hidden relative"
+      ref={graphRef}
+      aria-label="GitHub contribution activity graph"
+      role="region"
+    >
+      <h3 className="text-lg font-semibold text-orange-500 mb-4">Contribution Activity</h3>
+      
+      <div className="flex overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+        {/* Days of week labels (y-axis) */}
+        <div className="flex flex-col mr-2 pt-8">
+          {daysOfWeek.map((day, index) => (
+            <div
+              key={day}
+              className="h-4 text-xs text-gray-500 flex items-center mb-1"
+              aria-hidden="true"
+            >
+              {index % 2 === 0 ? day : ""}
             </div>
-
-            {/* Contribution Grid with Day Labels */}
-            <div className="flex">
-              {/* Day Labels */}
-              <div className="flex flex-col gap-1 mr-2 text-xs text-gray-500 justify-between py-1">
-                <span>Mon</span>
-                <span>Wed</span>
-                <span>Fri</span>
-              </div>
-
-              {/* Contribution Squares */}
-              <div className="flex gap-1">
-                {weeks.map((week, weekIndex) => (
-                  <div key={weekIndex} className="flex flex-col gap-1">
-                    {week.map((day, dayIndex) => (
-                      <Tooltip.Root key={day.date}>
-                        <Tooltip.Trigger asChild>
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            whileHover={{ scale: 1.2 }}
-                            transition={{
-                              duration: 0.2,
-                              delay: (weekIndex * 7 + dayIndex) * 0.01,
-                            }}
-                            className={`w-4 h-4 rounded-sm ${getLevelColor(
-                              day.level
-                            )} cursor-pointer transition-all duration-200`}
-                          />
-                        </Tooltip.Trigger>
-                        <AnimatePresence>
-                          <Tooltip.Portal>
-                            <Tooltip.Content className="glass-card px-3 py-2 text-sm z-50" sideOffset={5} asChild>
-                              <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 10 }}
-                              >
-                                <div className="font-medium text-orange-500">{formatDate(day.date)}</div>
-                                <div className="text-gray-400">{getContributionText(day.count)}</div>
-                                <Tooltip.Arrow className="fill-orange-500/20" />
-                              </motion.div>
-                            </Tooltip.Content>
-                          </Tooltip.Portal>
-                        </AnimatePresence>
-                      </Tooltip.Root>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Legend */}
-            <div className="flex justify-start mt-4 text-sm text-gray-400 gap-4 items-center">
-              <span className="font-medium">Contribution Level:</span>
-              <div className="flex items-center gap-2">
-                {[0, 1, 2, 3, 4].map((level) => (
-                  <Tooltip.Root key={level} delayDuration={0}>
-                    <Tooltip.Trigger asChild>
-                      <motion.div
-                        whileHover={{ scale: 1.2 }}
-                        className={`w-4 h-4 rounded-sm ${getLevelColor(level)} cursor-help`}
+          ))}
+        </div>
+        
+        {/* Contribution grid */}
+        <div>
+          {/* Months labels (x-axis) */}
+          <div className="flex mb-1">
+            {weeks.map((week, weekIndex) => {
+              const date = parseISO(week[0].date);
+              const isFirstOfMonth = date.getDate() <= 7;
+              const showMonth = isFirstOfMonth || weekIndex === 0;
+              
+              return (
+                <div
+                  key={weekIndex}
+                  className="w-4 text-xs text-gray-500 text-center"
+                  style={{ height: "20px" }}
+                  aria-hidden="true"
+                >
+                  {showMonth ? format(date, "MMM") : ""}
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Grid cells */}
+          <div className="flex">
+            <div>
+              {[0, 1, 2, 3, 4, 5, 6].map((rowIndex) => (
+                <div key={rowIndex} className="flex mb-1">
+                  {weeks.map((week, colIndex) => {
+                    const day = week[rowIndex];
+                    const activityLevel = getActivityLabel(day.level);
+                    const formattedDate = format(
+                      parseISO(day.date),
+                      "MMMM d, yyyy"
+                    );
+                    
+                    return (
+                      <button
+                        id={`cell-${rowIndex}-${colIndex}`}
+                        key={`${rowIndex}-${colIndex}`}
+                        className={`w-4 h-4 rounded-sm ${getActivityColor(
+                          day.level
+                        )} transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-gray-900 focus:ring-orange-500`}
+                        aria-label={`${formattedDate}: ${day.count} contributions, ${activityLevel}`}
+                        role="gridcell"
+                        onMouseEnter={(e) => showTooltip(day, e)}
+                        onMouseLeave={hideTooltip}
+                        onFocus={(e) => {
+                          focusedCellRef.current = e.currentTarget;
+                          showTooltip(day, e as unknown as React.MouseEvent<HTMLButtonElement>);
+                        }}
+                        onBlur={() => {
+                          focusedCellRef.current = null;
+                          hideTooltip();
+                        }}
+                        onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
+                        tabIndex={0}
                       />
-                    </Tooltip.Trigger>
-                    <Tooltip.Portal>
-                      <Tooltip.Content className="glass-card px-2 py-1 text-xs" sideOffset={5}>
-                        {level === 0
-                          ? "No contributions"
-                          : level === 1
-                          ? "1-3 contributions"
-                          : level === 2
-                          ? "4-6 contributions"
-                          : level === 3
-                          ? "7-10 contributions"
-                          : "10+ contributions"}
-                        <Tooltip.Arrow className="fill-orange-500/20" />
-                      </Tooltip.Content>
-                    </Tooltip.Portal>
-                  </Tooltip.Root>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Contribution Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-orange-500/20">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card p-4">
-            <div className="text-gray-400 text-sm">Total Contributions</div>
-            <div className="text-2xl font-bold text-orange-500">{totalContributions}</div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="glass-card p-4"
-          >
-            <div className="text-gray-400 text-sm">Contributing Days</div>
-            <div className="text-2xl font-bold text-orange-500">{contributingDays}</div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="glass-card p-4"
-          >
-            <div className="text-gray-400 text-sm">Current Streak</div>
-            <div className="text-2xl font-bold text-orange-500">{currentStreak} days</div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass-card p-4"
-          >
-            <div className="text-gray-400 text-sm">Best Day</div>
-            <div className="text-2xl font-bold text-orange-500">{bestDay.count} contributions</div>
-            <div className="text-xs text-gray-400 mt-1">
-              {new Date(bestDay.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            </div>
-          </motion.div>
-        </div>
       </div>
-    </Tooltip.Provider>
+      
+      {/* Activity level legend */}
+      <div className="flex items-center justify-end mt-4">
+        <span className="text-xs text-gray-500 mr-2">Less</span>
+        {[0, 1, 2, 3, 4].map((level) => (
+          <div
+            key={level}
+            className={`w-4 h-4 rounded-sm ${getActivityColor(level)} mr-1`}
+            aria-label={getActivityLabel(level)}
+          />
+        ))}
+        <span className="text-xs text-gray-500">More</span>
+      </div>
+      
+      {/* Tooltip */}
+      {tooltip.visible && (
+        <motion.div
+          ref={tooltipRef}
+          className="absolute bg-gray-900 text-white text-xs p-2 rounded-md shadow-lg pointer-events-none z-10 border border-gray-700"
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          role="tooltip"
+          aria-hidden="true"
+        >
+          <div className="font-medium">{format(parseISO(tooltip.date), "MMMM d, yyyy")}</div>
+          <div>
+            {tooltip.count} contribution{tooltip.count !== 1 ? "s" : ""}
+          </div>
+        </motion.div>
+      )}
+    </div>
   );
 };
 
