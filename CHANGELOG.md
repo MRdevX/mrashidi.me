@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/MRdevX/mrashidi.me/compare/v0.1.4...v0.1.5) (2025-03-03)
+
+
+### Features
+
+* standardize "Get In Touch" capitalization across components ([55d1ab4](https://github.com/MRdevX/mrashidi.me/commit/55d1ab465ee7e912860a6d71f11d44e82c13a2db))
+
 ### [0.1.4](https://github.com/MRdevX/mrashidi.me/compare/v0.1.3...v0.1.4) (2025-03-02)
 
 
