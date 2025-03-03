@@ -189,10 +189,6 @@ export default function ContactForm() {
         transition={{ duration: 0.5 }}
         className="glass-card p-6 sm:p-8"
       >
-        <h2 className="text-2xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">
-          Get In Touch
-        </h2>
-        
         {submitStatus.type && (
           <div
             className={`mb-6 p-4 rounded-md ${

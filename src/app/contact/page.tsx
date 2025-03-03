@@ -12,7 +12,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          Get in Touch
+          Get In Touch
         </motion.h1>
 
         <motion.p

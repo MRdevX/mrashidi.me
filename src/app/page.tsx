@@ -293,7 +293,7 @@ export default function Home() {
               href="/contact"
               className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group"
             >
-              <span>Get in Touch</span>
+              <span>Get In Touch</span>
               <svg 
                 className="w-5 h-5 transform transition-transform group-hover:translate-x-1" 
                 fill="none" 
