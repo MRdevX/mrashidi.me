@@ -116,7 +116,7 @@ This repository contains the source code for my personal website. While the code
 
 ## License
 
-Copyright (c) 2024 Mahdi Rashidi. All rights reserved.
+Copyright (c) 2024 Dee M. Rashidi. All rights reserved.
 
 This source code is provided for educational and demonstration purposes only. You may:
 - View and study the code
@@ -131,7 +131,7 @@ You may not:
 
 ## Contact
 
-Mahdi Rashidi
+Dee M. Rashidi
 - GitHub: [@mrdevx](https://github.com/mrdevx)
 - Email: contact@mrashidi.me
-- Location: Istanbul, Turkey
+- Location: Berlin, Germany

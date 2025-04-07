@@ -28,7 +28,7 @@ export class EmailService {
     this.toEmail = process.env.EMAIL_TO_ADDRESS || 'contact@mrashidi.me';
 
     this.templateConfig = {
-      companyName: 'Mahdi Rashidi',
+      companyName: 'Dee M. Rashidi',
       companyWebsite: 'https://mrashidi.me',
       socialLinks: {
         github: 'https://github.com/mrdevx',
@@ -310,7 +310,7 @@ export class EmailService {
                         </tr>
                         <tr>
                           <td style="padding-top: 10px;">
-                            <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
+                            <p style="margin: 0; color: #ffffff;">Best regards,<br>Dee M. Rashidi</p>
                           </td>
                         </tr>
                       </table>
@@ -365,7 +365,7 @@ While you wait for my response, feel free to explore my portfolio:
 ${this.templateConfig.companyWebsite}
 
 Best regards,
-Mahdi Rashidi
+Dee M. Rashidi
 
 ---
 GitHub: ${this.templateConfig.socialLinks.github}
