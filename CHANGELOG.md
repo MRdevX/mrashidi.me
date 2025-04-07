@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/MRdevX/mrashidi.me/compare/v0.1.5...v0.1.6) (2025-04-07)
+
+
+### Features
+
+* update personal information to reflect name and location change ([2b9474b](https://github.com/MRdevX/mrashidi.me/commit/2b9474b5b42548180032cabfac2816742ecb2804))
+
 ### [0.1.5](https://github.com/MRdevX/mrashidi.me/compare/v0.1.4...v0.1.5) (2025-03-03)
 
 
