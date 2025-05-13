@@ -67,7 +67,7 @@ export default function Terminal() {
         case "about":
           output = (
             <div className="mt-2 space-y-2">
-              <p>👋 Hi! I&apos;m Dee M. Rashidi, a Senior Backend Engineer with 9+ years of experience.</p>
+              <p>👋 Hi! I&apos;m Mahdi Rashidi, a Senior Backend Engineer with 9+ years of experience.</p>
               <p>
                 I specialize in building scalable backend systems, cloud architecture, and DevOps practices. Currently
                 working with Node.js, TypeScript, and various cloud technologies.
@@ -351,7 +351,7 @@ export default function Terminal() {
                 animate={{ opacity: 1 }}
                 className="text-gray-400 mb-4"
               >
-                <p className="text-orange-500 mb-2">Welcome to Dee M. Rashidi&apos;s terminal interface!</p>
+                <p className="text-orange-500 mb-2">Welcome to Mahdi Rashidi&apos;s terminal interface!</p>
                 <p>Type <span className="text-green-400 font-semibold">help</span> to see available commands.</p>
               </motion.div>
             )}

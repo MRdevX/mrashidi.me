@@ -6,7 +6,7 @@ import { cacheService } from "@/services/cacheService";
 const authors: IBlogAuthor[] = [
   {
     username: "mrdevx",
-    name: "Dee M. Rashidi",
+    name: "Mahdi Rashidi",
     mediumUrl: "https://mrdevx.medium.com",
   },
 ];
