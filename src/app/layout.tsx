@@ -123,7 +123,7 @@ export default function RootLayout({
                   </svg>
                 </a>
                 <a
-                  href="https://linkedin.com/in/mrdevx"
+                  href="https://linkedin.com/in/deerashidi"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"

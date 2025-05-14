@@ -32,7 +32,7 @@ export class EmailService {
       companyWebsite: 'https://mrashidi.me',
       socialLinks: {
         github: 'https://github.com/mrdevx',
-        linkedin: 'https://linkedin.com/in/mrdevx',
+        linkedin: 'https://linkedin.com/in/deerashidi',
       },
       footerText: 'Full Stack Developer specializing in Backend Development, Cloud & DevOps, and Database Design',
       skills: [

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState, Suspense, lazy } from "react";
-import { githubService } from "@/services/githubService";
 import Link from "next/link";
 import LoadingAnimation from "@/components/LoadingAnimation";
 
@@ -10,34 +9,11 @@ import LoadingAnimation from "@/components/LoadingAnimation";
 const ContributionGraph = lazy(() => import("@/components/ContributionGraph"));
 const Terminal = lazy(() => import("@/components/Terminal"));
 
-interface ContributionDay {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
-}
-
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [contributions, setContributions] = useState<ContributionDay[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
-
-    async function fetchGitHubData() {
-      try {
-        const contributionsData = await githubService.getContributions();
-        setContributions(contributionsData);
-      } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-        setError('Failed to load GitHub activity data');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchGitHubData();
   }, []);
 
   const container = {
@@ -65,14 +41,21 @@ export default function Home() {
           <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
             Dee M. Rashidi
           </h1>
-          <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">Senior Backend Engineer & Cloud Architect</p>
+          <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">
+            Senior Backend Engineer & Cloud Architect
+          </p>
           <p className="text-lg text-gray-400 mb-6 relative z-10 max-w-2xl mx-auto">
-            Experienced in building scalable cloud-native applications and microservices architectures. 
-            Passionate about DevOps practices and optimizing cloud infrastructure for performance and cost efficiency.
+            Experienced in building scalable cloud-native applications and microservices architectures. Passionate about
+            DevOps practices and optimizing cloud infrastructure for performance and cost efficiency.
           </p>
           <p className="text-lg text-gray-400 mb-8 relative z-10 flex items-center justify-center gap-2">
             <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             Berlin, Germany
@@ -105,7 +88,7 @@ export default function Home() {
               GitHub
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/mrdevx"
+              href="https://linkedin.com/in/deerashidi"
               target="_blank"
               rel="noopener noreferrer"
               className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
@@ -118,7 +101,7 @@ export default function Home() {
               LinkedIn
             </motion.a>
           </div>
-          
+
           <div className="scanline absolute inset-0 pointer-events-none" />
         </motion.div>
 
@@ -127,11 +110,13 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">
             Interact with Terminal
           </h2>
-          <Suspense fallback={
-            <div className="terminal-window w-full h-96 glass-card border border-orange-500/20 overflow-hidden rounded-lg flex items-center justify-center">
-              <LoadingAnimation text="Loading terminal..." color="green" />
-            </div>
-          }>
+          <Suspense
+            fallback={
+              <div className="terminal-window w-full h-96 glass-card border border-orange-500/20 overflow-hidden rounded-lg flex items-center justify-center">
+                <LoadingAnimation text="Loading terminal..." color="green" />
+              </div>
+            }
+          >
             <Terminal />
           </Suspense>
         </motion.div>
@@ -253,29 +238,16 @@ export default function Home() {
         {/* GitHub Section */}
         <motion.div className="mb-16" variants={item}>
           <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">GitHub Activity</h2>
-
           <motion.div variants={item} className="w-full overflow-x-auto pb-4">
-            {loading ? (
-              <div className="glass-card p-6 flex justify-center items-center" style={{ minHeight: "240px" }}>
-                <LoadingAnimation text="Loading GitHub data..." />
-              </div>
-            ) : error ? (
-              <div className="glass-card p-6 text-center py-12">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-orange-500/60 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <p className="text-orange-500/80 mb-2 text-lg">{error}</p>
-                <p className="text-gray-400">Please check back later</p>
-              </div>
-            ) : (
-              <Suspense fallback={
+            <Suspense
+              fallback={
                 <div className="glass-card p-6 flex justify-center items-center" style={{ minHeight: "240px" }}>
-                  <LoadingAnimation text="Rendering graph..." />
+                  <LoadingAnimation text="Loading GitHub activity..." />
                 </div>
-              }>
-                <ContributionGraph data={contributions} />
-              </Suspense>
-            )}
+              }
+            >
+              <ContributionGraph />
+            </Suspense>
           </motion.div>
         </motion.div>
 
@@ -287,30 +259,22 @@ export default function Home() {
               Ready to Discuss Your Next Project?
             </h2>
             <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              Looking for a backend engineer who can bring your ideas to life? Let&apos;s connect and discuss how we can work together to create scalable, efficient solutions for your business.
+              Looking for a backend engineer who can bring your ideas to life? Let&apos;s connect and discuss how we can work
+              together to create scalable, efficient solutions for your business.
             </p>
-            <Link
-              href="/contact"
-              className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group"
-            >
+            <Link href="/contact" className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group">
               <span>Get In Touch</span>
-              <svg 
-                className="w-5 h-5 transform transition-transform group-hover:translate-x-1" 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className="w-5 h-5 transform transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
           </div>
         </motion.div>
-
       </motion.div>
     </div>
   );

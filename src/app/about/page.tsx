@@ -18,10 +18,10 @@ export default function About() {
         <div className="prose dark:prose-invert max-w-none">
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.2 }}>
             <p className="text-lg mb-6 leading-relaxed text-gray-300">
-              Software Engineer with 9+ years of experience in scalable Backend Development, with a primary focus on Node.js
-              and TypeScript for the past 5+ years. Specialized in cloud native applications, microservices architecture, and
-              DevOps practices. Proven expertise in optimizing cloud infrastructure, improving system reliability, and
-              delivering high-impact solutions.
+              Backend Engineer with 9+ years experience, including 6+ years building scalable TypeScript/Node.js applications
+              and cloud‑native solutions. Experienced in microservices architecture, Kubernetes, and multi‑cloud platforms
+              including Azure, AWS, and GCP. Focused on delivering reliable enterprise solutions with emphasis on high
+              availability and performance optimization.
             </p>
           </motion.section>
 
@@ -32,7 +32,7 @@ export default function About() {
               {[
                 {
                   title: "Backend Development",
-                  skills: "Node.js, TypeScript, NestJS, Express.js, RESTful APIs",
+                  skills: "TypeScript, Node.js, NestJS, Express.js, RESTful APIs, RabbitMQ",
                   icon: (
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
@@ -46,7 +46,7 @@ export default function About() {
                 },
                 {
                   title: "Cloud & DevOps",
-                  skills: "Azure, Kubernetes, Docker, GitLab CI/CD, AWS, GCP, Terraform",
+                  skills: "Azure, AWS, GCP, Kubernetes (AKS), Docker, GitLab CI/CD, Terraform, Helm",
                   icon: (
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
@@ -59,8 +59,8 @@ export default function About() {
                   ),
                 },
                 {
-                  title: "Architecture",
-                  skills: "Microservices, Event-Driven Architecture, Domain-Driven Design (DDD)",
+                  title: "Architecture & Infrastructure",
+                  skills: "Microservices, Event-Driven Architecture, Monorepo (Lerna/NX), High Availability",
                   icon: (
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
@@ -73,8 +73,8 @@ export default function About() {
                   ),
                 },
                 {
-                  title: "Databases",
-                  skills: "PostgreSQL, MongoDB, Redis, TypeORM, Mongoose, Prisma",
+                  title: "Monitoring & Databases",
+                  skills: "PostgreSQL, MongoDB, Redis, Grafana, Prometheus, Redash, Observability",
                   icon: (
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
