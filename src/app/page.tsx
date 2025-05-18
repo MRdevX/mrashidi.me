@@ -105,7 +105,7 @@ export default function Home() {
               GitHub
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/mrdevx"
+              href="https://linkedin.com/in/deerashidi"
               target="_blank"
               rel="noopener noreferrer"
               className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"

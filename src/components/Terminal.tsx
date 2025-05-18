@@ -153,7 +153,7 @@ export default function Terminal() {
               </p>
               <p className="flex items-center gap-2">
                 <span className="text-orange-500">LinkedIn:</span>
-                <a href="https://linkedin.com/in/mrdevx" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
+                <a href="https://linkedin.com/in/deerashidi" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
                   linkedin.com/in/mrdevx
                 </a>
               </p>
