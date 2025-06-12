@@ -159,7 +159,7 @@ export const handleCommand = (command: CommandType): string | ReactElement => {
               rel="noopener noreferrer"
               className="text-green-400 hover:underline"
             >
-              linkedin.com/in/mrdevx
+              linkedin.com/in/deerashidi
             </a>
           </p>
           <p className="flex items-center gap-2">
