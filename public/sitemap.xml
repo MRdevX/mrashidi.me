@@ -2,66 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mrashidi.me</loc>
-<<<<<<< HEAD
-    <lastmod>2025-04-07T14:38:26.275Z</lastmod>
-=======
-    <lastmod>2025-06-03T11:14:47.736Z</lastmod>
->>>>>>> 197f3e5 (chore: refactor GitHub contribution graph and remove unused code)
+    <lastmod>2025-06-12T13:18:05.223Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/about</loc>
-<<<<<<< HEAD
-    <lastmod>2025-04-07T14:38:26.275Z</lastmod>
-=======
-    <lastmod>2025-06-03T11:14:47.737Z</lastmod>
->>>>>>> 197f3e5 (chore: refactor GitHub contribution graph and remove unused code)
+    <lastmod>2025-06-12T13:18:05.223Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/blog</loc>
-<<<<<<< HEAD
-    <lastmod>2025-04-07T14:38:26.275Z</lastmod>
-=======
-    <lastmod>2025-06-03T11:14:47.737Z</lastmod>
->>>>>>> 197f3e5 (chore: refactor GitHub contribution graph and remove unused code)
+    <lastmod>2025-06-12T13:18:05.223Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/contact</loc>
-<<<<<<< HEAD
-    <lastmod>2025-04-07T14:38:26.275Z</lastmod>
-=======
-    <lastmod>2025-06-03T11:14:47.737Z</lastmod>
->>>>>>> 197f3e5 (chore: refactor GitHub contribution graph and remove unused code)
+    <lastmod>2025-06-12T13:18:05.223Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/projects</loc>
-<<<<<<< HEAD
-    <lastmod>2025-04-07T14:38:26.275Z</lastmod>
-=======
-    <lastmod>2025-06-03T11:14:47.737Z</lastmod>
->>>>>>> 197f3e5 (chore: refactor GitHub contribution graph and remove unused code)
+    <lastmod>2025-06-12T13:18:05.223Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/resume</loc>
-<<<<<<< HEAD
-    <lastmod>2025-04-07T14:38:26.275Z</lastmod>
-=======
-    <lastmod>2025-06-03T11:14:47.737Z</lastmod>
->>>>>>> 197f3e5 (chore: refactor GitHub contribution graph and remove unused code)
+    <lastmod>2025-06-12T13:18:05.223Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
