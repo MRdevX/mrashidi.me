@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import BackgroundEffects from "@/components/BackgroundEffects";
+import Navbar from "@/components/navigation/Navbar";
+import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 

@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, Suspense, lazy } from "react";
 import Link from "next/link";
-import LoadingAnimation from "@/components/LoadingAnimation";
+import LoadingAnimation from "@/components/ui/LoadingAnimation";
 
 // Lazy load heavy components
-const ContributionGraph = lazy(() => import("@/components/ContributionGraph"));
-const Terminal = lazy(() => import("@/components/Terminal"));
+const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
+const Terminal = lazy(() => import("@/components/terminal/Terminal"));
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
