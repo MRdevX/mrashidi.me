@@ -132,10 +132,28 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
             >
               <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Backend Development
+                Programming Languages
               </h3>
               <div className="flex flex-wrap gap-2">
-                {["Node.js", "TypeScript", "NestJS", "Express.js", "RESTful APIs"].map((tech) => (
+                {["TypeScript", "JavaScript/ES6+", "Java", "Python", "C#", "Bash"].map((tech) => (
+                  <span key={tech} className="tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="feature-card group"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
+                Backend Frameworks
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {["NestJS", "Node.js", "Express.js", "Spring Boot", "Fastify"].map((tech) => (
                   <span key={tech} className="tech-badge">
                     {tech}
                   </span>
@@ -153,11 +171,13 @@ export default function Home() {
                 Cloud & DevOps
               </h3>
               <div className="flex flex-wrap gap-2">
-                {["Azure", "Kubernetes", "Docker", "GitLab CI/CD", "Terraform"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
+                {["Azure", "Kubernetes", "Docker", "GitLab CI/CD", "GitHub Actions", "AWS", "GCP", "Terraform", "Helm"].map(
+                  (tech) => (
+                    <span key={tech} className="tech-badge">
+                      {tech}
+                    </span>
+                  )
+                )}
               </div>
             </motion.div>
 
@@ -168,14 +188,16 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
             >
               <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Architecture
+                Databases & ORMs
               </h3>
               <div className="flex flex-wrap gap-2">
-                {["Microservices", "Event-Driven", "DDD", "API Gateway"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
+                {["PostgreSQL", "TypeORM", "MongoDB", "Mongoose", "Redis", "Sequelize", "Prisma", "Drizzle", "MikroORM"].map(
+                  (tech) => (
+                    <span key={tech} className="tech-badge">
+                      {tech}
+                    </span>
+                  )
+                )}
               </div>
             </motion.div>
 
@@ -186,28 +208,10 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
             >
               <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Databases & Caching
+                Architecture & Protocols
               </h3>
               <div className="flex flex-wrap gap-2">
-                {["PostgreSQL", "MongoDB", "Redis", "TypeORM", "Mongoose"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Messaging & Integration
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["RabbitMQ", "Redis Pub/Sub", "Apache Kafka", "Service Bus"].map((tech) => (
+                {["Microservices", "Event-Driven", "RESTful APIs", "gRPC", "WebSockets", "GraphQL"].map((tech) => (
                   <span key={tech} className="tech-badge">
                     {tech}
                   </span>
@@ -225,7 +229,7 @@ export default function Home() {
                 Security & Testing
               </h3>
               <div className="flex flex-wrap gap-2">
-                {["JWT", "OAuth2/OIDC", "Jest", "SonarQube", "Zero Trust"].map((tech) => (
+                {["JWT", "OAuth2/OIDC", "Jest", "Postman", "SonarQube", "Zero Trust", "OWASP Top 10"].map((tech) => (
                   <span key={tech} className="tech-badge">
                     {tech}
                   </span>
