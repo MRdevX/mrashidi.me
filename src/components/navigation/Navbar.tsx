@@ -41,7 +41,7 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex justify-between w-full">
-                <Link href="/" className="flex items-center flex-shrink-0" aria-label="Dee M. Rashidi - Home">
+                <Link href="/" className="flex items-center flex-shrink-0" aria-label="Mahdi Rashidi - Home">
                   <motion.span
                     className="text-xl font-bold text-orange-500 font-cyberpunk glow-text"
                     initial={{ opacity: 0, y: -20 }}

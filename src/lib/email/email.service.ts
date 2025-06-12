@@ -1,5 +1,5 @@
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
-import { IContactFormData, ITemplateConfig } from './types';
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { IContactFormData, ITemplateConfig } from "./types";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -8,12 +8,12 @@ export class EmailService {
   private readonly templateConfig: ITemplateConfig;
 
   constructor() {
-    const region = process.env.AWS_REGION || 'eu-central-1';
+    const region = process.env.AWS_REGION || "eu-central-1";
     const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
     const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
     if (!accessKeyId || !secretAccessKey) {
-      throw new Error('Missing AWS credentials');
+      throw new Error("Missing AWS credentials");
     }
 
     this.sesClient = new SESClient({
@@ -24,22 +24,22 @@ export class EmailService {
       },
     });
 
-    this.fromEmail = process.env.EMAIL_FROM_ADDRESS || 'no-reply@mrashidi.me';
-    this.toEmail = process.env.EMAIL_TO_ADDRESS || 'contact@mrashidi.me';
+    this.fromEmail = process.env.EMAIL_FROM_ADDRESS || "no-reply@mrashidi.me";
+    this.toEmail = process.env.EMAIL_TO_ADDRESS || "contact@mrashidi.me";
 
     this.templateConfig = {
-      companyName: 'Dee M. Rashidi',
-      companyWebsite: 'https://mrashidi.me',
+      companyName: "Mahdi Rashidi",
+      companyWebsite: "https://mrashidi.me",
       socialLinks: {
-        github: 'https://github.com/mrdevx',
-        linkedin: 'https://linkedin.com/in/deerashidi',
+        github: "https://github.com/mrdevx",
+        linkedin: "https://linkedin.com/in/deerashidi",
       },
-      footerText: 'Full Stack Developer specializing in Backend Development, Cloud & DevOps, and Database Design',
+      footerText: "Software Backend Engineer specializing in Backend Development, Cloud & DevOps, and Database Design",
       skills: [
-        { name: 'Backend Development', technologies: ['Node.js', 'TypeScript', 'Python', 'Go'] },
-        { name: 'Cloud & DevOps', technologies: ['AWS', 'Docker', 'Kubernetes', 'Terraform'] },
-        { name: 'Database Design', technologies: ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'] }
-      ]
+        { name: "Backend Development", technologies: ["Node.js", "TypeScript", "Python", "Go"] },
+        { name: "Cloud & DevOps", technologies: ["AWS", "Docker", "Kubernetes", "Terraform"] },
+        { name: "Database Design", technologies: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"] },
+      ],
     };
   }
 
@@ -49,7 +49,7 @@ export class EmailService {
       const userEmailSuccess = await this.sendUserConfirmation(data);
       return adminEmailSuccess && userEmailSuccess;
     } catch (error) {
-      console.error('Failed to send emails:', error);
+      console.error("Failed to send emails:", error);
       return false;
     }
   }
@@ -64,16 +64,16 @@ export class EmailService {
         Message: {
           Subject: {
             Data: `Contact Form Submission from ${data.name}`,
-            Charset: 'UTF-8',
+            Charset: "UTF-8",
           },
           Body: {
             Html: {
               Data: this.createAdminEmailBody(data),
-              Charset: 'UTF-8',
+              Charset: "UTF-8",
             },
             Text: {
               Data: this.createAdminEmailText(data),
-              Charset: 'UTF-8',
+              Charset: "UTF-8",
             },
           },
         },
@@ -84,7 +84,7 @@ export class EmailService {
       console.log(`Admin notification sent successfully: ${response.MessageId}`);
       return true;
     } catch (error) {
-      console.error('Failed to send admin notification:', error);
+      console.error("Failed to send admin notification:", error);
       return false;
     }
   }
@@ -99,16 +99,16 @@ export class EmailService {
         Message: {
           Subject: {
             Data: `Thanks for reaching out, ${data.name}! | ${this.templateConfig.companyName}`,
-            Charset: 'UTF-8',
+            Charset: "UTF-8",
           },
           Body: {
             Html: {
               Data: this.createUserConfirmationHtml(data),
-              Charset: 'UTF-8',
+              Charset: "UTF-8",
             },
             Text: {
               Data: this.createUserConfirmationText(data),
-              Charset: 'UTF-8',
+              Charset: "UTF-8",
             },
           },
         },
@@ -118,7 +118,7 @@ export class EmailService {
       console.log(`User confirmation sent successfully: ${response.MessageId}`);
       return true;
     } catch (error) {
-      console.error('Failed to send user confirmation:', error);
+      console.error("Failed to send user confirmation:", error);
       return false;
     }
   }
@@ -195,7 +195,7 @@ export class EmailService {
                         </tr>
                         <tr>
                           <td style="background-color: #2a2a2a; border: 1px solid #333333; border-radius: 4px; padding: 15px; color: #ffffff;">
-                            ${data.message.replace(/\n/g, '<br>')}
+                            ${data.message.replace(/\n/g, "<br>")}
                           </td>
                         </tr>
                       </table>
@@ -278,7 +278,7 @@ export class EmailService {
                       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 25px;">
                         <tr>
                           <td style="background-color: #2a2a2a; border: 1px solid #333333; border-radius: 4px; padding: 20px; color: #ffffff;">
-                            ${data.message.replace(/\n/g, '<br>')}
+                            ${data.message.replace(/\n/g, "<br>")}
                           </td>
                         </tr>
                       </table>
@@ -310,7 +310,7 @@ export class EmailService {
                         </tr>
                         <tr>
                           <td style="padding-top: 10px;">
-                            <p style="margin: 0; color: #ffffff;">Best regards,<br>Dee M. Rashidi</p>
+                            <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
                           </td>
                         </tr>
                       </table>
@@ -365,7 +365,7 @@ While you wait for my response, feel free to explore my portfolio:
 ${this.templateConfig.companyWebsite}
 
 Best regards,
-Dee M. Rashidi
+Mahdi Rashidi
 
 ---
 GitHub: ${this.templateConfig.socialLinks.github}
@@ -390,4 +390,4 @@ ${data.message}
 Sent at: ${new Date().toISOString()}
     `.trim();
   }
-} 
+}

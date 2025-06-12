@@ -19,7 +19,7 @@ export const handleCommand = (command: CommandType): string | ReactElement => {
     case "about":
       return (
         <div className="mt-2 space-y-2">
-          <p>👋 Hi! I&apos;m Dee M. Rashidi, a Senior Backend Engineer with 9+ years of experience.</p>
+          <p>👋 Hi! I&apos;m Mahdi Rashidi, a Senior Backend Engineer with 9+ years of experience.</p>
           <p>
             I specialize in building scalable backend systems, cloud architecture, and DevOps practices. Currently
             working with Node.js, TypeScript, and various cloud technologies.

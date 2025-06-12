@@ -45,22 +45,26 @@ This repository contains the source code for my personal website. While the code
 ### Local Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/mrdevx/mrashidi.me.git
    cd mrashidi.me
    ```
 
 2. Install dependencies:
+
    ```bash
    yarn install
    ```
 
 3. Create a `.env.local` file in the root directory and add your GitHub token:
+
    ```env
    NEXT_PUBLIC_GITHUB_TOKEN=your_github_token
    ```
 
 4. Run the development server:
+
    ```bash
    yarn dev
    ```
@@ -84,23 +88,27 @@ This repository contains the source code for my personal website. While the code
 ## Features
 
 ### Interactive Terminal
+
 - Custom-built terminal interface with command history
 - Supports various commands for exploring my background and work
 - Real-time command execution
 
 ### GitHub Integration
+
 - Real-time repository display
 - Contribution graph visualization
 - Activity feed integration
 - Project statistics
 
 ### Blog Section
+
 - Medium blog integration
 - Responsive article cards
 - Image optimization
 - Pagination support
 
 ### Portfolio Projects
+
 - Showcase of my professional work
 - Detailed project descriptions
 - Technology stack highlights
@@ -116,14 +124,16 @@ This repository contains the source code for my personal website. While the code
 
 ## License
 
-Copyright (c) 2024 Dee M. Rashidi. All rights reserved.
+Copyright (c) 2024 Mahdi Rashidi. All rights reserved.
 
 This source code is provided for educational and demonstration purposes only. You may:
+
 - View and study the code
 - Fork the repository for reference
 - Suggest improvements via issues or pull requests
 
 You may not:
+
 - Use this code for commercial purposes
 - Redistribute the code
 - Use the code to create similar websites
@@ -131,7 +141,8 @@ You may not:
 
 ## Contact
 
-Dee M. Rashidi
+Mahdi Rashidi
+
 - GitHub: [@mrdevx](https://github.com/mrdevx)
 - Email: contact@mrashidi.me
 - Location: Berlin, Germany

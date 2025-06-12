@@ -39,7 +39,7 @@ export default function Home() {
         <motion.div className="text-center mb-12 glass-card p-8 relative overflow-hidden" variants={item}>
           <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent opacity-50" />
           <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
-            Dee M. Rashidi
+            Mahdi Rashidi
           </h1>
           <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">
             Senior Backend Engineer & Cloud Architect
