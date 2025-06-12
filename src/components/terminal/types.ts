@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement } from "react";
 
 export interface Command {
   input: string;
@@ -17,7 +17,6 @@ export const AVAILABLE_COMMANDS = {
   "view-source": "View website source code",
   achievements: "List my achievements and certifications",
   blog: "Show my latest blog posts",
-  "system-info": "Display system information",
 } as const;
 
-export type CommandType = keyof typeof AVAILABLE_COMMANDS; 
+export type CommandType = keyof typeof AVAILABLE_COMMANDS;
