@@ -1,4 +1,4 @@
-import { motion, Easing } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface LoadingAnimationProps {
   size?: "small" | "medium" | "large";
@@ -38,7 +38,7 @@ const LoadingAnimation = ({
   };
 
   // Animation variants for dots
-  const containerVariants = {
+  const containerVariants: Variants = {
     animate: {
       transition: {
         staggerChildren: 0.2,
@@ -46,7 +46,7 @@ const LoadingAnimation = ({
     },
   };
 
-  const dotVariants = {
+  const dotVariants: Variants = {
     initial: {
       y: "0%",
     },
@@ -55,7 +55,7 @@ const LoadingAnimation = ({
       transition: {
         duration: 0.8,
         repeat: Infinity,
-        ease: Easing.easeInOut,
+        ease: "easeInOut",
       },
     },
   };
@@ -88,9 +88,7 @@ const LoadingAnimation = ({
       </motion.div>
       {text && (
         <div className="mt-3 text-center">
-          <span className={`text-${color === 'white' ? 'gray-200' : color}-500 text-sm`}>
-            {text}
-          </span>
+          <span className={`text-${color === "white" ? "gray-200" : color}-500 text-sm`}>{text}</span>
         </div>
       )}
       <div className="sr-only">Loading content, please wait</div>
@@ -98,4 +96,4 @@ const LoadingAnimation = ({
   );
 };
 
-export default LoadingAnimation; 
+export default LoadingAnimation;
