@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, Easing } from "framer-motion";
 
 interface LoadingAnimationProps {
   size?: "small" | "medium" | "large";
@@ -55,7 +55,7 @@ const LoadingAnimation = ({
       transition: {
         duration: 0.8,
         repeat: Infinity,
-        ease: "easeInOut",
+        ease: Easing.easeInOut,
       },
     },
   };
