@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { IBlogPost } from "@/types/blog";
 import { blogService } from "@/services/blogService";
 
@@ -95,14 +96,16 @@ export default function Blog() {
                       />
                     </div>
                   )}
-                  <div className="space-y-4">
-                    <h2 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
-                      {post.title}
-                    </h2>
+                  <div className="space-y-4 relative z-10">
+                    <Link href={post.url} target="_blank" rel="noopener noreferrer" className="block">
+                      <h2 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
+                        {post.title}
+                      </h2>
+                    </Link>
                     <p className="text-gray-400 group-hover:text-gray-300 transition-colors line-clamp-3">{post.content}</p>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">{new Date(post.publishedAt).toLocaleDateString()}</span>
-                      <a
+                      <Link
                         href={post.url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -112,7 +115,7 @@ export default function Blog() {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </motion.article>
