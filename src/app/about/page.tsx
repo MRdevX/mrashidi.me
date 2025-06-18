@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import personalInfo from "@/data/personalInfo";
 
 export default function About() {
   const fadeIn = {
@@ -17,18 +18,13 @@ export default function About() {
 
         <div className="prose dark:prose-invert max-w-none">
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.2 }}>
-            <p className="text-lg mb-6 leading-relaxed text-gray-300">
-              Backend Engineer with 9+ years experience, including 6+ years building scalable TypeScript/Node.js applications
-              and cloud‑native solutions. Experienced in microservices architecture, Kubernetes, and multi‑cloud platforms
-              including Azure, AWS, and GCP. Focused on delivering reliable enterprise solutions with emphasis on high
-              availability and performance optimization.
-            </p>
+            <p className="text-lg mb-6 leading-relaxed text-gray-300">{personalInfo.summary}</p>
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
 
-            {/* Cyberpunk Skills Grid */}
+            {/* Flexible Skills Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
@@ -174,13 +170,16 @@ export default function About() {
                     { name: "AI Agents (N8N)", level: "familiar" },
                   ],
                 },
-              ].map((cat, idx) => (
+              ].map((cat) => (
                 <div key={cat.category} className="mb-6">
                   <h3 className="text-xl font-bold mb-3 text-orange-500 font-cyberpunk glow-text">{cat.category}</h3>
-                  <ul className="space-y-2">
+                  <ul className="flex flex-wrap gap-2">
                     {cat.skills.map((skill) => (
-                      <li key={skill.name} className="flex items-center gap-3">
-                        <span className="text-gray-300 font-medium">{skill.name}</span>
+                      <li
+                        key={skill.name}
+                        className="flex items-center gap-2 px-3 py-1 rounded-lg bg-gray-800/70 hover:bg-gray-700/80 transition-colors"
+                      >
+                        <span className="text-gray-200 font-medium whitespace-nowrap">{skill.name}</span>
                         <span
                           className={
                             skill.level === "advanced"
@@ -192,24 +191,6 @@ export default function About() {
                         >
                           {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
                         </span>
-                        <div className="flex-1 ml-2">
-                          <div className="w-full bg-gray-800 rounded-full h-1.5">
-                            <motion.div
-                              className={
-                                skill.level === "advanced"
-                                  ? "bg-orange-500 h-1.5 rounded-full shadow-orange-500/50 shadow-md"
-                                  : skill.level === "intermediate"
-                                    ? "bg-blue-500 h-1.5 rounded-full shadow-blue-500/50 shadow-md"
-                                    : "bg-purple-500 h-1.5 rounded-full shadow-purple-500/50 shadow-md"
-                              }
-                              initial={{ width: 0 }}
-                              animate={{
-                                width: skill.level === "advanced" ? "100%" : skill.level === "intermediate" ? "66%" : "33%",
-                              }}
-                              transition={{ duration: 0.8, delay: 0.2 + idx * 0.1 }}
-                            />
-                          </div>
-                        </div>
                       </li>
                     ))}
                   </ul>

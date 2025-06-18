@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { CommandType, AVAILABLE_COMMANDS } from "./types";
 import { skillCategories } from "@/components/skills/skillsData";
+import personalInfo from "@/data/personalInfo";
 
 export const handleCommand = (command: CommandType): string | ReactElement => {
   switch (command) {
@@ -20,15 +21,8 @@ export const handleCommand = (command: CommandType): string | ReactElement => {
     case "about":
       return (
         <div className="mt-2 space-y-2">
-          <p>👋 Hi! I&apos;m Mahdi Rashidi, a Backend Engineer with 9+ years of experience.</p>
-          <p>
-            I specialize in building scalable TypeScript/Node.js applications and cloud-native solutions. My expertise
-            includes microservices architecture, Kubernetes, and multi-cloud platforms (Azure, AWS, GCP).
-          </p>
-          <p>
-            Based in Berlin, Germany, I focus on delivering reliable enterprise solutions with emphasis on high availability
-            and performance optimization.
-          </p>
+          <p>{personalInfo.summary}</p>
+          <p>{personalInfo.description}</p>
         </div>
       );
 

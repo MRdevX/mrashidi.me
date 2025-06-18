@@ -5,6 +5,7 @@ import Navbar from "@/components/navigation/Navbar";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import personalInfo from "@/data/personalInfo";
 
 // Optimize font loading
 const inter = Inter({
@@ -26,8 +27,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Mahdi Rashidi | Software Backend Engineer",
-  description:
-    "Expert Software Backend Engineer specializing in React, Node.js, and modern web technologies. View my portfolio, projects, and get in touch for collaborations.",
+  description: personalInfo.description,
   keywords: "Software Backend Engineer, web developer, react developer, node.js, javascript, portfolio, software engineer",
   creator: "Mahdi Rashidi",
   authors: [{ name: "Mahdi Rashidi", url: "https://mrashidi.me" }],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     url: "https://mrashidi.me",
     siteName: "Mahdi Rashidi - Software Backend Engineer",
     title: "Mahdi Rashidi | Software Backend Engineer",
-    description: "Expert Software Backend Engineer specializing in React, Node.js, and modern web technologies.",
+    description: personalInfo.description,
     images: [
       {
         url: "https://mrashidi.me/og-image.jpg", // Replace with actual image
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mahdi Rashidi | Software Backend Engineer",
-    description: "Expert Software Backend Engineer specializing in React, Node.js, and modern web technologies.",
+    description: personalInfo.description,
     creator: "@your_twitter_handle", // Replace with actual Twitter handle if available
     images: ["https://mrashidi.me/twitter-image.jpg"], // Replace with actual image
   },
