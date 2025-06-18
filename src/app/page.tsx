@@ -135,7 +135,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text text-center">
                     {cat.category}
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-6">
                     {advanced.length > 0 && (
                       <div>
                         <div className="flex items-center gap-2 mb-2">
