@@ -44,7 +44,7 @@ export default function Home() {
             {personalInfo.name}
           </h1>
           <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
-          <p className="text-lg text-gray-400 mb-6 relative z-10 max-w-2xl mx-auto">{personalInfo.summary}</p>
+          <p className="text-lg text-gray-400 mb-6 relative z-10 max-w-2xl mx-auto">{personalInfo.intro}</p>
           <p className="text-lg text-gray-400 mb-8 relative z-10 flex items-center justify-center gap-2">
             <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

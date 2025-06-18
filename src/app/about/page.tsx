@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import personalInfo from "@/data/personalInfo";
+import skillCategories from "@/data/skills";
+import education from "@/data/education";
 
 export default function About() {
   const fadeIn = {
@@ -24,153 +26,8 @@ export default function About() {
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
 
-            {/* Flexible Skills Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  category: "Programming Languages",
-                  skills: [
-                    { name: "TypeScript", level: "advanced" },
-                    { name: "JavaScript (ES6+)", level: "advanced" },
-                    { name: "Java", level: "intermediate" },
-                    { name: "C#", level: "intermediate" },
-                    { name: "Python", level: "intermediate" },
-                    { name: "Bash", level: "intermediate" },
-                    { name: "Go", level: "familiar" },
-                    { name: "Kotlin", level: "familiar" },
-                  ],
-                },
-                {
-                  category: "Backend Frameworks",
-                  skills: [
-                    { name: "NestJS", level: "advanced" },
-                    { name: "Node.js", level: "advanced" },
-                    { name: "Express.js", level: "advanced" },
-                    { name: "Spring Boot", level: "intermediate" },
-                    { name: "Fastify", level: "familiar" },
-                    { name: "Deno", level: "familiar" },
-                    { name: "Fiber", level: "familiar" },
-                    { name: "Django", level: "familiar" },
-                  ],
-                },
-                {
-                  category: "Architecture Patterns",
-                  skills: [
-                    { name: "Microservices", level: "advanced" },
-                    { name: "Event-Driven Architecture", level: "advanced" },
-                    { name: "Monolithic Architecture", level: "intermediate" },
-                    { name: "API Gateway Pattern", level: "intermediate" },
-                    { name: "Domain-Driven Design", level: "familiar" },
-                  ],
-                },
-                {
-                  category: "APIs & Data Protocols",
-                  skills: [
-                    { name: "RESTful APIs", level: "advanced" },
-                    { name: "JSON", level: "advanced" },
-                    { name: "XML", level: "advanced" },
-                    { name: "gRPC", level: "advanced" },
-                    { name: "WebSockets", level: "advanced" },
-                    { name: "GraphQL", level: "familiar" },
-                    { name: "SOAP", level: "familiar" },
-                  ],
-                },
-                {
-                  category: "Cloud Platforms",
-                  skills: [
-                    { name: "Azure (AKS, Key Vault, Blob, PostgreSQL Flexible Server)", level: "advanced" },
-                    { name: "AWS (ECS, S3, RDS)", level: "intermediate" },
-                    { name: "GCP", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "DevOps & Infrastructure",
-                  skills: [
-                    { name: "Kubernetes", level: "advanced" },
-                    { name: "Docker", level: "advanced" },
-                    { name: "GitLab CI/CD", level: "advanced" },
-                    { name: "Terraform", level: "intermediate" },
-                    { name: "Helm", level: "intermediate" },
-                    { name: "GitHub Actions", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "Monitoring & Observability",
-                  skills: [
-                    { name: "Sentry", level: "advanced" },
-                    { name: "Azure Monitor", level: "advanced" },
-                    { name: "Redash", level: "advanced" },
-                    { name: "Grafana/Prometheus", level: "advanced" },
-                    { name: "K8s Lens", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "Databases, ORMs & Caching",
-                  skills: [
-                    { name: "PostgreSQL", level: "advanced" },
-                    { name: "TypeORM", level: "advanced" },
-                    { name: "MongoDB", level: "advanced" },
-                    { name: "Mongoose", level: "advanced" },
-                    { name: "Redis", level: "advanced" },
-                    { name: "Sequelize", level: "familiar" },
-                    { name: "Prisma", level: "familiar" },
-                    { name: "Drizzle", level: "familiar" },
-                  ],
-                },
-                {
-                  category: "Messaging & Streaming",
-                  skills: [
-                    { name: "RabbitMQ", level: "advanced" },
-                    { name: "Redis Pub/Sub", level: "advanced" },
-                    { name: "Apache Kafka", level: "intermediate" },
-                    { name: "Azure Service Bus", level: "intermediate" },
-                    { name: "Azure Event Grid", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "Security Standards",
-                  skills: [
-                    { name: "JWT", level: "advanced" },
-                    { name: "API Security", level: "advanced" },
-                    { name: "Zero Trust Architecture", level: "advanced" },
-                    { name: "OAuth2/OpenID Connect (OIDC)", level: "advanced" },
-                    { name: "OWASP", level: "intermediate" },
-                    { name: "The 12-Factor App", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "Testing & Quality Assurance",
-                  skills: [
-                    { name: "Jest", level: "advanced" },
-                    { name: "Postman", level: "advanced" },
-                    { name: "Unit/Integration/End-to-End Testing", level: "advanced" },
-                    { name: "SonarQube", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "Tools & Platforms",
-                  skills: [
-                    { name: "Git (GitFlow)", level: "advanced" },
-                    { name: "GitLab", level: "advanced" },
-                    { name: "VS Code", level: "advanced" },
-                    { name: "Cursor AI", level: "advanced" },
-                    { name: "WebStorm", level: "advanced" },
-                    { name: "Docker Hub", level: "advanced" },
-                    { name: "Jira", level: "intermediate" },
-                    { name: "Confluence", level: "intermediate" },
-                    { name: "Figma", level: "intermediate" },
-                    { name: "Miro", level: "intermediate" },
-                  ],
-                },
-                {
-                  category: "AI & Machine Learning",
-                  skills: [
-                    { name: "Google AI Studio", level: "familiar" },
-                    { name: "Fine-tuning Models (Gemini-1.5-flash, Ollama)", level: "familiar" },
-                    { name: "AI Agents (N8N)", level: "familiar" },
-                  ],
-                },
-              ].map((cat) => (
+              {skillCategories.map((cat) => (
                 <div key={cat.category} className="mb-6">
                   <h3 className="text-xl font-bold mb-3 text-orange-500 font-cyberpunk glow-text">{cat.category}</h3>
                   <ul className="flex flex-wrap gap-2">
@@ -202,12 +59,7 @@ export default function About() {
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.8 }}>
             <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Languages</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { language: "Persian", level: "Native Proficiency", progress: 100 },
-                { language: "English", level: "Fluent (C1)", progress: 90 },
-                { language: "German", level: "Pre-Intermediate (A2)", progress: 40 },
-                { language: "Turkish", level: "Elementary (A1)", progress: 20 },
-              ].map((lang, index) => (
+              {personalInfo.languages.map((lang, index) => (
                 <motion.div
                   key={lang.language}
                   className="feature-card group"
@@ -236,15 +88,17 @@ export default function About() {
 
           <motion.section initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 1.2 }}>
             <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Education</h2>
-            <div className="feature-card group">
-              <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
-                B.Sc. in Computer Software Engineering
-              </h3>
-              <p className="text-gray-400 group-hover:text-gray-300 transition-colors mt-2">
-                Bu-Ali Sina University, Hamedan, Iran
-              </p>
-              <p className="text-gray-500 mt-1">Sep 2011 – Sep 2015</p>
-            </div>
+            {education.map((edu) => (
+              <div className="feature-card group mb-4" key={edu.degree + edu.school}>
+                <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
+                  {edu.degree}
+                </h3>
+                <p className="text-gray-400 group-hover:text-gray-300 transition-colors mt-2">
+                  {edu.school}, {edu.location}
+                </p>
+                <p className="text-gray-500 mt-1">{edu.period}</p>
+              </div>
+            ))}
           </motion.section>
         </div>
       </div>
