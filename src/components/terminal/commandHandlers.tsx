@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { CommandType, AVAILABLE_COMMANDS } from "./types";
+import { skillCategories } from "@/components/skills/skillsData";
 
 export const handleCommand = (command: CommandType): string | ReactElement => {
   switch (command) {
@@ -33,72 +34,37 @@ export const handleCommand = (command: CommandType): string | ReactElement => {
 
     case "skills":
       return (
-        <div className="mt-2 space-y-4">
-          <div>
-            <p className="text-orange-500 font-bold mb-2">Programming Languages:</p>
-            <div className="grid grid-cols-2 gap-2">
-              <span className="text-green-400">• TypeScript (Advanced)</span>
-              <span className="text-green-400">• JavaScript/ES6+ (Advanced)</span>
-              <span className="text-green-400">• Java (Intermediate)</span>
-              <span className="text-green-400">• Python (Intermediate)</span>
-              <span className="text-green-400">• C# (Intermediate)</span>
-              <span className="text-green-400">• Bash (Intermediate)</span>
-              <span className="text-green-400">• Go (Familiar)</span>
-              <span className="text-green-400">• Kotlin (Familiar)</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold mb-2">Backend Frameworks:</p>
-            <div className="grid grid-cols-2 gap-2">
-              <span className="text-green-400">• NestJS (Advanced)</span>
-              <span className="text-green-400">• Node.js (Advanced)</span>
-              <span className="text-green-400">• Express.js (Advanced)</span>
-              <span className="text-green-400">• Spring Boot (Intermediate)</span>
-              <span className="text-green-400">• Fastify (Intermediate)</span>
-              <span className="text-green-400">• Deno (Familiar)</span>
-              <span className="text-green-400">• Fiber (Familiar)</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold mb-2">Cloud & DevOps:</p>
-            <div className="grid grid-cols-2 gap-2">
-              <span className="text-green-400">• Azure (Advanced)</span>
-              <span className="text-green-400">• Kubernetes (Advanced)</span>
-              <span className="text-green-400">• Docker (Advanced)</span>
-              <span className="text-green-400">• GitLab CI/CD (Advanced)</span>
-              <span className="text-green-400">• GitHub Actions (Advanced)</span>
-              <span className="text-green-400">• AWS (Intermediate)</span>
-              <span className="text-green-400">• GCP (Intermediate)</span>
-              <span className="text-green-400">• Terraform (Intermediate)</span>
-              <span className="text-green-400">• Helm (Intermediate)</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold mb-2">Databases & Data:</p>
-            <div className="grid grid-cols-2 gap-2">
-              <span className="text-green-400">• PostgreSQL (Advanced)</span>
-              <span className="text-green-400">• TypeORM (Advanced)</span>
-              <span className="text-green-400">• MongoDB (Advanced)</span>
-              <span className="text-green-400">• Mongoose (Advanced)</span>
-              <span className="text-green-400">• Redis (Advanced)</span>
-              <span className="text-green-400">• Sequelize (Familiar)</span>
-              <span className="text-green-400">• Prisma (Familiar)</span>
-              <span className="text-green-400">• Drizzle (Familiar)</span>
-              <span className="text-green-400">• MikroORM (Familiar)</span>
-            </div>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold mb-2">Architecture & Protocols:</p>
-            <div className="grid grid-cols-2 gap-2">
-              <span className="text-green-400">• Microservices</span>
-              <span className="text-green-400">• Event-Driven Architecture</span>
-              <span className="text-green-400">• RESTful APIs</span>
-              <span className="text-green-400">• gRPC</span>
-              <span className="text-green-400">• WebSockets</span>
-              <span className="text-green-400">• GraphQL (Familiar)</span>
-            </div>
-          </div>
-        </div>
+        <pre className="font-mono text-sm text-gray-200 mt-2 whitespace-pre-wrap">
+          {skillCategories.map((cat) => {
+            const advanced = cat.skills.filter((s) => s.level === "advanced");
+            const intermediate = cat.skills.filter((s) => s.level === "intermediate");
+            const familiar = cat.skills.filter((s) => s.level === "familiar");
+            return [
+              <span key={cat.category + "-cat"} className="text-orange-400">
+                {cat.category + "\n"}
+              </span>,
+              <span key={cat.category + "-adv"} className="text-green-400">
+                {" "}
+                Advanced:{" "}
+              </span>,
+              advanced.map((s) => s.name).join(", ") || "-",
+              "\n",
+              <span key={cat.category + "-int"} className="text-green-400">
+                {" "}
+                Intermediate:
+              </span>,
+              " ",
+              intermediate.map((s) => s.name).join(", ") || "-",
+              "\n",
+              <span key={cat.category + "-fam"} className="text-green-400">
+                {" "}
+                Familiar:{" "}
+              </span>,
+              familiar.map((s) => s.name).join(", ") || "-",
+              "\n----------------------------------------\n",
+            ];
+          })}
+        </pre>
       );
 
     case "projects":

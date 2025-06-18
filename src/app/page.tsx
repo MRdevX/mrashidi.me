@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState, Suspense, lazy } from "react";
 import Link from "next/link";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
+import { skillCategories } from "@/components/skills/skillsData";
 
 // Lazy load heavy components
 const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
@@ -124,118 +125,78 @@ export default function Home() {
         {/* Tech Stack Section */}
         <motion.div className="mb-16" variants={item}>
           <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Tech Stack</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Programming Languages
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["TypeScript", "JavaScript/ES6+", "Java", "Python", "C#", "Bash"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Backend Frameworks
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["NestJS", "Node.js", "Express.js", "Spring Boot", "Fastify"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Cloud & DevOps
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["Azure", "Kubernetes", "Docker", "GitLab CI/CD", "GitHub Actions", "AWS", "GCP", "Terraform", "Helm"].map(
-                  (tech) => (
-                    <span key={tech} className="tech-badge">
-                      {tech}
-                    </span>
-                  )
-                )}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Databases & ORMs
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["PostgreSQL", "TypeORM", "MongoDB", "Mongoose", "Redis", "Sequelize", "Prisma", "Drizzle", "MikroORM"].map(
-                  (tech) => (
-                    <span key={tech} className="tech-badge">
-                      {tech}
-                    </span>
-                  )
-                )}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Architecture & Protocols
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["Microservices", "Event-Driven", "RESTful APIs", "gRPC", "WebSockets", "GraphQL"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="feature-card group"
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h3 className="text-xl font-bold mb-4 text-orange-500 group-hover:text-orange-400 transition-colors">
-                Security & Testing
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["JWT", "OAuth2/OIDC", "Jest", "Postman", "SonarQube", "Zero Trust", "OWASP Top 10"].map((tech) => (
-                  <span key={tech} className="tech-badge">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+          <div className="space-y-10">
+            {skillCategories.map((cat) => {
+              const advanced = cat.skills.filter((s) => s.level === "advanced");
+              const intermediate = cat.skills.filter((s) => s.level === "intermediate");
+              const familiar = cat.skills.filter((s) => s.level === "familiar");
+              return (
+                <div key={cat.category} className="feature-card group p-6">
+                  <h3 className="text-xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text text-center">
+                    {cat.category}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {advanced.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text">
+                            Advanced
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {advanced.map((skill) => (
+                            <span
+                              key={skill.name}
+                              className="px-2 py-1 rounded bg-orange-500/10 text-orange-300 border border-orange-500/40 font-mono text-xs font-semibold shadow-orange-500/30 shadow-sm"
+                            >
+                              {skill.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {intermediate.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text">
+                            Intermediate
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {intermediate.map((skill) => (
+                            <span
+                              key={skill.name}
+                              className="px-2 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/40 font-mono text-xs font-semibold shadow-blue-500/30 shadow-sm"
+                            >
+                              {skill.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {familiar.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text">
+                            Familiar
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {familiar.map((skill) => (
+                            <span
+                              key={skill.name}
+                              className="px-2 py-1 rounded bg-purple-500/10 text-purple-300 border border-purple-500/40 font-mono text-xs font-semibold shadow-purple-500/30 shadow-sm"
+                            >
+                              {skill.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 

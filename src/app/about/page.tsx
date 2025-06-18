@@ -26,81 +26,194 @@ export default function About() {
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
-            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Expertise</h2>
+            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Cyberpunk Skills Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
-                  title: "Backend Development",
-                  skills: "TypeScript, Node.js, NestJS, Express.js, RESTful APIs, RabbitMQ",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                      />
-                    </svg>
-                  ),
+                  category: "Programming Languages",
+                  skills: [
+                    { name: "TypeScript", level: "advanced" },
+                    { name: "JavaScript (ES6+)", level: "advanced" },
+                    { name: "Java", level: "intermediate" },
+                    { name: "C#", level: "intermediate" },
+                    { name: "Python", level: "intermediate" },
+                    { name: "Bash", level: "intermediate" },
+                    { name: "Go", level: "familiar" },
+                    { name: "Kotlin", level: "familiar" },
+                  ],
                 },
                 {
-                  title: "Cloud & DevOps",
-                  skills: "Azure, AWS, GCP, Kubernetes (AKS), Docker, GitLab CI/CD, Terraform, Helm",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                      />
-                    </svg>
-                  ),
+                  category: "Backend Frameworks",
+                  skills: [
+                    { name: "NestJS", level: "advanced" },
+                    { name: "Node.js", level: "advanced" },
+                    { name: "Express.js", level: "advanced" },
+                    { name: "Spring Boot", level: "intermediate" },
+                    { name: "Fastify", level: "familiar" },
+                    { name: "Deno", level: "familiar" },
+                    { name: "Fiber", level: "familiar" },
+                    { name: "Django", level: "familiar" },
+                  ],
                 },
                 {
-                  title: "Architecture & Infrastructure",
-                  skills: "Microservices, Event-Driven Architecture, Monorepo (Lerna/NX), High Availability",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                      />
-                    </svg>
-                  ),
+                  category: "Architecture Patterns",
+                  skills: [
+                    { name: "Microservices", level: "advanced" },
+                    { name: "Event-Driven Architecture", level: "advanced" },
+                    { name: "Monolithic Architecture", level: "intermediate" },
+                    { name: "API Gateway Pattern", level: "intermediate" },
+                    { name: "Domain-Driven Design", level: "familiar" },
+                  ],
                 },
                 {
-                  title: "Monitoring & Databases",
-                  skills: "PostgreSQL, MongoDB, Redis, Grafana, Prometheus, Redash, Observability",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
-                      />
-                    </svg>
-                  ),
+                  category: "APIs & Data Protocols",
+                  skills: [
+                    { name: "RESTful APIs", level: "advanced" },
+                    { name: "JSON", level: "advanced" },
+                    { name: "XML", level: "advanced" },
+                    { name: "gRPC", level: "advanced" },
+                    { name: "WebSockets", level: "advanced" },
+                    { name: "GraphQL", level: "familiar" },
+                    { name: "SOAP", level: "familiar" },
+                  ],
                 },
-              ].map((skill, index) => (
-                <motion.div
-                  key={skill.title}
-                  className="feature-card group"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="text-orange-500 group-hover:text-orange-400 transition-colors mb-4">{skill.icon}</div>
-                  <h3 className="text-xl font-bold mb-3 text-orange-500 group-hover:text-orange-400 transition-colors">
-                    {skill.title}
-                  </h3>
-                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors">{skill.skills}</p>
-                </motion.div>
+                {
+                  category: "Cloud Platforms",
+                  skills: [
+                    { name: "Azure (AKS, Key Vault, Blob, PostgreSQL Flexible Server)", level: "advanced" },
+                    { name: "AWS (ECS, S3, RDS)", level: "intermediate" },
+                    { name: "GCP", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "DevOps & Infrastructure",
+                  skills: [
+                    { name: "Kubernetes", level: "advanced" },
+                    { name: "Docker", level: "advanced" },
+                    { name: "GitLab CI/CD", level: "advanced" },
+                    { name: "Terraform", level: "intermediate" },
+                    { name: "Helm", level: "intermediate" },
+                    { name: "GitHub Actions", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "Monitoring & Observability",
+                  skills: [
+                    { name: "Sentry", level: "advanced" },
+                    { name: "Azure Monitor", level: "advanced" },
+                    { name: "Redash", level: "advanced" },
+                    { name: "Grafana/Prometheus", level: "advanced" },
+                    { name: "K8s Lens", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "Databases, ORMs & Caching",
+                  skills: [
+                    { name: "PostgreSQL", level: "advanced" },
+                    { name: "TypeORM", level: "advanced" },
+                    { name: "MongoDB", level: "advanced" },
+                    { name: "Mongoose", level: "advanced" },
+                    { name: "Redis", level: "advanced" },
+                    { name: "Sequelize", level: "familiar" },
+                    { name: "Prisma", level: "familiar" },
+                    { name: "Drizzle", level: "familiar" },
+                  ],
+                },
+                {
+                  category: "Messaging & Streaming",
+                  skills: [
+                    { name: "RabbitMQ", level: "advanced" },
+                    { name: "Redis Pub/Sub", level: "advanced" },
+                    { name: "Apache Kafka", level: "intermediate" },
+                    { name: "Azure Service Bus", level: "intermediate" },
+                    { name: "Azure Event Grid", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "Security Standards",
+                  skills: [
+                    { name: "JWT", level: "advanced" },
+                    { name: "API Security", level: "advanced" },
+                    { name: "Zero Trust Architecture", level: "advanced" },
+                    { name: "OAuth2/OpenID Connect (OIDC)", level: "advanced" },
+                    { name: "OWASP", level: "intermediate" },
+                    { name: "The 12-Factor App", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "Testing & Quality Assurance",
+                  skills: [
+                    { name: "Jest", level: "advanced" },
+                    { name: "Postman", level: "advanced" },
+                    { name: "Unit/Integration/End-to-End Testing", level: "advanced" },
+                    { name: "SonarQube", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "Tools & Platforms",
+                  skills: [
+                    { name: "Git (GitFlow)", level: "advanced" },
+                    { name: "GitLab", level: "advanced" },
+                    { name: "VS Code", level: "advanced" },
+                    { name: "Cursor AI", level: "advanced" },
+                    { name: "WebStorm", level: "advanced" },
+                    { name: "Docker Hub", level: "advanced" },
+                    { name: "Jira", level: "intermediate" },
+                    { name: "Confluence", level: "intermediate" },
+                    { name: "Figma", level: "intermediate" },
+                    { name: "Miro", level: "intermediate" },
+                  ],
+                },
+                {
+                  category: "AI & Machine Learning",
+                  skills: [
+                    { name: "Google AI Studio", level: "familiar" },
+                    { name: "Fine-tuning Models (Gemini-1.5-flash, Ollama)", level: "familiar" },
+                    { name: "AI Agents (N8N)", level: "familiar" },
+                  ],
+                },
+              ].map((cat, idx) => (
+                <div key={cat.category} className="mb-6">
+                  <h3 className="text-xl font-bold mb-3 text-orange-500 font-cyberpunk glow-text">{cat.category}</h3>
+                  <ul className="space-y-2">
+                    {cat.skills.map((skill) => (
+                      <li key={skill.name} className="flex items-center gap-3">
+                        <span className="text-gray-300 font-medium">{skill.name}</span>
+                        <span
+                          className={
+                            skill.level === "advanced"
+                              ? "px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text"
+                              : skill.level === "intermediate"
+                                ? "px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text"
+                                : "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
+                          }
+                        >
+                          {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
+                        </span>
+                        <div className="flex-1 ml-2">
+                          <div className="w-full bg-gray-800 rounded-full h-1.5">
+                            <motion.div
+                              className={
+                                skill.level === "advanced"
+                                  ? "bg-orange-500 h-1.5 rounded-full shadow-orange-500/50 shadow-md"
+                                  : skill.level === "intermediate"
+                                    ? "bg-blue-500 h-1.5 rounded-full shadow-blue-500/50 shadow-md"
+                                    : "bg-purple-500 h-1.5 rounded-full shadow-purple-500/50 shadow-md"
+                              }
+                              initial={{ width: 0 }}
+                              animate={{
+                                width: skill.level === "advanced" ? "100%" : skill.level === "intermediate" ? "66%" : "33%",
+                              }}
+                              transition={{ duration: 0.8, delay: 0.2 + idx * 0.1 }}
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </motion.section>
