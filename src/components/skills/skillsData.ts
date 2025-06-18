@@ -42,11 +42,11 @@ export const skillCategories: SkillCategory[] = [
   {
     category: "Cloud & DevOps",
     skills: [
-      { name: "Azure (AKS, Key Vault, Blob, PostgreSQL Flexible Server)", level: "advanced" },
+      { name: "Azure", level: "advanced" },
       { name: "Kubernetes", level: "advanced" },
       { name: "Docker", level: "advanced" },
       { name: "GitLab CI/CD", level: "advanced" },
-      { name: "AWS (ECS, S3, RDS)", level: "intermediate" },
+      { name: "AWS", level: "intermediate" },
       { name: "GCP", level: "intermediate" },
       { name: "Terraform", level: "intermediate" },
       { name: "Helm", level: "intermediate" },

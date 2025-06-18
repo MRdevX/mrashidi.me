@@ -125,7 +125,7 @@ export default function Home() {
         {/* Tech Stack Section */}
         <motion.div className="mb-16" variants={item}>
           <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Tech Stack</h2>
-          <div className="space-y-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {skillCategories.map((cat) => {
               const advanced = cat.skills.filter((s) => s.level === "advanced");
               const intermediate = cat.skills.filter((s) => s.level === "intermediate");
