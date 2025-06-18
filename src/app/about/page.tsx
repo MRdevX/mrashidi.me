@@ -39,14 +39,16 @@ export default function About() {
                         <span className="text-gray-200 font-medium whitespace-nowrap">{skill.name}</span>
                         <span
                           className={
-                            skill.level === "advanced"
+                            skill.level === "expert"
                               ? "px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text"
-                              : skill.level === "intermediate"
+                              : skill.level === "proficient"
                                 ? "px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text"
-                                : "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
+                                : skill.level === "experienced"
+                                  ? "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
+                                  : ""
                           }
                         >
-                          {skill.level.charAt(0).toUpperCase() + skill.level.slice(1)}
+                          {skill.level ? skill.level.charAt(0).toUpperCase() + skill.level.slice(1) : ""}
                         </span>
                       </li>
                     ))}

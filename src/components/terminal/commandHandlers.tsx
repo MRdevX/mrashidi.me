@@ -30,33 +30,50 @@ export const handleCommand = (command: CommandType): string | ReactElement => {
       return (
         <pre className="font-mono text-sm text-gray-200 mt-2 whitespace-pre-wrap">
           {skillCategories.map((cat) => {
-            const advanced = cat.skills.filter((s) => s.level === "advanced");
-            const intermediate = cat.skills.filter((s) => s.level === "intermediate");
-            const familiar = cat.skills.filter((s) => s.level === "familiar");
+            const expert = cat.skills.filter((s) => s.level === "expert");
+            const proficient = cat.skills.filter((s) => s.level === "proficient");
+            const experienced = cat.skills.filter((s) => s.level === "experienced");
+            const noLevel = cat.skills.filter((s) => !s.level);
             return [
               <span key={cat.category + "-cat"} className="text-orange-400">
                 {cat.category + "\n"}
               </span>,
-              <span key={cat.category + "-adv"} className="text-green-400">
-                {" "}
-                Advanced:{" "}
-              </span>,
-              advanced.map((s) => s.name).join(", ") || "-",
-              "\n",
-              <span key={cat.category + "-int"} className="text-green-400">
-                {" "}
-                Intermediate:
-              </span>,
-              " ",
-              intermediate.map((s) => s.name).join(", ") || "-",
-              "\n",
-              <span key={cat.category + "-fam"} className="text-green-400">
-                {" "}
-                Familiar:{" "}
-              </span>,
-              familiar.map((s) => s.name).join(", ") || "-",
-              "\n----------------------------------------\n",
-            ];
+              expert.length > 0 && [
+                <span key={cat.category + "-exp"} className="text-green-400">
+                  {" "}
+                  Expert:{" "}
+                </span>,
+                expert.map((s) => s.name).join(", "),
+                "\n",
+              ],
+              proficient.length > 0 && [
+                <span key={cat.category + "-prof"} className="text-green-400">
+                  {" "}
+                  Proficient:{" "}
+                </span>,
+                proficient.map((s) => s.name).join(", "),
+                "\n",
+              ],
+              experienced.length > 0 && [
+                <span key={cat.category + "-exp"} className="text-green-400">
+                  {" "}
+                  Experienced:{" "}
+                </span>,
+                experienced.map((s) => s.name).join(", "),
+                "\n",
+              ],
+              noLevel.length > 0 && [
+                <span key={cat.category + "-tools"} className="text-green-400">
+                  {" "}
+                  Tools:{" "}
+                </span>,
+                noLevel.map((s) => s.name).join(", "),
+                "\n",
+              ],
+              "----------------------------------------\n",
+            ]
+              .flat()
+              .filter(Boolean);
           })}
         </pre>
       );
