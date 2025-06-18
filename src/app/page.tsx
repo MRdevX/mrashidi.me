@@ -5,6 +5,7 @@ import { useEffect, useState, Suspense, lazy } from "react";
 import Link from "next/link";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
 import { skillCategories } from "@/components/skills/skillsData";
+import personalInfo from "@/data/personalInfo";
 
 // Lazy load heavy components
 const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
@@ -40,15 +41,10 @@ export default function Home() {
         <motion.div className="text-center mb-12 glass-card p-8 relative overflow-hidden" variants={item}>
           <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent opacity-50" />
           <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
-            Mahdi Rashidi
+            {personalInfo.name}
           </h1>
-          <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">
-            Senior Backend Engineer & Cloud Architect
-          </p>
-          <p className="text-lg text-gray-400 mb-6 relative z-10 max-w-2xl mx-auto">
-            Experienced in building scalable cloud-native applications and microservices architectures. Passionate about
-            DevOps practices and optimizing cloud infrastructure for performance and cost efficiency.
-          </p>
+          <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
+          <p className="text-lg text-gray-400 mb-6 relative z-10 max-w-2xl mx-auto">{personalInfo.summary}</p>
           <p className="text-lg text-gray-400 mb-8 relative z-10 flex items-center justify-center gap-2">
             <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -59,12 +55,12 @@ export default function Home() {
               />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            Berlin, Germany
+            {personalInfo.location}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 relative z-10">
             <motion.a
-              href="mailto:contact@mrashidi.me"
+              href={`mailto:${personalInfo.email}`}
               className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -76,7 +72,7 @@ export default function Home() {
               Email
             </motion.a>
             <motion.a
-              href="https://github.com/mrdevx"
+              href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
               className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
@@ -89,7 +85,7 @@ export default function Home() {
               GitHub
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/deerashidi"
+              href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center"
@@ -221,12 +217,9 @@ export default function Home() {
           <div className="glass-card p-8 md:p-12 border border-orange-500/10 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <h2 className="text-2xl md:text-3xl font-bold text-orange-500 font-cyberpunk glow-text mb-6">
-              Ready to Discuss Your Next Project?
+              {personalInfo.contactCta}
             </h2>
-            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              Looking for a backend engineer who can bring your ideas to life? Let&apos;s connect and discuss how we can work
-              together to create scalable, efficient solutions for your business.
-            </p>
+            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">{personalInfo.contactDescription}</p>
             <Link href="/contact" className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group">
               <span>Get In Touch</span>
               <svg
