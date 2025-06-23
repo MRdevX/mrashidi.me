@@ -33,6 +33,8 @@ const skillCategories: SkillCategory[] = [
       { name: "Express", level: "proficient" },
       { name: "Spring Boot", level: "experienced" },
       { name: "FastAPI", level: "experienced" },
+      { name: "Django", level: "experienced" },
+      { name: "Flask", level: "experienced" },
       { name: "Deno", level: "experienced" },
     ],
   },

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/MRdevX/mrashidi.me/compare/v0.1.8...v0.1.9) (2025-06-23)
+
+
+### Features
+
+* enhance About component with animated skill category display ([7afb5d2](https://github.com/MRdevX/mrashidi.me/commit/7afb5d28ff2c6d5a53257625709397b2ce3844fb))
+* enhance blog post links with navigation ([ab44836](https://github.com/MRdevX/mrashidi.me/commit/ab44836f013230d8aecaec83944f8c888b7d2c43))
+* enhance personal information integration in Home component ([a174d49](https://github.com/MRdevX/mrashidi.me/commit/a174d49155c214b5d14d72b1a25efc669f8a24d7))
+* implement architecture improvements for enhanced maintainability and developer experience ([830a542](https://github.com/MRdevX/mrashidi.me/commit/830a542ec531c598b0753f44b62e99a7a0decb15))
+* integrate personal information into layout and about sections ([0e07a90](https://github.com/MRdevX/mrashidi.me/commit/0e07a90b0cfe70e4ae6ded28c4279022fecfdd7e))
+* refactor skills display and enhance data structure ([e4c24f6](https://github.com/MRdevX/mrashidi.me/commit/e4c24f63ecf5bcd803eba57dad48946edc34153a))
+* restructure personal and education data ([a382da0](https://github.com/MRdevX/mrashidi.me/commit/a382da0f1d779b54fbc36292e1a9465a0606cd6f))
+* update About component to utilize new data structures for skills and education ([ce64237](https://github.com/MRdevX/mrashidi.me/commit/ce642375d4de1584c11d64e55ecbd2e563b879b2))
+* update personalInfo summary and intro ([b5ea54c](https://github.com/MRdevX/mrashidi.me/commit/b5ea54cb8724d46c307bf20176a6a15e9a25a144))
+* updated handleCommand to fetch recent blog posts asynchronously. ([abc8068](https://github.com/MRdevX/mrashidi.me/commit/abc8068f84391e6bf8198850bdc31473a0794b52))
+
 ### [0.1.8](https://github.com/MRdevX/mrashidi.me/compare/v0.1.6...v0.1.8) (2025-06-12)
 
 ### [0.1.7](https://github.com/MRdevX/mrashidi.me/compare/v0.1.6...v0.1.7) (2025-06-12)
