@@ -3,10 +3,10 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { motion } from "framer-motion";
 import Script from "next/script";
-import { FormData, FormErrors, SubmitStatus } from './types';
-import { validateForm } from './validation';
-import FormInput from './FormInput';
-import StatusMessage from './StatusMessage';
+import { FormData, FormErrors, SubmitStatus } from "./types";
+import { validateForm } from "./validation";
+import FormInput from "./FormInput";
+import StatusMessage from "./StatusMessage";
 
 declare global {
   interface Window {
@@ -43,20 +43,18 @@ export default function ContactForm() {
   const executeRecaptcha = async (): Promise<string> => {
     try {
       await window.grecaptcha.ready(() => {});
-      const token = await window.grecaptcha.execute(siteKey!, { action: 'submit' });
+      const token = await window.grecaptcha.execute(siteKey!, { action: "submit" });
       return token;
     } catch (error) {
-      console.error('Error executing reCAPTCHA:', error);
-      throw new Error('Failed to verify reCAPTCHA');
+      console.error("Error executing reCAPTCHA:", error);
+      throw new Error("Failed to verify reCAPTCHA");
     }
   };
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
+
     // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors({ ...errors, [name]: undefined });
@@ -65,22 +63,22 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     // Reset status
     setSubmitStatus({ type: null, message: "" });
-    
+
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Execute reCAPTCHA and get token
       const recaptchaToken = await executeRecaptcha();
-      
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -88,7 +86,7 @@ export default function ContactForm() {
         },
         body: JSON.stringify({
           ...formData,
-          recaptchaToken
+          recaptchaToken,
         }),
       });
 
@@ -138,10 +136,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
-        strategy="lazyOnload"
-      />
+      <Script src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`} strategy="lazyOnload" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -149,7 +144,7 @@ export default function ContactForm() {
         className="glass-card p-6 sm:p-8"
       >
         <StatusMessage status={submitStatus} />
-        
+
         <form onSubmit={handleSubmit} noValidate className="space-y-6" aria-label="Contact form">
           <FormInput
             id="name"
@@ -196,11 +191,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 px-4 rounded-md font-medium transition-colors ${
-              isSubmitting
-                ? "bg-gray-700 cursor-not-allowed"
-                : "bg-orange-500 hover:bg-orange-600"
-            }`}
+            className={`neon-button w-full ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             {isSubmitting ? "Sending..." : "Send Message"}
           </button>
@@ -208,4 +199,4 @@ export default function ContactForm() {
       </motion.div>
     </>
   );
-} 
+}

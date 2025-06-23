@@ -109,7 +109,7 @@ export default function Resume() {
           </motion.h1>
           <motion.a
             href="/cv/Mahdi_Rashidi_CV.pdf"
-            className="w-full sm:w-auto px-4 sm:px-6 py-3 glass-card text-orange-500 rounded-lg hover:text-orange-400 hover:border-orange-500/40 transition-all duration-300 flex items-center justify-center space-x-2"
+            className="neon-button w-full sm:w-auto flex items-center justify-center space-x-2"
             target="_blank"
             variants={item}
             whileHover={{ scale: 1.05 }}
