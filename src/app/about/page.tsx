@@ -27,10 +27,18 @@ export default function About() {
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {skillCategories.map((cat) => (
-                <div key={cat.category} className="mb-6">
-                  <h3 className="text-xl font-bold mb-3 text-orange-500 font-cyberpunk glow-text">{cat.category}</h3>
-                  <ul className="flex flex-wrap gap-2">
+              {skillCategories.map((cat, index) => (
+                <motion.div
+                  key={cat.category}
+                  className="feature-card group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                >
+                  <h3 className="text-xl font-bold mb-3 text-orange-500 font-cyberpunk glow-text relative z-10">
+                    {cat.category}
+                  </h3>
+                  <ul className="flex flex-wrap gap-2 relative z-10">
                     {cat.skills.map((skill) => (
                       <li
                         key={skill.name}
@@ -53,7 +61,7 @@ export default function About() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.section>
