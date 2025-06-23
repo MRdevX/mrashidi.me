@@ -9,6 +9,7 @@ export default function Terminal() {
   const [input, setInput] = useState("");
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyPosition, setHistoryPosition] = useState(-1);
+  const [isExecuting, setIsExecuting] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,28 +26,58 @@ export default function Terminal() {
     inputRef.current?.focus();
   }, []);
 
-  const executeCommand = (cmd: string) => {
+  const executeCommand = async (cmd: string) => {
     const command = cmd.toLowerCase().trim() as CommandType;
-    const output = handleCommand(command);
 
+    // Add command to list immediately with loading state
+    const commandIndex = commands.length;
     setCommands((prev) => [
       ...prev,
       {
         input: cmd,
-        output,
+        output: command === "blog" ? "Loading blog posts..." : "Executing command...",
         timestamp: new Date(),
       },
     ]);
 
-    if (command !== "clear") {
-      setCommandHistory((prev) => [...prev, cmd]);
-    } else {
-      setCommands([]);
+    setIsExecuting(true);
+
+    try {
+      const output = await handleCommand(command);
+
+      // Update the command output
+      setCommands((prev) => {
+        const newCommands = [...prev];
+        newCommands[commandIndex] = {
+          ...newCommands[commandIndex],
+          output,
+        };
+        return newCommands;
+      });
+
+      if (command !== "clear") {
+        setCommandHistory((prev) => [...prev, cmd]);
+      } else {
+        setCommands([]);
+      }
+    } catch (error) {
+      console.error("Command execution error:", error);
+      // Update the command output with error
+      setCommands((prev) => {
+        const newCommands = [...prev];
+        newCommands[commandIndex] = {
+          ...newCommands[commandIndex],
+          output: "Error executing command. Please try again.",
+        };
+        return newCommands;
+      });
+    } finally {
+      setIsExecuting(false);
     }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && input.trim()) {
+    if (e.key === "Enter" && input.trim() && !isExecuting) {
       executeCommand(input);
       setInput("");
       setHistoryPosition(-1);
@@ -75,10 +106,7 @@ export default function Terminal() {
   };
 
   return (
-    <div
-      ref={terminalRef}
-      className="w-full h-[600px] bg-black/90 rounded-lg p-4 font-mono text-sm overflow-y-auto"
-    >
+    <div ref={terminalRef} className="w-full h-[600px] bg-black/90 rounded-lg p-4 font-mono text-sm overflow-y-auto">
       <div className="space-y-2">
         <AnimatePresence>
           {commands.map((command, index) => (
@@ -102,8 +130,9 @@ export default function Terminal() {
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          className="flex-1 bg-transparent border-none outline-none text-gray-300"
-          placeholder="Type 'help' for available commands..."
+          disabled={isExecuting}
+          className="flex-1 bg-transparent border-none outline-none text-gray-300 disabled:opacity-50"
+          placeholder={isExecuting ? "Executing command..." : "Type 'help' for available commands..."}
         />
       </div>
     </div>

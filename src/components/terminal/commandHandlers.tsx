@@ -2,8 +2,9 @@ import { ReactElement } from "react";
 import { CommandType, AVAILABLE_COMMANDS } from "./types";
 import { skillCategories } from "@/components/skills/skillsData";
 import personalInfo from "@/data/personalInfo";
+import { blogService } from "@/services/blogService";
 
-export const handleCommand = (command: CommandType): string | ReactElement => {
+export const handleCommand = async (command: CommandType): Promise<string | ReactElement> => {
   switch (command) {
     case "help":
       return (
@@ -217,23 +218,54 @@ export const handleCommand = (command: CommandType): string | ReactElement => {
       );
 
     case "blog":
-      return (
-        <div className="mt-2">
-          <p className="mb-4">Visit my blog for articles on backend development and cloud architecture:</p>
-          <a href="/blog" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
-            mrashidi.me/blog
-          </a>
-          <div className="mt-4 space-y-2">
-            <p className="text-orange-500 font-bold">Recent Articles:</p>
-            <ul className="space-y-1">
-              <li className="text-gray-400">• Building Scalable Microservices with NestJS</li>
-              <li className="text-gray-400">• Optimizing Cloud Costs in Kubernetes</li>
-              <li className="text-gray-400">• Real-time Data Processing with WebSockets</li>
-              <li className="text-gray-400">• Security Best Practices for Node.js Applications</li>
-            </ul>
+      try {
+        const response = await blogService.getBlogPosts(1, 5);
+        return (
+          <div className="mt-2">
+            <p className="mb-4">Visit my blog for articles on backend development and cloud architecture:</p>
+            <a href="/blog" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
+              mrashidi.me/blog
+            </a>
+            <div className="mt-4 space-y-2">
+              <p className="text-orange-500 font-bold">Recent Articles:</p>
+              {response.posts.length > 0 ? (
+                <ul className="space-y-1">
+                  {response.posts.map((post) => (
+                    <li key={post.url} className="text-gray-400">
+                      •{" "}
+                      <a
+                        href={post.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-green-400 hover:underline"
+                      >
+                        {post.title}
+                      </a>
+                      <span className="text-gray-500 text-xs ml-2">({new Date(post.publishedAt).toLocaleDateString()})</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500">No recent articles found.</p>
+              )}
+            </div>
           </div>
-        </div>
-      );
+        );
+      } catch (error) {
+        console.error("Failed to fetch blog posts:", error);
+        return (
+          <div className="mt-2">
+            <p className="mb-4">Visit my blog for articles on backend development and cloud architecture:</p>
+            <a href="/blog" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:underline">
+              mrashidi.me/blog
+            </a>
+            <div className="mt-4 space-y-2">
+              <p className="text-orange-500 font-bold">Recent Articles:</p>
+              <p className="text-red-500">Failed to load recent articles. Please visit the blog page.</p>
+            </div>
+          </div>
+        );
+      }
 
     default:
       return 'Command not found. Type "help" for available commands.';
