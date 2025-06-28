@@ -1,4 +1,4 @@
-export type SkillLevel = "expert" | "proficient" | "experienced";
+export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 
 export interface Skill {
   name: string;
@@ -17,12 +17,11 @@ const skillCategories: SkillCategory[] = [
       { name: "TypeScript", level: "expert" },
       { name: "JavaScript (ES6+)", level: "expert" },
       { name: "Java", level: "proficient" },
-      { name: "Python", level: "proficient" },
-      { name: "C#", level: "proficient" },
-      { name: "Bash", level: "proficient" },
-      { name: "Go", level: "experienced" },
-      { name: "Kotlin", level: "experienced" },
-      { name: "Rust", level: "experienced" },
+      { name: "C#", level: "experienced" },
+      { name: "C++", level: "experienced" },
+      { name: "Python", level: "familiar" },
+      { name: "Kotlin", level: "familiar" },
+      { name: "Go", level: "familiar" },
     ],
   },
   {
@@ -30,12 +29,11 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "NestJS", level: "expert" },
       { name: "Node.js", level: "expert" },
-      { name: "Express", level: "proficient" },
+      { name: "Express", level: "expert" },
       { name: "Spring Boot", level: "experienced" },
-      { name: "FastAPI", level: "experienced" },
-      { name: "Django", level: "experienced" },
-      { name: "Flask", level: "experienced" },
-      { name: "Deno", level: "experienced" },
+      { name: "ASP.NET", level: "experienced" },
+      { name: "Django", level: "familiar" },
+      { name: "Flask", level: "familiar" },
     ],
   },
   {
@@ -57,13 +55,15 @@ const skillCategories: SkillCategory[] = [
       { name: "API Gateway", level: "expert" },
       { name: "Domain-Driven Design (DDD)", level: "expert" },
       { name: "Serverless", level: "expert" },
+      { name: "Monorepos", level: "expert" },
     ],
   },
   {
     category: "Cloud Platforms",
     skills: [
       { name: "Azure (AKS, Key Vault, Blob Storage)", level: "expert" },
-      { name: "AWS (Lambda, ECS, S3, RDS, DynamoDB)", level: "experienced" },
+      { name: "AWS (Fargate, Lambda, ECS, S3, RDS, DynamoDB)", level: "experienced" },
+      { name: "GCP", level: "experienced" },
     ],
   },
   {
@@ -71,10 +71,11 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Kubernetes", level: "expert" },
       { name: "Docker", level: "expert" },
-      { name: "Terraform", level: "expert" },
       { name: "GitLab CI/CD", level: "expert" },
-      { name: "Helm", level: "proficient" },
-      { name: "GitHub Actions", level: "proficient" },
+      { name: "Linux", level: "expert" },
+      { name: "Terraform", level: "experienced" },
+      { name: "Helm", level: "experienced" },
+      { name: "GitHub Actions", level: "experienced" },
     ],
   },
   {
@@ -95,17 +96,19 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "RabbitMQ", level: "expert" },
       { name: "Redis Pub/Sub", level: "expert" },
-      { name: "Apache Kafka", level: "proficient" },
-      { name: "Azure Service Bus", level: "proficient" },
+      { name: "Azure Service Bus", level: "experienced" },
       { name: "AWS SQS/SNS", level: "experienced" },
+      { name: "Apache Kafka", level: "familiar" },
     ],
   },
   {
     category: "Observability",
     skills: [
-      { name: "Prometheus/Grafana", level: "expert" },
+      { name: "Azure Monitor", level: "expert" },
       { name: "Sentry", level: "expert" },
-      { name: "Azure Monitor", level: "proficient" },
+      { name: "Prometheus/Grafana", level: "experienced" },
+      { name: "CloudWatch", level: "experienced" },
+      { name: "Fresh Ping", level: "experienced" },
     ],
   },
   {
@@ -113,8 +116,8 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Jest", level: "expert" },
       { name: "Unit/Integration Testing", level: "expert" },
-      { name: "Postman", level: "proficient" },
-      { name: "End-to-End Testing", level: "proficient" },
+      { name: "Postman Automated Tests", level: "experienced" },
+      { name: "End-to-End Testing", level: "experienced" },
     ],
   },
   {
@@ -131,22 +134,23 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Frontend Skills",
     skills: [
-      { name: "React (Hooks, Context API)", level: "experienced" },
-      { name: "Next.js (App Router, API Routes)", level: "experienced" },
-      { name: "HTML5/CSS3", level: "experienced" },
+      { name: "React (Hooks, Context API)", level: "familiar" },
+      { name: "Next.js (App Router, API Routes)", level: "familiar" },
+      { name: "HTML5/CSS3", level: "familiar" },
     ],
   },
   {
     category: "AI Development",
     skills: [
-      { name: "LLM APIs (Gemini, OpenAI)", level: "proficient" },
-      { name: "Fine-tuning", level: "experienced" },
+      { name: "LLM APIs (Gemini, OpenAI)", level: "experienced" },
+      { name: "Fine-tuning", level: "familiar" },
     ],
   },
   {
     category: "Tools",
     skills: [
       { name: "Git" },
+      { name: "Linux Distros" },
       { name: "Cursor AI" },
       { name: "K8s Lens" },
       { name: "Jira" },

@@ -34,6 +34,7 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
             const expert = cat.skills.filter((s) => s.level === "expert");
             const proficient = cat.skills.filter((s) => s.level === "proficient");
             const experienced = cat.skills.filter((s) => s.level === "experienced");
+            const familiar = cat.skills.filter((s) => s.level === "familiar");
             const noLevel = cat.skills.filter((s) => !s.level);
             return [
               <span key={cat.category + "-cat"} className="text-orange-400">
@@ -61,6 +62,14 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
                   Experienced:{" "}
                 </span>,
                 experienced.map((s) => s.name).join(", "),
+                "\n",
+              ],
+              familiar.length > 0 && [
+                <span key={cat.category + "-fam"} className="text-green-400">
+                  {" "}
+                  Familiar:{" "}
+                </span>,
+                familiar.map((s) => s.name).join(", "),
                 "\n",
               ],
               noLevel.length > 0 && [

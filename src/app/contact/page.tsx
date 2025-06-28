@@ -61,6 +61,66 @@ export default function Contact() {
             </section>
           </div>
         </motion.div>
+
+        <motion.div
+          className="mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <h2 className="text-2xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">
+            My Mentorship Impact & Reviews
+          </h2>
+          <p className="text-gray-400 mb-6">
+            See what others have said about their mentorship sessions and the impact we&apos;ve made together.
+          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="flex justify-center">
+              <section
+                style={{
+                  padding: "16px",
+                  height: "560px",
+                  boxShadow: "rgba(142, 151, 158, 0.15) 0px 4px 19px 0px",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  width: "100%",
+                  maxWidth: "650px",
+                }}
+              >
+                <iframe
+                  src="https://adplist.org/widgets/impact?src=mahdi-rashidi"
+                  title="ADPList Impact"
+                  width="100%"
+                  height="100%"
+                  loading="lazy"
+                  style={{ border: "0px" }}
+                />
+              </section>
+            </div>
+            <div className="flex justify-center">
+              <section
+                style={{
+                  padding: "16px",
+                  height: "560px",
+                  boxShadow: "rgba(142, 151, 158, 0.15) 0px 4px 19px 0px",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  width: "100%",
+                  maxWidth: "650px",
+                }}
+              >
+                <iframe
+                  src="https://adplist.org/widgets/reviews?src=mahdi-rashidi"
+                  title="ADPList Reviews"
+                  width="100%"
+                  height="100%"
+                  loading="lazy"
+                  style={{ border: "0px" }}
+                />
+              </section>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

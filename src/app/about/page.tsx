@@ -53,7 +53,9 @@ export default function About() {
                                 ? "px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text"
                                 : skill.level === "experienced"
                                   ? "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
-                                  : ""
+                                  : skill.level === "familiar"
+                                    ? "px-2 py-0.5 rounded-full text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-500 glow-text"
+                                    : ""
                           }
                         >
                           {skill.level ? skill.level.charAt(0).toUpperCase() + skill.level.slice(1) : ""}

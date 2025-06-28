@@ -126,6 +126,7 @@ export default function Home() {
               const expert = cat.skills.filter((s) => s.level === "expert");
               const proficient = cat.skills.filter((s) => s.level === "proficient");
               const experienced = cat.skills.filter((s) => s.level === "experienced");
+              const familiar = cat.skills.filter((s) => s.level === "familiar");
               const noLevel = cat.skills.filter((s) => !s.level);
               return (
                 <div key={cat.category} className="feature-card group p-6">
@@ -183,6 +184,25 @@ export default function Home() {
                             <span
                               key={skill.name}
                               className="px-2 py-1 rounded bg-purple-500/10 text-purple-300 border border-purple-500/40 font-mono text-xs font-semibold shadow-purple-500/30 shadow-sm"
+                            >
+                              {skill.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {familiar.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-500 glow-text">
+                            Familiar
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {familiar.map((skill) => (
+                            <span
+                              key={skill.name}
+                              className="px-2 py-1 rounded bg-gray-500/10 text-gray-300 border border-gray-500/40 font-mono text-xs font-semibold shadow-gray-500/30 shadow-sm"
                             >
                               {skill.name}
                             </span>

@@ -1,98 +1,115 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { skillCategories, type SkillLevel } from "@/data/skills";
 
-interface Skill {
-  name: string;
-  level: number;
-  category: string;
-  description: string;
-  relatedSkills: string[];
-}
+const getLevelColor = (level: SkillLevel) => {
+  switch (level) {
+    case "expert":
+      return "bg-green-500";
+    case "proficient":
+      return "bg-blue-500";
+    case "experienced":
+      return "bg-orange-500";
+    case "familiar":
+      return "bg-gray-500";
+    default:
+      return "bg-gray-400";
+  }
+};
 
-const skills: Skill[] = [
-  {
-    name: "Backend Development",
-    level: 95,
-    category: "Core",
-    description: "Extensive experience in building scalable backend systems",
-    relatedSkills: ["Node.js", "TypeScript", "Python", "Go"],
-  },
-  {
-    name: "Cloud & DevOps",
-    level: 90,
-    category: "Infrastructure",
-    description: "Expert in cloud architecture and DevOps practices",
-    relatedSkills: ["AWS", "Docker", "Kubernetes", "Terraform"],
-  },
-  {
-    name: "Database Design",
-    level: 85,
-    category: "Data",
-    description: "Proficient in designing and optimizing databases",
-    relatedSkills: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"],
-  },
-  // Add more skills here
-];
+const getLevelWidth = (level: SkillLevel) => {
+  switch (level) {
+    case "expert":
+      return 95;
+    case "proficient":
+      return 80;
+    case "experienced":
+      return 65;
+    case "familiar":
+      return 45;
+    default:
+      return 30;
+  }
+};
+
+const getLevelLabel = (level: SkillLevel) => {
+  switch (level) {
+    case "expert":
+      return "Expert";
+    case "proficient":
+      return "Proficient";
+    case "experienced":
+      return "Experienced";
+    case "familiar":
+      return "Familiar";
+    default:
+      return "Basic";
+  }
+};
 
 export default function SkillsTree() {
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
-  const categories = Array.from(new Set(skills.map((s) => s.category)));
 
   return (
     <div className="py-10">
-      {categories.map((category, categoryIndex) => (
+      {skillCategories.map((category, categoryIndex) => (
         <motion.div
-          key={category}
+          key={category.category}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: categoryIndex * 0.2 }}
+          transition={{ delay: categoryIndex * 0.1 }}
           className="mb-8"
         >
-          <h3 className="text-xl font-bold mb-4 glow-text">{category}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {skills
-              .filter((skill) => skill.category === category)
-              .map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  className={`feature-card ${selectedSkill === skill.name ? "ring-2 ring-orange-500/50" : ""}`}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => setSelectedSkill(selectedSkill === skill.name ? null : skill.name)}
-                  onMouseEnter={() => setHoveredSkill(skill.name)}
-                  onMouseLeave={() => setHoveredSkill(null)}
-                >
-                  <div className="flex justify-between items-center">
-                    <h4 className="font-semibold">{skill.name}</h4>
-                    <div className="relative w-20 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <motion.div
-                        className="absolute top-0 left-0 h-full bg-orange-500"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1, delay: index * 0.1 }}
-                      />
-                    </div>
-                  </div>
+          <motion.h3
+            className="text-xl font-bold mb-4 glow-text cursor-pointer"
+            onClick={() => setSelectedCategory(selectedCategory === category.category ? null : category.category)}
+            whileHover={{ scale: 1.02 }}
+          >
+            {category.category}
+          </motion.h3>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-hidden"
+            initial={false}
+            animate={{
+              height: selectedCategory === category.category ? "auto" : 0,
+              opacity: selectedCategory === category.category ? 1 : 0,
+            }}
+          >
+            {category.skills.map((skill, index) => (
+              <motion.div
+                key={skill.name}
+                className={`feature-card ${hoveredSkill === skill.name ? "ring-2 ring-orange-500/50" : ""}`}
+                whileHover={{ scale: 1.02 }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <h4 className="font-semibold text-sm">{skill.name}</h4>
+                  {skill.level && (
+                    <span className={`text-xs px-2 py-1 rounded-full text-white ${getLevelColor(skill.level)}`}>
+                      {getLevelLabel(skill.level)}
+                    </span>
+                  )}
+                </div>
 
-                  <motion.div
-                    initial={false}
-                    animate={{ height: selectedSkill === skill.name ? "auto" : 0 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="mt-4 text-gray-600 dark:text-gray-300">{skill.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {skill.relatedSkills.map((related, i) => (
-                        <span key={i} className={`tech-badge ${hoveredSkill === skill.name ? "scale-105" : ""}`}>
-                          {related}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-          </div>
+                {skill.level && (
+                  <div className="relative w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-2">
+                    <motion.div
+                      className={`absolute top-0 left-0 h-full ${getLevelColor(skill.level)}`}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${getLevelWidth(skill.level)}%` }}
+                      transition={{ duration: 1, delay: index * 0.1 }}
+                    />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
       ))}
     </div>
