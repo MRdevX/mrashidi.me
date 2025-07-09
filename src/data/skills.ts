@@ -19,7 +19,7 @@ const skillCategories: SkillCategory[] = [
       { name: "Java", level: "proficient" },
       { name: "C#", level: "experienced" },
       { name: "C++", level: "experienced" },
-      { name: "Python", level: "familiar" },
+      { name: "Python", level: "experienced" },
       { name: "Kotlin", level: "familiar" },
       { name: "Go", level: "familiar" },
     ],
