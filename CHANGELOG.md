@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/MRdevX/mrashidi.me/compare/v0.1.8...v0.1.10) (2025-07-21)
+
+
+### Features
+
+* add mentorship impact and reviews section to Contact component ([c4db0c6](https://github.com/MRdevX/mrashidi.me/commit/c4db0c65d6b33625f3277437eb80b9d500359ca7))
+* add the Contact component to include a section for booking mentorship ([96d1964](https://github.com/MRdevX/mrashidi.me/commit/96d1964ef3c68b05748cafc1a933883dab5b4070))
+* enhance About component with animated skill category display ([7afb5d2](https://github.com/MRdevX/mrashidi.me/commit/7afb5d28ff2c6d5a53257625709397b2ce3844fb))
+* enhance blog post links with navigation ([ab44836](https://github.com/MRdevX/mrashidi.me/commit/ab44836f013230d8aecaec83944f8c888b7d2c43))
+* enhance personal information integration in Home component ([a174d49](https://github.com/MRdevX/mrashidi.me/commit/a174d49155c214b5d14d72b1a25efc669f8a24d7))
+* enhance ProjectCard component with tech icons and additional project details ([8338b46](https://github.com/MRdevX/mrashidi.me/commit/8338b467d08842bb97d4dd990a00386217563438))
+* implement architecture improvements for enhanced maintainability and developer experience ([830a542](https://github.com/MRdevX/mrashidi.me/commit/830a542ec531c598b0753f44b62e99a7a0decb15))
+* integrate personal information into layout and about sections ([0e07a90](https://github.com/MRdevX/mrashidi.me/commit/0e07a90b0cfe70e4ae6ded28c4279022fecfdd7e))
+* refactor Projects component to utilize project data model and enhance project display ([bafb36e](https://github.com/MRdevX/mrashidi.me/commit/bafb36e6eb24fe821ca9715dba90acb3afaf64ab))
+* refactor skills display and enhance data structure ([e4c24f6](https://github.com/MRdevX/mrashidi.me/commit/e4c24f63ecf5bcd803eba57dad48946edc34153a))
+* restructure personal and education data ([a382da0](https://github.com/MRdevX/mrashidi.me/commit/a382da0f1d779b54fbc36292e1a9465a0606cd6f))
+* update About component to utilize new data structures for skills and education ([ce64237](https://github.com/MRdevX/mrashidi.me/commit/ce642375d4de1584c11d64e55ecbd2e563b879b2))
+* update personalInfo summary and intro ([b5ea54c](https://github.com/MRdevX/mrashidi.me/commit/b5ea54cb8724d46c307bf20176a6a15e9a25a144))
+* updated handleCommand to fetch recent blog posts asynchronously. ([abc8068](https://github.com/MRdevX/mrashidi.me/commit/abc8068f84391e6bf8198850bdc31473a0794b52))
+
+
+### Bug Fixes
+
+* add minimatch dependency to resolve TypeScript build error on Vercel ([b572d47](https://github.com/MRdevX/mrashidi.me/commit/b572d478667df0f35287d3d9994699e2a8e88663))
+
 ### [0.1.9](https://github.com/MRdevX/mrashidi.me/compare/v0.1.8...v0.1.9) (2025-06-23)
 
 
