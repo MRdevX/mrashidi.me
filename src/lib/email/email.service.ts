@@ -1,5 +1,6 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { IContactFormData, ITemplateConfig } from "./types";
+import { FormData as IContactFormData } from "@/types/forms";
+import { ITemplateConfig } from "./types";
 
 export class EmailService {
   private readonly sesClient: SESClient;

@@ -1,4 +1,4 @@
-import { SubmitStatus } from './types';
+import { SubmitStatus } from "@/types/forms";
 
 interface StatusMessageProps {
   status: SubmitStatus;
@@ -19,4 +19,4 @@ export default function StatusMessage({ status }: StatusMessageProps) {
       {status.message}
     </div>
   );
-} 
+}

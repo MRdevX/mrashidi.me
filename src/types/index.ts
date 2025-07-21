@@ -1,26 +1,7 @@
 // Core application types
 export * from "./blog";
 export * from "./api";
-
-// Form types
-export interface FormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-export interface FormErrors {
-  name?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-}
-
-export interface SubmitStatus {
-  type: "success" | "error" | null;
-  message: string;
-}
+export * from "./forms";
 
 // GitHub types
 export interface GitHubRepo {

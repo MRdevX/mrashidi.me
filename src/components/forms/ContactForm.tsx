@@ -3,7 +3,7 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { motion } from "framer-motion";
 import Script from "next/script";
-import { FormData, FormErrors, SubmitStatus } from "./types";
+import { FormData, FormErrors, SubmitStatus } from "@/types/forms";
 import { validateForm } from "./validation";
 import FormInput from "./FormInput";
 import StatusMessage from "./StatusMessage";

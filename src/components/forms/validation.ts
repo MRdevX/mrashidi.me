@@ -1,8 +1,8 @@
-import { FormData, FormErrors } from './types';
+import { FormData, FormErrors } from "@/types/forms";
 
 export const validateForm = (formData: FormData): FormErrors => {
   const errors: FormErrors = {};
-  
+
   // Name validation
   if (!formData.name.trim()) {
     errors.name = "Name is required";
@@ -29,4 +29,4 @@ export const validateForm = (formData: FormData): FormErrors => {
   }
 
   return errors;
-}; 
+};
