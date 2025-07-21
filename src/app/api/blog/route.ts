@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { parseString } from "xml2js";
 import { IBlogPost, IBlogAuthor, IMediumRssFeed } from "@/types/blog";
 import { cacheService } from "@/services/cacheService";
+import { ErrorHandler } from "@/lib/errors";
 
 const authors: IBlogAuthor[] = [
   {
@@ -196,7 +197,8 @@ export async function GET(request: Request) {
     const result = await BlogService.getAllPosts(page, limit);
     return NextResponse.json(result);
   } catch (error) {
-    console.error("Failed to fetch blog posts:", error);
-    return NextResponse.json({ error: "Failed to fetch blog posts" }, { status: 500 });
+    const appError = ErrorHandler.handle(error);
+    ErrorHandler.log(appError, "Blog API");
+    return NextResponse.json({ error: appError.message }, { status: appError.statusCode || 500 });
   }
 }

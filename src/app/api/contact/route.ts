@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { EmailService } from "@/lib/email/email.service";
+import { ErrorHandler } from "@/lib/errors";
 
 const RECAPTCHA_THRESHOLD = 0.5; // Minimum score to accept (0.0 to 1.0)
 
@@ -18,10 +19,7 @@ export async function POST(request: Request) {
 
     // Validate required fields
     if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
     // Verify reCAPTCHA
@@ -30,21 +28,15 @@ export async function POST(request: Request) {
       { method: "POST" }
     );
 
-    const recaptchaData = await recaptchaResponse.json() as RecaptchaResponse;
+    const recaptchaData = (await recaptchaResponse.json()) as RecaptchaResponse;
 
     if (!recaptchaData.success) {
-      return NextResponse.json(
-        { error: "reCAPTCHA verification failed" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "reCAPTCHA verification failed" }, { status: 400 });
     }
 
     // Check reCAPTCHA score
     if (recaptchaData.score < RECAPTCHA_THRESHOLD) {
-      return NextResponse.json(
-        { error: "Suspicious activity detected. Please try again." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Suspicious activity detected. Please try again." }, { status: 400 });
     }
 
     // Initialize email service
@@ -59,21 +51,13 @@ export async function POST(request: Request) {
     });
 
     if (!emailSent) {
-      return NextResponse.json(
-        { error: "Failed to send email" },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
     }
 
-    return NextResponse.json(
-      { message: "Message sent successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Message sent successfully" }, { status: 200 });
   } catch (error) {
-    console.error("Error processing contact form:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    const appError = ErrorHandler.handle(error);
+    ErrorHandler.log(appError, "Contact API");
+    return NextResponse.json({ error: appError.message }, { status: appError.statusCode || 500 });
   }
-} 
+}
