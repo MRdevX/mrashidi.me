@@ -25,8 +25,6 @@ import {
   SiMysql,
   SiJest,
   SiPostman,
-  SiHtml5,
-  SiCss3,
   SiJira,
   SiConfluence,
   SiNx,
@@ -35,9 +33,21 @@ import {
   SiPrometheus,
   SiGrafana,
   SiSentry,
+  SiCplusplus,
+  SiExpress,
+  SiSwagger,
+  SiAmazonapigateway,
+  SiAwslambda,
+  SiGitlab,
+  SiApachekafka,
+  SiTypeorm,
+  SiMongoose,
+  SiHibernate,
+  SiAmazoncloudwatch,
+  SiLens,
 } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
-import { FaAws, FaNetworkWired, FaNodeJs, FaTools } from "react-icons/fa";
+import { FaAws, FaNetworkWired, FaNodeJs, FaTools, FaHtml5, FaCss3, FaGit } from "react-icons/fa";
 import { TbBrandCSharp } from "react-icons/tb";
 import { DiMsqlServer } from "react-icons/di";
 import { IconType } from "react-icons";
@@ -96,8 +106,8 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   mssql: { Icon: DiMsqlServer, colorClass: "text-blue-800" },
   jest: { Icon: SiJest, colorClass: "text-red-500" },
   postman: { Icon: SiPostman, colorClass: "text-orange-500" },
-  html5: { Icon: SiHtml5, colorClass: "text-orange-500" },
-  css3: { Icon: SiCss3, colorClass: "text-blue-500" },
+  html5: { Icon: FaHtml5, colorClass: "text-orange-500" },
+  css3: { Icon: FaCss3, colorClass: "text-blue-500" },
   jira: { Icon: SiJira, colorClass: "text-blue-500" },
   confluence: { Icon: SiConfluence, colorClass: "text-blue-400" },
   nx: { Icon: SiNx, colorClass: "text-gray-400" },
@@ -107,6 +117,23 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   grafana: { Icon: SiGrafana, colorClass: "text-orange-400" },
   sentry: { Icon: SiSentry, colorClass: "text-orange-500" },
   default: { Icon: FaTools, colorClass: "text-gray-400" },
+  amazonapigateway: { Icon: SiAmazonapigateway, colorClass: "text-yellow-700" },
+  amazoncloudwatch: { Icon: SiAmazoncloudwatch, colorClass: "text-purple-700" },
+  apachekafka: { Icon: SiApachekafka, colorClass: "text-black" },
+  awslambda: { Icon: SiAwslambda, colorClass: "text-orange-500" },
+  cplusplus: { Icon: SiCplusplus, colorClass: "text-blue-700" },
+  express: { Icon: SiExpress, colorClass: "text-gray-300" },
+  git: { Icon: FaGit, colorClass: "text-orange-600" },
+  gitlab: { Icon: SiGitlab, colorClass: "text-orange-600" },
+  hibernate: { Icon: SiHibernate, colorClass: "text-yellow-700" },
+  lens: { Icon: SiLens, colorClass: "text-blue-400" },
+  mongoose: { Icon: SiMongoose, colorClass: "text-red-700" },
+  swagger: { Icon: SiSwagger, colorClass: "text-green-500" },
+  typeorm: { Icon: SiTypeorm, colorClass: "text-red-600" },
+  // Aliases for skills that include logo names
+  k8slens: { Icon: SiLens, colorClass: "text-blue-400" }, // K8s Lens
+  jpa: { Icon: SiHibernate, colorClass: "text-yellow-700" }, // JPA uses Hibernate logo
+  serverless: { Icon: SiAwslambda, colorClass: "text-orange-500" }, // Serverless uses AWS Lambda
 };
 
 export function getTechIcon(iconKey: string) {
