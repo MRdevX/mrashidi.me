@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/MRdevX/mrashidi.me/compare/v0.1.10...v0.1.11) (2025-07-21)
+
+
+### Features
+
+* add new technology icons for JavaScript, TypeScript, Mongoose, and TypeORM ([9184baf](https://github.com/MRdevX/mrashidi.me/commit/9184baf81b04a3cadd30dfc3a1144c18f4a06edb))
+* enhance About and Home components with dynamic tech icons ([6ff8258](https://github.com/MRdevX/mrashidi.me/commit/6ff825879edb061cbc6a3fe9877d175b18ebfc23))
+* expand techIconMap with additional technology icons and update HTML/CSS icons ([39797fb](https://github.com/MRdevX/mrashidi.me/commit/39797fb7f7c8dfc1abb27e3bb6b8ea9e65a52e09))
+* refine skill categories by splitting combined skills into individual entries for clarity ([a4c9016](https://github.com/MRdevX/mrashidi.me/commit/a4c90162e1378cf8141c9c79dd4995b79058f1e1))
+* update Home and About components for improved clarity and visual representation ([b1ffe14](https://github.com/MRdevX/mrashidi.me/commit/b1ffe142194960029cef6fc9cff2c6be93f48d58))
+* update Home component to dynamically display main tech stack with icons ([4211520](https://github.com/MRdevX/mrashidi.me/commit/42115201cb8790180f008c98ca77a4321e5efebb))
+
 ### [0.1.10](https://github.com/MRdevX/mrashidi.me/compare/v0.1.8...v0.1.10) (2025-07-21)
 
 
