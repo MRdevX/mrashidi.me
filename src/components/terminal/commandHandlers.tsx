@@ -3,6 +3,7 @@ import { CommandType, AVAILABLE_COMMANDS } from "./types";
 import { skillCategories } from "@/components/skills/skillsData";
 import personalInfo from "@/data/personalInfo";
 import { blogService } from "@/services/blogService";
+import { projects } from "@/data/projects";
 
 export const handleCommand = async (command: CommandType): Promise<string | ReactElement> => {
   switch (command) {
@@ -91,30 +92,45 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
     case "projects":
       return (
         <div className="mt-2 space-y-4">
-          <div>
-            <p className="text-orange-500 font-bold">E-Mobility Services Platform</p>
-            <p className="text-gray-400">Cloud-native platform for EV charging services</p>
-            <p className="text-green-400 text-sm">Tech: Azure, Kubernetes, NestJS, TypeScript, PostgreSQL, RabbitMQ</p>
-            <p className="text-gray-400 text-sm">• Led GCP to Azure migration with zero downtime</p>
-            <p className="text-gray-400 text-sm">• Optimized cloud infrastructure costs</p>
-            <p className="text-gray-400 text-sm">• Implemented comprehensive observability stack</p>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold">Flight Operations Platform</p>
-            <p className="text-gray-400">Aviation operations and crew management system</p>
-            <p className="text-green-400 text-sm">Tech: Express.js, MongoDB, WebSocket, Redis</p>
-            <p className="text-gray-400 text-sm">• Built backend architecture from scratch</p>
-            <p className="text-gray-400 text-sm">• Developed offline sync system for flight crews</p>
-            <p className="text-gray-400 text-sm">• Integrated weather forecast APIs</p>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold">Mobile Banking & Payment Gateway</p>
-            <p className="text-gray-400">Banking services platform with POS integration</p>
-            <p className="text-green-400 text-sm">Tech: Express.js, MongoDB, REST/SOAP APIs</p>
-            <p className="text-gray-400 text-sm">• Migrated from Java to Node.js ecosystem</p>
-            <p className="text-gray-400 text-sm">• Improved security with AES encryption</p>
-            <p className="text-gray-400 text-sm">• Automated data migration with Python</p>
-          </div>
+          {projects.map((project, idx) => (
+            <div key={project.title + idx}>
+              <p className="text-orange-500 font-bold">{project.title}</p>
+              <p className="text-gray-400">{project.description}</p>
+              <p className="text-green-400 text-sm">Tech: {project.stack.join(", ")}</p>
+              <div className="flex gap-2 text-xs mt-1">
+                <span
+                  className={`px-2 py-0.5 rounded font-semibold ${project.visibility === "public" ? "bg-green-700 text-green-200" : "bg-gray-700 text-gray-300"}`}
+                >
+                  {project.visibility}
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded font-semibold ${project.type === "personal" ? "bg-blue-700 text-blue-200" : "bg-orange-700 text-orange-200"}`}
+                >
+                  {project.type}
+                </span>
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 text-orange-400 underline"
+                  >
+                    GitHub
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 text-green-400 underline"
+                  >
+                    Live
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       );
 
