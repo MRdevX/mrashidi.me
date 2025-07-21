@@ -4,6 +4,107 @@ import { motion } from "framer-motion";
 import personalInfo from "@/data/personalInfo";
 import skillCategories from "@/data/skills";
 import education from "@/data/education";
+import techIconMap, { getTechIcon } from "@/lib/techIconMap";
+
+// Helper to get color class for each icon
+const getIconColorClass = (iconKey: string) => {
+  switch (iconKey) {
+    case "react":
+      return "text-cyan-400";
+    case "nextjs":
+      return "text-black dark:text-white";
+    case "tailwindcss":
+      return "text-sky-400";
+    case "typescript":
+      return "text-blue-500";
+    case "framermotion":
+      return "text-pink-400";
+    case "nodejs":
+      return "text-green-600";
+    case "inquirerjs":
+      return "text-gray-400";
+    case "azure":
+      return "text-blue-500";
+    case "kubernetes":
+      return "text-blue-400";
+    case "nestjs":
+      return "text-rose-600";
+    case "postgresql":
+      return "text-blue-800";
+    case "redis":
+      return "text-red-500";
+    case "mongodb":
+      return "text-green-700";
+    case "docker":
+      return "text-blue-500";
+    case "aws":
+      return "text-yellow-500";
+    case "rabbitmq":
+      return "text-orange-500";
+    case "websocket":
+      return "text-gray-400";
+    case "javascript":
+      return "text-yellow-400";
+    case "java":
+      return "text-red-700";
+    case "csharp":
+      return "text-purple-700";
+    case "python":
+      return "text-yellow-300";
+    case "kotlin":
+      return "text-purple-400";
+    case "go":
+      return "text-cyan-500";
+    case "springboot":
+      return "text-green-500";
+    case "aspnet":
+      return "text-blue-700";
+    case "django":
+      return "text-green-700";
+    case "flask":
+      return "text-gray-400";
+    case "graphql":
+      return "text-pink-500";
+    case "gcp":
+      return "text-blue-400";
+    case "terraform":
+      return "text-purple-500";
+    case "helm":
+      return "text-blue-500";
+    case "githubactions":
+      return "text-blue-500";
+    case "mysql":
+      return "text-blue-500";
+    case "mssql":
+      return "text-blue-800";
+    case "jest":
+      return "text-red-500";
+    case "postman":
+      return "text-orange-500";
+    case "html5":
+      return "text-orange-500";
+    case "css3":
+      return "text-blue-500";
+    case "jira":
+      return "text-blue-500";
+    case "confluence":
+      return "text-blue-400";
+    case "nx":
+      return "text-gray-400";
+    case "miro":
+      return "text-pink-400";
+    case "figma":
+      return "text-pink-500";
+    case "prometheus":
+      return "text-orange-500";
+    case "grafana":
+      return "text-orange-400";
+    case "sentry":
+      return "text-orange-500";
+    default:
+      return "text-gray-400";
+  }
+};
 
 export default function About() {
   const fadeIn = {
@@ -39,29 +140,42 @@ export default function About() {
                     {cat.category}
                   </h3>
                   <ul className="flex flex-wrap gap-2 relative z-10">
-                    {cat.skills.map((skill) => (
-                      <li
-                        key={skill.name}
-                        className="flex items-center gap-2 px-3 py-1 rounded-lg bg-gray-800/70 hover:bg-gray-700/80 transition-colors"
-                      >
-                        <span className="text-gray-200 font-medium whitespace-nowrap">{skill.name}</span>
-                        <span
-                          className={
-                            skill.level === "expert"
-                              ? "px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text"
-                              : skill.level === "proficient"
-                                ? "px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text"
-                                : skill.level === "experienced"
-                                  ? "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
-                                  : skill.level === "familiar"
-                                    ? "px-2 py-0.5 rounded-full text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-500 glow-text"
-                                    : ""
-                          }
+                    {cat.skills.map((skill) => {
+                      let iconKey = skill.name
+                        .toLowerCase()
+                        .replace(/\s*\(.*\)/, "")
+                        .replace(/\./g, "")
+                        .replace(/\s+/g, "")
+                        .replace(/\+/, "p")
+                        .replace(/#/, "sharp");
+                      if (iconKey.includes("azure")) iconKey = "azure";
+                      if (iconKey === "aws") iconKey = "aws";
+                      const { Icon, colorClass } = getTechIcon(iconKey);
+                      return (
+                        <li
+                          key={skill.name}
+                          className="flex items-center gap-2 px-3 py-1 rounded-lg bg-gray-800/70 hover:bg-gray-700/80 transition-colors"
                         >
-                          {skill.level ? skill.level.charAt(0).toUpperCase() + skill.level.slice(1) : ""}
-                        </span>
-                      </li>
-                    ))}
+                          <Icon className={`w-5 h-5 ${colorClass}`} />
+                          <span className="text-gray-200 font-medium whitespace-nowrap">{skill.name}</span>
+                          <span
+                            className={
+                              skill.level === "expert"
+                                ? "px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text"
+                                : skill.level === "proficient"
+                                  ? "px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text"
+                                  : skill.level === "experienced"
+                                    ? "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
+                                    : skill.level === "familiar"
+                                      ? "px-2 py-0.5 rounded-full text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-500 glow-text"
+                                      : ""
+                            }
+                          >
+                            {skill.level ? skill.level.charAt(0).toUpperCase() + skill.level.slice(1) : ""}
+                          </span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </motion.div>
               ))}

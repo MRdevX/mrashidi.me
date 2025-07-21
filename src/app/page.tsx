@@ -6,50 +6,11 @@ import Link from "next/link";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
 import { skillCategories } from "@/components/skills/skillsData";
 import personalInfo from "@/data/personalInfo";
-import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiFramer,
-  SiKubernetes,
-  SiNestjs,
-  SiPostgresql,
-  SiRedis,
-  SiMongodb,
-  SiDocker,
-  SiRabbitmq,
-} from "react-icons/si";
-import { VscAzure } from "react-icons/vsc";
-import { FaAws, FaNetworkWired, FaNodeJs } from "react-icons/fa";
+import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 
 // Lazy load heavy components
 const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
 const Terminal = lazy(() => import("@/components/terminal/Terminal"));
-
-const techIconMap: Record<string, React.ReactNode> = {
-  react: <SiReact className="w-7 h-7 text-cyan-400" />,
-  nextjs: <SiNextdotjs className="w-7 h-7 text-black dark:text-white" />,
-  tailwindcss: <SiTailwindcss className="w-7 h-7 text-sky-400" />,
-  typescript: <SiTypescript className="w-7 h-7 text-blue-500" />,
-  framermotion: <SiFramer className="w-7 h-7 text-pink-400" />,
-  nodejs: <FaNodeJs className="w-7 h-7 text-green-600" />,
-  inquirerjs: (
-    <span className="w-7 h-7 inline-block" role="img" aria-label="Inquirer.js">
-      💬
-    </span>
-  ),
-  azure: <VscAzure className="w-7 h-7 text-blue-500" />,
-  kubernetes: <SiKubernetes className="w-7 h-7 text-blue-400" />,
-  nestjs: <SiNestjs className="w-7 h-7 text-rose-600" />,
-  postgresql: <SiPostgresql className="w-7 h-7 text-blue-800" />,
-  redis: <SiRedis className="w-7 h-7 text-red-500" />,
-  mongodb: <SiMongodb className="w-7 h-7 text-green-700" />,
-  docker: <SiDocker className="w-7 h-7 text-blue-500" />,
-  aws: <FaAws className="w-7 h-7 text-yellow-500" />,
-  rabbitmq: <SiRabbitmq className="w-7 h-7 text-orange-500" />,
-  websocket: <FaNetworkWired className="w-7 h-7 text-gray-400" />,
-};
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -188,15 +149,18 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Main Stack</h2>
           <div className="glass-card p-8 flex flex-col items-center border border-orange-500/20 shadow-lg rounded-xl">
             <div className="flex flex-wrap justify-center gap-6">
-              {uniqueMainStack.map((tech) => (
-                <div
-                  key={tech.name}
-                  className="flex flex-col items-center gap-2 p-3 rounded-lg bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
-                >
-                  {techIconMap[tech.iconKey]}
-                  <span className="text-xs text-gray-200 font-mono text-center mt-1">{tech.name}</span>
-                </div>
-              ))}
+              {uniqueMainStack.map((tech) => {
+                const { Icon, colorClass } = getTechIcon(tech.iconKey);
+                return (
+                  <div
+                    key={tech.name}
+                    className="flex flex-col items-center gap-2 p-3 rounded-lg bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
+                  >
+                    <Icon className={`w-10 h-10 ${colorClass}`} />
+                    <span className="text-xs text-gray-200 font-mono text-center mt-1">{tech.name}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </motion.div>

@@ -3,7 +3,7 @@ export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 export interface Skill {
   name: string;
   level?: SkillLevel;
-  excludeFromMainStack?: boolean; 
+  excludeFromMainStack?: boolean;
 }
 
 export interface SkillCategory {
@@ -16,11 +16,11 @@ const skillCategories: SkillCategory[] = [
     category: "Programming Languages",
     skills: [
       { name: "TypeScript", level: "expert" },
-      { name: "JavaScript (ES6+)", level: "expert" },
+      { name: "JavaScript", level: "expert" },
       { name: "Java", level: "proficient" },
       { name: "C#", level: "experienced" },
       { name: "C++", level: "experienced" },
-      { name: "Python", level: "experienced" },
+      { name: "Python", level: "proficient" },
       { name: "Kotlin", level: "familiar" },
       { name: "Go", level: "familiar" },
     ],
