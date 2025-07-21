@@ -7203,6 +7203,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     react-google-recaptcha: "npm:^3.1.0"
+    react-icons: "npm:^5.5.0"
     react-intersection-observer: "npm:^9.16.0"
     tailwind-merge: "npm:^3.3.1"
     tailwindcss: "npm:3.4.17"
@@ -7975,6 +7976,15 @@ __metadata:
   peerDependencies:
     react: ">=16.4.1"
   checksum: 10c0/5ecaa6b88f238defd939012cb2671b4cbda59fe03f059158994b8c5215db482412e905eae6a67d23cef220d77cfe0430ab91ce7849d476515cda72f3a8a0a746
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "react-icons@npm:5.5.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/a24309bfc993c19cbcbfc928157e53a137851822779977b9588f6dd41ffc4d11ebc98b447f4039b0d309a858f0a42980f6bfb4477fb19f9f2d1bc2e190fcf79c
   languageName: node
   linkType: hard
 

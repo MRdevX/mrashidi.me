@@ -1,5 +1,51 @@
 import React from "react";
 import { Project } from "@/data/projects";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiFramer,
+  SiNodedotjs,
+  SiKubernetes,
+  SiNestjs,
+  SiPostgresql,
+  SiRedis,
+  SiMongodb,
+  SiDocker,
+  SiAmazon,
+  SiRabbitmq,
+} from "react-icons/si";
+import { FaNetworkWired } from "react-icons/fa";
+
+// Icon mapping using react-icons
+const techIconMap: Record<string, React.ReactNode> = {
+  react: <SiReact className="w-4 h-4 mr-1 text-cyan-400 inline-block" />,
+  nextjs: <SiNextdotjs className="w-4 h-4 mr-1 text-black dark:text-white inline-block" />,
+  tailwindcss: <SiTailwindcss className="w-4 h-4 mr-1 text-sky-400 inline-block" />,
+  typescript: <SiTypescript className="w-4 h-4 mr-1 text-blue-500 inline-block" />,
+  framermotion: <SiFramer className="w-4 h-4 mr-1 text-pink-400 inline-block" />,
+  nodejs: <SiNodedotjs className="w-4 h-4 mr-1 text-green-600 inline-block" />,
+  inquirerjs: (
+    <span className="w-4 h-4 mr-1 inline-block" role="img" aria-label="Inquirer.js">
+      💬
+    </span>
+  ),
+  azure: (
+    <span className="w-4 h-4 mr-1 inline-block" role="img" aria-label="Azure">
+      ☁️
+    </span>
+  ),
+  kubernetes: <SiKubernetes className="w-4 h-4 mr-1 text-blue-400 inline-block" />,
+  nestjs: <SiNestjs className="w-4 h-4 mr-1 text-rose-600 inline-block" />,
+  postgresql: <SiPostgresql className="w-4 h-4 mr-1 text-blue-800 inline-block" />,
+  redis: <SiRedis className="w-4 h-4 mr-1 text-red-500 inline-block" />,
+  mongodb: <SiMongodb className="w-4 h-4 mr-1 text-green-700 inline-block" />,
+  docker: <SiDocker className="w-4 h-4 mr-1 text-blue-500 inline-block" />,
+  aws: <SiAmazon className="w-4 h-4 mr-1 text-yellow-500 inline-block" />,
+  rabbitmq: <SiRabbitmq className="w-4 h-4 mr-1 text-orange-500 inline-block" />,
+  websocket: <FaNetworkWired className="w-4 h-4 mr-1 text-gray-400 inline-block" />,
+};
 
 interface ProjectCardProps {
   project: Project;
@@ -10,7 +56,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <div className="glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group">
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{project.title}</h3>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap items-center justify-end">
+          {project.year && (
+            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-gray-800 text-gray-300 border border-gray-600">
+              {project.year}
+            </span>
+          )}
+          {project.status && (
+            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-gray-700 text-gray-400 border border-gray-600 capitalize">
+              {project.status}
+            </span>
+          )}
           <span
             className={`px-2 py-0.5 rounded font-semibold text-xs ${project.visibility === "public" ? "bg-green-700 text-green-200" : "bg-gray-700 text-gray-300"}`}
           >
@@ -29,12 +85,31 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               Open Source
             </span>
           )}
+          {project.openSource && project.license && (
+            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-yellow-900 text-yellow-200 border border-yellow-700 ml-1">
+              {project.license}
+            </span>
+          )}
         </div>
       </div>
-      <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm">{project.description}</p>
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-wrap gap-2 items-center text-sm mb-1">
+          {project.clientName && <span className="font-semibold text-orange-400">{project.clientName}</span>}
+          {project.role && <span className="text-gray-400">{project.role}</span>}
+        </div>
+        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm mb-1">{project.description}</p>
+        {project.highlights && project.highlights.length > 0 && (
+          <ul className="list-disc list-inside text-xs text-gray-400 space-y-1 mt-1">
+            {project.highlights.map((h, i) => (
+              <li key={i}>{h}</li>
+            ))}
+          </ul>
+        )}
+      </div>
       <div className="flex flex-wrap gap-2 mt-2">
-        {project.stack.map((tech) => (
-          <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs">
+        {project.stack.map((tech, i) => (
+          <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs flex items-center">
+            {project.stackIcons && project.stackIcons[i] && techIconMap[project.stackIcons[i]]}
             {tech}
           </span>
         ))}
@@ -64,6 +139,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               <path d="M12.293 2.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-8.5 8.5a1 1 0 01-.325.217l-4 1.5a1 1 0 01-1.263-1.263l1.5-4a1 1 0 01.217-.325l8.5-8.5zM15 7l-2-2-8.293 8.293-.707.707-.707 2.121 2.121-.707.707-.707z" />
             </svg>
             Live
+          </a>
+        )}
+        {project.caseStudyUrl && (
+          <a
+            href={project.caseStudyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M12 4v1H6a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-5h-1v5a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1h6V4a1 1 0 112 0v2a1 1 0 01-1 1h-2a1 1 0 110-2h1V4a1 1 0 10-2 0z" />
+            </svg>
+            Case Study
           </a>
         )}
       </div>
