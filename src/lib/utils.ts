@@ -1,6 +1,9 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { FormData, FormErrors } from "@/types/forms";
+import { ValidationError } from "@/lib/errors";
+
 /**
  * Utility function to merge Tailwind CSS classes
  */
@@ -82,4 +85,49 @@ export function calculateReadingTime(text: string): number {
   const wordsPerMinute = 200;
   const words = text.trim().split(/\s+/).length;
   return Math.ceil(words / wordsPerMinute);
+}
+
+export function validateForm(formData: FormData): FormErrors {
+  const errors: FormErrors = {};
+
+  // Name validation
+  if (!formData.name.trim()) {
+    errors.name = "Name is required";
+  }
+
+  // Email validation
+  if (!formData.email.trim()) {
+    errors.email = "Email is required";
+  } else if (!isValidEmail(formData.email)) {
+    errors.email = "Please enter a valid email address";
+  }
+
+  // Subject validation
+  if (!formData.subject.trim()) {
+    errors.subject = "Subject is required";
+  }
+
+  // Message validation
+  if (!formData.message.trim()) {
+    errors.message = "Message is required";
+  } else if (formData.message.trim().length < 10) {
+    errors.message = "Message should be at least 10 characters";
+  }
+
+  return errors;
+}
+
+export function assertValidForm(formData: FormData): void {
+  const errors = validateForm(formData);
+  // Convert FormErrors to Record<string, string> (filter out undefined)
+  const filteredErrors: Record<string, string> = {};
+  for (const key in errors) {
+    const value = errors[key as keyof typeof errors];
+    if (typeof value === "string") {
+      filteredErrors[key] = value;
+    }
+  }
+  if (Object.keys(filteredErrors).length > 0) {
+    throw new ValidationError("Invalid form data", filteredErrors);
+  }
 }

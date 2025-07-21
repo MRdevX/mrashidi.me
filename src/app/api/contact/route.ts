@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { EmailService } from "@/lib/email/email.service";
-import { ErrorHandler } from "@/lib/errors";
+import { ErrorHandler, ValidationError } from "@/lib/errors";
+import { assertValidForm } from "@/lib/utils";
 
 const RECAPTCHA_THRESHOLD = 0.5; // Minimum score to accept (0.0 to 1.0)
 
@@ -17,10 +18,8 @@ export async function POST(request: Request) {
   try {
     const { name, email, subject, message, recaptchaToken } = await request.json();
 
-    // Validate required fields
-    if (!name || !email || !subject || !message) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
-    }
+    // Validate all fields using shared utility
+    assertValidForm({ name, email, subject, message });
 
     // Verify reCAPTCHA
     const recaptchaResponse = await fetch(
@@ -58,6 +57,10 @@ export async function POST(request: Request) {
   } catch (error) {
     const appError = ErrorHandler.handle(error);
     ErrorHandler.log(appError, "Contact API");
-    return NextResponse.json({ error: appError.message }, { status: appError.statusCode || 500 });
+    const response: Record<string, unknown> = { error: appError.message };
+    if (appError instanceof ValidationError) {
+      response.fields = appError.fields;
+    }
+    return NextResponse.json(response, { status: appError.statusCode || 500 });
   }
 }
