@@ -109,7 +109,7 @@ export default function Resume() {
           </motion.h1>
           <motion.a
             href="/cv/Mahdi_Rashidi_CV.pdf"
-            className="neon-button w-full sm:w-auto flex items-center justify-center space-x-2"
+            className="neon-button w-full sm:w-auto flex items-center justify-center space-x-2 rounded-lg"
             target="_blank"
             variants={item}
             whileHover={{ scale: 1.05 }}
@@ -151,7 +151,7 @@ export default function Resume() {
                       <p className="text-gray-400 group-hover:text-gray-300">{job.location}</p>
                     </div>
                     <div className="mt-2 md:mt-0">
-                      <span className="inline-block px-4 py-2 glass-card text-orange-500 rounded-full">{job.period}</span>
+                      <span className="inline-block px-4 py-2 glass-card text-orange-500 rounded-lg">{job.period}</span>
                     </div>
                   </div>
                   <ul className="mt-6 space-y-3">

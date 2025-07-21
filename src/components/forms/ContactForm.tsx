@@ -191,7 +191,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`neon-button w-full ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`neon-button w-full rounded-lg ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             {isSubmitting ? "Sending..." : "Send Message"}
           </button>
