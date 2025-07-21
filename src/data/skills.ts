@@ -3,6 +3,7 @@ export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 export interface Skill {
   name: string;
   level?: SkillLevel;
+  excludeFromMainStack?: boolean; 
 }
 
 export interface SkillCategory {
@@ -61,8 +62,8 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Cloud Platforms",
     skills: [
-      { name: "Azure (AKS, Key Vault, Blob Storage)", level: "expert" },
-      { name: "AWS (Fargate, Lambda, ECS, S3, RDS, DynamoDB)", level: "experienced" },
+      { name: "Azure Cloud", level: "expert" },
+      { name: "AWS", level: "proficient" },
       { name: "GCP", level: "experienced" },
     ],
   },
@@ -104,7 +105,7 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Observability",
     skills: [
-      { name: "Azure Monitor", level: "expert" },
+      { name: "Azure Monitor", level: "expert", excludeFromMainStack: true },
       { name: "Sentry", level: "expert" },
       { name: "Prometheus/Grafana", level: "experienced" },
       { name: "CloudWatch", level: "experienced" },

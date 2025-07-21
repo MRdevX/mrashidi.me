@@ -6,10 +6,50 @@ import Link from "next/link";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
 import { skillCategories } from "@/components/skills/skillsData";
 import personalInfo from "@/data/personalInfo";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiFramer,
+  SiKubernetes,
+  SiNestjs,
+  SiPostgresql,
+  SiRedis,
+  SiMongodb,
+  SiDocker,
+  SiRabbitmq,
+} from "react-icons/si";
+import { VscAzure } from "react-icons/vsc";
+import { FaAws, FaNetworkWired, FaNodeJs } from "react-icons/fa";
 
 // Lazy load heavy components
 const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
 const Terminal = lazy(() => import("@/components/terminal/Terminal"));
+
+const techIconMap: Record<string, React.ReactNode> = {
+  react: <SiReact className="w-7 h-7 text-cyan-400" />,
+  nextjs: <SiNextdotjs className="w-7 h-7 text-black dark:text-white" />,
+  tailwindcss: <SiTailwindcss className="w-7 h-7 text-sky-400" />,
+  typescript: <SiTypescript className="w-7 h-7 text-blue-500" />,
+  framermotion: <SiFramer className="w-7 h-7 text-pink-400" />,
+  nodejs: <FaNodeJs className="w-7 h-7 text-green-600" />,
+  inquirerjs: (
+    <span className="w-7 h-7 inline-block" role="img" aria-label="Inquirer.js">
+      💬
+    </span>
+  ),
+  azure: <VscAzure className="w-7 h-7 text-blue-500" />,
+  kubernetes: <SiKubernetes className="w-7 h-7 text-blue-400" />,
+  nestjs: <SiNestjs className="w-7 h-7 text-rose-600" />,
+  postgresql: <SiPostgresql className="w-7 h-7 text-blue-800" />,
+  redis: <SiRedis className="w-7 h-7 text-red-500" />,
+  mongodb: <SiMongodb className="w-7 h-7 text-green-700" />,
+  docker: <SiDocker className="w-7 h-7 text-blue-500" />,
+  aws: <FaAws className="w-7 h-7 text-yellow-500" />,
+  rabbitmq: <SiRabbitmq className="w-7 h-7 text-orange-500" />,
+  websocket: <FaNetworkWired className="w-7 h-7 text-gray-400" />,
+};
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -34,6 +74,31 @@ export default function Home() {
   };
 
   if (!mounted) return null;
+
+  // Gather main stack (expert/proficient) and their icon keys dynamically from all categories
+  const mainStack: { name: string; iconKey: string }[] = [];
+  skillCategories.forEach((cat) => {
+    cat.skills.forEach((skill) => {
+      if ((skill.level === "expert" || skill.level === "proficient") && !skill.excludeFromMainStack) {
+        // Normalize name to icon key
+        let iconKey = skill.name
+          .toLowerCase()
+          .replace(/\s*\(.*\)/, "") // remove parenthesis
+          .replace(/\./g, "") // remove dots
+          .replace(/\s+/g, "") // remove spaces
+          .replace(/\+/, "p") // e.g. C++ -> cpp
+          .replace(/#/, "sharp"); // e.g. C# -> csharp
+        // Special cases for cloud providers
+        if (iconKey.includes("azure")) iconKey = "azure";
+        if (iconKey === "aws") iconKey = "aws";
+        if (techIconMap[iconKey]) {
+          mainStack.push({ name: skill.name, iconKey });
+        }
+      }
+    });
+  });
+  // Remove duplicates by name
+  const uniqueMainStack = Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
 
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
@@ -118,116 +183,21 @@ export default function Home() {
           </Suspense>
         </motion.div>
 
-        {/* Tech Stack Section */}
+        {/* Main Stack Section (replaces Tech Stack) */}
         <motion.div className="mb-16" variants={item}>
-          <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Tech Stack</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {skillCategories.map((cat) => {
-              const expert = cat.skills.filter((s) => s.level === "expert");
-              const proficient = cat.skills.filter((s) => s.level === "proficient");
-              const experienced = cat.skills.filter((s) => s.level === "experienced");
-              const familiar = cat.skills.filter((s) => s.level === "familiar");
-              const noLevel = cat.skills.filter((s) => !s.level);
-              return (
-                <div key={cat.category} className="feature-card group p-6">
-                  <h3 className="text-xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text text-center">
-                    {cat.category}
-                  </h3>
-                  <div className="flex flex-col gap-6">
-                    {expert.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text">
-                            Expert
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {expert.map((skill) => (
-                            <span
-                              key={skill.name}
-                              className="px-2 py-1 rounded bg-orange-500/10 text-orange-300 border border-orange-500/40 font-mono text-xs font-semibold shadow-orange-500/30 shadow-sm"
-                            >
-                              {skill.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {proficient.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text">
-                            Proficient
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {proficient.map((skill) => (
-                            <span
-                              key={skill.name}
-                              className="px-2 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/40 font-mono text-xs font-semibold shadow-blue-500/30 shadow-sm"
-                            >
-                              {skill.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {experienced.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text">
-                            Experienced
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {experienced.map((skill) => (
-                            <span
-                              key={skill.name}
-                              className="px-2 py-1 rounded bg-purple-500/10 text-purple-300 border border-purple-500/40 font-mono text-xs font-semibold shadow-purple-500/30 shadow-sm"
-                            >
-                              {skill.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {familiar.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-500 glow-text">
-                            Familiar
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {familiar.map((skill) => (
-                            <span
-                              key={skill.name}
-                              className="px-2 py-1 rounded bg-gray-500/10 text-gray-300 border border-gray-500/40 font-mono text-xs font-semibold shadow-gray-500/30 shadow-sm"
-                            >
-                              {skill.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {noLevel.length > 0 && (
-                      <div>
-                        <div className="flex flex-wrap gap-2">
-                          {noLevel.map((skill) => (
-                            <span
-                              key={skill.name}
-                              className="px-2 py-1 rounded bg-gray-500/10 text-gray-300 border border-gray-500/40 font-mono text-xs font-semibold shadow-gray-500/30 shadow-sm"
-                            >
-                              {skill.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+          <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Main Stack</h2>
+          <div className="glass-card p-8 flex flex-col items-center border border-orange-500/20 shadow-lg rounded-xl">
+            <div className="flex flex-wrap justify-center gap-6">
+              {uniqueMainStack.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex flex-col items-center gap-2 p-3 rounded-lg bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
+                >
+                  {techIconMap[tech.iconKey]}
+                  <span className="text-xs text-gray-200 font-mono text-center mt-1">{tech.name}</span>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </motion.div>
 
