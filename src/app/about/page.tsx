@@ -5,6 +5,7 @@ import personalInfo from "@/data/personalInfo";
 import skillCategories from "@/data/skills";
 import education from "@/data/education";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
+import { SkillLevel } from "@/data/skills";
 
 // Helper to get color class for each icon
 const getIconColorClass = (iconKey: string) => {
@@ -126,21 +127,36 @@ export default function About() {
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
-
+            {/* Legend for proficiency levels */}
+            <div className="flex flex-wrap gap-4 mb-6">
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#FF5F1F" }}></span>Expert
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#00CFFF" }}></span>Proficient
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#A259F7" }}></span>Experienced
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#A3A3A3" }}></span>Familiar
+              </span>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {skillCategories.map((cat, index) => (
-                <motion.div
+              {skillCategories.map((cat) => (
+                <div
                   key={cat.category}
-                  className="feature-card group"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="feature-card mb-8 p-6 relative overflow-visible bg-gray-900/40 border border-white/10 backdrop-blur-2xl"
+                  style={{ position: "relative" }}
                 >
-                  <h3 className="text-xl font-bold mb-3 text-orange-500 font-cyberpunk glow-text relative z-10">
+                  {/* Cyberpunk orange accent bar on the left */}
+                  <span className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-[#FF5F1F] opacity-90"></span>
+                  <h3 className="text-2xl font-bold mb-5 text-orange-500 font-cyberpunk glow-text pl-4 relative z-10">
                     {cat.category}
                   </h3>
-                  <ul className="flex flex-wrap gap-2 relative z-10">
+                  <div className="flex flex-wrap gap-3 pl-4 relative z-10">
                     {cat.skills.map((skill) => {
+                      let glow = "0 0 0px #0000";
                       let iconKey = skill.name
                         .toLowerCase()
                         .replace(/\s*\(.*\)/, "")
@@ -151,33 +167,36 @@ export default function About() {
                       if (iconKey.includes("azure")) iconKey = "azure";
                       if (iconKey === "aws") iconKey = "aws";
                       const { Icon, colorClass } = getTechIcon(iconKey);
+                      switch (skill.level as SkillLevel) {
+                        case "expert":
+                          glow = "0 0 12px 2px #FF5F1F";
+                          break;
+                        case "proficient":
+                          glow = "0 0 12px 2px #00CFFF";
+                          break;
+                        case "experienced":
+                          glow = "0 0 12px 2px #A259F7";
+                          break;
+                        case "familiar":
+                          glow = "0 0 8px 1.5px #A3A3A3";
+                          break;
+                        default:
+                          glow = "0 0 0px #0000";
+                      }
                       return (
-                        <li
+                        <span
                           key={skill.name}
-                          className="flex items-center gap-2 px-3 py-1 rounded-lg bg-gray-800/70 hover:bg-gray-700/80 transition-colors"
+                          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm bg-gray-900/70 text-white shadow-sm transition-all duration-200 cursor-default backdrop-blur-md border border-white/10`}
+                          style={{ boxShadow: glow }}
+                          title={skill.name}
                         >
                           <Icon className={`w-5 h-5 ${colorClass}`} />
-                          <span className="text-gray-200 font-medium whitespace-nowrap">{skill.name}</span>
-                          <span
-                            className={
-                              skill.level === "expert"
-                                ? "px-2 py-0.5 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500 glow-text"
-                                : skill.level === "proficient"
-                                  ? "px-2 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500 glow-text"
-                                  : skill.level === "experienced"
-                                    ? "px-2 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500 glow-text"
-                                    : skill.level === "familiar"
-                                      ? "px-2 py-0.5 rounded-full text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-500 glow-text"
-                                      : ""
-                            }
-                          >
-                            {skill.level ? skill.level.charAt(0).toUpperCase() + skill.level.slice(1) : ""}
-                          </span>
-                        </li>
+                          <span>{skill.name}</span>
+                        </span>
                       );
                     })}
-                  </ul>
-                </motion.div>
+                  </div>
+                </div>
               ))}
             </div>
           </motion.section>

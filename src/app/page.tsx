@@ -146,7 +146,7 @@ export default function Home() {
 
         {/* Main Stack Section (replaces Tech Stack) */}
         <motion.div className="mb-16" variants={item}>
-          <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">Main Stack</h2>
+          <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">My Tech Stack</h2>
           <div className="glass-card p-8 flex flex-col items-center border border-orange-500/20 shadow-lg rounded-xl">
             <div className="flex flex-wrap justify-center gap-6">
               {uniqueMainStack.map((tech) => {
