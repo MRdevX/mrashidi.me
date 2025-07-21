@@ -1,7 +1,6 @@
 import {
   SiReact,
   SiNextdotjs,
-  SiTypescript,
   SiTailwindcss,
   SiFramer,
   SiKubernetes,
@@ -10,7 +9,6 @@ import {
   SiMongodb,
   SiDocker,
   SiRabbitmq,
-  SiJavascript,
   SiKotlin,
   SiGo,
   SiSpring,
@@ -40,8 +38,6 @@ import {
   SiAwslambda,
   SiGitlab,
   SiApachekafka,
-  SiTypeorm,
-  SiMongoose,
   SiHibernate,
   SiAmazoncloudwatch,
   SiLens,
@@ -52,6 +48,7 @@ import { TbBrandCSharp } from "react-icons/tb";
 import { DiMsqlServer } from "react-icons/di";
 import { IconType } from "react-icons";
 import React from "react";
+import Image from "next/image";
 
 const InquirerIcon: React.FC<{ className?: string }> = ({ className }) => (
   <span className={className} role="img" aria-label="Inquirer.js">
@@ -60,14 +57,19 @@ const InquirerIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 const SvgIcon: React.FC<{ src: string; className?: string; alt: string }> = ({ src, className, alt }) => (
-  <img src={src} className={className} alt={alt} />
+  <Image src={src} className={className} alt={alt} width={20} height={20} style={{ color: "currentColor" }} />
 );
 
 const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: string }>; colorClass: string }> = {
   react: { Icon: SiReact, colorClass: "text-cyan-400" },
   nextjs: { Icon: SiNextdotjs, colorClass: "text-black dark:text-white" },
   tailwindcss: { Icon: SiTailwindcss, colorClass: "text-sky-400" },
-  typescript: { Icon: SiTypescript, colorClass: "text-blue-500" },
+  typescript: {
+    Icon: (props: { className?: string }) => (
+      <SvgIcon src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" alt="TypeScript" {...props} />
+    ),
+    colorClass: "",
+  },
   framermotion: { Icon: SiFramer, colorClass: "text-pink-400" },
   nodejs: { Icon: FaNodeJs, colorClass: "text-green-600" },
   inquirerjs: { Icon: InquirerIcon, colorClass: "text-gray-400" },
@@ -76,7 +78,7 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   nestjs: { Icon: SiNestjs, colorClass: "text-rose-600" },
   postgresql: {
     Icon: (props: { className?: string }) => <SvgIcon src="/icons/postgresql.svg" alt="PostgreSQL" {...props} />,
-    colorClass: "",
+    colorClass: "text-blue-800",
   },
   redis: { Icon: SiRedis, colorClass: "text-red-500" },
   mongodb: { Icon: SiMongodb, colorClass: "text-green-700" },
@@ -84,12 +86,20 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   aws: { Icon: FaAws, colorClass: "text-yellow-500" },
   rabbitmq: { Icon: SiRabbitmq, colorClass: "text-orange-500" },
   websocket: { Icon: FaNetworkWired, colorClass: "text-gray-400" },
-  javascript: { Icon: SiJavascript, colorClass: "text-yellow-400" },
-  java: { Icon: (props: { className?: string }) => <SvgIcon src="/icons/java.svg" alt="Java" {...props} />, colorClass: "" },
+  javascript: {
+    Icon: (props: { className?: string }) => (
+      <SvgIcon src="https://www.vectorlogo.zone/logos/javascript/javascript-icon.svg" alt="JavaScript" {...props} />
+    ),
+    colorClass: "",
+  },
+  java: {
+    Icon: (props: { className?: string }) => <SvgIcon src="/icons/java.svg" alt="Java" {...props} />,
+    colorClass: "text-red-700",
+  },
   csharp: { Icon: TbBrandCSharp, colorClass: "text-purple-700" },
   python: {
     Icon: (props: { className?: string }) => <SvgIcon src="/icons/python.svg" alt="Python" {...props} />,
-    colorClass: "",
+    colorClass: "text-yellow-300",
   },
   kotlin: { Icon: SiKotlin, colorClass: "text-purple-400" },
   go: { Icon: SiGo, colorClass: "text-cyan-500" },
@@ -127,9 +137,15 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   gitlab: { Icon: SiGitlab, colorClass: "text-orange-600" },
   hibernate: { Icon: SiHibernate, colorClass: "text-yellow-700" },
   lens: { Icon: SiLens, colorClass: "text-blue-400" },
-  mongoose: { Icon: SiMongoose, colorClass: "text-red-700" },
+  mongoose: {
+    Icon: (props: { className?: string }) => <SvgIcon src="/icons/mongoose.svg" alt="Mongoose" {...props} />,
+    colorClass: "",
+  },
   swagger: { Icon: SiSwagger, colorClass: "text-green-500" },
-  typeorm: { Icon: SiTypeorm, colorClass: "text-red-600" },
+  typeorm: {
+    Icon: (props: { className?: string }) => <SvgIcon src="/icons/typeorm.svg" alt="TypeORM" {...props} />,
+    colorClass: "",
+  },
   // Aliases for skills that include logo names
   k8slens: { Icon: SiLens, colorClass: "text-blue-400" }, // K8s Lens
   jpa: { Icon: SiHibernate, colorClass: "text-yellow-700" }, // JPA uses Hibernate logo

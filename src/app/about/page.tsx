@@ -4,108 +4,8 @@ import { motion } from "framer-motion";
 import personalInfo from "@/data/personalInfo";
 import skillCategories from "@/data/skills";
 import education from "@/data/education";
-import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 import { SkillLevel } from "@/data/skills";
-
-// Helper to get color class for each icon
-const getIconColorClass = (iconKey: string) => {
-  switch (iconKey) {
-    case "react":
-      return "text-cyan-400";
-    case "nextjs":
-      return "text-black dark:text-white";
-    case "tailwindcss":
-      return "text-sky-400";
-    case "typescript":
-      return "text-blue-500";
-    case "framermotion":
-      return "text-pink-400";
-    case "nodejs":
-      return "text-green-600";
-    case "inquirerjs":
-      return "text-gray-400";
-    case "azure":
-      return "text-blue-500";
-    case "kubernetes":
-      return "text-blue-400";
-    case "nestjs":
-      return "text-rose-600";
-    case "postgresql":
-      return "text-blue-800";
-    case "redis":
-      return "text-red-500";
-    case "mongodb":
-      return "text-green-700";
-    case "docker":
-      return "text-blue-500";
-    case "aws":
-      return "text-yellow-500";
-    case "rabbitmq":
-      return "text-orange-500";
-    case "websocket":
-      return "text-gray-400";
-    case "javascript":
-      return "text-yellow-400";
-    case "java":
-      return "text-red-700";
-    case "csharp":
-      return "text-purple-700";
-    case "python":
-      return "text-yellow-300";
-    case "kotlin":
-      return "text-purple-400";
-    case "go":
-      return "text-cyan-500";
-    case "springboot":
-      return "text-green-500";
-    case "aspnet":
-      return "text-blue-700";
-    case "django":
-      return "text-green-700";
-    case "flask":
-      return "text-gray-400";
-    case "graphql":
-      return "text-pink-500";
-    case "gcp":
-      return "text-blue-400";
-    case "terraform":
-      return "text-purple-500";
-    case "helm":
-      return "text-blue-500";
-    case "githubactions":
-      return "text-blue-500";
-    case "mysql":
-      return "text-blue-500";
-    case "mssql":
-      return "text-blue-800";
-    case "jest":
-      return "text-red-500";
-    case "postman":
-      return "text-orange-500";
-    case "html5":
-      return "text-orange-500";
-    case "css3":
-      return "text-blue-500";
-    case "jira":
-      return "text-blue-500";
-    case "confluence":
-      return "text-blue-400";
-    case "nx":
-      return "text-gray-400";
-    case "miro":
-      return "text-pink-400";
-    case "figma":
-      return "text-pink-500";
-    case "prometheus":
-      return "text-orange-500";
-    case "grafana":
-      return "text-orange-400";
-    case "sentry":
-      return "text-orange-500";
-    default:
-      return "text-gray-400";
-  }
-};
+import { getTechIcon } from "@/lib/techIconMap";
 
 export default function About() {
   const fadeIn = {
@@ -186,7 +86,7 @@ export default function About() {
                       return (
                         <span
                           key={skill.name}
-                          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm bg-gray-900/70 text-white shadow-sm transition-all duration-200 cursor-default backdrop-blur-md border border-white/10`}
+                          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-gray-900/70 text-white shadow-sm transition-all duration-200 cursor-default backdrop-blur-md border border-white/10`}
                           style={{ boxShadow: glow }}
                           title={skill.name}
                         >
