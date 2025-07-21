@@ -1,4 +1,5 @@
 import { FormData, FormErrors } from "@/types/forms";
+import { isValidEmail } from "@/lib/utils";
 
 export const validateForm = (formData: FormData): FormErrors => {
   const errors: FormErrors = {};
@@ -9,10 +10,9 @@ export const validateForm = (formData: FormData): FormErrors => {
   }
 
   // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!formData.email.trim()) {
     errors.email = "Email is required";
-  } else if (!emailRegex.test(formData.email)) {
+  } else if (!isValidEmail(formData.email)) {
     errors.email = "Please enter a valid email address";
   }
 
