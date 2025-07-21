@@ -98,7 +98,8 @@ const skillCategories: SkillCategory[] = [
       { name: "RabbitMQ", level: "expert" },
       { name: "Redis Pub/Sub", level: "expert" },
       { name: "Azure Service Bus", level: "experienced" },
-      { name: "AWS SQS/SNS", level: "experienced" },
+      { name: "AWS SQS", level: "experienced" },
+      { name: "AWS SNS", level: "experienced" },
       { name: "Apache Kafka", level: "familiar" },
     ],
   },
@@ -107,7 +108,8 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Azure Monitor", level: "expert", excludeFromMainStack: true },
       { name: "Sentry", level: "expert" },
-      { name: "Prometheus/Grafana", level: "experienced" },
+      { name: "Prometheus", level: "experienced" },
+      { name: "Grafana", level: "experienced" },
       { name: "CloudWatch", level: "experienced" },
       { name: "Fresh Ping", level: "experienced" },
     ],
@@ -124,7 +126,8 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Security",
     skills: [
-      { name: "OAuth2/OIDC", level: "expert" },
+      { name: "OAuth2", level: "expert" },
+      { name: "OIDC", level: "expert" },
       { name: "JWT", level: "expert" },
       { name: "API Security", level: "expert" },
       { name: "RBAC", level: "expert" },
@@ -137,7 +140,8 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "React (Hooks, Context API)", level: "familiar" },
       { name: "Next.js (App Router, API Routes)", level: "familiar" },
-      { name: "HTML5/CSS3", level: "familiar" },
+      { name: "HTML5", level: "familiar" },
+      { name: "CSS3", level: "familiar" },
     ],
   },
   {
