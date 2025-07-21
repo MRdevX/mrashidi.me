@@ -1,4 +1,4 @@
-import { APIError, NetworkError } from "@/lib/errors";
+import { APIError, NetworkError, ErrorHandler } from "@/lib/errors";
 
 /**
  * Base service class providing common functionality
@@ -22,41 +22,46 @@ export abstract class BaseService {
       return response;
     } catch (error) {
       clearTimeout(timeoutId);
-
       if (error instanceof Error && error.name === "AbortError") {
-        throw new NetworkError("Request timeout");
+        const netErr = new NetworkError("Request timeout");
+        ErrorHandler.log(netErr, "BaseService.fetchWithTimeout");
+        throw netErr;
       }
-
-      throw error;
+      const appError = ErrorHandler.handle(error);
+      ErrorHandler.log(appError, "BaseService.fetchWithTimeout");
+      throw appError;
     }
   }
 
   protected async fetchJSON<T>(url: string, options: RequestInit = {}): Promise<T> {
-    const response = await this.fetchWithTimeout(url, {
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-    });
-
     try {
+      const response = await this.fetchWithTimeout(url, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+      });
       return await response.json();
-    } catch (_error) {
+    } catch (error) {
+      const appError = ErrorHandler.handle(error);
+      ErrorHandler.log(appError, "BaseService.fetchJSON");
       throw new APIError("Failed to parse JSON response");
     }
   }
 
   protected validateRequiredFields(data: Record<string, unknown>, fields: string[]): void {
     const missingFields = fields.filter((field) => !data[field]);
-
     if (missingFields.length > 0) {
-      throw new APIError(`Missing required fields: ${missingFields.join(", ")}`, 400);
+      const err = new APIError(`Missing required fields: ${missingFields.join(", ")}`, 400);
+      ErrorHandler.log(err, "BaseService.validateRequiredFields");
+      throw err;
     }
   }
 
   protected logError(error: unknown, context: string): void {
-    console.error(`[${this.constructor.name}] ${context}:`, error);
+    const appError = ErrorHandler.handle(error);
+    ErrorHandler.log(appError, context);
   }
 
   protected logInfo(message: string, data?: unknown): void {

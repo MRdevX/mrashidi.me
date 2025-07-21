@@ -1,4 +1,5 @@
 import { BlogResponse } from "@/types/blog";
+import { ErrorHandler } from "@/lib/errors";
 
 interface MediumPostResponse {
   title: string;
@@ -29,8 +30,9 @@ class BlogService {
         total: data.total,
       };
     } catch (error) {
-      console.error("Failed to fetch blog posts:", error);
-      throw error;
+      const appError = ErrorHandler.handle(error);
+      ErrorHandler.log(appError, "BlogService.getBlogPosts");
+      throw appError;
     }
   }
 }
