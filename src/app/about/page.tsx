@@ -86,11 +86,11 @@ export default function About() {
                       return (
                         <span
                           key={skill.name}
-                          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-gray-900/70 text-white shadow-sm transition-all duration-200 cursor-default backdrop-blur-md border border-white/10`}
+                          className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-900/70 text-white shadow-sm transition-all duration-200 cursor-default backdrop-blur-md border border-white/10`}
                           style={{ boxShadow: glow }}
                           title={skill.name}
                         >
-                          <Icon className={`w-5 h-5 ${colorClass}`} />
+                          <Icon className={`w-4 h-4 ${colorClass}`} />
                           <span>{skill.name}</span>
                         </span>
                       );
