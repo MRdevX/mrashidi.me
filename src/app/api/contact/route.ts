@@ -3,7 +3,7 @@ import { EmailService } from "@/lib/email/email.service";
 import { ErrorHandler, ValidationError } from "@/lib/errors";
 import { assertValidForm } from "@/lib/utils";
 
-const RECAPTCHA_THRESHOLD = 0.5; // Minimum score to accept (0.0 to 1.0)
+const RECAPTCHA_THRESHOLD = 0.5;
 
 interface RecaptchaResponse {
   success: boolean;
@@ -18,10 +18,8 @@ export async function POST(request: Request) {
   try {
     const { name, email, subject, message, recaptchaToken } = await request.json();
 
-    // Validate all fields using shared utility
     assertValidForm({ name, email, subject, message });
 
-    // Verify reCAPTCHA
     const recaptchaResponse = await fetch(
       `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
       { method: "POST" }
@@ -33,15 +31,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "reCAPTCHA verification failed" }, { status: 400 });
     }
 
-    // Check reCAPTCHA score
     if (recaptchaData.score < RECAPTCHA_THRESHOLD) {
       return NextResponse.json({ error: "Suspicious activity detected. Please try again." }, { status: 400 });
     }
 
-    // Initialize email service
     const emailService = new EmailService();
 
-    // Send emails
     const emailSent = await emailService.sendContactFormEmail({
       name,
       email,

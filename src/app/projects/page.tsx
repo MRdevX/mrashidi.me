@@ -29,7 +29,6 @@ export default function Projects() {
           Projects
         </motion.h1>
 
-        {/* Professional Projects Section */}
         {professionalProjects.length > 0 && (
           <motion.div className="mb-12" variants={item}>
             <h2 className="text-2xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Professional Projects</h2>
@@ -41,7 +40,6 @@ export default function Projects() {
           </motion.div>
         )}
 
-        {/* Personal Projects Section */}
         {personalProjects.length > 0 && (
           <motion.div className="mb-12" variants={item}>
             <h2 className="text-2xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Personal Projects</h2>

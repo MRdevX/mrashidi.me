@@ -78,22 +78,20 @@ src/
 ### **Type Safety**
 
 ```typescript
-// Before: Scattered types
-interface FormData { ... } // in forms/types.ts
-interface GitHubRepo { ... } // in githubService.ts
 
-// After: Centralized types
+interface FormData { ... }
+interface GitHubRepo { ... }
+
+
 import { FormData, GitHubRepo } from '@/types';
 ```
 
 ### **Configuration Management**
 
 ```typescript
-// Before: Magic numbers everywhere
 const CACHE_UPDATE_INTERVAL = 1000 * 60 * 60;
 const RECAPTCHA_THRESHOLD = 0.5;
 
-// After: Centralized constants
 import { API_CONFIG } from "@/lib/constants";
 const { CACHE_UPDATE_INTERVAL, RECAPTCHA_THRESHOLD } = API_CONFIG;
 ```
@@ -101,27 +99,21 @@ const { CACHE_UPDATE_INTERVAL, RECAPTCHA_THRESHOLD } = API_CONFIG;
 ### **Error Handling**
 
 ```typescript
-// Before: Basic try-catch
 try {
   const response = await fetch(url);
 } catch (error) {
   console.error(error);
 }
 
-// After: Structured error handling
 import { asyncHandler, APIError } from "@/lib/errors";
-const safeFetch = asyncHandler(async (url: string) => {
-  // Automatic error handling and logging
-});
+const safeFetch = asyncHandler(async (url: string) => {});
 ```
 
 ### **Utility Functions**
 
 ```typescript
-// Before: Inline utility logic
 const cleanHtml = html.replace(/<[^>]*>/g, "");
 
-// After: Reusable utilities
 import { cleanHtmlContent } from "@/lib/utils";
 const cleanHtml = cleanHtmlContent(html);
 ```
@@ -155,20 +147,16 @@ const cleanHtml = cleanHtmlContent(html);
 1. Update imports to use centralized types:
 
    ```typescript
-   // Old
    import { FormData } from "./forms/types";
 
-   // New
    import { FormData } from "@/types";
    ```
 
 2. Replace magic numbers with constants:
 
    ```typescript
-   // Old
    const timeout = 10000;
 
-   // New
    import { API_CONFIG } from "@/lib/constants";
    const timeout = API_CONFIG.TIMEOUT;
    ```
@@ -176,10 +164,8 @@ const cleanHtml = cleanHtmlContent(html);
 3. Use utility functions:
 
    ```typescript
-   // Old
    const className = `base ${isActive ? "active" : ""}`;
 
-   // New
    import { cn } from "@/lib/utils";
    const className = cn("base", isActive && "active");
    ```

@@ -8,7 +8,6 @@ import { Analytics } from "@vercel/analytics/react";
 import personalInfo from "@/data/personalInfo";
 import { ThemeProvider } from "@/context/ThemeContext";
 
-// Optimize font loading
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -18,12 +17,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// Define the viewport configuration separately
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#ff5f1f", // Using your neon orange theme color
+  themeColor: "#ff5f1f",
 };
 
 export const metadata: Metadata = {
@@ -41,7 +39,7 @@ export const metadata: Metadata = {
     description: personalInfo.description,
     images: [
       {
-        url: "https://mrashidi.me/og-image.jpg", // Replace with actual image
+        url: "https://mrashidi.me/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Mahdi Rashidi - Software Backend Engineer",
@@ -52,8 +50,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Mahdi Rashidi | Software Backend Engineer",
     description: personalInfo.description,
-    creator: "@your_twitter_handle", // Replace with actual Twitter handle if available
-    images: ["https://mrashidi.me/twitter-image.jpg"], // Replace with actual image
+    creator: "@your_twitter_handle",
+    images: ["https://mrashidi.me/twitter-image.jpg"],
   },
   robots: "index, follow",
   alternates: {
@@ -62,9 +60,8 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png", // Create this icon if you haven't already
+    apple: "/apple-touch-icon.png",
   },
-  // viewport and themeColor have been moved to the viewport export above
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

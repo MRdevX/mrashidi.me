@@ -55,7 +55,6 @@ export default function ContactForm() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -64,7 +63,6 @@ export default function ContactForm() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Reset status
     setSubmitStatus({ type: null, message: "" });
 
     const validationErrors = validateForm(formData);
@@ -76,7 +74,6 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      // Execute reCAPTCHA and get token
       const recaptchaToken = await executeRecaptcha();
 
       const response = await fetch("/api/contact", {
@@ -91,7 +88,6 @@ export default function ContactForm() {
       });
 
       if (response.ok) {
-        // Reset form on success
         setFormData({ name: "", email: "", subject: "", message: "" });
         setSubmitStatus({
           type: "success",

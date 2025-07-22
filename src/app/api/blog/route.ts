@@ -12,7 +12,7 @@ const authors: IBlogAuthor[] = [
   },
 ];
 
-const CACHE_UPDATE_INTERVAL = 1000 * 60 * 60; // 1 hour in milliseconds
+const CACHE_UPDATE_INTERVAL = 1000 * 60 * 60;
 
 class BlogService {
   private static isUpdating = false;
@@ -59,7 +59,7 @@ class BlogService {
           "User-Agent": "Mozilla/5.0 (compatible; BlogFetcher/1.0)",
           Accept: "application/xml",
         },
-        next: { revalidate: 3600 }, // Cache the fetch for 1 hour
+        next: { revalidate: 3600 },
       });
 
       if (!response.ok) {
@@ -107,7 +107,6 @@ class BlogService {
         allPosts.push(...posts);
       }
 
-      // Sort posts by date
       const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 
       await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
@@ -120,26 +119,21 @@ class BlogService {
   }
 
   static startCacheUpdateInterval() {
-    // Only start if we're on the server and not in a test environment
     if (typeof window !== "undefined" || process.env.NODE_ENV === "test") {
       return;
     }
 
-    // Clear any existing interval
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
     }
 
-    // Set new interval
     this.updateInterval = setInterval(() => this.updateCache(), CACHE_UPDATE_INTERVAL);
 
-    // Initial update
     this.updateCache().catch(console.error);
   }
 
   static async getAllPosts(page: number, limit: number) {
     try {
-      // Try to get posts from cache
       const cachedData = await cacheService.getBlogPosts();
 
       if (cachedData) {
@@ -155,20 +149,16 @@ class BlogService {
         };
       }
 
-      // If cache miss, fetch fresh data
       const allPosts: IBlogPost[] = [];
       for (const author of authors) {
         const posts = await this.fetchMediumPosts(author);
         allPosts.push(...posts);
       }
 
-      // Sort posts by date
       const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 
-      // Update cache with new data
       await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
 
-      // Return paginated results
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
       const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
@@ -185,7 +175,6 @@ class BlogService {
   }
 }
 
-// Initialize the cache update interval
 BlogService.startCacheUpdateInterval();
 
 export async function GET(request: Request) {

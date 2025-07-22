@@ -1,5 +1,3 @@
-// Project data model and list for use across the app
-
 export type ProjectVisibility = "public" | "private";
 export type ProjectType = "personal" | "client";
 
@@ -8,7 +6,7 @@ export interface Project {
   description: string;
   highlights?: string[];
   stack: string[];
-  stackIcons?: string[]; // icon names for each tech
+  stackIcons?: string[];
   githubUrl?: string;
   liveUrl?: string;
   caseStudyUrl?: string;
@@ -38,7 +36,7 @@ export const projects: Project[] = [
     ],
     stack: ["Azure", "Kubernetes", "NestJS", "TypeScript", "PostgreSQL", "Redis"],
     stackIcons: ["azure", "kubernetes", "nestjs", "typescript", "postgresql", "redis"],
-    githubUrl: undefined, // private repo
+    githubUrl: undefined,
     liveUrl: undefined,
     visibility: "private",
     type: "client",
@@ -97,7 +95,7 @@ export const projects: Project[] = [
     ],
     stack: ["Node.js", "MongoDB", "Redis", "WebSocket", "Docker", "AWS"],
     stackIcons: ["nodejs", "mongodb", "redis", "websocket", "docker", "aws"],
-    githubUrl: undefined, // private repo
+    githubUrl: undefined,
     liveUrl: undefined,
     visibility: "private",
     type: "client",
@@ -114,7 +112,7 @@ export const projects: Project[] = [
     highlights: ["Implemented advanced rate limiting", "Comprehensive error logging", "Focus on security and reliability"],
     stack: ["NestJS", "PostgreSQL", "Redis", "RabbitMQ", "Docker", "Kubernetes"],
     stackIcons: ["nestjs", "postgresql", "redis", "rabbitmq", "docker", "kubernetes"],
-    githubUrl: undefined, // private repo
+    githubUrl: undefined,
     liveUrl: undefined,
     visibility: "private",
     type: "client",

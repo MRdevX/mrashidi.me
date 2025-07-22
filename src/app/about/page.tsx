@@ -27,7 +27,6 @@ export default function About() {
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
-            {/* Legend for proficiency levels */}
             <div className="flex flex-wrap gap-4 mb-6">
               <span className="flex items-center gap-2">
                 <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#FF5F1F" }}></span>Expert
@@ -49,7 +48,6 @@ export default function About() {
                   className="feature-card mb-8 p-6 relative overflow-visible bg-gray-900/40 border border-white/10 backdrop-blur-2xl"
                   style={{ position: "relative" }}
                 >
-                  {/* Cyberpunk orange accent bar on the left */}
                   <span className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-[#FF5F1F] opacity-90"></span>
                   <h3 className="text-2xl font-bold mb-5 text-orange-500 font-cyberpunk glow-text pl-4 relative z-10">
                     {cat.category}

@@ -13,7 +13,6 @@ const LoadingAnimation = ({
   text = "Loading...",
   fullScreen = false,
 }: LoadingAnimationProps) => {
-  // Define size values
   const sizeValues = {
     small: {
       container: "w-4 h-4",
@@ -29,7 +28,6 @@ const LoadingAnimation = ({
     },
   };
 
-  // Define color values
   const colorValues = {
     orange: "bg-orange-500",
     green: "bg-green-500",
@@ -37,7 +35,6 @@ const LoadingAnimation = ({
     white: "bg-white",
   };
 
-  // Animation variants for dots
   const containerVariants: Variants = {
     animate: {
       transition: {

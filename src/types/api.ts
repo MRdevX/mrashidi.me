@@ -1,4 +1,3 @@
-// Standard API response wrapper
 export interface APIResponse<T = unknown> {
   success: boolean;
   data?: T;
@@ -12,7 +11,6 @@ export interface APIResponse<T = unknown> {
   };
 }
 
-// Pagination response
 export interface PaginatedResponse<T> {
   data: T[];
   pagination: {
@@ -25,7 +23,6 @@ export interface PaginatedResponse<T> {
   };
 }
 
-// Error response
 export interface ErrorResponse {
   success: false;
   error: string;
@@ -33,7 +30,6 @@ export interface ErrorResponse {
   details?: Record<string, string>;
 }
 
-// Success response
 export interface SuccessResponse<T> {
   success: true;
   data: T;

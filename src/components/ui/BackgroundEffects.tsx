@@ -30,7 +30,6 @@ export default function BackgroundEffects() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Initialize matrix particles
     const particleCount = Math.floor(canvas.width / 20);
     matrixRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
@@ -39,7 +38,6 @@ export default function BackgroundEffects() {
       char: chars[Math.floor(Math.random() * chars.length)],
     }));
 
-    // Animation loop
     let animationFrame: number;
     const animate = () => {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";

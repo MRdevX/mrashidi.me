@@ -90,24 +90,20 @@ export function calculateReadingTime(text: string): number {
 export function validateForm(formData: FormData): FormErrors {
   const errors: FormErrors = {};
 
-  // Name validation
   if (!formData.name.trim()) {
     errors.name = "Name is required";
   }
 
-  // Email validation
   if (!formData.email.trim()) {
     errors.email = "Email is required";
   } else if (!isValidEmail(formData.email)) {
     errors.email = "Please enter a valid email address";
   }
 
-  // Subject validation
   if (!formData.subject.trim()) {
     errors.subject = "Subject is required";
   }
 
-  // Message validation
   if (!formData.message.trim()) {
     errors.message = "Message is required";
   } else if (formData.message.trim().length < 10) {
@@ -119,7 +115,7 @@ export function validateForm(formData: FormData): FormErrors {
 
 export function assertValidForm(formData: FormData): void {
   const errors = validateForm(formData);
-  // Convert FormErrors to Record<string, string> (filter out undefined)
+
   const filteredErrors: Record<string, string> = {};
   for (const key in errors) {
     const value = errors[key as keyof typeof errors];

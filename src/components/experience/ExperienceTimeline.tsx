@@ -21,7 +21,6 @@ const experiences: Experience[] = [
     ],
     technologies: ["Node.js", "TypeScript", "Docker", "Kubernetes", "AWS"],
   },
-  // Add more experiences here
 ];
 
 export default function ExperienceTimeline() {

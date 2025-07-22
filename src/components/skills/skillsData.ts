@@ -1,5 +1,3 @@
-// Shared skills data for use in main page and terminal
-
 export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 
 export interface Skill {

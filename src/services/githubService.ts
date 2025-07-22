@@ -127,7 +127,6 @@ class GitHubService {
       const weeks = data.data.user.contributionsCollection.contributionCalendar.weeks;
       const contributions: ContributionDay[] = [];
 
-      // Process the last 6 months of contributions
       const sixMonthsAgo = new Date();
       sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
@@ -138,7 +137,6 @@ class GitHubService {
             const count = day.contributionCount;
             let level: 0 | 1 | 2 | 3 | 4;
 
-            // Determine level based on contribution count
             if (count === 0) level = 0;
             else if (count <= 3) level = 1;
             else if (count <= 6) level = 2;

@@ -1,9 +1,7 @@
-// Core application types
 export * from "./blog";
 export * from "./api";
 export * from "./forms";
 
-// GitHub types
 export interface GitHubRepo {
   name: string;
   description: string;
@@ -28,7 +26,6 @@ export interface ContributionDay {
   level: 0 | 1 | 2 | 3 | 4;
 }
 
-// Global window types
 declare global {
   interface Window {
     grecaptcha: {

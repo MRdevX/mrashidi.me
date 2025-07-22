@@ -23,27 +23,27 @@ src/components/
 ### 2. Component Structure
 
 ```typescript
-// 1. Imports
+
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
-// 2. Types (if component-specific)
+
 interface MyComponentProps {
   title: string;
   className?: string;
 }
 
-// 3. Component
+
 export default function MyComponent({ title, className }: MyComponentProps) {
-  // 4. State and hooks
+
   const [isOpen, setIsOpen] = useState(false);
 
-  // 5. Event handlers
+
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
 
-  // 6. Render
+
   return (
     <div className={cn('base-styles', className)}>
       <h2>{title}</h2>

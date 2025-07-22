@@ -5,12 +5,12 @@ class CacheService {
   private cache: NodeCache;
   private readonly BLOG_POSTS_KEY = "blog_posts";
   private readonly BLOG_POSTS_TOTAL_KEY = "blog_posts_total";
-  private readonly CACHE_TTL = 60 * 60; // 1 hour in seconds
+  private readonly CACHE_TTL = 60 * 60;
 
   constructor() {
     this.cache = new NodeCache({
       stdTTL: this.CACHE_TTL,
-      checkperiod: this.CACHE_TTL * 0.2, // Check for expired keys at 20% of TTL
+      checkperiod: this.CACHE_TTL * 0.2,
     });
   }
 
@@ -38,5 +38,4 @@ class CacheService {
   }
 }
 
-// Create a singleton instance
 export const cacheService = new CacheService();

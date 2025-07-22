@@ -8,7 +8,6 @@ import { skillCategories } from "@/components/skills/skillsData";
 import personalInfo from "@/data/personalInfo";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 
-// Lazy load heavy components
 const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
 const Terminal = lazy(() => import("@/components/terminal/Terminal"));
 
@@ -36,20 +35,17 @@ export default function Home() {
 
   if (!mounted) return null;
 
-  // Gather main stack (expert/proficient) and their icon keys dynamically from all categories
   const mainStack: { name: string; iconKey: string }[] = [];
   skillCategories.forEach((cat) => {
     cat.skills.forEach((skill) => {
       if ((skill.level === "expert" || skill.level === "proficient") && !skill.excludeFromMainStack) {
-        // Normalize name to icon key
         let iconKey = skill.name
           .toLowerCase()
-          .replace(/\s*\(.*\)/, "") // remove parenthesis
-          .replace(/\./g, "") // remove dots
-          .replace(/\s+/g, "") // remove spaces
-          .replace(/\+/, "p") // e.g. C++ -> cpp
-          .replace(/#/, "sharp"); // e.g. C# -> csharp
-        // Special cases for cloud providers
+          .replace(/\s*\(.*\)/, "")
+          .replace(/\./g, "")
+          .replace(/\s+/g, "")
+          .replace(/\+/, "p")
+          .replace(/#/, "sharp");
         if (iconKey.includes("azure")) iconKey = "azure";
         if (iconKey === "aws") iconKey = "aws";
         if (techIconMap[iconKey]) {
@@ -58,7 +54,6 @@ export default function Home() {
       }
     });
   });
-  // Remove duplicates by name
   const uniqueMainStack = Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
 
   return (
@@ -106,7 +101,7 @@ export default function Home() {
               whileTap={{ scale: 0.95 }}
             >
               <svg className="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.239 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
               GitHub
             </motion.a>
@@ -128,7 +123,6 @@ export default function Home() {
           <div className="scanline absolute inset-0 pointer-events-none" />
         </motion.div>
 
-        {/* Interactive Terminal */}
         <motion.div className="mb-16" variants={item}>
           <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">
             Interact with Terminal
@@ -144,7 +138,6 @@ export default function Home() {
           </Suspense>
         </motion.div>
 
-        {/* Main Stack Section (replaces Tech Stack) */}
         <motion.div className="mb-16" variants={item}>
           <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">My Tech Stack</h2>
           <div className="glass-card p-8 flex flex-col items-center border border-orange-500/20 shadow-lg rounded-lg">
@@ -165,7 +158,6 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* GitHub Section */}
         <motion.div className="mb-16" variants={item}>
           <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">GitHub Activity</h2>
           <motion.div variants={item} className="w-full overflow-x-auto pb-4">
@@ -181,7 +173,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Get in Touch Section */}
         <motion.div className="text-center" variants={item}>
           <div className="glass-card p-8 md:p-12 border border-orange-500/10 relative overflow-hidden group rounded-lg">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

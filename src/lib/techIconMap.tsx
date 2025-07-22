@@ -146,10 +146,10 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
     Icon: (props: { className?: string }) => <SvgIcon src="/icons/typeorm.svg" alt="TypeORM" {...props} />,
     colorClass: "",
   },
-  // Aliases for skills that include logo names
-  k8slens: { Icon: SiLens, colorClass: "text-blue-400" }, // K8s Lens
-  jpa: { Icon: SiHibernate, colorClass: "text-yellow-700" }, // JPA uses Hibernate logo
-  serverless: { Icon: SiAwslambda, colorClass: "text-orange-500" }, // Serverless uses AWS Lambda
+
+  k8slens: { Icon: SiLens, colorClass: "text-blue-400" },
+  jpa: { Icon: SiHibernate, colorClass: "text-yellow-700" },
+  serverless: { Icon: SiAwslambda, colorClass: "text-orange-500" },
 };
 
 export function getTechIcon(iconKey: string) {

@@ -13,16 +13,18 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      // Allow unused variables when they start with an underscore
-      "@typescript-eslint/no-unused-vars": ["error", { 
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_",
-        "caughtErrorsIgnorePattern": "^_"
-      }],
-      // Allow empty catch blocks for error handling patterns
-      "no-empty": ["error", { "allowEmptyCatch": true }]
-    }
-  }
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+
+      "no-empty": ["error", { allowEmptyCatch: true }],
+    },
+  },
 ];
 
 export default eslintConfig;
