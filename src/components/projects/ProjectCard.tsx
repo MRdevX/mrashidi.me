@@ -62,9 +62,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}
       </div>
       <div className="flex flex-wrap gap-2 mt-2">
-        {project.stack.map((tech, i) => {
-          const iconKey = project.stackIcons && project.stackIcons[i];
-          const techIcon = iconKey ? getTechIcon(iconKey) : null;
+        {project.stack.map((tech) => {
+          let iconKey = tech
+            .toLowerCase()
+            .replace(/\s*\(.*\)/, "")
+            .replace(/\./g, "")
+            .replace(/\s+/g, "")
+            .replace(/\+/, "p")
+            .replace(/#/, "sharp");
+          if (iconKey.includes("azure")) iconKey = "azure";
+          if (iconKey === "aws") iconKey = "aws";
+          const techIcon = getTechIcon(iconKey);
           return (
             <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs flex items-center">
               {techIcon && <techIcon.Icon className={`w-4 h-4 mr-1 inline-block ${techIcon.colorClass}`} />}
