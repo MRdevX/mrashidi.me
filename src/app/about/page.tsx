@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import personalInfo from "@/data/personalInfo";
 import skillCategories from "@/data/skills";
 import education from "@/data/education";
-import { SkillLevel } from "@/data/skills";
 import { getTechIcon } from "@/lib/techIconMap";
 
 export default function About() {
@@ -30,25 +29,25 @@ export default function About() {
             <div className="flex flex-wrap gap-3 mb-8">
               <span
                 className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 12px 2px #FF5F1F" }}
+                style={{ boxShadow: "0 0 12px 2px #9A3412" }}
               >
                 Expert
               </span>
               <span
                 className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 12px 2px #00CFFF" }}
+                style={{ boxShadow: "0 0 12px 2px #EA580C" }}
               >
                 Proficient
               </span>
               <span
                 className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 12px 2px #A259F7" }}
+                style={{ boxShadow: "0 0 12px 2px #FBBF24" }}
               >
                 Experienced
               </span>
               <span
                 className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 8px 1.5px #A3A3A3" }}
+                style={{ boxShadow: "0 0 8px 1.5px #FEF9C3" }}
               >
                 Familiar
               </span>
@@ -70,10 +69,10 @@ export default function About() {
                       if (iconKey === "aws") iconKey = "aws";
                       const { Icon, colorClass } = getTechIcon(iconKey);
                       let glow = "0 0 0px #0000";
-                      if (skill.level === "expert") glow = "0 0 12px 2px #FF5F1F";
-                      else if (skill.level === "proficient") glow = "0 0 12px 2px #00CFFF";
-                      else if (skill.level === "experienced") glow = "0 0 12px 2px #A259F7";
-                      else if (skill.level === "familiar") glow = "0 0 8px 1.5px #A3A3A3";
+                      if (skill.level === "expert") glow = "0 0 12px 2px #9A3412";
+                      else if (skill.level === "proficient") glow = "0 0 12px 2px #EA580C";
+                      else if (skill.level === "experienced") glow = "0 0 12px 2px #FBBF24";
+                      else if (skill.level === "familiar") glow = "0 0 8px 1.5px #FEF9C3";
                       return (
                         <span
                           key={skill.name}
