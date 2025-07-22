@@ -1,51 +1,6 @@
 import React from "react";
 import { Project } from "@/data/projects";
-import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiFramer,
-  SiNodedotjs,
-  SiKubernetes,
-  SiNestjs,
-  SiPostgresql,
-  SiRedis,
-  SiMongodb,
-  SiDocker,
-  SiAmazon,
-  SiRabbitmq,
-} from "react-icons/si";
-import { FaNetworkWired } from "react-icons/fa";
-
-// Icon mapping using react-icons
-const techIconMap: Record<string, React.ReactNode> = {
-  react: <SiReact className="w-4 h-4 mr-1 text-cyan-400 inline-block" />,
-  nextjs: <SiNextdotjs className="w-4 h-4 mr-1 text-black dark:text-white inline-block" />,
-  tailwindcss: <SiTailwindcss className="w-4 h-4 mr-1 text-sky-400 inline-block" />,
-  typescript: <SiTypescript className="w-4 h-4 mr-1 text-blue-500 inline-block" />,
-  framermotion: <SiFramer className="w-4 h-4 mr-1 text-pink-400 inline-block" />,
-  nodejs: <SiNodedotjs className="w-4 h-4 mr-1 text-green-600 inline-block" />,
-  inquirerjs: (
-    <span className="w-4 h-4 mr-1 inline-block" role="img" aria-label="Inquirer.js">
-      💬
-    </span>
-  ),
-  azure: (
-    <span className="w-4 h-4 mr-1 inline-block" role="img" aria-label="Azure">
-      ☁️
-    </span>
-  ),
-  kubernetes: <SiKubernetes className="w-4 h-4 mr-1 text-blue-400 inline-block" />,
-  nestjs: <SiNestjs className="w-4 h-4 mr-1 text-rose-600 inline-block" />,
-  postgresql: <SiPostgresql className="w-4 h-4 mr-1 text-blue-800 inline-block" />,
-  redis: <SiRedis className="w-4 h-4 mr-1 text-red-500 inline-block" />,
-  mongodb: <SiMongodb className="w-4 h-4 mr-1 text-green-700 inline-block" />,
-  docker: <SiDocker className="w-4 h-4 mr-1 text-blue-500 inline-block" />,
-  aws: <SiAmazon className="w-4 h-4 mr-1 text-yellow-500 inline-block" />,
-  rabbitmq: <SiRabbitmq className="w-4 h-4 mr-1 text-orange-500 inline-block" />,
-  websocket: <FaNetworkWired className="w-4 h-4 mr-1 text-gray-400 inline-block" />,
-};
+import { getTechIcon } from "@/lib/techIconMap";
 
 interface ProjectCardProps {
   project: Project;
@@ -107,12 +62,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}
       </div>
       <div className="flex flex-wrap gap-2 mt-2">
-        {project.stack.map((tech, i) => (
-          <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs flex items-center">
-            {project.stackIcons && project.stackIcons[i] && techIconMap[project.stackIcons[i]]}
-            {tech}
-          </span>
-        ))}
+        {project.stack.map((tech, i) => {
+          const iconKey = project.stackIcons && project.stackIcons[i];
+          const techIcon = iconKey ? getTechIcon(iconKey) : null;
+          return (
+            <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs flex items-center">
+              {techIcon &&
+                (typeof techIcon.Icon === "function" && techIcon.Icon.name === "SvgIcon"
+                  ? React.createElement(techIcon.Icon, { className: "w-4 h-4 mr-1 inline-block" })
+                  : React.createElement(techIcon.Icon, { className: `w-4 h-4 mr-1 inline-block !${techIcon.colorClass}` }))}
+              {tech}
+            </span>
+          );
+        })}
       </div>
       <div className="flex gap-3 mt-4">
         {project.githubUrl && (
