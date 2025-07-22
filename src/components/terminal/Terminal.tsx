@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, KeyboardEvent, ChangeEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState, KeyboardEvent } from "react";
 import { Command, CommandType } from "./types";
 import { handleCommand } from "./commandHandlers";
-import CommandOutput from "./CommandOutput";
+import TerminalInput from "./TerminalInput";
+import TerminalHistory from "./TerminalHistory";
 
-export default function Terminal() {
+function TerminalContainer() {
   const [commands, setCommands] = useState<Command[]>([]);
   const [input, setInput] = useState("");
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -28,8 +28,6 @@ export default function Terminal() {
 
   const executeCommand = async (cmd: string) => {
     const command = cmd.toLowerCase().trim() as CommandType;
-
-    // Add command to list immediately with loading state
     const commandIndex = commands.length;
     setCommands((prev) => [
       ...prev,
@@ -39,13 +37,9 @@ export default function Terminal() {
         timestamp: new Date(),
       },
     ]);
-
     setIsExecuting(true);
-
     try {
       const output = await handleCommand(command);
-
-      // Update the command output
       setCommands((prev) => {
         const newCommands = [...prev];
         newCommands[commandIndex] = {
@@ -54,15 +48,12 @@ export default function Terminal() {
         };
         return newCommands;
       });
-
       if (command !== "clear") {
         setCommandHistory((prev) => [...prev, cmd]);
       } else {
         setCommands([]);
       }
-    } catch (error) {
-      console.error("Command execution error:", error);
-      // Update the command output with error
+    } catch (_error) {
       setCommands((prev) => {
         const newCommands = [...prev];
         newCommands[commandIndex] = {
@@ -74,6 +65,10 @@ export default function Terminal() {
     } finally {
       setIsExecuting(false);
     }
+  };
+
+  const handleInputChange = (value: string) => {
+    setInput(value);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -101,40 +96,18 @@ export default function Terminal() {
     }
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-
   return (
     <div ref={terminalRef} className="w-full h-[600px] bg-black/90 rounded-lg p-4 font-mono text-sm overflow-y-auto">
-      <div className="space-y-2">
-        <AnimatePresence>
-          {commands.map((command, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <CommandOutput command={command} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-      <div className="flex items-center gap-2 mt-4">
-        <span className="text-green-400">$</span>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          disabled={isExecuting}
-          className="flex-1 bg-transparent border-none outline-none text-gray-300 disabled:opacity-50"
-          placeholder={isExecuting ? "Executing command..." : "Type 'help' for available commands..."}
-        />
-      </div>
+      <TerminalHistory commands={commands} />
+      <TerminalInput
+        inputRef={inputRef}
+        value={input}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        isExecuting={isExecuting}
+      />
     </div>
   );
 }
+
+export default TerminalContainer;
