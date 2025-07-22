@@ -2,7 +2,7 @@ export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 
 export interface Skill {
   name: string;
-  level?: string;
+  level?: SkillLevel;
   excludeFromMainStack?: boolean;
 }
 
@@ -10,7 +10,7 @@ export interface SkillCategory {
   category: string;
   skills: Array<{
     name: string;
-    level?: string;
+    level?: SkillLevel;
     excludeFromMainStack?: boolean;
   }>;
 }
