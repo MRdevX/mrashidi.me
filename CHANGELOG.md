@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/MRdevX/mrashidi.me/compare/v0.1.11...v0.1.12) (2025-07-22)
+
+
+### Features
+
+* add ThemeContext for theme management and integrate into layout; update education data structure and blog component to use SWR for data fetching ([d66352f](https://github.com/MRdevX/mrashidi.me/commit/d66352fa525bcd7fd968a0255f0207ada8c1b7a1))
+
 ### [0.1.11](https://github.com/MRdevX/mrashidi.me/compare/v0.1.10...v0.1.11) (2025-07-21)
 
 
