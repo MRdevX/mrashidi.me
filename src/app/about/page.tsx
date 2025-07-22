@@ -134,12 +134,12 @@ export default function About() {
           <motion.section initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 1.2 }}>
             <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Education</h2>
             {education.map((edu) => (
-              <div className="feature-card group mb-4" key={edu.degree + edu.school}>
+              <div className="feature-card group mb-4" key={edu.degree + edu.institution}>
                 <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
                   {edu.degree}
                 </h3>
                 <p className="text-gray-400 group-hover:text-gray-300 transition-colors mt-2">
-                  {edu.school}, {edu.location}
+                  {edu.institution}, {edu.location}
                 </p>
                 <p className="text-gray-500 mt-1">{edu.period}</p>
               </div>

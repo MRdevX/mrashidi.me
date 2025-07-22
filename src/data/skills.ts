@@ -2,13 +2,17 @@ export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 
 export interface Skill {
   name: string;
-  level?: SkillLevel;
+  level?: string;
   excludeFromMainStack?: boolean;
 }
 
 export interface SkillCategory {
   category: string;
-  skills: Skill[];
+  skills: Array<{
+    name: string;
+    level?: string;
+    excludeFromMainStack?: boolean;
+  }>;
 }
 
 const skillCategories: SkillCategory[] = [

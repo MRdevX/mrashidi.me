@@ -1,39 +1,22 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { IBlogPost } from "@/types/blog";
 import { blogService } from "@/services/blogService";
+import useSWR from "swr";
 
 export default function Blog() {
-  const [posts, setPosts] = useState<IBlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
-  const [totalPosts, setTotalPosts] = useState(0);
   const postsPerPage = 6;
 
-  const fetchPosts = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await blogService.getBlogPosts(page, postsPerPage);
-      setPosts(response.posts);
-      setTotalPosts(response.total);
-      setError(null);
-    } catch (err) {
-      setError("Failed to fetch blog posts. Please try again later.");
-      console.error("Error fetching blog posts:", err);
-    } finally {
-      setLoading(false);
-    }
-  }, [page, postsPerPage]);
+  const fetcher = (page: number, postsPerPage: number) => blogService.getBlogPosts(page, postsPerPage);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+  const { data, error, isLoading } = useSWR(["blogPosts", page, postsPerPage], ([, p, pp]) => fetcher(p, pp));
 
+  const posts = data?.posts || [];
+  const totalPosts = data?.total || 0;
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   return (
@@ -47,7 +30,7 @@ export default function Blog() {
           Blog Posts
         </motion.h1>
 
-        {loading ? (
+        {isLoading ? (
           <div className="flex justify-center items-center min-h-[400px]">
             <div className="loading-dots">
               <span></span>
@@ -57,7 +40,7 @@ export default function Blog() {
           </div>
         ) : error ? (
           <motion.div className="text-center text-red-500 py-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            {error}
+            Failed to fetch blog posts. Please try again later.
           </motion.div>
         ) : (
           <>
