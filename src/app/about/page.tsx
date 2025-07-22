@@ -27,34 +27,38 @@ export default function About() {
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
             <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
-            <div className="flex flex-wrap gap-4 mb-6">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#FF5F1F" }}></span>Expert
+            <div className="flex flex-wrap gap-3 mb-8">
+              <span
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
+                style={{ boxShadow: "0 0 12px 2px #FF5F1F" }}
+              >
+                Expert
               </span>
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#00CFFF" }}></span>Proficient
+              <span
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
+                style={{ boxShadow: "0 0 12px 2px #00CFFF" }}
+              >
+                Proficient
               </span>
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#A259F7" }}></span>Experienced
+              <span
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
+                style={{ boxShadow: "0 0 12px 2px #A259F7" }}
+              >
+                Experienced
               </span>
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded-full" style={{ background: "#A3A3A3" }}></span>Familiar
+              <span
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
+                style={{ boxShadow: "0 0 8px 1.5px #A3A3A3" }}
+              >
+                Familiar
               </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {skillCategories.map((cat) => (
-                <div
-                  key={cat.category}
-                  className="feature-card mb-8 p-6 relative overflow-visible bg-gray-900/40 border border-white/10 backdrop-blur-2xl"
-                  style={{ position: "relative" }}
-                >
-                  <span className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-[#FF5F1F] opacity-90"></span>
-                  <h3 className="text-2xl font-bold mb-5 text-orange-500 font-cyberpunk glow-text pl-4 relative z-10">
-                    {cat.category}
-                  </h3>
-                  <div className="flex flex-wrap gap-3 pl-4 relative z-10">
+                <div key={cat.category} className="feature-card mb-8 p-6 bg-gray-900/70 border border-white/10 rounded-xl">
+                  <h3 className="text-2xl font-bold mb-5 text-orange-500 font-cyberpunk glow-text">{cat.category}</h3>
+                  <div className="flex flex-wrap gap-3">
                     {cat.skills.map((skill) => {
-                      let glow = "0 0 0px #0000";
                       let iconKey = skill.name
                         .toLowerCase()
                         .replace(/\s*\(.*\)/, "")
@@ -65,26 +69,15 @@ export default function About() {
                       if (iconKey.includes("azure")) iconKey = "azure";
                       if (iconKey === "aws") iconKey = "aws";
                       const { Icon, colorClass } = getTechIcon(iconKey);
-                      switch (skill.level as SkillLevel) {
-                        case "expert":
-                          glow = "0 0 12px 2px #FF5F1F";
-                          break;
-                        case "proficient":
-                          glow = "0 0 12px 2px #00CFFF";
-                          break;
-                        case "experienced":
-                          glow = "0 0 12px 2px #A259F7";
-                          break;
-                        case "familiar":
-                          glow = "0 0 8px 1.5px #A3A3A3";
-                          break;
-                        default:
-                          glow = "0 0 0px #0000";
-                      }
+                      let glow = "0 0 0px #0000";
+                      if (skill.level === "expert") glow = "0 0 12px 2px #FF5F1F";
+                      else if (skill.level === "proficient") glow = "0 0 12px 2px #00CFFF";
+                      else if (skill.level === "experienced") glow = "0 0 12px 2px #A259F7";
+                      else if (skill.level === "familiar") glow = "0 0 8px 1.5px #A3A3A3";
                       return (
                         <span
                           key={skill.name}
-                          className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-900/70 text-white shadow-sm transition-all duration-200 cursor-default backdrop-blur-md border border-white/10`}
+                          className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10`}
                           style={{ boxShadow: glow }}
                           title={skill.name}
                         >
