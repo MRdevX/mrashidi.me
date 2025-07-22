@@ -67,10 +67,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           const techIcon = iconKey ? getTechIcon(iconKey) : null;
           return (
             <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs flex items-center">
-              {techIcon &&
-                (typeof techIcon.Icon === "function" && techIcon.Icon.name === "SvgIcon"
-                  ? React.createElement(techIcon.Icon, { className: "w-4 h-4 mr-1 inline-block" })
-                  : React.createElement(techIcon.Icon, { className: `w-4 h-4 mr-1 inline-block !${techIcon.colorClass}` }))}
+              {techIcon && <techIcon.Icon className={`w-4 h-4 mr-1 inline-block ${techIcon.colorClass}`} />}
               {tech}
             </span>
           );
