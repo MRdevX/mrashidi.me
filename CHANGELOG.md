@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/MRdevX/mrashidi.me/compare/v0.1.14...v0.1.15) (2025-08-09)
+
+
+### Features
+
+* add Albert Sans font and enhance typography styles across the application for a cohesive cyberpunk theme ([7addfaa](https://github.com/MRdevX/mrashidi.me/commit/7addfaab03c82426e4c8ba7d48ecc05a5922d0d0))
+
 ### [0.1.14](https://github.com/MRdevX/mrashidi.me/compare/v0.1.13...v0.1.14) (2025-07-22)
 
 ### [0.1.13](https://github.com/MRdevX/mrashidi.me/compare/v0.1.12...v0.1.13) (2025-07-22)
