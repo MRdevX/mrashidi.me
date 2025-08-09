@@ -184,7 +184,7 @@ export default function Projects() {
 
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
-      <motion.div className="max-w-6xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
+      <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
         <motion.h1 className="text-4xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text" variants={item}>
           Projects
         </motion.h1>
