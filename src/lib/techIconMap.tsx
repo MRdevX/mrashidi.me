@@ -149,6 +149,10 @@ const getIconKey = (techName: string): string => {
     "llm apis": "llmapis",
     "linux distros": "linuxdistros",
     "cursor ai": "cursorai",
+    "chrome extension api": "chromeextensionapi",
+    "google sheets api": "googlesheetsapi",
+    html: "html5",
+    css: "css3",
   };
 
   return specialCases[normalized] || normalized.replace(/\s+/g, "");
@@ -299,6 +303,9 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   linuxdistros: { Icon: SiLinux, colorClass: "text-yellow-500" },
   rest: { Icon: TbApi, colorClass: "text-blue-500" },
   websockets: { Icon: FaNetworkWired, colorClass: "text-gray-400" },
+  chromeextensionapi: { Icon: TbApi, colorClass: "text-green-500" },
+  googlesheetsapi: { Icon: TbBrandGoogle, colorClass: "text-green-600" },
+  oauth: { Icon: TbBrandOauth, colorClass: "text-blue-500" },
 };
 
 export function getTechIcon(iconKey: string) {
