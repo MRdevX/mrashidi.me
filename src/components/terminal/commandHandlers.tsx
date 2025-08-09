@@ -291,6 +291,26 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
         );
       }
 
+    case "view-source":
+      return (
+        <div className="mt-2 space-y-2">
+          <p>This website is open source! 🎉</p>
+          <p className="text-orange-500 font-bold">Repository:</p>
+          <a
+            href="https://github.com/MRdevX/mrashidi.me"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-400 hover:underline"
+          >
+            github.com/MRdevX/mrashidi.me
+          </a>
+          <p className="text-gray-500 text-sm mt-2">Built with Next.js, TypeScript, and Tailwind CSS</p>
+          <p className="text-gray-500 text-sm">Features: Interactive terminal, GitHub integration, blog posts</p>
+          <p className="text-gray-500 text-xs mt-2">Feel free to explore, contribute, or use as inspiration!</p>
+          <p className="text-gray-500 text-xs">— Mahdi Rashidi</p>
+        </div>
+      );
+
     default:
       return 'Command not found. Type "help" for available commands.';
   }
