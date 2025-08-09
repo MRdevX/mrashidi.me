@@ -69,7 +69,7 @@ export default function Navbar() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span>View Code</span>
+                    <span>Open Source</span>
                   </motion.a>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8" role="navigation" aria-label="Main Menu">
