@@ -59,6 +59,8 @@ import {
   SiAmazonapigateway,
   SiAwsfargate,
   SiAmazonecs,
+  SiRedash,
+  SiLerna,
 } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
 import {
@@ -306,6 +308,8 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   chromeextensionapi: { Icon: TbApi, colorClass: "text-green-500" },
   googlesheetsapi: { Icon: TbBrandGoogle, colorClass: "text-green-600" },
   oauth: { Icon: TbBrandOauth, colorClass: "text-blue-500" },
+  redash: { Icon: SiRedash, colorClass: "text-red-500" },
+  lerna: { Icon: SiLerna, colorClass: "text-blue-500" },
 };
 
 export function getTechIcon(iconKey: string) {
