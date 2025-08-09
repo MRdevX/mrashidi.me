@@ -12,6 +12,24 @@ export default function About() {
     visible: { opacity: 1, y: 0 },
   };
 
+  // Flatten all skills and organize by level
+  const allSkills = skillCategories.flatMap((cat) => cat.skills);
+  const skillsByLevel = {
+    expert: allSkills.filter((skill) => skill.level === "expert"),
+    proficient: allSkills.filter((skill) => skill.level === "proficient"),
+    experienced: allSkills.filter((skill) => skill.level === "experienced"),
+    familiar: allSkills.filter((skill) => skill.level === "familiar"),
+    unspecified: allSkills.filter((skill) => !skill.level),
+  };
+
+  const levelConfig = {
+    expert: { color: "#9A3412", label: "Expert" },
+    proficient: { color: "#EA580C", label: "Proficient" },
+    experienced: { color: "#FBBF24", label: "Experienced" },
+    familiar: { color: "#FEF9C3", label: "Familiar" },
+    unspecified: { color: "#6B7280", label: "Tools & Concepts" },
+  };
+
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <div className="max-w-4xl mx-auto px-4">
@@ -25,69 +43,54 @@ export default function About() {
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
-            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Technical Skills</h2>
-            <div className="flex flex-wrap gap-3 mb-8">
-              <span
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 12px 2px #9A3412" }}
-              >
-                Expert
-              </span>
-              <span
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 12px 2px #EA580C" }}
-              >
-                Proficient
-              </span>
-              <span
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 12px 2px #FBBF24" }}
-              >
-                Experienced
-              </span>
-              <span
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10"
-                style={{ boxShadow: "0 0 8px 1.5px #FEF9C3" }}
-              >
-                Familiar
-              </span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {skillCategories.map((cat) => (
-                <div key={cat.category} className="feature-card mb-8 p-6 bg-gray-900/70 border border-white/10 rounded-xl">
-                  <h3 className="text-2xl font-bold mb-5 text-orange-500 font-cyberpunk glow-text">{cat.category}</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {cat.skills.map((skill) => {
-                      let iconKey = skill.name
-                        .toLowerCase()
-                        .replace(/\s*\(.*\)/, "")
-                        .replace(/\./g, "")
-                        .replace(/\s+/g, "")
-                        .replace(/\+/, "p")
-                        .replace(/#/, "sharp");
-                      if (iconKey.includes("azure")) iconKey = "azure";
-                      if (iconKey === "aws") iconKey = "aws";
-                      const { Icon, colorClass } = getTechIcon(iconKey);
-                      let glow = "0 0 0px #0000";
-                      if (skill.level === "expert") glow = "0 0 12px 2px #9A3412";
-                      else if (skill.level === "proficient") glow = "0 0 12px 2px #EA580C";
-                      else if (skill.level === "experienced") glow = "0 0 12px 2px #FBBF24";
-                      else if (skill.level === "familiar") glow = "0 0 8px 1.5px #FEF9C3";
-                      return (
-                        <span
-                          key={skill.name}
-                          className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold text-xs bg-gray-800/80 text-white border border-white/10`}
-                          style={{ boxShadow: glow }}
-                          title={skill.name}
-                        >
-                          <Icon className={`w-4 h-4 ${colorClass}`} />
-                          <span>{skill.name}</span>
-                        </span>
-                      );
-                    })}
+            <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Skills & Technologies</h2>
+
+            <div className="space-y-8">
+              {Object.entries(skillsByLevel).map(([level, skills]) => {
+                if (skills.length === 0) return null;
+                const config = levelConfig[level as keyof typeof levelConfig];
+
+                return (
+                  <div key={level} className="feature-card p-6 bg-gray-900/70 border border-white/10 rounded-xl">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold text-sm bg-gray-800/80 text-white border border-white/10"
+                        style={{ boxShadow: `0 0 12px 2px ${config.color}` }}
+                      >
+                        {config.label}
+                      </span>
+                      <span className="text-gray-400 text-sm">({skills.length})</span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {skills.map((skill) => {
+                        let iconKey = skill.name
+                          .toLowerCase()
+                          .replace(/\s*\(.*\)/, "")
+                          .replace(/\./g, "")
+                          .replace(/\s+/g, "")
+                          .replace(/\+/, "p")
+                          .replace(/#/, "sharp");
+                        if (iconKey.includes("azure")) iconKey = "azure";
+                        if (iconKey === "aws") iconKey = "aws";
+                        const { Icon, colorClass } = getTechIcon(iconKey);
+
+                        return (
+                          <span
+                            key={skill.name}
+                            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm bg-gray-800/60 text-white border border-white/10 hover:bg-gray-800/80 transition-colors"
+                            style={{ boxShadow: `0 0 8px 1px ${config.color}` }}
+                            title={skill.name}
+                          >
+                            <Icon className={`w-4 h-4 ${colorClass}`} />
+                            <span>{skill.name}</span>
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </motion.section>
 
