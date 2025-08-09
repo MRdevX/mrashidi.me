@@ -26,7 +26,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Mahdi Rashidi | Software Backend Engineer",
-  description: personalInfo.description,
+  description: personalInfo.intro,
   keywords: "Software Backend Engineer, web developer, react developer, node.js, javascript, portfolio, software engineer",
   creator: "Mahdi Rashidi",
   authors: [{ name: "Mahdi Rashidi", url: "https://mrashidi.me" }],
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     url: "https://mrashidi.me",
     siteName: "Mahdi Rashidi - Software Backend Engineer",
     title: "Mahdi Rashidi | Software Backend Engineer",
-    description: personalInfo.description,
+    description: personalInfo.intro,
     images: [
       {
         url: "https://mrashidi.me/og-image.jpg",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mahdi Rashidi | Software Backend Engineer",
-    description: personalInfo.description,
+    description: personalInfo.intro,
     creator: "@your_twitter_handle",
     images: ["https://mrashidi.me/twitter-image.jpg"],
   },

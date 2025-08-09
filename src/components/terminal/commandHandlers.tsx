@@ -23,8 +23,7 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
     case "about":
       return (
         <div className="mt-2 space-y-2">
-          <p>{personalInfo.summary}</p>
-          <p>{personalInfo.description}</p>
+          <p>{personalInfo.bio}</p>
         </div>
       );
 
