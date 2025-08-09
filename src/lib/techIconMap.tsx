@@ -34,7 +34,6 @@ import {
   SiCplusplus,
   SiExpress,
   SiSwagger,
-  SiAmazonapigateway,
   SiAwslambda,
   SiGitlab,
   SiApachekafka,
@@ -50,6 +49,16 @@ import {
   SiShell,
   SiGnubash,
   SiJsonwebtokens,
+  SiEventstore,
+  SiCloudflare,
+  SiLinux,
+  SiMqtt,
+  SiOpenid,
+  SiTrpc,
+  SiOpenapiinitiative,
+  SiAmazonapigateway,
+  SiAwsfargate,
+  SiAmazonecs,
 } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
 import {
@@ -65,13 +74,16 @@ import {
   FaMobile,
   FaWindows,
   FaDatabase,
+  FaShieldAlt,
+  FaLock,
+  FaEye,
+  FaUserCog,
 } from "react-icons/fa";
-import { TbLicense } from "react-icons/tb";
+import { TbLicense, TbBrandCSharp, TbApi, TbBrandGoogle, TbBrandOpenai, TbBrain, TbBrandOauth } from "react-icons/tb";
 import { AiOutlineKubernetes, AiOutlineTranslation } from "react-icons/ai";
-
 import { GiCargoCrate } from "react-icons/gi";
-import { TbBrandCSharp } from "react-icons/tb";
 import { DiMsqlServer } from "react-icons/di";
+import { VscAzureDevops } from "react-icons/vsc";
 import { IconType } from "react-icons";
 import React from "react";
 import Image from "next/image";
@@ -111,6 +123,32 @@ const getIconKey = (techName: string): string => {
     "express.js": "express",
     "tailwind css": "tailwindcss",
     "framer motion": "framermotion",
+    "spring boot": "springboot",
+    "java ee": "javaee",
+    "api versioning": "apiversioning",
+    "event-driven architecture": "eventdrivenarchitecture",
+    "api gateway": "apigateway",
+    "domain-driven design": "domaindrivendesign",
+    "azure key vault": "azurekeyvault",
+    "azure blob storage": "azureblobstorage",
+    "aws fargate": "awsfargate",
+    "aws ecs": "awsecs",
+    "aws s3": "awss3",
+    "aws amplify": "awsamplify",
+    "gitlab ci/cd": "gitlabcicd",
+    "azure service bus": "azureservicebus",
+    "aws sqs": "awssqs",
+    "aws sns": "awssns",
+    "azure monitor": "azuremonitor",
+    "fresh ping": "freshping",
+    "unit testing": "unittesting",
+    "integration testing": "integrationtesting",
+    "end-to-end testing": "endtoendtesting",
+    "api security": "apisecurity",
+    "zero trust": "zerotrust",
+    "llm apis": "llmapis",
+    "linux distros": "linuxdistros",
+    "cursor ai": "cursorai",
   };
 
   return specialCases[normalized] || normalized.replace(/\s+/g, "");
@@ -160,6 +198,7 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   kotlin: { Icon: SiKotlin, colorClass: "text-purple-400" },
   go: { Icon: SiGo, colorClass: "text-cyan-500" },
   springboot: { Icon: SiSpring, colorClass: "text-green-500" },
+  javaee: { Icon: SiSpring, colorClass: "text-green-500" },
   aspnet: { Icon: SiDotnet, colorClass: "text-blue-700" },
   django: { Icon: SiDjango, colorClass: "text-green-700" },
   flask: { Icon: SiFlask, colorClass: "text-gray-400" },
@@ -225,6 +264,41 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   windows: { Icon: FaWindows, colorClass: "text-blue-600" },
   spotifyapi: { Icon: SiSpotify, colorClass: "text-green-500" },
   restfulapis: { Icon: SiAmazonapigateway, colorClass: "text-blue-500" },
+
+  // New icons for missing skills
+  grpc: { Icon: SiTrpc, colorClass: "text-blue-500" },
+  openapi: { Icon: SiOpenapiinitiative, colorClass: "text-green-500" },
+  apiversioning: { Icon: TbApi, colorClass: "text-purple-500" },
+  eventdrivenarchitecture: { Icon: SiEventstore, colorClass: "text-green-600" },
+  apigateway: { Icon: SiAmazonapigateway, colorClass: "text-orange-500" },
+  aks: { Icon: SiKubernetes, colorClass: "text-blue-400" },
+  awsfargate: { Icon: SiAwsfargate, colorClass: "text-orange-500" },
+  awsecs: { Icon: SiAmazonecs, colorClass: "text-blue-500" },
+  awss3: { Icon: FaAws, colorClass: "text-yellow-500" },
+  awsamplify: { Icon: FaAws, colorClass: "text-yellow-500" },
+  cloudflare: { Icon: SiCloudflare, colorClass: "text-orange-500" },
+  gitlabcicd: { Icon: SiGitlab, colorClass: "text-orange-600" },
+  linux: { Icon: SiLinux, colorClass: "text-yellow-500" },
+  mqtt: { Icon: SiMqtt, colorClass: "text-blue-500" },
+  awssqs: { Icon: FaAws, colorClass: "text-yellow-500" },
+  awssns: { Icon: FaAws, colorClass: "text-yellow-500" },
+  azuremonitor: { Icon: VscAzureDevops, colorClass: "text-blue-500" },
+  unittesting: { Icon: SiJest, colorClass: "text-green-500" },
+  integrationtesting: { Icon: SiJest, colorClass: "text-blue-500" },
+  endtoendtesting: { Icon: SiJest, colorClass: "text-purple-500" },
+  oauth2: { Icon: TbBrandOauth, colorClass: "text-blue-500" },
+  oidc: { Icon: SiOpenid, colorClass: "text-blue-600" },
+  apisecurity: { Icon: FaShieldAlt, colorClass: "text-green-500" },
+  rbac: { Icon: FaUserCog, colorClass: "text-purple-500" },
+  ssltls: { Icon: FaLock, colorClass: "text-green-600" },
+  zerotrust: { Icon: FaEye, colorClass: "text-red-500" },
+  llmapis: { Icon: TbBrain, colorClass: "text-purple-500" },
+  gemini: { Icon: TbBrandGoogle, colorClass: "text-blue-500" },
+  openai: { Icon: TbBrandOpenai, colorClass: "text-green-500" },
+  finetuning: { Icon: TbBrain, colorClass: "text-purple-600" },
+  linuxdistros: { Icon: SiLinux, colorClass: "text-yellow-500" },
+  rest: { Icon: TbApi, colorClass: "text-blue-500" },
+  websockets: { Icon: FaNetworkWired, colorClass: "text-gray-400" },
 };
 
 export function getTechIcon(iconKey: string) {

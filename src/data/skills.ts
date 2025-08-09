@@ -3,7 +3,7 @@ export type SkillLevel = "expert" | "proficient" | "experienced" | "familiar";
 export interface Skill {
   name: string;
   level?: SkillLevel;
-  excludeFromMainStack?: boolean;
+  includeInMainStack?: boolean;
 }
 
 export interface SkillCategory {
@@ -11,7 +11,7 @@ export interface SkillCategory {
   skills: Array<{
     name: string;
     level?: SkillLevel;
-    excludeFromMainStack?: boolean;
+    includeInMainStack?: boolean;
   }>;
 }
 
@@ -19,11 +19,11 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Programming Languages",
     skills: [
-      { name: "TypeScript", level: "proficient" },
-      { name: "JavaScript", level: "proficient" },
-      { name: "Java", level: "experienced" },
+      { name: "TypeScript", level: "proficient", includeInMainStack: true },
+      { name: "JavaScript", level: "proficient", includeInMainStack: true },
+      { name: "Java", level: "experienced", includeInMainStack: true },
       { name: "C#", level: "experienced" },
-      { name: "Python", level: "experienced" },
+      { name: "Python", level: "experienced", includeInMainStack: true },
       { name: "C++", level: "experienced" },
       { name: "Kotlin", level: "familiar" },
       { name: "Go", level: "familiar" },
@@ -32,9 +32,9 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Backend Frameworks",
     skills: [
-      { name: "Node.js", level: "proficient" },
-      { name: "NestJS", level: "proficient" },
-      { name: "Express", level: "proficient" },
+      { name: "Node.js", level: "proficient", includeInMainStack: true },
+      { name: "NestJS", level: "proficient", includeInMainStack: true },
+      { name: "Express", level: "proficient", includeInMainStack: true },
       { name: "Spring Boot", level: "experienced" },
       { name: "Java EE", level: "experienced" },
       { name: "Django", level: "familiar" },
@@ -44,10 +44,10 @@ const skillCategories: SkillCategory[] = [
   {
     category: "APIs & Protocols",
     skills: [
-      { name: "REST", level: "proficient" },
-      { name: "gRPC", level: "proficient" },
+      { name: "REST", level: "proficient", includeInMainStack: true },
+      { name: "gRPC", level: "proficient", includeInMainStack: true },
       { name: "OpenAPI", level: "proficient" },
-      { name: "Swagger", level: "proficient" },
+      { name: "Swagger", level: "proficient", includeInMainStack: true },
       { name: "API Versioning", level: "proficient" },
       { name: "WebSockets", level: "experienced" },
       { name: "GraphQL", level: "familiar" },
@@ -56,8 +56,8 @@ const skillCategories: SkillCategory[] = [
   {
     category: "System Architecture",
     skills: [
-      { name: "Microservices" },
-      { name: "Event-Driven Architecture" },
+      { name: "Microservices", includeInMainStack: true },
+      { name: "Event-Driven Architecture", includeInMainStack: true },
       { name: "API Gateway" },
       { name: "Domain-Driven Design" },
       { name: "Serverless" },
@@ -67,11 +67,11 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Cloud Platforms",
     skills: [
-      { name: "Azure", level: "proficient" },
+      { name: "Azure", level: "proficient", includeInMainStack: true },
       { name: "AKS", level: "proficient" },
       { name: "Azure Key Vault", level: "proficient" },
       { name: "Azure Blob Storage", level: "proficient" },
-      { name: "AWS", level: "experienced" },
+      { name: "AWS", level: "experienced", includeInMainStack: true },
       { name: "AWS Fargate", level: "experienced" },
       { name: "AWS ECS", level: "experienced" },
       { name: "AWS S3", level: "experienced" },
@@ -84,11 +84,11 @@ const skillCategories: SkillCategory[] = [
   {
     category: "DevOps & Infrastructure",
     skills: [
-      { name: "Kubernetes", level: "proficient" },
-      { name: "Docker", level: "proficient" },
-      { name: "GitLab CI/CD", level: "proficient" },
-      { name: "Linux", level: "proficient" },
-      { name: "Terraform", level: "experienced" },
+      { name: "Kubernetes", level: "proficient", includeInMainStack: true },
+      { name: "Docker", level: "proficient", includeInMainStack: true },
+      { name: "GitLab CI/CD", level: "proficient", includeInMainStack: true },
+      { name: "Linux", level: "proficient", includeInMainStack: true },
+      { name: "Terraform", level: "experienced", includeInMainStack: true },
       { name: "Helm", level: "experienced" },
       { name: "GitHub Actions", level: "experienced" },
     ],
@@ -96,11 +96,11 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Databases & ORMs",
     skills: [
-      { name: "PostgreSQL", level: "proficient" },
-      { name: "TypeORM", level: "proficient" },
-      { name: "Redis", level: "proficient" },
-      { name: "MongoDB", level: "proficient" },
-      { name: "Mongoose", level: "proficient" },
+      { name: "PostgreSQL", level: "proficient"},
+      { name: "TypeORM", level: "proficient", includeInMainStack: true },
+      { name: "Redis", level: "proficient", includeInMainStack: true },
+      { name: "MongoDB", level: "proficient", includeInMainStack: true },
+      { name: "Mongoose", level: "proficient", includeInMainStack: true },
       { name: "MySQL", level: "experienced" },
       { name: "MSSQL", level: "experienced" },
       { name: "JPA", level: "experienced" },
@@ -109,8 +109,8 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Messaging Systems",
     skills: [
-      { name: "RabbitMQ", level: "proficient" },
-      { name: "Redis Pub/Sub", level: "proficient" },
+      { name: "RabbitMQ", level: "proficient", includeInMainStack: true },
+      { name: "Redis Pub/Sub", level: "proficient", includeInMainStack: true },
       { name: "MQTT", level: "proficient" },
       { name: "Azure Service Bus", level: "experienced" },
       { name: "AMQP", level: "experienced" },
@@ -122,10 +122,10 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Observability",
     skills: [
-      { name: "Azure Monitor", level: "proficient", excludeFromMainStack: true },
-      { name: "Sentry", level: "proficient" },
-      { name: "Prometheus", level: "experienced" },
-      { name: "Grafana", level: "experienced" },
+      { name: "Azure Monitor", level: "proficient" },
+      { name: "Sentry", level: "proficient", includeInMainStack: true },
+      { name: "Prometheus", level: "experienced", includeInMainStack: true },
+      { name: "Grafana", level: "experienced", includeInMainStack: true },
       { name: "Fresh Ping", level: "experienced" },
       { name: "CloudWatch", level: "familiar" },
     ],
@@ -133,10 +133,10 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Quality Assurance",
     skills: [
-      { name: "Jest", level: "proficient" },
+      { name: "Jest", level: "proficient", includeInMainStack: true },
       { name: "Unit Testing", level: "proficient" },
       { name: "Integration Testing", level: "proficient" },
-      { name: "Postman", level: "experienced" },
+      { name: "Postman", level: "experienced", includeInMainStack: true },
       { name: "End-to-End Testing", level: "experienced" },
       { name: "Supertest", level: "experienced" },
     ],
@@ -146,7 +146,7 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "OAuth2" },
       { name: "OIDC" },
-      { name: "JWT" },
+      { name: "JWT", includeInMainStack: true },
       { name: "API Security" },
       { name: "RBAC" },
       { name: "SSL/TLS" },
@@ -174,7 +174,7 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Tools",
     skills: [
-      { name: "Git" },
+      { name: "Git", includeInMainStack: true },
       { name: "Linux Distros" },
       { name: "Cursor AI" },
       { name: "K8s Lens" },

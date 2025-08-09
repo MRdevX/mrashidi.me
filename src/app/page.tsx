@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState, Suspense, lazy } from "react";
 import Link from "next/link";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
-import { skillCategories } from "@/components/skills/skillsData";
+import { skillCategories } from "@/data/skills";
 import personalInfo from "@/data/personalInfo";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 
@@ -38,7 +38,7 @@ export default function Home() {
   const mainStack: { name: string; iconKey: string }[] = [];
   skillCategories.forEach((cat) => {
     cat.skills.forEach((skill) => {
-      if ((skill.level === "expert" || skill.level === "proficient") && !skill.excludeFromMainStack) {
+      if (skill.includeInMainStack) {
         let iconKey = skill.name
           .toLowerCase()
           .replace(/\s*\(.*\)/, "")
