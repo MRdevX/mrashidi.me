@@ -41,9 +41,35 @@ import {
   SiHibernate,
   SiAmazoncloudwatch,
   SiLens,
+  SiRust,
+  SiDeno,
+  SiApple,
+  SiSpotify,
+  SiDrizzle,
+  SiQt,
+  SiShell,
+  SiGnubash,
+  SiJsonwebtokens,
 } from "react-icons/si";
 import { VscAzure } from "react-icons/vsc";
-import { FaAws, FaNetworkWired, FaNodeJs, FaTools, FaHtml5, FaCss3, FaGit } from "react-icons/fa";
+import {
+  FaAws,
+  FaNetworkWired,
+  FaNodeJs,
+  FaTools,
+  FaHtml5,
+  FaCss3,
+  FaGit,
+  FaTerminal,
+  FaCloud,
+  FaMobile,
+  FaWindows,
+  FaDatabase,
+} from "react-icons/fa";
+import { TbLicense } from "react-icons/tb";
+import { AiOutlineKubernetes, AiOutlineTranslation } from "react-icons/ai";
+
+import { GiCargoCrate } from "react-icons/gi";
 import { TbBrandCSharp } from "react-icons/tb";
 import { DiMsqlServer } from "react-icons/di";
 import { IconType } from "react-icons";
@@ -59,6 +85,36 @@ const InquirerIcon: React.FC<{ className?: string }> = ({ className }) => (
 const SvgIcon: React.FC<{ src: string; className?: string; alt: string }> = ({ src, className, alt }) => (
   <Image src={src} className={className} alt={alt} width={20} height={20} style={{ color: "currentColor" }} />
 );
+
+// Utility function to convert technology names to icon keys
+const getIconKey = (techName: string): string => {
+  const normalized = techName.toLowerCase().trim();
+
+  // Special cases mapping
+  const specialCases: Record<string, string> = {
+    "next.js": "nextjs",
+    "drizzle orm": "drizzle",
+    typeorm: "typeorm",
+    mongoose: "mongoose",
+    typescript: "typescript",
+    javascript: "javascript",
+    java: "java",
+    python: "python",
+    postgresql: "postgresql",
+    "restful apis": "restfulapis",
+    "weather apis": "weatherapis",
+    "translation apis": "translationapis",
+    "spotify api": "spotifyapi",
+    "license analysis": "licenseanalysis",
+    "shell scripting": "shellscripting",
+    "database management": "databasemanagement",
+    "express.js": "express",
+    "tailwind css": "tailwindcss",
+    "framer motion": "framermotion",
+  };
+
+  return specialCases[normalized] || normalized.replace(/\s+/g, "");
+};
 
 const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: string }>; colorClass: string }> = {
   react: { Icon: SiReact, colorClass: "text-cyan-400" },
@@ -146,14 +202,34 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
     Icon: (props: { className?: string }) => <SvgIcon src="/icons/typeorm.svg" alt="TypeORM" {...props} />,
     colorClass: "",
   },
-
   k8slens: { Icon: SiLens, colorClass: "text-blue-400" },
   jpa: { Icon: SiHibernate, colorClass: "text-yellow-700" },
   serverless: { Icon: SiAwslambda, colorClass: "text-orange-500" },
+
+  rust: { Icon: SiRust, colorClass: "text-orange-600" },
+  deno: { Icon: SiDeno, colorClass: "text-green-600" },
+  bash: { Icon: SiGnubash, colorClass: "text-gray-700" },
+  cli: { Icon: FaTerminal, colorClass: "text-gray-600" },
+  cargo: { Icon: GiCargoCrate, colorClass: "text-orange-500" },
+  drizzle: { Icon: SiDrizzle, colorClass: "text-blue-600" },
+  jwt: { Icon: SiJsonwebtokens, colorClass: "text-purple-500" },
+  ipados: { Icon: FaMobile, colorClass: "text-blue-500" },
+  weatherapis: { Icon: FaCloud, colorClass: "text-blue-400" },
+  licenseanalysis: { Icon: TbLicense, colorClass: "text-green-600" },
+  shellscripting: { Icon: SiShell, colorClass: "text-gray-600" },
+  databasemanagement: { Icon: FaDatabase, colorClass: "text-blue-600" },
+  devops: { Icon: AiOutlineKubernetes, colorClass: "text-purple-600" },
+  translationapis: { Icon: AiOutlineTranslation, colorClass: "text-blue-500" },
+  pyqt: { Icon: SiQt, colorClass: "text-green-600" },
+  macos: { Icon: SiApple, colorClass: "text-gray-800" },
+  windows: { Icon: FaWindows, colorClass: "text-blue-600" },
+  spotifyapi: { Icon: SiSpotify, colorClass: "text-green-500" },
+  restfulapis: { Icon: SiAmazonapigateway, colorClass: "text-blue-500" },
 };
 
 export function getTechIcon(iconKey: string) {
-  return techIconMap[iconKey] || techIconMap["default"];
+  const normalizedKey = getIconKey(iconKey);
+  return techIconMap[normalizedKey] || techIconMap["default"];
 }
 
 export default techIconMap;

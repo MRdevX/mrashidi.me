@@ -32,7 +32,7 @@ export default function ProjectFilters({
         <div className="flex flex-wrap gap-2">
           {stacks.map((stack) => {
             const isSelected = selectedStacks.has(stack);
-            const techIcon = getTechIcon(stack.toLowerCase().replace(/\s+/g, ""));
+            const techIcon = getTechIcon(stack);
             const usageCount = stackUsageCount[stack];
 
             return (
@@ -104,7 +104,7 @@ export default function ProjectFilters({
                   } top-1`}
                 />
               </div>
-              <span className="ml-4 text-sm font-semibold text-orange-400 font-cyberpunk group-hover:text-orange-300 transition-colors">
+              <span className="ml-4 text-sm font-semibold text-orange-400 font-albert group-hover:text-orange-300 transition-colors">
                 Show Open Source Only
               </span>
             </label>
