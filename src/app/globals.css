@@ -2,7 +2,7 @@
 @import "@fontsource/orbitron";
 @import "@fontsource/press-start-2p";
 @import "@fontsource/vt323";
-@import "@fontsource/space-grotesk";
+@import "@fontsource/albert-sans";
 
 @tailwind base;
 @tailwind components;
@@ -80,13 +80,18 @@ html {
 
 /* Card hover effect */
 .hover-card-effect {
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
   border: 1px solid rgba(255, 95, 31, 0.2);
 }
 
 .hover-card-effect:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 0 20px rgba(255, 95, 31, 0.2), 0 0 40px rgba(255, 95, 31, 0.1), 0 0 60px rgba(255, 95, 31, 0.05);
+  box-shadow:
+    0 0 20px rgba(255, 95, 31, 0.2),
+    0 0 40px rgba(255, 95, 31, 0.1),
+    0 0 60px rgba(255, 95, 31, 0.05);
   border-color: var(--neon-orange);
 }
 
@@ -198,22 +203,102 @@ html {
   outline-offset: 2px;
 }
 
-/* Terminal and cyberpunk theme */
-.terminal-text {
-  font-family: "JetBrains Mono", monospace;
-  color: var(--terminal-green);
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-}
-
+/* Cohesive Cyberpunk Typography System */
 .cyberpunk-text {
   font-family: "Orbitron", sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.terminal-text {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--terminal-green);
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  font-weight: 400;
 }
 
 .retro-text {
   font-family: "Press Start 2P", cursive;
   line-height: 1.5;
+  font-weight: 400;
+}
+
+.matrix-text {
+  font-family: "VT323", monospace;
+  color: var(--terminal-green);
+  text-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
+  font-weight: 400;
+}
+
+.space-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 1.6;
+}
+
+/* Typography Hierarchy */
+.cyberpunk-h1 {
+  @apply text-5xl md:text-6xl lg:text-7xl font-bold;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.cyberpunk-h2 {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.cyberpunk-h3 {
+  @apply text-2xl md:text-3xl font-semibold;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: #e5e7eb;
+}
+
+.cyberpunk-h4 {
+  @apply text-xl md:text-2xl font-medium;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  color: #d1d5db;
+}
+
+.cyberpunk-body-text {
+  @apply text-lg leading-relaxed;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  color: #e5e7eb;
+  line-height: 1.7;
+}
+
+.cyberpunk-caption {
+  @apply text-sm;
+  font-family: "JetBrains Mono", monospace;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.cyberpunk-label {
+  @apply text-xs uppercase tracking-wider;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  color: #9ca3af;
+  letter-spacing: 1px;
 }
 
 .terminal-window {
@@ -246,27 +331,46 @@ html {
 
 @keyframes glitch {
   0% {
-    text-shadow: 0.05em 0 0 var(--neon-orange), -0.05em -0.025em 0 var(--neon-blue), -0.025em 0.05em 0 var(--neon-purple);
+    text-shadow:
+      0.05em 0 0 var(--neon-orange),
+      -0.05em -0.025em 0 var(--neon-blue),
+      -0.025em 0.05em 0 var(--neon-purple);
   }
   14% {
-    text-shadow: 0.05em 0 0 var(--neon-orange), -0.05em -0.025em 0 var(--neon-blue), -0.025em 0.05em 0 var(--neon-purple);
+    text-shadow:
+      0.05em 0 0 var(--neon-orange),
+      -0.05em -0.025em 0 var(--neon-blue),
+      -0.025em 0.05em 0 var(--neon-purple);
   }
   15% {
-    text-shadow: -0.05em -0.025em 0 var(--neon-orange), 0.025em 0.025em 0 var(--neon-blue),
+    text-shadow:
+      -0.05em -0.025em 0 var(--neon-orange),
+      0.025em 0.025em 0 var(--neon-blue),
       -0.05em -0.05em 0 var(--neon-purple);
   }
   49% {
-    text-shadow: -0.05em -0.025em 0 var(--neon-orange), 0.025em 0.025em 0 var(--neon-blue),
+    text-shadow:
+      -0.05em -0.025em 0 var(--neon-orange),
+      0.025em 0.025em 0 var(--neon-blue),
       -0.05em -0.05em 0 var(--neon-purple);
   }
   50% {
-    text-shadow: 0.025em 0.05em 0 var(--neon-orange), 0.05em 0 0 var(--neon-blue), 0 -0.05em 0 var(--neon-purple);
+    text-shadow:
+      0.025em 0.05em 0 var(--neon-orange),
+      0.05em 0 0 var(--neon-blue),
+      0 -0.05em 0 var(--neon-purple);
   }
   99% {
-    text-shadow: 0.025em 0.05em 0 var(--neon-orange), 0.05em 0 0 var(--neon-blue), 0 -0.05em 0 var(--neon-purple);
+    text-shadow:
+      0.025em 0.05em 0 var(--neon-orange),
+      0.05em 0 0 var(--neon-blue),
+      0 -0.05em 0 var(--neon-purple);
   }
   100% {
-    text-shadow: -0.025em 0 0 var(--neon-orange), -0.025em -0.025em 0 var(--neon-blue), -0.025em -0.05em 0 var(--neon-purple);
+    text-shadow:
+      -0.025em 0 0 var(--neon-orange),
+      -0.025em -0.025em 0 var(--neon-blue),
+      -0.025em -0.05em 0 var(--neon-purple);
   }
 }
 
@@ -279,7 +383,8 @@ html {
   height: 100%;
   z-index: -1;
   opacity: 0.1;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
     repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.2) 0%, rgba(0, 255, 0, 0.2) 1px, transparent 1px, transparent 2px);
   background-size: 100% 2px;
   animation: matrix 20s linear infinite;
@@ -368,12 +473,8 @@ html {
 /* Circuit board background */
 .circuit-bg {
   background-color: var(--background-dark);
-  background-image: radial-gradient(
-      circle at 100% 150%,
-      var(--background-dark) 24%,
-      var(--neon-orange) 25%,
-      var(--background-dark) 28%
-    ),
+  background-image:
+    radial-gradient(circle at 100% 150%, var(--background-dark) 24%, var(--neon-orange) 25%, var(--background-dark) 28%),
     radial-gradient(circle at 0 150%, var(--background-dark) 24%, var(--neon-orange) 25%, var(--background-dark) 28%),
     radial-gradient(circle at 50% 100%, var(--neon-orange) 10%, var(--background-dark) 11%),
     radial-gradient(circle at 100% 50%, var(--neon-orange) 5%, var(--background-dark) 6%),
@@ -385,7 +486,9 @@ html {
 /* Typing animation */
 .typing {
   border-right: 2px solid var(--terminal-green);
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  animation:
+    typing 3.5s steps(40, end),
+    blink-caret 0.75s step-end infinite;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -485,10 +588,16 @@ html {
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 15px var(--secondary);
+    text-shadow:
+      0 0 5px var(--primary),
+      0 0 10px var(--primary),
+      0 0 15px var(--secondary);
   }
   to {
-    text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--secondary);
+    text-shadow:
+      0 0 10px var(--primary),
+      0 0 20px var(--primary),
+      0 0 30px var(--secondary);
   }
 }
 
@@ -612,10 +721,16 @@ html {
 @keyframes glow {
   0%,
   100% {
-    text-shadow: 0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2);
+    text-shadow:
+      0 0 10px rgba(255, 95, 31, 0.5),
+      0 0 20px rgba(255, 95, 31, 0.3),
+      0 0 30px rgba(255, 95, 31, 0.2);
   }
   50% {
-    text-shadow: 0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3);
+    text-shadow:
+      0 0 20px rgba(255, 95, 31, 0.7),
+      0 0 30px rgba(255, 95, 31, 0.5),
+      0 0 40px rgba(255, 95, 31, 0.3);
   }
 }
 

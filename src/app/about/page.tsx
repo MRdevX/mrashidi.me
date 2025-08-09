@@ -12,7 +12,6 @@ export default function About() {
     visible: { opacity: 1, y: 0 },
   };
 
-  // Flatten all skills and organize by level
   const allSkills = skillCategories.flatMap((cat) => cat.skills);
   const skillsByLevel = {
     expert: allSkills.filter((skill) => skill.level === "expert"),
@@ -39,7 +38,7 @@ export default function About() {
 
         <div className="prose dark:prose-invert max-w-none">
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.2 }}>
-            <p className="text-lg mb-6 leading-relaxed text-gray-300">{personalInfo.description}</p>
+            <p className="text-lg mb-6 leading-relaxed text-gray-300 font-albert">{personalInfo.description}</p>
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>

@@ -65,8 +65,10 @@ export default function Home() {
             {personalInfo.name}
           </h1>
           <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
-          <p className="text-lg text-gray-400 mb-6 relative z-10 max-w-3xl mx-auto leading-relaxed">{personalInfo.intro}</p>
-          <p className="text-lg text-gray-400 mb-8 relative z-10 flex items-center justify-center gap-2">
+          <p className="text-lg text-gray-300 mb-6 relative z-10 max-w-3xl mx-auto leading-relaxed font-albert">
+            {personalInfo.intro}
+          </p>
+          <p className="text-lg text-gray-300 mb-8 relative z-10 flex items-center justify-center gap-2 font-albert">
             <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -179,7 +181,9 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl font-bold text-orange-500 font-cyberpunk glow-text mb-6">
               {personalInfo.contactCta}
             </h2>
-            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">{personalInfo.contactDescription}</p>
+            <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-albert leading-relaxed">
+              {personalInfo.contactDescription}
+            </p>
             <Link href="/contact" className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group rounded-lg">
               <span>Get In Touch</span>
               <svg
