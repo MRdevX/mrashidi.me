@@ -26,6 +26,13 @@ function TerminalContainer() {
     inputRef.current?.focus();
   }, []);
 
+  // Refocus input after command execution
+  useEffect(() => {
+    if (!isExecuting && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isExecuting]);
+
   const executeCommand = async (cmd: string) => {
     const command = cmd.toLowerCase().trim() as CommandType;
     const commandIndex = commands.length;
@@ -96,8 +103,18 @@ function TerminalContainer() {
     }
   };
 
+  const handleTerminalClick = () => {
+    if (inputRef.current && !isExecuting) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
-    <div ref={terminalRef} className="w-full h-[600px] bg-black/90 rounded-lg p-4 font-mono text-sm overflow-y-auto">
+    <div
+      ref={terminalRef}
+      className="w-full h-[600px] bg-black/90 rounded-lg p-4 font-mono text-sm overflow-y-auto cursor-text"
+      onClick={handleTerminalClick}
+    >
       <TerminalHistory commands={commands} />
       <TerminalInput
         inputRef={inputRef}
