@@ -28,8 +28,8 @@ export default function ProjectFilters({
 
     return (
       <div key={category} className="mb-6">
-        <h4 className="text-md font-semibold text-gray-300 mb-3">{displayName}</h4>
-        <div className="flex flex-wrap gap-3">
+        <h4 className="text-md font-semibold text-gray-300 mb-3 font-albert">{displayName}</h4>
+        <div className="flex flex-wrap gap-2">
           {stacks.map((stack) => {
             const isSelected = selectedStacks.has(stack);
             const techIcon = getTechIcon(stack.toLowerCase().replace(/\s+/g, ""));
@@ -39,17 +39,19 @@ export default function ProjectFilters({
               <button
                 key={stack}
                 onClick={() => onToggleStack(stack)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200 hover:scale-105 ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-medium ${
                   isSelected
-                    ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg"
-                    : "bg-gray-800/50 border-gray-600 text-gray-300 hover:border-orange-500/50 hover:text-orange-400"
+                    ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg shadow-orange-500/25"
+                    : "bg-gray-800/30 border-gray-600 text-gray-300 hover:border-orange-500/60 hover:text-orange-400 hover:bg-gray-800/50 hover:shadow-lg hover:shadow-orange-500/10"
                 }`}
               >
-                {techIcon && <techIcon.Icon className={`w-5 h-5 ${techIcon.colorClass}`} />}
+                {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} />}
                 <span className="text-sm font-medium">{stack}</span>
                 <span
-                  className={`text-xs px-1.5 py-0.5 rounded-full ${
-                    isSelected ? "bg-orange-500 text-white" : "bg-gray-600 text-gray-400"
+                  className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${
+                    isSelected
+                      ? "bg-orange-500 text-black shadow-lg"
+                      : "bg-gray-600/80 text-gray-300 border border-gray-500/50"
                   }`}
                 >
                   {usageCount}
@@ -67,8 +69,8 @@ export default function ProjectFilters({
       {/* Technology Stack Icons - Categorized */}
       <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-orange-400 mb-3">Filter by Technology Stack</h3>
-          <p className="text-gray-400 text-sm mb-4">
+          <h3 className="text-lg font-semibold text-orange-400 mb-3 font-cyberpunk glow-text">Filter by Technology Stack</h3>
+          <p className="text-gray-400 text-sm mb-4 font-albert">
             Click on technology icons to filter projects. Multiple selections are supported.
           </p>
         </div>
@@ -81,10 +83,10 @@ export default function ProjectFilters({
 
       {/* Additional Filters */}
       <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Open Source Toggle */}
           <div className="flex items-center">
-            <label className="flex items-center cursor-pointer">
+            <label className="flex items-center cursor-pointer group">
               <input
                 type="checkbox"
                 checked={showOpenSourceOnly}
@@ -92,17 +94,19 @@ export default function ProjectFilters({
                 className="sr-only"
               />
               <div
-                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${
-                  showOpenSourceOnly ? "bg-orange-500" : "bg-gray-600"
+                className={`relative w-12 h-7 rounded-full transition-all duration-300 ${
+                  showOpenSourceOnly ? "bg-orange-500 shadow-lg shadow-orange-500/50" : "bg-gray-600 border border-gray-500"
                 }`}
               >
                 <div
-                  className={`absolute w-4 h-4 bg-white rounded-full transition-transform duration-200 ${
+                  className={`absolute w-5 h-5 bg-white rounded-full transition-all duration-300 shadow-md ${
                     showOpenSourceOnly ? "translate-x-6" : "translate-x-1"
                   } top-1`}
                 />
               </div>
-              <span className="ml-3 text-sm font-semibold text-orange-400">Show Open Source Only</span>
+              <span className="ml-4 text-sm font-semibold text-orange-400 font-cyberpunk group-hover:text-orange-300 transition-colors">
+                Show Open Source Only
+              </span>
             </label>
           </div>
 
@@ -110,7 +114,7 @@ export default function ProjectFilters({
           <div className="flex items-center justify-end">
             <button
               onClick={onClearAll}
-              className="px-4 py-2 bg-gray-700/50 text-gray-300 border border-gray-600 rounded-md hover:bg-gray-600/50 hover:text-white transition-colors duration-200"
+              className="neon-button text-sm px-6 py-3 font-cyberpunk hover:scale-105 transition-transform duration-200"
             >
               Clear All Filters
             </button>
