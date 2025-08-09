@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.16](https://github.com/MRdevX/mrashidi.me/compare/v0.1.15...v0.1.16) (2025-08-09)
+
+
+### Features
+
+* add "view-source" command to display project information and repository link in Terminal component ([a74c5d4](https://github.com/MRdevX/mrashidi.me/commit/a74c5d4d200a7dc9883051898f9e6f26c9a9f087))
+* add GitHub link to Navbar for easy access to project repository ([c79456e](https://github.com/MRdevX/mrashidi.me/commit/c79456ee01b40525178e38947cfc856e97119d53))
+* add input refocus functionality in Terminal component after command execution ([aa8f9a8](https://github.com/MRdevX/mrashidi.me/commit/aa8f9a8fea3ea740c4ff71faa2e5fde054d59ed8))
+* add new project "NestJS Queue Worker PoC" with detailed description, highlights, and tech stack ([846ede2](https://github.com/MRdevX/mrashidi.me/commit/846ede2d29978f9602c107097370f9be990bfa63))
+* add new project "Notable Nomads Backend API" with comprehensive description, highlights, tech stack, and links ([d21a858](https://github.com/MRdevX/mrashidi.me/commit/d21a85803669726b28b4856821952f0360e5d744))
+* add new projects "Kubernetes Rollout Automation" and "NestJS Microservice Kit" with detailed descriptions, highlights, tech stacks, and GitHub links ([13e4191](https://github.com/MRdevX/mrashidi.me/commit/13e4191a45fe1bb7931d1042cb44dd659faddf82))
+* add new projects "Nestifined Auth MS", "PostgreSQL Backup Restore Kit", and "Rusty Repo Updater" with detailed descriptions, highlights, tech stacks, and GitHub links ([545c19e](https://github.com/MRdevX/mrashidi.me/commit/545c19ed3160760df7cbcc669eb33ab4099d0309))
+* enhance project filtering and searching capabilities with technology stack categorization, regex support, and UI improvements ([508a80a](https://github.com/MRdevX/mrashidi.me/commit/508a80ab5d5d9b420c2f335381a9f9eba3727ad0))
+* implement advanced project filtering with regex support, dynamic technology categorization, and modular component architecture for improved user experience ([628ddda](https://github.com/MRdevX/mrashidi.me/commit/628ddda4f04a00d76436727019e53486607ab7ba))
+* update project list with new entries, enhance descriptions, and modify tech stacks for existing projects ([e850c9f](https://github.com/MRdevX/mrashidi.me/commit/e850c9f2892d399e9730389db982e390475dbca0))
+
+
+### Bug Fixes
+
+* adjust maximum width of project container for improved layout consistency ([9c0ded4](https://github.com/MRdevX/mrashidi.me/commit/9c0ded42c3711101be41f43257fa9d903d39cf4e))
+
 ### [0.1.15](https://github.com/MRdevX/mrashidi.me/compare/v0.1.14...v0.1.15) (2025-08-09)
 
 
