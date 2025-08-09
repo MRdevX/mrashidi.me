@@ -39,3 +39,34 @@ export const ANIMATION = {
   NORMAL: 0.3,
   SLOW: 0.5,
 } as const;
+
+export const TECHNOLOGY_CATEGORIES = {
+  frameworks: ["NestJS", "Next.js", "React", "Framer Motion", "TypeORM", "Drizzle ORM"],
+  languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash"],
+  databases: ["PostgreSQL", "MongoDB", "Redis"],
+  clouds: ["AWS", "Azure", "Docker", "Kubernetes"],
+  tools: ["Git", "Docker", "Kubernetes", "Jenkins", "GitHub Actions", "Swagger", "Postman"],
+};
+
+export type TechnologyCategory = keyof typeof TECHNOLOGY_CATEGORIES;
+
+export const CATEGORY_DISPLAY_NAMES: Record<TechnologyCategory, string> = {
+  frameworks: "Frameworks",
+  languages: "Programming Languages",
+  databases: "Databases",
+  clouds: "Cloud & Infrastructure",
+  tools: "Development Tools",
+} as const;
+
+export const getAllTechnologies = (): string[] => {
+  return Object.values(TECHNOLOGY_CATEGORIES).flat() as string[];
+};
+
+export const getTechnologyCategory = (technology: string): TechnologyCategory | null => {
+  for (const [category, technologies] of Object.entries(TECHNOLOGY_CATEGORIES)) {
+    if (technologies.includes(technology)) {
+      return category as TechnologyCategory;
+    }
+  }
+  return null;
+};
