@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.17](https://github.com/MRdevX/mrashidi.me/compare/v0.1.16...v0.1.17) (2025-08-09)
+
+
+### Features
+
+* improve project filtering and searching logic ([de48862](https://github.com/MRdevX/mrashidi.me/commit/de4886231cc99d6069db9572a91bff21ac9bd0c0))
+
 ### [0.1.16](https://github.com/MRdevX/mrashidi.me/compare/v0.1.15...v0.1.16) (2025-08-09)
 
 
