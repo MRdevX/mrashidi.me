@@ -41,7 +41,7 @@ export default function ProjectSearchBox({ searchQuery, onSearchChange, onClear 
       {searchQuery && (
         <div className="mt-3 text-sm text-gray-400 font-albert">
           <p className="flex items-center gap-2">
-            <span className="text-orange-400 font-cyberpunk">Searching for:</span>
+            <span className="text-orange-400 font-albert">Searching for:</span>
             <span className="text-orange-300 font-mono bg-gray-800/50 px-2 py-1 rounded border border-orange-500/30">
               {searchQuery}
             </span>
