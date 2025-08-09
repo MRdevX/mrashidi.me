@@ -1,6 +1,3 @@
-/**
- * Base application error class
- */
 export class AppError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;
@@ -14,18 +11,12 @@ export class AppError extends Error {
   }
 }
 
-/**
- * API-specific error class
- */
 export class APIError extends AppError {
   constructor(message: string, statusCode: number = 500) {
     super(message, statusCode);
   }
 }
 
-/**
- * Validation error class
- */
 export class ValidationError extends AppError {
   public readonly fields: Record<string, string>;
 
@@ -35,18 +26,12 @@ export class ValidationError extends AppError {
   }
 }
 
-/**
- * Network error class
- */
 export class NetworkError extends AppError {
   constructor(message: string = "Network request failed") {
     super(message, 503);
   }
 }
 
-/**
- * Error handler utility
- */
 export class ErrorHandler {
   static handle(error: unknown): AppError {
     if (error instanceof AppError) {
@@ -73,9 +58,6 @@ export class ErrorHandler {
   }
 }
 
-/**
- * Async error wrapper for better error handling
- */
 export function asyncHandler<T extends readonly unknown[], R>(fn: (...args: T) => Promise<R>): (...args: T) => Promise<R> {
   return async (...args: T): Promise<R> => {
     try {

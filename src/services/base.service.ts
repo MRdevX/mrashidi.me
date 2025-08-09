@@ -1,8 +1,5 @@
 import { APIError, NetworkError, ErrorHandler } from "@/lib/errors";
 
-/**
- * Base service class providing common functionality
- */
 export abstract class BaseService {
   protected async fetchWithTimeout(url: string, options: RequestInit = {}, timeout: number = 10000): Promise<Response> {
     const controller = new AbortController();

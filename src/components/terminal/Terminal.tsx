@@ -26,7 +26,6 @@ function TerminalContainer() {
     inputRef.current?.focus();
   }, []);
 
-  // Refocus input after command execution
   useEffect(() => {
     if (!isExecuting && inputRef.current) {
       inputRef.current.focus();
