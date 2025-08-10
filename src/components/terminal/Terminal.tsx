@@ -1,77 +1,16 @@
-import { useEffect, useRef, useState, KeyboardEvent } from "react";
-import { Command, CommandType } from "./types";
-import { handleCommand } from "./commandHandlers";
+import { useState, KeyboardEvent, useEffect } from "react";
+import { useTerminal, useCommandHistory, useTerminalFocus } from "./hooks";
 import TerminalInput from "./TerminalInput";
 import TerminalHistory from "./TerminalHistory";
+import { TERMINAL_STYLES, TERMINAL_CONSTANTS } from "./constants";
+import { motion } from "framer-motion";
 
 function TerminalContainer() {
-  const [commands, setCommands] = useState<Command[]>([]);
   const [input, setInput] = useState("");
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [historyPosition, setHistoryPosition] = useState(-1);
-  const [isExecuting, setIsExecuting] = useState(false);
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (terminalRef.current) {
-      const scrollToBottom = () => {
-        terminalRef.current!.scrollTop = terminalRef.current!.scrollHeight;
-      };
-      requestAnimationFrame(scrollToBottom);
-    }
-  }, [commands, input]);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  useEffect(() => {
-    if (!isExecuting && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isExecuting]);
-
-  const executeCommand = async (cmd: string) => {
-    const command = cmd.toLowerCase().trim() as CommandType;
-    const commandIndex = commands.length;
-    setCommands((prev) => [
-      ...prev,
-      {
-        input: cmd,
-        output: command === "blog" ? "Loading blog posts..." : "Executing command...",
-        timestamp: new Date(),
-      },
-    ]);
-    setIsExecuting(true);
-    try {
-      const output = await handleCommand(command);
-      setCommands((prev) => {
-        const newCommands = [...prev];
-        newCommands[commandIndex] = {
-          ...newCommands[commandIndex],
-          output,
-        };
-        return newCommands;
-      });
-      if (command !== "clear") {
-        setCommandHistory((prev) => [...prev, cmd]);
-      } else {
-        setCommands([]);
-      }
-    } catch (_error) {
-      setCommands((prev) => {
-        const newCommands = [...prev];
-        newCommands[commandIndex] = {
-          ...newCommands[commandIndex],
-          output: "Error executing command. Please try again.",
-        };
-        return newCommands;
-      });
-    } finally {
-      setIsExecuting(false);
-    }
-  };
+  const { commands, commandHistory, isExecuting, executeCommand } = useTerminal();
+  const { navigateHistory, resetHistoryPosition } = useCommandHistory(commandHistory);
+  const { inputRef, terminalRef, handleTerminalClick } = useTerminalFocus(isExecuting);
 
   const handleInputChange = (value: string) => {
     setInput(value);
@@ -81,38 +20,26 @@ function TerminalContainer() {
     if (e.key === "Enter" && input.trim() && !isExecuting) {
       executeCommand(input);
       setInput("");
-      setHistoryPosition(-1);
+      resetHistoryPosition();
     } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (commandHistory.length > 0) {
-        const newPosition = Math.min(historyPosition + 1, commandHistory.length - 1);
-        setHistoryPosition(newPosition);
-        setInput(commandHistory[commandHistory.length - 1 - newPosition]);
-      }
+      const newInput = navigateHistory("up", input);
+      setInput(newInput);
     } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (historyPosition > 0) {
-        const newPosition = historyPosition - 1;
-        setHistoryPosition(newPosition);
-        setInput(commandHistory[commandHistory.length - 1 - newPosition]);
-      } else if (historyPosition === 0) {
-        setHistoryPosition(-1);
-        setInput("");
-      }
-    }
-  };
-
-  const handleTerminalClick = () => {
-    if (inputRef.current && !isExecuting) {
-      inputRef.current.focus();
+      const newInput = navigateHistory("down", input);
+      setInput(newInput);
     }
   };
 
   return (
-    <div
+    <motion.div
       ref={terminalRef}
-      className="w-full h-[600px] bg-black/90 rounded-lg p-4 font-mono text-sm overflow-y-auto cursor-text"
+      className={TERMINAL_STYLES.CONTAINER}
       onClick={handleTerminalClick}
+      role="application"
+      aria-label="Interactive terminal"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <TerminalHistory commands={commands} />
       <TerminalInput
@@ -122,7 +49,7 @@ function TerminalContainer() {
         onKeyDown={handleKeyDown}
         isExecuting={isExecuting}
       />
-    </div>
+    </motion.div>
   );
 }
 

@@ -53,6 +53,8 @@ export class BlogService {
   static async fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
     try {
       const feedUrl = `${author.mediumUrl}/feed`;
+      console.log(`Fetching Medium feed from: ${feedUrl}`);
+
       const response = await fetch(feedUrl, {
         headers: {
           "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
@@ -62,10 +64,12 @@ export class BlogService {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch feed: ${response.status}`);
+        throw new Error(`Failed to fetch feed: ${response.status} ${response.statusText}`);
       }
 
       const xmlData = await response.text();
+      console.log(`Received XML data length: ${xmlData.length}`);
+
       const feed = await this.parseMediumFeed(xmlData);
 
       if (!feed?.rss?.channel?.item) {
@@ -74,6 +78,7 @@ export class BlogService {
       }
 
       const items = Array.isArray(feed.rss.channel.item) ? feed.rss.channel.item : [feed.rss.channel.item];
+      console.log(`Found ${items.length} items in feed for ${author.username}`);
 
       return items.map((item) => ({
         title: item.title || "Untitled",
@@ -133,9 +138,11 @@ export class BlogService {
 
   static async getAllPosts(page: number, limit: number) {
     try {
+      console.log("Getting all posts, checking cache first...");
       const cachedData = await cacheService.getBlogPosts();
 
       if (cachedData) {
+        console.log(`Found cached data with ${cachedData.total} posts`);
         const { posts, total } = cachedData;
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
@@ -148,15 +155,19 @@ export class BlogService {
         };
       }
 
+      console.log("No cached data found, fetching from Medium...");
       const allPosts: IBlogPost[] = [];
       for (const author of authors) {
+        console.log(`Fetching posts for author: ${author.username}`);
         const posts = await this.fetchMediumPosts(author);
         allPosts.push(...posts);
       }
 
+      console.log(`Total posts fetched: ${allPosts.length}`);
       const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 
       await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
+      console.log("Posts cached successfully");
 
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
