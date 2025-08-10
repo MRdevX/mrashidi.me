@@ -2,12 +2,29 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect } from "react";
 import personalInfo from "@/data/personalInfo";
 import skillCategories from "@/data/skills";
 import education from "@/data/education";
 import { getTechIcon } from "@/lib/techIconMap";
 
 export default function About() {
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const glitchImages = document.querySelectorAll(".glitch-image");
+      glitchImages.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        (element as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
+        (element as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
+      });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
