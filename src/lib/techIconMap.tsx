@@ -100,11 +100,9 @@ const SvgIcon: React.FC<{ src: string; className?: string; alt: string }> = ({ s
   <Image src={src} className={className} alt={alt} width={20} height={20} style={{ color: "currentColor" }} />
 );
 
-// Utility function to convert technology names to icon keys
 const getIconKey = (techName: string): string => {
   const normalized = techName.toLowerCase().trim();
 
-  // Special cases mapping
   const specialCases: Record<string, string> = {
     "next.js": "nextjs",
     "drizzle orm": "drizzle",
@@ -271,7 +269,6 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   spotifyapi: { Icon: SiSpotify, colorClass: "text-green-500" },
   restfulapis: { Icon: SiAmazonapigateway, colorClass: "text-blue-500" },
 
-  // New icons for missing skills
   grpc: { Icon: SiTrpc, colorClass: "text-blue-500" },
   openapi: { Icon: SiOpenapiinitiative, colorClass: "text-green-500" },
   apiversioning: { Icon: TbApi, colorClass: "text-purple-500" },

@@ -2,8 +2,10 @@ import { ReactElement } from "react";
 import { CommandType, AVAILABLE_COMMANDS } from "./types";
 import { skillCategories } from "@/components/skills/skillsData";
 import personalInfo from "@/data/personalInfo";
-import { blogService } from "@/services/blogService";
 import { projects } from "@/data/projects";
+import workExperience from "@/data/workExperience";
+import certificates from "@/data/certificates";
+import { blogService } from "@/services/blogService";
 
 export const handleCommand = async (command: CommandType): Promise<string | ReactElement> => {
   switch (command) {
@@ -88,10 +90,28 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
         </pre>
       );
 
+    case "experience":
+      return (
+        <div className="mt-2 space-y-4">
+          {workExperience.map((exp, idx) => (
+            <div key={exp.title + idx}>
+              <p className="text-orange-500 font-bold">{exp.title}</p>
+              <p className="text-green-400">{exp.company}</p>
+              <p className="text-gray-400">• {exp.period}</p>
+              {exp.achievements.slice(0, 3).map((achievement, achievementIdx) => (
+                <p key={achievementIdx} className="text-gray-400">
+                  • {achievement}
+                </p>
+              ))}
+            </div>
+          ))}
+        </div>
+      );
+
     case "projects":
       return (
         <div className="mt-2 space-y-4">
-          {projects.map((project, idx) => (
+          {projects.slice(0, 3).map((project, idx) => (
             <div key={project.title + idx}>
               <p className="text-orange-500 font-bold">{project.title}</p>
               <p className="text-gray-400">{project.description}</p>
@@ -138,79 +158,42 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
         <div className="mt-2 space-y-2">
           <p className="flex items-center gap-2">
             <span className="text-orange-500">Email:</span>
-            <a href="mailto:contact@mrashidi.me" className="text-green-400 hover:underline">
-              contact@mrashidi.me
+            <a href={`mailto:${personalInfo.email}`} className="text-green-400 hover:underline">
+              {personalInfo.email}
             </a>
           </p>
           <p className="flex items-center gap-2">
             <span className="text-orange-500">GitHub:</span>
             <a
-              href="https://github.com/mrdevx"
+              href={personalInfo.social.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-green-400 hover:underline"
             >
-              github.com/mrdevx
+              {personalInfo.social.github.replace("https://", "")}
             </a>
           </p>
           <p className="flex items-center gap-2">
             <span className="text-orange-500">LinkedIn:</span>
             <a
-              href="https://linkedin.com/in/deerashidi"
+              href={personalInfo.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-green-400 hover:underline"
             >
-              linkedin.com/in/deerashidi
+              {personalInfo.social.linkedin.replace("https://", "")}
             </a>
           </p>
           <p className="flex items-center gap-2">
             <span className="text-orange-500">Location:</span>
-            <span className="text-green-400">Berlin, Germany</span>
+            <span className="text-green-400">{personalInfo.location}</span>
           </p>
           <p className="flex items-center gap-2">
             <span className="text-orange-500">Languages:</span>
-            <span className="text-green-400">English (C1), Persian (Native), German (A2), Turkish (A1)</span>
+            <span className="text-green-400">
+              {personalInfo.languages.map((lang) => `${lang.language} (${lang.level})`).join(", ")}
+            </span>
           </p>
-        </div>
-      );
-
-    case "experience":
-      return (
-        <div className="mt-2 space-y-4">
-          <div>
-            <p className="text-orange-500 font-bold">Senior Backend Engineer & Technical Lead</p>
-            <p className="text-green-400">Fakir Technology Consultants GmbH (2022 - 2025)</p>
-            <p className="text-gray-400">• Led GCP to Azure migration with zero downtime</p>
-            <p className="text-gray-400">• Managed AKS infrastructure for EV charging platform</p>
-            <p className="text-gray-400">• Architected monorepo solution using Lerna and NX</p>
-            <p className="text-gray-400">• Upgraded core systems and migrated to PostgreSQL Flexible Server</p>
-            <p className="text-gray-400">• Optimized cloud infrastructure costs and implemented observability stack</p>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold">Senior Backend Engineer</p>
-            <p className="text-green-400">Fakir Technology Consultants GmbH (2021 - 2022)</p>
-            <p className="text-gray-400">• Built eConsultant MVP for CO2 emissions and EV transition</p>
-            <p className="text-gray-400">• Developed RESTful APIs using NestJS/TypeScript</p>
-            <p className="text-gray-400">• Optimized database performance and API response times</p>
-            <p className="text-gray-400">• Refactored billing service into modular components</p>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold">Senior Backend Engineer</p>
-            <p className="text-green-400">Mehrpardaz Co (2020 - 2021)</p>
-            <p className="text-gray-400">• Built backend architecture for aviation operations platform</p>
-            <p className="text-gray-400">• Developed RESTful APIs for React dashboard and iPadOS app</p>
-            <p className="text-gray-400">• Integrated weather forecast APIs and offline sync system</p>
-            <p className="text-gray-400">• Designed MongoDB schema for aviation data</p>
-          </div>
-          <div>
-            <p className="text-orange-500 font-bold">Backend Engineer</p>
-            <p className="text-green-400">Iran Kish Credit Card Co (2018 - 2019)</p>
-            <p className="text-gray-400">• Developed REST backend services using Express.js</p>
-            <p className="text-gray-400">• Integrated third-party financial APIs</p>
-            <p className="text-gray-400">• Improved security with AES encryption</p>
-            <p className="text-gray-400">• Automated data migration with Python</p>
-          </div>
         </div>
       );
 
@@ -220,24 +203,31 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
           <div>
             <p className="text-orange-500 font-bold mb-2">Recent Certifications:</p>
             <ul className="space-y-1">
-              <li className="text-green-400">• AWS Cloud Technical Essentials (2025)</li>
-              <li className="text-green-400">• Introduction to Generative AI by Google Cloud (2025)</li>
-              <li className="text-green-400">• Advanced Terraform (2024)</li>
-              <li className="text-green-400">• Microservices: Security (2024)</li>
-              <li className="text-green-400">• Azure Administration Essential Training (2024)</li>
-              <li className="text-green-400">• Building High-Throughput Data Microservices (2024)</li>
-              <li className="text-green-400">• Critical Thinking for Better Judgment and Decision-Making (2024)</li>
-              <li className="text-green-400">• Working with Difficult People (2024)</li>
+              {certificates
+                .slice(0, 8)
+                .map((category) =>
+                  category.certificates.map((cert, idx) => (
+                    <li key={cert.name + idx} className="text-green-400">
+                      • {cert.name} ({cert.year})
+                    </li>
+                  ))
+                )
+                .flat()}
             </ul>
           </div>
           <div>
             <p className="text-orange-500 font-bold mb-2">Key Achievements:</p>
             <ul className="space-y-1">
-              <li className="text-gray-400">• Led successful GCP to Azure migration with zero downtime</li>
-              <li className="text-gray-400">• Optimized cloud infrastructure costs through resource monitoring</li>
-              <li className="text-gray-400">• Improved API response times through database optimization</li>
-              <li className="text-gray-400">• Implemented comprehensive observability stack</li>
-              <li className="text-gray-400">• Developed offline sync system for flight operations</li>
+              {workExperience
+                .slice(0, 2)
+                .map((exp) =>
+                  exp.achievements.slice(0, 3).map((achievement, idx) => (
+                    <li key={exp.title + idx} className="text-gray-400">
+                      • {achievement}
+                    </li>
+                  ))
+                )
+                .flat()}
             </ul>
           </div>
         </div>

@@ -4,14 +4,49 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { blogService } from "@/services/blogService";
 import useSWR from "swr";
+
+interface BlogPost {
+  title: string;
+  content: string;
+  url: string;
+  publishedAt: string;
+  imageUrl?: string;
+  author: {
+    username: string;
+    name: string;
+    mediumUrl: string;
+  };
+}
+
+interface BlogResponse {
+  success: boolean;
+  data: BlogPost[];
+  meta?: {
+    fromCache?: boolean;
+    total?: number;
+    page?: number;
+    limit?: number;
+  };
+}
 
 export default function Blog() {
   const [page, setPage] = useState(1);
   const postsPerPage = 6;
 
-  const fetcher = (page: number, postsPerPage: number) => blogService.getBlogPosts(page, postsPerPage);
+  const fetcher = async (page: number, postsPerPage: number): Promise<{ posts: BlogPost[]; total: number }> => {
+    const response = await fetch(`/api/blog?page=${page}&limit=${postsPerPage}`);
+    const data: BlogResponse = await response.json();
+
+    if (!data.success) {
+      throw new Error("Failed to fetch blog posts");
+    }
+
+    return {
+      posts: data.data,
+      total: data.meta?.total || 0,
+    };
+  };
 
   const { data, error, isLoading } = useSWR(["blogPosts", page, postsPerPage], ([, p, pp]) => fetcher(p, pp));
 
