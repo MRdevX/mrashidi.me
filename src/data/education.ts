@@ -4,6 +4,7 @@ export interface Education {
   period: string;
   location: string;
   details?: string[];
+  url?: string;
 }
 
 const education: Education[] = [
@@ -12,6 +13,7 @@ const education: Education[] = [
     institution: "Bu-Ali Sina University",
     location: "Hamedan, Iran",
     period: "Sep 2011 – Sep 2015",
+    url: "https://en.wikipedia.org/wiki/Bu-Ali_Sina_University",
   },
 ];
 
