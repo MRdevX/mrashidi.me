@@ -226,6 +226,8 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
               <li className="text-green-400">• Microservices: Security (2024)</li>
               <li className="text-green-400">• Azure Administration Essential Training (2024)</li>
               <li className="text-green-400">• Building High-Throughput Data Microservices (2024)</li>
+              <li className="text-green-400">• Critical Thinking for Better Judgment and Decision-Making (2024)</li>
+              <li className="text-green-400">• Working with Difficult People (2024)</li>
             </ul>
           </div>
           <div>
