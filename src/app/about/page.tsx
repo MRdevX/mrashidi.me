@@ -3,10 +3,7 @@
 import { motion } from "framer-motion";
 import { useMouseTracking } from "@/hooks/useMouseTracking";
 import { fadeInVariants } from "@/lib/animations";
-import BioSection from "@/components/about/BioSection";
-import SkillsSection from "@/components/about/SkillsSection";
-import LanguagesSection from "@/components/about/LanguagesSection";
-import EducationSection from "@/components/about/EducationSection";
+import { BioSection, SkillsSection, LanguagesSection, EducationSection } from "@/components/about";
 
 export default function About() {
   useMouseTracking(".glitch-image");
