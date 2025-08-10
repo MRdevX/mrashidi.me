@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import personalInfo from "@/data/personalInfo";
 import skillCategories from "@/data/skills";
 import education from "@/data/education";
@@ -38,7 +39,31 @@ export default function About() {
 
         <div className="prose dark:prose-invert max-w-none">
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.2 }}>
-            <p className="text-lg mb-6 leading-relaxed text-gray-300 font-albert">{personalInfo.bio}</p>
+            <div className="relative">
+              <motion.div
+                className="float-right ml-8 mb-6 lg:ml-12 lg:mb-8"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="relative group">
+                  <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-lg overflow-hidden border-4 border-orange-500/30 shadow-2xl relative bg-gray-800">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent z-10"></div>
+                    <Image
+                      src="/profile.jpeg"
+                      alt="Mahdi Rashidi"
+                      width={256}
+                      height={256}
+                      className="w-full h-full object-cover"
+                      priority
+                    />
+                  </div>
+                  <div className="absolute -inset-2 bg-gradient-to-r from-orange-500/50 to-purple-500/50 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                </div>
+              </motion.div>
+
+              <p className="text-lg leading-relaxed text-gray-300 font-albert text-justify">{personalInfo.bio}</p>
+            </div>
           </motion.section>
 
           <motion.section className="mb-12" initial="hidden" animate="visible" variants={fadeIn} transition={{ delay: 0.4 }}>
