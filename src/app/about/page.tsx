@@ -47,7 +47,7 @@ export default function About() {
                 transition={{ delay: 0.4 }}
               >
                 <div className="relative group">
-                  <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-lg overflow-hidden border-4 border-orange-500/30 shadow-2xl relative bg-gray-800">
+                  <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-lg overflow-hidden border-4 border-orange-500/30 shadow-2xl relative bg-gray-800 glitch-image">
                     <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent z-10"></div>
                     <Image
                       src="/profile.jpeg"
@@ -57,6 +57,7 @@ export default function About() {
                       className="w-full h-full object-cover"
                       priority
                     />
+                    <div className="absolute inset-0 glitch-overlay pointer-events-none"></div>
                   </div>
                   <div className="absolute -inset-2 bg-gradient-to-r from-orange-500/50 to-purple-500/50 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                 </div>
