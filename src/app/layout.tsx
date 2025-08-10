@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import personalInfo from "@/data/personalInfo";
 import { ThemeProvider } from "@/context/ThemeContext";
 
