@@ -3,6 +3,7 @@ export interface SocialLinks {
   linkedin: string;
   email: string;
   website: string;
+  telegram: string;
 }
 
 export interface Language {
@@ -36,6 +37,7 @@ const personalInfo: PersonalInfo = {
     linkedin: "https://linkedin.com/in/deerashidi",
     email: "contact@mrashidi.me",
     website: "https://mrashidi.me",
+    telegram: "https://t.me/deerashidi",
   },
   languages: [
     { language: "Persian", level: "Native Proficiency", progress: 100 },
