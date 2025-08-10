@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.18](https://github.com/MRdevX/mrashidi.me/compare/v0.1.17...v0.1.18) (2025-08-10)
+
+
+### Features
+
+* add neon effect to profile image ([abc6659](https://github.com/MRdevX/mrashidi.me/commit/abc6659995c5a135f3d3fb55c9a796b86b88fa93))
+* add NomadBoard Chrome Extension project details ([5d4d1c5](https://github.com/MRdevX/mrashidi.me/commit/5d4d1c5f7d265eb09d2553fe935ddcd5e57a022d))
+* add profile image to About page ([48e181d](https://github.com/MRdevX/mrashidi.me/commit/48e181de30dbffd9ceabf3633dbd212abdcc43fa))
+* add Telegram link to social media section ([a371193](https://github.com/MRdevX/mrashidi.me/commit/a371193537fc5cd8fd702b3118ec3d01b3942ca0))
+* add URL support to education entries and enhance layout ([381fe1a](https://github.com/MRdevX/mrashidi.me/commit/381fe1a62b2e57cfb24ff0208b81cdc8ffeccc0f))
+* enhance technology icon mapping and improve project filter component for better stack handling ([7ebc50e](https://github.com/MRdevX/mrashidi.me/commit/7ebc50ed125dc8ab99d6b63947750685eeefd417))
+* implement interactive glitch effect on images in About page ([a6ac64c](https://github.com/MRdevX/mrashidi.me/commit/a6ac64cefa93e37aaebcfa9d6843e3d1b20d3a8d))
+* integrate certificates data structure and update resume section ([06e8f92](https://github.com/MRdevX/mrashidi.me/commit/06e8f92e8d4105c945538f94dfdfe2bd82050634))
+* modularize Resume page into sections ([dfa18e6](https://github.com/MRdevX/mrashidi.me/commit/dfa18e67cc82c550beead41589db05be63608b76))
+* **nav-bar:** implement navigation components ([86026d2](https://github.com/MRdevX/mrashidi.me/commit/86026d25187e92170208040e7dc4185488779f01))
+* refactor About page into modular sections for improved readability and maintainability ([372b1aa](https://github.com/MRdevX/mrashidi.me/commit/372b1aa556af4ce6b56c0dc6de7307f4c421cc84))
+* refactor API routes for blog and contact forms ([00cad2d](https://github.com/MRdevX/mrashidi.me/commit/00cad2df89b7d20b4ab687c1611be5598112eb3b))
+* **terminal:** enhance terminal functionality with command handling ([c8e8605](https://github.com/MRdevX/mrashidi.me/commit/c8e8605a9950d5788177c10aec51996f6d6f00aa))
+* update project descriptions and highlights ([18d85e7](https://github.com/MRdevX/mrashidi.me/commit/18d85e7f425b94c6e2a474860cf824f50c66ea54))
+
+
+### Bug Fixes
+
+* update font class for search indicator ([672d2b9](https://github.com/MRdevX/mrashidi.me/commit/672d2b94eb221564ad263065568e0a1f9a092b48))
+
 ### [0.1.17](https://github.com/MRdevX/mrashidi.me/compare/v0.1.16...v0.1.17) (2025-08-09)
 
 
