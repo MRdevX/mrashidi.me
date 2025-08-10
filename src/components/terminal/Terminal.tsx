@@ -1,8 +1,8 @@
-import { useState, KeyboardEvent, useEffect } from "react";
+import { useState, KeyboardEvent } from "react";
 import { useTerminal, useCommandHistory, useTerminalFocus } from "./hooks";
 import TerminalInput from "./TerminalInput";
 import TerminalHistory from "./TerminalHistory";
-import { TERMINAL_STYLES, TERMINAL_CONSTANTS } from "./constants";
+import { TERMINAL_STYLES } from "./constants";
 import { motion } from "framer-motion";
 
 function TerminalContainer() {

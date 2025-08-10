@@ -12,7 +12,6 @@ interface TerminalInputProps {
   placeholder?: string;
 }
 
-// Terminal cursor component with blinking effect
 const TerminalCursor = ({ isVisible }: { isVisible: boolean }) => (
   <motion.span
     className="text-green-400 font-mono"
@@ -34,7 +33,6 @@ export default function TerminalInput({
 }: TerminalInputProps) {
   const [showCursor, setShowCursor] = useState(true);
 
-  // Blinking cursor effect
   useEffect(() => {
     if (isExecuting) {
       setShowCursor(false);
@@ -49,7 +47,6 @@ export default function TerminalInput({
   }, [isExecuting]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    // Prevent default behavior for specific keys
     if (["ArrowUp", "ArrowDown", "Tab"].includes(e.key)) {
       e.preventDefault();
     }

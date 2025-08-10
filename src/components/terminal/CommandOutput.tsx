@@ -9,7 +9,6 @@ interface CommandOutputProps {
   className?: string;
 }
 
-// Terminal-style loading spinner with animation
 const TerminalSpinner = () => {
   const [frame, setFrame] = useState(0);
   const spinnerFrames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
@@ -20,7 +19,7 @@ const TerminalSpinner = () => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [spinnerFrames.length]);
 
   return (
     <div className="flex items-center gap-2">
@@ -30,7 +29,6 @@ const TerminalSpinner = () => {
   );
 };
 
-// Typewriter effect component
 const TypewriterText = ({
   text,
   speed = TERMINAL_CONSTANTS.TYPING_SPEED.NORMAL,
@@ -70,7 +68,6 @@ const TypewriterText = ({
   );
 };
 
-// Terminal-style command execution
 const TerminalCommand = ({ input, timestamp }: { input: string; timestamp: Date }) => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -102,7 +99,6 @@ export default function CommandOutput({ command, className = "" }: CommandOutput
   const [showOutput, setShowOutput] = useState(false);
 
   useEffect(() => {
-    // Simulate command processing time
     const timer = setTimeout(() => {
       setShowOutput(true);
     }, TERMINAL_CONSTANTS.COMMAND_DELAY);

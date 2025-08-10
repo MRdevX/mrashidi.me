@@ -19,7 +19,6 @@ interface BlogPost {
   };
 }
 
-// Common UI Components
 const TerminalSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="mt-2 space-y-2">
     <p className="text-orange-500 font-bold">{title}</p>
@@ -63,7 +62,6 @@ const TerminalBadge = ({
   return <span className={`px-2 py-0.5 rounded font-semibold text-xs ${variants[variant]}`}>{children}</span>;
 };
 
-// Helper Functions
 const formatSkillsByLevel = () => {
   return skillCategories.map((cat) => {
     const skillsByLevel = {
@@ -186,7 +184,6 @@ const renderAchievements = () => {
   return <ul className="space-y-1">{achievements}</ul>;
 };
 
-// Command Handlers
 const commandHandlers = {
   help: () => (
     <div className="mt-2">
@@ -287,13 +284,10 @@ const commandHandlers = {
   ),
 
   clear: () => {
-    // This command is handled directly in the Terminal component
-    // Return empty string as placeholder
     return "";
   },
 };
 
-// Main handler function
 export const handleCommand = async (command: CommandType): Promise<string | ReactElement> => {
   const handler = commandHandlers[command];
 

@@ -9,7 +9,7 @@ export const TERMINAL_CONSTANTS = {
     HELP: "Loading help...",
     DEFAULT: "Executing command...",
   },
-  // Terminal-specific timing constants
+
   TYPING_SPEED: {
     FAST: 10,
     NORMAL: 20,
@@ -26,7 +26,7 @@ export const TERMINAL_STYLES = {
   INPUT: "flex-1 bg-transparent border-none outline-none text-gray-300 disabled:opacity-50 placeholder-gray-600 font-mono",
   WELCOME: "text-gray-500 text-sm italic",
   TIMESTAMP: "text-gray-600 text-xs ml-auto opacity-70",
-  // Terminal-specific text colors
+
   TEXT: {
     PRIMARY: "text-gray-300",
     SECONDARY: "text-gray-400",

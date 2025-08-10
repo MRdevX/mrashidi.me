@@ -16,7 +16,6 @@ export const useTerminal = () => {
       const command = normalizeCommand(cmd);
       const commandIndex = commands.length;
 
-      // Add command to list with loading state
       setCommands((prev) => [
         ...prev,
         {
@@ -29,7 +28,6 @@ export const useTerminal = () => {
       setIsExecuting(true);
 
       try {
-        // Simulate realistic command execution time based on command type
         const executionDelay = getExecutionDelay(command);
         await new Promise((resolve) => setTimeout(resolve, executionDelay));
 
@@ -44,7 +42,6 @@ export const useTerminal = () => {
           return newCommands;
         });
 
-        // Handle special commands
         if (command === "clear") {
           setCommands([]);
         } else {
@@ -95,28 +92,27 @@ export const useTerminal = () => {
   };
 
   const getExecutionDelay = (command: CommandType): number => {
-    // Simulate realistic command execution times
     switch (command) {
       case "blog":
-        return 800; // API calls take longer
+        return 800;
       case "help":
-        return 150; // Quick command
+        return 150;
       case "skills":
-        return 300; // Medium complexity
+        return 300;
       case "projects":
-        return 400; // Medium complexity
+        return 400;
       case "experience":
-        return 350; // Medium complexity
+        return 350;
       case "achievements":
-        return 250; // Quick command
+        return 250;
       case "contact":
-        return 200; // Quick command
+        return 200;
       case "about":
-        return 180; // Quick command
+        return 180;
       case "clear":
-        return 50; // Instant
+        return 50;
       default:
-        return 200; // Default
+        return 200;
     }
   };
 
