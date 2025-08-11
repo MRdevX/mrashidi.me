@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { EmailService } from "@/lib/email/email.service";
+import { ServerEmailService } from "@/lib/email/server-email.service";
 import { RecaptchaService } from "@/services/recaptchaService";
 import { ContactFormValidator } from "@/lib/validation/contactForm";
 import { ContactFormData } from "@/types/forms";
@@ -9,8 +9,7 @@ import { ApiResponseHandler } from "@/lib/api/response";
 async function handleContactForm(request: NextRequest, formData: ContactFormData) {
   await RecaptchaService.verify(formData.recaptchaToken);
 
-  const emailService = new EmailService();
-  const emailSent = await emailService.sendContactFormEmail({
+  const emailSent = await ServerEmailService.sendContactFormEmail({
     name: formData.name,
     email: formData.email,
     subject: formData.subject,

@@ -1,7 +1,12 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { FormData as IContactFormData } from "@/types/forms";
 import { ResumeRequestData } from "@/types/forms";
-import { ContactTemplates, ResumeTemplates, getTemplateConfig } from "./templates";
+import { MjmlContactTemplates, MjmlResumeTemplates, getTemplateConfig } from "./templates";
+
+// Server-side only - this service should not be imported during build
+if (typeof window !== "undefined") {
+  throw new Error("EmailService is server-side only");
+}
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -65,6 +70,8 @@ export class EmailService {
       console.log("From:", this.fromEmail);
       console.log("To:", this.toEmail);
 
+      const htmlContent = MjmlContactTemplates.createAdminNotificationHtml(data, this.templateConfig);
+
       const command = new SendEmailCommand({
         Source: this.fromEmail,
         Destination: {
@@ -77,11 +84,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ContactTemplates.createAdminNotificationHtml(data, this.templateConfig),
+              Data: htmlContent,
               Charset: "UTF-8",
             },
             Text: {
-              Data: ContactTemplates.createAdminNotificationText(data),
+              Data: MjmlContactTemplates.createAdminNotificationText(data),
               Charset: "UTF-8",
             },
           },
@@ -104,6 +111,8 @@ export class EmailService {
 
   private async sendUserConfirmation(data: IContactFormData): Promise<boolean> {
     try {
+      const htmlContent = MjmlContactTemplates.createUserConfirmationHtml(data, this.templateConfig);
+
       const command = new SendEmailCommand({
         Source: this.fromEmail,
         Destination: {
@@ -116,11 +125,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ContactTemplates.createUserConfirmationHtml(data, this.templateConfig),
+              Data: htmlContent,
               Charset: "UTF-8",
             },
             Text: {
-              Data: ContactTemplates.createUserConfirmationText(data, this.templateConfig),
+              Data: MjmlContactTemplates.createUserConfirmationText(data, this.templateConfig),
               Charset: "UTF-8",
             },
           },
@@ -138,6 +147,8 @@ export class EmailService {
 
   private async sendResumeRequestNotification(data: ResumeRequestData): Promise<boolean> {
     try {
+      const htmlContent = MjmlResumeTemplates.createAdminNotificationHtml(data, this.templateConfig);
+
       const command = new SendEmailCommand({
         Source: this.fromEmail,
         Destination: {
@@ -150,11 +161,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ResumeTemplates.createAdminNotificationHtml(data, this.templateConfig),
+              Data: htmlContent,
               Charset: "UTF-8",
             },
             Text: {
-              Data: ResumeTemplates.createAdminNotificationText(data),
+              Data: MjmlResumeTemplates.createAdminNotificationText(data),
               Charset: "UTF-8",
             },
           },
@@ -173,6 +184,8 @@ export class EmailService {
 
   private async sendResumeToUser(data: ResumeRequestData): Promise<boolean> {
     try {
+      const htmlContent = MjmlResumeTemplates.createUserConfirmationHtml(data, this.templateConfig);
+
       const command = new SendEmailCommand({
         Source: this.fromEmail,
         Destination: {
@@ -185,11 +198,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ResumeTemplates.createUserConfirmationHtml(data, this.templateConfig),
+              Data: htmlContent,
               Charset: "UTF-8",
             },
             Text: {
-              Data: ResumeTemplates.createUserConfirmationText(data, this.templateConfig),
+              Data: MjmlResumeTemplates.createUserConfirmationText(data, this.templateConfig),
               Charset: "UTF-8",
             },
           },

@@ -1,6 +1,8 @@
-export { BaseTemplate } from "./base-template";
-export { ContactTemplates } from "./contact-templates";
-export { ResumeTemplates } from "./resume-templates";
 export { getTemplateConfig } from "./config";
 
-export type { IBaseTemplateData } from "./base-template";
+// MJML Templates
+export { MjmlBaseTemplate } from "./mjml-base-template";
+export { MjmlContactTemplates } from "./mjml-contact-templates";
+export { MjmlResumeTemplates } from "./mjml-resume-templates";
+
+export type { IMjmlBaseTemplateProps } from "./mjml-base-template";
