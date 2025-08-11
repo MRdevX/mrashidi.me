@@ -61,8 +61,13 @@ import {
   SiAmazonecs,
   SiRedash,
   SiLerna,
+  SiHono,
+  SiSupabase,
+  SiVitest,
+  SiLangchain,
 } from "react-icons/si";
-import { VscAzure } from "react-icons/vsc";
+import { BsFillHexagonFill } from "react-icons/bs";
+import { VscAzure, VscVscode } from "react-icons/vsc";
 import {
   FaAws,
   FaNetworkWired,
@@ -80,6 +85,9 @@ import {
   FaLock,
   FaEye,
   FaUserCog,
+  FaKey,
+  FaBrain,
+  FaCode,
 } from "react-icons/fa";
 import { TbLicense, TbBrandCSharp, TbApi, TbBrandGoogle, TbBrandOpenai, TbBrain, TbBrandOauth } from "react-icons/tb";
 import { AiOutlineKubernetes, AiOutlineTranslation } from "react-icons/ai";
@@ -153,6 +161,12 @@ const getIconKey = (techName: string): string => {
     "google sheets api": "googlesheetsapi",
     html: "html5",
     css: "css3",
+    postgrest: "postgrest",
+    "api tokens": "apitokens",
+    "fine-tuning": "finetuning",
+    rag: "rag",
+    "vs code": "vscode",
+    "C++": "cplusplus",
   };
 
   return specialCases[normalized] || normalized.replace(/\s+/g, "");
@@ -268,7 +282,6 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   windows: { Icon: FaWindows, colorClass: "text-blue-600" },
   spotifyapi: { Icon: SiSpotify, colorClass: "text-green-500" },
   restfulapis: { Icon: SiAmazonapigateway, colorClass: "text-blue-500" },
-
   grpc: { Icon: SiTrpc, colorClass: "text-blue-500" },
   openapi: { Icon: SiOpenapiinitiative, colorClass: "text-green-500" },
   apiversioning: { Icon: TbApi, colorClass: "text-purple-500" },
@@ -307,6 +320,19 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   oauth: { Icon: TbBrandOauth, colorClass: "text-blue-500" },
   redash: { Icon: SiRedash, colorClass: "text-red-500" },
   lerna: { Icon: SiLerna, colorClass: "text-blue-500" },
+  hono: { Icon: SiHono, colorClass: "text-blue-600" },
+  supabase: { Icon: SiSupabase, colorClass: "text-green-600" },
+  freshping: { Icon: FaCloud, colorClass: "text-blue-400" },
+  vitest: { Icon: SiVitest, colorClass: "text-green-500" },
+  supertest: { Icon: SiJest, colorClass: "text-red-500" },
+  apitokens: { Icon: FaKey, colorClass: "text-yellow-500" },
+  rag: { Icon: FaBrain, colorClass: "text-purple-500" },
+  langchain: { Icon: SiLangchain, colorClass: "text-blue-500" },
+  vscode: { Icon: VscVscode, colorClass: "text-blue-500" },
+  microservices: { Icon: FaCode, colorClass: "text-blue-400" },
+  monorepos: { Icon: SiLerna, colorClass: "text-blue-500" },
+  domaindrivendesign: { Icon: FaDatabase, colorClass: "text-purple-500" },
+  cursorai: { Icon: BsFillHexagonFill, colorClass: "text-purple-500" },
 };
 
 export function getTechIcon(iconKey: string) {
