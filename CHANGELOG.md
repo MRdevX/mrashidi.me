@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.19](https://github.com/MRdevX/mrashidi.me/compare/v0.1.18...v0.1.19) (2025-08-11)
+
+
+### Features
+
+* **email:** refactor email service to use template classes and improve email structure ([5f06b87](https://github.com/MRdevX/mrashidi.me/commit/5f06b87d68860eb0fdf45ec1dc623eb76de4867f))
+* **resume:** enhance resume request modal with company input and update email notifications ([0fe811d](https://github.com/MRdevX/mrashidi.me/commit/0fe811dc3acbe770fcd09945125ba29e33f093ad))
+* **resume:** implement resume request feature with modal and email notifications ([c319e54](https://github.com/MRdevX/mrashidi.me/commit/c319e54d6089675c9e2878f87cd89917822ff97d))
+
+
+### Bug Fixes
+
+* **layout:** update Analytics import path to use next version ([a9d1de3](https://github.com/MRdevX/mrashidi.me/commit/a9d1de3f65de92e2128042728425d84d503f0073))
+* **terminal:** update dependencies ([1311da0](https://github.com/MRdevX/mrashidi.me/commit/1311da01bf75093828f8de8fb7c9bd51b4301a1a))
+
 ### [0.1.18](https://github.com/MRdevX/mrashidi.me/compare/v0.1.17...v0.1.18) (2025-08-10)
 
 
