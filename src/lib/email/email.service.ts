@@ -2,8 +2,6 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { FormData as IContactFormData } from "@/types/forms";
 import { ResumeRequestData } from "@/types/forms";
 import { ITemplateConfig } from "./types";
-import fs from "fs";
-import path from "path";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -49,19 +47,25 @@ export class EmailService {
 
   async sendContactFormEmail(data: IContactFormData): Promise<boolean> {
     try {
+      console.log("Sending contact form emails...");
       const adminEmailSuccess = await this.sendAdminNotification(data);
+      console.log("Admin email success:", adminEmailSuccess);
       const userEmailSuccess = await this.sendUserConfirmation(data);
+      console.log("User email success:", userEmailSuccess);
       return adminEmailSuccess && userEmailSuccess;
     } catch (error) {
-      console.error("Failed to send emails:", error);
+      console.error("Failed to send contact form emails:", error);
       return false;
     }
   }
 
   async sendResumeRequestEmail(data: ResumeRequestData): Promise<boolean> {
     try {
+      console.log("Sending resume request emails...");
       const adminEmailSuccess = await this.sendResumeRequestNotification(data);
+      console.log("Resume admin email success:", adminEmailSuccess);
       const userEmailSuccess = await this.sendResumeToUser(data);
+      console.log("Resume user email success:", userEmailSuccess);
       return adminEmailSuccess && userEmailSuccess;
     } catch (error) {
       console.error("Failed to send resume request emails:", error);
@@ -71,6 +75,10 @@ export class EmailService {
 
   private async sendAdminNotification(data: IContactFormData): Promise<boolean> {
     try {
+      console.log("Preparing admin notification email...");
+      console.log("From:", this.fromEmail);
+      console.log("To:", this.toEmail);
+
       const command = new SendEmailCommand({
         Source: this.fromEmail,
         Destination: {
@@ -95,11 +103,15 @@ export class EmailService {
         ReplyToAddresses: [data.email],
       });
 
+      console.log("Sending admin notification...");
       const response = await this.sesClient.send(command);
       console.log(`Admin notification sent successfully: ${response.MessageId}`);
       return true;
     } catch (error) {
       console.error("Failed to send admin notification:", error);
+      if (error instanceof Error) {
+        console.error("Error details:", error.message);
+      }
       return false;
     }
   }
@@ -175,8 +187,6 @@ export class EmailService {
 
   private async sendResumeToUser(data: ResumeRequestData): Promise<boolean> {
     try {
-      // Note: SES has limitations with attachments. For production,
-      // consider hosting the PDF on S3 and including a download link.
       const command = new SendEmailCommand({
         Source: this.fromEmail,
         Destination: {
@@ -184,7 +194,7 @@ export class EmailService {
         },
         Message: {
           Subject: {
-            Data: `Your Resume - ${this.templateConfig.companyName}`,
+            Data: `Thanks for downloading my CV! Let's connect - ${this.templateConfig.companyName}`,
             Charset: "UTF-8",
           },
           Body: {
@@ -201,23 +211,11 @@ export class EmailService {
       });
 
       const response = await this.sesClient.send(command);
-      console.log(`Resume sent to user successfully: ${response.MessageId}`);
+      console.log(`Resume confirmation sent to user successfully: ${response.MessageId}`);
       return true;
     } catch (error) {
-      console.error("Failed to send resume to user:", error);
+      console.error("Failed to send resume confirmation to user:", error);
       return false;
-    }
-  }
-
-  private async getResumePdfContent(): Promise<string> {
-    try {
-      // Read the PDF file from the public directory
-      const pdfPath = path.join(process.cwd(), "public", "cv", "Mahdi_Rashidi_CV.pdf");
-      const pdfBuffer = fs.readFileSync(pdfPath);
-      return pdfBuffer.toString("base64");
-    } catch (error) {
-      console.error("Failed to read resume PDF:", error);
-      throw new Error("Resume PDF not found");
     }
   }
 
@@ -523,6 +521,17 @@ This is an automated message. Please don't reply to this email.
                             <span style="color: #ff5f1f; font-weight: bold;">Email:</span> ${data.email}
                           </td>
                         </tr>
+                        ${
+                          data.company
+                            ? `
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Company:</span> ${data.company}
+                          </td>
+                        </tr>
+                        `
+                            : ""
+                        }
                       </table>
                       
                       <!-- Divider -->
@@ -536,7 +545,7 @@ This is an automated message. Please don't reply to this email.
                       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                           <td style="padding-bottom: 15px; color: #ffffff;">
-                            <p style="margin: 0; color: #ffffff;">Someone has requested your resume. The resume has been automatically sent to their email address.</p>
+                            <p style="margin: 0; color: #ffffff;">Someone has downloaded your resume from your portfolio website.</p>
                           </td>
                         </tr>
                       </table>
@@ -567,7 +576,7 @@ This is an automated message. Please don't reply to this email.
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Your Resume - Mahdi Rashidi</title>
+          <title>Resume Request Confirmation - Mahdi Rashidi</title>
           <style type="text/css">
             body, p, div, td { 
               color: #ffffff;
@@ -595,7 +604,7 @@ This is an automated message. Please don't reply to this email.
                   <!-- Header -->
                   <tr>
                     <td align="center" style="padding: 25px 20px; background-color: #111111; border-bottom: 2px solid #ff5f1f; border-radius: 8px 8px 0 0;">
-                      <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ff5f1f;">Your Resume</h1>
+                      <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ff5f1f;">Resume Request Confirmation</h1>
                     </td>
                   </tr>
                   
@@ -608,9 +617,9 @@ This is an automated message. Please don't reply to this email.
                           <td style="padding-bottom: 20px; color: #ffffff;">
                             <p style="margin: 0 0 16px 0; color: #ffffff;">Hi ${data.name},</p>
                             
-                            <p style="margin: 0 0 16px 0; color: #ffffff;">Thank you for your interest in my professional background! I've attached my resume to this email for your review.</p>
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">Thank you for your interest in my professional background! I hope you found my CV helpful.</p>
                             
-                            <p style="margin: 0 0 16px 0; color: #ffffff;">My resume includes my experience in backend development, cloud infrastructure, and database design. Feel free to reach out if you have any questions or would like to discuss potential opportunities.</p>
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">I invite you to explore my portfolio website where you can find detailed information about my experience, projects, and skills. Feel free to reach out if you'd like to discuss potential opportunities or have any questions.</p>
                           </td>
                         </tr>
                       </table>
@@ -624,11 +633,11 @@ This is an automated message. Please don't reply to this email.
                       
                       <!-- Call to action -->
                       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                        <tr>
-                          <td style="padding-bottom: 20px;">
-                            <p style="margin: 0 0 20px 0; color: #ffffff;">You can also explore my portfolio for more details about my work and projects.</p>
-                          </td>
-                        </tr>
+                                                  <tr>
+                            <td style="padding-bottom: 20px;">
+                              <p style="margin: 0 0 20px 0; color: #ffffff;">Please visit my portfolio to learn more about my work:</p>
+                            </td>
+                          </tr>
                         <tr>
                           <td align="center" style="padding-bottom: 25px;">
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0">
@@ -642,6 +651,7 @@ This is an automated message. Please don't reply to this email.
                         </tr>
                         <tr>
                           <td style="padding-top: 10px;">
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my website or via the contact information below. I'm always open to discussing new opportunities!</p>
                             <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
                           </td>
                         </tr>
@@ -688,8 +698,9 @@ New Resume Request
 
 Name: ${data.name}
 Email: ${data.email}
+${data.company ? `Company: ${data.company}` : ""}
 
-The resume has been automatically sent to their email address.
+Someone has downloaded your resume from your portfolio website.
 
 Requested at: ${new Date().toISOString()}
     `.trim();
@@ -699,12 +710,14 @@ Requested at: ${new Date().toISOString()}
     return `
 Hi ${data.name},
 
-Thank you for your interest in my professional background! I've attached my resume to this email for your review.
+Thank you for your interest in my professional background! I hope you found my CV helpful.
 
-My resume includes my experience in backend development, cloud infrastructure, and database design. Feel free to reach out if you have any questions or would like to discuss potential opportunities.
+I invite you to explore my portfolio website where you can find detailed information about my experience, projects, and skills. Feel free to reach out if you'd like to discuss potential opportunities or have any questions.
 
-You can also explore my portfolio for more details about my work and projects:
+Please visit my portfolio to learn more about my work:
 ${this.templateConfig.companyWebsite}
+
+If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my website or via the contact information below. I'm always open to discussing new opportunities!
 
 Best regards,
 Mahdi Rashidi

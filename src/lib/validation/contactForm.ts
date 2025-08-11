@@ -16,7 +16,7 @@ export class ContactFormValidator {
 
     if (!formData.email?.trim()) {
       errors.push("Email is required");
-    } else if (!this.isValidEmail(formData.email)) {
+    } else if (!ContactFormValidator.isValidEmail(formData.email)) {
       errors.push("Invalid email format");
     }
 
@@ -66,7 +66,7 @@ export class ResumeRequestValidator {
 
     if (!formData.email?.trim()) {
       errors.push("Email is required");
-    } else if (!this.isValidEmail(formData.email)) {
+    } else if (!ResumeRequestValidator.isValidEmail(formData.email)) {
       errors.push("Invalid email format");
     }
 
@@ -77,6 +77,7 @@ export class ResumeRequestValidator {
     return {
       name: formData.name!.trim(),
       email: formData.email!.trim().toLowerCase(),
+      company: formData.company?.trim() || undefined,
     };
   }
 

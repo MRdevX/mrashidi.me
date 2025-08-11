@@ -6,17 +6,6 @@ import { ResumeRequestData, ResumeRequestErrors, SubmitStatus } from "@/types/fo
 import FormInput from "@/components/forms/FormInput";
 import StatusMessage from "@/components/forms/StatusMessage";
 
-/**
- * Resume Request Modal Component
- *
- * This component handles resume requests by:
- * 1. Collecting user's name and email
- * 2. Sending the resume via email to the user
- * 3. Notifying the admin about the request
- *
- * Note: Currently sends email without PDF attachment due to SES limitations.
- * For production, consider using S3 to host the PDF and include a download link.
- */
 interface ResumeRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -27,6 +16,7 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
   const [formData, setFormData] = useState<ResumeRequestData>({
     name: "",
     email: "",
+    company: "",
   });
   const [errors, setErrors] = useState<ResumeRequestErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,6 +47,11 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
     return errors;
   };
 
+  const isFormValid = (): boolean => {
+    const errors = validateForm(formData);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitStatus({ type: null, message: "" });
@@ -70,15 +65,22 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
     setIsSubmitting(true);
 
     try {
+      const downloadLink = document.createElement("a");
+      downloadLink.href = "/cv/Mahdi_Rashidi_CV.pdf";
+      downloadLink.download = "Mahdi_Rashidi_CV.pdf";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
       const success = await onSubmit(formData);
 
       if (success) {
-        setFormData({ name: "", email: "" });
+        setFormData({ name: "", email: "", company: "" });
         setSubmitStatus({
           type: "success",
-          message: "Resume sent successfully! Check your email.",
+          message: "CV downloaded! Check your email for confirmation.",
         });
-        // Close modal after 2 seconds
+
         setTimeout(() => {
           onClose();
           setSubmitStatus({ type: null, message: "" });
@@ -86,7 +88,7 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
       } else {
         setSubmitStatus({
           type: "error",
-          message: "Failed to send resume. Please try again.",
+          message: "CV downloaded but email failed. Please try again.",
         });
       }
     } catch (_error) {
@@ -101,7 +103,7 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
 
   const handleClose = () => {
     if (!isSubmitting) {
-      setFormData({ name: "", email: "" });
+      setFormData({ name: "", email: "", company: "" });
       setErrors({});
       setSubmitStatus({ type: null, message: "" });
       onClose();
@@ -165,15 +167,27 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
                 required
               />
 
+              <FormInput
+                id="resume-company"
+                name="company"
+                label="Company (Optional)"
+                type="text"
+                value={formData.company || ""}
+                onChange={handleChange}
+                error={errors.company}
+                placeholder="Enter your company name"
+                required={false}
+              />
+
               <StatusMessage status={submitStatus} />
 
-              {/* Submit Button */}
+              {/* Download Button */}
               <motion.button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isFormValid()}
                 className="w-full neon-button flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                whileHover={{ scale: isSubmitting || !isFormValid() ? 1 : 1.02 }}
+                whileTap={{ scale: isSubmitting || !isFormValid() ? 1 : 0.98 }}
               >
                 {isSubmitting ? (
                   <>
@@ -185,7 +199,7 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
-                    <span>Sending...</span>
+                    <span>Processing...</span>
                   </>
                 ) : (
                   <>
@@ -194,10 +208,10 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                       />
                     </svg>
-                    <span>Send Resume</span>
+                    <span>Download CV</span>
                   </>
                 )}
               </motion.button>

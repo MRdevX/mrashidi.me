@@ -17,18 +17,18 @@ export interface SubmitStatus {
   message: string;
 }
 
-// API types
 export interface ContactFormData extends FormData {
   recaptchaToken: string;
 }
 
-// Resume request types
 export interface ResumeRequestData {
   name: string;
   email: string;
+  company?: string;
 }
 
 export interface ResumeRequestErrors {
   name?: string;
   email?: string;
+  company?: string;
 }

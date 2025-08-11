@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mrashidi.me</loc>
-    <lastmod>2025-08-11T06:25:28.812Z</lastmod>
+    <lastmod>2025-08-11T07:49:30.174Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/about</loc>
-    <lastmod>2025-08-11T06:25:28.812Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://mrashidi.me/blog</loc>
-    <lastmod>2025-08-11T06:25:28.812Z</lastmod>
+    <lastmod>2025-08-11T07:49:30.175Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/contact</loc>
-    <lastmod>2025-08-11T06:25:28.812Z</lastmod>
+    <lastmod>2025-08-11T07:49:30.175Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://mrashidi.me/blog</loc>
+    <lastmod>2025-08-11T07:49:30.175Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/projects</loc>
-    <lastmod>2025-08-11T06:25:28.812Z</lastmod>
+    <lastmod>2025-08-11T07:49:30.175Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://mrashidi.me/resume</loc>
-    <lastmod>2025-08-11T06:25:28.812Z</lastmod>
+    <lastmod>2025-08-11T07:49:30.175Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

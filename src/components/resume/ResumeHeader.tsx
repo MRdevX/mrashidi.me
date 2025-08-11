@@ -54,7 +54,7 @@ export default function ResumeHeader() {
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
             />
           </svg>
-          <span>Request CV</span> {/* This should show "Request CV" not "Download CV" */}
+          <span>Request CV</span>
         </motion.button>
       </div>
 
