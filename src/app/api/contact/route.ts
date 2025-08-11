@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 import { EmailService } from "@/lib/email/email.service";
 import { RecaptchaService } from "@/services/recaptchaService";
-import { ContactFormValidator, ContactFormData } from "@/lib/validation/contactForm";
+import { ContactFormValidator } from "@/lib/validation/contactForm";
+import { ContactFormData } from "@/types/forms";
 import { withValidation } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
 

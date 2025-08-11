@@ -1,10 +1,5 @@
-export interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  recaptchaToken: string;
-}
+import { ContactFormData } from "@/types/forms";
+import { ResumeRequestData } from "@/types/forms";
 
 export class ContactFormValidator {
   static validate(data: unknown): ContactFormData {
@@ -13,31 +8,80 @@ export class ContactFormValidator {
     }
 
     const formData = data as Partial<ContactFormData>;
+    const errors: string[] = [];
 
-    const requiredFields: (keyof ContactFormData)[] = ["name", "email", "subject", "message", "recaptchaToken"];
-    const missingFields = requiredFields.filter((field) => !formData[field]);
-
-    if (missingFields.length > 0) {
-      throw new Error(`Missing required fields: ${missingFields.join(", ")}`);
+    if (!formData.name?.trim()) {
+      errors.push("Name is required");
     }
 
+    if (!formData.email?.trim()) {
+      errors.push("Email is required");
+    } else if (!this.isValidEmail(formData.email)) {
+      errors.push("Invalid email format");
+    }
+
+    if (!formData.subject?.trim()) {
+      errors.push("Subject is required");
+    }
+
+    if (!formData.message?.trim()) {
+      errors.push("Message is required");
+    }
+
+    if (!formData.recaptchaToken?.trim()) {
+      errors.push("reCAPTCHA token is required");
+    }
+
+    if (errors.length > 0) {
+      throw new Error(errors.join(", "));
+    }
+
+    return {
+      name: formData.name!.trim(),
+      email: formData.email!.trim().toLowerCase(),
+      subject: formData.subject!.trim(),
+      message: formData.message!.trim(),
+      recaptchaToken: formData.recaptchaToken!.trim(),
+    };
+  }
+
+  private static isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email!)) {
-      throw new Error("Invalid email format");
+    return emailRegex.test(email);
+  }
+}
+
+export class ResumeRequestValidator {
+  static validate(data: unknown): ResumeRequestData {
+    if (!data || typeof data !== "object") {
+      throw new Error("Invalid form data");
     }
 
-    if (formData.name!.length < 2 || formData.name!.length > 100) {
-      throw new Error("Name must be between 2 and 100 characters");
+    const formData = data as Partial<ResumeRequestData>;
+    const errors: string[] = [];
+
+    if (!formData.name?.trim()) {
+      errors.push("Name is required");
     }
 
-    if (formData.subject!.length < 5 || formData.subject!.length > 200) {
-      throw new Error("Subject must be between 5 and 200 characters");
+    if (!formData.email?.trim()) {
+      errors.push("Email is required");
+    } else if (!this.isValidEmail(formData.email)) {
+      errors.push("Invalid email format");
     }
 
-    if (formData.message!.length < 10 || formData.message!.length > 2000) {
-      throw new Error("Message must be between 10 and 2000 characters");
+    if (errors.length > 0) {
+      throw new Error(errors.join(", "));
     }
 
-    return formData as ContactFormData;
+    return {
+      name: formData.name!.trim(),
+      email: formData.email!.trim().toLowerCase(),
+    };
+  }
+
+  private static isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 }

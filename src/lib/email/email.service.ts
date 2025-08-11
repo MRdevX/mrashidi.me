@@ -1,6 +1,9 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { FormData as IContactFormData } from "@/types/forms";
+import { ResumeRequestData } from "@/types/forms";
 import { ITemplateConfig } from "./types";
+import fs from "fs";
+import path from "path";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -51,6 +54,17 @@ export class EmailService {
       return adminEmailSuccess && userEmailSuccess;
     } catch (error) {
       console.error("Failed to send emails:", error);
+      return false;
+    }
+  }
+
+  async sendResumeRequestEmail(data: ResumeRequestData): Promise<boolean> {
+    try {
+      const adminEmailSuccess = await this.sendResumeRequestNotification(data);
+      const userEmailSuccess = await this.sendResumeToUser(data);
+      return adminEmailSuccess && userEmailSuccess;
+    } catch (error) {
+      console.error("Failed to send resume request emails:", error);
       return false;
     }
   }
@@ -121,6 +135,89 @@ export class EmailService {
     } catch (error) {
       console.error("Failed to send user confirmation:", error);
       return false;
+    }
+  }
+
+  private async sendResumeRequestNotification(data: ResumeRequestData): Promise<boolean> {
+    try {
+      const command = new SendEmailCommand({
+        Source: this.fromEmail,
+        Destination: {
+          ToAddresses: [this.toEmail],
+        },
+        Message: {
+          Subject: {
+            Data: `Resume Request from ${data.name}`,
+            Charset: "UTF-8",
+          },
+          Body: {
+            Html: {
+              Data: this.createResumeRequestAdminEmailBody(data),
+              Charset: "UTF-8",
+            },
+            Text: {
+              Data: this.createResumeRequestAdminEmailText(data),
+              Charset: "UTF-8",
+            },
+          },
+        },
+        ReplyToAddresses: [data.email],
+      });
+
+      const response = await this.sesClient.send(command);
+      console.log(`Resume request notification sent successfully: ${response.MessageId}`);
+      return true;
+    } catch (error) {
+      console.error("Failed to send resume request notification:", error);
+      return false;
+    }
+  }
+
+  private async sendResumeToUser(data: ResumeRequestData): Promise<boolean> {
+    try {
+      // Note: SES has limitations with attachments. For production,
+      // consider hosting the PDF on S3 and including a download link.
+      const command = new SendEmailCommand({
+        Source: this.fromEmail,
+        Destination: {
+          ToAddresses: [data.email],
+        },
+        Message: {
+          Subject: {
+            Data: `Your Resume - ${this.templateConfig.companyName}`,
+            Charset: "UTF-8",
+          },
+          Body: {
+            Html: {
+              Data: this.createResumeUserEmailBody(data),
+              Charset: "UTF-8",
+            },
+            Text: {
+              Data: this.createResumeUserEmailText(data),
+              Charset: "UTF-8",
+            },
+          },
+        },
+      });
+
+      const response = await this.sesClient.send(command);
+      console.log(`Resume sent to user successfully: ${response.MessageId}`);
+      return true;
+    } catch (error) {
+      console.error("Failed to send resume to user:", error);
+      return false;
+    }
+  }
+
+  private async getResumePdfContent(): Promise<string> {
+    try {
+      // Read the PDF file from the public directory
+      const pdfPath = path.join(process.cwd(), "public", "cv", "Mahdi_Rashidi_CV.pdf");
+      const pdfBuffer = fs.readFileSync(pdfPath);
+      return pdfBuffer.toString("base64");
+    } catch (error) {
+      console.error("Failed to read resume PDF:", error);
+      throw new Error("Resume PDF not found");
     }
   }
 
@@ -363,6 +460,250 @@ YOUR MESSAGE:
 ${data.message}
 
 While you wait for my response, feel free to explore my portfolio:
+${this.templateConfig.companyWebsite}
+
+Best regards,
+Mahdi Rashidi
+
+---
+GitHub: ${this.templateConfig.socialLinks.github}
+LinkedIn: ${this.templateConfig.socialLinks.linkedin}
+Website: ${this.templateConfig.companyWebsite}
+
+This is an automated message. Please don't reply to this email.
+    `.trim();
+  }
+
+  private createResumeRequestAdminEmailBody(data: ResumeRequestData): string {
+    return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>New Resume Request</title>
+          <style type="text/css">
+            body, p, div, td { 
+              color: #ffffff;
+              font-family: Arial, Helvetica, sans-serif;
+            }
+            body { 
+              background-color: #121212; 
+            }
+            a { 
+              color: #ff5f1f; 
+              text-decoration: none; 
+            }
+          </style>
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #121212;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #121212;">
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #1e1e1e; border-radius: 8px; border: 1px solid #333333; box-shadow: 0 4px 16px rgba(0,0,0,0.5);">
+                  <!-- Header -->
+                  <tr>
+                    <td align="center" style="padding: 20px; background-color: #111111; border-bottom: 2px solid #ff5f1f; border-radius: 8px 8px 0 0;">
+                      <h1 style="margin: 0; font-size: 22px; font-weight: 700; color: #ff5f1f;">New Resume Request</h1>
+                    </td>
+                  </tr>
+                  
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding: 30px 25px; background-color: #1e1e1e;">
+                      <!-- Contact details -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Name:</span> ${data.name}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <span style="color: #ff5f1f; font-weight: bold;">Email:</span> ${data.email}
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Divider -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 20px 0;">
+                        <tr>
+                          <td height="1" style="background-color: #333333; font-size: 0; line-height: 0;">&nbsp;</td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Action section -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 15px; color: #ffffff;">
+                            <p style="margin: 0; color: #ffffff;">Someone has requested your resume. The resume has been automatically sent to their email address.</p>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Timestamp -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top: 20px;">
+                        <tr>
+                          <td align="right" style="font-size: 12px; color: #b0b0b0;">
+                            Requested at: ${new Date().toISOString()}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
+    `;
+  }
+
+  private createResumeUserEmailBody(data: ResumeRequestData): string {
+    return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Your Resume - Mahdi Rashidi</title>
+          <style type="text/css">
+            body, p, div, td { 
+              color: #ffffff;
+              font-family: Arial, Helvetica, sans-serif;
+            }
+            body { 
+              background-color: #121212; 
+            }
+            a { 
+              color: #ff5f1f; 
+              text-decoration: none; 
+            }
+            p {
+              margin: 0 0 16px 0;
+              line-height: 1.5;
+            }
+          </style>
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #121212;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #121212;">
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <!-- Email container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #1e1e1e; border-radius: 8px; border: 1px solid #333333; box-shadow: 0 4px 16px rgba(0,0,0,0.5);">
+                  <!-- Header -->
+                  <tr>
+                    <td align="center" style="padding: 25px 20px; background-color: #111111; border-bottom: 2px solid #ff5f1f; border-radius: 8px 8px 0 0;">
+                      <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ff5f1f;">Your Resume</h1>
+                    </td>
+                  </tr>
+                  
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding: 30px 25px; background-color: #1e1e1e;">
+                      <!-- Greeting -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 20px; color: #ffffff;">
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">Hi ${data.name},</p>
+                            
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">Thank you for your interest in my professional background! I've attached my resume to this email for your review.</p>
+                            
+                            <p style="margin: 0 0 16px 0; color: #ffffff;">My resume includes my experience in backend development, cloud infrastructure, and database design. Feel free to reach out if you have any questions or would like to discuss potential opportunities.</p>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Divider -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 20px 0;">
+                        <tr>
+                          <td height="1" style="background-color: #333333; font-size: 0; line-height: 0;">&nbsp;</td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Call to action -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <p style="margin: 0 0 20px 0; color: #ffffff;">You can also explore my portfolio for more details about my work and projects.</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="center" style="padding-bottom: 25px;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td align="center" style="border-radius: 4px; background-color: #ff5f1f;">
+                                  <a href="${this.templateConfig.companyWebsite}" target="_blank" style="display: inline-block; padding: 12px 24px; font-weight: bold; color: #ffffff; text-decoration: none; border: 1px solid #ff5f1f; border-radius: 4px;">Visit My Portfolio</a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-top: 10px;">
+                            <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td align="center" style="padding: 25px; background-color: #111111; border-top: 1px solid #333333; border-radius: 0 0 8px 8px;">
+                      <!-- Social links -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 15px;">
+                        <tr>
+                          <td align="center" style="color: #b0b0b0;">
+                            <a href="${this.templateConfig.socialLinks.github}" target="_blank" style="color: #b0b0b0; text-decoration: none; margin: 0 10px;">GitHub</a> | 
+                            <a href="${this.templateConfig.socialLinks.linkedin}" target="_blank" style="color: #b0b0b0; text-decoration: none; margin: 0 10px;">LinkedIn</a> | 
+                            <a href="${this.templateConfig.companyWebsite}" target="_blank" style="color: #b0b0b0; text-decoration: none; margin: 0 10px;">Website</a>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Footnote -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td align="center" style="color: #808080; font-size: 12px;">
+                            This is an automated message. Please don't reply to this email.
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
+    `;
+  }
+
+  private createResumeRequestAdminEmailText(data: ResumeRequestData): string {
+    return `
+New Resume Request
+
+Name: ${data.name}
+Email: ${data.email}
+
+The resume has been automatically sent to their email address.
+
+Requested at: ${new Date().toISOString()}
+    `.trim();
+  }
+
+  private createResumeUserEmailText(data: ResumeRequestData): string {
+    return `
+Hi ${data.name},
+
+Thank you for your interest in my professional background! I've attached my resume to this email for your review.
+
+My resume includes my experience in backend development, cloud infrastructure, and database design. Feel free to reach out if you have any questions or would like to discuss potential opportunities.
+
+You can also explore my portfolio for more details about my work and projects:
 ${this.templateConfig.companyWebsite}
 
 Best regards,
