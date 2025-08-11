@@ -2486,6 +2486,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/third-parties@npm:^15.4.6":
+  version: 15.4.6
+  resolution: "@next/third-parties@npm:15.4.6"
+  dependencies:
+    third-party-capital: "npm:1.0.20"
+  peerDependencies:
+    next: ^13.0.0 || ^14.0.0 || ^15.0.0
+    react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
+  checksum: 10c0/db6375da0ae0256a0f9af8779d0ff7a6de8c7a5131ea5f9434fd709dc68bcf00eda09ac055cc261a07aece76e40e05b9df21b6ff7727fed79c048d8d1b21db3c
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -6799,6 +6811,7 @@ __metadata:
     "@fontsource/vt323": "npm:^5.2.6"
     "@headlessui/react": "npm:^2.2.4"
     "@next/eslint-plugin-next": "npm:^15.3.5"
+    "@next/third-parties": "npm:^15.4.6"
     "@types/next-pwa": "npm:^5.6.9"
     "@types/node": "npm:^22.16.2"
     "@types/react": "npm:^19.1.8"
@@ -8639,6 +8652,13 @@ __metadata:
   dependencies:
     any-promise: "npm:^1.0.0"
   checksum: 10c0/f375aeb2b05c100a456a30bc3ed07ef03a39cbdefe02e0403fb714b8c7e57eeaad1a2f5c4ecfb9ce554ce3db9c2b024eba144843cd9e344566d9fcee73b04767
+  languageName: node
+  linkType: hard
+
+"third-party-capital@npm:1.0.20":
+  version: 1.0.20
+  resolution: "third-party-capital@npm:1.0.20"
+  checksum: 10c0/7f45ff156ec9d7e2957a5b39061be22b780ffbd2d93c127252d908e2bff6cdd09f827a95909d457c8096e036f155006a38e355a06ee11cb6d63c7f4b150bbfb0
   languageName: node
   linkType: hard
 

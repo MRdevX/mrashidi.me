@@ -5,6 +5,7 @@ import Navbar from "@/components/navigation/Navbar";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import personalInfo from "@/data/personalInfo";
 import { ThemeProvider } from "@/context/ThemeContext";
 
@@ -143,6 +144,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </footer>
           <SpeedInsights />
           <Analytics />
+          <GoogleTagManager gtmId="GTM-T27QBF7L" />
         </ThemeProvider>
       </body>
     </html>
