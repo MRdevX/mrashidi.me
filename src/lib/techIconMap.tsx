@@ -320,7 +320,7 @@ const techIconMap: Record<string, { Icon: IconType | React.FC<{ className?: stri
   oauth: { Icon: TbBrandOauth, colorClass: "text-blue-500" },
   redash: { Icon: SiRedash, colorClass: "text-red-500" },
   lerna: { Icon: SiLerna, colorClass: "text-blue-500" },
-  hono: { Icon: SiHono, colorClass: "text-blue-600" },
+  hono: { Icon: SiHono, colorClass: "text-orange-500" },
   supabase: { Icon: SiSupabase, colorClass: "text-green-600" },
   freshping: { Icon: FaCloud, colorClass: "text-blue-400" },
   vitest: { Icon: SiVitest, colorClass: "text-green-500" },
