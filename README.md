@@ -20,6 +20,8 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🌐 **PWA Support**: Progressive Web App with offline capabilities
 - 🔍 **SEO Optimized**: Meta tags, sitemap generation, and structured data
 - 📱 **Responsive Design**: Optimized for all devices and screen sizes
+- 🎯 **Modern Icons**: Lucide React icons throughout the UI for consistency
+- 🎭 **Enhanced UI**: Improved visual hierarchy with contextual icons
 
 ### Technical Features
 
@@ -33,6 +35,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🔒 **Security**: reCAPTCHA, input validation, and error handling
 - 📦 **Caching**: Node-cache for blog posts and API responses
 - 🚀 **Performance**: Optimized images, lazy loading, and code splitting
+- 🎨 **Icon System**: Centralized Lucide React icon library with size and color presets
 
 ## 🛠 Tech Stack
 
@@ -45,7 +48,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - **UI Components**: Headless UI 2.2.4
 - **Forms**: React Hook Form 7.62.0 + Zod 4.0.17
 - **Data Fetching**: SWR 2.3.4
-- **Icons**: React Icons 5.5.0
+- **Icons**: Lucide React 0.263.1 + React Icons 5.5.0
 
 ### Backend & Services
 
@@ -106,6 +109,7 @@ mrashidi.me/
 │   │   │   ├── hooks/       # Terminal custom hooks
 │   │   │   └── types.ts     # Terminal types
 │   │   └── ui/              # Reusable UI components
+│   │       └── icons.tsx    # Centralized icon library
 │   ├── context/             # React context providers
 │   ├── data/                # Static data files
 │   ├── hooks/               # Custom React hooks
@@ -230,6 +234,7 @@ Professional contact system with multiple layers of security:
 - **Form Validation**: Zod schema validation
 - **Email Templates**: HTML email templates
 - **Dual Notifications**: Admin and user confirmation emails
+- **Enhanced UI**: Lucide icons for better visual hierarchy
 
 **Security Measures:**
 
@@ -248,6 +253,7 @@ Automated resume delivery system:
 - **Email Notification**: Automated email delivery
 - **Form Validation**: Contact information validation
 - **Professional Templates**: Branded email templates
+- **Enhanced UI**: Modern icons and improved layout
 
 ## 🔧 Development Setup
 
@@ -319,6 +325,7 @@ RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 - **Reusable Components**: Modular UI components with proper TypeScript interfaces
 - **Performance Optimization**: React.memo, useMemo, and useCallback usage
 - **Error Boundaries**: Graceful error handling throughout the application
+- **Icon System**: Centralized Lucide React icon management with size and color presets
 
 ### API Architecture
 
@@ -372,6 +379,29 @@ export const ANIMATION = {
 };
 ```
 
+### Icon System
+
+```typescript
+// Centralized icon management
+export const iconSizes = {
+  xs: "w-3 h-3",
+  sm: "w-4 h-4",
+  md: "w-5 h-5",
+  lg: "w-6 h-6",
+  xl: "w-8 h-8",
+  "2xl": "w-10 h-10",
+} as const;
+
+export const iconColors = {
+  primary: "text-orange-500",
+  secondary: "text-gray-400",
+  success: "text-green-500",
+  error: "text-red-500",
+  warning: "text-yellow-500",
+  info: "text-blue-500",
+} as const;
+```
+
 ## 📊 Performance Metrics
 
 - **Lighthouse Score**: 95+ across all metrics
@@ -401,28 +431,39 @@ The application is deployed on Vercel with the following optimizations:
 
 ## 📈 Recent Improvements
 
-### v2.1 - Enhanced Performance & Security
+### v0.1.20 - Enhanced UI & Icon System
 
-- 🔒 Added comprehensive input validation with Zod
-- ⚡ Implemented multi-level caching strategy
-- 🎨 Enhanced cyberpunk design system
-- 📱 Improved PWA capabilities
-- 🔍 Advanced project filtering with regex support
+- 🎨 **Lucide React Integration**: Comprehensive icon system throughout the application
+- 🔧 **Enhanced Form Validation**: Improved Zod schemas and form handling
+- 🎯 **Better Visual Hierarchy**: Contextual icons for improved user experience
+- 📱 **Responsive Improvements**: Better mobile experience with enhanced components
+- 🏗️ **Component Refactoring**: Modular architecture for better maintainability
+- 🔒 **Security Enhancements**: Improved input validation and error handling
 
-### v2.0 - Dynamic Project Filtering
+### v0.1.19 - Resume System Enhancement
 
-- ✨ Added regex-based project search
-- 🏷️ Implemented dynamic technology categorization
-- 🧩 Refactored to modular component architecture
-- ⚡ Improved performance with custom hooks
-- 🎯 Enhanced type safety throughout
+- 📄 **Resume Request Modal**: Interactive modal with company input
+- 📧 **Enhanced Email Notifications**: Improved email templates and delivery
+- 🎨 **UI Improvements**: Better visual design for resume section
 
-### v1.5 - Enhanced Portfolio
+### v0.1.18 - Profile & Project Enhancements
 
-- 📊 Added GitHub activity integration
-- 💻 Implemented interactive terminal
-- 📝 Integrated Medium blog
-- 🎨 Improved cyberpunk design theme
+- 👤 **Profile Image**: Added profile image with neon effects to About page
+- 🎨 **Interactive Effects**: Glitch effects and enhanced visual elements
+- 📊 **Project Updates**: New projects and enhanced descriptions
+- 🏗️ **Component Modularization**: Refactored pages into reusable sections
+
+### v0.1.17 - Advanced Project Filtering
+
+- 🔍 **Regex Search**: Advanced pattern matching for project filtering
+- 🏷️ **Dynamic Categorization**: Technology stack organization
+- ⚡ **Performance Optimization**: Custom hooks and improved architecture
+
+### v0.1.16 - Terminal & Navigation
+
+- 💻 **Enhanced Terminal**: New commands and improved functionality
+- 🔗 **GitHub Integration**: Direct repository links and navigation
+- 📱 **Mobile Navigation**: Improved responsive design
 
 ## 📄 License
 

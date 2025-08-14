@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.20](https://github.com/MRdevX/mrashidi.me/compare/v0.1.19...v0.1.20) (2025-08-14)
+
+
+### Features
+
+* **blog:** refactor blog component structure ([f9b5c4b](https://github.com/MRdevX/mrashidi.me/commit/f9b5c4bf64e68aa4f74428eff0ab6122dfec0246))
+* **contact:** refactor contact form and validation logic ([cd995d3](https://github.com/MRdevX/mrashidi.me/commit/cd995d319165641d23118a5107db4db366027f7d))
+* **contact:** refactor contact page structure with reusable components ([1c1304e](https://github.com/MRdevX/mrashidi.me/commit/1c1304e4016dfa05878d09f5ef9119f89f4a9cff))
+* **icons:** add lucide-react icons and refactor components to use new icons ([eda8d88](https://github.com/MRdevX/mrashidi.me/commit/eda8d887ada98225bb7f3af172e6bb00ad7003c1))
+* **layout:** enhance footer and social media icons ([e9eefe0](https://github.com/MRdevX/mrashidi.me/commit/e9eefe04c035b2035b696bc15970f86bd7af87ce))
+* **layout:** integrate Google Tag Manager ([f6cc43a](https://github.com/MRdevX/mrashidi.me/commit/f6cc43a0e764769681d9fd2d3e3d14fb5c5cea3c))
+* **readme:** overhaul README to enhance project description ([aa6cd7c](https://github.com/MRdevX/mrashidi.me/commit/aa6cd7c8bfb280eef1c063ce419f2b4def6d6c2c))
+* **skills:** update skill levels and resume ([b44535a](https://github.com/MRdevX/mrashidi.me/commit/b44535aa17d50cb8ab73ccffc8160c764e2a112c))
+* **validation:** introduce Zod schemas for form validation and refactor related components ([49ff8b3](https://github.com/MRdevX/mrashidi.me/commit/49ff8b359199704bfddd0def9db9787cb172463e))
+
+
+### Bug Fixes
+
+* **projects:** update project years ([37f1572](https://github.com/MRdevX/mrashidi.me/commit/37f1572814d4d45c583d440c9e45e7c1d43c956b))
+* **techIconMap:** color class for hono icon ([5d1b3c6](https://github.com/MRdevX/mrashidi.me/commit/5d1b3c6f30b2e8ef3289a4ae79d525357ed70507))
+
 ### [0.1.19](https://github.com/MRdevX/mrashidi.me/compare/v0.1.18...v0.1.19) (2025-08-11)
 
 
