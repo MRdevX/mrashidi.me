@@ -7,8 +7,10 @@ import { SubmitHandler } from "react-hook-form";
 import { contactFormSchema, ContactFormData } from "@/lib/validation/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Send, User, Mail, MessageSquare, FileText } from "lucide-react";
 import FormInputWithValidation from "./FormInputWithValidation";
 import StatusMessage from "./StatusMessage";
+import Button from "@/components/ui/Button";
 
 declare global {
   interface Window {
@@ -133,7 +135,13 @@ export default function ContactFormRefactored() {
         <StatusMessage status={submitStatus} />
 
         <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6" aria-label="Contact form">
-          <FormInputWithValidation form={form} name="name" label="Name" placeholder="Your name" />
+          <FormInputWithValidation 
+            form={form} 
+            name="name" 
+            label="Name" 
+            placeholder="Your name"
+            icon={<User className="w-4 h-4" />}
+          />
 
           <FormInputWithValidation
             form={form}
@@ -141,9 +149,16 @@ export default function ContactFormRefactored() {
             label="Email"
             type="email"
             placeholder="your.email@example.com"
+            icon={<Mail className="w-4 h-4" />}
           />
 
-          <FormInputWithValidation form={form} name="subject" label="Subject" placeholder="What is this about?" />
+          <FormInputWithValidation 
+            form={form} 
+            name="subject" 
+            label="Subject" 
+            placeholder="What is this about?"
+            icon={<FileText className="w-4 h-4" />}
+          />
 
           <FormInputWithValidation
             form={form}
@@ -152,17 +167,18 @@ export default function ContactFormRefactored() {
             placeholder="Your message here..."
             multiline
             rows={5}
+            icon={<MessageSquare className="w-4 h-4" />}
           />
 
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting || !form.formState.isValid}
-            className={`neon-button w-full rounded-lg transition-opacity ${
-              isSubmitting || !form.formState.isValid ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            loading={isSubmitting}
+            icon={<Send className="w-4 h-4" />}
+            className="w-full"
           >
             {isSubmitting ? "Sending..." : "Send Message"}
-          </button>
+          </Button>
         </form>
       </motion.div>
     </>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FolderOpen } from "lucide-react";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
 import ProjectSearchBox from "@/components/projects/ProjectSearchBox";
 import ProjectFilters from "@/components/projects/ProjectFilters";
@@ -36,9 +37,12 @@ export default function Projects() {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
-        <motion.h1 className="text-4xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text" variants={item}>
-          Projects
-        </motion.h1>
+        <motion.div className="flex items-center gap-3 mb-8" variants={item}>
+          <FolderOpen className="w-8 h-8 text-orange-500" />
+          <h1 className="text-4xl font-bold text-orange-500 font-cyberpunk glow-text">
+            Projects
+          </h1>
+        </motion.div>
 
         <ProjectSearchBox searchQuery={searchQuery} onSearchChange={setSearchQuery} onClear={() => setSearchQuery("")} />
 

@@ -1,4 +1,5 @@
 import { KeyboardEvent, RefObject, useState, useEffect } from "react";
+import { Terminal } from "lucide-react";
 import { TERMINAL_CONSTANTS, TERMINAL_STYLES } from "./constants";
 import { motion } from "framer-motion";
 
@@ -60,14 +61,15 @@ export default function TerminalInput({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
     >
-      <motion.span
-        className={TERMINAL_STYLES.PROMPT}
+      <motion.div
+        className="flex items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        $
-      </motion.span>
+        <Terminal className="w-4 h-4 text-green-400" />
+        <span className={TERMINAL_STYLES.PROMPT}>$</span>
+      </motion.div>
       <div className="flex items-center flex-1">
         <input
           ref={inputRef}

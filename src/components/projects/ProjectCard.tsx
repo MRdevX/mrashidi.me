@@ -1,4 +1,5 @@
 import React from "react";
+import { Github, ExternalLink, FileText, Globe } from "lucide-react";
 import { Project } from "@/data/projects";
 import { getTechIcon } from "@/lib/techIconMap";
 
@@ -34,9 +35,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </span>
           {project.openSource && (
             <span className="px-2 py-0.5 rounded font-semibold text-xs bg-yellow-700 text-yellow-200 flex items-center gap-1">
-              <svg className="w-3.5 h-3.5 inline-block" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 12.93V17a1 1 0 11-2 0v-2.07A6.002 6.002 0 014 10a1 1 0 112 0 4 4 0 108 0 1 1 0 112 0 6.002 6.002 0 01-5 4.93z" />
-              </svg>
+              <Globe className="w-3.5 h-3.5" />
               Open Source
             </span>
           )}
@@ -89,9 +88,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
           >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
+            <Github className="w-4 h-4" />
             GitHub
           </a>
         )}
@@ -102,9 +99,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 px-3 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20 hover:text-green-300 transition-colors text-xs font-semibold"
           >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M12.293 2.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-8.5 8.5a1 1 0 01-.325.217l-4 1.5a1 1 0 01-1.263-1.263l1.5-4a1 1 0 01.217-.325l8.5-8.5zM15 7l-2-2-8.293 8.293-.707.707-.707 2.121 2.121-.707.707-.707z" />
-            </svg>
+            <ExternalLink className="w-4 h-4" />
             Live
           </a>
         )}
@@ -115,9 +110,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
           >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M12 4v1H6a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-5h-1v5a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1h6V4a1 1 0 112 0v2a1 1 0 01-1 1h-2a1 1 0 110-2h1V4a1 1 0 10-2 0z" />
-            </svg>
+            <FileText className="w-4 h-4" />
             Case Study
           </a>
         )}
