@@ -29,8 +29,6 @@ export default function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit
       name: "",
       email: "",
       company: "",
-      position: "",
-      message: "",
     },
   });
 
@@ -126,17 +124,11 @@ export default function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit
                 placeholder="Enter your email address"
               />
 
-              <FormInputWithValidation form={form} name="company" label="Company" placeholder="Enter your company name" />
-
-              <FormInputWithValidation form={form} name="position" label="Position" placeholder="Enter your position" />
-
-              <FormInputWithValidation
-                form={form}
-                name="message"
-                label="Message (Optional)"
-                placeholder="Any additional information..."
-                multiline
-                rows={3}
+              <FormInputWithValidation 
+                form={form} 
+                name="company" 
+                label="Company (Optional)" 
+                placeholder="Enter your company name" 
                 required={false}
               />
 

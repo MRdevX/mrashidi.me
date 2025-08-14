@@ -5,10 +5,7 @@ const contactFormAPISchema = contactFormSchema.extend({
   recaptchaToken: z.string().min(1, "reCAPTCHA token is required"),
 });
 
-const resumeRequestAPISchema = resumeRequestSchema.extend({
-  position: z.string().min(1, "Position is required"),
-  message: z.string().optional(),
-});
+const resumeRequestAPISchema = resumeRequestSchema;
 
 export const validateContactFormAPI = (data: unknown) => {
   return contactFormAPISchema.parse(data);

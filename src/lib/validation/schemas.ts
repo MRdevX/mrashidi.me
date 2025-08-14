@@ -7,11 +7,7 @@ export const contactFormSchema = z.object({
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be less than 50 characters")
     .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address")
-    .max(100, "Email must be less than 100 characters"),
+  email: z.email("Please enter a valid email address"),
   subject: z
     .string()
     .min(1, "Subject is required")
@@ -30,25 +26,12 @@ export const resumeRequestSchema = z.object({
     .min(1, "Name is required")
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be less than 50 characters"),
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address")
-    .max(100, "Email must be less than 100 characters"),
+  email: z.email("Please enter a valid email address"),
   company: z
     .string()
-    .min(1, "Company is required")
-    .min(2, "Company must be at least 2 characters")
-    .max(100, "Company must be less than 100 characters"),
-  position: z
-    .string()
-    .min(1, "Position is required")
-    .min(2, "Position must be at least 2 characters")
-    .max(100, "Position must be less than 100 characters"),
-  message: z
-    .string()
     .optional()
-    .refine((val) => !val || val.length <= 500, "Message must be less than 500 characters"),
+    .refine((val) => !val || val.length >= 2, "Company must be at least 2 characters")
+    .refine((val) => !val || val.length <= 100, "Company must be less than 100 characters"),
 });
 
 export const blogSearchSchema = z.object({
