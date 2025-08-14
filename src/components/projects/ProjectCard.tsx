@@ -1,13 +1,16 @@
 import React from "react";
-import { Github, ExternalLink, FileText, Globe } from "lucide-react";
+import { Github, ExternalLink, FileText, Globe, GitCommit, Calendar, Loader2 } from "lucide-react";
 import { Project } from "@/data/projects";
 import { getTechIcon } from "@/lib/techIconMap";
+import { formatDate, createCommitUrl } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: Project;
+  commitInfo?: { date: Date; hash: string };
+  isLoadingCommitDates?: boolean;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
   return (
     <div className="glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group">
       <div className="flex items-center justify-between gap-2">
@@ -60,6 +63,36 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </ul>
         )}
       </div>
+
+      {/* Commit Information */}
+      {project.githubUrl && (
+        <div className="flex flex-wrap gap-2 items-center text-xs text-gray-500 border-t border-gray-700 pt-2">
+          {commitInfo ? (
+            <>
+              <div className="flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
+                <span>Last commit: {formatDate(commitInfo.date)}</span>
+              </div>
+              <a
+                href={createCommitUrl(project.githubUrl, commitInfo.hash)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 hover:text-orange-400 transition-colors"
+                title="View commit on GitHub"
+              >
+                <GitCommit className="w-3 h-3" />
+                <span className="font-mono">{commitInfo.hash.substring(0, 7)}</span>
+              </a>
+            </>
+          ) : isLoadingCommitDates ? (
+            <div className="flex items-center gap-1 text-gray-600">
+              <Loader2 className="w-3 h-3 animate-spin" />
+              <span>Loading commit info...</span>
+            </div>
+          ) : null}
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2 mt-2">
         {project.stack.map((tech) => {
           let iconKey = tech

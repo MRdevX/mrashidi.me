@@ -8,6 +8,8 @@ interface ProjectResultsProps {
   searchQuery: string;
   selectedStacks: Set<string>;
   showOpenSourceOnly: boolean;
+  commitInfo?: Map<string, { date: Date; hash: string }>;
+  isLoadingCommitDates?: boolean;
 }
 
 export default function ProjectResults({
@@ -15,6 +17,8 @@ export default function ProjectResults({
   searchQuery,
   selectedStacks,
   showOpenSourceOnly,
+  commitInfo = new Map(),
+  isLoadingCommitDates = false,
 }: ProjectResultsProps) {
   return (
     <>
@@ -58,7 +62,12 @@ export default function ProjectResults({
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 gap-6">
             {filteredProjects.map((project, idx) => (
-              <ProjectCard key={project.title + idx} project={project} />
+              <ProjectCard
+                key={project.title + idx}
+                project={project}
+                commitInfo={project.githubUrl ? commitInfo.get(project.githubUrl) : undefined}
+                isLoadingCommitDates={isLoadingCommitDates}
+              />
             ))}
           </div>
         ) : (

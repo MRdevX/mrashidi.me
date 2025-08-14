@@ -45,13 +45,19 @@ interface ContributionDayResponse {
   date: string;
 }
 
+import { extractGitHubRepoInfo } from "@/lib/utils";
+
+interface LatestCommitInfo {
+  date: Date;
+  hash: string;
+}
+
 class GitHubService {
   private readonly username = "mrdevx";
   private readonly baseUrl = "https://api.github.com";
   private readonly graphqlUrl = "https://api.github.com/graphql";
   private readonly headers = {
     Accept: "application/vnd.github.v3+json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
   };
 
   async getTopRepositories(): Promise<GitHubRepo[]> {
@@ -156,6 +162,65 @@ class GitHubService {
     } catch (error) {
       console.error("Error fetching GitHub contributions:", error);
       return [];
+    }
+  }
+
+  async getLatestCommitInfo(githubUrl: string): Promise<LatestCommitInfo | null> {
+    try {
+      const repoInfo = extractGitHubRepoInfo(githubUrl);
+      if (!repoInfo) {
+        console.warn(`Invalid GitHub URL format: ${githubUrl}`);
+        return null;
+      }
+
+      const repoPath = `${repoInfo.owner}/${repoInfo.name}`;
+
+      let response = await fetch(`${this.baseUrl}/repos/${repoPath}/commits?per_page=1&sha=main`);
+
+      if (!response.ok) {
+        response = await fetch(`${this.baseUrl}/repos/${repoPath}/commits?per_page=1&sha=master`);
+
+        if (!response.ok) {
+          console.warn(`Failed to fetch commits for ${repoPath}: ${response.status}`);
+          return null;
+        }
+      }
+
+      const commits = await response.json();
+      return commits.length > 0 ? { date: new Date(commits[0].commit.author.date), hash: commits[0].sha } : null;
+    } catch (error) {
+      console.error(`Error fetching latest commit info for ${githubUrl}:`, error);
+      return null;
+    }
+  }
+
+  async getLatestCommitDate(githubUrl: string): Promise<Date | null> {
+    const commitInfo = await this.getLatestCommitInfo(githubUrl);
+    return commitInfo?.date || null;
+  }
+
+  async testGitHubAPI(githubUrl: string): Promise<boolean> {
+    try {
+      const repoInfo = extractGitHubRepoInfo(githubUrl);
+      if (!repoInfo) {
+        console.warn(`Invalid GitHub URL format: ${githubUrl}`);
+        return false;
+      }
+
+      const repoPath = `${repoInfo.owner}/${repoInfo.name}`;
+
+      const response = await fetch(`${this.baseUrl}/repos/${repoPath}`);
+
+      if (!response.ok) {
+        console.warn(`Failed to fetch repo info: ${response.status}`);
+        return false;
+      }
+
+      await response.json();
+      return true;
+    } catch (error) {
+      console.error("Error testing GitHub API:", error);
+      return false;
     }
   }
 }
