@@ -7,3 +7,4 @@ export { default as Navbar } from "./navigation/Navbar";
 export { default as SkillsTree } from "./skills/SkillsTree";
 export { default as Terminal } from "./terminal/Terminal";
 export * from "./blog";
+export * from "./contact";
