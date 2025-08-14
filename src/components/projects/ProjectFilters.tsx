@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Filter, Globe, X, Layers } from "lucide-react";
 import { getTechIcon } from "@/lib/techIconMap";
 import { TechnologyCategory, CATEGORY_DISPLAY_NAMES } from "@/lib/constants";
 
@@ -28,7 +29,10 @@ export default function ProjectFilters({
 
     return (
       <div key={category} className="mb-6">
-        <h4 className="text-md font-semibold text-gray-300 mb-3 font-albert">{displayName}</h4>
+        <h4 className="text-md font-semibold text-gray-300 mb-3 font-albert flex items-center gap-2">
+          <Layers className="w-4 h-4 text-orange-400" />
+          {displayName}
+        </h4>
         <div className="flex flex-wrap gap-2">
           {stacks.map((stack) => {
             const isSelected = selectedStacks.has(stack);
@@ -69,7 +73,10 @@ export default function ProjectFilters({
       {/* Technology Stack Icons - Categorized */}
       <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-orange-400 mb-3 font-cyberpunk glow-text">Filter by Technology Stack</h3>
+          <h3 className="text-lg font-semibold text-orange-400 mb-3 font-cyberpunk glow-text flex items-center gap-2">
+            <Filter className="w-5 h-5" />
+            Filter by Technology Stack
+          </h3>
           <p className="text-gray-400 text-sm mb-4 font-albert">
             Click on technology icons to filter projects. Multiple selections are supported.
           </p>
@@ -104,7 +111,8 @@ export default function ProjectFilters({
                   } top-1`}
                 />
               </div>
-              <span className="ml-4 text-sm font-semibold text-orange-400 font-albert group-hover:text-orange-300 transition-colors">
+              <span className="ml-4 text-sm font-semibold text-orange-400 font-albert group-hover:text-orange-300 transition-colors flex items-center gap-2">
+                <Globe className="w-4 h-4" />
                 Show Open Source Only
               </span>
             </label>
@@ -114,8 +122,9 @@ export default function ProjectFilters({
           <div className="flex items-center justify-end">
             <button
               onClick={onClearAll}
-              className="neon-button text-sm px-6 py-3 font-cyberpunk hover:scale-105 transition-transform duration-200"
+              className="neon-button text-sm px-6 py-3 font-cyberpunk hover:scale-105 transition-transform duration-200 flex items-center gap-2"
             >
+              <X className="w-4 h-4" />
               Clear All Filters
             </button>
           </div>

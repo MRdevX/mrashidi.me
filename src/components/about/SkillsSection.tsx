@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Code2 } from "lucide-react";
 import { skillCategories } from "@/data/skills";
 import { getTechIcon } from "@/lib/techIconMap";
 import { fadeInVariants } from "@/lib/animations";
@@ -44,7 +45,10 @@ export default function SkillsSection() {
       variants={fadeInVariants}
       transition={{ delay: 0.4 }}
     >
-      <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Skills & Technologies</h2>
+      <div className="flex items-center gap-3 mb-8">
+        <Code2 className="w-8 h-8 text-orange-500" />
+        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Skills & Technologies</h2>
+      </div>
 
       <div className="space-y-8">
         {Object.entries(skillsByLevel).map(([level, skills]) => {

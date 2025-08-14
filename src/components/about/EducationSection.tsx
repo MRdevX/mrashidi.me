@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
+import { GraduationCap, ExternalLink } from "lucide-react";
 import education from "@/data/education";
 import { fadeInVariants } from "@/lib/animations";
 
 export default function EducationSection() {
   return (
     <motion.section initial="hidden" animate="visible" variants={fadeInVariants} transition={{ delay: 1.2 }}>
-      <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Education</h2>
+      <div className="flex items-center gap-3 mb-6">
+        <GraduationCap className="w-8 h-8 text-orange-500" />
+        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Education</h2>
+      </div>
       {education.map((edu) => (
         <div className="feature-card group mb-4" key={edu.degree + edu.institution}>
           <div className="flex items-center justify-between">
@@ -20,21 +24,7 @@ export default function EducationSection() {
                 onClick={() => edu.url && window.open(edu.url, "_blank")}
               >
                 <span>{edu.institution}</span>
-                {edu.url && (
-                  <svg
-                    className="w-4 h-4 ml-2 text-orange-500 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                  </svg>
-                )}
+                {edu.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 flex-shrink-0" />}
               </div>
             </div>
             <div className="text-sm text-gray-400 text-right ml-4">

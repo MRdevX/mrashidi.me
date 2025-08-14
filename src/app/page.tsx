@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, Suspense, lazy } from "react";
 import Link from "next/link";
+import { MapPin, Mail, Send, ArrowRight, Terminal as TerminalIcon, Code2, Activity, MessageCircle } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
 import { skillCategories } from "@/data/skills";
 import personalInfo from "@/data/personalInfo";
@@ -69,15 +71,7 @@ export default function Home() {
             {personalInfo.intro}
           </p>
           <p className="text-lg text-gray-300 mb-8 relative z-10 flex items-center justify-center gap-2 font-albert">
-            <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
+            <MapPin className="w-5 h-5 text-orange-500" />
             {personalInfo.location}
           </p>
 
@@ -88,10 +82,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-              </svg>
+              <Mail className="w-4 h-4 inline-block mr-2" />
               Email
             </motion.a>
             <motion.a
@@ -102,9 +93,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
+              <FaGithub className="w-4 h-4 inline-block mr-2" />
               GitHub
             </motion.a>
             <motion.a
@@ -115,9 +104,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-              </svg>
+              <FaLinkedin className="w-4 h-4 inline-block mr-2" />
               LinkedIn
             </motion.a>
             <motion.a
@@ -128,9 +115,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-              </svg>
+              <Send className="w-4 h-4 inline-block mr-2" />
               Telegram
             </motion.a>
           </div>
@@ -139,9 +124,10 @@ export default function Home() {
         </motion.div>
 
         <motion.div className="mb-16" variants={item}>
-          <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">
-            Interact with Terminal
-          </h2>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <TerminalIcon className="w-6 h-6 text-orange-500" />
+            <h2 className="text-2xl font-bold text-orange-500 font-cyberpunk glow-text">Interact with Terminal</h2>
+          </div>
           <Suspense
             fallback={
               <div className="terminal-window w-full h-96 glass-card border border-orange-500/20 overflow-hidden rounded-lg flex items-center justify-center">
@@ -154,7 +140,10 @@ export default function Home() {
         </motion.div>
 
         <motion.div className="mb-16" variants={item}>
-          <h2 className="text-2xl font-bold mb-8 text-center text-orange-500 font-cyberpunk glow-text">My Tech Stack</h2>
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <Code2 className="w-6 h-6 text-orange-500" />
+            <h2 className="text-2xl font-bold text-orange-500 font-cyberpunk glow-text">My Tech Stack</h2>
+          </div>
           <div className="glass-card p-8 flex flex-col items-center border border-orange-500/20 shadow-lg rounded-lg">
             <div className="flex flex-wrap justify-center gap-6">
               {uniqueMainStack.map((tech) => {
@@ -174,7 +163,10 @@ export default function Home() {
         </motion.div>
 
         <motion.div className="mb-16" variants={item}>
-          <h2 className="text-2xl font-bold mb-6 text-center text-orange-500 font-cyberpunk glow-text">GitHub Activity</h2>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Activity className="w-6 h-6 text-orange-500" />
+            <h2 className="text-2xl font-bold text-orange-500 font-cyberpunk glow-text">GitHub Activity</h2>
+          </div>
           <motion.div variants={item} className="w-full overflow-x-auto pb-4">
             <Suspense
               fallback={
@@ -191,22 +183,18 @@ export default function Home() {
         <motion.div className="text-center" variants={item}>
           <div className="glass-card p-8 md:p-12 border border-orange-500/10 relative overflow-hidden group rounded-lg">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <h2 className="text-2xl md:text-3xl font-bold text-orange-500 font-cyberpunk glow-text mb-6">
-              {personalInfo.contactCta}
-            </h2>
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <MessageCircle className="w-6 h-6 text-orange-500" />
+              <h2 className="text-2xl md:text-3xl font-bold text-orange-500 font-cyberpunk glow-text">
+                {personalInfo.contactCta}
+              </h2>
+            </div>
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-albert leading-relaxed">
               {personalInfo.contactDescription}
             </p>
             <Link href="/contact" className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group rounded-lg">
               <span>Get In Touch</span>
-              <svg
-                className="w-5 h-5 transform transition-transform group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              <ArrowRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </motion.div>

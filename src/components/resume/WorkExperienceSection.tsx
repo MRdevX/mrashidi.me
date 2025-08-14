@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Briefcase, CheckCircle } from "lucide-react";
 
 interface WorkExperience {
   title: string;
@@ -90,7 +91,10 @@ const workExperience: WorkExperience[] = [
 export default function WorkExperienceSection() {
   return (
     <section className="mb-16">
-      <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Work Experience</h2>
+      <div className="flex items-center gap-3 mb-8">
+        <Briefcase className="w-8 h-8 text-orange-500" />
+        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Work Experience</h2>
+      </div>
 
       <div className="space-y-12">
         {workExperience.map((job, index) => (
@@ -123,19 +127,7 @@ export default function WorkExperienceSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * i }}
                 >
-                  <svg
-                    className="w-6 h-6 text-orange-500 mr-2 flex-shrink-0 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <CheckCircle className="w-6 h-6 text-orange-500 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-300 group-hover:text-gray-200 transition-colors">{achievement}</span>
                 </motion.li>
               ))}

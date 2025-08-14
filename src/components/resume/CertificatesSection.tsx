@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
+import { Award, CheckCircle, ExternalLink } from "lucide-react";
 import certificates from "@/data/certificates";
 
 export default function CertificatesSection() {
   return (
     <section className="mb-16">
-      <h2 className="text-3xl font-bold mb-8 text-orange-500 font-cyberpunk glow-text">Recent Certifications</h2>
+      <div className="flex items-center gap-3 mb-8">
+        <Award className="w-8 h-8 text-orange-500" />
+        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Recent Certifications</h2>
+      </div>
       <div className="space-y-8">
         {certificates.map((category, categoryIndex) => (
           <motion.div
@@ -30,37 +34,11 @@ export default function CertificatesSection() {
                   transition={{ delay: 0.1 * i }}
                   onClick={() => cert.url && window.open(cert.url, "_blank")}
                 >
-                  <svg
-                    className="w-5 h-5 text-orange-500 flex-shrink-0 mr-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <CheckCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mr-3" />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-gray-200 hover:text-white transition-colors flex items-center">
                       {cert.name}
-                      {cert.url && (
-                        <svg
-                          className="w-4 h-4 ml-2 text-orange-500 flex-shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      )}
+                      {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 flex-shrink-0" />}
                     </div>
                   </div>
                   <div className="text-sm text-gray-400 text-right ml-4">

@@ -67,7 +67,11 @@ export default function FormInputWithValidation<T extends Record<string, unknown
       </label>
       <div className="relative">
         {icon && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none flex items-center h-6">
+          <div
+            className={`absolute left-3 text-gray-400 pointer-events-none flex items-center h-6 ${
+              multiline ? "top-3" : "top-1/2 -translate-y-1/2"
+            }`}
+          >
             {icon}
           </div>
         )}

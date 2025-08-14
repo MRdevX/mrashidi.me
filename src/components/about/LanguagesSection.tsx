@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Languages } from "lucide-react";
 import personalInfo from "@/data/personalInfo";
 import { fadeInVariants, slideInVariants } from "@/lib/animations";
 
@@ -11,7 +12,10 @@ export default function LanguagesSection() {
       variants={fadeInVariants}
       transition={{ delay: 0.8 }}
     >
-      <h2 className="text-3xl font-bold mb-6 text-orange-500 font-cyberpunk glow-text">Languages</h2>
+      <div className="flex items-center gap-3 mb-6">
+        <Languages className="w-8 h-8 text-orange-500" />
+        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Languages</h2>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {personalInfo.languages.map((lang, index) => (
           <motion.div
