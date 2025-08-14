@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Script from "next/script";
-import { FormData, FormErrors, SubmitStatus } from "@/types/forms";
-import { validateForm } from "./validation";
-import FormInput from "./FormInput";
+import { SubmitHandler } from "react-hook-form";
+import { contactFormSchema, ContactFormData } from "@/lib/validation/schemas";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import FormInputWithValidation from "./FormInputWithValidation";
 import StatusMessage from "./StatusMessage";
 
 declare global {
@@ -17,19 +19,26 @@ declare global {
   }
 }
 
-export default function ContactForm() {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    subject: "",
+export default function ContactFormRefactored() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+    type: null,
     message: "",
   });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({ type: null, message: "" });
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    mode: "onBlur",
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+  });
 
   useEffect(() => {
     if (!siteKey) {
@@ -51,26 +60,8 @@ export default function ContactForm() {
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    if (errors[name as keyof FormErrors]) {
-      setErrors({ ...errors, [name]: undefined });
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
     setSubmitStatus({ type: null, message: "" });
-
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -82,13 +73,13 @@ export default function ContactForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
+          ...data,
           recaptchaToken,
         }),
       });
 
       if (response.ok) {
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        form.reset();
         setSubmitStatus({
           type: "success",
           message: "Message sent successfully! I'll get back to you soon.",
@@ -141,53 +132,34 @@ export default function ContactForm() {
       >
         <StatusMessage status={submitStatus} />
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-6" aria-label="Contact form">
-          <FormInput
-            id="name"
-            name="name"
-            label="Name"
-            value={formData.name}
-            onChange={handleChange}
-            error={errors.name}
-            placeholder="Your name"
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6" aria-label="Contact form">
+          <FormInputWithValidation form={form} name="name" label="Name" placeholder="Your name" />
 
-          <FormInput
-            id="email"
+          <FormInputWithValidation
+            form={form}
             name="email"
             label="Email"
             type="email"
-            value={formData.email}
-            onChange={handleChange}
-            error={errors.email}
             placeholder="your.email@example.com"
           />
 
-          <FormInput
-            id="subject"
-            name="subject"
-            label="Subject"
-            value={formData.subject}
-            onChange={handleChange}
-            error={errors.subject}
-            placeholder="What is this about?"
-          />
+          <FormInputWithValidation form={form} name="subject" label="Subject" placeholder="What is this about?" />
 
-          <FormInput
-            id="message"
+          <FormInputWithValidation
+            form={form}
             name="message"
             label="Message"
-            value={formData.message}
-            onChange={handleChange}
-            error={errors.message}
             placeholder="Your message here..."
             multiline
+            rows={5}
           />
 
           <button
             type="submit"
-            disabled={isSubmitting}
-            className={`neon-button w-full rounded-lg ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={isSubmitting || !form.formState.isValid}
+            className={`neon-button w-full rounded-lg transition-opacity ${
+              isSubmitting || !form.formState.isValid ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {isSubmitting ? "Sending..." : "Send Message"}
           </button>

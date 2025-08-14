@@ -1,4 +1,7 @@
-import { SubmitStatus } from "@/types/forms";
+interface SubmitStatus {
+  type: "success" | "error" | null;
+  message: string;
+}
 
 interface StatusMessageProps {
   status: SubmitStatus;

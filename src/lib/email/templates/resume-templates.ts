@@ -1,4 +1,4 @@
-import { ResumeRequestData } from "@/types/forms";
+import { ResumeRequestData } from "@/lib/validation/schemas";
 import { ITemplateConfig } from "../types";
 import { BaseTemplate } from "./base-template";
 

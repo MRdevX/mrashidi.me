@@ -3,7 +3,7 @@ import { EmailService } from "@/lib/email/email.service";
 import { validateResumeRequestAPI } from "@/lib/validation/apiValidators";
 import { withValidation } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
-import { ResumeRequestData } from "@/types/forms";
+import { ResumeRequestData } from "@/lib/validation/schemas";
 
 async function handleResumeRequest(request: NextRequest, formData: ResumeRequestData) {
   const emailService = new EmailService();

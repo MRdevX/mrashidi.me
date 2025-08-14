@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ResumeRequestModal from "./ResumeRequestModal";
-import { ResumeRequestData } from "@/types/forms";
+import { ResumeRequestData } from "@/lib/validation/schemas";
 
 export default function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,67 +1,41 @@
 "use client";
 
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ResumeRequestData, ResumeRequestErrors, SubmitStatus } from "@/types/forms";
-import FormInput from "@/components/forms/FormInput";
+import { SubmitHandler } from "react-hook-form";
+import { resumeRequestSchema, ResumeRequestData } from "@/lib/validation/schemas";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import FormInputWithValidation from "@/components/forms/FormInputWithValidation";
 import StatusMessage from "@/components/forms/StatusMessage";
 
-interface ResumeRequestModalProps {
+interface ResumeRequestModalRefactoredProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: ResumeRequestData) => Promise<boolean>;
 }
 
-export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestModalProps) {
-  const [formData, setFormData] = useState<ResumeRequestData>({
-    name: "",
-    email: "",
-    company: "",
-  });
-  const [errors, setErrors] = useState<ResumeRequestErrors>({});
+export default function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: ResumeRequestModalRefactoredProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({ type: null, message: "" });
+  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+    type: null,
+    message: "",
+  });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const form = useForm<ResumeRequestData>({
+    resolver: zodResolver(resumeRequestSchema),
+    mode: "onBlur",
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      position: "",
+      message: "",
+    },
+  });
 
-    if (errors[name as keyof ResumeRequestErrors]) {
-      setErrors({ ...errors, [name]: undefined });
-    }
-  };
-
-  const validateForm = (data: ResumeRequestData): ResumeRequestErrors => {
-    const errors: ResumeRequestErrors = {};
-
-    if (!data.name?.trim()) {
-      errors.name = "Name is required";
-    }
-
-    if (!data.email?.trim()) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      errors.email = "Invalid email format";
-    }
-
-    return errors;
-  };
-
-  const isFormValid = (): boolean => {
-    const errors = validateForm(formData);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit: SubmitHandler<ResumeRequestData> = async (data) => {
     setSubmitStatus({ type: null, message: "" });
-
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -72,10 +46,10 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
       downloadLink.click();
       document.body.removeChild(downloadLink);
 
-      const success = await onSubmit(formData);
+      const success = await onSubmit(data);
 
       if (success) {
-        setFormData({ name: "", email: "", company: "" });
+        form.reset();
         setSubmitStatus({
           type: "success",
           message: "CV downloaded! Check your email for confirmation.",
@@ -103,8 +77,7 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
 
   const handleClose = () => {
     if (!isSubmitting) {
-      setFormData({ name: "", email: "", company: "" });
-      setErrors({});
+      form.reset();
       setSubmitStatus({ type: null, message: "" });
       onClose();
     }
@@ -142,40 +115,28 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <FormInput
-                id="resume-name"
-                name="name"
-                label="Full Name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                error={errors.name}
-                placeholder="Enter your full name"
-                required
-              />
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="p-6 space-y-4">
+              <FormInputWithValidation form={form} name="name" label="Full Name" placeholder="Enter your full name" />
 
-              <FormInput
-                id="resume-email"
+              <FormInputWithValidation
+                form={form}
                 name="email"
                 label="Email Address"
                 type="email"
-                value={formData.email}
-                onChange={handleChange}
-                error={errors.email}
                 placeholder="Enter your email address"
-                required
               />
 
-              <FormInput
-                id="resume-company"
-                name="company"
-                label="Company (Optional)"
-                type="text"
-                value={formData.company || ""}
-                onChange={handleChange}
-                error={errors.company}
-                placeholder="Enter your company name"
+              <FormInputWithValidation form={form} name="company" label="Company" placeholder="Enter your company name" />
+
+              <FormInputWithValidation form={form} name="position" label="Position" placeholder="Enter your position" />
+
+              <FormInputWithValidation
+                form={form}
+                name="message"
+                label="Message (Optional)"
+                placeholder="Any additional information..."
+                multiline
+                rows={3}
                 required={false}
               />
 
@@ -184,10 +145,10 @@ export default function ResumeRequestModal({ isOpen, onClose, onSubmit }: Resume
               {/* Download Button */}
               <motion.button
                 type="submit"
-                disabled={isSubmitting || !isFormValid()}
+                disabled={isSubmitting || !form.formState.isValid}
                 className="w-full neon-button flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                whileHover={{ scale: isSubmitting || !isFormValid() ? 1 : 1.02 }}
-                whileTap={{ scale: isSubmitting || !isFormValid() ? 1 : 0.98 }}
+                whileHover={{ scale: isSubmitting || !form.formState.isValid ? 1 : 1.02 }}
+                whileTap={{ scale: isSubmitting || !form.formState.isValid ? 1 : 0.98 }}
               >
                 {isSubmitting ? (
                   <>

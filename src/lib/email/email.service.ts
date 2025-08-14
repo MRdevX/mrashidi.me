@@ -1,6 +1,6 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { FormData as IContactFormData } from "@/types/forms";
-import { ResumeRequestData } from "@/types/forms";
+import { ContactFormData } from "@/lib/validation/schemas";
+import { ResumeRequestData } from "@/lib/validation/schemas";
 import { ContactTemplates, ResumeTemplates, getTemplateConfig } from "./templates";
 
 export class EmailService {
@@ -31,7 +31,7 @@ export class EmailService {
     this.templateConfig = getTemplateConfig();
   }
 
-  async sendContactFormEmail(data: IContactFormData): Promise<boolean> {
+  async sendContactFormEmail(data: ContactFormData): Promise<boolean> {
     try {
       console.log("Sending contact form emails...");
       const adminEmailSuccess = await this.sendAdminNotification(data);
@@ -59,7 +59,7 @@ export class EmailService {
     }
   }
 
-  private async sendAdminNotification(data: IContactFormData): Promise<boolean> {
+  private async sendAdminNotification(data: ContactFormData): Promise<boolean> {
     try {
       console.log("Preparing admin notification email...");
       console.log("From:", this.fromEmail);
@@ -102,7 +102,7 @@ export class EmailService {
     }
   }
 
-  private async sendUserConfirmation(data: IContactFormData): Promise<boolean> {
+  private async sendUserConfirmation(data: ContactFormData): Promise<boolean> {
     try {
       const command = new SendEmailCommand({
         Source: this.fromEmail,

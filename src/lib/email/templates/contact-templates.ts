@@ -1,9 +1,9 @@
-import { FormData as IContactFormData } from "@/types/forms";
+import { ContactFormData } from "@/lib/validation/schemas";
 import { ITemplateConfig } from "../types";
 import { BaseTemplate } from "./base-template";
 
 export class ContactTemplates {
-  static createAdminNotificationHtml(data: IContactFormData, templateConfig: ITemplateConfig): string {
+  static createAdminNotificationHtml(data: ContactFormData, templateConfig: ITemplateConfig): string {
     const content = `
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
         ${BaseTemplate.createInfoRow("Name", data.name)}
@@ -37,7 +37,7 @@ export class ContactTemplates {
     });
   }
 
-  static createUserConfirmationHtml(data: IContactFormData, templateConfig: ITemplateConfig): string {
+  static createUserConfirmationHtml(data: ContactFormData, templateConfig: ITemplateConfig): string {
     const content = `
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
         <tr>
@@ -81,7 +81,7 @@ export class ContactTemplates {
     });
   }
 
-  static createAdminNotificationText(data: IContactFormData): string {
+  static createAdminNotificationText(data: ContactFormData): string {
     return `
 New Contact Form Submission
 
@@ -96,7 +96,7 @@ Sent at: ${new Date().toISOString()}
     `.trim();
   }
 
-  static createUserConfirmationText(data: IContactFormData, templateConfig: ITemplateConfig): string {
+  static createUserConfirmationText(data: ContactFormData, templateConfig: ITemplateConfig): string {
     return `
 Hi ${data.name},
 
