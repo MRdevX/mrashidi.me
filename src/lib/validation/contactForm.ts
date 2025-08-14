@@ -1,88 +1,35 @@
-import { ContactFormData } from "@/types/forms";
-import { ResumeRequestData } from "@/types/forms";
+import { FormData, ResumeRequestData } from "@/types/forms";
+import { validators, createValidator } from "./common";
 
-export class ContactFormValidator {
-  static validate(data: unknown): ContactFormData {
-    if (!data || typeof data !== "object") {
-      throw new Error("Invalid form data");
-    }
+export const validateContactForm = createValidator<FormData>({
+  name: [
+    (value) => validators.required(value, "Name"),
+    (value) => validators.minLength(value, 2, "Name"),
+    (value) => validators.maxLength(value, 100, "Name"),
+  ],
+  email: [(value) => validators.email(value)],
+  subject: [
+    (value) => validators.required(value, "Subject"),
+    (value) => validators.minLength(value, 5, "Subject"),
+    (value) => validators.maxLength(value, 200, "Subject"),
+  ],
+  message: [
+    (value) => validators.required(value, "Message"),
+    (value) => validators.minLength(value, 10, "Message"),
+    (value) => validators.maxLength(value, 2000, "Message"),
+  ],
+});
 
-    const formData = data as Partial<ContactFormData>;
-    const errors: string[] = [];
+export const validateResumeRequest = createValidator<ResumeRequestData>({
+  name: [
+    (value) => validators.required(value, "Name"),
+    (value) => validators.minLength(value, 2, "Name"),
+    (value) => validators.maxLength(value, 100, "Name"),
+  ],
+  email: [(value) => validators.email(value)],
+  company: [(value) => (value ? validators.maxLength(value, 100, "Company") : undefined)],
+});
 
-    if (!formData.name?.trim()) {
-      errors.push("Name is required");
-    }
-
-    if (!formData.email?.trim()) {
-      errors.push("Email is required");
-    } else if (!ContactFormValidator.isValidEmail(formData.email)) {
-      errors.push("Invalid email format");
-    }
-
-    if (!formData.subject?.trim()) {
-      errors.push("Subject is required");
-    }
-
-    if (!formData.message?.trim()) {
-      errors.push("Message is required");
-    }
-
-    if (!formData.recaptchaToken?.trim()) {
-      errors.push("reCAPTCHA token is required");
-    }
-
-    if (errors.length > 0) {
-      throw new Error(errors.join(", "));
-    }
-
-    return {
-      name: formData.name!.trim(),
-      email: formData.email!.trim().toLowerCase(),
-      subject: formData.subject!.trim(),
-      message: formData.message!.trim(),
-      recaptchaToken: formData.recaptchaToken!.trim(),
-    };
-  }
-
-  private static isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-}
-
-export class ResumeRequestValidator {
-  static validate(data: unknown): ResumeRequestData {
-    if (!data || typeof data !== "object") {
-      throw new Error("Invalid form data");
-    }
-
-    const formData = data as Partial<ResumeRequestData>;
-    const errors: string[] = [];
-
-    if (!formData.name?.trim()) {
-      errors.push("Name is required");
-    }
-
-    if (!formData.email?.trim()) {
-      errors.push("Email is required");
-    } else if (!ResumeRequestValidator.isValidEmail(formData.email)) {
-      errors.push("Invalid email format");
-    }
-
-    if (errors.length > 0) {
-      throw new Error(errors.join(", "));
-    }
-
-    return {
-      name: formData.name!.trim(),
-      email: formData.email!.trim().toLowerCase(),
-      company: formData.company?.trim() || undefined,
-    };
-  }
-
-  private static isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-}
+export const validateForm = (formData: FormData) => {
+  return validateContactForm(formData);
+};

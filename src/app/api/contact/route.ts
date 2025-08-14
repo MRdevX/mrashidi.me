@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { EmailService } from "@/lib/email/email.service";
 import { RecaptchaService } from "@/services/recaptchaService";
-import { ContactFormValidator } from "@/lib/validation/contactForm";
+import { validateContactFormAPI } from "@/lib/validation/apiValidators";
 import { ContactFormData } from "@/types/forms";
 import { withValidation } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
@@ -24,4 +24,4 @@ async function handleContactForm(request: NextRequest, formData: ContactFormData
   return ApiResponseHandler.success({ message: "Message sent successfully" });
 }
 
-export const POST = withValidation(handleContactForm, ContactFormValidator.validate);
+export const POST = withValidation(handleContactForm, validateContactFormAPI);
