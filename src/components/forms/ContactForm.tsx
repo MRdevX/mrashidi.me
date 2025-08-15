@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, User, Mail, MessageSquare, FileText } from "lucide-react";
 import FormInputWithValidation from "./FormInputWithValidation";
 import StatusMessage from "./StatusMessage";
-import Button from "@/components/ui/Button";
+import { CyberpunkButton } from "@/components/ui";
 
 declare global {
   interface Window {
@@ -135,10 +135,10 @@ export default function ContactFormRefactored() {
         <StatusMessage status={submitStatus} />
 
         <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6" aria-label="Contact form">
-          <FormInputWithValidation 
-            form={form} 
-            name="name" 
-            label="Name" 
+          <FormInputWithValidation
+            form={form}
+            name="name"
+            label="Name"
             placeholder="Your name"
             icon={<User className="w-4 h-4" />}
           />
@@ -152,10 +152,10 @@ export default function ContactFormRefactored() {
             icon={<Mail className="w-4 h-4" />}
           />
 
-          <FormInputWithValidation 
-            form={form} 
-            name="subject" 
-            label="Subject" 
+          <FormInputWithValidation
+            form={form}
+            name="subject"
+            label="Subject"
             placeholder="What is this about?"
             icon={<FileText className="w-4 h-4" />}
           />
@@ -170,15 +170,16 @@ export default function ContactFormRefactored() {
             icon={<MessageSquare className="w-4 h-4" />}
           />
 
-          <Button
+          <CyberpunkButton
             type="submit"
             disabled={isSubmitting || !form.formState.isValid}
             loading={isSubmitting}
             icon={<Send className="w-4 h-4" />}
             className="w-full"
+            variant="neon"
           >
             {isSubmitting ? "Sending..." : "Send Message"}
-          </Button>
+          </CyberpunkButton>
         </form>
       </motion.div>
     </>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Search, X } from "lucide-react";
+import { CyberpunkButton } from "@/components/ui";
 
 interface ProjectSearchBoxProps {
   searchQuery: string;
@@ -22,12 +23,14 @@ export default function ProjectSearchBox({ searchQuery, onSearchChange, onClear 
           className="w-full pl-12 pr-12 py-4 bg-gray-800/30 border-2 border-orange-500/30 rounded-lg text-gray-300 placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:bg-gray-800/50 transition-all duration-300 font-albert"
         />
         {searchQuery && (
-          <button
-            onClick={onClear}
-            className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-orange-400 transition-colors duration-200 hover:scale-110"
-          >
-            <X className="h-5 w-5" />
-          </button>
+          <div className="absolute inset-y-0 right-0 pr-2 flex items-center">
+            <CyberpunkButton
+              onClick={onClear}
+              variant="ghost"
+              icon={<X className="h-4 w-4" />}
+              className="h-8 w-8 p-0 text-gray-400 hover:text-orange-400"
+            />
+          </div>
         )}
       </div>
       {searchQuery && (

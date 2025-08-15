@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { FileText, Download } from "lucide-react";
 import ResumeRequestModal from "./ResumeRequestModal";
 import { ResumeRequestData } from "@/lib/validation/schemas";
+import { CyberpunkButton } from "@/components/ui";
 
 export default function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,18 +42,17 @@ export default function ResumeHeader() {
             Professional Experience
           </h1>
         </div>
-        <motion.button
+        <CyberpunkButton
           onClick={() => {
             console.log("Resume request button clicked");
             setIsModalOpen(true);
           }}
-          className="neon-button w-full sm:w-auto flex items-center justify-center space-x-2 rounded-lg"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          variant="neon"
+          icon={<Download className="w-5 h-5" />}
+          className="w-full sm:w-auto"
         >
-          <Download className="w-5 h-5" />
-          <span>Request CV</span>
-        </motion.button>
+          Request CV
+        </CyberpunkButton>
       </div>
 
       <ResumeRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleResumeRequest} />

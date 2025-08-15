@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Filter, Globe, X, Layers } from "lucide-react";
 import { getTechIcon } from "@/lib/techIconMap";
 import { TechnologyCategory, CATEGORY_DISPLAY_NAMES } from "@/lib/constants";
+import { CyberpunkButton } from "@/components/ui";
 
 interface ProjectFiltersProps {
   categorizedStacks: Record<TechnologyCategory, string[]>;
@@ -120,13 +121,9 @@ export default function ProjectFilters({
 
           {/* Clear Filters */}
           <div className="flex items-center justify-end">
-            <button
-              onClick={onClearAll}
-              className="neon-button text-sm px-6 py-3 font-cyberpunk hover:scale-105 transition-transform duration-200 flex items-center gap-2"
-            >
-              <X className="w-4 h-4" />
+            <CyberpunkButton onClick={onClearAll} variant="neon" icon={<X className="w-4 h-4" />} className="text-sm">
               Clear All Filters
-            </button>
+            </CyberpunkButton>
           </div>
         </div>
       </motion.div>

@@ -1,3 +1,6 @@
+import { CyberpunkButton } from "@/components/ui";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 interface BlogPaginationProps {
   currentPage: number;
   totalPages: number;
@@ -8,24 +11,29 @@ export default function BlogPagination({ currentPage, totalPages, onPageChange }
   if (totalPages <= 1) return null;
 
   return (
-    <div className="mt-12 flex justify-center space-x-4">
-      <button
+    <div className="mt-12 flex justify-center items-center space-x-4">
+      <CyberpunkButton
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className={`neon-button ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+        variant="neon"
+        icon={<ChevronLeft className="w-4 h-4" />}
+        className={currentPage === 1 ? "opacity-50" : ""}
       >
         Previous
-      </button>
-      <span className="px-4 py-2 text-gray-400">
+      </CyberpunkButton>
+      <span className="px-4 py-2 text-gray-400 font-albert">
         Page {currentPage} of {totalPages}
       </span>
-      <button
+      <CyberpunkButton
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className={`neon-button ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+        variant="neon"
+        icon={<ChevronRight className="w-4 h-4" />}
+        iconPosition="right"
+        className={currentPage === totalPages ? "opacity-50" : ""}
       >
         Next
-      </button>
+      </CyberpunkButton>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import LoadingAnimation from "@/components/ui/LoadingAnimation";
 import { skillCategories } from "@/data/skills";
 import personalInfo from "@/data/personalInfo";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
+import { CyberpunkButton } from "@/components/ui";
 
 const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
 const Terminal = lazy(() => import("@/components/terminal/Terminal"));
@@ -76,48 +77,34 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 relative z-10">
-            <motion.a
-              href={`mailto:${personalInfo.email}`}
-              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center rounded-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Mail className="w-4 h-4 inline-block mr-2" />
-              Email
-            </motion.a>
-            <motion.a
-              href={personalInfo.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center rounded-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FaGithub className="w-4 h-4 inline-block mr-2" />
-              GitHub
-            </motion.a>
-            <motion.a
-              href={personalInfo.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center rounded-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FaLinkedin className="w-4 h-4 inline-block mr-2" />
-              LinkedIn
-            </motion.a>
-            <motion.a
-              href={personalInfo.social.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="neon-button text-sm px-4 py-2 w-full sm:w-auto text-center rounded-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Send className="w-4 h-4 inline-block mr-2" />
-              Telegram
-            </motion.a>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <a href={`mailto:${personalInfo.email}`} className="block">
+                <CyberpunkButton variant="neon" icon={<Mail className="w-4 h-4" />} className="w-full sm:w-auto">
+                  Email
+                </CyberpunkButton>
+              </a>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <a href={personalInfo.social.github} target="_blank" rel="noopener noreferrer" className="block">
+                <CyberpunkButton variant="neon" icon={<FaGithub className="w-4 h-4" />} className="w-full sm:w-auto">
+                  GitHub
+                </CyberpunkButton>
+              </a>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="block">
+                <CyberpunkButton variant="neon" icon={<FaLinkedin className="w-4 h-4" />} className="w-full sm:w-auto">
+                  LinkedIn
+                </CyberpunkButton>
+              </a>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <a href={personalInfo.social.telegram} target="_blank" rel="noopener noreferrer" className="block">
+                <CyberpunkButton variant="neon" icon={<Send className="w-4 h-4" />} className="w-full sm:w-auto">
+                  Telegram
+                </CyberpunkButton>
+              </a>
+            </motion.div>
           </div>
 
           <div className="scanline absolute inset-0 pointer-events-none" />
@@ -192,9 +179,17 @@ export default function Home() {
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-albert leading-relaxed">
               {personalInfo.contactDescription}
             </p>
-            <Link href="/contact" className="neon-button px-8 py-3 text-lg inline-flex items-center gap-2 group rounded-lg">
-              <span>Get In Touch</span>
-              <ArrowRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
+            <Link href="/contact" className="block relative z-10">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <CyberpunkButton
+                  variant="neon"
+                  icon={<ArrowRight className="w-5 h-5" />}
+                  iconPosition="right"
+                  className="text-lg px-8 py-3"
+                >
+                  Get In Touch
+                </CyberpunkButton>
+              </motion.div>
             </Link>
           </div>
         </motion.div>
