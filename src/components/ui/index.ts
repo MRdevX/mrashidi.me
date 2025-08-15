@@ -5,7 +5,6 @@ export { default as AnimatedSection } from "./AnimatedSection";
 export { default as PageContainer } from "./PageContainer";
 export { default as SectionHeader } from "./SectionHeader";
 
-// shadcn/ui components
 export { Button, buttonVariants } from "./Button";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
 export { Input } from "./input";
@@ -13,7 +12,6 @@ export { Textarea } from "./textarea";
 export { Badge } from "./badge";
 export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
 
-// Cyberpunk wrapper components
 export { CyberpunkButton } from "./CyberpunkButton";
 export {
   CyberpunkCard,
@@ -35,8 +33,9 @@ export {
   CyberpunkDialogFooter,
   CyberpunkDialogTrigger,
 } from "./CyberpunkDialog";
+export { CyberpunkExperienceCard } from "./CyberpunkExperienceCard";
+export { CyberpunkTimeline } from "./CyberpunkTimeline";
 
-// Demo component
 export { CyberpunkComponentsDemo } from "./CyberpunkComponentsDemo";
 
 export * from "./icons";

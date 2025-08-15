@@ -1,17 +1,12 @@
 export {
-  // Navigation
   Menu,
   X,
-
-  // Actions
   Search,
   Download,
   Send,
   ExternalLink,
   FileText,
   ArrowRight,
-
-  // User Interface
   User,
   Mail,
   MessageSquare,
@@ -22,39 +17,26 @@ export {
   Globe,
   MapPin,
   Heart,
-
-  // Section Icons
   Code2,
   Activity,
-
-  // Filter & Search
   Filter,
   Layers,
   Package,
   AlertCircle,
-
-  // About & Resume Icons
   Languages,
   GraduationCap,
   Briefcase,
   Award,
   CheckCircle,
-
-  // Contact Icons
   Users,
   Star,
-
-  // Status
   Loader2,
-
-  // Form
   User as UserIcon,
   Mail as MailIcon,
   MessageSquare as MessageIcon,
   FileText as FileTextIcon,
 } from "lucide-react";
 
-// Icon size presets for consistency
 export const iconSizes = {
   xs: "w-3 h-3",
   sm: "w-4 h-4",
@@ -64,7 +46,6 @@ export const iconSizes = {
   "2xl": "w-10 h-10",
 } as const;
 
-// Common icon colors
 export const iconColors = {
   primary: "text-orange-500",
   secondary: "text-gray-400",

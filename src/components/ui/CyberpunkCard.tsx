@@ -48,7 +48,6 @@ export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps
 
 CyberpunkCard.displayName = "CyberpunkCard";
 
-// Export the card sub-components with cyberpunk styling
 export const CyberpunkCardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <CardHeader ref={ref} className={cn("border-b border-gray-700/50", className)} {...props} />

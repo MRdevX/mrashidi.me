@@ -148,14 +148,6 @@ export const getSortedTechnologiesByUsage = (
   return result;
 };
 
-/**
- * Sorts projects by their latest commit date, with fallback to year field
- * Projects with GitHub URLs will be sorted by actual commit dates
- * Projects without GitHub URLs will be sorted by their year field
- * @param projects Array of projects to sort
- * @param commitDates Map of GitHub URLs to their latest commit dates
- * @returns Sorted array of projects (most recent first)
- */
 export const sortProjectsByDate = (projects: Project[], commitDates: Map<string, Date> = new Map()): Project[] => {
   return [...projects].sort((a, b) => {
     const dateA = getProjectDate(a, commitDates);
@@ -165,10 +157,6 @@ export const sortProjectsByDate = (projects: Project[], commitDates: Map<string,
   });
 };
 
-/**
- * Gets the most relevant date for a project
- * Priority: GitHub commit date > year field > fallback date
- */
 const getProjectDate = (project: Project, commitDates: Map<string, Date>): Date => {
   if (project.githubUrl && commitDates.has(project.githubUrl)) {
     return commitDates.get(project.githubUrl)!;

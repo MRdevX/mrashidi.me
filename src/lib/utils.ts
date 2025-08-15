@@ -5,11 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/**
- * Extracts repository owner and name from a GitHub URL
- * @param githubUrl GitHub repository URL
- * @returns Object with owner and name, or null if invalid
- */
 export const extractGitHubRepoInfo = (githubUrl: string): { owner: string; name: string } | null => {
   const repoMatch = githubUrl.match(/github\.com\/([^\/]+\/[^\/]+)/);
   if (!repoMatch) {
@@ -20,11 +15,6 @@ export const extractGitHubRepoInfo = (githubUrl: string): { owner: string; name:
   return { owner, name };
 };
 
-/**
- * Formats a date for display
- * @param date Date to format
- * @returns Formatted date string
- */
 export const formatDate = (date: Date): string => {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -33,12 +23,6 @@ export const formatDate = (date: Date): string => {
   });
 };
 
-/**
- * Creates a GitHub commit URL from repository URL and commit hash
- * @param repoUrl GitHub repository URL
- * @param commitHash Full commit hash
- * @returns GitHub commit URL
- */
 export const createCommitUrl = (repoUrl: string, commitHash: string): string => {
   return `${repoUrl}/commit/${commitHash}`;
 };
