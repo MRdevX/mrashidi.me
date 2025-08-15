@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FolderOpen, RefreshCw } from "lucide-react";
+import { FolderOpen } from "lucide-react";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
 import ProjectSearchBox from "@/components/projects/ProjectSearchBox";
 import ProjectFilters from "@/components/projects/ProjectFilters";
@@ -18,7 +18,6 @@ export default function Projects() {
     stackUsageCount,
     filteredProjects,
     isLoadingCommitDates,
-    refreshCommitDates,
     commitInfo,
   } = useProjectFilters();
 
@@ -45,19 +44,6 @@ export default function Projects() {
             <FolderOpen className="w-8 h-8 text-orange-500" />
             <h1 className="text-4xl font-bold text-orange-500 font-cyberpunk glow-text">Projects</h1>
           </div>
-
-          {/* Refresh button for commit dates */}
-          <motion.button
-            onClick={refreshCommitDates}
-            disabled={isLoadingCommitDates}
-            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-400 hover:text-orange-500 transition-colors duration-200 border border-gray-600 hover:border-orange-500 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
-            whileHover={!isLoadingCommitDates ? { scale: 1.02 } : {}}
-            whileTap={!isLoadingCommitDates ? { scale: 0.98 } : {}}
-            title="Refresh project dates from GitHub"
-          >
-            <RefreshCw className={`w-4 h-4 ${isLoadingCommitDates ? "animate-spin" : ""}`} />
-            {isLoadingCommitDates ? "Updating..." : "Refresh Dates"}
-          </motion.button>
         </motion.div>
 
         <ProjectSearchBox searchQuery={searchQuery} onSearchChange={setSearchQuery} onClear={() => setSearchQuery("")} />

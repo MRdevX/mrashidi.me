@@ -6,6 +6,7 @@ import { githubService } from "@/services/githubService";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;
+const AUTO_REFRESH_INTERVAL = 30 * 60 * 1000;
 
 interface CommitInfo {
   date: string;
@@ -34,7 +35,6 @@ export interface UseProjectFiltersReturn {
   categorizedStacks: Record<TechnologyCategory, string[]>;
   filteredProjects: typeof projects;
   isLoadingCommitDates: boolean;
-  refreshCommitDates: () => Promise<void>;
   commitInfo: Map<string, { date: Date; hash: string }>;
 }
 
@@ -158,12 +158,14 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     }
   };
 
-  const refreshCommitDates = async () => {
-    await fetchCommitDates(true);
-  };
-
   useEffect(() => {
     fetchCommitDates();
+
+    const intervalId = setInterval(() => {
+      fetchCommitDates(true);
+    }, AUTO_REFRESH_INTERVAL);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const toggleStack = (stack: string) => {
@@ -197,7 +199,6 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     categorizedStacks,
     filteredProjects,
     isLoadingCommitDates,
-    refreshCommitDates,
     commitInfo,
   };
 }

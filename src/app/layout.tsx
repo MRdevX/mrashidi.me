@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { Mail, Heart } from "lucide-react";
+import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
@@ -103,9 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="max-w-4xl mx-auto px-4">
               <div className="glass-card p-8 text-center">
                 <p className="text-gray-400 mb-4 flex items-center justify-center gap-2">
-                  © {new Date().getFullYear()} Mahdi Rashidi. Made with
-                  <Heart className="w-4 h-4 text-red-500 fill-current" />
-                  All rights reserved.
+                  © {new Date().getFullYear()} Mahdi Rashidi. All rights reserved.
                 </p>
                 <div className="flex justify-center space-x-6" aria-label="Social Media Links">
                   <a
