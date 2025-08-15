@@ -1,14 +1,6 @@
 import * as React from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
 import { cn } from "@/lib/utils";
-
-interface CyberpunkDialogProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  children: React.ReactNode;
-  className?: string;
-}
 
 export const CyberpunkDialog = Dialog;
 
@@ -40,12 +32,11 @@ export const CyberpunkDialogContent = React.forwardRef<
 ));
 CyberpunkDialogContent.displayName = "CyberpunkDialogContent";
 
-export const CyberpunkDialogHeader = React.forwardRef<
-  React.ElementRef<typeof DialogHeader>,
-  React.ComponentPropsWithoutRef<typeof DialogHeader>
->(({ className, ...props }, ref) => (
-  <DialogHeader ref={ref} className={cn("border-b border-orange-500/20 pb-4", className)} {...props} />
-));
+export const CyberpunkDialogHeader = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogHeader>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("border-b border-orange-500/20 pb-4", className)} {...props} />
+  )
+);
 CyberpunkDialogHeader.displayName = "CyberpunkDialogHeader";
 
 export const CyberpunkDialogTitle = React.forwardRef<
@@ -64,10 +55,9 @@ export const CyberpunkDialogDescription = React.forwardRef<
 ));
 CyberpunkDialogDescription.displayName = "CyberpunkDialogDescription";
 
-export const CyberpunkDialogFooter = React.forwardRef<
-  React.ElementRef<typeof DialogFooter>,
-  React.ComponentPropsWithoutRef<typeof DialogFooter>
->(({ className, ...props }, ref) => (
-  <DialogFooter ref={ref} className={cn("border-t border-orange-500/20 pt-4", className)} {...props} />
-));
+export const CyberpunkDialogFooter = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogFooter>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("border-t border-orange-500/20 pt-4", className)} {...props} />
+  )
+);
 CyberpunkDialogFooter.displayName = "CyberpunkDialogFooter";

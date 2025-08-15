@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { projects } from "@/data/projects";
 import { TechnologyCategory } from "@/lib/constants";
 import { processTechnologyData, filterProjects, sortProjectsByDate } from "@/lib/techUtils";
@@ -105,7 +105,7 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     }
   };
 
-  const fetchCommitDates = async (forceRefresh = false) => {
+  const fetchCommitDates = useCallback(async (forceRefresh = false) => {
     setIsLoadingCommitDates(true);
 
     try {
@@ -156,7 +156,7 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     } finally {
       setIsLoadingCommitDates(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchCommitDates();
@@ -166,7 +166,7 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     }, AUTO_REFRESH_INTERVAL);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [fetchCommitDates]);
 
   const toggleStack = (stack: string) => {
     const newSelectedStacks = new Set(selectedStacks);

@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { CommandType, AVAILABLE_COMMANDS } from "./types";
-import { skillCategories } from "@/components/skills/skillsData";
+import { skillCategories } from "@/data/skills";
 import personalInfo from "@/data/personalInfo";
 import { projects } from "@/data/projects";
 import workExperience from "@/data/workExperience";

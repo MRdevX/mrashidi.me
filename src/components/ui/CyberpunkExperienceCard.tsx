@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, Building2, ChevronDown, ChevronUp, CheckCircle2 } from "lucide-react";

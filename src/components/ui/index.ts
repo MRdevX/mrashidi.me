@@ -1,9 +1,6 @@
 export { default as BackgroundEffects } from "./BackgroundEffects";
 export { default as ContributionGraph } from "./ContributionGraph";
 export { default as LoadingAnimation } from "./LoadingAnimation";
-export { default as AnimatedSection } from "./AnimatedSection";
-export { default as PageContainer } from "./PageContainer";
-export { default as SectionHeader } from "./SectionHeader";
 
 export { Button, buttonVariants } from "./Button";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
@@ -35,7 +32,5 @@ export {
 } from "./CyberpunkDialog";
 export { CyberpunkExperienceCard } from "./CyberpunkExperienceCard";
 export { CyberpunkTimeline } from "./CyberpunkTimeline";
-
-export { CyberpunkComponentsDemo } from "./CyberpunkComponentsDemo";
 
 export * from "./icons";

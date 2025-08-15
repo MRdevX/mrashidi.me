@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { FileText, Download } from "lucide-react";
 import ResumeRequestModal from "./ResumeRequestModal";
 import { ResumeRequestData } from "@/lib/validation/schemas";

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { SubmitHandler } from "react-hook-form";
 import { resumeRequestSchema, ResumeRequestData } from "@/lib/validation/schemas";
 import { useForm } from "react-hook-form";

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Badge } from "./badge";
 import { cn } from "@/lib/utils";
 
 interface CyberpunkBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,7 +19,7 @@ const cyberpunkVariants = {
 export const CyberpunkBadge = React.forwardRef<HTMLDivElement, CyberpunkBadgeProps>(
   ({ className, variant = "default", ...props }, ref) => {
     return (
-      <Badge
+      <div
         ref={ref}
         className={cn(
           "font-medium transition-all duration-300",
