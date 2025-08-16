@@ -90,16 +90,19 @@ export const projects: Project[] = [
   {
     title: "NestJS Queue Worker PoC",
     description:
-      "A proof-of-concept demonstrating a scalable, fault-tolerant task processing system built with NestJS, PostgreSQL, and RabbitMQ. Showcases workflow orchestration, retry mechanisms, and horizontal scaling for distributed task processing.",
+      "A proof-of-concept demonstrating a scalable, fault-tolerant task processing system built with NestJS, PostgreSQL, and multi-provider messaging (RabbitMQ, NATS, Redis). Showcases workflow orchestration, retry mechanisms, comprehensive testing, invoice workflow automation, and horizontal scaling for distributed task processing.",
     highlights: [
+      "Multi-Provider Messaging with RabbitMQ, NATS, and Redis support",
       "Queue Manager for task queuing, assignment, and monitoring",
       "Worker Nodes with fault tolerance and optimized patterns",
+      "Complete Invoice Workflow with scheduling and automation",
+      "Comprehensive Testing with unit, integration, and e2e coverage",
       "Workflow Orchestration with complex task dependencies",
       "Horizontal scaling support for multiple worker instances",
       "Retry mechanisms with configurable policies",
       "Health monitoring and comprehensive API documentation",
     ],
-    stack: ["NestJS", "TypeScript", "PostgreSQL", "RabbitMQ", "Docker", "Node.js"],
+    stack: ["NestJS", "TypeScript", "PostgreSQL", "RabbitMQ", "NATS", "Redis", "Docker", "Node.js", "Jest", "Supertest"],
     githubUrl: "https://github.com/MRdevX/nestjs-queue-worker-poc",
     liveUrl: undefined,
     visibility: "public",
