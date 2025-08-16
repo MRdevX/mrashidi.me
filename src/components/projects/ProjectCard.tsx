@@ -8,9 +8,15 @@ interface ProjectCardProps {
   project: Project;
   commitInfo?: { date: Date; hash: string };
   isLoadingCommitDates?: boolean;
+  isRefreshingInBackground?: boolean;
 }
 
-export default function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  commitInfo,
+  isLoadingCommitDates = false,
+  isRefreshingInBackground = false,
+}: ProjectCardProps) {
   return (
     <div className="glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group">
       <div className="flex items-center justify-between gap-2">
@@ -72,6 +78,7 @@ export default function ProjectCard({ project, commitInfo, isLoadingCommitDates 
               <div className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
                 <span>Last commit: {formatDate(commitInfo.date)}</span>
+                {isRefreshingInBackground && <span className="text-orange-400 text-xs ml-1">(refreshing...)</span>}
               </div>
               <a
                 href={createCommitUrl(project.githubUrl, commitInfo.hash)}

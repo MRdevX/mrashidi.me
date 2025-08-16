@@ -6,7 +6,7 @@ import { githubService } from "@/services/githubService";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;
-const AUTO_REFRESH_INTERVAL = 30 * 60 * 1000;
+const AUTO_REFRESH_INTERVAL = 6 * 60 * 60 * 1000;
 
 interface CommitInfo {
   date: string;
@@ -35,6 +35,7 @@ export interface UseProjectFiltersReturn {
   categorizedStacks: Record<TechnologyCategory, string[]>;
   filteredProjects: typeof projects;
   isLoadingCommitDates: boolean;
+  isRefreshingInBackground: boolean;
   commitInfo: Map<string, { date: Date; hash: string }>;
 }
 
@@ -45,6 +46,8 @@ export function useProjectFilters(): UseProjectFiltersReturn {
   const [commitDates, setCommitDates] = useState<Map<string, Date>>(new Map());
   const [commitInfo, setCommitInfo] = useState<Map<string, { date: Date; hash: string }>>(new Map());
   const [isLoadingCommitDates, setIsLoadingCommitDates] = useState<boolean>(false);
+  const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
+  const [isRefreshingInBackground, setIsRefreshingInBackground] = useState<boolean>(false);
 
   const { categorizedStacks, stackUsageCount } = useMemo(() => {
     return processTechnologyData(projects);
@@ -105,68 +108,87 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     }
   };
 
-  const fetchCommitDates = useCallback(async (forceRefresh = false) => {
-    setIsLoadingCommitDates(true);
+  const fetchCommitDates = useCallback(
+    async (forceRefresh = false) => {
+      setIsLoadingCommitDates(true);
 
-    try {
-      if (!forceRefresh) {
-        const cachedInfo = loadCachedCommitInfo();
-        if (cachedInfo.size > 0) {
-          setCommitInfo(cachedInfo);
+      try {
+        if (!forceRefresh && !isInitialLoad && typeof window !== "undefined") {
+          const cachedInfo = loadCachedCommitInfo();
+          if (cachedInfo.size > 0) {
+            setCommitInfo(cachedInfo);
 
-          const datesMap = new Map<string, Date>();
-          cachedInfo.forEach((info, url) => {
-            datesMap.set(url, info.date);
-          });
-          setCommitDates(datesMap);
-          setIsLoadingCommitDates(false);
-          return;
-        }
-      }
-
-      const newCommitInfo = new Map<string, { date: Date; hash: string }>();
-
-      const projectsWithGithub = projects.filter((project) => project.githubUrl);
-
-      const promises = projectsWithGithub.map(async (project) => {
-        if (!project.githubUrl) return;
-
-        try {
-          const commitInfo = await githubService.getLatestCommitInfo(project.githubUrl);
-          if (commitInfo) {
-            newCommitInfo.set(project.githubUrl, commitInfo);
+            const datesMap = new Map<string, Date>();
+            cachedInfo.forEach((info, url) => {
+              datesMap.set(url, info.date);
+            });
+            setCommitDates(datesMap);
+            setIsLoadingCommitDates(false);
+            setIsRefreshingInBackground(true);
+            setTimeout(async () => {
+              try {
+                await fetchCommitDates(true);
+              } catch (error) {
+                console.warn("Background refresh failed:", error);
+              } finally {
+                setIsRefreshingInBackground(false);
+              }
+            }, 100);
+            return;
           }
-        } catch (error) {
-          console.warn(`Failed to fetch commit info for ${project.githubUrl}:`, error);
         }
-      });
 
-      await Promise.all(promises);
+        const newCommitInfo = new Map<string, { date: Date; hash: string }>();
 
-      saveCommitInfoToCache(newCommitInfo);
-      setCommitInfo(newCommitInfo);
+        const projectsWithGithub = projects.filter((project) => project.githubUrl);
 
-      const datesMap = new Map<string, Date>();
-      newCommitInfo.forEach((info, url) => {
-        datesMap.set(url, info.date);
-      });
-      setCommitDates(datesMap);
-    } catch (error) {
-      console.error("Error fetching commit info:", error);
-    } finally {
-      setIsLoadingCommitDates(false);
-    }
-  }, []);
+        const promises = projectsWithGithub.map(async (project) => {
+          if (!project.githubUrl) return;
+
+          try {
+            const commitInfo = await githubService.getLatestCommitInfo(project.githubUrl);
+            if (commitInfo) {
+              newCommitInfo.set(project.githubUrl, commitInfo);
+            }
+          } catch (error) {
+            console.warn(`Failed to fetch commit info for ${project.title} (${project.githubUrl}):`, error);
+          }
+        });
+
+        await Promise.allSettled(promises);
+
+        saveCommitInfoToCache(newCommitInfo);
+        setCommitInfo(newCommitInfo);
+
+        const datesMap = new Map<string, Date>();
+        newCommitInfo.forEach((info, url) => {
+          datesMap.set(url, info.date);
+        });
+        setCommitDates(datesMap);
+
+        if (isInitialLoad) {
+          setIsInitialLoad(false);
+        }
+      } catch (error) {
+        console.error("Error fetching commit info:", error);
+      } finally {
+        setIsLoadingCommitDates(false);
+      }
+    },
+    [isInitialLoad]
+  );
 
   useEffect(() => {
     fetchCommitDates();
 
     const intervalId = setInterval(() => {
-      fetchCommitDates(true);
+      if (!isInitialLoad) {
+        fetchCommitDates(true);
+      }
     }, AUTO_REFRESH_INTERVAL);
 
     return () => clearInterval(intervalId);
-  }, [fetchCommitDates]);
+  }, [fetchCommitDates, isInitialLoad]);
 
   const toggleStack = (stack: string) => {
     const newSelectedStacks = new Set(selectedStacks);
@@ -199,6 +221,7 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     categorizedStacks,
     filteredProjects,
     isLoadingCommitDates,
+    isRefreshingInBackground,
     commitInfo,
   };
 }

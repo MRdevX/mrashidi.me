@@ -10,6 +10,7 @@ interface ProjectResultsProps {
   showOpenSourceOnly: boolean;
   commitInfo?: Map<string, { date: Date; hash: string }>;
   isLoadingCommitDates?: boolean;
+  isRefreshingInBackground?: boolean;
 }
 
 export default function ProjectResults({
@@ -19,6 +20,7 @@ export default function ProjectResults({
   showOpenSourceOnly,
   commitInfo = new Map(),
   isLoadingCommitDates = false,
+  isRefreshingInBackground = false,
 }: ProjectResultsProps) {
   return (
     <>
@@ -67,6 +69,7 @@ export default function ProjectResults({
                 project={project}
                 commitInfo={project.githubUrl ? commitInfo.get(project.githubUrl) : undefined}
                 isLoadingCommitDates={isLoadingCommitDates}
+                isRefreshingInBackground={isRefreshingInBackground}
               />
             ))}
           </div>

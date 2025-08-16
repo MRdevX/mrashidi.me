@@ -181,13 +181,24 @@ class GitHubService {
         response = await fetch(`${this.baseUrl}/repos/${repoPath}/commits?per_page=1&sha=master`);
 
         if (!response.ok) {
-          console.warn(`Failed to fetch commits for ${repoPath}: ${response.status}`);
+          console.warn(`Failed to fetch commits for ${repoPath}: ${response.status} ${response.statusText}`);
           return null;
         }
       }
 
       const commits = await response.json();
-      return commits.length > 0 ? { date: new Date(commits[0].commit.author.date), hash: commits[0].sha } : null;
+
+      if (commits.length === 0) {
+        console.warn(`No commits found for ${repoPath}`);
+        return null;
+      }
+
+      const commitInfo = {
+        date: new Date(commits[0].commit.author.date),
+        hash: commits[0].sha,
+      };
+
+      return commitInfo;
     } catch (error) {
       console.error(`Error fetching latest commit info for ${githubUrl}:`, error);
       return null;

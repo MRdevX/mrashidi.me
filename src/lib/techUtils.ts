@@ -149,6 +149,8 @@ export const getSortedTechnologiesByUsage = (
 };
 
 export const sortProjectsByDate = (projects: Project[], commitDates: Map<string, Date> = new Map()): Project[] => {
+  console.log("Sorting projects by date. Commit dates available:", commitDates.size);
+
   return [...projects].sort((a, b) => {
     const dateA = getProjectDate(a, commitDates);
     const dateB = getProjectDate(b, commitDates);
@@ -163,11 +165,12 @@ const getProjectDate = (project: Project, commitDates: Map<string, Date>): Date 
   }
 
   if (project.year) {
-    const yearMatch = project.year.match(/(\d{4})/);
-    if (yearMatch) {
-      return new Date(parseInt(yearMatch[1]), 0, 1);
+    const yearMatch = project.year.match(/(\d{4})/g);
+    if (yearMatch && yearMatch.length > 0) {
+      const years = yearMatch.map((y) => parseInt(y)).sort((a, b) => b - a);
+      return new Date(years[0], 0, 1);
     }
   }
 
-  return new Date();
+  return new Date(2000, 0, 1);
 };
