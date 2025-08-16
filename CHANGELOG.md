@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.22](https://github.com/MRdevX/mrashidi.me/compare/v0.1.21...v0.1.22) (2025-08-16)
+
+
+### Features
+
+* **projects:** add DataFlow Pipeline PoC project with detailed features and technology stack ([29a325a](https://github.com/MRdevX/mrashidi.me/commit/29a325a54cb550132fa70f82fc03e3cd23fc5d1e))
+
 ### [0.1.21](https://github.com/MRdevX/mrashidi.me/compare/v0.1.19...v0.1.21) (2025-08-15)
 
 
