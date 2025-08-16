@@ -41,11 +41,10 @@ export const ANIMATION = {
 } as const;
 
 export const TECHNOLOGY_CATEGORIES = {
-  frameworks: ["NestJS", "Next.js", "React", "Framer Motion", "TypeORM", "Drizzle ORM"],
+  frameworks: ["NestJS", "Next.js", "React", "Framer Motion", "TypeORM", "Drizzle ORM", "Hono"],
   languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash"],
-  databases: ["PostgreSQL", "MongoDB", "Redis"],
+  databases: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "PostgREST"],
   clouds: ["AWS", "Azure", "Docker", "Kubernetes"],
-  tools: ["Git", "Docker", "Kubernetes", "Jenkins", "GitHub Actions", "Swagger", "Postman"],
 };
 
 export type TechnologyCategory = keyof typeof TECHNOLOGY_CATEGORIES;
@@ -55,7 +54,6 @@ export const CATEGORY_DISPLAY_NAMES: Record<TechnologyCategory, string> = {
   languages: "Programming Languages",
   databases: "Databases",
   clouds: "Cloud & Infrastructure",
-  tools: "Development Tools",
 } as const;
 
 export const getAllTechnologies = (): string[] => {
