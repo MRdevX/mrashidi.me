@@ -22,21 +22,6 @@ export default function SkillsSection() {
     unspecified: allSkills.filter((skill) => !skill.level),
   };
 
-  const getIconKey = (skillName: string): string => {
-    let iconKey = skillName
-      .toLowerCase()
-      .replace(/\s*\(.*\)/, "")
-      .replace(/\./g, "")
-      .replace(/\s+/g, "")
-      .replace(/\+/, "p")
-      .replace(/#/, "sharp");
-
-    if (iconKey.includes("azure")) iconKey = "azure";
-    if (iconKey === "aws") iconKey = "aws";
-
-    return iconKey;
-  };
-
   return (
     <motion.section
       className="mb-12"
@@ -69,8 +54,7 @@ export default function SkillsSection() {
 
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => {
-                  const iconKey = getIconKey(skill.name);
-                  const { Icon, colorClass } = getTechIcon(iconKey);
+                  const { Icon, colorClass } = getTechIcon(skill.name);
 
                   return (
                     <span
