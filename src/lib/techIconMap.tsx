@@ -65,6 +65,8 @@ import {
   SiSupabase,
   SiVitest,
   SiLangchain,
+  SiNatsdotio,
+  SiZod,
 } from "react-icons/si";
 import { BsFillHexagonFill } from "react-icons/bs";
 import { VscAzure, VscVscode, VscAzureDevops } from "react-icons/vsc";
@@ -126,6 +128,7 @@ const PythonIcon = createSvgIcon("/icons/python.svg", "Python");
 const PostgreSQLIcon = createSvgIcon("/icons/postgresql.svg", "PostgreSQL");
 const MongooseIcon = createSvgIcon("/icons/mongoose.svg", "Mongoose");
 const TypeORMIcon = createSvgIcon("/icons/typeorm.svg", "TypeORM");
+const GraphileWorkerIcon = createSvgIcon("https://worker.graphile.org/img/logo.optimized.svg", "Graphile Worker");
 
 const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?: string }>; colorClass: string }> = {
   react: { Icon: SiReact, colorClass: "text-cyan-400" },
@@ -279,6 +282,10 @@ const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?:
   licenseanalysis: { Icon: TbLicense, colorClass: "text-green-600" },
   pyqt: { Icon: SiQt, colorClass: "text-green-600" },
 
+  zod: { Icon: SiZod, colorClass: "text-blue-500" },
+  nats: { Icon: SiNatsdotio, colorClass: "text-white-500" },
+  graphileworker: { Icon: GraphileWorkerIcon, colorClass: "text-orange-600" },
+
   default: { Icon: FaTools, colorClass: "text-gray-400" },
 };
 const getIconKey = (techName: string): string => {
@@ -402,6 +409,8 @@ const getIconKey = (techName: string): string => {
     llm: "llmapis",
     cursor: "cursorai",
     inquirer: "inquirerjs",
+    graphile: "graphileworker",
+    worker: "graphileworker",
   };
 
   if (abbreviations[normalized]) {
