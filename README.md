@@ -244,7 +244,7 @@ Create a `.env.local` file with the following variables:
 
 ```env
 # GitHub Integration
-NEXT_PUBLIC_GITHUB_TOKEN=your_github_token
+GITHUB_TOKEN=your_github_token
 
 # AWS SES Configuration
 AWS_REGION=eu-central-1
