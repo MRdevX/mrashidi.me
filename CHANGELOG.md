@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.24](https://github.com/MRdevX/mrashidi.me/compare/v0.1.23...v0.1.24) (2025-08-18)
+
+
+### Features
+
+* **blog:** implement blog preloading and caching enhancements for improved performance ([3c71141](https://github.com/MRdevX/mrashidi.me/commit/3c71141059c1248205f4e45fb6fdf00901bcccc3))
+
 ### [0.1.23](https://github.com/MRdevX/mrashidi.me/compare/v0.1.22...v0.1.23) (2025-08-18)
 
 
