@@ -1,4 +1,4 @@
-import withPWA from 'next-pwa';
+import withPWA from "next-pwa";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -16,13 +16,19 @@ const nextConfig = {
       },
     ],
   },
+
+  turbopack: {
+    resolveExtensions: [".tsx", ".ts", ".jsx", ".js", ".mjs", ".json", ".css", ".scss"],
+
+    resolveAlias: {},
+  },
 };
 
 const config = withPWA({
-  dest: 'public',
+  dest: "public",
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
+  disable: process.env.NODE_ENV === "development",
 })(nextConfig);
 
 export default config;
