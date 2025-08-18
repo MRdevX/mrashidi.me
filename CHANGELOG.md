@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.23](https://github.com/MRdevX/mrashidi.me/compare/v0.1.22...v0.1.23) (2025-08-18)
+
+
+### Features
+
+* **constants:** update technology categories to include Hono and Supabase ([403a388](https://github.com/MRdevX/mrashidi.me/commit/403a388944929acc135054b8b2c0de94fa25b7db))
+* **projects:** add background refreshing for commit dates ([b90e7b9](https://github.com/MRdevX/mrashidi.me/commit/b90e7b9695c057370bbad6998188ec766e65955b))
+* **projects:** update NestJS Queue Worker PoC data ([3be80c3](https://github.com/MRdevX/mrashidi.me/commit/3be80c317da190e8cc580cb4cccc1fc4a1986ca3))
+
 ### [0.1.22](https://github.com/MRdevX/mrashidi.me/compare/v0.1.21...v0.1.22) (2025-08-16)
 
 
