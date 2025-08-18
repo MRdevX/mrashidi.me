@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Search, Filter, Globe, Package, AlertCircle } from "lucide-react";
 import ProjectCard from "@/components/projects/ProjectCard";
-import { projects } from "@/data/projects";
+import { projects } from "@/data";
 
 interface ProjectResultsProps {
   filteredProjects: typeof projects;

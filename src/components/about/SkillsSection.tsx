@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Code2 } from "lucide-react";
-import { skillCategories } from "@/data/skills";
+import { skills } from "@/data";
 import { getTechIcon } from "@/lib/techIconMap";
 import { fadeInVariants } from "@/lib/animations";
 
@@ -13,7 +13,7 @@ const levelConfig = {
 };
 
 export default function SkillsSection() {
-  const allSkills = skillCategories.flatMap((cat) => cat.skills);
+  const allSkills = skills.flatMap((cat) => cat.skills);
   const skillsByLevel = {
     expert: allSkills.filter((skill) => skill.level === "expert"),
     proficient: allSkills.filter((skill) => skill.level === "proficient"),

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { projects } from "@/data/projects";
+import { projects } from "@/data";
 import { TechnologyCategory } from "@/lib/constants";
 import { processTechnologyData, filterProjects, sortProjectsByDate } from "@/lib/techUtils";
 import { githubService } from "@/services/githubService";

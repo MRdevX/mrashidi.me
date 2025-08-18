@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Languages } from "lucide-react";
-import personalInfo from "@/data/personalInfo";
+import { personalInfo } from "@/data";
 import { fadeInVariants, slideInVariants } from "@/lib/animations";
 
 export default function LanguagesSection() {

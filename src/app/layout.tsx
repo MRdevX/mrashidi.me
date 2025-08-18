@@ -8,7 +8,7 @@ import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleTagManager } from "@next/third-parties/google";
-import personalInfo from "@/data/personalInfo";
+import { personalInfo, siteConfig, siteMetadata } from "@/data";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 const inter = Inter({
@@ -24,47 +24,26 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#ff5f1f",
+  themeColor: siteConfig.themeColor,
 };
 
 export const metadata: Metadata = {
-  title: "Mahdi Rashidi | Software Backend Engineer",
+  title: siteMetadata.title,
   description: personalInfo.intro,
-  keywords: "Software Backend Engineer, web developer, react developer, node.js, javascript, portfolio, software engineer",
-  creator: "Mahdi Rashidi",
-  authors: [{ name: "Mahdi Rashidi", url: "https://mrashidi.me" }],
+  keywords: siteMetadata.keywords,
+  creator: siteMetadata.creator,
+  authors: siteMetadata.authors,
   openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://mrashidi.me",
-    siteName: "Mahdi Rashidi - Software Backend Engineer",
-    title: "Mahdi Rashidi | Software Backend Engineer",
+    ...siteMetadata.openGraph,
     description: personalInfo.intro,
-    images: [
-      {
-        url: "https://mrashidi.me/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Mahdi Rashidi - Software Backend Engineer",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Mahdi Rashidi | Software Backend Engineer",
+    ...siteMetadata.twitter,
     description: personalInfo.intro,
-    creator: "@your_twitter_handle",
-    images: ["https://mrashidi.me/twitter-image.jpg"],
   },
-  robots: "index, follow",
-  alternates: {
-    canonical: "https://mrashidi.me",
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+  robots: siteMetadata.robots,
+  alternates: siteMetadata.alternates,
+  icons: siteMetadata.icons,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -75,13 +54,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#f97316" />
-        <meta name="msapplication-TileColor" content="#f97316" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="MR Portfolio" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="application-name" content="MR Portfolio" />
+        <meta name="theme-color" content={siteConfig.themeColor} />
+        <meta name="msapplication-TileColor" content={siteConfig.msTileColor} />
+        <meta name="apple-mobile-web-app-capable" content={siteConfig.appleMobileWebAppCapable ? "yes" : "no"} />
+        <meta name="apple-mobile-web-app-status-bar-style" content={siteConfig.appleMobileWebAppStatusBarStyle} />
+        <meta name="apple-mobile-web-app-title" content={siteConfig.appleMobileWebAppTitle} />
+        <meta name="mobile-web-app-capable" content={siteConfig.mobileWebAppCapable ? "yes" : "no"} />
+        <meta name="application-name" content={siteConfig.appName} />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
@@ -103,31 +82,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="max-w-4xl mx-auto px-4">
               <div className="glass-card p-8 text-center">
                 <p className="text-gray-400 mb-4 flex items-center justify-center gap-2">
-                  © {new Date().getFullYear()} Mahdi Rashidi. All rights reserved.
+                  © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
                 </p>
                 <div className="flex justify-center space-x-6" aria-label="Social Media Links">
                   <a
-                    href="https://github.com/mrdevx"
+                    href={personalInfo.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"
-                    aria-label="Visit Mahdi Rashidi's GitHub Profile"
+                    aria-label={`Visit ${personalInfo.name}'s GitHub Profile`}
                   >
                     <FaGithub className="h-6 w-6" />
                   </a>
                   <a
-                    href="https://linkedin.com/in/deerashidi"
+                    href={personalInfo.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"
-                    aria-label="Visit Mahdi Rashidi's LinkedIn Profile"
+                    aria-label={`Visit ${personalInfo.name}'s LinkedIn Profile`}
                   >
                     <FaLinkedin className="h-6 w-6" />
                   </a>
                   <a
-                    href="mailto:contact@mrashidi.me"
+                    href={`mailto:${personalInfo.social.email}`}
                     className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"
-                    aria-label="Email Mahdi Rashidi"
+                    aria-label={`Email ${personalInfo.name}`}
                   >
                     <Mail className="h-6 w-6" />
                   </a>
@@ -137,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </footer>
           <SpeedInsights />
           <Analytics />
-          <GoogleTagManager gtmId="GTM-T27QBF7L" />
+          <GoogleTagManager gtmId={siteConfig.gtmId} />
         </ThemeProvider>
       </body>
     </html>

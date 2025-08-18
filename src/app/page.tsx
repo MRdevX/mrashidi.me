@@ -6,8 +6,7 @@ import Link from "next/link";
 import { MapPin, Mail, Send, ArrowRight, Terminal as TerminalIcon, Code2, Activity, MessageCircle } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import LoadingAnimation from "@/components/ui/LoadingAnimation";
-import { skillCategories } from "@/data/skills";
-import personalInfo from "@/data/personalInfo";
+import { skills, personalInfo } from "@/data";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 import { CyberpunkButton } from "@/components/ui";
 
@@ -39,7 +38,7 @@ export default function Home() {
   if (!mounted) return null;
 
   const mainStack: { name: string; iconKey: string }[] = [];
-  skillCategories.forEach((cat) => {
+  skills.forEach((cat) => {
     cat.skills.forEach((skill) => {
       if (skill.includeInMainStack) {
         let iconKey = skill.name

@@ -12,8 +12,10 @@ export const navigationItems: NavigationItem[] = [
   { name: "Contact", href: "/contact" },
 ];
 
+import coreConfig from "../core";
+
 export const githubLink = {
-  url: "https://github.com/MRdevX/mrashidi.me",
+  url: coreConfig.social.githubRepo,
   label: "Open Source",
   mobileLabel: "View Code",
   ariaLabel: "View source code on GitHub",

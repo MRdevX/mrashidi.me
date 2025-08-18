@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Disclosure } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { useScrollPosition } from "@/hooks";
-import { navigationItems } from "@/data/navigation";
+import { navigation } from "@/data";
 import { BrandLogo } from "./BrandLogo";
 import { NavigationItem } from "./NavigationItem";
 import { MobileNavigationItem } from "./MobileNavigationItem";
@@ -34,7 +34,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8" role="navigation" aria-label="Main Menu">
-                  {navigationItems.map((item) => (
+                  {navigation.map((item) => (
                     <NavigationItem key={item.name} item={item} isActive={pathname === item.href} />
                   ))}
                 </div>
@@ -59,7 +59,7 @@ export default function Navbar() {
                 aria-label="Mobile Menu"
               >
                 <div className="pt-2 pb-3 space-y-1">
-                  {navigationItems.map((item) => (
+                  {navigation.map((item) => (
                     <MobileNavigationItem key={item.name} item={item} isActive={pathname === item.href} />
                   ))}
                   <GitHubLink variant="mobile" />
@@ -72,4 +72,3 @@ export default function Navbar() {
     </Disclosure>
   );
 }
-

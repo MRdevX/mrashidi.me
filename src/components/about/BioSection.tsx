@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import personalInfo from "@/data/personalInfo";
+import { personalInfo } from "@/data";
 import ProfileImage from "./ProfileImage";
 import { fadeInVariants } from "@/lib/animations";
 

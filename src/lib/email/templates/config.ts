@@ -1,11 +1,12 @@
 import { ITemplateConfig } from "../types";
+import { coreConfig } from "@/data";
 
 export const getTemplateConfig = (): ITemplateConfig => ({
-  companyName: "Mahdi Rashidi",
-  companyWebsite: "https://mrashidi.me",
+  companyName: coreConfig.person.name,
+  companyWebsite: coreConfig.site.url,
   socialLinks: {
-    github: "https://github.com/mrdevx",
-    linkedin: "https://linkedin.com/in/deerashidi",
+    github: coreConfig.social.github,
+    linkedin: coreConfig.social.linkedin,
   },
   footerText: "Software Backend Engineer specializing in Backend Development, Cloud & DevOps, and Database Design",
   skills: [

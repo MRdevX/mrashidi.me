@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { GraduationCap, ExternalLink } from "lucide-react";
-import education from "@/data/education";
+import { education } from "@/data";
 import { fadeInVariants } from "@/lib/animations";
 
 export default function EducationSection() {

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Disclosure } from "@headlessui/react";
 import { Github } from "lucide-react";
-import { githubLink } from "@/data/navigation";
+import { githubLink } from "@/data";
 
 interface GitHubLinkProps {
   variant?: "desktop" | "mobile";

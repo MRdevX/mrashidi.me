@@ -1,6 +1,6 @@
 import React from "react";
 import { Github, ExternalLink, FileText, Globe, GitCommit, Calendar, Loader2 } from "lucide-react";
-import { Project } from "@/data/projects";
+import { Project } from "@/data";
 import { getTechIcon } from "@/lib/techIconMap";
 import { formatDate, createCommitUrl } from "@/lib/utils";
 

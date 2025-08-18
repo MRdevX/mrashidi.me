@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Briefcase, MapPin, Building2, Calendar, CheckCircle2 } from "lucide-react";
 import { CyberpunkCard, CyberpunkCardHeader, CyberpunkCardTitle, CyberpunkCardContent } from "@/components/ui";
-import workExperience from "@/data/workExperience";
+import { workExperience } from "@/data";
 
 export default function WorkExperienceSection() {
   return (

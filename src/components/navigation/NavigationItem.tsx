@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NavigationItem as NavigationItemType } from "@/data/navigation";
+import { NavigationItem as NavigationItemType } from "@/data";
 
 interface NavigationItemProps {
   item: NavigationItemType;

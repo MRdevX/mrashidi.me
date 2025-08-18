@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Award, CheckCircle, ExternalLink } from "lucide-react";
-import certificates from "@/data/certificates";
+import { certificates } from "@/data";
 
 export default function CertificatesSection() {
   return (
