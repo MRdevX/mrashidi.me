@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.25](https://github.com/MRdevX/mrashidi.me/compare/v0.1.24...v0.1.25) (2025-08-18)
+
+
+### Features
+
+* **icons:** add new tech icons for Zod, Natsdotio, and Graphile Worker ([8b4452b](https://github.com/MRdevX/mrashidi.me/commit/8b4452b8f68793037a4b841c4361915e3d6d23e5))
+* **seo:** optimize website for search ([1d6af7e](https://github.com/MRdevX/mrashidi.me/commit/1d6af7e20d4ce660950ee7523b394d7951b916ef))
+
 ### [0.1.24](https://github.com/MRdevX/mrashidi.me/compare/v0.1.23...v0.1.24) (2025-08-18)
 
 
