@@ -39,7 +39,7 @@ const nextConfig = {
               "img-src 'self' data: https: blob:",
               "media-src 'self' https:",
               "connect-src 'self' https: wss:",
-              "frame-src 'self' https://git-graph.vercel.app",
+              "frame-src 'self' https://git-graph.vercel.app https://adplist.org",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
