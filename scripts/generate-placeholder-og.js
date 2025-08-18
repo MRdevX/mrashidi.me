@@ -14,7 +14,6 @@ const { createCanvas, loadImage } = require("canvas");
 const fs = require("fs");
 const path = require("path");
 
-// Check if canvas is installed
 try {
   require("canvas");
 } catch (error) {
@@ -26,7 +25,6 @@ try {
 
 const publicDir = path.join(__dirname, "../public");
 
-// Ensure public directory exists
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
@@ -83,18 +81,15 @@ function generateOGImage(config) {
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
 
-  // Background gradient
   const gradient = ctx.createLinearGradient(0, 0, width, height);
   gradient.addColorStop(0, "#000000");
   gradient.addColorStop(1, "#1a1a1a");
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, width, height);
 
-  // Add some geometric elements
   ctx.fillStyle = "#f97316";
   ctx.globalAlpha = 0.1;
 
-  // Top right triangle
   ctx.beginPath();
   ctx.moveTo(width, 0);
   ctx.lineTo(width - 200, 0);
@@ -102,7 +97,6 @@ function generateOGImage(config) {
   ctx.closePath();
   ctx.fill();
 
-  // Bottom left triangle
   ctx.beginPath();
   ctx.moveTo(0, height);
   ctx.lineTo(200, height);
@@ -112,30 +106,24 @@ function generateOGImage(config) {
 
   ctx.globalAlpha = 1;
 
-  // Text styling
   ctx.textAlign = "center";
   ctx.fillStyle = "#ffffff";
 
-  // Main title
   ctx.font = "bold 64px Arial";
   ctx.fillText(config.title, width / 2, height / 2 - 80);
 
-  // Subtitle
   ctx.font = "32px Arial";
   ctx.fillStyle = "#f97316";
   ctx.fillText(config.subtitle, width / 2, height / 2 - 20);
 
-  // Description
   ctx.font = "24px Arial";
   ctx.fillStyle = "#cccccc";
   ctx.fillText(config.description, width / 2, height / 2 + 40);
 
-  // Bottom text
   ctx.font = "18px Arial";
   ctx.fillStyle = "#888888";
   ctx.fillText("mrashidi.me", width / 2, height - 40);
 
-  // Add a subtle border
   ctx.strokeStyle = "#f97316";
   ctx.lineWidth = 4;
   ctx.strokeRect(20, 20, width - 40, height - 40);
@@ -167,7 +155,6 @@ async function generateAllImages() {
   console.log("4. Consider using design tools like Canva or Figma");
 }
 
-// Check if canvas is available
 try {
   generateAllImages();
 } catch (error) {

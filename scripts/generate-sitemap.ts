@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 
 interface PrettierConfig {
   parser: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 async function generate(): Promise<void> {
@@ -24,6 +24,16 @@ async function generate(): Promise<void> {
   );
 
   const baseUrl = "https://mrashidi.me";
+  const currentDate = new Date().toISOString();
+
+  const pageConfig = {
+    "": { priority: "1.0", changefreq: "weekly" },
+    "/about": { priority: "0.8", changefreq: "monthly" },
+    "/projects": { priority: "0.9", changefreq: "weekly" },
+    "/blog": { priority: "0.8", changefreq: "daily" },
+    "/contact": { priority: "0.7", changefreq: "monthly" },
+    "/resume": { priority: "0.8", changefreq: "monthly" },
+  };
 
   const sitemap = `
     <?xml version="1.0" encoding="UTF-8"?>
@@ -31,15 +41,15 @@ async function generate(): Promise<void> {
       ${pages
         .map((page) => {
           const path = page.replace("src/app", "").replace("/page.tsx", "").replace(/\/\(/g, "/").replace(/\)/g, "");
-
           const route = path === "/index" ? "" : path;
+          const config = pageConfig[route as keyof typeof pageConfig] || { priority: "0.6", changefreq: "monthly" };
 
           return `
             <url>
               <loc>${baseUrl}${route}</loc>
-              <lastmod>${new Date().toISOString()}</lastmod>
-              <changefreq>weekly</changefreq>
-              <priority>${route === "" ? "1.0" : "0.8"}</priority>
+              <lastmod>${currentDate}</lastmod>
+              <changefreq>${config.changefreq}</changefreq>
+              <priority>${config.priority}</priority>
             </url>
           `;
         })
@@ -54,14 +64,14 @@ async function generate(): Promise<void> {
     });
 
     await writeFile(resolve(__dirname, "../public/sitemap.xml"), formatted);
-    console.log("Sitemap generated successfully!");
+    console.log("✅ Enhanced sitemap generated successfully!");
   } catch (error) {
-    console.error("Error generating sitemap:", error);
+    console.error("❌ Error generating sitemap:", error);
     throw error;
   }
 }
 
 generate().catch((error: Error) => {
-  console.error("Error generating sitemap:", error);
+  console.error("❌ Error generating sitemap:", error);
   process.exit(1);
 });
