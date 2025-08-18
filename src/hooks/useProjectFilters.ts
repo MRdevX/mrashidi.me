@@ -1,12 +1,11 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { projects } from "@/data";
 import { TechnologyCategory } from "@/lib/constants";
-import { processTechnologyData, filterProjects, sortProjectsByDate } from "@/lib/techUtils";
+import { processTechnologyData, filterProjects } from "@/lib/techUtils";
 import { githubService } from "@/services/githubService";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;
-const AUTO_REFRESH_INTERVAL = 6 * 60 * 60 * 1000;
 
 interface CommitInfo {
   date: string;
@@ -35,7 +34,6 @@ export interface UseProjectFiltersReturn {
   categorizedStacks: Record<TechnologyCategory, string[]>;
   filteredProjects: typeof projects;
   isLoadingCommitDates: boolean;
-  isRefreshingInBackground: boolean;
   commitInfo: Map<string, { date: Date; hash: string }>;
 }
 
@@ -43,11 +41,8 @@ export function useProjectFilters(): UseProjectFiltersReturn {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedStacks, setSelectedStacks] = useState<Set<string>>(new Set());
   const [showOpenSourceOnly, setShowOpenSourceOnly] = useState<boolean>(false);
-  const [commitDates, setCommitDates] = useState<Map<string, Date>>(new Map());
   const [commitInfo, setCommitInfo] = useState<Map<string, { date: Date; hash: string }>>(new Map());
   const [isLoadingCommitDates, setIsLoadingCommitDates] = useState<boolean>(false);
-  const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
-  const [isRefreshingInBackground, setIsRefreshingInBackground] = useState<boolean>(false);
 
   const { categorizedStacks, stackUsageCount } = useMemo(() => {
     return processTechnologyData(projects);
@@ -56,11 +51,6 @@ export function useProjectFilters(): UseProjectFiltersReturn {
   const allStacks = useMemo(() => {
     return Object.values(categorizedStacks).flat().sort();
   }, [categorizedStacks]);
-
-  const filteredProjects = useMemo(() => {
-    const filtered = filterProjects(projects, searchQuery, selectedStacks, showOpenSourceOnly);
-    return sortProjectsByDate(filtered, commitDates);
-  }, [searchQuery, selectedStacks, showOpenSourceOnly, commitDates]);
 
   const loadCachedCommitInfo = (): Map<string, { date: Date; hash: string }> => {
     try {
@@ -108,87 +98,69 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     }
   };
 
-  const fetchCommitDates = useCallback(
-    async (forceRefresh = false) => {
-      setIsLoadingCommitDates(true);
+  const fetchCommitDates = useCallback(async () => {
+    setIsLoadingCommitDates(true);
 
-      try {
-        if (!forceRefresh && !isInitialLoad && typeof window !== "undefined") {
-          const cachedInfo = loadCachedCommitInfo();
-          if (cachedInfo.size > 0) {
-            setCommitInfo(cachedInfo);
-
-            const datesMap = new Map<string, Date>();
-            cachedInfo.forEach((info, url) => {
-              datesMap.set(url, info.date);
-            });
-            setCommitDates(datesMap);
-            setIsLoadingCommitDates(false);
-            setIsRefreshingInBackground(true);
-            setTimeout(async () => {
-              try {
-                await fetchCommitDates(true);
-              } catch (error) {
-                console.warn("Background refresh failed:", error);
-              } finally {
-                setIsRefreshingInBackground(false);
-              }
-            }, 100);
-            return;
-          }
-        }
-
-        const newCommitInfo = new Map<string, { date: Date; hash: string }>();
-
-        const projectsWithGithub = projects.filter((project) => project.githubUrl);
-
-        const promises = projectsWithGithub.map(async (project) => {
-          if (!project.githubUrl) return;
-
-          try {
-            const commitInfo = await githubService.getLatestCommitInfo(project.githubUrl);
-            if (commitInfo) {
-              newCommitInfo.set(project.githubUrl, commitInfo);
-            }
-          } catch (error) {
-            console.warn(`Failed to fetch commit info for ${project.title} (${project.githubUrl}):`, error);
-          }
-        });
-
-        await Promise.allSettled(promises);
-
-        saveCommitInfoToCache(newCommitInfo);
-        setCommitInfo(newCommitInfo);
-
-        const datesMap = new Map<string, Date>();
-        newCommitInfo.forEach((info, url) => {
-          datesMap.set(url, info.date);
-        });
-        setCommitDates(datesMap);
-
-        if (isInitialLoad) {
-          setIsInitialLoad(false);
-        }
-      } catch (error) {
-        console.error("Error fetching commit info:", error);
-      } finally {
+    try {
+      const cachedInfo = loadCachedCommitInfo();
+      if (cachedInfo.size > 0) {
+        setCommitInfo(cachedInfo);
         setIsLoadingCommitDates(false);
+        return;
       }
-    },
-    [isInitialLoad]
-  );
+
+      const newCommitInfo = new Map<string, { date: Date; hash: string }>();
+      const projectsWithGithub = projects.filter((project) => project.githubUrl);
+
+      const results = await Promise.allSettled(
+        projectsWithGithub.map(async (project) => {
+          if (!project.githubUrl) return null;
+
+          const commitInfo = await githubService.getLatestCommitInfo(project.githubUrl);
+          return { url: project.githubUrl, commitInfo };
+        })
+      );
+
+      results.forEach((result) => {
+        if (result.status === "fulfilled" && result.value?.commitInfo) {
+          newCommitInfo.set(result.value.url, result.value.commitInfo);
+        }
+      });
+
+      if (newCommitInfo.size > 0) {
+        saveCommitInfoToCache(newCommitInfo);
+      }
+      setCommitInfo(newCommitInfo);
+    } catch (error) {
+      console.error("Error fetching commit info:", error);
+    } finally {
+      setIsLoadingCommitDates(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchCommitDates();
+  }, [fetchCommitDates]);
 
-    const intervalId = setInterval(() => {
-      if (!isInitialLoad) {
-        fetchCommitDates(true);
+  const filteredProjects = useMemo(() => {
+    const filtered = filterProjects(projects, searchQuery, selectedStacks, showOpenSourceOnly);
+
+    return filtered.sort((a, b) => {
+      const aHasGithub = a.githubUrl && commitInfo.has(a.githubUrl);
+      const bHasGithub = b.githubUrl && commitInfo.has(b.githubUrl);
+
+      if (aHasGithub && bHasGithub) {
+        const aDate = commitInfo.get(a.githubUrl!)!.date;
+        const bDate = commitInfo.get(b.githubUrl!)!.date;
+        return bDate.getTime() - aDate.getTime();
       }
-    }, AUTO_REFRESH_INTERVAL);
 
-    return () => clearInterval(intervalId);
-  }, [fetchCommitDates, isInitialLoad]);
+      if (aHasGithub && !bHasGithub) return -1;
+      if (!aHasGithub && bHasGithub) return 1;
+
+      return 0;
+    });
+  }, [searchQuery, selectedStacks, showOpenSourceOnly, commitInfo]);
 
   const toggleStack = (stack: string) => {
     const newSelectedStacks = new Set(selectedStacks);
@@ -221,7 +193,6 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     categorizedStacks,
     filteredProjects,
     isLoadingCommitDates,
-    isRefreshingInBackground,
     commitInfo,
   };
 }

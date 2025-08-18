@@ -18,7 +18,6 @@ export default function Projects() {
     stackUsageCount,
     filteredProjects,
     isLoadingCommitDates,
-    isRefreshingInBackground,
     commitInfo,
   } = useProjectFilters();
 
@@ -66,7 +65,6 @@ export default function Projects() {
           showOpenSourceOnly={showOpenSourceOnly}
           commitInfo={commitInfo}
           isLoadingCommitDates={isLoadingCommitDates}
-          isRefreshingInBackground={isRefreshingInBackground}
         />
       </motion.div>
     </div>

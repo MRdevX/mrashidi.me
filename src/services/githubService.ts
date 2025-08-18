@@ -52,13 +52,24 @@ interface LatestCommitInfo {
   hash: string;
 }
 
-class GitHubService {
+export class GitHubService {
   private readonly username = "mrdevx";
-  private readonly baseUrl = "https://api.github.com";
+  private baseUrl = "https://api.github.com";
   private readonly graphqlUrl = "https://api.github.com/graphql";
-  private readonly headers = {
+  private headers: HeadersInit = {
     Accept: "application/vnd.github.v3+json",
+    "User-Agent": "mrashidi.me-portfolio",
   };
+
+  constructor() {
+    const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+    if (token) {
+      this.headers = {
+        ...this.headers,
+        Authorization: `token ${token}`,
+      };
+    }
+  }
 
   async getTopRepositories(): Promise<GitHubRepo[]> {
     try {
@@ -174,31 +185,27 @@ class GitHubService {
       }
 
       const repoPath = `${repoInfo.owner}/${repoInfo.name}`;
+      const branches = ["main", "master"];
 
-      let response = await fetch(`${this.baseUrl}/repos/${repoPath}/commits?per_page=1&sha=main`);
+      for (const branch of branches) {
+        const response = await fetch(`${this.baseUrl}/repos/${repoPath}/commits?per_page=1&sha=${branch}`, {
+          headers: this.headers,
+        });
 
-      if (!response.ok) {
-        response = await fetch(`${this.baseUrl}/repos/${repoPath}/commits?per_page=1&sha=master`);
+        if (response.ok) {
+          const commits = await response.json();
 
-        if (!response.ok) {
-          console.warn(`Failed to fetch commits for ${repoPath}: ${response.status} ${response.statusText}`);
-          return null;
+          if (commits.length > 0) {
+            return {
+              date: new Date(commits[0].commit.author.date),
+              hash: commits[0].sha,
+            };
+          }
         }
       }
 
-      const commits = await response.json();
-
-      if (commits.length === 0) {
-        console.warn(`No commits found for ${repoPath}`);
-        return null;
-      }
-
-      const commitInfo = {
-        date: new Date(commits[0].commit.author.date),
-        hash: commits[0].sha,
-      };
-
-      return commitInfo;
+      console.warn(`No commits found for ${repoPath}`);
+      return null;
     } catch (error) {
       console.error(`Error fetching latest commit info for ${githubUrl}:`, error);
       return null;
