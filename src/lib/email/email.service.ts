@@ -3,6 +3,7 @@ import { ContactFormData } from "@/lib/validation/schemas";
 import { ResumeRequestData } from "@/lib/validation/schemas";
 import { ContactTemplates, ResumeTemplates, getTemplateConfig } from "./templates";
 import { logger } from "@/lib/utils/logger";
+import { AuthenticationError } from "@/lib/errors";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -16,7 +17,7 @@ export class EmailService {
     const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
     if (!accessKeyId || !secretAccessKey) {
-      throw new Error("Missing AWS credentials");
+      throw new AuthenticationError("Missing AWS credentials");
     }
 
     this.sesClient = new SESClient({

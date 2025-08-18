@@ -49,8 +49,7 @@ export const resumeRequestSchema = z.object({
   email: baseEmailSchema,
   company: z
     .string()
-    .optional()
-    .transform((val) => val?.trim() || "")
+    .trim()
     .refine((val) => !val || val.length >= 2, "Company must be at least 2 characters")
     .refine((val) => !val || val.length <= 100, "Company must be less than 100 characters")
     .refine(

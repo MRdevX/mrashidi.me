@@ -5,6 +5,7 @@ import { validateContactFormAPI } from "@/lib/validation/apiValidators";
 import { ContactFormData } from "@/lib/validation/schemas";
 import { withValidation } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
+import { APIError } from "@/lib/errors";
 
 async function handleContactForm(request: NextRequest, formData: ContactFormData & { recaptchaToken: string }) {
   await RecaptchaService.verify(formData.recaptchaToken);
@@ -18,7 +19,7 @@ async function handleContactForm(request: NextRequest, formData: ContactFormData
   });
 
   if (!emailSent) {
-    throw new Error("Failed to send email");
+    throw new APIError("Failed to send email");
   }
 
   return ApiResponseHandler.success({ message: "Message sent successfully" });

@@ -1,4 +1,5 @@
 import { logger } from "@/lib/utils/logger";
+import { NetworkError } from "@/lib/errors";
 
 interface LatestCommitInfo {
   date: Date;
@@ -13,7 +14,7 @@ export class GitHubService {
       const response = await fetch(`${this.apiBase}?action=commit-info&url=${encodeURIComponent(githubUrl)}`);
 
       if (!response.ok) {
-        throw new Error("Failed to fetch commit info");
+        throw new NetworkError("Failed to fetch commit info");
       }
 
       const commitInfo = await response.json();

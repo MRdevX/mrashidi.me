@@ -137,7 +137,6 @@ mrashidi.me/
 Components are organized by feature rather than type, making the codebase more maintainable and scalable:
 
 ```typescript
-// Feature-based imports
 import { BlogHeader, BlogGrid, BlogPagination } from "@/components/features/blog";
 import { ContactFormSection, MentorshipSection } from "@/components/features/contact";
 import { ProjectCard, ProjectFilters } from "@/components/features/projects";
@@ -148,10 +147,8 @@ import { ProjectCard, ProjectFilters } from "@/components/features/projects";
 All application settings are centralized in the `src/config` directory:
 
 ```typescript
-// Unified configuration access
 import { CONFIG } from "@/config";
 
-// Access any configuration
 const apiTimeout = CONFIG.constants.api.TIMEOUT;
 const themeColors = CONFIG.theme.colors;
 ```
@@ -161,10 +158,8 @@ const themeColors = CONFIG.theme.colors;
 Utilities are categorized by domain and centralized for better maintainability:
 
 ```typescript
-// Centralized utility imports
 import { formatDate, truncateText, isValidEmail } from "@/lib/utils";
 
-// Domain-specific utilities
 import { formatDate, formatRelativeTime } from "@/lib/utils/date.utils";
 import { toTitleCase, generateRandomString } from "@/lib/utils/string.utils";
 ```
@@ -174,7 +169,6 @@ import { toTitleCase, generateRandomString } from "@/lib/utils/string.utils";
 Comprehensive API layer with middleware, validation, and error handling:
 
 ```typescript
-// API routes with middleware
 export const GET = withPagination(handleBlogPosts);
 export const POST = withValidation(handleContactForm, validateContactFormAPI);
 ```
@@ -184,7 +178,6 @@ export const POST = withValidation(handleContactForm, validateContactFormAPI);
 Reusable hooks that separate business logic from UI components:
 
 ```typescript
-// Custom hooks for complex state management
 const { posts, isLoading, error, setPage } = useBlogData(6);
 const { filters, setSearchQuery, toggleStack } = useProjectFilters();
 ```
@@ -194,11 +187,9 @@ const { filters, setSearchQuery, toggleStack } = useProjectFilters();
 Type-safe form validation using reusable base schemas:
 
 ```typescript
-// Base schemas for reusability (DRY principle)
 const baseNameSchema = z.string().min(1, "Name is required").max(50);
 const baseEmailSchema = z.email("Please enter a valid email address");
 
-// Composed schemas
 export const contactFormSchema = z.object({
   name: baseNameSchema,
   email: baseEmailSchema,
