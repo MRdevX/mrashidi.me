@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.27](https://github.com/MRdevX/mrashidi.me/compare/v0.1.26...v0.1.27) (2025-08-18)
+
+
+### Bug Fixes
+
+* **sentry:** use only SENTRY_DSN for better security ([c3154fc](https://github.com/MRdevX/mrashidi.me/commit/c3154fc21ba325a99f228f823b2a45bd0eb2b972))
+
 ### [0.1.26](https://github.com/MRdevX/mrashidi.me/compare/v0.1.25...v0.1.26) (2025-08-18)
 
 
