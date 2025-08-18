@@ -45,10 +45,10 @@ const skillCategories: SkillCategory[] = [
   {
     category: "APIs & Protocols",
     skills: [
-      { name: "REST", level: "proficient", includeInMainStack: true },
-      { name: "gRPC", level: "proficient", includeInMainStack: true },
+      { name: "REST", level: "proficient" },
+      { name: "gRPC", level: "proficient" },
       { name: "OpenAPI", level: "proficient" },
-      { name: "Swagger", level: "proficient", includeInMainStack: true },
+      { name: "Swagger", level: "proficient" },
       { name: "API Versioning", level: "proficient" },
       { name: "WebSockets", level: "experienced" },
       { name: "GraphQL", level: "familiar" },
@@ -81,7 +81,7 @@ const skillCategories: SkillCategory[] = [
       { name: "Docker", level: "proficient", includeInMainStack: true },
       { name: "GitLab CI/CD", level: "proficient", includeInMainStack: true },
       { name: "Linux", level: "proficient", includeInMainStack: true },
-      { name: "Terraform", level: "experienced", includeInMainStack: true },
+      { name: "Terraform", level: "experienced" },
       { name: "Helm", level: "experienced" },
       { name: "GitHub Actions", level: "experienced" },
     ],
@@ -113,9 +113,9 @@ const skillCategories: SkillCategory[] = [
     category: "Observability",
     skills: [
       { name: "Azure Monitor", level: "proficient" },
-      { name: "Sentry", level: "proficient", includeInMainStack: true },
-      { name: "Prometheus", level: "experienced", includeInMainStack: true },
-      { name: "Grafana", level: "experienced", includeInMainStack: true },
+      { name: "Sentry", level: "proficient" },
+      { name: "Prometheus", level: "experienced" },
+      { name: "Grafana", level: "experienced" },
       { name: "CloudWatch", level: "familiar" },
     ],
   },
@@ -135,7 +135,7 @@ const skillCategories: SkillCategory[] = [
     category: "Security",
     skills: [
       { name: "OAuth2" },
-      { name: "JWT", includeInMainStack: true },
+      { name: "JWT" },
       { name: "API Security" },
       { name: "RBAC" },
       { name: "SSL/TLS" },
@@ -165,7 +165,7 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Tools",
     skills: [
-      { name: "Git", includeInMainStack: true },
+      { name: "Git" },
       { name: "Linux Distros" },
       { name: "Cursor AI" },
       { name: "VS Code" },
