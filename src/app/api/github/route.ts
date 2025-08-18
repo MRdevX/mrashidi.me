@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/utils/logger";
 
 interface LatestCommitInfo {
   date: Date;
@@ -65,7 +66,11 @@ class GitHubService {
 
       return null;
     } catch (error) {
-      console.error(`Error fetching commit info for ${githubUrl}:`, error);
+      logger.error({
+        operation: "getLatestCommitInfo",
+        githubUrl,
+        error: error instanceof Error ? error.message : String(error),
+      });
       return null;
     }
   }
@@ -102,7 +107,11 @@ export async function GET(request: NextRequest) {
     const result = await githubService.getLatestCommitInfo(githubUrl);
     return NextResponse.json(result);
   } catch (error) {
-    console.error("GitHub API error:", error);
+    logger.error({
+      operation: "GET",
+      endpoint: "/api/github",
+      error: error instanceof Error ? error.message : String(error),
+    });
     const message = error instanceof Error ? error.message : "Internal server error";
     return NextResponse.json({ error: message }, { status: 500 });
   }

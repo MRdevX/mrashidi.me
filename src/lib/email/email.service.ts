@@ -2,6 +2,7 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { ContactFormData } from "@/lib/validation/schemas";
 import { ResumeRequestData } from "@/lib/validation/schemas";
 import { ContactTemplates, ResumeTemplates, getTemplateConfig } from "./templates";
+import { logger } from "@/lib/utils/logger";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -33,37 +34,60 @@ export class EmailService {
 
   async sendContactFormEmail(data: ContactFormData): Promise<boolean> {
     try {
-      console.log("Sending contact form emails...");
+      logger.info({ operation: "sendContactFormEmail", status: "started" });
       const adminEmailSuccess = await this.sendAdminNotification(data);
-      console.log("Admin email success:", adminEmailSuccess);
       const userEmailSuccess = await this.sendUserConfirmation(data);
-      console.log("User email success:", userEmailSuccess);
+
+      logger.info({
+        operation: "sendContactFormEmail",
+        status: "completed",
+        adminEmailSuccess,
+        userEmailSuccess,
+      });
+
       return adminEmailSuccess && userEmailSuccess;
     } catch (error) {
-      console.error("Failed to send contact form emails:", error);
+      logger.error({
+        operation: "sendContactFormEmail",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
 
   async sendResumeRequestEmail(data: ResumeRequestData): Promise<boolean> {
     try {
-      console.log("Sending resume request emails...");
+      logger.info({ operation: "sendResumeRequestEmail", status: "started" });
       const adminEmailSuccess = await this.sendResumeRequestNotification(data);
-      console.log("Resume admin email success:", adminEmailSuccess);
       const userEmailSuccess = await this.sendResumeToUser(data);
-      console.log("Resume user email success:", userEmailSuccess);
+
+      logger.info({
+        operation: "sendResumeRequestEmail",
+        status: "completed",
+        adminEmailSuccess,
+        userEmailSuccess,
+      });
+
       return adminEmailSuccess && userEmailSuccess;
     } catch (error) {
-      console.error("Failed to send resume request emails:", error);
+      logger.error({
+        operation: "sendResumeRequestEmail",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
 
   private async sendAdminNotification(data: ContactFormData): Promise<boolean> {
     try {
-      console.log("Preparing admin notification email...");
-      console.log("From:", this.fromEmail);
-      console.log("To:", this.toEmail);
+      logger.debug({
+        operation: "sendAdminNotification",
+        status: "preparing",
+        fromEmail: this.fromEmail,
+        toEmail: this.toEmail,
+      });
 
       const command = new SendEmailCommand({
         Source: this.fromEmail,
@@ -89,15 +113,22 @@ export class EmailService {
         ReplyToAddresses: [data.email],
       });
 
-      console.log("Sending admin notification...");
+      logger.debug({ operation: "sendAdminNotification", status: "sending" });
       const response = await this.sesClient.send(command);
-      console.log(`Admin notification sent successfully: ${response.MessageId}`);
+
+      logger.info({
+        operation: "sendAdminNotification",
+        status: "success",
+        messageId: response.MessageId,
+      });
+
       return true;
     } catch (error) {
-      console.error("Failed to send admin notification:", error);
-      if (error instanceof Error) {
-        console.error("Error details:", error.message);
-      }
+      logger.error({
+        operation: "sendAdminNotification",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
@@ -128,10 +159,18 @@ export class EmailService {
       });
 
       const response = await this.sesClient.send(command);
-      console.log(`User confirmation sent successfully: ${response.MessageId}`);
+      logger.info({
+        operation: "sendUserConfirmation",
+        status: "success",
+        messageId: response.MessageId,
+      });
       return true;
     } catch (error) {
-      console.error("Failed to send user confirmation:", error);
+      logger.error({
+        operation: "sendUserConfirmation",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
@@ -163,10 +202,18 @@ export class EmailService {
       });
 
       const response = await this.sesClient.send(command);
-      console.log(`Resume request notification sent successfully: ${response.MessageId}`);
+      logger.info({
+        operation: "sendResumeRequestNotification",
+        status: "success",
+        messageId: response.MessageId,
+      });
       return true;
     } catch (error) {
-      console.error("Failed to send resume request notification:", error);
+      logger.error({
+        operation: "sendResumeRequestNotification",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
@@ -197,10 +244,18 @@ export class EmailService {
       });
 
       const response = await this.sesClient.send(command);
-      console.log(`Resume confirmation sent to user successfully: ${response.MessageId}`);
+      logger.info({
+        operation: "sendResumeToUser",
+        status: "success",
+        messageId: response.MessageId,
+      });
       return true;
     } catch (error) {
-      console.error("Failed to send resume confirmation to user:", error);
+      logger.error({
+        operation: "sendResumeToUser",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }

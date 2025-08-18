@@ -1,5 +1,6 @@
 import NodeCache from "node-cache";
 import { IBlogPost } from "@/types/blog";
+import { logger } from "@/lib/utils/logger";
 
 class CacheService {
   private cache: NodeCache;
@@ -24,7 +25,10 @@ class CacheService {
 
       return { posts, total };
     } catch (error) {
-      console.error("Error getting blog posts from cache:", error);
+      logger.error({
+        operation: "getBlogPosts",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return null;
     }
   }
@@ -35,7 +39,10 @@ class CacheService {
       this.cache.set(this.BLOG_POSTS_TOTAL_KEY, total);
       this.cache.set(this.BLOG_LAST_UPDATE_KEY, Date.now());
     } catch (error) {
-      console.error("Error setting blog posts in cache:", error);
+      logger.error({
+        operation: "setBlogPosts",
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -43,7 +50,10 @@ class CacheService {
     try {
       return this.cache.get<number>(this.BLOG_LAST_UPDATE_KEY) || null;
     } catch (error) {
-      console.error("Error getting last update time:", error);
+      logger.error({
+        operation: "getLastUpdateTime",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return null;
     }
   }

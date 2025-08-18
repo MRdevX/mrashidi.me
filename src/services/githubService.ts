@@ -1,3 +1,5 @@
+import { logger } from "@/lib/utils/logger";
+
 interface LatestCommitInfo {
   date: Date;
   hash: string;
@@ -25,7 +27,11 @@ export class GitHubService {
         hash: commitInfo.hash,
       };
     } catch (error) {
-      console.error(`Error fetching latest commit info for ${githubUrl}:`, error);
+      logger.error({
+        operation: "getLatestCommitInfo",
+        githubUrl,
+        error: error instanceof Error ? error.message : String(error),
+      });
       return null;
     }
   }
@@ -40,7 +46,11 @@ export class GitHubService {
       const commitInfo = await this.getLatestCommitInfo(githubUrl);
       return commitInfo !== null;
     } catch (error) {
-      console.error("Error testing GitHub API:", error);
+      logger.error({
+        operation: "testGitHubAPI",
+        githubUrl,
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }

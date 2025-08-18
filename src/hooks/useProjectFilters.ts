@@ -3,6 +3,7 @@ import { projects } from "@/data";
 import { TechnologyCategory } from "@/lib/constants";
 import { processTechnologyData, filterProjects } from "@/lib/techUtils";
 import { githubService } from "@/services/githubService";
+import { logger } from "@/lib/utils/logger";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;
@@ -72,7 +73,10 @@ export function useProjectFilters(): UseProjectFiltersReturn {
 
       return infoMap;
     } catch (error) {
-      console.warn("Failed to load cached commit info:", error);
+      logger.warn({
+        operation: "loadCachedCommitInfo",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return new Map();
     }
   };
@@ -94,7 +98,10 @@ export function useProjectFilters(): UseProjectFiltersReturn {
 
       localStorage.setItem(COMMIT_DATES_CACHE_KEY, JSON.stringify(cacheData));
     } catch (error) {
-      console.warn("Failed to save commit info to cache:", error);
+      logger.warn({
+        operation: "saveCommitInfoToCache",
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 
@@ -132,7 +139,10 @@ export function useProjectFilters(): UseProjectFiltersReturn {
       }
       setCommitInfo(newCommitInfo);
     } catch (error) {
-      console.error("Error fetching commit info:", error);
+      logger.error({
+        operation: "fetchCommitDates",
+        error: error instanceof Error ? error.message : String(error),
+      });
     } finally {
       setIsLoadingCommitDates(false);
     }

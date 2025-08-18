@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { BlogResponse, BlogData } from "@/components/features/blog/types";
+import { logger } from "@/lib/utils/logger";
 
 export function useBlogPreload() {
   const preloadBlogPosts = useCallback(async (page: number = 1, postsPerPage: number = 6) => {
@@ -16,7 +17,10 @@ export function useBlogPreload() {
         total: data.meta?.total || 0,
       } as BlogData;
     } catch (error) {
-      console.error("Failed to preload blog posts:", error);
+      logger.error({
+        operation: "useBlogPreload",
+        error: error instanceof Error ? error.message : String(error),
+      });
       return null;
     }
   }, []);

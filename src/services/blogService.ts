@@ -3,6 +3,7 @@ import { IBlogPost, IBlogAuthor, IMediumRssFeed } from "@/types/blog";
 import { cacheService } from "./cacheService";
 import { cachePerformanceMonitor } from "@/lib/utils/cachePerformance";
 import { API_CONFIG } from "@/lib/config/api";
+import { logger } from "@/lib/utils/logger";
 
 const authors: IBlogAuthor[] = [
   {
@@ -55,7 +56,11 @@ export class BlogService {
   static async fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
     try {
       const feedUrl = `${author.mediumUrl}/feed`;
-      console.log(`Fetching Medium feed from: ${feedUrl}`);
+      logger.debug({
+        operation: "fetchMediumPosts",
+        author: author.username,
+        feedUrl,
+      });
 
       const response = await fetch(feedUrl, {
         headers: {
@@ -70,17 +75,29 @@ export class BlogService {
       }
 
       const xmlData = await response.text();
-      console.log(`Received XML data length: ${xmlData.length}`);
+      logger.debug({
+        operation: "fetchMediumPosts",
+        author: author.username,
+        xmlDataLength: xmlData.length,
+      });
 
       const feed = await this.parseMediumFeed(xmlData);
 
       if (!feed?.rss?.channel?.item) {
-        console.warn(`No items found in feed for author ${author.username}`);
+        logger.warn({
+          operation: "fetchMediumPosts",
+          author: author.username,
+          message: "No items found in feed",
+        });
         return [];
       }
 
       const items = Array.isArray(feed.rss.channel.item) ? feed.rss.channel.item : [feed.rss.channel.item];
-      console.log(`Found ${items.length} items in feed for ${author.username}`);
+      logger.debug({
+        operation: "fetchMediumPosts",
+        author: author.username,
+        itemsCount: items.length,
+      });
 
       return items.map((item) => ({
         title: item.title || "Untitled",
@@ -95,24 +112,32 @@ export class BlogService {
         },
       }));
     } catch (error) {
-      console.error(`Failed to fetch posts for ${author.username}:`, error);
+      logger.error({
+        operation: "fetchMediumPosts",
+        author: author.username,
+        error: error instanceof Error ? error.message : String(error),
+      });
       return [];
     }
   }
 
   static async preloadBlogPosts(): Promise<void> {
     if (this.isPreloaded) {
-      console.log("Blog posts already preloaded");
+      logger.debug({ operation: "preloadBlogPosts", message: "Already preloaded" });
       return;
     }
 
     try {
-      console.log("Preloading blog posts...");
+      logger.info({ operation: "preloadBlogPosts", status: "started" });
       await this.updateCache();
       this.isPreloaded = true;
-      console.log("Blog posts preloaded successfully");
+      logger.info({ operation: "preloadBlogPosts", status: "completed" });
     } catch (error) {
-      console.error("Failed to preload blog posts:", error);
+      logger.error({
+        operation: "preloadBlogPosts",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -121,7 +146,7 @@ export class BlogService {
 
     try {
       this.isUpdating = true;
-      console.log("Starting blog posts cache update...");
+      logger.info({ operation: "updateCache", status: "started" });
 
       const allPosts: IBlogPost[] = [];
       for (const author of authors) {
@@ -132,9 +157,17 @@ export class BlogService {
       const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 
       await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
-      console.log("Blog posts cache updated successfully");
+      logger.info({
+        operation: "updateCache",
+        status: "completed",
+        postsCount: sortedPosts.length,
+      });
     } catch (error) {
-      console.error("Failed to update blog posts cache:", error);
+      logger.error({
+        operation: "updateCache",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
     } finally {
       this.isUpdating = false;
     }
@@ -154,12 +187,24 @@ export class BlogService {
     }
 
     if (process.env.NODE_ENV === "development") {
-      this.preloadBlogPosts().catch(console.error);
+      this.preloadBlogPosts().catch((error) => {
+        logger.error({
+          operation: "startCacheUpdateInterval",
+          message: "Failed to preload blog posts",
+          error: error instanceof Error ? error.message : String(error),
+        });
+      });
     }
 
     this.updateInterval = setInterval(() => {
       if (!this.isUpdating) {
-        this.updateCache().catch(console.error);
+        this.updateCache().catch((error) => {
+          logger.error({
+            operation: "startCacheUpdateInterval",
+            message: "Failed to update cache",
+            error: error instanceof Error ? error.message : String(error),
+          });
+        });
       }
     }, CACHE_UPDATE_INTERVAL);
 
@@ -175,14 +220,19 @@ export class BlogService {
     const startTime = Date.now();
 
     try {
-      console.log("Getting all posts, checking cache first...");
+      logger.debug({ operation: "getAllPosts", status: "checking_cache" });
       const cachedData = await cacheService.getBlogPosts();
 
       if (cachedData) {
         const responseTime = Date.now() - startTime;
         cachePerformanceMonitor.recordHit(responseTime);
 
-        console.log(`Found cached data with ${cachedData.total} posts`);
+        logger.debug({
+          operation: "getAllPosts",
+          status: "cache_hit",
+          postsCount: cachedData.total,
+        });
+
         const { posts, total } = cachedData;
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
@@ -197,19 +247,28 @@ export class BlogService {
         };
       }
 
-      console.log("No cached data found, fetching from Medium...");
+      logger.debug({ operation: "getAllPosts", status: "cache_miss" });
       const allPosts: IBlogPost[] = [];
       for (const author of authors) {
-        console.log(`Fetching posts for author: ${author.username}`);
+        logger.debug({
+          operation: "getAllPosts",
+          status: "fetching_author",
+          author: author.username,
+        });
         const posts = await this.fetchMediumPosts(author);
         allPosts.push(...posts);
       }
 
-      console.log(`Total posts fetched: ${allPosts.length}`);
+      logger.debug({
+        operation: "getAllPosts",
+        status: "fetched_all",
+        totalPosts: allPosts.length,
+      });
+
       const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 
       await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
-      console.log("Posts cached successfully");
+      logger.debug({ operation: "getAllPosts", status: "cached_successfully" });
 
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
@@ -227,7 +286,11 @@ export class BlogService {
       const responseTime = Date.now() - startTime;
       cachePerformanceMonitor.recordMiss(responseTime);
 
-      console.error("Failed to fetch blog posts:", error);
+      logger.error({
+        operation: "getAllPosts",
+        status: "failed",
+        error: error instanceof Error ? error.message : String(error),
+      });
       throw error;
     }
   }
@@ -237,8 +300,17 @@ export class BlogService {
     const thirtyMinutes = 30 * 60 * 1000;
 
     if (lastUpdate && Date.now() - lastUpdate > thirtyMinutes) {
-      console.log("Cache is stale, triggering background refresh...");
-      this.updateCache().catch(console.error);
+      logger.debug({
+        operation: "triggerBackgroundRefresh",
+        message: "Cache is stale, triggering background refresh",
+      });
+      this.updateCache().catch((error) => {
+        logger.error({
+          operation: "triggerBackgroundRefresh",
+          message: "Failed to update cache",
+          error: error instanceof Error ? error.message : String(error),
+        });
+      });
     }
   }
 }
