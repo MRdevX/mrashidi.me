@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import withPWA from "next-pwa";
 
 /** @type {import('next').NextConfig} */
@@ -89,4 +90,18 @@ const config = withPWA({
   disable: process.env.NODE_ENV === "development",
 })(nextConfig);
 
-export default config;
+export default withSentryConfig(config, {
+  org: "notable-nomads",
+
+  project: "mrashidi-me",
+
+  silent: !process.env.CI,
+
+  widenClientFileUpload: true,
+
+  tunnelRoute: "/monitoring",
+
+  disableLogger: true,
+
+  automaticVercelMonitors: true,
+});
