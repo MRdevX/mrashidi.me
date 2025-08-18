@@ -1,10 +1,8 @@
 # mrashidi.me
 
-A modern, cyberpunk-inspired personal portfolio website showcasing my work as a Backend Engineer. As a software engineer with a strong backend focus, this is my hobby project born from curiosity about frontend development and Next.js. I wanted to build my own interactive website to showcase my projects and skills while exploring modern web development practices. The site features an interactive terminal, real-time GitHub integration, advanced project filtering, and comprehensive blog integration.
+A modern, cyberpunk-inspired personal portfolio website showcasing my work as a Software Engineer. Built with Next.js 15, TypeScript, and Tailwind CSS, featuring an interactive terminal, real-time GitHub integration, advanced project filtering, and comprehensive blog integration.
 
 > **Note**: This is my personal website and is not intended to be used as a template. The code is shared for transparency and demonstration of my work, but all rights are reserved.
-
-> **Contributions Welcome**: As a backend engineer exploring frontend development, I welcome contributions from frontend engineers! I'm open to new ideas, improvements, and suggestions to make this project better. Feel free to open issues or submit pull requests.
 
 ## 🚀 Features
 
@@ -20,8 +18,6 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🌐 **PWA Support**: Progressive Web App with offline capabilities
 - 🔍 **SEO Optimized**: Meta tags, sitemap generation, and structured data
 - 📱 **Responsive Design**: Optimized for all devices and screen sizes
-- 🎯 **Modern Icons**: Lucide React icons throughout the UI for consistency
-- 🎭 **Enhanced UI**: Improved visual hierarchy with contextual icons
 
 ### Technical Features
 
@@ -31,11 +27,8 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🎭 **Framer Motion**: Smooth animations and transitions
 - 🔄 **SWR**: Data fetching with caching and revalidation
 - 📝 **React Hook Form**: Form handling with Zod validation
-- 🎨 **Headless UI**: Accessible UI components
 - 🔒 **Security**: reCAPTCHA, input validation, and error handling
 - 📦 **Caching**: Node-cache for blog posts and API responses
-- 🚀 **Performance**: Optimized images, lazy loading, and code splitting
-- 🎨 **Icon System**: Centralized Lucide React icon library with size and color presets
 
 ## 🛠 Tech Stack
 
@@ -73,7 +66,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - **Performance**: Vercel Speed Insights 1.2.0
 - **PWA**: next-pwa 5.6.0
 
-## 📁 Project Structure
+## 📁 Project Architecture
 
 ```
 mrashidi.me/
@@ -83,7 +76,7 @@ mrashidi.me/
 │   └── manifest.json         # PWA manifest
 ├── src/
 │   ├── app/                  # Next.js App Router
-│   │   ├── api/             # API routes
+│   │   ├── api/             # API routes with middleware
 │   │   │   ├── blog/        # Blog API with pagination
 │   │   │   ├── contact/     # Contact form API
 │   │   │   └── resume/      # Resume request API
@@ -96,29 +89,39 @@ mrashidi.me/
 │   │   ├── layout.tsx       # Root layout
 │   │   └── page.tsx         # Homepage
 │   ├── components/          # React components
-│   │   ├── about/           # About page components
-│   │   ├── blog/            # Blog components with SWR
-│   │   ├── contact/         # Contact form components
-│   │   ├── experience/      # Work experience timeline
+│   │   ├── features/        # Feature-based organization
+│   │   │   ├── about/       # About page components
+│   │   │   ├── blog/        # Blog components with SWR
+│   │   │   ├── contact/     # Contact form components
+│   │   │   ├── projects/    # Project filtering components
+│   │   │   └── resume/      # Resume components
+│   │   ├── layout/          # Layout components (Navbar, etc.)
 │   │   ├── forms/           # Reusable form components
-│   │   ├── navigation/      # Navigation components
-│   │   ├── projects/        # Project filtering components
-│   │   ├── resume/          # Resume components
-│   │   ├── skills/          # Skills visualization
 │   │   ├── terminal/        # Interactive terminal
 │   │   │   ├── hooks/       # Terminal custom hooks
 │   │   │   └── types.ts     # Terminal types
 │   │   └── ui/              # Reusable UI components
 │   │       └── icons.tsx    # Centralized icon library
+│   ├── config/              # Application configuration
+│   │   ├── app.config.ts    # App-wide settings
+│   │   ├── theme.config.ts  # Theme configuration
+│   │   ├── constants.ts     # Application constants
+│   │   └── index.ts         # Unified config export
 │   ├── context/             # React context providers
 │   ├── data/                # Static data files
+│   │   ├── profile/         # Personal information
+│   │   └── site/            # Site configuration
 │   ├── hooks/               # Custom React hooks
 │   ├── lib/                 # Utilities and configuration
 │   │   ├── api/             # API utilities and middleware
 │   │   ├── config/          # Configuration constants
 │   │   ├── email/           # Email service and templates
+│   │   ├── utils/           # Organized utility functions
+│   │   │   ├── string.utils.ts
+│   │   │   ├── date.utils.ts
+│   │   │   └── index.ts     # Centralized exports
 │   │   ├── validation/      # Zod schemas and validators
-│   │   └── utils.ts         # Utility functions
+│   │   └── utils.ts         # Core utilities
 │   ├── services/            # External service integrations
 │   └── types/               # TypeScript type definitions
 ├── scripts/                 # Build and utility scripts
@@ -127,133 +130,103 @@ mrashidi.me/
 └── package.json             # Dependencies and scripts
 ```
 
-## 🎯 Key Features Deep Dive
+## 🏗 Architecture Highlights
 
-### Interactive Terminal System
+### **Feature-Based Component Organization**
 
-The terminal provides a unique way to explore my background and work:
-
-**Available Commands:**
-
-- `help` - Show available commands
-- `about` - Display personal information
-- `experience` - Show work experience
-- `skills` - List technical skills
-- `projects` - Show project portfolio
-- `achievements` - List certifications and achievements
-- `contact` - Display contact information
-- `blog` - Show latest blog posts
-- `view-source` - View website source code
-- `clear` - Clear terminal history
-
-**Technical Implementation:**
-
-- Custom hooks for state management (`useTerminal`, `useCommandHistory`)
-- Real-time command execution with loading states
-- Command history navigation (arrow keys)
-- Typewriter effect for output display
-- Error handling and fallback responses
-
-### Advanced Project Filtering
-
-Sophisticated filtering system with multiple capabilities:
-
-**Search Features:**
-
-- **Regex Support**: Advanced pattern matching (e.g., `docker|kubernetes`, `202[45]`)
-- **Multi-field Search**: Title, description, highlights, technology stack, role
-- **Fallback Search**: Simple text search for invalid regex patterns
-- **Real-time Results**: Instant filtering and search feedback
-
-**Technology Categories:**
+Components are organized by feature rather than type, making the codebase more maintainable and scalable:
 
 ```typescript
-export const TECHNOLOGY_CATEGORIES = {
-  frameworks: ["NestJS", "Next.js", "React", "Framer Motion", "TypeORM"],
-  languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash"],
-  databases: ["PostgreSQL", "MongoDB", "Redis"],
-  clouds: ["AWS", "Azure", "Docker", "Kubernetes"],
-  tools: ["Git", "Docker", "Kubernetes", "Jenkins", "GitHub Actions"],
-};
+// Feature-based imports
+import { BlogHeader, BlogGrid, BlogPagination } from "@/components/features/blog";
+import { ContactFormSection, MentorshipSection } from "@/components/features/contact";
+import { ProjectCard, ProjectFilters } from "@/components/features/projects";
 ```
 
-**Filtering Options:**
+### **Centralized Configuration Management**
 
-- Multi-selection technology filters
-- Open source only filter
-- Usage count display
-- Dynamic category organization
+All application settings are centralized in the `src/config` directory:
 
-### GitHub Integration
+```typescript
+// Unified configuration access
+import { CONFIG } from "@/config";
 
-Real-time GitHub data integration with multiple endpoints:
+// Access any configuration
+const apiTimeout = CONFIG.constants.api.TIMEOUT;
+const themeColors = CONFIG.theme.colors;
+```
 
-**Features:**
+### **Organized Utility Functions**
 
-- **Repository Display**: Top repositories with stars and forks
-- **Contribution Graph**: Visual representation of GitHub activity
-- **Activity Feed**: Recent GitHub activities
-- **GraphQL Integration**: Efficient data fetching
-- **Caching**: Optimized API calls with caching
+Utilities are categorized by domain and centralized for better maintainability:
 
-**API Endpoints:**
+```typescript
+// Centralized utility imports
+import { formatDate, truncateText, isValidEmail } from "@/lib/utils";
 
-- GitHub REST API for repositories
-- GitHub GraphQL API for contributions
-- Rate limiting and error handling
+// Domain-specific utilities
+import { formatDate, formatRelativeTime } from "@/lib/utils/date.utils";
+import { toTitleCase, generateRandomString } from "@/lib/utils/string.utils";
+```
 
-### Blog Integration with Medium
+### **Type-Safe API Layer**
 
-Comprehensive blog system with RSS feed integration:
+Comprehensive API layer with middleware, validation, and error handling:
 
-**Features:**
+```typescript
+// API routes with middleware
+export const GET = withPagination(handleBlogPosts);
+export const POST = withValidation(handleContactForm, validateContactFormAPI);
+```
 
-- **RSS Feed Parsing**: XML to JSON conversion
-- **Content Caching**: Node-cache for performance
-- **Pagination**: Server-side pagination
-- **Image Extraction**: Automatic image URL extraction
-- **Content Cleaning**: HTML sanitization
-- **Error Handling**: Graceful fallbacks
+### **Custom Hooks for Business Logic**
 
-**Technical Implementation:**
+Reusable hooks that separate business logic from UI components:
 
-- XML parsing with xml2js
-- Automatic cache updates every hour
-- SWR for client-side data fetching
-- Responsive article cards
-- SEO optimization
+```typescript
+// Custom hooks for complex state management
+const { posts, isLoading, error, setPage } = useBlogData(6);
+const { filters, setSearchQuery, toggleStack } = useProjectFilters();
+```
 
-### Contact System
+### **Validation with Zod Schemas**
 
-Professional contact system with multiple layers of security:
+Type-safe form validation using reusable base schemas:
 
-**Features:**
+```typescript
+// Base schemas for reusability (DRY principle)
+const baseNameSchema = z.string().min(1, "Name is required").max(50);
+const baseEmailSchema = z.email("Please enter a valid email address");
 
-- **AWS SES Integration**: Reliable email delivery
-- **reCAPTCHA Protection**: Bot prevention
-- **Form Validation**: Zod schema validation
-- **Email Templates**: HTML email templates
-- **Dual Notifications**: Admin and user confirmation emails
-- **Enhanced UI**: Lucide icons for better visual hierarchy
+// Composed schemas
+export const contactFormSchema = z.object({
+  name: baseNameSchema,
+  email: baseEmailSchema,
+  subject: baseSubjectSchema,
+  message: baseMessageSchema,
+});
+```
 
-**Security Measures:**
+## 🎯 Key Architectural Principles
 
-- reCAPTCHA v3 integration
-- Input sanitization and validation
-- Rate limiting
-- Error handling and logging
+### **YAGNI (You Aren't Gonna Need It)**
 
-### Resume System
+- Removed unused interfaces and methods
+- Simplified validation logic
+- Eliminated unnecessary abstractions
 
-Automated resume delivery system:
+### **KISS (Keep It Simple, Stupid)**
 
-**Features:**
+- Direct Zod validation without wrapper functions
+- Simplified service classes
+- Streamlined utility functions
 
-- **Direct Download**: Immediate PDF download
-- **Email Notification**: Automated email delivery
-- **Form Validation**: Contact information validation
-- **Professional Templates**: Branded email templates
-- **Enhanced UI**: Modern icons and improved layout
+### **DRY (Don't Repeat Yourself)**
+
+- Centralized utility functions
+- Reusable base validation schemas
+- Unified configuration management
+- Single source of truth for exports
 
 ## 🔧 Development Setup
 
@@ -317,98 +290,6 @@ RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 - `yarn lint` - Run ESLint
 - `yarn generate-sitemap` - Generate sitemap manually
 
-## 🏗 Architecture Highlights
-
-### Modular Component Design
-
-- **Custom Hooks**: Business logic separation (`useProjectFilters`, `useTerminal`)
-- **Reusable Components**: Modular UI components with proper TypeScript interfaces
-- **Performance Optimization**: React.memo, useMemo, and useCallback usage
-- **Error Boundaries**: Graceful error handling throughout the application
-- **Icon System**: Centralized Lucide React icon management with size and color presets
-
-### API Architecture
-
-- **Middleware Pattern**: Request validation and error handling middleware
-- **Response Standardization**: Consistent API response format
-- **Caching Strategy**: Multi-level caching for performance
-- **Error Handling**: Comprehensive error handling with proper logging
-
-### State Management
-
-- **Local State**: React hooks for component-level state
-- **Custom Hooks**: Reusable state logic
-- **Context API**: Theme and global state management
-- **SWR**: Server state management with caching
-
-### Performance Optimizations
-
-- **Code Splitting**: Automatic route-based code splitting
-- **Image Optimization**: Next.js Image component with optimization
-- **Lazy Loading**: Component and data lazy loading
-- **Caching**: Multiple caching layers (SWR, Node-cache, Next.js cache)
-
-## 🎨 Design System
-
-### Color Palette
-
-```typescript
-export const THEME = {
-  PRIMARY: "#ff5f1f", // Orange
-  SECONDARY: "#f97316", // Orange-500
-  BACKGROUND: "#000000", // Black
-  TEXT: "#ffffff", // White
-};
-```
-
-### Typography
-
-- **Cyberpunk**: Orbitron (headings)
-- **Terminal**: JetBrains Mono (code/terminal)
-- **Retro**: Press Start 2P (special elements)
-- **Matrix**: VT323 (matrix-style text)
-- **Albert**: Albert Sans (body text)
-
-### Animation System
-
-```typescript
-export const ANIMATION = {
-  FAST: 0.2, // Quick interactions
-  NORMAL: 0.3, // Standard transitions
-  SLOW: 0.5, // Page transitions
-};
-```
-
-### Icon System
-
-```typescript
-// Centralized icon management
-export const iconSizes = {
-  xs: "w-3 h-3",
-  sm: "w-4 h-4",
-  md: "w-5 h-5",
-  lg: "w-6 h-6",
-  xl: "w-8 h-8",
-  "2xl": "w-10 h-10",
-} as const;
-
-export const iconColors = {
-  primary: "text-orange-500",
-  secondary: "text-gray-400",
-  success: "text-green-500",
-  error: "text-red-500",
-  warning: "text-yellow-500",
-  info: "text-blue-500",
-} as const;
-```
-
-## 📊 Performance Metrics
-
-- **Lighthouse Score**: 95+ across all metrics
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
-- **First Input Delay**: < 100ms
 
 ## 🔒 Security Features
 
@@ -429,45 +310,9 @@ The application is deployed on Vercel with the following optimizations:
 - **Analytics**: Built-in performance monitoring
 - **PWA**: Progressive Web App capabilities
 
-## 📈 Recent Improvements
-
-### v0.1.20 - Enhanced UI & Icon System
-
-- 🎨 **Lucide React Integration**: Comprehensive icon system throughout the application
-- 🔧 **Enhanced Form Validation**: Improved Zod schemas and form handling
-- 🎯 **Better Visual Hierarchy**: Contextual icons for improved user experience
-- 📱 **Responsive Improvements**: Better mobile experience with enhanced components
-- 🏗️ **Component Refactoring**: Modular architecture for better maintainability
-- 🔒 **Security Enhancements**: Improved input validation and error handling
-
-### v0.1.19 - Resume System Enhancement
-
-- 📄 **Resume Request Modal**: Interactive modal with company input
-- 📧 **Enhanced Email Notifications**: Improved email templates and delivery
-- 🎨 **UI Improvements**: Better visual design for resume section
-
-### v0.1.18 - Profile & Project Enhancements
-
-- 👤 **Profile Image**: Added profile image with neon effects to About page
-- 🎨 **Interactive Effects**: Glitch effects and enhanced visual elements
-- 📊 **Project Updates**: New projects and enhanced descriptions
-- 🏗️ **Component Modularization**: Refactored pages into reusable sections
-
-### v0.1.17 - Advanced Project Filtering
-
-- 🔍 **Regex Search**: Advanced pattern matching for project filtering
-- 🏷️ **Dynamic Categorization**: Technology stack organization
-- ⚡ **Performance Optimization**: Custom hooks and improved architecture
-
-### v0.1.16 - Terminal & Navigation
-
-- 💻 **Enhanced Terminal**: New commands and improved functionality
-- 🔗 **GitHub Integration**: Direct repository links and navigation
-- 📱 **Mobile Navigation**: Improved responsive design
-
 ## 📄 License
 
-Copyright (c) 2024 Mahdi Rashidi. All rights reserved.
+Copyright (c) 2025 Mahdi Rashidi. All rights reserved.
 
 This source code is provided for educational and demonstration purposes only. You may:
 
