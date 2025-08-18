@@ -18,7 +18,9 @@ const preloadBlogData = async (page: number, postsPerPage: number): Promise<Blog
   };
 };
 
-preload(["blogPosts", 1, 6], () => preloadBlogData(1, 6));
+if (typeof window !== "undefined") {
+  preload(["blogPosts", 1, 6], () => preloadBlogData(1, 6));
+}
 
 export function useBlogData(postsPerPage: number = 6) {
   const [page, setPage] = useState(1);

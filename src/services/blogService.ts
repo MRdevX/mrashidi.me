@@ -145,11 +145,17 @@ export class BlogService {
       return;
     }
 
+    if (process.env.NODE_ENV !== "development") {
+      return;
+    }
+
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
     }
 
-    this.preloadBlogPosts().catch(console.error);
+    if (process.env.NODE_ENV === "development") {
+      this.preloadBlogPosts().catch(console.error);
+    }
 
     this.updateInterval = setInterval(() => {
       if (!this.isUpdating) {
