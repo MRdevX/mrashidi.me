@@ -1,5 +1,6 @@
+import { logger } from "@/lib/utils/logger";
+
 const isDevelopment = process.env.NODE_ENV === "development";
-const isProduction = process.env.NODE_ENV === "production";
 
 const SAFE_ERROR_MESSAGES = {
   DEFAULT: "An unexpected error occurred",
@@ -145,11 +146,7 @@ export class ErrorHandler {
       logData.stack = error.stack;
     }
 
-    console.error(`[${logData.context}] Error:`, logData);
-
-    if (isProduction) {
-      // TODO: Implement external logging service integration (Sentry, LogRocket, etc.)
-    }
+    logger.error(logData, `[${logData.context}] Error`);
   }
 
   static isOperational(error: AppError): boolean {

@@ -3,6 +3,17 @@ import fg from "fast-glob";
 import prettier from "prettier";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import pino from "pino";
+
+const logger = pino({
+  level: "info",
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+    },
+  },
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -64,14 +75,14 @@ async function generate(): Promise<void> {
     });
 
     await writeFile(resolve(__dirname, "../public/sitemap.xml"), formatted);
-    console.log("✅ Enhanced sitemap generated successfully!");
+    logger.info("✅ Enhanced sitemap generated successfully!");
   } catch (error) {
-    console.error("❌ Error generating sitemap:", error);
+    logger.error({ error }, "❌ Error generating sitemap");
     throw error;
   }
 }
 
 generate().catch((error: Error) => {
-  console.error("❌ Error generating sitemap:", error);
+  logger.error({ error }, "❌ Error generating sitemap");
   process.exit(1);
 });

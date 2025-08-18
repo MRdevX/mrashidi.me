@@ -217,11 +217,8 @@ const commandHandlers = {
 
   blog: async () => {
     try {
-      console.log("Fetching blog posts from API...");
       const response = await fetch("/api/blog?page=1&limit=5");
       const data = await response.json();
-
-      console.log("Blog API response:", data);
 
       if (!data.success) {
         throw new Error(data.message || "Failed to fetch blog posts");
@@ -251,7 +248,6 @@ const commandHandlers = {
         </div>
       );
     } catch (error) {
-      console.error("Failed to fetch blog posts:", error);
       return (
         <div className="mt-2">
           <p className="mb-4">Visit my blog for articles on backend development and cloud architecture:</p>
@@ -294,8 +290,7 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
 
   try {
     return await handler();
-  } catch (error) {
-    console.error(`Error executing command ${command}:`, error);
+  } catch (_error) {
     return `Error executing command "${command}". Please try again.`;
   }
 };

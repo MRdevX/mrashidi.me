@@ -1,3 +1,5 @@
+import { logger } from "./logger";
+
 interface CacheMetrics {
   hits: number;
   misses: number;
@@ -46,11 +48,14 @@ class CachePerformanceMonitor {
   }
 
   logMetrics() {
-    console.log("Cache Performance Metrics:", {
-      hitRate: `${this.metrics.hitRate.toFixed(2)}%`,
-      averageResponseTime: `${this.metrics.averageResponseTime.toFixed(2)}ms`,
-      totalRequests: this.metrics.hits + this.metrics.misses,
-    });
+    logger.info(
+      {
+        hitRate: `${this.metrics.hitRate.toFixed(2)}%`,
+        averageResponseTime: `${this.metrics.averageResponseTime.toFixed(2)}ms`,
+        totalRequests: this.metrics.hits + this.metrics.misses,
+      },
+      "Cache Performance Metrics"
+    );
   }
 }
 

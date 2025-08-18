@@ -1,4 +1,5 @@
 import { TECHNOLOGY_CATEGORIES, TechnologyCategory, getTechnologyCategory } from "./constants";
+import { logger } from "@/lib/utils/logger";
 
 export interface TechnologyUsage {
   tech: string;
@@ -149,7 +150,7 @@ export const getSortedTechnologiesByUsage = (
 };
 
 export const sortProjectsByDate = (projects: Project[], commitDates: Map<string, Date> = new Map()): Project[] => {
-  console.log("Sorting projects by date. Commit dates available:", commitDates.size);
+  logger.debug({ commitDatesSize: commitDates.size }, "Sorting projects by date. Commit dates available");
 
   return [...projects].sort((a, b) => {
     const dateA = getProjectDate(a, commitDates);

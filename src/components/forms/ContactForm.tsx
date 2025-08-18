@@ -11,6 +11,7 @@ import { Send, User, Mail, MessageSquare, FileText } from "lucide-react";
 import FormInputWithValidation from "./FormInputWithValidation";
 import StatusMessage from "./StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
+import { logger } from "@/lib/utils/logger";
 
 declare global {
   interface Window {
@@ -44,7 +45,7 @@ export default function ContactFormRefactored() {
 
   useEffect(() => {
     if (!siteKey) {
-      console.error("reCAPTCHA site key is not configured");
+      logger.error("reCAPTCHA site key is not configured");
       setSubmitStatus({ type: "error", message: "Contact form is temporarily unavailable" });
       return;
     }
@@ -57,7 +58,7 @@ export default function ContactFormRefactored() {
       const token = await window.grecaptcha.execute(siteKey!, { action: "submit" });
       return token;
     } catch (error) {
-      console.error("Error executing reCAPTCHA:", error);
+      logger.error({ error }, "Error executing reCAPTCHA");
       throw new Error("Failed to verify reCAPTCHA");
     }
   };
