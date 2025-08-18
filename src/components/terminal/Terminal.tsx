@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, KeyboardEvent } from "react";
 import { useTerminal, useCommandHistory, useTerminalFocus } from "./hooks";
 import TerminalInput from "./TerminalInput";

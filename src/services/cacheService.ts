@@ -5,6 +5,7 @@ class CacheService {
   private cache: NodeCache;
   private readonly BLOG_POSTS_KEY = "blog_posts";
   private readonly BLOG_POSTS_TOTAL_KEY = "blog_posts_total";
+  private readonly BLOG_LAST_UPDATE_KEY = "blog_last_update";
   private readonly CACHE_TTL = 60 * 60;
 
   constructor() {
@@ -32,8 +33,18 @@ class CacheService {
     try {
       this.cache.set(this.BLOG_POSTS_KEY, posts);
       this.cache.set(this.BLOG_POSTS_TOTAL_KEY, total);
+      this.cache.set(this.BLOG_LAST_UPDATE_KEY, Date.now());
     } catch (error) {
       console.error("Error setting blog posts in cache:", error);
+    }
+  }
+
+  getLastUpdateTime(): number | null {
+    try {
+      return this.cache.get<number>(this.BLOG_LAST_UPDATE_KEY) || null;
+    } catch (error) {
+      console.error("Error getting last update time:", error);
+      return null;
     }
   }
 }

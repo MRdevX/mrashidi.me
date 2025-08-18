@@ -1,6 +1,7 @@
 import { parseString } from "xml2js";
 import { IBlogPost, IBlogAuthor, IMediumRssFeed } from "@/types/blog";
 import { cacheService } from "./cacheService";
+import { cachePerformanceMonitor } from "@/lib/utils/cachePerformance";
 import { API_CONFIG } from "@/lib/config/api";
 
 const authors: IBlogAuthor[] = [
@@ -16,6 +17,7 @@ const CACHE_UPDATE_INTERVAL = API_CONFIG.CACHE.BLOG_UPDATE_INTERVAL;
 export class BlogService {
   private static isUpdating = false;
   private static updateInterval: NodeJS.Timeout | null = null;
+  private static isPreloaded = false;
 
   static async parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> {
     return new Promise((resolve, reject) => {
@@ -98,6 +100,22 @@ export class BlogService {
     }
   }
 
+  static async preloadBlogPosts(): Promise<void> {
+    if (this.isPreloaded) {
+      console.log("Blog posts already preloaded");
+      return;
+    }
+
+    try {
+      console.log("Preloading blog posts...");
+      await this.updateCache();
+      this.isPreloaded = true;
+      console.log("Blog posts preloaded successfully");
+    } catch (error) {
+      console.error("Failed to preload blog posts:", error);
+    }
+  }
+
   static async updateCache() {
     if (this.isUpdating) return;
 
@@ -131,22 +149,40 @@ export class BlogService {
       clearInterval(this.updateInterval);
     }
 
-    this.updateInterval = setInterval(() => this.updateCache(), CACHE_UPDATE_INTERVAL);
+    this.preloadBlogPosts().catch(console.error);
 
-    this.updateCache().catch(console.error);
+    this.updateInterval = setInterval(() => {
+      if (!this.isUpdating) {
+        this.updateCache().catch(console.error);
+      }
+    }, CACHE_UPDATE_INTERVAL);
+
+    setInterval(
+      () => {
+        cachePerformanceMonitor.logMetrics();
+      },
+      10 * 60 * 1000
+    );
   }
 
   static async getAllPosts(page: number, limit: number) {
+    const startTime = Date.now();
+
     try {
       console.log("Getting all posts, checking cache first...");
       const cachedData = await cacheService.getBlogPosts();
 
       if (cachedData) {
+        const responseTime = Date.now() - startTime;
+        cachePerformanceMonitor.recordHit(responseTime);
+
         console.log(`Found cached data with ${cachedData.total} posts`);
         const { posts, total } = cachedData;
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
         const paginatedPosts = posts.slice(startIndex, endIndex);
+
+        this.triggerBackgroundRefresh();
 
         return {
           posts: paginatedPosts,
@@ -173,14 +209,30 @@ export class BlogService {
       const endIndex = startIndex + limit;
       const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
 
+      const responseTime = Date.now() - startTime;
+      cachePerformanceMonitor.recordMiss(responseTime);
+
       return {
         posts: paginatedPosts,
         total: sortedPosts.length,
         fromCache: false,
       };
     } catch (error) {
+      const responseTime = Date.now() - startTime;
+      cachePerformanceMonitor.recordMiss(responseTime);
+
       console.error("Failed to fetch blog posts:", error);
       throw error;
+    }
+  }
+
+  private static triggerBackgroundRefresh() {
+    const lastUpdate = cacheService.getLastUpdateTime();
+    const thirtyMinutes = 30 * 60 * 1000;
+
+    if (lastUpdate && Date.now() - lastUpdate > thirtyMinutes) {
+      console.log("Cache is stale, triggering background refresh...");
+      this.updateCache().catch(console.error);
     }
   }
 }
@@ -195,4 +247,5 @@ export const blogService = {
       total: result.total,
     };
   },
+  preloadBlogPosts: () => BlogService.preloadBlogPosts(),
 };

@@ -1,25 +1,48 @@
-import { useState } from "react";
-import useSWR from "swr";
+"use client";
+
+import { useState, useEffect } from "react";
+import useSWR, { preload } from "swr";
 import { BlogResponse, BlogData } from "./types";
+
+const preloadBlogData = async (page: number, postsPerPage: number): Promise<BlogData> => {
+  const response = await fetch(`/api/blog?page=${page}&limit=${postsPerPage}`);
+  const data: BlogResponse = await response.json();
+
+  if (!data.success) {
+    throw new Error("Failed to fetch blog posts");
+  }
+
+  return {
+    posts: data.data,
+    total: data.meta?.total || 0,
+  };
+};
+
+preload(["blogPosts", 1, 6], () => preloadBlogData(1, 6));
 
 export function useBlogData(postsPerPage: number = 6) {
   const [page, setPage] = useState(1);
 
-  const fetcher = async (page: number, postsPerPage: number): Promise<BlogData> => {
-    const response = await fetch(`/api/blog?page=${page}&limit=${postsPerPage}`);
-    const data: BlogResponse = await response.json();
-
-    if (!data.success) {
-      throw new Error("Failed to fetch blog posts");
+  const { data, error, isLoading, mutate } = useSWR(
+    ["blogPosts", page, postsPerPage],
+    ([, p, pp]) => preloadBlogData(p, pp),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      dedupingInterval: 5 * 60 * 1000,
+      errorRetryCount: 3,
+      errorRetryInterval: 1000,
     }
+  );
 
-    return {
-      posts: data.data,
-      total: data.meta?.total || 0,
-    };
-  };
-
-  const { data, error, isLoading } = useSWR(["blogPosts", page, postsPerPage], ([, p, pp]) => fetcher(p, pp));
+  useEffect(() => {
+    if (data?.total) {
+      const totalPages = Math.ceil(data.total / postsPerPage);
+      if (page < totalPages) {
+        preload(["blogPosts", page + 1, postsPerPage], () => preloadBlogData(page + 1, postsPerPage));
+      }
+    }
+  }, [page, postsPerPage, data?.total]);
 
   const posts = data?.posts || [];
   const totalPosts = data?.total || 0;
@@ -33,5 +56,6 @@ export function useBlogData(postsPerPage: number = 6) {
     isLoading,
     error,
     setPage,
+    mutate,
   };
 }

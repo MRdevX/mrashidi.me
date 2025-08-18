@@ -12,7 +12,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 💻 **Interactive Terminal**: Custom-built terminal with command history and real-time execution
 - 📊 **GitHub Integration**: Real-time repository display and contribution graph visualization
 - 🔍 **Advanced Project Filtering**: Regex search with dynamic technology categorization
-- 📝 **Blog Integration**: Medium RSS feed integration with caching and pagination
+- 📝 **Blog Integration**: Medium RSS feed integration with intelligent preloading and caching
 - 📧 **Contact System**: AWS SES email service with reCAPTCHA protection
 - 📄 **Resume Download**: Automated CV delivery with email notifications
 - 🌐 **PWA Support**: Progressive Web App with offline capabilities
@@ -28,7 +28,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🔄 **SWR**: Data fetching with caching and revalidation
 - 📝 **React Hook Form**: Form handling with Zod validation
 - 🔒 **Security**: reCAPTCHA, input validation, and error handling
-- 📦 **Caching**: Node-cache for blog posts and API responses
+- 📦 **Caching**: Node-cache for blog posts and API responses with performance monitoring
 
 ## 🛠 Tech Stack
 
@@ -289,7 +289,6 @@ RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 - `yarn start` - Start production server
 - `yarn lint` - Run ESLint
 - `yarn generate-sitemap` - Generate sitemap manually
-
 
 ## 🔒 Security Features
 

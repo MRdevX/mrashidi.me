@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavigationItem as NavigationItemType } from "@/data";
+import { useBlogPreload } from "@/hooks";
 
 interface NavigationItemProps {
   item: NavigationItemType;
@@ -7,6 +8,14 @@ interface NavigationItemProps {
 }
 
 export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
+  const { preloadFirstPage } = useBlogPreload();
+
+  const handleMouseEnter = () => {
+    if (item.href === "/blog") {
+      preloadFirstPage();
+    }
+  };
+
   return (
     <Link
       href={item.href}
@@ -16,6 +25,7 @@ export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
           : "border-transparent text-gray-400 hover:text-orange-400 hover:border-orange-400"
       }`}
       aria-current={isActive ? "page" : undefined}
+      onMouseEnter={handleMouseEnter}
     >
       {item.name}
     </Link>

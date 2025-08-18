@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { BlogPost } from "./types";
 import BlogPostCard from "./BlogPostCard";

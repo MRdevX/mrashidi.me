@@ -5,6 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
+import { BlogPreloader } from "@/components/features/blog";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleTagManager } from "@next/third-parties/google";
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </a>
 
           <BackgroundEffects />
+          <BlogPreloader />
           <Navbar />
           <main id="main-content" className="pt-16 relative z-10">
             {children}
