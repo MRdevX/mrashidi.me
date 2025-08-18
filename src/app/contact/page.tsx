@@ -7,7 +7,7 @@ import {
   MentorshipSection,
   ReviewsSection,
   useContactData,
-} from "@/components/contact";
+} from "@/components/features/contact";
 
 export default function Contact() {
   const { header, sections, adpListWidgets } = useContactData();

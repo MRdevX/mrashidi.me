@@ -1,26 +1,26 @@
 import { CommandType } from "./types";
+import { AVAILABLE_COMMANDS } from "./constants";
 
 export const formatTimestamp = (timestamp: Date): string => {
-  return timestamp.toLocaleTimeString([], {
+  return timestamp.toLocaleTimeString("en-US", {
+    hour12: false,
     hour: "2-digit",
     minute: "2-digit",
+    second: "2-digit",
   });
 };
 
 export const normalizeCommand = (input: string): CommandType => {
-  return input.toLowerCase().trim() as CommandType;
+  return input.trim().toLowerCase() as CommandType;
 };
 
 export const isValidCommand = (input: string): boolean => {
   const normalized = normalizeCommand(input);
-  return normalized.length > 0;
+  return normalized in AVAILABLE_COMMANDS;
 };
 
 export const generateCommandKey = (command: { timestamp: Date; input: string }, index: number): string => {
-  return `${command.timestamp.getTime()}-${index}`;
+  return `${command.timestamp.getTime()}-${command.input}-${index}`;
 };
 
-export const truncateText = (text: string, maxLength: number): string => {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength - 3) + "...";
-};
+export { truncateText } from "@/lib/utils/index";

@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "./globals.css";
-import Navbar from "@/components/navigation/Navbar";
+import Navbar from "@/components/layout/Navbar";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";

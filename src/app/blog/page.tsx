@@ -1,6 +1,14 @@
 "use client";
 
-import { BlogHeader, BlogGrid, BlogPagination, BlogLoading, BlogError, BlogContainer, useBlogData } from "@/components/blog";
+import {
+  BlogHeader,
+  BlogGrid,
+  BlogPagination,
+  BlogLoading,
+  BlogError,
+  BlogContainer,
+  useBlogData,
+} from "@/components/features/blog";
 
 export default function Blog() {
   const { posts, totalPages, currentPage, isLoading, error, setPage } = useBlogData(6);

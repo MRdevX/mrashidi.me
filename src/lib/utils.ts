@@ -6,50 +6,30 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const extractGitHubRepoInfo = (githubUrl: string): { owner: string; name: string } | null => {
-  const repoMatch = githubUrl.match(/github\.com\/([^\/]+\/[^\/]+)/);
-  if (!repoMatch) {
-    return null;
-  }
-
-  const [owner, name] = repoMatch[1].split("/");
-  return { owner, name };
-};
-
-export const formatDate = (date: Date): string => {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const match = githubUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  if (!match) return null;
+  return { owner: match[1], name: match[2] };
 };
 
 export const createCommitUrl = (repoUrl: string, commitHash: string): string => {
   return `${repoUrl}/commit/${commitHash}`;
 };
 
-export function truncateText(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + "...";
-}
-
 export function cleanHtmlContent(html: string): string {
-  if (!html) return "";
   return html
     .replace(/<[^>]*>/g, "")
     .replace(/&nbsp;/g, " ")
-    .replace(/\n\s*\n/g, "\n")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
     .trim();
 }
 
 export function extractImageUrl(html: string): string | undefined {
-  if (!html) return undefined;
-  const imgMatch = html.match(/<img[^>]+src="([^">]+)"/);
+  const imgMatch = html.match(/<img[^>]+src="([^"]+)"/);
   return imgMatch ? imgMatch[1] : undefined;
-}
-
-export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
 }
 
 export function debounce<T extends readonly unknown[], R>(func: (...args: T) => R, wait: number): (...args: T) => void {

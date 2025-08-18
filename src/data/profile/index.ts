@@ -4,7 +4,6 @@ export { default as education } from "./education";
 export { default as workExperience } from "./workExperience";
 export { default as certificates } from "./certificates";
 
-// Re-export types
 export type { PersonalInfo, SocialLinks, Language } from "./personalInfo";
 export type { SkillCategory, Skill, SkillLevel } from "./skills";
 export type { Education } from "./education";

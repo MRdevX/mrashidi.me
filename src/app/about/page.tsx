@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import { useMouseTracking } from "@/hooks/useMouseTracking";
 import { fadeInVariants } from "@/lib/animations";
-import { BioSection, SkillsSection, LanguagesSection, EducationSection } from "@/components/about";
+import { BioSection, SkillsSection, LanguagesSection, EducationSection } from "@/components/features/about";
 
 export default function About() {
   useMouseTracking(".glitch-image");

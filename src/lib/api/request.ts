@@ -5,10 +5,6 @@ export interface PaginationParams {
   limit: number;
 }
 
-export interface RequestValidator<T> {
-  validate(data: unknown): T;
-}
-
 export class RequestHandler {
   static getPaginationParams(request: NextRequest): PaginationParams {
     const searchParams = request.nextUrl.searchParams;
@@ -24,16 +20,8 @@ export class RequestHandler {
   static async getJsonBody<T>(request: NextRequest): Promise<T> {
     try {
       return await request.json();
-    } catch (_error) {
+    } catch {
       throw new Error("Invalid JSON body");
-    }
-  }
-
-  static validateRequiredFields<T extends Record<string, unknown>>(data: T, requiredFields: (keyof T)[]): void {
-    const missingFields = requiredFields.filter((field) => !data[field]);
-
-    if (missingFields.length > 0) {
-      throw new Error(`Missing required fields: ${missingFields.join(", ")}`);
     }
   }
 }

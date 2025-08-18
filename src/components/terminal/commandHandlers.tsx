@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
-import { CommandType, AVAILABLE_COMMANDS } from "./types";
+import { CommandType } from "./types";
+import { AVAILABLE_COMMANDS } from "./constants";
 import { skills, personalInfo, projects, workExperience, certificates } from "@/data";
 
 interface BlogPost {
@@ -59,7 +60,7 @@ const TerminalBadge = ({
 };
 
 const formatSkillsByLevel = () => {
-      return skills.map((cat) => {
+  return skills.map((cat) => {
     const skillsByLevel = {
       expert: cat.skills.filter((s) => s.level === "expert"),
       proficient: cat.skills.filter((s) => s.level === "proficient"),

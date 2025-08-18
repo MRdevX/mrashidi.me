@@ -1,8 +1,7 @@
-import React from "react";
-import { Github, ExternalLink, FileText, Globe, GitCommit, Calendar, Loader2 } from "lucide-react";
-import { Project } from "@/data";
+import { ExternalLink, Github, Calendar, GitCommit } from "lucide-react";
+import { Project } from "@/data/site/projects";
+import { formatDate, createCommitUrl } from "@/lib/utils/index";
 import { getTechIcon } from "@/lib/techIconMap";
-import { formatDate, createCommitUrl } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: Project;
@@ -44,7 +43,7 @@ export default function ProjectCard({
           </span>
           {project.openSource && (
             <span className="px-2 py-0.5 rounded font-semibold text-xs bg-yellow-700 text-yellow-200 flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5" />
+              {/* <Globe className="w-3.5 h-3.5" /> */}
               Open Source
             </span>
           )}
@@ -93,7 +92,7 @@ export default function ProjectCard({
             </>
           ) : isLoadingCommitDates ? (
             <div className="flex items-center gap-1 text-gray-600">
-              <Loader2 className="w-3 h-3 animate-spin" />
+              {/* <Loader2 className="w-3 h-3 animate-spin" /> */}
               <span>Loading commit info...</span>
             </div>
           ) : null}
@@ -150,7 +149,7 @@ export default function ProjectCard({
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
           >
-            <FileText className="w-4 h-4" />
+            {/* <FileText className="w-4 h-4" /> */}
             Case Study
           </a>
         )}
