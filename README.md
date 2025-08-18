@@ -18,6 +18,9 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🌐 **PWA Support**: Progressive Web App with offline capabilities
 - 🔍 **SEO Optimized**: Meta tags, sitemap generation, and structured data
 - 📱 **Responsive Design**: Optimized for all devices and screen sizes
+- 🛡️ **Security Enhanced**: Comprehensive security headers, CSP, and input validation
+- 📊 **Error Monitoring**: Sentry integration for error tracking and performance monitoring
+- 📝 **Structured Logging**: Centralized logging system with Pino for better debugging
 
 ### Technical Features
 
@@ -27,37 +30,43 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🎭 **Framer Motion**: Smooth animations and transitions
 - 🔄 **SWR**: Data fetching with caching and revalidation
 - 📝 **React Hook Form**: Form handling with Zod validation
-- 🔒 **Security**: reCAPTCHA, input validation, and error handling
+- 🔒 **Security**: reCAPTCHA, input validation, and comprehensive error handling
 - 📦 **Caching**: Node-cache for blog posts and API responses with performance monitoring
+- 🎨 **ShadCN UI**: Modern component library with cyberpunk theming
+- 🔍 **Error Handling**: Structured error classes and safe error responses
 
 ## 🛠 Tech Stack
 
 ### Frontend
 
-- **Framework**: Next.js 15.3.5 (App Router)
-- **Language**: TypeScript 5.7.2
+- **Framework**: Next.js 15.4.6 (App Router)
+- **Language**: TypeScript 5.9.2
 - **Styling**: Tailwind CSS 3.4.17
-- **Animation**: Framer Motion 12.23.0
-- **UI Components**: Headless UI 2.2.4
+- **Animation**: Framer Motion 12.23.12
+- **UI Components**: Headless UI 2.2.7 + Radix UI 1.1.15
 - **Forms**: React Hook Form 7.62.0 + Zod 4.0.17
-- **Data Fetching**: SWR 2.3.4
-- **Icons**: Lucide React 0.263.1 + React Icons 5.5.0
+- **Data Fetching**: SWR 2.3.6
+- **Icons**: Lucide React 0.539.0 + React Icons 5.5.0
+- **Fonts**: Fontsource (Albert Sans, JetBrains Mono, Orbitron, Press Start 2P, VT323)
 
 ### Backend & Services
 
-- **Email Service**: AWS SES (@aws-sdk/client-ses 3.840.0)
+- **Email Service**: AWS SES (@aws-sdk/client-ses 3.864.0)
 - **Caching**: Node-cache 5.1.2
 - **XML Parsing**: xml2js 0.6.2
 - **Pattern Matching**: minimatch 10.0.3
 - **Utilities**: clsx 2.1.1, tailwind-merge 3.3.1
+- **Error Monitoring**: Sentry (@sentry/nextjs 10.5.0)
+- **Logging**: Pino 9.9.0 + Pino Pretty 13.1.1
 
 ### Development Tools
 
 - **Package Manager**: Yarn 4.9.2
-- **Linting**: ESLint 9.30.1
+- **Linting**: ESLint 9.33.0
 - **Formatting**: Prettier 3.6.2
-- **Type Checking**: TypeScript 5.7.2
+- **Type Checking**: TypeScript 5.9.2
 - **Build Tool**: Turbopack (Next.js 15)
+- **Version Management**: Standard Version
 
 ### Deployment & Analytics
 
@@ -65,6 +74,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - **Analytics**: Vercel Analytics 1.5.0
 - **Performance**: Vercel Speed Insights 1.2.0
 - **PWA**: next-pwa 5.6.0
+- **Error Tracking**: Sentry with automatic Vercel monitors
 
 ## 📁 Project Architecture
 
@@ -119,14 +129,28 @@ mrashidi.me/
 │   │   ├── utils/           # Organized utility functions
 │   │   │   ├── string.utils.ts
 │   │   │   ├── date.utils.ts
+│   │   │   ├── logger.ts    # Centralized logging
+│   │   │   ├── cachePerformance.ts
 │   │   │   └── index.ts     # Centralized exports
 │   │   ├── validation/      # Zod schemas and validators
+│   │   ├── errors.ts        # Structured error handling
 │   │   └── utils.ts         # Core utilities
 │   ├── services/            # External service integrations
+│   │   ├── base.service.ts  # Base service class
+│   │   ├── blogService.ts   # Blog data service
+│   │   ├── cacheService.ts  # Caching service
+│   │   ├── githubService.ts # GitHub API service
+│   │   └── recaptchaService.ts # reCAPTCHA service
 │   └── types/               # TypeScript type definitions
 ├── scripts/                 # Build and utility scripts
-├── next.config.mjs          # Next.js configuration
+│   ├── generate-sitemap.ts  # Sitemap generation
+│   ├── generate-og-images.js # Open Graph image generation
+│   └── generate-placeholder-og.js # Placeholder OG images
+├── next.config.mjs          # Next.js configuration with security headers
 ├── tailwind.config.ts       # Tailwind CSS configuration
+├── components.json          # ShadCN UI configuration
+├── sentry.edge.config.ts    # Sentry edge configuration
+├── sentry.server.config.ts  # Sentry server configuration
 └── package.json             # Dependencies and scripts
 ```
 
@@ -162,6 +186,7 @@ import { formatDate, truncateText, isValidEmail } from "@/lib/utils";
 
 import { formatDate, formatRelativeTime } from "@/lib/utils/date.utils";
 import { toTitleCase, generateRandomString } from "@/lib/utils/string.utils";
+import { logger } from "@/lib/utils/logger";
 ```
 
 ### **Type-Safe API Layer**
@@ -198,6 +223,31 @@ export const contactFormSchema = z.object({
 });
 ```
 
+### **Structured Error Handling**
+
+Comprehensive error handling with custom error classes and safe responses:
+
+```typescript
+import { AppError, ValidationError, APIError } from "@/lib/errors";
+
+try {
+  // API logic
+} catch (error) {
+  throw new APIError("Failed to fetch data", { cause: error });
+}
+```
+
+### **Centralized Logging System**
+
+Structured logging with Pino for better debugging and monitoring:
+
+```typescript
+import { logger } from "@/lib/utils/logger";
+
+logger.info("User action performed", { userId, action });
+logger.error("API error occurred", { error, context });
+```
+
 ## 🎯 Key Architectural Principles
 
 ### **YAGNI (You Aren't Gonna Need It)**
@@ -228,6 +278,7 @@ export const contactFormSchema = z.object({
 - GitHub Personal Access Token
 - AWS SES credentials (for email functionality)
 - Google reCAPTCHA keys
+- Sentry DSN (for error monitoring)
 
 ### Environment Variables
 
@@ -247,6 +298,10 @@ EMAIL_TO_ADDRESS=contact@mrashidi.me
 # reCAPTCHA Configuration
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
 RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+
+# Sentry Configuration
+SENTRY_DSN=your_sentry_dsn
+SENTRY_AUTH_TOKEN=your_sentry_auth_token
 ```
 
 ### Installation & Running
@@ -280,6 +335,9 @@ RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 - `yarn start` - Start production server
 - `yarn lint` - Run ESLint
 - `yarn generate-sitemap` - Generate sitemap manually
+- `yarn check-og-images` - Check Open Graph images
+- `yarn generate-og-images` - Generate placeholder OG images
+- `yarn release` - Create a new release with standard-version
 
 ## 🔒 Security Features
 
@@ -289,6 +347,11 @@ RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 - **Rate Limiting**: API endpoint protection
 - **Error Handling**: Secure error messages
 - **Environment Variables**: Sensitive data protection
+- **Security Headers**: Comprehensive CSP and security headers
+- **Frame Protection**: X-Frame-Options and frame-ancestors directives
+- **Content Type Protection**: X-Content-Type-Options headers
+- **XSS Protection**: X-XSS-Protection headers
+- **HSTS**: Strict-Transport-Security headers
 
 ## 🚀 Deployment
 
@@ -299,6 +362,8 @@ The application is deployed on Vercel with the following optimizations:
 - **Automatic Scaling**: Serverless scaling based on demand
 - **Analytics**: Built-in performance monitoring
 - **PWA**: Progressive Web App capabilities
+- **Error Monitoring**: Sentry integration with automatic Vercel monitors
+- **Security**: Comprehensive security headers and CSP
 
 ## 📄 License
 
