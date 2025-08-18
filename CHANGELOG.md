@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.26](https://github.com/MRdevX/mrashidi.me/compare/v0.1.25...v0.1.26) (2025-08-18)
+
+
+### Features
+
+* **errors:** implement structured error handling with custom error classes and safe error responses ([8a14b52](https://github.com/MRdevX/mrashidi.me/commit/8a14b52c0edc7485bc33233262c687451dc99116))
+* **github:** enhance GitHub API security ([6256504](https://github.com/MRdevX/mrashidi.me/commit/62565043ea0b775b499c8a4048ed6bac4beda8c9))
+* **logging:** integrate centralized logging system across the application ([afe39dd](https://github.com/MRdevX/mrashidi.me/commit/afe39ddce2fa8d5c3acebd118dea4d6e22747cfe))
+* **manifest:** update manifest.json with additional properties for improved PWA support ([71e0dfc](https://github.com/MRdevX/mrashidi.me/commit/71e0dfc822240a3dfec123b0d6029044d697cd1d))
+* **security:** extend frame-src directive in CSP to include adplist.org ([dcddf8c](https://github.com/MRdevX/mrashidi.me/commit/dcddf8c8f90bd2017448d3351944281bf94216df))
+* **security:** implement comprehensive security headers in Next.js configuration ([dbb5d9c](https://github.com/MRdevX/mrashidi.me/commit/dbb5d9c34e52ee89ec33cfad99860672c726426b))
+* **security:** update frame-src directive in CSP to allow frames from git-graph.vercel.app ([9de5c77](https://github.com/MRdevX/mrashidi.me/commit/9de5c77b9eb4ff8190e52563a873a7e9ec82ee3f))
+* **sentry:** integrate Sentry for error tracking and performance monitoring across the application ([286e41c](https://github.com/MRdevX/mrashidi.me/commit/286e41c1dfc595824430b8e760782cc1bcb3a3dc))
+* **validation:** enhance validation schemas for name, email, subject, message, and search queries ([a27b816](https://github.com/MRdevX/mrashidi.me/commit/a27b8166a98b81dea9a2e77c91117849aade8f10))
+
+
+### Bug Fixes
+
+* **blog:** ensure blog data preloading and service updates only occur in the browser and development environment ([c254902](https://github.com/MRdevX/mrashidi.me/commit/c254902553e9e541a8d7295e505bc18e95effdce))
+
 ### [0.1.25](https://github.com/MRdevX/mrashidi.me/compare/v0.1.24...v0.1.25) (2025-08-18)
 
 
