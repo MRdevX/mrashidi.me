@@ -43,7 +43,8 @@ const coreConfig: CoreConfig = {
     title: "Mahdi Rashidi | Software Backend Engineer",
     description:
       "Software engineer with 9 years of experience in backend development. I work primarily with Node.js and TypeScript, with experience across various frameworks and languages. I focus on building systems that are reliable and easy to maintain.",
-    keywords: "Software Backend Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer",
+    keywords:
+      "Software Backend Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, AWS, Azure, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST API",
   },
 };
 

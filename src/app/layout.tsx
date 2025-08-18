@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { personalInfo, siteConfig, siteMetadata } from "@/data";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { StructuredData } from "@/components/SEO";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,6 +65,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="application-name" content={siteConfig.appName} />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Structured Data */}
+        <StructuredData type="person" />
+        <StructuredData type="website" />
+        <StructuredData type="organization" />
       </head>
       <body className={`${inter.className} bg-black text-gray-100 min-h-screen relative`}>
         <ThemeProvider>

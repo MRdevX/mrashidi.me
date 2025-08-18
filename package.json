@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
+    "check-og-images": "node scripts/generate-og-images.js",
+    "generate-og-images": "node scripts/generate-placeholder-og.js",
     "release": "npx standard-version"
   },
   "dependencies": {
@@ -24,6 +26,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "canvas": "^3.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
