@@ -148,7 +148,6 @@ export class ErrorHandler {
     console.error(`[${logData.context}] Error:`, logData);
 
     if (isProduction) {
-      // TODO: Implement external logging service integration (Sentry, LogRocket, etc.)
     }
   }
 
