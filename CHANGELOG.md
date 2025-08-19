@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.30](https://github.com/MRdevX/mrashidi.me/compare/v0.1.29...v0.1.30) (2025-08-19)
+
+
+### Bug Fixes
+
+* **projects:** correct description of personal portfolio website ([f3351b9](https://github.com/MRdevX/mrashidi.me/commit/f3351b9a767e72d68c23c79f9a11252ccd48176e))
+
 ### [0.1.29](https://github.com/MRdevX/mrashidi.me/compare/v0.1.28...v0.1.29) (2025-08-19)
 
 
