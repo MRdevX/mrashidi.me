@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.29](https://github.com/MRdevX/mrashidi.me/compare/v0.1.28...v0.1.29) (2025-08-19)
+
+
+### Features
+
+* **docs:** enhance README with new security, error monitoring, and logging features; update tech stack and installation instructions ([872c13c](https://github.com/MRdevX/mrashidi.me/commit/872c13c93cf26275cd5393cee00f572202f351b0))
+
 ### [0.1.28](https://github.com/MRdevX/mrashidi.me/compare/v0.1.27...v0.1.28) (2025-08-18)
 
 ### [0.1.27](https://github.com/MRdevX/mrashidi.me/compare/v0.1.26...v0.1.27) (2025-08-18)
