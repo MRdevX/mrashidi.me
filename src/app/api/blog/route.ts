@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { BlogService } from "@/services/blogService";
+import { BlogService } from "@/services/blog.service";
 import { withPagination } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
 

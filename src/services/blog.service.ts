@@ -1,6 +1,6 @@
 import { parseString } from "xml2js";
 import { IBlogPost, IBlogAuthor, IMediumRssFeed } from "@/types/blog";
-import { cacheService } from "./cacheService";
+import { cacheService } from "./cache.service";
 import { cachePerformanceMonitor } from "@/lib/utils/cachePerformance";
 import { API_CONFIG } from "@/lib/config/api";
 import { logger } from "@/lib/utils/logger";
