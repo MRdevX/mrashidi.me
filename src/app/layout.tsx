@@ -88,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main-content" className="pt-16 relative z-10">
             {children}
           </main>
-          <footer className="mt-20 py-8 relative z-10" role="contentinfo" aria-label="Site Footer">
+          <footer className="mt-12 py-8 relative z-10" role="contentinfo" aria-label="Site Footer">
             <div className="max-w-4xl mx-auto px-4">
               <div className="glass-card p-8 text-center">
                 <p className="text-gray-400 mb-4 flex items-center justify-center gap-2">
