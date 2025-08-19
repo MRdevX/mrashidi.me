@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.31](https://github.com/MRdevX/mrashidi.me/compare/v0.1.30...v0.1.31) (2025-08-19)
+
+
+### Features
+
+* **version:** add API endpoint to fetch application version and replace GitHub link with VersionBadge component in Navbar ([ed6cabe](https://github.com/MRdevX/mrashidi.me/commit/ed6cabe0b240c4a80de64649a6a3b64d3305234d))
+
 ### [0.1.30](https://github.com/MRdevX/mrashidi.me/compare/v0.1.29...v0.1.30) (2025-08-19)
 
 
