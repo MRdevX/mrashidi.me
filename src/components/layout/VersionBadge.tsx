@@ -57,8 +57,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
 
   const linkContent = isMobile ? (
     <>
-      <GitBranch className="h-5 w-5 mr-3" aria-hidden="true" />
-      main v{version}
+      <GitBranch className="h-5 w-5 mr-3" aria-hidden="true" />v{version}
     </>
   ) : (
     <>
@@ -73,7 +72,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
         }}
         transition={{ duration: 0.3 }}
       >
-        main v{version}
+        v{version}
       </motion.span>
 
       <motion.div
