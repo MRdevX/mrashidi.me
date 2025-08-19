@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.32](https://github.com/MRdevX/mrashidi.me/compare/v0.1.31...v0.1.32) (2025-08-19)
+
+
+### Bug Fixes
+
+* **layout:** adjust footer margin for improved spacing ([6ff329a](https://github.com/MRdevX/mrashidi.me/commit/6ff329ac0b16d3feb0ccedc777f8c5dcb713d0d0))
+* **version:** update version display to include 'main' prefix ([2a67bce](https://github.com/MRdevX/mrashidi.me/commit/2a67bcea8738f2edf61c54a9ce72211fa977f2ff))
+
 ### [0.1.31](https://github.com/MRdevX/mrashidi.me/compare/v0.1.30...v0.1.31) (2025-08-19)
 
 
