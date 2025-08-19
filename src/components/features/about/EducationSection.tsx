@@ -3,7 +3,7 @@ import { GraduationCap, ExternalLink } from "lucide-react";
 import { education } from "@/data";
 import { fadeInVariants } from "@/lib/animations";
 
-export default function EducationSection() {
+export function EducationSection() {
   return (
     <motion.section initial="hidden" animate="visible" variants={fadeInVariants} transition={{ delay: 1.2 }}>
       <div className="flex items-center gap-3 mb-6">

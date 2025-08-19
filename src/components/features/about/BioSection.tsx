@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { personalInfo } from "@/data";
-import ProfileImage from "./ProfileImage";
+import { ProfileImage } from "./ProfileImage";
 import { fadeInVariants } from "@/lib/animations";
 
-export default function BioSection() {
+export function BioSection() {
   return (
     <motion.section
       className="mb-12"

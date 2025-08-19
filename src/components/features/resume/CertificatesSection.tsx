@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Award, CheckCircle, ExternalLink } from "lucide-react";
 import { certificates } from "@/data";
 
-export default function CertificatesSection() {
+export function CertificatesSection() {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-3 mb-8">

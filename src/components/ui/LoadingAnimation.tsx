@@ -95,4 +95,4 @@ const LoadingAnimation = ({
   );
 };
 
-export default LoadingAnimation;
+export { LoadingAnimation };

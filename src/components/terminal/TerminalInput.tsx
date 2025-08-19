@@ -23,7 +23,7 @@ const TerminalCursor = ({ isVisible }: { isVisible: boolean }) => (
   </motion.span>
 );
 
-export default function TerminalInput({
+export function TerminalInput({
   inputRef,
   value,
   onChange,

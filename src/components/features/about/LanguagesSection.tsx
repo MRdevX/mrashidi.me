@@ -3,7 +3,7 @@ import { Languages } from "lucide-react";
 import { personalInfo } from "@/data";
 import { fadeInVariants, slideInVariants } from "@/lib/animations";
 
-export default function LanguagesSection() {
+export function LanguagesSection() {
   return (
     <motion.section
       className="mb-12"

@@ -95,7 +95,7 @@ const TerminalCommand = ({ input, timestamp }: { input: string; timestamp: Date 
   </motion.div>
 );
 
-export default function CommandOutput({ command, className = "" }: CommandOutputProps) {
+export function CommandOutput({ command, className = "" }: CommandOutputProps) {
   const [showOutput, setShowOutput] = useState(false);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
-export * from "./string.utils";
-export * from "./date.utils";
+export * from "./string-utils";
+export * from "./date-utils";
 
 export { cn } from "../utils";
 export {
@@ -12,5 +12,5 @@ export {
   calculateReadingTime,
 } from "../utils";
 
-export { isValidEmail, truncateText } from "./string.utils";
-export { formatDate, formatShortDate, formatRelativeTime } from "./date.utils";
+export { isValidEmail, truncateText } from "./string-utils";
+export { formatDate, formatShortDate, formatRelativeTime } from "./date-utils";

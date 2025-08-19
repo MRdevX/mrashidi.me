@@ -2,8 +2,8 @@
 
 import { useState, KeyboardEvent } from "react";
 import { useTerminal, useCommandHistory, useTerminalFocus } from "./hooks";
-import TerminalInput from "./TerminalInput";
-import TerminalHistory from "./TerminalHistory";
+import { TerminalInput } from "./TerminalInput";
+import { TerminalHistory } from "./TerminalHistory";
 import { TERMINAL_STYLES } from "./constants";
 import { motion } from "framer-motion";
 
@@ -55,4 +55,4 @@ function TerminalContainer() {
   );
 }
 
-export default TerminalContainer;
+export { TerminalContainer as Terminal };

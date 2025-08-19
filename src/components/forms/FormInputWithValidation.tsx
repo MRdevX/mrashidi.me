@@ -17,7 +17,7 @@ interface FormInputWithValidationProps<T extends Record<string, unknown>> {
   icon?: ReactNode;
 }
 
-export default function FormInputWithValidation<T extends Record<string, unknown>>({
+export function FormInputWithValidation<T extends Record<string, unknown>>({
   form,
   name,
   label,

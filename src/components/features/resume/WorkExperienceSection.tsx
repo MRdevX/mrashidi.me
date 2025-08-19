@@ -3,7 +3,7 @@ import { Briefcase, MapPin, Building2, Calendar, CheckCircle2 } from "lucide-rea
 import { CyberpunkCard, CyberpunkCardHeader, CyberpunkCardTitle, CyberpunkCardContent } from "@/components/ui";
 import { workExperience } from "@/data";
 
-export default function WorkExperienceSection() {
+export function WorkExperienceSection() {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-3 mb-8">

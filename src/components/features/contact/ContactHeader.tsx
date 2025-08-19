@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
@@ -6,7 +8,7 @@ interface ContactHeaderProps {
   description: string;
 }
 
-export default function ContactHeader({ title, description }: ContactHeaderProps) {
+export function ContactHeader({ title, description }: ContactHeaderProps) {
   return (
     <>
       <motion.div className="flex items-center gap-3 mb-8" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>

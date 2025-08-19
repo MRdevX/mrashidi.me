@@ -2,7 +2,7 @@ import NodeCache from "node-cache";
 import { IBlogPost } from "@/types/blog";
 import { logger } from "@/lib/utils/logger";
 
-class CacheService {
+export class CacheService {
   private cache: NodeCache;
   private readonly BLOG_POSTS_KEY = "blog_posts";
   private readonly BLOG_POSTS_TOTAL_KEY = "blog_posts_total";

@@ -9,7 +9,7 @@ interface BlogPostCardProps {
   post: BlogPost;
 }
 
-export default function BlogPostCard({ post }: BlogPostCardProps) {
+export function BlogPostCard({ post }: BlogPostCardProps) {
   return (
     <motion.article
       className="feature-card group"

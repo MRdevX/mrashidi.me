@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { FileText, Download } from "lucide-react";
-import ResumeRequestModal from "./ResumeRequestModal";
+import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
 import { ResumeRequestData } from "@/lib/validation/schemas";
 import { CyberpunkButton } from "@/components/ui";
 import { logger } from "@/lib/utils/logger";
 
-export default function ResumeHeader() {
+export function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleResumeRequest = async (data: ResumeRequestData): Promise<boolean> => {

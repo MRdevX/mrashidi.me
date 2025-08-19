@@ -1,5 +1,5 @@
 import { Command } from "./types";
-import CommandOutput from "./CommandOutput";
+import { CommandOutput } from "./CommandOutput";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateCommandKey } from "./utils";
 
@@ -8,7 +8,7 @@ interface TerminalHistoryProps {
   className?: string;
 }
 
-export default function TerminalHistory({ commands, className = "" }: TerminalHistoryProps) {
+export function TerminalHistory({ commands, className = "" }: TerminalHistoryProps) {
   if (commands.length === 0) {
     return null;
   }

@@ -12,7 +12,7 @@ const levelConfig = {
   unspecified: { color: "#6B7280", label: "Tools & Concepts" },
 };
 
-export default function SkillsSection() {
+export function SkillsSection() {
   const allSkills = skills.flatMap((cat) => cat.skills);
   const skillsByLevel = {
     expert: allSkills.filter((skill) => skill.level === "expert"),

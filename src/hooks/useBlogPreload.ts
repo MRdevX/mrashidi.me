@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback } from "react";
 import { BlogResponse, BlogData } from "@/components/features/blog/types";
 import { logger } from "@/lib/utils/logger";

@@ -9,7 +9,7 @@ interface ProjectCardProps {
   isLoadingCommitDates?: boolean;
 }
 
-export default function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
+export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
   return (
     <div className="glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group">
       <div className="flex items-center justify-between gap-2">

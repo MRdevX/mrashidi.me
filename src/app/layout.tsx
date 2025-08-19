@@ -4,7 +4,6 @@ import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { BlogPreloader } from "@/components/features/blog";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
@@ -12,6 +11,7 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { personalInfo, siteConfig, siteMetadata } from "@/data";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { StructuredData } from "@/components/SEO";
+import { BackgroundEffects } from "@/components/ui/BackgroundEffects";
 
 const inter = Inter({
   subsets: ["latin"],

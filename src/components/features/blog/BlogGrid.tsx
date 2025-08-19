@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import { BlogPost } from "./types";
-import BlogPostCard from "./BlogPostCard";
+import { BlogPostCard } from "./BlogPostCard";
 
 interface BlogGridProps {
   posts: BlogPost[];
 }
 
-export default function BlogGrid({ posts }: BlogGridProps) {
+export function BlogGrid({ posts }: BlogGridProps) {
   return (
     <motion.div
       className="grid grid-cols-1 md:grid-cols-2 gap-8"

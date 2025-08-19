@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Search, Filter, Globe, Package, AlertCircle } from "lucide-react";
-import ProjectCard from "@/components/features/projects/ProjectCard";
+import { ProjectCard } from "@/components/features/projects/ProjectCard";
 import { projects } from "@/data";
 
 interface ProjectResultsProps {
@@ -12,7 +12,7 @@ interface ProjectResultsProps {
   isLoadingCommitDates?: boolean;
 }
 
-export default function ProjectResults({
+export function ProjectResults({
   filteredProjects,
   searchQuery,
   selectedStacks,

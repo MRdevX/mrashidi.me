@@ -8,8 +8,8 @@ import { contactFormSchema, ContactFormData } from "@/lib/validation/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, User, Mail, MessageSquare, FileText } from "lucide-react";
-import FormInputWithValidation from "./FormInputWithValidation";
-import StatusMessage from "./StatusMessage";
+import { FormInputWithValidation } from "./FormInputWithValidation";
+import { StatusMessage } from "./StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
 import { logger } from "@/lib/utils/logger";
 
@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-export default function ContactFormRefactored() {
+export function ContactFormRefactored() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error" | null; message: string }>({
     type: null,

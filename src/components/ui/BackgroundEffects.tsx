@@ -10,7 +10,7 @@ interface Particle {
   char: string;
 }
 
-export default function BackgroundEffects() {
+export function BackgroundEffects() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const matrixRef = useRef<Particle[]>([]);
   const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";

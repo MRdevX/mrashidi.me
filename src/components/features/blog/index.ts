@@ -1,10 +1,10 @@
-export { default as BlogContainer } from "./BlogContainer";
-export { default as BlogError } from "./BlogError";
-export { default as BlogGrid } from "./BlogGrid";
-export { default as BlogHeader } from "./BlogHeader";
-export { default as BlogLoading } from "./BlogLoading";
-export { default as BlogPagination } from "./BlogPagination";
-export { default as BlogPostCard } from "./BlogPostCard";
+export { BlogContainer } from "./BlogContainer";
+export { BlogError } from "./BlogError";
+export { BlogGrid } from "./BlogGrid";
+export { BlogHeader } from "./BlogHeader";
+export { BlogLoading } from "./BlogLoading";
+export { BlogPagination } from "./BlogPagination";
+export { BlogPostCard } from "./BlogPostCard";
 export { BlogPreloader } from "./BlogPreloader";
 export { useBlogData } from "./useBlogData";
 export type { BlogData, BlogResponse } from "./types";

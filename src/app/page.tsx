@@ -5,13 +5,13 @@ import { useEffect, useState, Suspense, lazy } from "react";
 import Link from "next/link";
 import { MapPin, Mail, Send, ArrowRight, Terminal as TerminalIcon, Code2, Activity, MessageCircle } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import LoadingAnimation from "@/components/ui/LoadingAnimation";
+import { LoadingAnimation } from "@/components/ui/LoadingAnimation";
 import { skills, personalInfo } from "@/data";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 import { CyberpunkButton } from "@/components/ui";
 
-const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph"));
-const Terminal = lazy(() => import("@/components/terminal/Terminal"));
+const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph").then(module => ({ default: module.ContributionGraph })));
+const Terminal = lazy(() => import("@/components/terminal/Terminal").then(module => ({ default: module.Terminal })));
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);

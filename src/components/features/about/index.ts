@@ -1,5 +1,5 @@
-export { default as BioSection } from "./BioSection";
-export { default as SkillsSection } from "./SkillsSection";
-export { default as LanguagesSection } from "./LanguagesSection";
-export { default as EducationSection } from "./EducationSection";
-export { default as ProfileImage } from "./ProfileImage";
+export { BioSection } from "./BioSection";
+export { SkillsSection } from "./SkillsSection";
+export { LanguagesSection } from "./LanguagesSection";
+export { EducationSection } from "./EducationSection";
+export { ProfileImage } from "./ProfileImage";

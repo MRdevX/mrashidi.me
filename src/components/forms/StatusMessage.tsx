@@ -7,7 +7,7 @@ interface StatusMessageProps {
   status: SubmitStatus;
 }
 
-export default function StatusMessage({ status }: StatusMessageProps) {
+export function StatusMessage({ status }: StatusMessageProps) {
   if (!status.type) return null;
 
   return (

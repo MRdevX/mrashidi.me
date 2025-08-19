@@ -127,8 +127,8 @@ mrashidi.me/
 │   │   ├── config/          # Configuration constants
 │   │   ├── email/           # Email service and templates
 │   │   ├── utils/           # Organized utility functions
-│   │   │   ├── string.utils.ts
-│   │   │   ├── date.utils.ts
+│   │   │   ├── string-utils.ts
+│   │   │   ├── date-utils.ts
 │   │   │   ├── logger.ts    # Centralized logging
 │   │   │   ├── cachePerformance.ts
 │   │   │   └── index.ts     # Centralized exports
@@ -184,8 +184,8 @@ Utilities are categorized by domain and centralized for better maintainability:
 ```typescript
 import { formatDate, truncateText, isValidEmail } from "@/lib/utils";
 
-import { formatDate, formatRelativeTime } from "@/lib/utils/date.utils";
-import { toTitleCase, generateRandomString } from "@/lib/utils/string.utils";
+import { formatDate, formatRelativeTime } from "@/lib/utils/date-utils";
+import { toTitleCase, generateRandomString } from "@/lib/utils/string-utils";
 import { logger } from "@/lib/utils/logger";
 ```
 

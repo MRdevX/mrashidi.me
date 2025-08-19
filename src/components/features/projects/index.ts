@@ -1,4 +1,4 @@
-export { default as ProjectCard } from "./ProjectCard";
-export { default as ProjectFilters } from "./ProjectFilters";
-export { default as ProjectResults } from "./ProjectResults";
-export { default as ProjectSearchBox } from "./ProjectSearchBox";
+export { ProjectCard } from "./ProjectCard";
+export { ProjectFilters } from "./ProjectFilters";
+export { ProjectResults } from "./ProjectResults";
+export { ProjectSearchBox } from "./ProjectSearchBox";

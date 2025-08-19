@@ -14,7 +14,7 @@ interface ProjectFiltersProps {
   onClearAll: () => void;
 }
 
-export default function ProjectFilters({
+export function ProjectFilters({
   categorizedStacks,
   stackUsageCount,
   selectedStacks,

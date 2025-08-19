@@ -7,7 +7,7 @@ interface BlogPaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPaginationProps) {
+export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPaginationProps) {
   if (totalPages <= 1) return null;
 
   return (

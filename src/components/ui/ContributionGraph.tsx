@@ -16,4 +16,4 @@ const ContributionGraph = () => {
   );
 };
 
-export default ContributionGraph;
+export { ContributionGraph };

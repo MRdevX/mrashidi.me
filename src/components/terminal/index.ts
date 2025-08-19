@@ -1,7 +1,7 @@
-export { default as Terminal } from "./Terminal";
-export { default as TerminalInput } from "./TerminalInput";
-export { default as TerminalHistory } from "./TerminalHistory";
-export { default as CommandOutput } from "./CommandOutput";
+export { Terminal } from "./Terminal";
+export { TerminalInput } from "./TerminalInput";
+export { TerminalHistory } from "./TerminalHistory";
+export { CommandOutput } from "./CommandOutput";
 
 export * from "./hooks";
 

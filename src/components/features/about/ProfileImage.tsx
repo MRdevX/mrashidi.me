@@ -9,7 +9,7 @@ interface ProfileImageProps {
   height?: number;
 }
 
-export default function ProfileImage({ src, alt, width = 256, height = 256 }: ProfileImageProps) {
+export function ProfileImage({ src, alt, width = 256, height = 256 }: ProfileImageProps) {
   return (
     <motion.div
       className="float-right ml-8 mb-6 lg:ml-12 lg:mb-8"

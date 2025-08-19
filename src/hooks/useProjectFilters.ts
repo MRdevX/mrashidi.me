@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { projects } from "@/data";
 import { TechnologyCategory } from "@/lib/constants";

@@ -5,8 +5,8 @@ import { SubmitHandler } from "react-hook-form";
 import { resumeRequestSchema, ResumeRequestData } from "@/lib/validation/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormInputWithValidation from "@/components/forms/FormInputWithValidation";
-import StatusMessage from "@/components/forms/StatusMessage";
+import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
+import { StatusMessage } from "@/components/forms/StatusMessage";
 import {
   CyberpunkDialog,
   CyberpunkDialogContent,
@@ -22,7 +22,7 @@ interface ResumeRequestModalRefactoredProps {
   onSubmit: (data: ResumeRequestData) => Promise<boolean>;
 }
 
-export default function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: ResumeRequestModalRefactoredProps) {
+export function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: ResumeRequestModalRefactoredProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error" | null; message: string }>({
     type: null,

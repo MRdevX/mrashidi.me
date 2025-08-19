@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { ContactSection, ADPListWidget as ADPListWidgetType } from "./types";
-import ADPListWidget from "./ADPListWidget";
+import { ADPListWidget } from "./ADPListWidget";
 
 interface ReviewsSectionProps {
   section: ContactSection;
@@ -9,7 +9,7 @@ interface ReviewsSectionProps {
   reviewsWidget: ADPListWidgetType;
 }
 
-export default function ReviewsSection({ section, impactWidget, reviewsWidget }: ReviewsSectionProps) {
+export function ReviewsSection({ section, impactWidget, reviewsWidget }: ReviewsSectionProps) {
   return (
     <motion.div
       className="mt-12"

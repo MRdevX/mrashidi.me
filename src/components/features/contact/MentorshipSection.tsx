@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { Users } from "lucide-react";
 import { ContactSection, ADPListWidget as ADPListWidgetType } from "./types";
-import ADPListWidget from "./ADPListWidget";
+import { ADPListWidget } from "./ADPListWidget";
 
 interface MentorshipSectionProps {
   section: ContactSection;
   widget: ADPListWidgetType;
 }
 
-export default function MentorshipSection({ section, widget }: MentorshipSectionProps) {
+export function MentorshipSection({ section, widget }: MentorshipSectionProps) {
   return (
     <motion.div
       className="mt-12"

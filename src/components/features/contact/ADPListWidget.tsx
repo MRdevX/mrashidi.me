@@ -5,7 +5,7 @@ interface ADPListWidgetProps {
   className?: string;
 }
 
-export default function ADPListWidget({ widget, className = "" }: ADPListWidgetProps) {
+export function ADPListWidget({ widget, className = "" }: ADPListWidgetProps) {
   const containerStyle = {
     height: widget.height,
     boxShadow: "rgba(142, 151, 158, 0.15) 0px 4px 19px 0px",

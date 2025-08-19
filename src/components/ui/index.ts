@@ -1,6 +1,6 @@
-export { default as BackgroundEffects } from "./BackgroundEffects";
-export { default as ContributionGraph } from "./ContributionGraph";
-export { default as LoadingAnimation } from "./LoadingAnimation";
+export { BackgroundEffects } from "./BackgroundEffects";
+export { ContributionGraph } from "./ContributionGraph";
+export { LoadingAnimation } from "./LoadingAnimation";
 
 export { Button, buttonVariants } from "./Button";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
