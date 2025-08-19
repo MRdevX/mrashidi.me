@@ -11,7 +11,7 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { personalInfo, siteConfig, siteMetadata } from "@/data";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { StructuredData } from "@/components/SEO";
-import { BackgroundEffects } from "@/components/ui/BackgroundEffects";
+import { BackgroundEffects } from "@/components/ui";
 
 const inter = Inter({
   subsets: ["latin"],

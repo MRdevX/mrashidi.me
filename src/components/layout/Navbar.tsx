@@ -8,7 +8,7 @@ import { navigation } from "@/data";
 import { BrandLogo } from "./BrandLogo";
 import { NavigationItem } from "./NavigationItem";
 import { MobileNavigationItem } from "./MobileNavigationItem";
-import { GitHubLink } from "./GitHubLink";
+import { VersionBadge } from "./VersionBadge";
 import { MobileMenuButton } from "./MobileMenuButton";
 
 export default function Navbar() {
@@ -30,7 +30,7 @@ export default function Navbar() {
               <div className="flex justify-between w-full">
                 <div className="flex items-center space-x-4">
                   <BrandLogo />
-                  <GitHubLink variant="desktop" />
+                  <VersionBadge variant="desktop" />
                 </div>
 
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8" role="navigation" aria-label="Main Menu">
@@ -62,7 +62,7 @@ export default function Navbar() {
                   {navigation.map((item) => (
                     <MobileNavigationItem key={item.name} item={item} isActive={pathname === item.href} />
                   ))}
-                  <GitHubLink variant="mobile" />
+                  <VersionBadge variant="mobile" />
                 </div>
               </Disclosure.Panel>
             )}
