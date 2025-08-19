@@ -231,7 +231,6 @@ Comprehensive error handling with custom error classes and safe responses:
 import { AppError, ValidationError, APIError } from "@/lib/errors";
 
 try {
-  // API logic
 } catch (error) {
   throw new APIError("Failed to fetch data", { cause: error });
 }

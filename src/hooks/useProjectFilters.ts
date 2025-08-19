@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { projects } from "@/data";
 import { TechnologyCategory } from "@/lib/constants";
 import { processTechnologyData, filterProjects } from "@/lib/techUtils";
-import { githubService } from "@/services/githubService";
+import { githubService } from "@/services/github.service";
 import { logger } from "@/lib/utils/logger";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";

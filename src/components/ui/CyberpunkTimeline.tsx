@@ -25,7 +25,7 @@ export const CyberpunkTimeline = React.forwardRef<HTMLDivElement, CyberpunkTimel
   return (
     <div ref={ref} className={cn("relative py-8", className)}>
       {/* Timeline line */}
-      <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange-500/50 via-orange-500/30 to-transparent transform -translate-x-1/2" />
+      <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-orange-500/50 via-orange-500/30 to-transparent transform -translate-x-1/2" />
 
       <div className="space-y-8">
         {items.map((item, index) => (
@@ -50,7 +50,7 @@ export const CyberpunkTimeline = React.forwardRef<HTMLDivElement, CyberpunkTimel
                 className="relative overflow-hidden border-orange-500/30 hover:border-orange-500/50 transition-all duration-300 group"
               >
                 {/* Animated background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-linear-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <CyberpunkCardHeader className="pb-4">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">

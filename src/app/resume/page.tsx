@@ -4,7 +4,7 @@ import { ResumeHeader, WorkExperienceSection, CertificatesSection } from "@/comp
 
 export default function Resume() {
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
       <div className="max-w-4xl mx-auto px-4">
         <ResumeHeader />
 

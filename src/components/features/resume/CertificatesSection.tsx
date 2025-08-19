@@ -34,11 +34,11 @@ export default function CertificatesSection() {
                   transition={{ delay: 0.1 * i }}
                   onClick={() => cert.url && window.open(cert.url, "_blank")}
                 >
-                  <CheckCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mr-3" />
+                  <CheckCircle className="w-5 h-5 text-orange-500 shrink-0 mr-3" />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-gray-200 hover:text-white transition-colors flex items-center">
                       {cert.name}
-                      {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 flex-shrink-0" />}
+                      {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />}
                     </div>
                   </div>
                   <div className="text-sm text-gray-400 text-right ml-4">
