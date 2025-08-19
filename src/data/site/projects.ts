@@ -67,7 +67,7 @@ export const projects: Project[] = [
   {
     title: "Personal Portfolio Website",
     description:
-      "A cyberpunk-inspired personal website and portfolio showcasing my work as a Senior Backend Engineer & Cloud Architect. Built with Next.js 14, TypeScript, and Tailwind CSS, featuring an interactive terminal, real-time GitHub activity tracking, and blog integration.",
+      "A cyberpunk-inspired personal website and portfolio showcasing my work as a Senior Backend Engineer & Cloud Architect. Built with Next.js, TypeScript, and Tailwind CSS, featuring an interactive terminal, real-time GitHub activity tracking, and blog integration.",
     highlights: [
       "Interactive Terminal with command history and real-time execution",
       "Real-time GitHub integration with contribution graph visualization",
