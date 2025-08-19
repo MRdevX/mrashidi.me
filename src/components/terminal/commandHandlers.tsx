@@ -186,7 +186,7 @@ const commandHandlers = {
     <div className="mt-2">
       <p className="text-orange-500 font-bold mb-2">Available commands:</p>
       {Object.entries(AVAILABLE_COMMANDS).map(([cmd, desc]) => (
-        <div key={cmd} className="grid grid-cols-[120px,1fr] gap-2 mt-1 group">
+        <div key={cmd} className="grid grid-cols-[120px_1fr] gap-2 mt-1 group">
           <span className="text-green-400 font-bold group-hover:text-green-300 transition-colors">{cmd}</span>
           <span className="text-gray-400 group-hover:text-gray-300 transition-colors">{desc}</span>
         </div>

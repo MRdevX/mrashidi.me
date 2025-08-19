@@ -13,7 +13,7 @@ export default function WorkExperienceSection() {
 
       <div className="relative">
         {/* Timeline line */}
-        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange-500/50 via-orange-500/30 to-transparent" />
+        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-orange-500/50 via-orange-500/30 to-transparent" />
 
         <div className="space-y-8">
           {workExperience.map((job, index) => (
@@ -37,7 +37,7 @@ export default function WorkExperienceSection() {
                   className="relative overflow-hidden border-orange-500/30 hover:border-orange-500/50 transition-all duration-300 group"
                 >
                   {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-linear-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   <CyberpunkCardHeader className="pb-4">
                     <div className="flex flex-col gap-4">
@@ -82,9 +82,9 @@ export default function WorkExperienceSection() {
                   <CyberpunkCardContent className="pt-0">
                     <div className="space-y-4">
                       <div className="flex items-center gap-3 mb-4 mt-6">
-                        <div className="w-1 h-5 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full" />
+                        <div className="w-1 h-5 bg-linear-to-b from-orange-500 to-orange-600 rounded-full" />
                         <h4 className="text-base font-bold text-orange-400 tracking-wide uppercase">Key Achievements</h4>
-                        <div className="flex-1 h-px bg-gradient-to-r from-orange-500/30 to-transparent" />
+                        <div className="flex-1 h-px bg-linear-to-r from-orange-500/30 to-transparent" />
                       </div>
                       <ul className="space-y-3">
                         {job.achievements.map((achievement, i) => (
@@ -95,7 +95,7 @@ export default function WorkExperienceSection() {
                             transition={{ delay: i * 0.05 }}
                             className="flex items-start gap-3 group/achievement"
                           >
-                            <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
+                            <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
                             <span className="text-gray-300 group-hover/achievement:text-gray-200 transition-colors leading-relaxed">
                               {achievement}
                             </span>

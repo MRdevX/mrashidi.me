@@ -36,7 +36,7 @@ export const CyberpunkExperienceCard = React.forwardRef<HTMLDivElement, Experien
           className="relative overflow-hidden border-orange-500/30 hover:border-orange-500/50 transition-all duration-300"
         >
           {/* Animated background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-linear-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           <CyberpunkCardHeader className="pb-4">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -109,7 +109,7 @@ export const CyberpunkExperienceCard = React.forwardRef<HTMLDivElement, Experien
                             transition={{ delay: i * 0.05 }}
                             className="flex items-start gap-3 group/achievement"
                           >
-                            <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
+                            <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
                             <span className="text-gray-300 group-hover/achievement:text-gray-200 transition-colors leading-relaxed">
                               {achievement}
                             </span>

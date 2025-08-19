@@ -10,7 +10,7 @@ export default function About() {
   useMouseTracking(".glitch-image");
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
       <div className="max-w-4xl mx-auto px-4">
         <motion.div initial="hidden" animate="visible" variants={fadeInVariants} transition={{ duration: 0.5 }}>
           <div className="flex items-center gap-3 mb-8">

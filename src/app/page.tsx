@@ -59,11 +59,11 @@ export default function Home() {
   const uniqueMainStack = Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
         <motion.div className="text-center mb-12 glass-card p-8 relative overflow-hidden" variants={item}>
-          <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent opacity-50" />
-          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
+          <div className="absolute inset-0 bg-linear-to-b from-orange-500/10 to-transparent opacity-50" />
+          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
             {personalInfo.name}
           </h1>
           <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
@@ -168,7 +168,7 @@ export default function Home() {
 
         <motion.div className="text-center" variants={item}>
           <div className="glass-card p-8 md:p-12 border border-orange-500/10 relative overflow-hidden group rounded-lg">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-linear-to-r from-orange-500/10 via-transparent to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="flex items-center justify-center gap-3 mb-6">
               <MessageCircle className="w-6 h-6 text-orange-500" />
               <h2 className="text-2xl md:text-3xl font-bold text-orange-500 font-cyberpunk glow-text">

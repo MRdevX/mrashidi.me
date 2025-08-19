@@ -37,7 +37,7 @@ export default function Projects() {
   };
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
       <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
         <motion.div className="flex items-center justify-between mb-8" variants={item}>
           <div className="flex items-center gap-3">

@@ -24,7 +24,7 @@ export default function EducationSection() {
                 onClick={() => edu.url && window.open(edu.url, "_blank")}
               >
                 <span>{edu.institution}</span>
-                {edu.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 flex-shrink-0" />}
+                {edu.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />}
               </div>
             </div>
             <div className="text-sm text-gray-400 text-right ml-4">
