@@ -21,18 +21,18 @@ export function useContactData(): ContactPageData {
     ],
     adpListWidgets: {
       booking: {
-        src: "booking?src=mahdi-rashidi",
+        src: "booking?src=mahdi-rashidi&theme=dark",
         title: "ADPList Mentorship Calendar",
         height: "600px",
       },
       impact: {
-        src: "impact?src=mahdi-rashidi",
+        src: "impact?src=mahdi-rashidi&theme=dark",
         title: "ADPList Impact",
         height: "560px",
         padding: "16px",
       },
       reviews: {
-        src: "reviews?src=mahdi-rashidi",
+        src: "reviews?src=mahdi-rashidi&theme=dark",
         title: "ADPList Reviews",
         height: "560px",
         padding: "16px",
