@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import { BlobService } from "@/services/blob.service";
-import { ApiResponseHandler } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
 import { logger } from "@/lib/utils/logger";
 
@@ -29,9 +28,7 @@ export async function POST(request: NextRequest) {
       throw new APIError("File must be a PDF", 400);
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-
-    const url = await BlobService.uploadCV(buffer);
+    const url = await BlobService.uploadCV(file);
 
     logger.info({
       operation: "cvUpload",
@@ -41,7 +38,8 @@ export async function POST(request: NextRequest) {
       fileSize: file.size,
     });
 
-    return ApiResponseHandler.success({
+    return Response.json({
+      success: true,
       message: "CV uploaded and replaced successfully",
       url,
     });

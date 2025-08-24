@@ -19,6 +19,7 @@ export class BlobService {
       const blob = await put(this.CV_PATH, file, {
         access: "public",
         addRandomSuffix: false,
+        allowOverwrite: true,
       });
 
       logger.info({
