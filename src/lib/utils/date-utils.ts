@@ -1,10 +1,3 @@
-/**
- * Date utility functions
- */
-
-/**
- * Formats a date to a readable string
- */
 export function formatDate(date: Date | string): string {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   return dateObj.toLocaleDateString("en-US", {
@@ -14,9 +7,6 @@ export function formatDate(date: Date | string): string {
   });
 }
 
-/**
- * Formats a date to a short string (MM/DD/YYYY)
- */
 export function formatShortDate(date: Date | string): string {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   return dateObj.toLocaleDateString("en-US", {
@@ -26,9 +16,6 @@ export function formatShortDate(date: Date | string): string {
   });
 }
 
-/**
- * Formats a date to show relative time (e.g., "2 days ago")
- */
 export function formatRelativeTime(date: Date | string): string {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   const now = new Date();
@@ -67,9 +54,6 @@ export function formatRelativeTime(date: Date | string): string {
   return `${diffInYears} year${diffInYears > 1 ? "s" : ""} ago`;
 }
 
-/**
- * Checks if a date is today
- */
 export function isToday(date: Date | string): boolean {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   const today = new Date();
@@ -80,25 +64,16 @@ export function isToday(date: Date | string): boolean {
   );
 }
 
-/**
- * Checks if a date is in the past
- */
 export function isPast(date: Date | string): boolean {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   return dateObj < new Date();
 }
 
-/**
- * Checks if a date is in the future
- */
 export function isFuture(date: Date | string): boolean {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   return dateObj > new Date();
 }
 
-/**
- * Gets the start of a day
- */
 export function startOfDay(date: Date | string): Date {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   const newDate = new Date(dateObj);
@@ -106,9 +81,6 @@ export function startOfDay(date: Date | string): Date {
   return newDate;
 }
 
-/**
- * Gets the end of a day
- */
 export function endOfDay(date: Date | string): Date {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   const newDate = new Date(dateObj);
@@ -116,9 +88,6 @@ export function endOfDay(date: Date | string): Date {
   return newDate;
 }
 
-/**
- * Adds days to a date
- */
 export function addDays(date: Date | string, days: number): Date {
   const dateObj = typeof date === "string" ? new Date(date) : date;
   const newDate = new Date(dateObj);
@@ -126,16 +95,10 @@ export function addDays(date: Date | string, days: number): Date {
   return newDate;
 }
 
-/**
- * Subtracts days from a date
- */
 export function subtractDays(date: Date | string, days: number): Date {
   return addDays(date, -days);
 }
 
-/**
- * Gets the difference in days between two dates
- */
 export function getDaysDifference(date1: Date | string, date2: Date | string): number {
   const dateObj1 = typeof date1 === "string" ? new Date(date1) : date1;
   const dateObj2 = typeof date2 === "string" ? new Date(date2) : date2;

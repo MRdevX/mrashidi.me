@@ -14,7 +14,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 🔍 **Advanced Project Filtering**: Regex search with dynamic technology categorization
 - 📝 **Blog Integration**: Medium RSS feed integration with intelligent preloading and caching
 - 📧 **Contact System**: AWS SES email service with reCAPTCHA protection
-- 📄 **Resume Download**: Automated CV delivery with email notifications
+- 📄 **Resume Download**: Automated CV delivery with email notifications via Vercel Blob
 - 🌐 **PWA Support**: Progressive Web App with offline capabilities
 - 🔍 **SEO Optimized**: Meta tags, sitemap generation, and structured data
 - 📱 **Responsive Design**: Optimized for all devices and screen sizes
@@ -52,6 +52,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 ### Backend & Services
 
 - **Email Service**: AWS SES (@aws-sdk/client-ses 3.864.0)
+- **File Storage**: Vercel Blob (@vercel/blob 1.1.1)
 - **Caching**: Node-cache 5.1.2
 - **XML Parsing**: xml2js 0.6.2
 - **Pattern Matching**: minimatch 10.0.3
@@ -81,7 +82,7 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 ```
 mrashidi.me/
 ├── public/                    # Static assets
-│   ├── cv/                   # Resume files
+│   ├── cv/                   # Resume files (gitignored, served via Vercel Blob)
 │   ├── icons/                # Technology icons
 │   └── manifest.json         # PWA manifest
 ├── src/
@@ -89,6 +90,7 @@ mrashidi.me/
 │   │   ├── api/             # API routes with middleware
 │   │   │   ├── blog/        # Blog API with pagination
 │   │   │   ├── contact/     # Contact form API
+│   │   │   ├── cv/          # CV API (download & upload via Vercel Blob)
 │   │   │   └── resume/      # Resume request API
 │   │   ├── about/           # About page
 │   │   ├── blog/            # Blog page with Medium integration
@@ -138,6 +140,7 @@ mrashidi.me/
 │   ├── services/            # External service integrations
 │   │   ├── base.service.ts  # Base service class
 │   │   ├── blogService.ts   # Blog data service
+│   │   ├── blobService.ts   # Vercel Blob service
 │   │   ├── cacheService.ts  # Caching service
 │   │   ├── githubService.ts # GitHub API service
 │   │   └── recaptchaService.ts # reCAPTCHA service
@@ -145,7 +148,8 @@ mrashidi.me/
 ├── scripts/                 # Build and utility scripts
 │   ├── generate-sitemap.ts  # Sitemap generation
 │   ├── generate-og-images.js # Open Graph image generation
-│   └── generate-placeholder-og.js # Placeholder OG images
+│   ├── generate-placeholder-og.js # Placeholder OG images
+│   └── upload-cv-to-blob.ts # CV upload script (uses API)
 ├── next.config.mjs          # Next.js configuration with security headers
 ├── tailwind.config.ts       # Tailwind CSS configuration
 ├── components.json          # ShadCN UI configuration

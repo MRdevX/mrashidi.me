@@ -44,3 +44,6 @@ sw.js
 sitemap.xml
 # Sentry Config File
 .env.sentry-build-plugin
+
+# CV files - served via Vercel Blob
+public/cv/
