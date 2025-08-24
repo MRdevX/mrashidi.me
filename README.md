@@ -148,8 +148,7 @@ mrashidi.me/
 ├── scripts/                 # Build and utility scripts
 │   ├── generate-sitemap.ts  # Sitemap generation
 │   ├── generate-og-images.js # Open Graph image generation
-│   ├── generate-placeholder-og.js # Placeholder OG images
-│   └── upload-cv-to-blob.ts # CV upload script (uses API)
+│   └── generate-placeholder-og.js # Placeholder OG images
 ├── next.config.mjs          # Next.js configuration with security headers
 ├── tailwind.config.ts       # Tailwind CSS configuration
 ├── components.json          # ShadCN UI configuration

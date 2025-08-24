@@ -10,7 +10,6 @@
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
     "check-og-images": "node scripts/generate-og-images.js",
     "generate-og-images": "node scripts/generate-placeholder-og.js",
-    "upload-cv": "tsx scripts/upload-cv-to-blob.ts",
     "release": "npx standard-version"
   },
   "dependencies": {
