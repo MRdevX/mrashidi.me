@@ -20,6 +20,7 @@ export class BlobService {
         access: "public",
         addRandomSuffix: false,
         allowOverwrite: true,
+        contentType: "application/pdf",
       });
 
       logger.info({
