@@ -6,9 +6,11 @@ import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequ
 import { ResumeRequestData } from "@/lib/validation/schemas";
 import { CyberpunkButton } from "@/components/ui";
 import { logger } from "@/lib/utils/logger";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 export function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { getSectionTitle } = useThemeConfig();
 
   const handleResumeRequest = async (data: ResumeRequestData): Promise<boolean> => {
     try {
@@ -46,7 +48,7 @@ export function ResumeHeader() {
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12">
         <div className="flex items-center gap-3">
           <FileText className="w-8 h-8 text-orange-500" />
-          <h1 className="text-3xl sm:text-4xl font-bold text-orange-500 font-cyberpunk glow-text text-center sm:text-left">
+          <h1 className={`text-3xl sm:text-4xl font-bold ${getSectionTitle()} text-center sm:text-left`}>
             Professional Experience
           </h1>
         </div>

@@ -11,7 +11,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
-  const { getTextColor, getBackgroundColor, getProjectBadge } = useThemeConfig();
+  const { getTextColor, getBackgroundColor, getProjectBadge, getBorderColor } = useThemeConfig();
 
   return (
     <div
@@ -73,7 +73,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
 
       {/* Commit Information */}
       {project.githubUrl && (
-        <div className={`flex flex-wrap gap-2 items-center text-xs ${getTextColor("muted")} border-t border-gray-700 pt-2`}>
+        <div className={`flex flex-wrap gap-2 items-center text-xs ${getTextColor("muted")} border-t ${getBorderColor("primary")} pt-2`}>
           {commitInfo ? (
             <>
               <div className="flex items-center gap-1">

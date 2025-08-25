@@ -32,7 +32,5 @@ export {
   CyberpunkDialogFooter,
   CyberpunkDialogTrigger,
 } from "./CyberpunkDialog";
-export { CyberpunkExperienceCard } from "./CyberpunkExperienceCard";
-export { CyberpunkTimeline } from "./CyberpunkTimeline";
 
 export * from "./icons";

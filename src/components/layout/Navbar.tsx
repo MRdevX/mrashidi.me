@@ -11,14 +11,16 @@ import { MobileNavigationItem } from "./MobileNavigationItem";
 import { VersionBadge } from "./VersionBadge";
 import { MobileMenuButton } from "./MobileMenuButton";
 import { ThemeToggle } from "@/components/ui";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 export default function Navbar() {
   const isScrolled = useScrollPosition();
   const pathname = usePathname();
+  const { getBackgroundColor, getBorderColor } = useThemeConfig();
 
   const getNavbarClasses = () => {
     return `fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? "bg-white/20 dark:bg-black/20 backdrop-blur-md border-b border-orange-500/10" : "bg-transparent"
+      isScrolled ? `${getBackgroundColor("glass")} backdrop-blur-md border-b ${getBorderColor("primary")}` : "bg-transparent"
     }`;
   };
 
@@ -61,7 +63,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="sm:hidden bg-white/20 dark:bg-black/20 backdrop-blur-md border-b border-orange-500/10"
+                className={`sm:hidden ${getBackgroundColor("glass")} backdrop-blur-md border-b ${getBorderColor("primary")}`}
                 id="mobile-menu"
                 aria-label="Mobile Menu"
               >

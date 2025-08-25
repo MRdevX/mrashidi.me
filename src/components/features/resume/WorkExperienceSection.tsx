@@ -2,13 +2,16 @@ import { motion } from "framer-motion";
 import { Briefcase, MapPin, Building2, Calendar, CheckCircle2 } from "lucide-react";
 import { CyberpunkCard, CyberpunkCardHeader, CyberpunkCardTitle, CyberpunkCardContent } from "@/components/ui";
 import { workExperience } from "@/data";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 export function WorkExperienceSection() {
+  const { getSectionTitle, getTextColor } = useThemeConfig();
+
   return (
     <section className="mb-16">
       <div className="flex items-center gap-3 mb-8">
         <Briefcase className="w-8 h-8 text-orange-500" />
-        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Work Experience</h2>
+        <h2 className={getSectionTitle()}>Work Experience</h2>
       </div>
 
       <div className="relative">
@@ -65,12 +68,12 @@ export function WorkExperienceSection() {
 
                       {/* Location and period */}
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm">
-                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <div className={`flex items-center gap-2 ${getTextColor("secondary")}`}>
                           <MapPin className="w-4 h-4" />
                           <span>{job.location}</span>
                         </div>
 
-                        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-500">
+                        <div className={`flex items-center gap-2 ${getTextColor("muted")}`}>
                           <Calendar className="w-4 h-4" />
                           <span>{job.period}</span>
                         </div>
@@ -96,7 +99,9 @@ export function WorkExperienceSection() {
                             className="flex items-start gap-3 group/achievement"
                           >
                             <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
-                            <span className="text-gray-700 dark:text-gray-300 group-hover/achievement:text-gray-800 dark:group-hover/achievement:text-gray-200 transition-colors leading-relaxed">
+                            <span
+                              className={`${getTextColor("primary")} group-hover/achievement:${getTextColor("primary")} transition-colors leading-relaxed`}
+                            >
                               {achievement}
                             </span>
                           </motion.li>

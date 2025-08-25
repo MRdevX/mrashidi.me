@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { slideInRightVariants } from "@/lib/animations";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface ProfileImageProps {
   src: string;
@@ -10,6 +11,8 @@ interface ProfileImageProps {
 }
 
 export function ProfileImage({ src, alt, width = 256, height = 256 }: ProfileImageProps) {
+  const { getBackgroundColor } = useThemeConfig();
+
   return (
     <motion.div
       className="float-right ml-8 mb-6 lg:ml-12 lg:mb-8"
@@ -17,7 +20,9 @@ export function ProfileImage({ src, alt, width = 256, height = 256 }: ProfileIma
       transition={{ delay: 0.4 }}
     >
       <div className="relative group">
-        <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-lg overflow-hidden border-4 border-orange-500/30 shadow-2xl relative bg-gray-100 dark:bg-gray-800 glitch-image">
+        <div
+          className={`w-48 h-48 lg:w-64 lg:h-64 rounded-lg overflow-hidden border-4 border-orange-500/30 shadow-2xl relative ${getBackgroundColor("muted")} glitch-image`}
+        >
           <div className="absolute inset-0 bg-linear-to-br from-orange-500/20 to-transparent z-10"></div>
           <Image src={src} alt={alt} width={width} height={height} className="w-full h-full object-cover" priority />
           <div className="absolute inset-0 glitch-overlay pointer-events-none"></div>

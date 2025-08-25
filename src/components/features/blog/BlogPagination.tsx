@@ -1,5 +1,6 @@
 import { CyberpunkButton } from "@/components/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface BlogPaginationProps {
   currentPage: number;
@@ -8,6 +9,8 @@ interface BlogPaginationProps {
 }
 
 export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPaginationProps) {
+  const { getTextColor } = useThemeConfig();
+
   if (totalPages <= 1) return null;
 
   return (
@@ -21,7 +24,7 @@ export function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPa
       >
         Previous
       </CyberpunkButton>
-      <span className="px-4 py-2 text-gray-400 font-albert">
+      <span className={`px-4 py-2 ${getTextColor("secondary")} font-albert`}>
         Page {currentPage} of {totalPages}
       </span>
       <CyberpunkButton

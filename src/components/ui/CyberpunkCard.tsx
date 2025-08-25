@@ -49,32 +49,47 @@ export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps
 CyberpunkCard.displayName = "CyberpunkCard";
 
 export const CyberpunkCardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <CardHeader ref={ref} className={cn("border-b border-gray-700/50", className)} {...props} />
-  )
+  ({ className, ...props }, ref) => {
+    const { getBorderColor } = useThemeConfig();
+    return (
+      <CardHeader ref={ref} className={cn(`border-b ${getBorderColor("primary")}`, className)} {...props} />
+    );
+  }
 );
 CyberpunkCardHeader.displayName = "CyberpunkCardHeader";
 
 export const CyberpunkCardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <CardTitle ref={ref} className={cn("text-orange-500 font-cyberpunk glow-text", className)} {...props} />
-  )
+  ({ className, ...props }, ref) => {
+    const { getSectionTitle } = useThemeConfig();
+    return (
+      <CardTitle ref={ref} className={cn(getSectionTitle(), className)} {...props} />
+    );
+  }
 );
 CyberpunkCardTitle.displayName = "CyberpunkCardTitle";
 
 export const CyberpunkCardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => <CardDescription ref={ref} className={cn("text-gray-400", className)} {...props} />
+  ({ className, ...props }, ref) => {
+    const { getTextColor } = useThemeConfig();
+    return <CardDescription ref={ref} className={cn(getTextColor("secondary"), className)} {...props} />;
+  }
 );
 CyberpunkCardDescription.displayName = "CyberpunkCardDescription";
 
 export const CyberpunkCardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => <CardContent ref={ref} className={cn("text-gray-300", className)} {...props} />
+  ({ className, ...props }, ref) => {
+    const { getTextColor } = useThemeConfig();
+    return <CardContent ref={ref} className={cn(getTextColor("primary"), className)} {...props} />;
+  }
 );
 CyberpunkCardContent.displayName = "CyberpunkCardContent";
 
 export const CyberpunkCardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <CardFooter ref={ref} className={cn("border-t border-gray-700/50", className)} {...props} />
-  )
+  ({ className, ...props }, ref) => {
+    const { getBorderColor } = useThemeConfig();
+    return (
+      <CardFooter ref={ref} className={cn(`border-t ${getBorderColor("primary")}`, className)} {...props} />
+    );
+  }
 );
 CyberpunkCardFooter.displayName = "CyberpunkCardFooter";
