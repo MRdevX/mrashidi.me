@@ -15,10 +15,10 @@ export const MobileNavigationItem = ({ item, isActive }: MobileNavigationItemPro
     <Disclosure.Button
       as={Link}
       href={item.href}
-      className={`block py-2 pl-3 pr-4 text-base font-medium border-l-4 ${getFocusPattern()} ${
+      className={`block py-2 pl-3 pr-4 text-sm font-medium border-l-2 transition-colors duration-200 ${getFocusPattern()} ${
         isActive
-          ? `border-orange-500 text-orange-500 ${getBackgroundColor("muted")}`
-          : `border-transparent ${getTextColor("secondary")} hover:text-orange-400 hover:border-orange-400 hover:${getBackgroundColor("muted")}`
+          ? `border-orange-500 text-orange-500`
+          : `border-transparent text-gray-600 dark:text-gray-400 hover:text-orange-500 hover:border-orange-500`
       }`}
       aria-current={isActive ? "page" : undefined}
     >

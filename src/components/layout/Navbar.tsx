@@ -20,7 +20,7 @@ export default function Navbar() {
 
   const getNavbarClasses = () => {
     return `fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? `${getBackgroundColor("glass")} backdrop-blur-md border-b ${getBorderColor("primary")}` : "bg-transparent"
+      isScrolled ? "glass-card border-b border-gray-200/20 dark:border-gray-700/20" : "bg-transparent"
     }`;
   };
 
@@ -63,7 +63,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className={`sm:hidden ${getBackgroundColor("glass")} backdrop-blur-md border-b ${getBorderColor("primary")}`}
+                className="sm:hidden glass-card border-b border-gray-200/20 dark:border-gray-700/20"
                 id="mobile-menu"
                 aria-label="Mobile Menu"
               >

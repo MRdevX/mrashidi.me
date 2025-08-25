@@ -21,10 +21,10 @@ export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
   return (
     <Link
       href={item.href}
-      className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors duration-200 ${getFocusPattern()} ${
+      className={`inline-flex items-center px-2 py-1 text-sm font-medium border-b-2 transition-colors duration-200 ${getFocusPattern()} ${
         isActive
           ? `border-orange-500 text-orange-500`
-          : `border-transparent ${getTextColor("secondary")} hover:text-orange-400 hover:border-orange-400`
+          : `border-transparent text-gray-600 dark:text-gray-400 hover:text-orange-500 hover:border-orange-500`
       }`}
       aria-current={isActive ? "page" : undefined}
       onMouseEnter={handleMouseEnter}
