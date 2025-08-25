@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.35](https://github.com/MRdevX/mrashidi.me/compare/v0.1.34...v0.1.35) (2025-08-25)
+
+
+### Features
+
+* **projects:** enhance ProjectCard styling with new badge system and update theme configuration ([17ec5bf](https://github.com/MRdevX/mrashidi.me/commit/17ec5bf0d671bbfd1d34ba122be08e3503f8642c))
+* **theme:** enhance theme configuration with new color palette, animations, and utility classes ([c3a5cd5](https://github.com/MRdevX/mrashidi.me/commit/c3a5cd5532bc70e97ef98b56496249e592677be1))
+* **theme:** implement theme configuration hook for dynamic styling ([dd0ba88](https://github.com/MRdevX/mrashidi.me/commit/dd0ba8868c07987ca912fc257d75756d492c53da))
+
 ### [0.1.34](https://github.com/MRdevX/mrashidi.me/compare/v0.1.33...v0.1.34) (2025-08-25)
 
 
