@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.34](https://github.com/MRdevX/mrashidi.me/compare/v0.1.33...v0.1.34) (2025-08-25)
+
+
+### Features
+
+* **blob:** set default content type to application/pdf for blob uploads ([5f26c2a](https://github.com/MRdevX/mrashidi.me/commit/5f26c2ae4beb739d9428455ec8281f0c8fc6bbb1))
+* **theme:** add theme toggle and support for light/dark themes ([862318f](https://github.com/MRdevX/mrashidi.me/commit/862318fa4139840b74f9c8ec2e23964ffe80185f))
+
 ### 0.1.33 (2025-08-24)
 
 
