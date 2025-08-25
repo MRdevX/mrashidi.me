@@ -16,9 +16,6 @@ import { BackgroundEffects } from "@/components/ui";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  preload: true,
-  fallback: ["system-ui", "Arial", "sans-serif"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
 });
 
@@ -50,7 +47,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable} dark`}>
+    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
@@ -73,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StructuredData type="website" />
         <StructuredData type="organization" />
       </head>
-      <body className={`${inter.className} bg-black text-gray-100 min-h-screen relative`}>
+      <body className={`${inter.className} min-h-screen relative`}>
         <ThemeProvider>
           <a
             href="#main-content"
@@ -91,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <footer className="mt-12 py-8 relative z-10" role="contentinfo" aria-label="Site Footer">
             <div className="max-w-4xl mx-auto px-4">
               <div className="glass-card p-8 text-center">
-                <p className="text-gray-400 mb-4 flex items-center justify-center gap-2">
+                <p className="text-gray-600 dark:text-gray-400 mb-4 flex items-center justify-center gap-2">
                   © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
                 </p>
                 <div className="flex justify-center space-x-6" aria-label="Social Media Links">

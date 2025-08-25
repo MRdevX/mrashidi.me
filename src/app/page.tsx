@@ -8,10 +8,12 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { LoadingAnimation } from "@/components/ui/LoadingAnimation";
 import { skills, personalInfo } from "@/data";
 import techIconMap, { getTechIcon } from "@/lib/techIconMap";
-import { CyberpunkButton } from "@/components/ui";
+import { CyberpunkButton, PageWrapper } from "@/components/ui";
 
-const ContributionGraph = lazy(() => import("@/components/ui/ContributionGraph").then(module => ({ default: module.ContributionGraph })));
-const Terminal = lazy(() => import("@/components/terminal/Terminal").then(module => ({ default: module.Terminal })));
+const ContributionGraph = lazy(() =>
+  import("@/components/ui/ContributionGraph").then((module) => ({ default: module.ContributionGraph }))
+);
+const Terminal = lazy(() => import("@/components/terminal/Terminal").then((module) => ({ default: module.Terminal })));
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -59,18 +61,18 @@ export default function Home() {
   const uniqueMainStack = Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
 
   return (
-    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
-      <motion.div className="max-w-4xl mx-auto px-4" initial="hidden" animate="show" variants={container}>
+    <PageWrapper>
+      <motion.div initial="hidden" animate="show" variants={container}>
         <motion.div className="text-center mb-12 glass-card p-8 relative overflow-hidden" variants={item}>
           <div className="absolute inset-0 bg-linear-to-b from-orange-500/10 to-transparent opacity-50" />
           <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
             {personalInfo.name}
           </h1>
-          <p className="text-2xl text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
-          <p className="text-lg text-gray-300 mb-6 relative z-10 max-w-3xl mx-auto leading-relaxed font-albert">
+          <p className="text-2xl text-gray-700 dark:text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
+          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 relative z-10 max-w-3xl mx-auto leading-relaxed font-albert">
             {personalInfo.intro}
           </p>
-          <p className="text-lg text-gray-300 mb-8 relative z-10 flex items-center justify-center gap-2 font-albert">
+          <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 relative z-10 flex items-center justify-center gap-2 font-albert">
             <MapPin className="w-5 h-5 text-orange-500" />
             {personalInfo.location}
           </p>
@@ -137,10 +139,10 @@ export default function Home() {
                 return (
                   <div
                     key={tech.name}
-                    className="flex flex-col items-center gap-2 p-3 rounded-lg bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
+                    className="flex flex-col items-center gap-2 p-3 rounded-lg bg-white/30 dark:bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
                   >
                     <Icon className={`w-10 h-10 ${colorClass}`} />
-                    <span className="text-xs text-gray-200 font-mono text-center mt-1">{tech.name}</span>
+                    <span className="text-xs text-gray-700 dark:text-gray-200 font-mono text-center mt-1">{tech.name}</span>
                   </div>
                 );
               })}
@@ -175,7 +177,7 @@ export default function Home() {
                 {personalInfo.contactCta}
               </h2>
             </div>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-albert leading-relaxed">
+            <p className="text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto font-albert leading-relaxed">
               {personalInfo.contactDescription}
             </p>
             <Link href="/contact" className="block relative z-10">
@@ -193,6 +195,6 @@ export default function Home() {
           </div>
         </motion.div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 }

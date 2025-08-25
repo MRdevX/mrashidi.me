@@ -18,7 +18,7 @@ export function EducationSection() {
                 {edu.degree}
               </h3>
               <div
-                className={`text-gray-400 group-hover:text-gray-300 transition-colors mt-2 flex items-center relative z-10 ${
+                className={`text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors mt-2 flex items-center relative z-10 ${
                   edu.url ? "cursor-pointer hover:text-orange-400" : ""
                 }`}
                 onClick={() => edu.url && window.open(edu.url, "_blank")}
@@ -27,9 +27,9 @@ export function EducationSection() {
                 {edu.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />}
               </div>
             </div>
-            <div className="text-sm text-gray-400 text-right ml-4">
+            <div className="text-sm text-gray-600 dark:text-gray-400 text-right ml-4">
               <div>{edu.location}</div>
-              <div className="text-xs text-gray-500">{edu.period}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-500">{edu.period}</div>
             </div>
           </div>
         </div>

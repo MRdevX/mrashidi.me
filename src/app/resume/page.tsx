@@ -1,18 +1,17 @@
 "use client";
 
 import { ResumeHeader, WorkExperienceSection, CertificatesSection } from "@/components/features/resume";
+import { PageWrapper } from "@/components/ui";
 
 export default function Resume() {
   return (
-    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
-      <div className="max-w-4xl mx-auto px-4">
-        <ResumeHeader />
+    <PageWrapper>
+      <ResumeHeader />
 
-        <div className="prose dark:prose-invert max-w-none">
-          <WorkExperienceSection />
-          <CertificatesSection />
-        </div>
+      <div className="prose dark:prose-invert max-w-none">
+        <WorkExperienceSection />
+        <CertificatesSection />
       </div>
-    </div>
+    </PageWrapper>
   );
 }

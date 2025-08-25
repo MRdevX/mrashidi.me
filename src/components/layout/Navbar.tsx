@@ -10,6 +10,7 @@ import { NavigationItem } from "./NavigationItem";
 import { MobileNavigationItem } from "./MobileNavigationItem";
 import { VersionBadge } from "./VersionBadge";
 import { MobileMenuButton } from "./MobileMenuButton";
+import { ThemeToggle } from "@/components/ui";
 
 export default function Navbar() {
   const isScrolled = useScrollPosition();
@@ -17,7 +18,7 @@ export default function Navbar() {
 
   const getNavbarClasses = () => {
     return `fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? "bg-black/20 backdrop-blur-md border-b border-orange-500/10" : "bg-transparent"
+      isScrolled ? "bg-white/20 dark:bg-black/20 backdrop-blur-md border-b border-orange-500/10" : "bg-transparent"
     }`;
   };
 
@@ -33,14 +34,20 @@ export default function Navbar() {
                   <VersionBadge variant="desktop" />
                 </div>
 
-                <div className="hidden sm:ml-6 sm:flex sm:space-x-8" role="navigation" aria-label="Main Menu">
+                <div
+                  className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8"
+                  role="navigation"
+                  aria-label="Main Menu"
+                >
                   {navigation.map((item) => (
                     <NavigationItem key={item.name} item={item} isActive={pathname === item.href} />
                   ))}
+                  <ThemeToggle size="sm" />
                 </div>
               </div>
 
-              <div className="-mr-2 flex items-center sm:hidden">
+              <div className="-mr-2 flex items-center space-x-2 sm:hidden">
+                <ThemeToggle size="sm" />
                 <MobileMenuButton isOpen={open} />
               </div>
             </div>
@@ -54,7 +61,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="sm:hidden bg-black/20 backdrop-blur-md border-b border-orange-500/10"
+                className="sm:hidden bg-white/20 dark:bg-black/20 backdrop-blur-md border-b border-orange-500/10"
                 id="mobile-menu"
                 aria-label="Mobile Menu"
               >
