@@ -31,7 +31,7 @@ export function CertificatesSection() {
               {category.certificates.map((cert, i) => (
                 <motion.div
                   key={i}
-                  className={`flex items-center p-3 rounded-lg border ${getBorderColor("primary")} hover:border-orange-500 transition-all duration-300 relative z-10 ${
+                  className={`flex items-center p-3 rounded-lg border ${getBorderColor("primary")} hover:border-orange-500 transition-all duration-300 relative z-10 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-orange-500/30 ${
                     cert.url ? `cursor-pointer hover:${getBackgroundColor("muted")}` : ""
                   }`}
                   initial={{ opacity: 0, x: -20 }}
