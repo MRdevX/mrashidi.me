@@ -21,7 +21,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
         <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{project.title}</h3>
         <div className="flex gap-2 flex-wrap items-center justify-end">
           {project.year && (
-            <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("year")}`}>{project.year}</span>
+            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30">
+              {project.year}
+            </span>
           )}
           {project.status && (
             <span

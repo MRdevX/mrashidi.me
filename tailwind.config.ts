@@ -40,15 +40,10 @@ export default {
       fontFamily: {
         cyberpunk: ["Orbitron", "sans-serif"],
         terminal: ["JetBrains Mono", "monospace"],
-        retro: ["Press Start 2P", "cursive"],
-        matrix: ["VT323", "monospace"],
         albert: ["Albert Sans", "sans-serif"],
       },
       animation: {
         glow: "glow 2s ease-in-out infinite alternate",
-        glitch: "glitch 1s infinite",
-        typewriter: "typing 3.5s steps(40, end)",
-        "matrix-rain": "matrix-rain 20s linear infinite",
         scanline: "scanline 8s linear infinite",
         "neon-pulse": "neonPulse 4s ease-in-out infinite",
       },
@@ -84,14 +79,7 @@ export default {
             textShadow: "-0.025em 0 0 #ff5f1f, -0.025em -0.025em 0 #00fff5, -0.025em -0.05em 0 #bc13fe",
           },
         },
-        typing: {
-          from: { width: "0" },
-          to: { width: "100%" },
-        },
-        "matrix-rain": {
-          "0%": { backgroundPosition: "0 0" },
-          "100%": { backgroundPosition: "0 100%" },
-        },
+
         scanline: {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(100%)" },
@@ -115,7 +103,7 @@ export default {
     },
   },
   plugins: [
-    function ({ addUtilities }: any) {
+    function ({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string>>) => void }) {
       const newUtilities = {
         ".text-neon-orange": {
           color: "#ff5f1f",

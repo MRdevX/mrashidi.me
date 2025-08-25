@@ -27,13 +27,6 @@ export const BLOG_AUTHORS = [
   },
 ] as const;
 
-export const THEME = {
-  PRIMARY: "#ff5f1f",
-  SECONDARY: "#f97316",
-  BACKGROUND: "#000000",
-  TEXT: "#ffffff",
-} as const;
-
 export const ANIMATION = {
   FAST: 0.2,
   NORMAL: 0.3,

@@ -9,7 +9,6 @@ export { Textarea } from "./textarea";
 export { Badge } from "./badge";
 export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
 export { ThemeToggle } from "./ThemeToggle";
-export { ThemeDemo } from "./ThemeDemo";
 export { PageWrapper } from "./PageWrapper";
 
 export { CyberpunkButton } from "./CyberpunkButton";

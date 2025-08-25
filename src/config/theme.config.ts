@@ -44,41 +44,6 @@ const COLORS = {
     500: "#3b82f6",
     700: "#1d4ed8",
   },
-  purple: {
-    DEFAULT: "#8b5cf6",
-    500: "#8b5cf6",
-    700: "#7c3aed",
-  },
-  pink: {
-    DEFAULT: "#ec4899",
-    500: "#ec4899",
-    700: "#db2777",
-  },
-  indigo: {
-    DEFAULT: "#6366f1",
-    500: "#6366f1",
-    700: "#4f46e5",
-  },
-  teal: {
-    DEFAULT: "#14b8a6",
-    500: "#14b8a6",
-    700: "#0f766e",
-  },
-  amber: {
-    DEFAULT: "#f59e0b",
-    500: "#f59e0b",
-    700: "#d97706",
-  },
-  emerald: {
-    DEFAULT: "#10b981",
-    500: "#10b981",
-    700: "#059669",
-  },
-  slate: {
-    DEFAULT: "#64748b",
-    500: "#64748b",
-    700: "#475569",
-  },
 } as const;
 
 const SEMANTIC_COLORS = {
@@ -111,8 +76,6 @@ const TYPOGRAPHY = {
   fonts: {
     cyberpunk: "Orbitron, sans-serif",
     terminal: "JetBrains Mono, monospace",
-    retro: "Press Start 2P, cursive",
-    matrix: "VT323, monospace",
     body: "Albert Sans, sans-serif",
   },
   sizes: {
@@ -212,9 +175,6 @@ const COMPONENT_VARIANTS = {
 
 const ANIMATIONS = {
   glow: "animate-glow",
-  glitch: "glitch-text",
-  typewriter: "typewriter",
-  matrix: "matrix-rain",
 } as const;
 
 const UTILITIES = {
@@ -222,8 +182,6 @@ const UTILITIES = {
     neon: "text-neon-orange",
     cyberpunk: "font-cyberpunk",
     terminal: "font-terminal",
-    retro: "font-retro",
-    matrix: "font-matrix",
   },
   effects: {
     glass: "glass-effect",
@@ -241,7 +199,6 @@ const PATTERNS = {
 } as const;
 
 const PROJECT_BADGES = {
-  year: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
   status: {
     active: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30",
     archived: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",

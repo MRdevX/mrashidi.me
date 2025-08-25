@@ -3,6 +3,7 @@
 import { Moon, Sun, Monitor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface ThemeToggleProps {
   className?: string;
@@ -29,36 +30,17 @@ const ICON_SIZES = {
   lg: "h-[1.4rem] w-[1.4rem]",
 } as const;
 
-export function ThemeToggle({ className, size = "md", variant = "cyberpunk" }: ThemeToggleProps) {
+function ThemeToggleInner({ className, size = "md", variant = "cyberpunk" }: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("dark");
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("dark");
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
-
-    const stored = localStorage.getItem("theme");
-    if (stored && ["light", "dark", "system"].includes(stored)) {
-      setTheme(stored as "light" | "dark" | "system");
-    }
-
-    const isDark = document.documentElement.classList.contains("dark");
-    setResolvedTheme(isDark ? "dark" : "light");
   }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-
-    if (newTheme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      setResolvedTheme(systemTheme);
-      document.documentElement.classList.toggle("dark", systemTheme === "dark");
-    } else {
-      setResolvedTheme(newTheme);
-      document.documentElement.classList.toggle("dark", newTheme === "dark");
-    }
   };
 
   const getIcon = () => {
@@ -112,4 +94,32 @@ export function ThemeToggle({ className, size = "md", variant = "cyberpunk" }: T
       <span className="sr-only">Toggle theme</span>
     </button>
   );
+}
+
+export function ThemeToggle(props: ThemeToggleProps) {
+  const [hasThemeProvider, setHasThemeProvider] = useState(false);
+
+  useEffect(() => {
+    setHasThemeProvider(true);
+  }, []);
+
+  if (!hasThemeProvider) {
+    return (
+      <button
+        className={cn(
+          "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          SIZE_CLASSES[props.size || "md"],
+          VARIANT_CLASSES[props.variant || "cyberpunk"],
+          props.className
+        )}
+        aria-label="Loading theme toggle"
+        disabled
+      >
+        <div className={ICON_SIZES[props.size || "md"]} />
+        <span className="sr-only">Loading theme toggle</span>
+      </button>
+    );
+  }
+
+  return <ThemeToggleInner {...props} />;
 }

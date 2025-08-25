@@ -1,7 +1,5 @@
 @import "@fontsource/jetbrains-mono" layer(base);
 @import "@fontsource/orbitron" layer(base);
-@import "@fontsource/press-start-2p" layer(base);
-@import "@fontsource/vt323" layer(base);
 @import "@fontsource/albert-sans" layer(base);
 
 @import "tailwindcss";
@@ -45,14 +43,10 @@
 
   --font-cyberpunk: Orbitron, sans-serif;
   --font-terminal: JetBrains Mono, monospace;
-  --font-retro: Press Start 2P, cursive;
-  --font-matrix: VT323, monospace;
   --font-albert: Albert Sans, sans-serif;
 
   --font-family-cyberpunk: var(--font-cyberpunk);
   --font-family-terminal: var(--font-terminal);
-  --font-family-retro: var(--font-retro);
-  --font-family-matrix: var(--font-matrix);
   --font-family-albert: var(--font-albert);
 
   --radius-lg: var(--radius);
