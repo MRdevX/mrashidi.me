@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 export const BrandLogo = () => {
-  const { getSectionTitle } = useThemeConfig();
+  const { getSectionTitle, getColor } = useThemeConfig();
 
   return (
     <Link href="/" className="flex items-center shrink-0 group" aria-label="Mahdi Rashidi - Home">
@@ -16,10 +16,10 @@ export const BrandLogo = () => {
         transition={{ duration: 0.5 }}
       >
         <motion.span
-          className="text-lg font-bold text-orange-500 font-cyberpunk tracking-wider relative z-10"
+          className={`text-lg font-bold ${getSectionTitle()} relative z-10`}
           whileHover={{
             scale: 1.05,
-            textShadow: "0 0 8px rgba(255, 95, 31, 0.6)",
+            textShadow: `0 0 8px ${getColor("primary")}99`,
           }}
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.2 }}

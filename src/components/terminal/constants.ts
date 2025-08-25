@@ -34,7 +34,7 @@ export const TERMINAL_CONSTANTS = {
 
 export const TERMINAL_STYLES = {
   CONTAINER:
-    "w-full h-[600px] bg-gray-50/95 dark:bg-black/95 rounded-lg p-4 font-mono text-sm overflow-y-auto cursor-text border border-gray-300 dark:border-gray-800 shadow-lg",
+    "w-full h-[600px] bg-white/60 dark:bg-black/95 rounded-lg p-4 font-mono text-sm overflow-y-auto cursor-text border border-gray-300 dark:border-gray-800 shadow-lg",
   PROMPT: "text-green-600 dark:text-green-400 select-none font-bold",
   INPUT:
     "flex-1 bg-transparent border-none outline-none text-gray-800 dark:text-gray-300 disabled:opacity-50 placeholder-gray-500 dark:placeholder-gray-600 font-mono",

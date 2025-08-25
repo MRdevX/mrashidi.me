@@ -907,6 +907,18 @@
     border-color: rgb(55 65 81 / 0.3);
   }
 
+  .glass-card-no-shadow {
+    background-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgb(0 0 0 / 0.1);
+    border-radius: 0.75rem;
+  }
+
+  .dark .glass-card-no-shadow {
+    background-color: rgb(31 41 55 / 0.3);
+    border-color: rgb(55 65 81 / 0.3);
+  }
+
   .feature-card {
     position: relative;
     overflow: hidden;
