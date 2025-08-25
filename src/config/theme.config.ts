@@ -46,6 +46,41 @@ export const THEME_CONFIG = {
       500: "#3b82f6",
       700: "#1d4ed8",
     },
+    purple: {
+      DEFAULT: "#8b5cf6",
+      500: "#8b5cf6",
+      700: "#7c3aed",
+    },
+    pink: {
+      DEFAULT: "#ec4899",
+      500: "#ec4899",
+      700: "#db2777",
+    },
+    indigo: {
+      DEFAULT: "#6366f1",
+      500: "#6366f1",
+      700: "#4f46e5",
+    },
+    teal: {
+      DEFAULT: "#14b8a6",
+      500: "#14b8a6",
+      700: "#0f766e",
+    },
+    amber: {
+      DEFAULT: "#f59e0b",
+      500: "#f59e0b",
+      700: "#d97706",
+    },
+    emerald: {
+      DEFAULT: "#10b981",
+      500: "#10b981",
+      700: "#059669",
+    },
+    slate: {
+      DEFAULT: "#64748b",
+      500: "#64748b",
+      700: "#475569",
+    },
   },
 
   semantic: {
@@ -154,13 +189,13 @@ export const THEME_CONFIG = {
         "bg-gray-50 dark:bg-black border-2 border-green-500/30 text-gray-800 dark:text-green-400 placeholder-gray-500 dark:placeholder-green-500/50 focus:border-green-500 focus:ring-green-500/50 font-terminal",
     },
     badge: {
-      default: "bg-orange-500/20 text-orange-400 border-orange-500/30 hover:bg-orange-500/30",
-      secondary: "bg-gray-800/60 text-gray-300 border-gray-600/30 hover:bg-gray-800/80",
-      destructive: "bg-red-500/20 text-red-400 border-red-500/30 hover:bg-red-500/30",
-      outline: "border-orange-500/50 text-orange-400 hover:bg-orange-500/20",
-      neon: "bg-orange-500/10 text-orange-400 border-orange-500/50 shadow-[0_0_10px_rgba(255,95,31,0.3)] hover:shadow-[0_0_15px_rgba(255,95,31,0.5)]",
-      tech: "bg-blue-500/20 text-blue-400 border-blue-500/30 hover:bg-blue-500/30",
-      status: "bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30",
+      default: "bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-500/30 hover:bg-orange-500/30",
+      secondary: "bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-600/30 hover:bg-gray-800/80",
+      destructive: "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30 hover:bg-red-500/30",
+      outline: "border-orange-500/50 text-orange-700 dark:text-orange-400 hover:bg-orange-500/20",
+      neon: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/50 shadow-[0_0_10px_rgba(255,95,31,0.3)] hover:shadow-[0_0_15px_rgba(255,95,31,0.5)]",
+      tech: "bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30 hover:bg-blue-500/30",
+      status: "bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30 hover:bg-green-500/30",
     },
     card: {
       glass: "glass-card",
@@ -206,6 +241,33 @@ export const THEME_CONFIG = {
     interactive: "transition-all duration-300 hover:scale-105",
     focus: "focus:outline-none focus:ring-2 focus:ring-orange-500/50",
   },
+
+  projectBadges: {
+    year: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
+    status: {
+      active: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30",
+      archived: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
+      "in progress": "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30 hover:bg-amber-500/30",
+      maintenance: "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30 hover:bg-blue-500/30",
+    },
+    visibility: {
+      public: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30",
+      private: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
+    },
+    type: {
+      personal: "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/30",
+      client: "bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-500/30 hover:bg-orange-500/30",
+    },
+    openSource: "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30 hover:bg-amber-500/30",
+    license: {
+      "All Rights Reserved": "bg-red-500/20 text-red-700 dark:text-red-300 border-red-500/30 hover:bg-red-500/30",
+      MIT: "bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/30 hover:bg-green-500/30",
+      "Apache 2.0": "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30 hover:bg-blue-500/30",
+      "GPL-3.0": "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/30",
+      "BSD-3-Clause": "bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/30",
+      default: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
+    },
+  },
 } as const;
 
 export type ButtonVariant = keyof typeof THEME_CONFIG.variants.button;
@@ -247,4 +309,26 @@ export const getSemanticColor = (category: keyof typeof THEME_CONFIG.semantic, v
 
 export const getPattern = (pattern: keyof typeof THEME_CONFIG.patterns): string => {
   return THEME_CONFIG.patterns[pattern];
+};
+
+export const getProjectBadge = (type: keyof typeof THEME_CONFIG.projectBadges, value?: string): string => {
+  const badgeConfig = THEME_CONFIG.projectBadges[type];
+
+  if (typeof badgeConfig === "string") {
+    return badgeConfig;
+  }
+
+  if (value && value in badgeConfig) {
+    return badgeConfig[value as keyof typeof badgeConfig] as string;
+  }
+
+  if (type === "license") {
+    const licenseConfig = badgeConfig as typeof THEME_CONFIG.projectBadges.license;
+    if ("default" in licenseConfig) {
+      return licenseConfig.default;
+    }
+  }
+
+  const firstKey = Object.keys(badgeConfig)[0] as keyof typeof badgeConfig;
+  return badgeConfig[firstKey] as string;
 };

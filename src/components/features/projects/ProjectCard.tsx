@@ -11,7 +11,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
-  const { getTextColor, getBackgroundColor, getBorderColor, colors } = useThemeConfig();
+  const { getTextColor, getBackgroundColor, getProjectBadge } = useThemeConfig();
 
   return (
     <div
@@ -21,39 +21,31 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
         <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{project.title}</h3>
         <div className="flex gap-2 flex-wrap items-center justify-end">
           {project.year && (
-            <span
-              className={`px-2 py-0.5 rounded font-semibold text-xs ${getBackgroundColor("muted")} ${getTextColor("primary")} border ${getBorderColor("secondary")}`}
-            >
-              {project.year}
-            </span>
+            <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("year")}`}>{project.year}</span>
           )}
           {project.status && (
             <span
-              className={`px-2 py-0.5 rounded font-semibold text-xs ${getBackgroundColor("muted")} ${getTextColor("secondary")} border ${getBorderColor("secondary")} capitalize`}
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("status", project.status)} capitalize`}
             >
               {project.status}
             </span>
           )}
-          <span
-            className={`px-2 py-0.5 rounded font-semibold text-xs ${project.visibility === "public" ? `bg-[${colors.success.DEFAULT}] text-white` : `${getBackgroundColor("muted")} ${getTextColor("primary")}`}`}
-          >
+          <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("visibility", project.visibility)}`}>
             {project.visibility}
           </span>
-          <span
-            className={`px-2 py-0.5 rounded font-semibold text-xs ${project.type === "personal" ? `bg-[${colors.info.DEFAULT}] text-white` : `bg-[${colors.primary.DEFAULT}] text-white`}`}
-          >
+          <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("type", project.type)}`}>
             {project.type}
           </span>
           {project.openSource && (
             <span
-              className={`px-2 py-0.5 rounded font-semibold text-xs bg-[${colors.warning.DEFAULT}] text-white flex items-center gap-1`}
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("openSource")} flex items-center gap-1`}
             >
               Open Source
             </span>
           )}
           {project.openSource && project.license && (
             <span
-              className={`px-2 py-0.5 rounded font-semibold text-xs bg-[${colors.warning.DEFAULT}]/80 text-white border border-[${colors.warning.DEFAULT}] ml-1`}
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("license", project.license)} ml-1`}
             >
               {project.license}
             </span>

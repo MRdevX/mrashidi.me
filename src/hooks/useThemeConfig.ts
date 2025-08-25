@@ -8,6 +8,7 @@ import {
   getShadow,
   getSemanticColor,
   getPattern,
+  getProjectBadge,
 } from "@/config/theme.config";
 import type { ButtonVariant, InputVariant, TextareaVariant, BadgeVariant, CardVariant } from "@/config/theme.config";
 
@@ -23,6 +24,7 @@ export const useThemeConfig = () => {
     getShadow,
     getSemanticColor,
     getPattern,
+    getProjectBadge,
 
     getButtonVariant: (variant: ButtonVariant) => getVariant("button", variant),
     getInputVariant: (variant: InputVariant) => getVariant("input", variant),
@@ -51,5 +53,6 @@ export const useThemeConfig = () => {
     utilities: THEME_CONFIG.utilities,
     semantic: THEME_CONFIG.semantic,
     patterns: THEME_CONFIG.patterns,
+    projectBadges: THEME_CONFIG.projectBadges,
   };
 };
