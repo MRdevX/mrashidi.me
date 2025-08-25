@@ -28,9 +28,11 @@ export function LanguagesSection() {
               <span className="font-semibold text-orange-500 group-hover:text-orange-400 transition-colors">
                 {lang.language}
               </span>
-              <span className="text-gray-400 group-hover:text-gray-300 transition-colors">{lang.level}</span>
+              <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+                {lang.level}
+              </span>
             </div>
-            <div className="w-full bg-gray-800 rounded-full h-2.5">
+            <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2.5">
               <motion.div
                 className="bg-orange-500 h-2.5 rounded-full"
                 initial={{ width: 0 }}

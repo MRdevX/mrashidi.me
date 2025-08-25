@@ -34,19 +34,20 @@ export const TERMINAL_CONSTANTS = {
 
 export const TERMINAL_STYLES = {
   CONTAINER:
-    "w-full h-[600px] bg-black/95 rounded-lg p-4 font-mono text-sm overflow-y-auto cursor-text border border-gray-800 shadow-lg",
-  PROMPT: "text-green-400 select-none font-bold",
-  INPUT: "flex-1 bg-transparent border-none outline-none text-gray-300 disabled:opacity-50 placeholder-gray-600 font-mono",
-  WELCOME: "text-gray-500 text-sm italic",
-  TIMESTAMP: "text-gray-600 text-xs ml-auto opacity-70",
+    "w-full h-[600px] bg-gray-50/95 dark:bg-black/95 rounded-lg p-4 font-mono text-sm overflow-y-auto cursor-text border border-gray-300 dark:border-gray-800 shadow-lg",
+  PROMPT: "text-green-600 dark:text-green-400 select-none font-bold",
+  INPUT:
+    "flex-1 bg-transparent border-none outline-none text-gray-800 dark:text-gray-300 disabled:opacity-50 placeholder-gray-500 dark:placeholder-gray-600 font-mono",
+  WELCOME: "text-gray-600 dark:text-gray-500 text-sm italic",
+  TIMESTAMP: "text-gray-500 dark:text-gray-600 text-xs ml-auto opacity-70",
 
   TEXT: {
-    PRIMARY: "text-gray-300",
-    SECONDARY: "text-gray-400",
-    SUCCESS: "text-green-400",
-    WARNING: "text-yellow-400",
-    ERROR: "text-red-400",
-    INFO: "text-blue-400",
-    MUTED: "text-gray-600",
+    PRIMARY: "text-gray-800 dark:text-gray-300",
+    SECONDARY: "text-gray-600 dark:text-gray-400",
+    SUCCESS: "text-green-600 dark:text-green-400",
+    WARNING: "text-yellow-600 dark:text-yellow-400",
+    ERROR: "text-red-600 dark:text-red-400",
+    INFO: "text-blue-600 dark:text-blue-400",
+    MUTED: "text-gray-500 dark:text-gray-600",
   },
 } as const;

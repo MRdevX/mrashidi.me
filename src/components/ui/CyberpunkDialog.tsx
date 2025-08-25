@@ -13,7 +13,7 @@ export const CyberpunkDialogContent = React.forwardRef<
   <DialogContent
     ref={ref}
     className={cn(
-      "bg-gray-900/95 backdrop-blur-lg border border-orange-500/30 shadow-2xl",
+      "bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border border-orange-500/30 shadow-2xl",
       "data-[state=open]:animate-in data-[state=closed]:animate-out",
       "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -51,7 +51,7 @@ export const CyberpunkDialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogDescription>,
   React.ComponentPropsWithoutRef<typeof DialogDescription>
 >(({ className, ...props }, ref) => (
-  <DialogDescription ref={ref} className={cn("text-gray-400 font-albert", className)} {...props} />
+  <DialogDescription ref={ref} className={cn("text-gray-600 dark:text-gray-400 font-albert", className)} {...props} />
 ));
 CyberpunkDialogDescription.displayName = "CyberpunkDialogDescription";
 

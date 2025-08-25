@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
 
 interface Particle {
   x: number;
@@ -13,9 +14,17 @@ interface Particle {
 export function BackgroundEffects() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const matrixRef = useRef<Particle[]>([]);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
   const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -40,10 +49,12 @@ export function BackgroundEffects() {
 
     let animationFrame: number;
     const animate = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      const bgColor = resolvedTheme === "dark" ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)";
+      ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#0f0";
+      const textColor = resolvedTheme === "dark" ? "#0f0" : "#006400";
+      ctx.fillStyle = textColor;
       ctx.font = "14px monospace";
 
       matrixRef.current.forEach((particle) => {
@@ -66,11 +77,27 @@ export function BackgroundEffects() {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [resolvedTheme, mounted]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <>
-      <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full pointer-events-none opacity-20 z-0" />
+      {/* Matrix animation - more prominent in header/footer areas */}
+      <canvas
+        ref={canvasRef}
+        className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
+          resolvedTheme === "dark" ? "opacity-30" : "opacity-15"
+        }`}
+      />
+
+      {/* Gradient overlays for header and footer areas */}
+      <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
+      <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
+
+      {/* Subtle radial gradient effects */}
       <motion.div
         className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
         animate={{
@@ -87,7 +114,13 @@ export function BackgroundEffects() {
           repeatType: "reverse",
         }}
       />
-      <div className="scanline fixed top-0 left-0 w-full h-full pointer-events-none opacity-10 z-0" />
+
+      {/* Scanline effect */}
+      <div
+        className={`scanline fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
+          resolvedTheme === "dark" ? "opacity-10" : "opacity-5"
+        }`}
+      />
     </>
   );
 }

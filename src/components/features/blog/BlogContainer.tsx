@@ -1,13 +1,10 @@
 import { ReactNode } from "react";
+import { PageWrapper } from "@/components/ui";
 
 interface BlogContainerProps {
   children: ReactNode;
 }
 
 export function BlogContainer({ children }: BlogContainerProps) {
-  return (
-    <div className="min-h-screen py-12 bg-linear-to-b from-gray-900 to-black">
-      <div className="max-w-4xl mx-auto px-4">{children}</div>
-    </div>
-  );
+  return <PageWrapper>{children}</PageWrapper>;
 }

@@ -14,7 +14,9 @@ export function BioSection() {
     >
       <div className="relative">
         <ProfileImage src="/profile.jpeg" alt="Mahdi Rashidi" />
-        <p className="text-lg leading-relaxed text-gray-300 font-albert text-justify">{personalInfo.bio}</p>
+        <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 font-albert text-justify">
+          {personalInfo.bio}
+        </p>
       </div>
     </motion.section>
   );

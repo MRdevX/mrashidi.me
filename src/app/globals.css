@@ -86,6 +86,20 @@
 
 @layer utilities {
   :root {
+    /* Light theme variables */
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 245, 245, 245;
+    --neon-orange: #ff5f1f;
+    --neon-blue: #00fff5;
+    --neon-purple: #bc13fe;
+    --terminal-green: #006400;
+    --background-dark: #ffffff;
+    --foreground-neon: rgba(255, 95, 31, 0.8);
+  }
+
+  .dark {
+    /* Dark theme variables */
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 10, 10, 10;
     --background-end-rgb: 0, 0, 0;
@@ -95,14 +109,6 @@
     --terminal-green: #00ff00;
     --background-dark: #0a0a0a;
     --foreground-neon: rgba(255, 95, 31, 0.8);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --foreground-rgb: 255, 255, 255;
-      --background-start-rgb: 10, 10, 10;
-      --background-end-rgb: 0, 0, 0;
-    }
   }
 
   /* Smooth scrolling behavior */
@@ -297,8 +303,13 @@
   .terminal-text {
     font-family: "JetBrains Mono", monospace;
     color: var(--terminal-green);
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    text-shadow: 0 0 5px rgba(0, 100, 0, 0.5);
     font-weight: 400;
+  }
+
+  .dark .terminal-text {
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
   }
 
   .retro-text {
@@ -310,8 +321,13 @@
   .matrix-text {
     font-family: "VT323", monospace;
     color: var(--terminal-green);
-    text-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
+    text-shadow: 0 0 4px rgba(0, 100, 0, 0.6);
     font-weight: 400;
+  }
+
+  .dark .matrix-text {
+    color: #00ff00;
+    text-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
   }
 
   .space-text {
@@ -329,6 +345,11 @@
     font-family: "Orbitron", sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
+    color: #000000;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .cyberpunk-h1 {
     color: #ffffff;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
   }
@@ -352,6 +373,11 @@
     font-family: "Orbitron", sans-serif;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    color: #000000;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .cyberpunk-h2 {
     color: #ffffff;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   }
@@ -377,6 +403,10 @@
     font-family: "Orbitron", sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: #374151;
+  }
+
+  .dark .cyberpunk-h3 {
     color: #e5e7eb;
   }
 
@@ -394,6 +424,10 @@
     font-family: "Orbitron", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.8px;
+    color: #4b5563;
+  }
+
+  .dark .cyberpunk-h4 {
     color: #d1d5db;
   }
 
@@ -410,6 +444,10 @@
     font-family: "Space Grotesk", sans-serif;
     font-weight: 400;
     letter-spacing: 0.2px;
+    color: #374151;
+  }
+
+  .dark .cyberpunk-body-text {
     color: #e5e7eb;
   }
 
@@ -417,8 +455,12 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-family: "JetBrains Mono", monospace;
-    color: #9ca3af;
+    color: #6b7280;
     font-weight: 400;
+  }
+
+  .dark .cyberpunk-caption {
+    color: #9ca3af;
   }
 
   .cyberpunk-label {
@@ -428,11 +470,15 @@
     letter-spacing: 0.05em;
     font-family: "Orbitron", sans-serif;
     font-weight: 600;
+    color: #6b7280;
+  }
+
+  .dark .cyberpunk-label {
     color: #9ca3af;
   }
 
   .terminal-window {
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(248, 250, 252, 0.95);
     border: 1px solid var(--neon-orange);
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(255, 95, 31, 0.3);
@@ -440,6 +486,10 @@
     min-height: 500px;
     position: relative;
     overflow: hidden;
+  }
+
+  .dark .terminal-window {
+    background: rgba(10, 10, 10, 0.95);
   }
 
   .terminal-window::before {
@@ -590,6 +640,10 @@
     margin-left: 2px;
   }
 
+  .dark .terminal-cursor {
+    background: #00ff00;
+  }
+
   @keyframes blink {
     0%,
     100% {
@@ -623,6 +677,10 @@
     overflow: hidden;
   }
 
+  .dark .typing {
+    border-right-color: #00ff00;
+  }
+
   @keyframes typing {
     from {
       width: 0;
@@ -642,14 +700,26 @@
     }
   }
 
+  .dark .typing {
+    border-right-color: #00ff00;
+  }
+
+  .dark .typing .blink-caret {
+    border-color: #00ff00;
+  }
+
   /* Code block styling */
   .code-block {
     font-family: "JetBrains Mono", monospace;
-    background: rgba(10, 10, 10, 0.9);
+    background: rgba(248, 250, 252, 0.9);
     padding: 1rem;
     border-radius: 4px;
     border-left: 3px solid var(--neon-orange);
     position: relative;
+  }
+
+  .dark .code-block {
+    background: rgba(10, 10, 10, 0.9);
   }
 
   .code-block::before {
@@ -708,6 +778,11 @@
   }
 
   .text-neon-green {
+    color: var(--terminal-green);
+    text-shadow: 0 0 5px var(--terminal-green);
+  }
+
+  .dark .text-neon-green {
     color: #0f0;
     text-shadow: 0 0 5px #0f0;
   }
@@ -828,7 +903,7 @@
   .glass-card {
     background-color: rgb(255 255 255 / 0.1);
     backdrop-filter: blur(16px);
-    border: 1px solid rgb(229 231 235 / 0.2);
+    border: 1px solid rgb(0 0 0 / 0.1);
     border-radius: 0.75rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   }
@@ -845,7 +920,7 @@
     padding: 1.5rem;
     background-color: rgb(255 255 255 / 0.1);
     backdrop-filter: blur(16px);
-    border: 1px solid rgb(229 231 235 / 0.2);
+    border: 1px solid rgb(0 0 0 / 0.1);
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     transition: all 0.3s ease;
   }
@@ -964,8 +1039,12 @@
 
   /* Update social media icon hover styles */
   .social-link {
-    color: rgb(156 163 175);
+    color: rgb(75 85 99);
     transition: color 0.3s;
+  }
+
+  .dark .social-link {
+    color: rgb(156 163 175);
   }
 
   .social-link:hover {
@@ -1090,7 +1169,7 @@
 
 @layer base {
   :root {
-    /* Cyberpunk Theme - Light Mode (if needed) */
+    /* Cyberpunk Theme - Light Mode */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -1110,11 +1189,11 @@
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 16 100% 56%; /* Orange focus ring */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 16 100% 56%; /* Orange */
+    --chart-2: 180 100% 48%; /* Cyan #00fff5 */
+    --chart-3: 280 100% 56%; /* Purple #bc13fe */
+    --chart-4: 120 100% 50%; /* Green #00ff00 */
+    --chart-5: 0 100% 50%; /* Red */
     --radius: 0.5rem;
   }
   .dark {
@@ -1153,5 +1232,6 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
   }
 }
