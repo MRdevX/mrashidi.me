@@ -58,30 +58,30 @@ export function BackgroundEffects() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    const particleCount = Math.floor(canvas.width / 20);
+    const particleCount = Math.floor(canvas.width / 50);
     matrixRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      speed: 1 + Math.random() * 3,
+      speed: 0.8 + Math.random() * 2,
       char: chars[Math.floor(Math.random() * chars.length)],
     }));
 
     let animationFrame: number;
     const animate = () => {
-      const bgColor = isDark ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)";
+      const bgColor = isDark ? "rgba(0, 0, 0, 0.03)" : "rgba(255, 255, 255, 0.03)";
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const textColor = isDark ? "#0f0" : "#006400";
       ctx.fillStyle = textColor;
-      ctx.font = "14px monospace";
+      ctx.font = "12px monospace";
 
       matrixRef.current.forEach((particle) => {
         ctx.fillText(particle.char, particle.x, particle.y);
         particle.y += particle.speed;
 
-        if (particle.y > canvas.height) {
-          particle.y = 0;
+        if (particle.y > canvas.height + 50) {
+          particle.y = -20;
           particle.x = Math.random() * canvas.width;
           particle.char = chars[Math.floor(Math.random() * chars.length)];
         }
