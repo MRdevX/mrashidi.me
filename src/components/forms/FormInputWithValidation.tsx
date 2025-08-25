@@ -2,6 +2,7 @@ import { InputHTMLAttributes, TextareaHTMLAttributes, ReactNode } from "react";
 import { FieldError, UseFormReturn, Path } from "react-hook-form";
 import { CyberpunkInput, CyberpunkTextarea } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface FormInputWithValidationProps<T extends Record<string, unknown>> {
   form: UseFormReturn<T>;
@@ -30,6 +31,8 @@ export function FormInputWithValidation<T extends Record<string, unknown>>({
   className = "",
   icon,
 }: FormInputWithValidationProps<T>) {
+  const { getTextColor } = useThemeConfig();
+
   const {
     register,
     formState: { errors },
@@ -61,12 +64,14 @@ export function FormInputWithValidation<T extends Record<string, unknown>>({
 
   return (
     <div>
-      <label htmlFor={fieldId} className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+      <label htmlFor={fieldId} className={`block mb-2 text-sm font-medium ${getTextColor("primary")}`}>
         {label} {required && <span className="text-orange-500">*</span>}
       </label>
       {multiline ? (
         <div className="relative">
-          {icon && <div className="absolute left-3 top-3 text-gray-400 pointer-events-none z-10">{icon}</div>}
+          {icon && (
+            <div className={`absolute left-3 top-3 ${getTextColor("secondary")} pointer-events-none z-10`}>{icon}</div>
+          )}
           <CyberpunkTextarea
             {...register(name)}
             {...textareaProps}

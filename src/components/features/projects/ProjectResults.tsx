@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Search, Filter, Globe, Package, AlertCircle } from "lucide-react";
 import { ProjectCard } from "@/components/features/projects/ProjectCard";
 import { projects } from "@/data";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface ProjectResultsProps {
   filteredProjects: typeof projects;
@@ -20,12 +21,14 @@ export function ProjectResults({
   commitInfo = new Map(),
   isLoadingCommitDates = false,
 }: ProjectResultsProps) {
+  const { getTextColor } = useThemeConfig();
+
   return (
     <>
       {/* Results Summary */}
       <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <p className="text-gray-400 text-sm flex items-center gap-2">
+          <p className={`${getTextColor("secondary")} text-sm flex items-center gap-2`}>
             <Package className="w-4 h-4" />
             Showing {filteredProjects.length} of {projects.length} projects
           </p>
@@ -72,11 +75,13 @@ export function ProjectResults({
           </div>
         ) : (
           <div className="text-center py-12">
-            <div className="text-gray-500 text-lg mb-2 flex items-center justify-center gap-2">
+            <div className={`${getTextColor("muted")} text-lg mb-2 flex items-center justify-center gap-2`}>
               <AlertCircle className="w-5 h-5" />
               No projects found
             </div>
-            <p className="text-gray-600 text-sm">Try adjusting your search or filters to see more projects</p>
+            <p className={`${getTextColor("secondary")} text-sm`}>
+              Try adjusting your search or filters to see more projects
+            </p>
           </div>
         )}
       </motion.div>

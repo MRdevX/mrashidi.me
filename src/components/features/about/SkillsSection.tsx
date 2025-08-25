@@ -3,6 +3,7 @@ import { Code2 } from "lucide-react";
 import { skills } from "@/data";
 import { getTechIcon } from "@/lib/techIconMap";
 import { fadeInVariants } from "@/lib/animations";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 const levelConfig = {
   expert: { color: "#9A3412", label: "Expert" },
@@ -13,6 +14,9 @@ const levelConfig = {
 };
 
 export function SkillsSection() {
+  const { getSectionHeader, getSectionTitle, getCardPattern, getTextColor, getBackgroundColor, getBorderColor } =
+    useThemeConfig();
+
   const allSkills = skills.flatMap((cat) => cat.skills);
   const skillsByLevel = {
     expert: allSkills.filter((skill) => skill.level === "expert"),
@@ -30,9 +34,9 @@ export function SkillsSection() {
       variants={fadeInVariants}
       transition={{ delay: 0.4 }}
     >
-      <div className="flex items-center gap-3 mb-8">
+      <div className={getSectionHeader()}>
         <Code2 className="w-8 h-8 text-orange-500" />
-        <h2 className="text-3xl font-bold text-orange-500 font-cyberpunk glow-text">Skills & Technologies</h2>
+        <h2 className={getSectionTitle()}>Skills & Technologies</h2>
       </div>
 
       <div className="space-y-8">
@@ -43,16 +47,16 @@ export function SkillsSection() {
           return (
             <div
               key={level}
-              className="feature-card p-6 bg-white/70 dark:bg-gray-900/70 border border-gray-200/50 dark:border-white/10 rounded-xl"
+              className={`${getCardPattern()} p-6 ${getBackgroundColor("glass")} border ${getBorderColor("primary")} rounded-xl`}
             >
               <div className="flex items-center gap-3 mb-4">
                 <span
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold text-sm bg-gray-100/80 dark:bg-gray-800/80 text-gray-800 dark:text-white border border-gray-300/50 dark:border-white/10"
+                  className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold text-sm ${getBackgroundColor("muted")} ${getTextColor("primary")} border ${getBorderColor("secondary")}`}
                   style={{ boxShadow: `0 0 12px 2px ${config.color}` }}
                 >
                   {config.label}
                 </span>
-                <span className="text-gray-600 dark:text-gray-400 text-sm">({skills.length})</span>
+                <span className={`${getTextColor("secondary")} text-sm`}>({skills.length})</span>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -62,7 +66,7 @@ export function SkillsSection() {
                   return (
                     <span
                       key={skill.name}
-                      className="inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm bg-gray-100/60 dark:bg-gray-800/60 text-gray-800 dark:text-white border border-gray-300/50 dark:border-white/10 hover:bg-gray-200/80 dark:hover:bg-gray-800/80 transition-colors"
+                      className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm ${getBackgroundColor("muted")} ${getTextColor("primary")} border ${getBorderColor("secondary")} hover:${getBackgroundColor("secondary")} transition-colors`}
                       style={{ boxShadow: `0 0 8px 1px ${config.color}` }}
                       title={skill.name}
                     >

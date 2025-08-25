@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NavigationItem as NavigationItemType } from "@/data";
 import { useBlogPreload } from "@/hooks";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface NavigationItemProps {
   item: NavigationItemType;
@@ -9,6 +10,7 @@ interface NavigationItemProps {
 
 export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
   const { preloadFirstPage } = useBlogPreload();
+  const { getFocusPattern } = useThemeConfig();
 
   const handleMouseEnter = () => {
     if (item.href === "/blog") {
@@ -19,7 +21,7 @@ export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
   return (
     <Link
       href={item.href}
-      className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors duration-200 focus-visible:outline-offset-4 focus-visible:outline-orange-500 ${
+      className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors duration-200 ${getFocusPattern()} ${
         isActive
           ? "border-orange-500 text-orange-500"
           : "border-transparent text-gray-400 hover:text-orange-400 hover:border-orange-400"
