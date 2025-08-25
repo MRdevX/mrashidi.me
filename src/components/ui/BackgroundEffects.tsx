@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useTheme } from "@/context/ThemeContext";
 
 interface Particle {
   x: number;
@@ -15,11 +14,31 @@ export function BackgroundEffects() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const matrixRef = useRef<Particle[]>([]);
   const [mounted, setMounted] = useState(false);
-  const { resolvedTheme } = useTheme();
+  const [isDark, setIsDark] = useState(false);
+
   const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
 
   useEffect(() => {
     setMounted(true);
+
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+          const isDarkMode = document.documentElement.classList.contains("dark");
+          setIsDark(isDarkMode);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -49,11 +68,11 @@ export function BackgroundEffects() {
 
     let animationFrame: number;
     const animate = () => {
-      const bgColor = resolvedTheme === "dark" ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)";
+      const bgColor = isDark ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)";
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const textColor = resolvedTheme === "dark" ? "#0f0" : "#006400";
+      const textColor = isDark ? "#0f0" : "#006400";
       ctx.fillStyle = textColor;
       ctx.font = "14px monospace";
 
@@ -77,7 +96,7 @@ export function BackgroundEffects() {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrame);
     };
-  }, [resolvedTheme, mounted]);
+  }, [isDark, mounted]);
 
   if (!mounted) {
     return null;
@@ -85,19 +104,17 @@ export function BackgroundEffects() {
 
   return (
     <>
-      {/* Matrix animation - more prominent in header/footer areas */}
+      {/* Matrix animation */}
       <canvas
         ref={canvasRef}
-        className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
-          resolvedTheme === "dark" ? "opacity-30" : "opacity-15"
-        }`}
+        className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${isDark ? "opacity-30" : "opacity-15"}`}
       />
 
-      {/* Gradient overlays for header and footer areas */}
+      {/* Gradient overlays */}
       <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
       <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
 
-      {/* Subtle radial gradient effects */}
+      {/* Radial gradient effects */}
       <motion.div
         className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
         animate={{
@@ -118,7 +135,7 @@ export function BackgroundEffects() {
       {/* Scanline effect */}
       <div
         className={`scanline fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
-          resolvedTheme === "dark" ? "opacity-10" : "opacity-5"
+          isDark ? "opacity-10" : "opacity-5"
         }`}
       />
     </>
