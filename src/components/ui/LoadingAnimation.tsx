@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface LoadingAnimationProps {
   size?: "small" | "medium" | "large";
@@ -15,6 +16,8 @@ const LoadingAnimation = ({
   text = "Loading...",
   fullScreen = false,
 }: LoadingAnimationProps) => {
+  const { colors, getTextColor } = useThemeConfig();
+
   const sizeValues = {
     small: {
       container: "w-4 h-4",
@@ -31,9 +34,9 @@ const LoadingAnimation = ({
   };
 
   const colorValues = {
-    orange: "bg-orange-500",
-    green: "bg-green-500",
-    blue: "bg-blue-500",
+    orange: `bg-[${colors.primary.DEFAULT}]`,
+    green: `bg-[${colors.success.DEFAULT}]`,
+    blue: `bg-[${colors.info.DEFAULT}]`,
     white: "bg-white",
   };
 
@@ -87,7 +90,7 @@ const LoadingAnimation = ({
       </motion.div>
       {text && (
         <div className="mt-3 text-center">
-          <span className={`text-${color === "white" ? "gray-200" : color}-500 text-sm`}>{text}</span>
+          <span className={`${getTextColor("secondary")} text-sm`}>{text}</span>
         </div>
       )}
       <div className="sr-only">Loading content, please wait</div>

@@ -4,15 +4,18 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { BlogPost } from "./types";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface BlogPostCardProps {
   post: BlogPost;
 }
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
+  const { getTextColor, getCardPattern } = useThemeConfig();
+
   return (
     <motion.article
-      className="feature-card group"
+      className={getCardPattern()}
       variants={{
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0 },
@@ -34,9 +37,11 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
         <Link href={post.url} target="_blank" rel="noopener noreferrer" className="block">
           <h2 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{post.title}</h2>
         </Link>
-        <p className="text-gray-400 group-hover:text-gray-300 transition-colors line-clamp-3">{post.content}</p>
+        <p className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors line-clamp-3`}>
+          {post.content}
+        </p>
         <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-500">{new Date(post.publishedAt).toLocaleDateString()}</span>
+          <span className={`text-sm ${getTextColor("muted")}`}>{new Date(post.publishedAt).toLocaleDateString()}</span>
           <Link
             href={post.url}
             target="_blank"

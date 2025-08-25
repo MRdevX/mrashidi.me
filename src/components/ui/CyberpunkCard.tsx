@@ -4,29 +4,27 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
 import { cn } from "@/lib/utils";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
+import type { CardVariant } from "@/config/theme.config";
 
 interface CyberpunkCardProps {
   children: React.ReactNode;
   className?: string;
-  variant?: "glass" | "feature" | "default";
+  variant?: CardVariant;
   hover?: boolean;
   animate?: boolean;
 }
 
-const cyberpunkVariants = {
-  glass: "glass-card",
-  feature: "feature-card",
-  default: "bg-gray-900/50 border border-gray-700 rounded-xl",
-};
-
 export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps>(
   ({ children, className, variant = "default", hover = false, animate = true, ...props }, ref) => {
+    const { getCardVariant } = useThemeConfig();
+
     const cardElement = (
       <Card
         ref={ref}
         className={cn(
           "transition-all duration-300",
-          cyberpunkVariants[variant],
+          getCardVariant(variant),
           hover && "hover:scale-[1.02] hover:shadow-lg",
           className
         )}

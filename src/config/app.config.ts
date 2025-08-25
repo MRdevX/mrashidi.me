@@ -3,13 +3,6 @@ export const APP_CONFIG = {
   version: "0.1.22",
   description: "Mahdi Rashidi's Personal Portfolio",
 
-  theme: {
-    primary: "#ff5f1f",
-    secondary: "#f97316",
-    background: "#000000",
-    text: "#ffffff",
-  },
-
   animations: {
     fast: 0.2,
     normal: 0.3,

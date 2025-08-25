@@ -2,6 +2,7 @@ import { ExternalLink, Github, Calendar, GitCommit } from "lucide-react";
 import { Project } from "@/data/site/projects";
 import { formatDate, createCommitUrl } from "@/lib/utils/index";
 import { getTechIcon } from "@/lib/techIconMap";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface ProjectCardProps {
   project: Project;
@@ -10,39 +11,44 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
+  const { getTextColor, getBackgroundColor, getProjectBadge } = useThemeConfig();
+
   return (
-    <div className="glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group">
+    <div
+      className={`glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group`}
+    >
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{project.title}</h3>
         <div className="flex gap-2 flex-wrap items-center justify-end">
           {project.year && (
-            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-gray-800 text-gray-300 border border-gray-600">
+            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30">
               {project.year}
             </span>
           )}
           {project.status && (
-            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-gray-700 text-gray-400 border border-gray-600 capitalize">
+            <span
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("status", project.status)} capitalize`}
+            >
               {project.status}
             </span>
           )}
-          <span
-            className={`px-2 py-0.5 rounded font-semibold text-xs ${project.visibility === "public" ? "bg-green-700 text-green-200" : "bg-gray-700 text-gray-300"}`}
-          >
+          <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("visibility", project.visibility)}`}>
             {project.visibility}
           </span>
-          <span
-            className={`px-2 py-0.5 rounded font-semibold text-xs ${project.type === "personal" ? "bg-blue-700 text-blue-200" : "bg-orange-700 text-orange-200"}`}
-          >
+          <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("type", project.type)}`}>
             {project.type}
           </span>
           {project.openSource && (
-            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-yellow-700 text-yellow-200 flex items-center gap-1">
-              {/* <Globe className="w-3.5 h-3.5" /> */}
+            <span
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("openSource")} flex items-center gap-1`}
+            >
               Open Source
             </span>
           )}
           {project.openSource && project.license && (
-            <span className="px-2 py-0.5 rounded font-semibold text-xs bg-yellow-900 text-yellow-200 border border-yellow-700 ml-1">
+            <span
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("license", project.license)} ml-1`}
+            >
               {project.license}
             </span>
           )}
@@ -51,11 +57,13 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
       <div className="flex flex-col gap-1">
         <div className="flex flex-wrap gap-2 items-center text-sm mb-1">
           {project.clientName && <span className="font-semibold text-orange-400">{project.clientName}</span>}
-          {project.role && <span className="text-gray-400">{project.role}</span>}
+          {project.role && <span className={getTextColor("secondary")}>{project.role}</span>}
         </div>
-        <p className="text-gray-400 group-hover:text-gray-300 transition-colors text-sm mb-1">{project.description}</p>
+        <p className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors text-sm mb-1`}>
+          {project.description}
+        </p>
         {project.highlights && project.highlights.length > 0 && (
-          <ul className="list-disc list-inside text-xs text-gray-400 space-y-1 mt-1">
+          <ul className={`list-disc list-inside text-xs ${getTextColor("secondary")} space-y-1 mt-1`}>
             {project.highlights.map((h, i) => (
               <li key={i}>{h}</li>
             ))}
@@ -65,7 +73,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
 
       {/* Commit Information */}
       {project.githubUrl && (
-        <div className="flex flex-wrap gap-2 items-center text-xs text-gray-500 border-t border-gray-700 pt-2">
+        <div className={`flex flex-wrap gap-2 items-center text-xs ${getTextColor("muted")} border-t border-gray-700 pt-2`}>
           {commitInfo ? (
             <>
               <div className="flex items-center gap-1">
@@ -84,7 +92,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               </a>
             </>
           ) : isLoadingCommitDates ? (
-            <div className="flex items-center gap-1 text-gray-600">
+            <div className={`flex items-center gap-1 ${getTextColor("muted")}`}>
               <span>Loading commit info...</span>
             </div>
           ) : null}
@@ -95,7 +103,10 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
         {project.stack.map((tech) => {
           const techIcon = getTechIcon(tech);
           return (
-            <span key={tech} className="tech-badge bg-gray-800/60 border border-orange-500/20 text-xs flex items-center">
+            <span
+              key={tech}
+              className={`tech-badge ${getBackgroundColor("muted")} border border-orange-500/20 text-xs flex items-center`}
+            >
               {techIcon && <techIcon.Icon className={`w-4 h-4 mr-1 inline-block ${techIcon.colorClass}`} />}
               {tech}
             </span>
@@ -132,7 +143,6 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
           >
-            {/* <FileText className="w-4 h-4" /> */}
             Case Study
           </a>
         )}

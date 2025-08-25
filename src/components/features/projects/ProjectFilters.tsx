@@ -3,6 +3,7 @@ import { Filter, Globe, X, Layers } from "lucide-react";
 import { getTechIcon } from "@/lib/techIconMap";
 import { TechnologyCategory, CATEGORY_DISPLAY_NAMES } from "@/lib/constants";
 import { CyberpunkButton } from "@/components/ui";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface ProjectFiltersProps {
   categorizedStacks: Record<TechnologyCategory, string[]>;
@@ -23,6 +24,8 @@ export function ProjectFilters({
   onToggleOpenSource,
   onClearAll,
 }: ProjectFiltersProps) {
+  const { getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
+
   const renderCategorySection = (category: TechnologyCategory, stacks: string[]) => {
     if (stacks.length === 0) return null;
 
@@ -30,7 +33,7 @@ export function ProjectFilters({
 
     return (
       <div key={category} className="mb-6">
-        <h4 className="text-md font-semibold text-gray-600 dark:text-gray-300 mb-3 font-albert flex items-center gap-2">
+        <h4 className={`text-md font-semibold ${getTextColor("secondary")} mb-3 font-albert flex items-center gap-2`}>
           <Layers className="w-4 h-4 text-orange-400" />
           {displayName}
         </h4>
@@ -47,7 +50,7 @@ export function ProjectFilters({
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-medium ${
                   isSelected
                     ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg shadow-orange-500/25"
-                    : "bg-white/30 dark:bg-gray-800/30 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-orange-500/60 hover:text-orange-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 hover:shadow-lg hover:shadow-orange-500/10"
+                    : `${getBackgroundColor("glassLight")} ${getBorderColor("secondary")} ${getTextColor("primary")} hover:border-orange-500/60 hover:text-orange-400 hover:${getBackgroundColor("secondary")} hover:shadow-lg hover:shadow-orange-500/10`
                 }`}
               >
                 {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} />}
@@ -56,7 +59,7 @@ export function ProjectFilters({
                   className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${
                     isSelected
                       ? "bg-orange-500 text-black shadow-lg"
-                      : "bg-gray-200/80 dark:bg-gray-600/80 text-gray-700 dark:text-gray-300 border border-gray-300/50 dark:border-gray-500/50"
+                      : `${getBackgroundColor("muted")} ${getTextColor("primary")} border ${getBorderColor("secondary")}`
                   }`}
                 >
                   {usageCount}
@@ -78,7 +81,7 @@ export function ProjectFilters({
             <Filter className="w-5 h-5" />
             Filter by Technology Stack
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 font-albert">
+          <p className={`${getTextColor("secondary")} text-sm mb-4 font-albert`}>
             Click on technology icons to filter projects. Multiple selections are supported.
           </p>
         </div>
@@ -105,7 +108,7 @@ export function ProjectFilters({
                 className={`relative w-12 h-7 rounded-full transition-all duration-300 ${
                   showOpenSourceOnly
                     ? "bg-orange-500 shadow-lg shadow-orange-500/50"
-                    : "bg-gray-300 dark:bg-gray-600 border border-gray-400 dark:border-gray-500"
+                    : `${getBackgroundColor("muted")} border ${getBorderColor("secondary")}`
                 }`}
               >
                 <div

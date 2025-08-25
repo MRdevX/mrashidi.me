@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { CommandType } from "./types";
 import { AVAILABLE_COMMANDS } from "./constants";
 import { skills, personalInfo, projects, workExperience, certificates } from "@/data";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface BlogPost {
   title: string;
@@ -48,11 +49,13 @@ const TerminalBadge = ({
   children: React.ReactNode;
   variant?: "public" | "private" | "personal" | "professional" | "default";
 }) => {
+  const { colors } = useThemeConfig();
+
   const variants = {
-    public: "bg-green-700 text-green-200",
+    public: `bg-[${colors.success.DEFAULT}] text-white`,
     private: "bg-gray-700 text-gray-300",
-    personal: "bg-blue-700 text-blue-200",
-    professional: "bg-orange-700 text-orange-200",
+    personal: `bg-[${colors.info.DEFAULT}] text-white`,
+    professional: `bg-[${colors.primary.DEFAULT}] text-white`,
     default: "bg-gray-700 text-gray-300",
   };
 
