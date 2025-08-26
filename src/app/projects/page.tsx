@@ -46,26 +46,28 @@ export default function Projects() {
           </div>
         </motion.div>
 
-        <ProjectSearchBox searchQuery={searchQuery} onSearchChange={setSearchQuery} onClear={() => setSearchQuery("")} />
+        <div className="glass-card p-8">
+          <ProjectSearchBox searchQuery={searchQuery} onSearchChange={setSearchQuery} onClear={() => setSearchQuery("")} />
 
-        <ProjectFilters
-          categorizedStacks={categorizedStacks}
-          stackUsageCount={stackUsageCount}
-          selectedStacks={selectedStacks}
-          showOpenSourceOnly={showOpenSourceOnly}
-          onToggleStack={toggleStack}
-          onToggleOpenSource={setShowOpenSourceOnly}
-          onClearAll={clearAllFilters}
-        />
+          <ProjectFilters
+            categorizedStacks={categorizedStacks}
+            stackUsageCount={stackUsageCount}
+            selectedStacks={selectedStacks}
+            showOpenSourceOnly={showOpenSourceOnly}
+            onToggleStack={toggleStack}
+            onToggleOpenSource={setShowOpenSourceOnly}
+            onClearAll={clearAllFilters}
+          />
 
-        <ProjectResults
-          filteredProjects={filteredProjects}
-          searchQuery={searchQuery}
-          selectedStacks={selectedStacks}
-          showOpenSourceOnly={showOpenSourceOnly}
-          commitInfo={commitInfo}
-          isLoadingCommitDates={isLoadingCommitDates}
-        />
+          <ProjectResults
+            filteredProjects={filteredProjects}
+            searchQuery={searchQuery}
+            selectedStacks={selectedStacks}
+            showOpenSourceOnly={showOpenSourceOnly}
+            commitInfo={commitInfo}
+            isLoadingCommitDates={isLoadingCommitDates}
+          />
+        </div>
       </motion.div>
     </div>
   );

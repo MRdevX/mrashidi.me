@@ -8,9 +8,11 @@ export default function Resume() {
     <PageWrapper>
       <ResumeHeader />
 
-      <div className="prose dark:prose-invert max-w-none">
-        <WorkExperienceSection />
-        <CertificatesSection />
+      <div className="glass-card p-8">
+        <div className="prose dark:prose-invert max-w-none">
+          <WorkExperienceSection />
+          <CertificatesSection />
+        </div>
       </div>
     </PageWrapper>
   );

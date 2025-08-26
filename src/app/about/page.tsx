@@ -19,11 +19,13 @@ export default function About() {
         </div>
       </motion.div>
 
-      <div className="prose dark:prose-invert max-w-none">
-        <BioSection />
-        <SkillsSection />
-        <LanguagesSection />
-        <EducationSection />
+      <div className="glass-card p-8">
+        <div className="prose dark:prose-invert max-w-none">
+          <BioSection />
+          <SkillsSection />
+          <LanguagesSection />
+          <EducationSection />
+        </div>
       </div>
     </PageWrapper>
   );

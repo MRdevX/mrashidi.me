@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageCircle, Users, Star } from "lucide-react";
+import { Users, Star } from "lucide-react";
 import { ADPListWidget } from "./ADPListWidget";
 import { ContactSection, ADPListWidget as ADPListWidgetType } from "./types";
 import { ContactFormRefactored as ContactForm } from "@/components/forms/ContactForm";
@@ -23,12 +23,6 @@ export function ContactHeader({ title, description, sections, adpListWidgets }: 
 
   return (
     <div className="space-y-12">
-      {/* Main Header */}
-      <motion.div className={getSectionHeader()} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-        <MessageCircle className="w-8 h-8 text-orange-500" />
-        <h1 className={getSectionTitle()}>{title}</h1>
-      </motion.div>
-
       <motion.p
         className={`${getTextColor("secondary")} mb-8`}
         initial={{ opacity: 0, y: 20 }}
