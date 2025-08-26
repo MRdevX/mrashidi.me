@@ -25,7 +25,7 @@ export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps
         className={cn(
           "transition-all duration-300",
           getCardVariant(variant),
-          hover && "hover:scale-[1.02] hover:shadow-lg",
+          hover && "hover:scale-[1.01] hover:shadow-lg",
           className
         )}
         {...props}
@@ -36,7 +36,7 @@ export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps
 
     if (animate && hover) {
       return (
-        <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
+        <motion.div whileHover={{ scale: 1.01 }} transition={{ duration: 0.2 }}>
           {cardElement}
         </motion.div>
       );
@@ -51,9 +51,7 @@ CyberpunkCard.displayName = "CyberpunkCard";
 export const CyberpunkCardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     const { getBorderColor } = useThemeConfig();
-    return (
-      <CardHeader ref={ref} className={cn(`border-b ${getBorderColor("primary")}`, className)} {...props} />
-    );
+    return <CardHeader ref={ref} className={cn(`border-b ${getBorderColor("primary")}`, className)} {...props} />;
   }
 );
 CyberpunkCardHeader.displayName = "CyberpunkCardHeader";
@@ -61,9 +59,7 @@ CyberpunkCardHeader.displayName = "CyberpunkCardHeader";
 export const CyberpunkCardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => {
     const { getSectionTitle } = useThemeConfig();
-    return (
-      <CardTitle ref={ref} className={cn(getSectionTitle(), className)} {...props} />
-    );
+    return <CardTitle ref={ref} className={cn(getSectionTitle(), className)} {...props} />;
   }
 );
 CyberpunkCardTitle.displayName = "CyberpunkCardTitle";
@@ -87,9 +83,7 @@ CyberpunkCardContent.displayName = "CyberpunkCardContent";
 export const CyberpunkCardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     const { getBorderColor } = useThemeConfig();
-    return (
-      <CardFooter ref={ref} className={cn(`border-t ${getBorderColor("primary")}`, className)} {...props} />
-    );
+    return <CardFooter ref={ref} className={cn(`border-t ${getBorderColor("primary")}`, className)} {...props} />;
   }
 );
 CyberpunkCardFooter.displayName = "CyberpunkCardFooter";
