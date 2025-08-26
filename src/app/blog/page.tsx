@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
-import { BlogHeader, BlogGrid, BlogPagination, BlogLoading, BlogError, BlogContainer, useBlogData } from "@/features/blog";
+import { BlogGrid, BlogPagination, BlogLoading, BlogError, BlogContainer, useBlogData } from "@/features/blog";
 import { fadeInVariants } from "@/lib/animations";
 
 export default function Blog() {

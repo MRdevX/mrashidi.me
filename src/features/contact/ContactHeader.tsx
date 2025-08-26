@@ -18,7 +18,7 @@ interface ContactHeaderProps {
   };
 }
 
-export function ContactHeader({ title, description, sections, adpListWidgets }: ContactHeaderProps) {
+export function ContactHeader({ description, sections, adpListWidgets }: ContactHeaderProps) {
   const { getSectionHeader, getSectionTitle, getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
 
   return (
