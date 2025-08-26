@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.38](https://github.com/MRdevX/mrashidi.me/compare/v0.1.37...v0.1.38) (2025-08-26)
+
+
+### Features
+
+* **projects:** implement pagination for project results ([b9b9ad6](https://github.com/MRdevX/mrashidi.me/commit/b9b9ad623c73548575f523e311ffd8d4a763e769))
+* **style:** wrap content in glass-card for improved aesthetics and add motion effects ([2edfe6e](https://github.com/MRdevX/mrashidi.me/commit/2edfe6e5d00c162149c291f5a9139e839a2079a0))
+
 ### [0.1.37](https://github.com/MRdevX/mrashidi.me/compare/v0.1.36...v0.1.37) (2025-08-26)
 
 
