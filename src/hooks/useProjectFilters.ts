@@ -36,14 +36,19 @@ export interface UseProjectFiltersReturn {
   stackUsageCount: Record<string, number>;
   categorizedStacks: Record<TechnologyCategory, string[]>;
   filteredProjects: typeof projects;
+  paginatedProjects: typeof projects;
+  currentPage: number;
+  totalPages: number;
+  setPage: (page: number) => void;
   isLoadingCommitDates: boolean;
   commitInfo: Map<string, { date: Date; hash: string }>;
 }
 
-export function useProjectFilters(): UseProjectFiltersReturn {
+export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersReturn {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedStacks, setSelectedStacks] = useState<Set<string>>(new Set());
   const [showOpenSourceOnly, setShowOpenSourceOnly] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [commitInfo, setCommitInfo] = useState<Map<string, { date: Date; hash: string }>>(new Map());
   const [isLoadingCommitDates, setIsLoadingCommitDates] = useState<boolean>(false);
 
@@ -174,6 +179,24 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     });
   }, [searchQuery, selectedStacks, showOpenSourceOnly, commitInfo]);
 
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredProjects.length / itemsPerPage);
+  }, [filteredProjects.length, itemsPerPage]);
+
+  const paginatedProjects = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredProjects.slice(startIndex, endIndex);
+  }, [filteredProjects, currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedStacks, showOpenSourceOnly]);
+
+  const setPage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+  };
+
   const toggleStack = (stack: string) => {
     const newSelectedStacks = new Set(selectedStacks);
     if (newSelectedStacks.has(stack)) {
@@ -204,6 +227,10 @@ export function useProjectFilters(): UseProjectFiltersReturn {
     stackUsageCount,
     categorizedStacks,
     filteredProjects,
+    paginatedProjects,
+    currentPage,
+    totalPages,
+    setPage,
     isLoadingCommitDates,
     commitInfo,
   };

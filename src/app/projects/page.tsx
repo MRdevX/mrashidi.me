@@ -3,9 +3,7 @@
 import { motion } from "framer-motion";
 import { FolderOpen } from "lucide-react";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
-import { ProjectSearchBox } from "@/features/projects/ProjectSearchBox";
-import { ProjectFilters } from "@/features/projects/ProjectFilters";
-import { ProjectResults } from "@/features/projects/ProjectResults";
+import { ProjectSearchBox, ProjectFilters, ProjectResults, ProjectPagination } from "@/features/projects";
 
 export default function Projects() {
   const {
@@ -16,10 +14,13 @@ export default function Projects() {
     clearAllFilters,
     categorizedStacks,
     stackUsageCount,
-    filteredProjects,
+    paginatedProjects,
+    currentPage,
+    totalPages,
+    setPage,
     isLoadingCommitDates,
     commitInfo,
-  } = useProjectFilters();
+  } = useProjectFilters(6);
 
   const container = {
     hidden: { opacity: 0 },
@@ -60,13 +61,15 @@ export default function Projects() {
           />
 
           <ProjectResults
-            filteredProjects={filteredProjects}
+            filteredProjects={paginatedProjects}
             searchQuery={searchQuery}
             selectedStacks={selectedStacks}
             showOpenSourceOnly={showOpenSourceOnly}
             commitInfo={commitInfo}
             isLoadingCommitDates={isLoadingCommitDates}
           />
+
+          <ProjectPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
         </div>
       </motion.div>
     </div>
