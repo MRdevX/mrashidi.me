@@ -1,6 +1,6 @@
 "use client";
 
-import { ContactContainer, ContactHeader, useContactData } from "@/components/features/contact";
+import { ContactContainer, ContactHeader, useContactData } from "@/features/contact";
 
 export default function Contact() {
   const { header, sections, adpListWidgets } = useContactData();

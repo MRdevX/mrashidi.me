@@ -34,6 +34,11 @@ A modern, cyberpunk-inspired personal portfolio website showcasing my work as a 
 - 📦 **Caching**: Node-cache for blog posts and API responses with performance monitoring
 - 🎨 **ShadCN UI**: Modern component library with cyberpunk theming
 - 🔍 **Error Handling**: Structured error classes and safe error responses
+- 🛡️ **Environment Safety**: Zod-validated environment variables with fail-fast behavior
+- 🔄 **Enhanced Fetching**: Robust fetch wrapper with retry logic and caching
+- 📝 **Structured Logging**: Server/client-safe logging with environment-based levels
+- 🧪 **Testing Ready**: Basic test structure with smoke tests
+- 🎯 **Path Aliases**: Clean imports with organized path aliases
 
 ## 🛠 Tech Stack
 
@@ -91,40 +96,47 @@ mrashidi.me/
 │   │   │   ├── blog/        # Blog API with pagination
 │   │   │   ├── contact/     # Contact form API
 │   │   │   ├── cv/          # CV API (download & upload via Vercel Blob)
-│   │   │   └── resume/      # Resume request API
+│   │   │   ├── github/      # GitHub API integration
+│   │   │   ├── health/      # Health check endpoint
+│   │   │   ├── resume/      # Resume request API
+│   │   │   └── version/     # Version API
 │   │   ├── about/           # About page
 │   │   ├── blog/            # Blog page with Medium integration
 │   │   ├── contact/         # Contact page with forms
 │   │   ├── projects/        # Projects page with filtering
 │   │   ├── resume/          # Resume page with download
-│   │   ├── globals.css      # Global styles
+│   │   ├── loading.tsx      # Root loading component
+│   │   ├── not-found.tsx    # 404 error page
+│   │   ├── sitemap.ts       # Dynamic sitemap generation
 │   │   ├── layout.tsx       # Root layout
 │   │   └── page.tsx         # Homepage
-│   ├── components/          # React components
-│   │   ├── features/        # Feature-based organization
-│   │   │   ├── about/       # About page components
-│   │   │   ├── blog/        # Blog components with SWR
-│   │   │   ├── contact/     # Contact form components
-│   │   │   ├── projects/    # Project filtering components
-│   │   │   └── resume/      # Resume components
+│   ├── components/          # Shared/presentational UI components
 │   │   ├── layout/          # Layout components (Navbar, etc.)
 │   │   ├── forms/           # Reusable form components
 │   │   ├── terminal/        # Interactive terminal
 │   │   │   ├── hooks/       # Terminal custom hooks
 │   │   │   └── types.ts     # Terminal types
-│   │   └── ui/              # Reusable UI components
-│   │       └── icons.tsx    # Centralized icon library
-│   ├── config/              # Application configuration
-│   │   ├── app.config.ts    # App-wide settings
-│   │   ├── theme.config.ts  # Theme configuration
-│   │   ├── constants.ts     # Application constants
-│   │   └── index.ts         # Unified config export
-│   ├── context/             # React context providers
-│   ├── data/                # Static data files
-│   │   ├── profile/         # Personal information
-│   │   └── site/            # Site configuration
-│   ├── hooks/               # Custom React hooks
-│   ├── lib/                 # Utilities and configuration
+│   │   ├── ui/              # Design system atoms (Button, Card, etc.)
+│   │   │   └── icons.tsx    # Centralized icon library
+│   │   └── SEO/             # SEO components (Breadcrumbs, StructuredData)
+│   ├── features/            # Domain modules (scale here)
+│   │   ├── about/           # About page components
+│   │   ├── blog/            # Blog components with SWR
+│   │   ├── contact/         # Contact form components
+│   │   ├── projects/        # Project filtering components
+│   │   ├── resume/          # Resume components
+│   │   └── index.ts         # Feature exports
+│   ├── server/              # Server-only cross-cutting utilities
+│   │   ├── auth/            # Authentication utilities
+│   │   ├── db/              # Database client setup
+│   │   ├── base.service.ts  # Base service class
+│   │   ├── blog.service.ts  # Blog data service
+│   │   ├── blob.service.ts  # Vercel Blob service
+│   │   ├── cache.service.ts # Caching service
+│   │   ├── github.service.ts # GitHub API service
+│   │   ├── recaptcha.service.ts # reCAPTCHA service
+│   │   └── index.ts         # Server exports
+│   ├── lib/                 # Cross-cutting utilities (no React)
 │   │   ├── api/             # API utilities and middleware
 │   │   ├── config/          # Configuration constants
 │   │   ├── email/           # Email service and templates
@@ -135,23 +147,46 @@ mrashidi.me/
 │   │   │   ├── cachePerformance.ts
 │   │   │   └── index.ts     # Centralized exports
 │   │   ├── validation/      # Zod schemas and validators
+│   │   ├── env.ts           # Zod-validated environment loader
+│   │   ├── fetcher.ts       # Fetch wrapper with errors/caching
+│   │   ├── logger.ts        # Tiny logger (server-safe)
 │   │   ├── errors.ts        # Structured error handling
+│   │   ├── animations.ts    # Animation utilities
+│   │   ├── constants.ts     # Application constants
+│   │   ├── structuredData.ts # SEO structured data
+│   │   ├── techUtils.ts     # Technology utilities
+│   │   ├── techIconMap.tsx  # Technology icon mapping
 │   │   └── utils.ts         # Core utilities
-│   ├── services/            # External service integrations
-│   │   ├── base.service.ts  # Base service class
-│   │   ├── blogService.ts   # Blog data service
-│   │   ├── blobService.ts   # Vercel Blob service
-│   │   ├── cacheService.ts  # Caching service
-│   │   ├── githubService.ts # GitHub API service
-│   │   └── recaptchaService.ts # reCAPTCHA service
-│   └── types/               # TypeScript type definitions
+│   ├── styles/              # Global styles
+│   │   └── globals.css      # Global CSS with Tailwind
+│   ├── config/              # Application configuration
+│   │   ├── app.config.ts    # App-wide settings
+│   │   ├── theme.config.ts  # Theme configuration
+│   │   ├── constants.ts     # Application constants
+│   │   └── index.ts         # Unified config export
+│   ├── context/             # React context providers
+│   ├── data/                # Static data files
+│   │   ├── profile/         # Personal information
+│   │   └── site/            # Site configuration
+│   ├── hooks/               # Shared client hooks (browser-safe)
+│   ├── types/               # Shared TypeScript types
+│   ├── tests/               # Test files
+│   │   └── smoke.test.ts    # Basic smoke tests
+│   ├── instrumentation.ts   # Next.js instrumentation
+│   └── instrumentation-client.ts # Client instrumentation
+├── .vscode/                 # VSCode settings
+│   └── settings.json        # Format on save, path intellisense
 ├── scripts/                 # Build and utility scripts
 │   ├── generate-sitemap.ts  # Sitemap generation
 │   ├── generate-og-images.js # Open Graph image generation
 │   └── generate-placeholder-og.js # Placeholder OG images
+├── .env.example             # Environment variables documentation
 ├── next.config.mjs          # Next.js configuration with security headers
+├── tsconfig.json            # TypeScript configuration with path aliases
 ├── tailwind.config.ts       # Tailwind CSS configuration
 ├── components.json          # ShadCN UI configuration
+├── eslint.config.mjs        # ESLint configuration
+├── postcss.config.js        # PostCSS configuration
 ├── sentry.edge.config.ts    # Sentry edge configuration
 ├── sentry.server.config.ts  # Sentry server configuration
 └── package.json             # Dependencies and scripts
@@ -159,37 +194,39 @@ mrashidi.me/
 
 ## 🏗 Architecture Highlights
 
-### **Feature-Based Component Organization**
+### **Feature-Based Architecture**
 
-Components are organized by feature rather than type, making the codebase more maintainable and scalable:
+Features are organized as domain modules with co-located components, server actions, and utilities:
 
 ```typescript
-import { BlogHeader, BlogGrid, BlogPagination } from "@/components/features/blog";
-import { ContactFormSection, MentorshipSection } from "@/components/features/contact";
-import { ProjectCard, ProjectFilters } from "@/components/features/projects";
+import { BlogHeader, BlogGrid, BlogPagination } from "@/features/blog";
+import { ContactFormSection, MentorshipSection } from "@/features/contact";
+import { ProjectCard, ProjectFilters } from "@/features/projects";
 ```
 
-### **Centralized Configuration Management**
+### **Path Aliases & Developer Experience**
 
-All application settings are centralized in the `src/config` directory:
+Enhanced path aliases and development tools for better productivity:
 
 ```typescript
-import { CONFIG } from "@/config";
+// Clean imports with path aliases
+import { Button } from "@components/ui/Button";
+import { BlogHeader } from "@features/blog";
+import { env } from "@lib/env";
+import { BlogService } from "@server/blog.service";
 
-const apiTimeout = CONFIG.constants.api.TIMEOUT;
-const themeColors = CONFIG.theme.colors;
+// VSCode settings provide format-on-save and better intellisense
 ```
 
-### **Organized Utility Functions**
+### **Enhanced Core Utilities**
 
-Utilities are categorized by domain and centralized for better maintainability:
+New utilities provide better type safety, error handling, and developer experience:
 
 ```typescript
+import { env } from "@/lib/env"; // Zod-validated environment variables
+import { fetcher, fetcherGet, fetcherPost } from "@/lib/fetcher"; // Robust fetch wrapper
+import { logger } from "@/lib/logger"; // Server/client-safe logging
 import { formatDate, truncateText, isValidEmail } from "@/lib/utils";
-
-import { formatDate, formatRelativeTime } from "@/lib/utils/date-utils";
-import { toTitleCase, generateRandomString } from "@/lib/utils/string-utils";
-import { logger } from "@/lib/utils/logger";
 ```
 
 ### **Type-Safe API Layer**
@@ -239,18 +276,40 @@ try {
 }
 ```
 
-### **Centralized Logging System**
+### **Server-Side Architecture**
 
-Structured logging with Pino for better debugging and monitoring:
+Server-only utilities and services are properly isolated:
 
 ```typescript
-import { logger } from "@/lib/utils/logger";
+import { BlogService } from "@/server/blog.service";
+import { GitHubService } from "@/server/github.service";
+import { BlobService } from "@/server/blob.service";
 
-logger.info("User action performed", { userId, action });
-logger.error("API error occurred", { error, context });
+// Server actions and database operations
+import { createSession, getUserByEmail } from "@/server/auth";
 ```
 
 ## 🎯 Key Architectural Principles
+
+### **Feature-First Organization**
+
+- Features are domain modules with co-located components, server actions, and utilities
+- Clear separation between shared UI components and feature-specific logic
+- Server-only code properly isolated in `src/server/`
+
+### **Type Safety & Error Handling**
+
+- Zod-validated environment variables with fail-fast behavior
+- Enhanced fetch wrapper with retry logic and caching
+- Structured error handling with custom error classes
+- Server/client-safe logging with environment-based levels
+
+### **Developer Experience**
+
+- Path aliases for clean imports (`@features/*`, `@server/*`, etc.)
+- VSCode settings for format-on-save and better intellisense
+- Environment documentation with `.env.example`
+- Basic smoke tests for project structure validation
 
 ### **YAGNI (You Aren't Gonna Need It)**
 
@@ -284,26 +343,31 @@ logger.error("API error occurred", { error, context });
 
 ### Environment Variables
 
-Create a `.env.local` file with the following variables:
+Create a `.env.local` file with the following variables (see `.env.example` for complete documentation):
 
 ```env
-# GitHub Integration
-GITHUB_TOKEN=your_github_token
+# Site Configuration
+NEXT_PUBLIC_SITE_URL=https://mrashidi.me
+NEXT_PUBLIC_GITHUB_USERNAME=mrashidi
 
-# AWS SES Configuration
-AWS_REGION=eu-central-1
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-EMAIL_FROM_ADDRESS=no-reply@mrashidi.me
-EMAIL_TO_ADDRESS=contact@mrashidi.me
-
-# reCAPTCHA Configuration
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
-RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+# GitHub API
+GITHUB_TOKEN=your_github_token_here
 
 # Sentry Configuration
-SENTRY_DSN=your_sentry_dsn
-SENTRY_AUTH_TOKEN=your_sentry_auth_token
+SENTRY_DSN=your_sentry_dsn_here
+SENTRY_ORG=your_sentry_org_here
+SENTRY_PROJECT=your_sentry_project_here
+SENTRY_AUTH_TOKEN=your_sentry_auth_token_here
+
+# reCAPTCHA Configuration
+RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key_here
+RECAPTCHA_SITE_KEY=your_recaptcha_site_key_here
+
+# Email Service Configuration
+EMAIL_SERVICE_API_KEY=your_email_service_api_key_here
+EMAIL_SERVICE_DOMAIN=your_email_service_domain_here
+EMAIL_FROM=your_from_email_here
+EMAIL_TO=your_to_email_here
 ```
 
 ### Installation & Running

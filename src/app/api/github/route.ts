@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 interface LatestCommitInfo {
   date: Date;

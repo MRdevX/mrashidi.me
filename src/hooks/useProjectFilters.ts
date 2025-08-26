@@ -4,8 +4,8 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { projects } from "@/data";
 import { TechnologyCategory } from "@/lib/constants";
 import { processTechnologyData, filterProjects } from "@/lib/techUtils";
-import { githubService } from "@/services/github.service";
-import { logger } from "@/lib/utils/logger";
+import { githubService } from "@/server/github.service";
+import { logger } from "@/lib/logger";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;

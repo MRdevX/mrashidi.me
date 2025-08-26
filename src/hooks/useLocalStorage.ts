@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState<T>(() => {

@@ -11,12 +11,12 @@ import { MobileNavigationItem } from "./MobileNavigationItem";
 import { VersionBadge } from "./VersionBadge";
 import { MobileMenuButton } from "./MobileMenuButton";
 import { ThemeToggle } from "@/components/ui";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+
 
 export default function Navbar() {
   const isScrolled = useScrollPosition();
   const pathname = usePathname();
-  const { getBackgroundColor, getBorderColor } = useThemeConfig();
+
 
   const getNavbarClasses = () => {
     return `fixed w-full z-50 transition-all duration-300 ${

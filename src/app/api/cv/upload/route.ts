@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
-import { BlobService } from "@/services/blob.service";
+import { BlobService } from "@/server/blob.service";
 import { APIError } from "@/lib/errors";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {

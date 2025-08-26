@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import { FolderOpen } from "lucide-react";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
-import { ProjectSearchBox } from "@/components/features/projects/ProjectSearchBox";
-import { ProjectFilters } from "@/components/features/projects/ProjectFilters";
-import { ProjectResults } from "@/components/features/projects/ProjectResults";
+import { ProjectSearchBox } from "@/features/projects/ProjectSearchBox";
+import { ProjectFilters } from "@/features/projects/ProjectFilters";
+import { ProjectResults } from "@/features/projects/ProjectResults";
 
 export default function Projects() {
   const {

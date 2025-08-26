@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import { BlogResponse, BlogData } from "@/components/features/blog/types";
-import { logger } from "@/lib/utils/logger";
+import { BlogResponse, BlogData } from "@/features/blog/types";
+import { logger } from "@/lib/logger";
 
 export function useBlogPreload() {
   const preloadBlogPosts = useCallback(async (page: number = 1, postsPerPage: number = 6) => {

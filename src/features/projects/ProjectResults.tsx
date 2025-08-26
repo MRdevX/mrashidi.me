@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Search, Filter, Globe, Package, AlertCircle } from "lucide-react";
-import { ProjectCard } from "@/components/features/projects/ProjectCard";
+import { ProjectCard } from "@/features/projects/ProjectCard";
 import { projects } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 

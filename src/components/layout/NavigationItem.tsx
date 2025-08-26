@@ -10,7 +10,7 @@ interface NavigationItemProps {
 
 export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
   const { preloadFirstPage } = useBlogPreload();
-  const { getFocusPattern, getTextColor } = useThemeConfig();
+  const { getFocusPattern } = useThemeConfig();
 
   const handleMouseEnter = () => {
     if (item.href === "/blog") {

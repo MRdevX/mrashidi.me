@@ -1,4 +1,4 @@
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 

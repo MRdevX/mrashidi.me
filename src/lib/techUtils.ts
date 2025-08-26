@@ -1,5 +1,5 @@
 import { TECHNOLOGY_CATEGORIES, TechnologyCategory, getTechnologyCategory } from "./constants";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 export interface TechnologyUsage {
   tech: string;

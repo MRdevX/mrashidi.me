@@ -9,7 +9,7 @@ interface MobileNavigationItemProps {
 }
 
 export const MobileNavigationItem = ({ item, isActive }: MobileNavigationItemProps) => {
-  const { getFocusPattern, getTextColor, getBackgroundColor } = useThemeConfig();
+  const { getFocusPattern } = useThemeConfig();
 
   return (
     <Disclosure.Button

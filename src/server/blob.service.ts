@@ -1,5 +1,5 @@
 import { put } from "@vercel/blob";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 export class BlobService {
   private static readonly CV_PATH = "cv/Mahdi_Rashidi_CV.pdf";

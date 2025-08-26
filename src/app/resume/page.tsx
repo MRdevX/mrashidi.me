@@ -1,6 +1,6 @@
 "use client";
 
-import { ResumeHeader, WorkExperienceSection, CertificatesSection } from "@/components/features/resume";
+import { ResumeHeader, WorkExperienceSection, CertificatesSection } from "@/features/resume";
 import { PageWrapper } from "@/components/ui";
 
 export default function Resume() {

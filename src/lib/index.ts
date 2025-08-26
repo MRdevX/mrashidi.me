@@ -7,6 +7,9 @@ export * from "./email";
 export * from "./validation";
 
 export * from "./utils";
+export * from "./env";
+export * from "./fetcher";
+export * from "./logger";
 
 export * from "./errors";
 export * from "./structuredData";

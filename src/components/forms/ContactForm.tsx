@@ -11,7 +11,7 @@ import { Send, User, Mail, MessageSquare, FileText } from "lucide-react";
 import { FormInputWithValidation } from "./FormInputWithValidation";
 import { StatusMessage } from "./StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 declare global {
   interface Window {

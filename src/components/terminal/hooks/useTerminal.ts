@@ -3,7 +3,7 @@ import { Command, CommandType } from "../types";
 import { handleCommand } from "../commandHandlers";
 import { TERMINAL_CONSTANTS } from "../constants";
 import { normalizeCommand, isValidCommand } from "../utils";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/lib/logger";
 
 export const useTerminal = () => {
   const [commands, setCommands] = useState<Command[]>([]);
