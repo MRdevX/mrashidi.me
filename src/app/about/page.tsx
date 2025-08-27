@@ -1,32 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { User } from "lucide-react";
-import { PageWrapper } from "@/components/ui";
+import { PageWrapper, PageHeader, PageSection } from "@/components/ui";
 import { BioSection, EducationSection, LanguagesSection, SkillsSection } from "@/features/about";
 import { useMouseTracking } from "@/hooks/useMouseTracking";
-import { fadeInVariants } from "@/lib/animations";
 
 export default function About() {
   useMouseTracking(".glitch-image");
 
   return (
     <PageWrapper>
-      <motion.div initial="hidden" animate="visible" variants={fadeInVariants} transition={{ duration: 0.5 }}>
-        <div className="flex items-center gap-3 mb-8">
-          <User className="w-8 h-8 text-orange-500" />
-          <h1 className="text-4xl font-bold text-orange-500 font-cyberpunk glow-text">About Me</h1>
-        </div>
-      </motion.div>
+      <PageHeader icon={User} title="About Me" />
 
-      <div className="glass-card p-8">
-        <div className="prose dark:prose-invert max-w-none">
-          <BioSection />
-          <SkillsSection />
-          <LanguagesSection />
-          <EducationSection />
+      <PageSection>
+        <div className="content-section">
+          <div className="prose dark:prose-invert max-w-none">
+            <BioSection />
+            <SkillsSection />
+            <LanguagesSection />
+            <EducationSection />
+          </div>
         </div>
-      </div>
+      </PageSection>
     </PageWrapper>
   );
 }
