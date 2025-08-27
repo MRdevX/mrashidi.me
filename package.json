@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "yarn generate-sitemap && next build",
-    "build:fast": "yarn generate-sitemap && SKIP_PWA=true next build",
+    "build": "pnpm generate-sitemap && next build",
+    "build:fast": "pnpm generate-sitemap && SKIP_PWA=true next build",
     "start": "next start",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
@@ -17,7 +17,11 @@
     "check-og-images": "node scripts/generate-og-images.js",
     "generate-og-images": "node scripts/generate-placeholder-og.js",
     "analyze": "ANALYZE=true next build",
-    "release": "npx standard-version"
+    "release": "npx standard-version",
+    "clean": "pnpm store prune && rm -rf node_modules .next",
+    "reinstall": "pnpm clean && pnpm install",
+    "update": "pnpm update --latest",
+    "outdated": "pnpm outdated"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.876.0",
@@ -70,5 +74,9 @@
     "tsx": "^4.20.5",
     "typescript": "5.9.2"
   },
-  "packageManager": "yarn@4.9.4"
+  "packageManager": "pnpm@10.8.0",
+  "engines": {
+    "node": ">=18.17.0",
+    "pnpm": ">=10.0.0"
+  }
 }

@@ -10,6 +10,12 @@
 !.yarn/releases
 !.yarn/versions
 
+# pnpm specific
+.pnpm-store/
+.pnpm-debug.log*
+.pnpm-debug.log
+.pnpm-state.json
+
 # testing
 /coverage
 
