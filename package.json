@@ -7,7 +7,7 @@
     "build": "yarn generate-sitemap && next build",
     "build:fast": "yarn generate-sitemap && SKIP_PWA=true next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
     "check-og-images": "node scripts/generate-og-images.js",
     "generate-og-images": "node scripts/generate-placeholder-og.js",
