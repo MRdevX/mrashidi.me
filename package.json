@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "pnpm generate-sitemap && next build",
+    "build": "NEXT_TELEMETRY_DISABLED=1 pnpm generate-sitemap && next build",
     "build:fast": "pnpm generate-sitemap && SKIP_PWA=true next build",
     "start": "next start",
     "lint": "biome lint .",

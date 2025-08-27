@@ -75,12 +75,17 @@
   ],
   "files": {
     "ignoreUnknown": false,
+    "maxSize": 1048576,
     "includes": [
       "**",
       "!**/node_modules",
+      "!**/.pnpm-store",
       "!**/.next",
       "!**/out",
       "!**/build",
+      "!**/dist",
+      "!**/coverage",
+      "!**/.git",
       "!**/next-env.d.ts",
       "!**/public/sw.js",
       "!**/public/workbox-*.js",
