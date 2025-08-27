@@ -47,7 +47,7 @@ export default function Home() {
       <motion.div initial="hidden" animate="show" variants={pageContainerVariants}>
         <motion.div className="hero-section content-section" variants={pageItemVariants}>
           <div className="hero-background" />
-          <h1 className="hero-title">{personalInfo.name}</h1>
+          <h1 className="text-5xl font-bold text-orange-500 font-cyberpunk glow-text">{personalInfo.name}</h1>
           <p className="hero-subtitle text-body">{personalInfo.title}</p>
           <p className="hero-description text-body">{personalInfo.intro}</p>
           <p className="hero-location text-body">

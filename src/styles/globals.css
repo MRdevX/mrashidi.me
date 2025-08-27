@@ -1402,12 +1402,10 @@
   }
 
   .hero-title {
-    font-size: 3rem;
+    font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background-clip: text;
-    color: transparent;
-    background-image: linear-gradient(to right, rgb(249 115 22), rgb(251 146 60));
+    color: rgb(249 115 22);
     font-family: var(--font-family-cyberpunk);
     animation: glow 2s ease-in-out infinite;
     position: relative;
@@ -1491,13 +1489,7 @@
   /* Responsive Hero Styles */
   @media (min-width: 640px) {
     .hero-title {
-      font-size: 3.75rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero-title {
-      font-size: 4.5rem;
+      font-size: 2.25rem;
     }
   }
 
