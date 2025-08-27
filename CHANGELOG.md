@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.41](https://github.com/MRdevX/mrashidi.me/compare/v0.1.40...v0.1.41) (2025-08-27)
+
+
+### Bug Fixes
+
+* add missing newlines in various files and improve code structure by updating imports and exports across components and hooks ([718241b](https://github.com/MRdevX/mrashidi.me/commit/718241bb09cc4dd943390c855cf95e0cdc5d1c32))
+
 ### [0.1.40](https://github.com/MRdevX/mrashidi.me/compare/v0.1.39...v0.1.40) (2025-08-27)
 
 
