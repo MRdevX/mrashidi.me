@@ -8,3 +8,4 @@ export { VersionBadge } from "./VersionBadge";
 export { Footer } from "./Footer";
 export { HeadMeta } from "./HeadMeta";
 export { AnalyticsWrapper } from "./Analytics";
+export { PageLayout } from "./PageLayout";
