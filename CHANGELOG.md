@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.40](https://github.com/MRdevX/mrashidi.me/compare/v0.1.39...v0.1.40) (2025-08-27)
+
+
+### Features
+
+* **pwa:** enhance PWA configuration with runtime caching, exclude specific file types, and add build script for fast builds ([816cc4d](https://github.com/MRdevX/mrashidi.me/commit/816cc4dd9e31e46217f88b155a2e15a3459f8793))
+
 ### [0.1.39](https://github.com/MRdevX/mrashidi.me/compare/v0.1.37...v0.1.39) (2025-08-27)
 
 
