@@ -1,10 +1,35 @@
 packages:
-  - .
+  # Include the root package
+  - "."
+  # Exclude build outputs and dependencies
+  - "!**/.next/**"
+  - "!**/node_modules/**"
+  - "!**/.pnpm-store/**"
 
+# Optimize dependency resolution for personal projects
+resolutionMode: "lowest-direct"
+
+# Enable optimistic repeat installs for faster development
+optimisticRepeatInstall: true
+
+# Enable shell emulator for cross-platform compatibility
+shellEmulator: true
+
+# Optimize hoisting for better performance
+hoist: true
+hoistPattern:
+  - "*typescript*"
+  - "*biome*"
+
+# Only build dependencies that need it
 onlyBuiltDependencies:
-  - '@sentry/cli'
-  - '@tailwindcss/oxide'
-  - '@vercel/speed-insights'
+  - "@sentry/cli"
+  - "@tailwindcss/oxide"
+  - "@vercel/speed-insights"
   - canvas
   - esbuild
   - sharp
+
+# Flexible peer dependency handling for personal projects
+strictPeerDependencies: false
+autoInstallPeers: true

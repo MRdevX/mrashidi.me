@@ -49,7 +49,7 @@ This portfolio showcases my work as a Software Engineer, focusing on:
 
 ### Development Tools
 
-- **Package Manager**: Yarn
+- **Package Manager**: pnpm
 - **Linting & Formatting**: Biome (replaced ESLint + Prettier)
 - **Build Tool**: Turbopack
 
@@ -106,8 +106,8 @@ src/
 
 ### Prerequisites
 
-- Node.js 18+
-- Yarn package manager
+- Node.js 22+
+- pnpm package manager
 - GitHub Personal Access Token
 - AWS SES credentials
 - Google reCAPTCHA keys
@@ -118,25 +118,25 @@ src/
 # Clone and install
 git clone https://github.com/mrdevx/mrashidi.me.git
 cd mrashidi.me
-yarn install
+pnpm install
 
 # Set up environment variables
 cp .env.example .env.local
 # Edit .env.local with your credentials
 
 # Start development
-yarn dev
+pnpm dev
 ```
 
 ### Available Scripts
 
-- `yarn dev` - Start development server with Turbopack
-- `yarn build` - Build production version
-- `yarn start` - Start production server
-- `yarn lint` - Run Biome linting and formatting
-- `yarn lint:fix` - Fix linting issues automatically
-- `yarn format` - Format code with Biome
-- `yarn generate-sitemap` - Generate sitemap
+- `pnpm dev` - Start development server with Turbopack
+- `pnpm build` - Build production version
+- `pnpm start` - Start production server
+- `pnpm lint` - Run Biome linting and formatting
+- `pnpm lint:fix` - Fix linting issues automatically
+- `pnpm format` - Format code with Biome
+- `pnpm generate-sitemap` - Generate sitemap
 
 ## 🔒 Security Features
 
