@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "yarn generate-sitemap && next build",
+    "build:fast": "yarn generate-sitemap && SKIP_PWA=true next build",
     "start": "next start",
     "lint": "next lint",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",

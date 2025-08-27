@@ -93,14 +93,33 @@ const nextConfig = {
   },
 };
 
-const config = withBundleAnalyzer(
-  withPWA({
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === "development",
-  })(nextConfig)
-);
+const pwaConfig =
+  process.env.SKIP_PWA === "true"
+    ? (config) => config
+    : withPWA({
+        dest: "public",
+        register: true,
+        skipWaiting: true,
+        disable: process.env.NODE_ENV === "development",
+
+        exclude: [/\.map$/, /_manifest\.js$/, /\.(jpg|jpeg|png|gif|webp|svg)$/, /\.(txt|xml)$/],
+
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts",
+              expiration: {
+                maxEntries: 5,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+        ],
+      });
+
+const config = withBundleAnalyzer(pwaConfig(nextConfig));
 
 export default withSentryConfig(config, {
   org: "notable-nomads",
