@@ -38,7 +38,7 @@ console.log("🔍 Checking for required OG images...\n");
 
 const missingImages = [];
 
-requiredImages.forEach((image) => {
+for (const image of requiredImages) {
   const imagePath = path.join(publicDir, image);
   if (!fs.existsSync(imagePath)) {
     missingImages.push(image);
@@ -46,7 +46,7 @@ requiredImages.forEach((image) => {
   } else {
     console.log(`✅ Found: ${image}`);
   }
-});
+}
 
 if (missingImages.length > 0) {
   console.log("\n📝 To create these images:");
@@ -68,7 +68,7 @@ if (missingImages.length > 0) {
 }
 
 console.log("\n📋 Image checklist:");
-requiredImages.forEach((image) => {
+for (const image of requiredImages) {
   const status = fs.existsSync(path.join(publicDir, image)) ? "✅" : "❌";
   console.log(`${status} ${image}`);
-});
+}

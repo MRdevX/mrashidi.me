@@ -44,7 +44,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
           </span>
           {project.openSource && (
             <span
-              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("openSource")} flex items-center gap-1`}
+              className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge(
+                "openSource"
+              )} flex items-center gap-1`}
             >
               Open Source
             </span>
@@ -70,8 +72,8 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
         </p>
         {project.highlights && project.highlights.length > 0 && (
           <ul className={`list-disc list-inside text-xs ${getTextColor("secondary")} space-y-1 mt-1`}>
-            {project.highlights.map((h, i) => (
-              <li key={i}>{h}</li>
+            {project.highlights.map((highlight) => (
+              <li key={highlight}>{highlight}</li>
             ))}
           </ul>
         )}
@@ -80,7 +82,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
       {/* Commit Information */}
       {project.githubUrl && (
         <div
-          className={`flex flex-wrap gap-2 items-center text-xs ${getTextColor("muted")} border-t ${getBorderColor("primary")} pt-2`}
+          className={`flex flex-wrap gap-2 items-center text-xs ${getTextColor("muted")} border-t ${getBorderColor(
+            "primary"
+          )} pt-2`}
         >
           {commitInfo ? (
             <>

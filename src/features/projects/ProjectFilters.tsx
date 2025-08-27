@@ -27,7 +27,9 @@ export function ProjectFilters({
   const { getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
 
   const renderCategorySection = (category: TechnologyCategory, stacks: string[]) => {
-    if (stacks.length === 0) return null;
+    if (stacks.length === 0) {
+      return null;
+    }
 
     const displayName = CATEGORY_DISPLAY_NAMES[category];
 
@@ -45,12 +47,17 @@ export function ProjectFilters({
 
             return (
               <button
+                type="button"
                 key={stack}
                 onClick={() => onToggleStack(stack)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-medium ${
                   isSelected
                     ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg shadow-orange-500/25"
-                    : `${getBackgroundColor("glassLight")} ${getBorderColor("secondary")} ${getTextColor("primary")} hover:border-orange-500/60 hover:text-orange-400 hover:${getBackgroundColor("secondary")} hover:shadow-lg hover:shadow-orange-500/10`
+                    : `${getBackgroundColor("glassLight")} ${getBorderColor("secondary")} ${getTextColor(
+                        "primary"
+                      )} hover:border-orange-500/60 hover:text-orange-400 hover:${getBackgroundColor(
+                        "secondary"
+                      )} hover:shadow-lg hover:shadow-orange-500/10`
                 }`}
               >
                 {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} />}

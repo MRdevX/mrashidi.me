@@ -3,6 +3,7 @@
 import { Disclosure } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useId } from "react";
 import { ThemeToggle } from "@/components/ui";
 import { navigation } from "@/data";
 import { useScrollPosition } from "@/hooks";
@@ -15,6 +16,7 @@ import { VersionBadge } from "./VersionBadge";
 export default function Navbar() {
   const isScrolled = useScrollPosition();
   const pathname = usePathname();
+  const mobileMenuId = useId();
 
   const getNavbarClasses = () => {
     return `fixed w-full z-50 transition-all duration-300 ${
@@ -58,7 +60,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 className="sm:hidden glass-card border-b border-gray-200/20 dark:border-gray-700/20"
-                id="mobile-menu"
+                id={mobileMenuId}
                 aria-label="Mobile Menu"
               >
                 <div className="pt-2 pb-3 space-y-1">

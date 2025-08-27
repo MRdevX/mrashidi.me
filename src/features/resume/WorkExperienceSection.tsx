@@ -92,17 +92,19 @@ export function WorkExperienceSection() {
                         <div className="flex-1 h-px bg-linear-to-r from-orange-500/30 to-transparent" />
                       </div>
                       <ul className="space-y-3">
-                        {job.achievements.map((achievement, i) => (
+                        {job.achievements.map((achievement, index) => (
                           <motion.li
-                            key={i}
+                            key={achievement}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.05 }}
+                            transition={{ delay: index * 0.05 }}
                             className="flex items-start gap-3 group/achievement"
                           >
                             <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
                             <span
-                              className={`${getTextColor("primary")} group-hover/achievement:${getTextColor("primary")} transition-colors leading-relaxed`}
+                              className={`${getTextColor("primary")} group-hover/achievement:${getTextColor(
+                                "primary"
+                              )} transition-colors leading-relaxed`}
                             >
                               {achievement}
                             </span>

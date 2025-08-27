@@ -10,36 +10,31 @@ interface RecaptchaResponse {
   error_codes?: string[];
 }
 
-export class RecaptchaService {
-  private static readonly VERIFY_URL = API_CONFIG.RECAPTCHA.VERIFY_URL;
-  private static readonly THRESHOLD = API_CONFIG.RECAPTCHA.THRESHOLD;
+const VERIFY_URL = API_CONFIG.RECAPTCHA.VERIFY_URL;
+const THRESHOLD = API_CONFIG.RECAPTCHA.THRESHOLD;
 
-  static async verify(token: string): Promise<boolean> {
-    if (!process.env.RECAPTCHA_SECRET_KEY) {
-      throw new AuthenticationError("reCAPTCHA secret key not configured");
-    }
-
-    const response = await fetch(
-      `${RecaptchaService.VERIFY_URL}?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
-      {
-        method: "POST",
-      }
-    );
-
-    if (!response.ok) {
-      throw new NetworkError("Failed to verify reCAPTCHA");
-    }
-
-    const data: RecaptchaResponse = await response.json();
-
-    if (!data.success) {
-      throw new ValidationError("reCAPTCHA verification failed");
-    }
-
-    if (data.score < RecaptchaService.THRESHOLD) {
-      throw new ValidationError("Suspicious activity detected. Please try again.");
-    }
-
-    return true;
+export async function verifyRecaptcha(token: string): Promise<boolean> {
+  if (!process.env.RECAPTCHA_SECRET_KEY) {
+    throw new AuthenticationError("reCAPTCHA secret key not configured");
   }
+
+  const response = await fetch(`${VERIFY_URL}?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`, {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new NetworkError("Failed to verify reCAPTCHA");
+  }
+
+  const data: RecaptchaResponse = await response.json();
+
+  if (!data.success) {
+    throw new ValidationError("reCAPTCHA verification failed");
+  }
+
+  if (data.score < THRESHOLD) {
+    throw new ValidationError("Suspicious activity detected. Please try again.");
+  }
+
+  return true;
 }

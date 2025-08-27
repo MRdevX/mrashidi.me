@@ -45,8 +45,8 @@ export default function Home() {
 
   const uniqueMainStack = useMemo(() => {
     const mainStack: { name: string; iconKey: string }[] = [];
-    skills.forEach((cat) => {
-      cat.skills.forEach((skill) => {
+    for (const cat of skills) {
+      for (const skill of cat.skills) {
         if (skill.includeInMainStack) {
           let iconKey = skill.name
             .toLowerCase()
@@ -65,8 +65,8 @@ export default function Home() {
             mainStack.push({ name: skill.name, iconKey });
           }
         }
-      });
-    });
+      }
+    }
     return Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
   }, []);
 

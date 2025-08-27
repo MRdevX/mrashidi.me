@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { type MotionProps, motion } from "framer-motion";
 import { type ReactNode, useEffect, useState } from "react";
 import { animationClasses, staggerDelays } from "@/lib/animations";
 
@@ -10,16 +10,7 @@ interface PerformanceWrapperProps {
   delay?: number;
   className?: string;
   useFramerMotion?: boolean;
-  framerMotionProps?: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    initial?: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    animate?: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    transition?: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    variants?: any;
-  };
+  framerMotionProps?: Pick<MotionProps, "initial" | "animate" | "transition" | "variants">;
 }
 
 export function PerformanceWrapper({
@@ -68,7 +59,11 @@ export function StaggerWrapper({ children, className = "", staggerDelay = "norma
     <div className={className}>
       {Array.isArray(children)
         ? children.map((child, index) => (
-            <PerformanceWrapper key={index} animation="slideUp" delay={index * staggerDelays[staggerDelay]}>
+            <PerformanceWrapper
+              key={`performance-wrapper-${index}-${typeof child === "string" ? child : "element"}`}
+              animation="slideUp"
+              delay={index * staggerDelays[staggerDelay]}
+            >
               {child}
             </PerformanceWrapper>
           ))

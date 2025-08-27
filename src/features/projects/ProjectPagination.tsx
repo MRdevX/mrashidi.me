@@ -11,7 +11,9 @@ interface ProjectPaginationProps {
 export function ProjectPagination({ currentPage, totalPages, onPageChange }: ProjectPaginationProps) {
   const { getTextColor } = useThemeConfig();
 
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1) {
+    return null;
+  }
 
   return (
     <div className="mt-12 flex justify-center items-center space-x-4">

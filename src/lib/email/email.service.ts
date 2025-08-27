@@ -2,7 +2,19 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { AuthenticationError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation/schemas";
-import { ContactTemplates, getTemplateConfig, ResumeTemplates } from "./templates";
+import { getTemplateConfig } from "./templates";
+import {
+  createAdminNotificationHtml as createContactAdminHtml,
+  createAdminNotificationText as createContactAdminText,
+  createUserConfirmationHtml as createContactUserHtml,
+  createUserConfirmationText as createContactUserText,
+} from "./templates/contact-templates";
+import {
+  createAdminNotificationHtml as createResumeAdminHtml,
+  createAdminNotificationText as createResumeAdminText,
+  createUserConfirmationHtml as createResumeUserHtml,
+  createUserConfirmationText as createResumeUserText,
+} from "./templates/resume-templates";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -101,11 +113,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ContactTemplates.createAdminNotificationHtml(data, this.templateConfig),
+              Data: createContactAdminHtml(data, this.templateConfig),
               Charset: "UTF-8",
             },
             Text: {
-              Data: ContactTemplates.createAdminNotificationText(data),
+              Data: createContactAdminText(data),
               Charset: "UTF-8",
             },
           },
@@ -147,11 +159,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ContactTemplates.createUserConfirmationHtml(data, this.templateConfig),
+              Data: createContactUserHtml(data, this.templateConfig),
               Charset: "UTF-8",
             },
             Text: {
-              Data: ContactTemplates.createUserConfirmationText(data, this.templateConfig),
+              Data: createContactUserText(data, this.templateConfig),
               Charset: "UTF-8",
             },
           },
@@ -189,11 +201,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ResumeTemplates.createAdminNotificationHtml(data, this.templateConfig),
+              Data: createResumeAdminHtml(data, this.templateConfig),
               Charset: "UTF-8",
             },
             Text: {
-              Data: ResumeTemplates.createAdminNotificationText(data),
+              Data: createResumeAdminText(data),
               Charset: "UTF-8",
             },
           },
@@ -232,11 +244,11 @@ export class EmailService {
           },
           Body: {
             Html: {
-              Data: ResumeTemplates.createUserConfirmationHtml(data, this.templateConfig),
+              Data: createResumeUserHtml(data, this.templateConfig),
               Charset: "UTF-8",
             },
             Text: {
-              Data: ResumeTemplates.createUserConfirmationText(data, this.templateConfig),
+              Data: createResumeUserText(data, this.templateConfig),
               Charset: "UTF-8",
             },
           },

@@ -21,7 +21,9 @@ export class CacheService {
       const posts = this.cache.get<IBlogPost[]>(this.BLOG_POSTS_KEY);
       const total = this.cache.get<number>(this.BLOG_POSTS_TOTAL_KEY);
 
-      if (!posts || total === undefined) return null;
+      if (!posts || total === undefined) {
+        return null;
+      }
 
       return { posts, total };
     } catch (error) {

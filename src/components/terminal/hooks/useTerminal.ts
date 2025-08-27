@@ -10,6 +10,54 @@ export const useTerminal = () => {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [isExecuting, setIsExecuting] = useState(false);
 
+  const getLoadingMessage = useCallback((command: CommandType): string => {
+    switch (command) {
+      case "blog":
+        return "Loading blog posts from API...";
+      case "help":
+        return "Loading available commands...";
+      case "skills":
+        return "Analyzing skill tree...";
+      case "projects":
+        return "Fetching project data...";
+      case "experience":
+        return "Loading work experience...";
+      case "achievements":
+        return "Retrieving achievements...";
+      case "contact":
+        return "Loading contact information...";
+      case "about":
+        return "Loading profile data...";
+      default:
+        return "Processing command...";
+    }
+  }, []);
+
+  const getExecutionDelay = useCallback((command: CommandType): number => {
+    switch (command) {
+      case "blog":
+        return 800;
+      case "help":
+        return 150;
+      case "skills":
+        return 300;
+      case "projects":
+        return 400;
+      case "experience":
+        return 350;
+      case "achievements":
+        return 250;
+      case "contact":
+        return 200;
+      case "about":
+        return 180;
+      case "clear":
+        return 50;
+      default:
+        return 200;
+    }
+  }, []);
+
   const executeCommand = useCallback(
     async (cmd: string) => {
       if (!isValidCommand(cmd)) {
@@ -68,60 +116,12 @@ export const useTerminal = () => {
         setIsExecuting(false);
       }
     },
-    [commands.length]
+    [commands.length, getExecutionDelay, getLoadingMessage]
   );
 
   const clearTerminal = useCallback(() => {
     setCommands([]);
   }, []);
-
-  const getLoadingMessage = (command: CommandType): string => {
-    switch (command) {
-      case "blog":
-        return "Loading blog posts from API...";
-      case "help":
-        return "Loading available commands...";
-      case "skills":
-        return "Analyzing skill tree...";
-      case "projects":
-        return "Fetching project data...";
-      case "experience":
-        return "Loading work experience...";
-      case "achievements":
-        return "Retrieving achievements...";
-      case "contact":
-        return "Loading contact information...";
-      case "about":
-        return "Loading profile data...";
-      default:
-        return "Processing command...";
-    }
-  };
-
-  const getExecutionDelay = (command: CommandType): number => {
-    switch (command) {
-      case "blog":
-        return 800;
-      case "help":
-        return 150;
-      case "skills":
-        return 300;
-      case "projects":
-        return 400;
-      case "experience":
-        return 350;
-      case "achievements":
-        return 250;
-      case "contact":
-        return 200;
-      case "about":
-        return 180;
-      case "clear":
-        return 50;
-      default:
-        return 200;
-    }
-  };
 
   return {
     commands,

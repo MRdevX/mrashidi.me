@@ -50,8 +50,7 @@ This portfolio showcases my work as a Software Engineer, focusing on:
 ### Development Tools
 
 - **Package Manager**: Yarn
-- **Linting**: ESLint
-- **Formatting**: Prettier
+- **Linting & Formatting**: Biome (replaced ESLint + Prettier)
 - **Build Tool**: Turbopack
 
 ## 🏗 Architecture
@@ -101,6 +100,7 @@ src/
 - **Server Isolation**: Server-only code properly isolated
 - **Error Handling**: Structured error classes and safe responses
 - **Performance**: SWR caching, lazy loading, and optimization
+- **Code Quality**: Biome for linting and formatting with zero-config setup
 
 ## 🔧 Development Setup
 
@@ -133,7 +133,9 @@ yarn dev
 - `yarn dev` - Start development server with Turbopack
 - `yarn build` - Build production version
 - `yarn start` - Start production server
-- `yarn lint` - Run ESLint
+- `yarn lint` - Run Biome linting and formatting
+- `yarn lint:fix` - Fix linting issues automatically
+- `yarn format` - Format code with Biome
 - `yarn generate-sitemap` - Generate sitemap
 
 ## 🔒 Security Features

@@ -1,11 +1,11 @@
 import type { NextRequest } from "next/server";
 import { APIError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
-import { BlobService } from "@/server/blob.service";
+import { getCVUrl } from "@/server/blob.service";
 
 export async function GET(_request: NextRequest) {
   try {
-    const cvUrl = BlobService.getCVUrl();
+    const cvUrl = getCVUrl();
 
     logger.info({
       operation: "cvDownload",

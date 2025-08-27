@@ -1,7 +1,7 @@
 import type { NextRequest, NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/config/api";
-import { ErrorHandler } from "@/lib/errors";
-import { ApiResponseHandler } from "./response";
+import { handleError, logError } from "@/lib/errors";
+import { createErrorResponse } from "./response";
 
 export type ApiHandler = (request: NextRequest) => Promise<NextResponse>;
 
@@ -10,9 +10,9 @@ export function withErrorHandling(handler: ApiHandler): ApiHandler {
     try {
       return await handler(request);
     } catch (error) {
-      const appError = ErrorHandler.handle(error);
-      ErrorHandler.log(appError, "API");
-      return ApiResponseHandler.error(appError, appError.statusCode || 500);
+      const appError = handleError(error);
+      logError(appError, "API");
+      return createErrorResponse(appError, appError.statusCode || 500);
     }
   };
 }

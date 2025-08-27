@@ -60,10 +60,12 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
     return Object.values(categorizedStacks).flat().sort();
   }, [categorizedStacks]);
 
-  const loadCachedCommitInfo = (): Map<string, { date: Date; hash: string }> => {
+  const loadCachedCommitInfo = useCallback((): Map<string, { date: Date; hash: string }> => {
     try {
       const cached = localStorage.getItem(COMMIT_DATES_CACHE_KEY);
-      if (!cached) return new Map();
+      if (!cached) {
+        return new Map();
+      }
 
       const parsed: CachedCommitDates = JSON.parse(cached);
       const now = Date.now();
@@ -74,9 +76,9 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
       }
 
       const infoMap = new Map<string, { date: Date; hash: string }>();
-      Object.entries(parsed.commits).forEach(([url, info]) => {
+      for (const [url, info] of Object.entries(parsed.commits)) {
         infoMap.set(url, { date: new Date(info.date), hash: info.hash });
-      });
+      }
 
       return infoMap;
     } catch (error) {
@@ -86,9 +88,9 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
       });
       return new Map();
     }
-  };
+  }, []);
 
-  const saveCommitInfoToCache = (info: Map<string, { date: Date; hash: string }>) => {
+  const saveCommitInfoToCache = useCallback((info: Map<string, { date: Date; hash: string }>) => {
     try {
       const commitsRecord: Record<string, CommitInfo> = {};
       info.forEach((commitData, url) => {
@@ -110,7 +112,7 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
         error: error instanceof Error ? error.message : String(error),
       });
     }
-  };
+  }, []);
 
   const fetchCommitDates = useCallback(async () => {
     setIsLoadingCommitDates(true);
@@ -128,18 +130,20 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
 
       const results = await Promise.allSettled(
         projectsWithGithub.map(async (project) => {
-          if (!project.githubUrl) return null;
+          if (!project.githubUrl) {
+            return null;
+          }
 
           const commitInfo = await githubService.getLatestCommitInfo(project.githubUrl);
           return { url: project.githubUrl, commitInfo };
         })
       );
 
-      results.forEach((result) => {
+      for (const result of results) {
         if (result.status === "fulfilled" && result.value?.commitInfo) {
           newCommitInfo.set(result.value.url, result.value.commitInfo);
         }
-      });
+      }
 
       if (newCommitInfo.size > 0) {
         saveCommitInfoToCache(newCommitInfo);
@@ -153,7 +157,7 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
     } finally {
       setIsLoadingCommitDates(false);
     }
-  }, []);
+  }, [loadCachedCommitInfo, saveCommitInfoToCache]);
 
   useEffect(() => {
     fetchCommitDates();
@@ -167,13 +171,20 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
       const bHasGithub = b.githubUrl && commitInfo.has(b.githubUrl);
 
       if (aHasGithub && bHasGithub) {
-        const aDate = commitInfo.get(a.githubUrl!)!.date;
-        const bDate = commitInfo.get(b.githubUrl!)!.date;
+        const aDate = commitInfo.get(a.githubUrl || "")?.date;
+        const bDate = commitInfo.get(b.githubUrl || "")?.date;
+        if (!aDate || !bDate) {
+          return 0;
+        }
         return bDate.getTime() - aDate.getTime();
       }
 
-      if (aHasGithub && !bHasGithub) return -1;
-      if (!aHasGithub && bHasGithub) return 1;
+      if (aHasGithub && !bHasGithub) {
+        return -1;
+      }
+      if (!aHasGithub && bHasGithub) {
+        return 1;
+      }
 
       return 0;
     });
@@ -191,7 +202,7 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, selectedStacks, showOpenSourceOnly]);
+  }, []);
 
   const setPage = (page: number) => {
     setCurrentPage(Math.max(1, Math.min(page, totalPages)));

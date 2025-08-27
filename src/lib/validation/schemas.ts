@@ -34,7 +34,7 @@ const baseMessageSchema = z
   .min(10, "Message must be at least 10 characters")
   .max(1000, "Message must be less than 1000 characters")
   .trim()
-  .regex(/^[\x00-\x7F\s\-_.,!?()@#$%&*+=<>[\]{}|\\/:;"'`~]+$/, "Message contains invalid characters")
+  .regex(/^[\x20-\x7E\s\-_.,!?()@#$%&*+=<>[\]{}|\\/:;"'`~]+$/, "Message contains invalid characters")
   .refine((val) => !/\s{3,}/.test(val), "Message cannot contain more than 2 consecutive spaces");
 
 export const contactFormSchema = z.object({

@@ -53,7 +53,8 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
             className="text-orange-500 hover:text-orange-400 transition-colors flex items-center gap-1"
           >
             Read More
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <title>Arrow right</title>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </Link>

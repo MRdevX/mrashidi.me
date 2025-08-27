@@ -34,11 +34,11 @@ export const performanceUtils = {
   optimizeImages: () => {
     if (typeof window !== "undefined") {
       const images = document.querySelectorAll("img");
-      images.forEach((img) => {
+      for (const img of images) {
         if (!img.loading) {
           img.loading = "lazy";
         }
-      });
+      }
     }
   },
 };

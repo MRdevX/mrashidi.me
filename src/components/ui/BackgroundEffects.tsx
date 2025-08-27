@@ -25,12 +25,12 @@ export function BackgroundEffects() {
     setIsDark(isDarkMode);
 
     const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
+      for (const mutation of mutations) {
         if (mutation.type === "attributes" && mutation.attributeName === "class") {
           const isDarkMode = document.documentElement.classList.contains("dark");
           setIsDark(isDarkMode);
         }
-      });
+      }
     });
 
     observer.observe(document.documentElement, {
@@ -42,13 +42,19 @@ export function BackgroundEffects() {
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
 
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -76,7 +82,7 @@ export function BackgroundEffects() {
       ctx.fillStyle = textColor;
       ctx.font = "12px monospace";
 
-      matrixRef.current.forEach((particle) => {
+      for (const particle of matrixRef.current) {
         ctx.fillText(particle.char, particle.x, particle.y);
         particle.y += particle.speed;
 
@@ -85,7 +91,7 @@ export function BackgroundEffects() {
           particle.x = Math.random() * canvas.width;
           particle.char = chars[Math.floor(Math.random() * chars.length)];
         }
-      });
+      }
 
       animationFrame = requestAnimationFrame(animate);
     };

@@ -38,6 +38,7 @@ export default function StructuredData({ type, path, title }: StructuredDataProp
     <Script
       id={`structured-data-${type}`}
       type="application/ld+json"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: This is structured data JSON, not user content
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );

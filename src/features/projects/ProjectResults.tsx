@@ -64,9 +64,9 @@ export function ProjectResults({
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 gap-6">
-            {filteredProjects.map((project, idx) => (
+            {filteredProjects.map((project) => (
               <ProjectCard
-                key={project.title + idx}
+                key={project.title}
                 project={project}
                 commitInfo={project.githubUrl ? commitInfo.get(project.githubUrl) : undefined}
                 isLoadingCommitDates={isLoadingCommitDates}

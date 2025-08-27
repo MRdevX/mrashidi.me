@@ -102,8 +102,8 @@ const renderWorkExperience = (limit?: number) => {
       <p className="text-orange-500 font-bold">{exp.title}</p>
       <p className="text-green-400">{exp.company}</p>
       <p className="text-gray-400">• {exp.period}</p>
-      {exp.achievements.slice(0, 3).map((achievement, achievementIdx) => (
-        <p key={achievementIdx} className="text-gray-400">
+      {exp.achievements.slice(0, 3).map((achievement) => (
+        <p key={`achievement-${achievement}`} className="text-gray-400">
           • {achievement}
         </p>
       ))}

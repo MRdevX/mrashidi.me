@@ -20,15 +20,26 @@ export function EducationSection() {
               <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
                 {edu.degree}
               </h3>
-              <div
-                className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors mt-2 flex items-center relative z-10 ${
-                  edu.url ? "cursor-pointer hover:text-orange-400" : ""
-                }`}
-                onClick={() => edu.url && window.open(edu.url, "_blank")}
-              >
-                <span>{edu.institution}</span>
-                {edu.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />}
-              </div>
+              {edu.url ? (
+                <button
+                  type="button"
+                  className={`${getTextColor("secondary")} group-hover:${getTextColor(
+                    "primary"
+                  )} transition-colors mt-2 flex items-center relative z-10 cursor-pointer hover:text-orange-400`}
+                  onClick={() => window.open(edu.url, "_blank")}
+                >
+                  <span>{edu.institution}</span>
+                  <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />
+                </button>
+              ) : (
+                <div
+                  className={`${getTextColor("secondary")} group-hover:${getTextColor(
+                    "primary"
+                  )} transition-colors mt-2 flex items-center relative z-10`}
+                >
+                  <span>{edu.institution}</span>
+                </div>
+              )}
             </div>
             <div className={`text-sm ${getTextColor("secondary")} text-right ml-4`}>
               <div>{edu.location}</div>

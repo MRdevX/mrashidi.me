@@ -63,6 +63,7 @@ function ThemeToggleInner({ className, size = "md", variant = "cyberpunk" }: The
   if (!mounted) {
     return (
       <button
+        type="button"
         className={cn(
           "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
           SIZE_CLASSES[size],
@@ -80,6 +81,7 @@ function ThemeToggleInner({ className, size = "md", variant = "cyberpunk" }: The
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
       className={cn(
         "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -106,6 +108,7 @@ export function ThemeToggle(props: ThemeToggleProps) {
   if (!hasThemeProvider) {
     return (
       <button
+        type="button"
         className={cn(
           "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
           SIZE_CLASSES[props.size || "md"],

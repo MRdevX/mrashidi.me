@@ -1,4 +1,4 @@
-import { APIError, ErrorHandler } from "@/lib/errors";
+import { APIError, handleError, logError } from "@/lib/errors";
 
 export abstract class BaseService {
   protected async fetchWithTimeout(url: string, options: RequestInit = {}, timeout: number = 10000): Promise<Response> {
@@ -33,7 +33,7 @@ export abstract class BaseService {
   }
 
   protected logError(error: unknown, context: string): void {
-    const appError = ErrorHandler.handle(error);
-    ErrorHandler.log(appError, context);
+    const appError = handleError(error);
+    logError(appError, context);
   }
 }

@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { APIError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
-import { BlobService } from "@/server/blob.service";
+import { uploadCV } from "@/server/blob.service";
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       throw new APIError("File must be a PDF", 400);
     }
 
-    const url = await BlobService.uploadCV(file);
+    const url = await uploadCV(file);
 
     logger.info({
       operation: "cvUpload",

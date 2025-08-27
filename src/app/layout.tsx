@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { MainContent } from "@/components/layout/MainContent";
 import Navbar from "@/components/layout/Navbar";
 import { StructuredData } from "@/components/SEO";
 import { BackgroundEffects } from "@/components/ui";
@@ -77,19 +78,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} min-h-screen relative`}>
         <ThemeProvider>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:p-4 focus:bg-orange-500 focus:text-black focus:outline-none focus:ring-2 focus:ring-white"
-          >
-            Skip to content
-          </a>
-
           <BackgroundEffects />
           <BlogPreloader />
           <Navbar />
-          <main id="main-content" className="pt-16 relative z-10">
-            {children}
-          </main>
+          <MainContent>{children}</MainContent>
           <footer className="mt-12 py-8 relative z-10">
             <div className="max-w-4xl mx-auto px-4">
               <div className="glass-card p-8 text-center">

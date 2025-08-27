@@ -67,7 +67,6 @@ const LoadingAnimation = ({
       className={`flex flex-col items-center justify-center ${
         fullScreen ? "fixed inset-0 bg-black/80 backdrop-blur-sm z-50" : ""
       }`}
-      role="status"
       aria-live="polite"
       aria-busy="true"
     >
@@ -77,14 +76,14 @@ const LoadingAnimation = ({
         initial="initial"
         animate="animate"
       >
-        {[...Array(3)].map((_, i) => (
+        {["dot-1", "dot-2", "dot-3"].map((dotId, index) => (
           <motion.div
-            key={i}
+            key={dotId}
             className={`${sizeValues[size].dot} ${colorValues[color]} rounded-full`}
             variants={dotVariants}
             animate="animate"
             initial="initial"
-            custom={i}
+            custom={index}
           />
         ))}
       </motion.div>
