@@ -76,7 +76,7 @@
   },
   "packageManager": "pnpm@10.8.0",
   "engines": {
-    "node": ">=18.17.0",
-    "pnpm": ">=10.0.0"
+    "node": "22.x",
+    "pnpm": "10.x"
   }
 }
