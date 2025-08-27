@@ -3,16 +3,18 @@ import { APIError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
 import { getCVUrl } from "@/server/blob.service";
 
+const logRedirect = (cvUrl: string) => {
+  logger.info({
+    operation: "cvDownload",
+    status: "redirecting_to_blob",
+    url: cvUrl,
+  });
+};
+
 export async function GET(_request: NextRequest) {
   try {
     const cvUrl = getCVUrl();
-
-    logger.info({
-      operation: "cvDownload",
-      status: "redirecting_to_blob",
-      url: cvUrl,
-    });
-
+    logRedirect(cvUrl);
     return Response.redirect(cvUrl);
   } catch (error) {
     logger.error({
