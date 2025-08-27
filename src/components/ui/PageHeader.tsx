@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { LucideIcon } from "lucide-react";
-import { fadeInVariants } from "@/lib/animations";
+import type { LucideIcon } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { fadeInVariants } from "@/lib/animations";
 
 interface PageHeaderProps {
   icon: LucideIcon;

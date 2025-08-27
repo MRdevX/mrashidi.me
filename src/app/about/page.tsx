@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "lucide-react";
-import { PageWrapper, PageHeader, PageSection } from "@/components/ui";
+import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
 import { BioSection, EducationSection, LanguagesSection, SkillsSection } from "@/features/about";
 import { useMouseTracking } from "@/hooks/useMouseTracking";
 

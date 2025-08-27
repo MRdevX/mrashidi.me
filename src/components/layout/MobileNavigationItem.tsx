@@ -1,7 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
 import type { NavigationItem as NavigationItemType } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface MobileNavigationItemProps {
   item: NavigationItemType;

@@ -1,5 +1,5 @@
-import { siteConfig } from "@/data";
 import { StructuredData } from "@/components/SEO";
+import { siteConfig } from "@/data";
 
 export function HeadMeta() {
   return (

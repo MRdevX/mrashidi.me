@@ -1,8 +1,8 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
-import { ContactContainer, ContactHeader, useContactData } from "@/features/contact";
 import { PageHeader, PageSection } from "@/components/ui";
+import { ContactContainer, ContactHeader, useContactData } from "@/features/contact";
 
 export default function Contact() {
   const { header, sections, adpListWidgets } = useContactData();

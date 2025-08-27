@@ -28,7 +28,9 @@ const logError = (operation: string, error: unknown, context?: Record<string, un
 const extractRepoInfo = (githubUrl: string): { owner: string; name: string } | null => {
   try {
     const url = new URL(githubUrl);
-    if (url.hostname !== "github.com") return null;
+    if (url.hostname !== "github.com") {
+      return null;
+    }
 
     const [, owner, name] = url.pathname.split("/");
     return owner && name ? { owner, name } : null;
@@ -56,7 +58,9 @@ const fetchGitHubAPI = async <T>(endpoint: string): Promise<T> => {
 
 const getLatestCommitInfo = async (githubUrl: string): Promise<LatestCommitInfo | null> => {
   const repoInfo = extractRepoInfo(githubUrl);
-  if (!repoInfo) return null;
+  if (!repoInfo) {
+    return null;
+  }
 
   const branches = ["main", "master"];
 

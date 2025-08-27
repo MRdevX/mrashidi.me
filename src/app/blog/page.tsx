@@ -1,8 +1,8 @@
 "use client";
 
 import { BookOpen } from "lucide-react";
-import { BlogContainer, BlogError, BlogGrid, BlogLoading, BlogPagination, useBlogData } from "@/features/blog";
 import { PageHeader, PageSection } from "@/components/ui";
+import { BlogContainer, BlogError, BlogGrid, BlogLoading, BlogPagination, useBlogData } from "@/features/blog";
 
 export default function Blog() {
   const { posts, totalPages, currentPage, isLoading, error, setPage } = useBlogData(6);

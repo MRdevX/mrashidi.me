@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import { FolderOpen } from "lucide-react";
+import { PageHeader, PageSection } from "@/components/ui";
 import { ProjectFilters, ProjectPagination, ProjectResults, ProjectSearchBox } from "@/features/projects";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
-import { PageHeader, PageSection } from "@/components/ui";
 import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
 
 export default function Projects() {

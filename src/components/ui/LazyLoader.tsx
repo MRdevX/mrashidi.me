@@ -1,4 +1,4 @@
-import { Suspense, ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 import { LoadingAnimation } from "./LoadingAnimation";
 
 interface LazyLoaderProps {

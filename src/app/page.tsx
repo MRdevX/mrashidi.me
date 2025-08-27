@@ -7,16 +7,16 @@ import { lazy, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
   CyberpunkButton,
+  LazyLoader,
+  MotionSection,
   PageWrapper,
   SectionHeader,
   SocialButton,
-  LazyLoader,
-  MotionSection,
   TechStackGrid,
 } from "@/components/ui";
 import { personalInfo } from "@/data";
-import { getMainTechStack } from "@/lib/skills";
 import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
+import { getMainTechStack } from "@/lib/skills";
 
 const ContributionGraph = lazy(() =>
   import("@/components/ui/ContributionGraph").then((module) => ({
@@ -103,7 +103,12 @@ export default function Home() {
           <div className="contact-section content-section">
             <div className="contact-section-background" />
             <div className="contact-content">
-              <SectionHeader icon={MessageCircle} title={personalInfo.contactCta} size="lg" className="justify-center" />
+              <SectionHeader
+                icon={MessageCircle}
+                title={personalInfo.contactCta}
+                size="lg"
+                className="justify-center"
+              />
               <p className="contact-description text-body">{personalInfo.contactDescription}</p>
               <Link href="/contact" className="block">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

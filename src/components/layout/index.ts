@@ -1,11 +1,11 @@
+export { AnalyticsWrapper } from "./Analytics";
 export { BrandLogo } from "./BrandLogo";
+export { Footer } from "./Footer";
+export { HeadMeta } from "./HeadMeta";
 export { MainContent } from "./MainContent";
 export { MobileMenuButton } from "./MobileMenuButton";
 export { MobileNavigationItem } from "./MobileNavigationItem";
 export { default as Navbar } from "./Navbar";
 export { NavigationItem } from "./NavigationItem";
-export { VersionBadge } from "./VersionBadge";
-export { Footer } from "./Footer";
-export { HeadMeta } from "./HeadMeta";
-export { AnalyticsWrapper } from "./Analytics";
 export { PageLayout } from "./PageLayout";
+export { VersionBadge } from "./VersionBadge";

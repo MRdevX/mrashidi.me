@@ -1,6 +1,5 @@
 import { Disclosure } from "@headlessui/react";
 import { Menu, X } from "lucide-react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface MobileMenuButtonProps {
   isOpen: boolean;

@@ -53,8 +53,8 @@ export function Footer() {
             © {currentYear} {personalInfo.name}. All rights reserved.
           </p>
           <div className="social-links-container">
-            {socialLinks.map((link, index) => (
-              <SocialLink key={index} {...link} />
+            {socialLinks.map((link) => (
+              <SocialLink key={link.ariaLabel} {...link} />
             ))}
           </div>
         </div>

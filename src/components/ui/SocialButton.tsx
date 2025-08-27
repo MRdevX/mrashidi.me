@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { LucideIcon } from "lucide-react";
-import { IconType } from "react-icons";
+import type { LucideIcon } from "lucide-react";
+import type { IconType } from "react-icons";
 import { CyberpunkButton } from "./CyberpunkButton";
 
 interface SocialButtonProps {
