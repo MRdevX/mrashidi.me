@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.39](https://github.com/MRdevX/mrashidi.me/compare/v0.1.37...v0.1.39) (2025-08-27)
+
+
+### Features
+
+* **config:** integrate bundle analyzer, enhance performance optimizations, and update Tailwind animations ([34fef51](https://github.com/MRdevX/mrashidi.me/commit/34fef51267dc2b871fdb18aff1ce0a7347f431a7))
+* **projects:** implement pagination for project results ([b9b9ad6](https://github.com/MRdevX/mrashidi.me/commit/b9b9ad623c73548575f523e311ffd8d4a763e769))
+* **style:** wrap content in glass-card for improved aesthetics and add motion effects ([2edfe6e](https://github.com/MRdevX/mrashidi.me/commit/2edfe6e5d00c162149c291f5a9139e839a2079a0))
+
 ### [0.1.38](https://github.com/MRdevX/mrashidi.me/compare/v0.1.37...v0.1.38) (2025-08-26)
 
 
