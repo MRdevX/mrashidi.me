@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import { CommandType } from "./types";
-import { AVAILABLE_COMMANDS } from "./constants";
-import { skills, personalInfo, projects, workExperience, certificates } from "@/data";
+import type { ReactElement } from "react";
+import { certificates, personalInfo, projects, skills, workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { AVAILABLE_COMMANDS } from "./constants";
+import type { CommandType } from "./types";
 
 interface BlogPost {
   title: string;
@@ -38,9 +38,13 @@ const TerminalLink = ({
   </a>
 );
 
-const TerminalListItem = ({ children, className = "text-gray-400" }: { children: React.ReactNode; className?: string }) => (
-  <li className={className}>• {children}</li>
-);
+const TerminalListItem = ({
+  children,
+  className = "text-gray-400",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => <li className={className}>• {children}</li>;
 
 const TerminalBadge = ({
   children,
@@ -116,8 +120,12 @@ const renderProjects = (limit?: number) => {
       <p className="text-gray-400">{project.description}</p>
       <p className="text-green-400 text-sm">Tech: {project.stack.join(", ")}</p>
       <div className="flex gap-2 text-xs mt-1 items-center">
-        <TerminalBadge variant={project.visibility === "public" ? "public" : "private"}>{project.visibility}</TerminalBadge>
-        <TerminalBadge variant={project.type === "personal" ? "personal" : "professional"}>{project.type}</TerminalBadge>
+        <TerminalBadge variant={project.visibility === "public" ? "public" : "private"}>
+          {project.visibility}
+        </TerminalBadge>
+        <TerminalBadge variant={project.type === "personal" ? "personal" : "professional"}>
+          {project.type}
+        </TerminalBadge>
         {project.githubUrl && (
           <TerminalLink href={project.githubUrl} className="text-orange-400 underline">
             GitHub
@@ -141,11 +149,15 @@ const renderContactInfo = () => (
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">GitHub:</span>
-      <TerminalLink href={personalInfo.social.github}>{personalInfo.social.github.replace("https://", "")}</TerminalLink>
+      <TerminalLink href={personalInfo.social.github}>
+        {personalInfo.social.github.replace("https://", "")}
+      </TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">LinkedIn:</span>
-      <TerminalLink href={personalInfo.social.linkedin}>{personalInfo.social.linkedin.replace("https://", "")}</TerminalLink>
+      <TerminalLink href={personalInfo.social.linkedin}>
+        {personalInfo.social.linkedin.replace("https://", "")}
+      </TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Location:</span>
@@ -240,7 +252,9 @@ const commandHandlers = {
                 {posts.map((post: BlogPost) => (
                   <li key={post.url} className="text-gray-400">
                     • <TerminalLink href={post.url}>{post.title}</TerminalLink>
-                    <span className="text-gray-500 text-xs ml-2">({new Date(post.publishedAt).toLocaleDateString()})</span>
+                    <span className="text-gray-500 text-xs ml-2">
+                      ({new Date(post.publishedAt).toLocaleDateString()})
+                    </span>
                   </li>
                 ))}
               </ul>

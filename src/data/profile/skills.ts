@@ -58,7 +58,11 @@ const skillCategories: SkillCategory[] = [
     category: "System Architecture",
     skills: [
       { name: "Microservices", level: "proficient", includeInMainStack: true },
-      { name: "Event-Driven Architecture", level: "proficient", includeInMainStack: true },
+      {
+        name: "Event-Driven Architecture",
+        level: "proficient",
+        includeInMainStack: true,
+      },
       { name: "API Gateway", level: "familiar" },
       { name: "Domain-Driven Design", level: "experienced" },
       { name: "Serverless", level: "familiar" },

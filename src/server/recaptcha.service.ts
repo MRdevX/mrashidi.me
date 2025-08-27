@@ -19,9 +19,12 @@ export class RecaptchaService {
       throw new AuthenticationError("reCAPTCHA secret key not configured");
     }
 
-    const response = await fetch(`${this.VERIFY_URL}?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`, {
-      method: "POST",
-    });
+    const response = await fetch(
+      `${RecaptchaService.VERIFY_URL}?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+      {
+        method: "POST",
+      }
+    );
 
     if (!response.ok) {
       throw new NetworkError("Failed to verify reCAPTCHA");
@@ -33,7 +36,7 @@ export class RecaptchaService {
       throw new ValidationError("reCAPTCHA verification failed");
     }
 
-    if (data.score < this.THRESHOLD) {
+    if (data.score < RecaptchaService.THRESHOLD) {
       throw new ValidationError("Suspicious activity detected. Please try again.");
     }
 

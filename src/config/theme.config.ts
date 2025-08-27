@@ -127,9 +127,11 @@ const COMPONENT_VARIANTS = {
     neon: "font-cyberpunk text-orange-500 border-2 border-orange-500 bg-transparent hover:bg-orange-500 hover:text-black text-shadow-neon transition-all duration-300 shadow-[0_0_20px_rgba(255,95,31,0.2)] hover:shadow-[0_0_40px_rgba(255,95,31,0.4)] px-6 py-3 text-base",
     primary:
       "font-cyberpunk bg-orange-500 hover:bg-orange-600 text-black border-2 border-orange-500 shadow-[0_0_15px_rgba(255,95,31,0.3)] px-6 py-3 text-base",
-    secondary: "font-cyberpunk bg-gray-800 hover:bg-gray-700 text-gray-200 border-2 border-gray-600 px-6 py-3 text-base",
+    secondary:
+      "font-cyberpunk bg-gray-800 hover:bg-gray-700 text-gray-200 border-2 border-gray-600 px-6 py-3 text-base",
     ghost: "font-cyberpunk bg-transparent hover:bg-gray-800 text-gray-300 border-2 border-gray-600 px-6 py-3 text-base",
-    default: "font-cyberpunk bg-orange-500 hover:bg-orange-600 text-black border-2 border-orange-500 px-6 py-3 text-base",
+    default:
+      "font-cyberpunk bg-orange-500 hover:bg-orange-600 text-black border-2 border-orange-500 px-6 py-3 text-base",
     outline:
       "font-cyberpunk border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-6 py-3 text-base",
     destructive: "font-cyberpunk bg-red-600 hover:bg-red-700 text-white border-2 border-red-600 px-6 py-3 text-base",

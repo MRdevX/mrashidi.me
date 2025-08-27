@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { FolderOpen } from "lucide-react";
+import { ProjectFilters, ProjectPagination, ProjectResults, ProjectSearchBox } from "@/features/projects";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
-import { ProjectSearchBox, ProjectFilters, ProjectResults, ProjectPagination } from "@/features/projects";
 
 export default function Projects() {
   const {
@@ -48,7 +48,11 @@ export default function Projects() {
         </motion.div>
 
         <div className="glass-card p-8">
-          <ProjectSearchBox searchQuery={searchQuery} onSearchChange={setSearchQuery} onClear={() => setSearchQuery("")} />
+          <ProjectSearchBox
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onClear={() => setSearchQuery("")}
+          />
 
           <ProjectFilters
             categorizedStacks={categorizedStacks}

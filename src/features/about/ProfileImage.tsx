@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { slideInRightVariants } from "@/lib/animations";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { slideInRightVariants } from "@/lib/animations";
 
 interface ProfileImageProps {
   src: string;

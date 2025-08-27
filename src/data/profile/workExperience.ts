@@ -48,7 +48,6 @@ const workExperience: WorkExperience[] = [
     location: "Tehran, Iran (Full-Time, Remote)",
     period: "Jan 2020 – Feb 2021",
     achievements: [
-
       "Built complete backend architecture from scratch using Express.js and JavaScript for aviation operations and crew management",
       "Designed and implemented RESTful APIs serving React dashboard and iPadOS application for flight crew operations",
       "Integrated meteorological APIs to deliver real‑time weather forecast data for specific flight routes",

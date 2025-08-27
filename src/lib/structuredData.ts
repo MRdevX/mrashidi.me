@@ -1,4 +1,4 @@
-import { personalInfo, coreConfig } from "@/data";
+import { coreConfig, personalInfo } from "@/data";
 
 export interface PersonSchema {
   "@context": "https://schema.org";

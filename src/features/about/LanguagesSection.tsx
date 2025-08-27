@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Languages } from "lucide-react";
 import { personalInfo } from "@/data";
-import { fadeInVariants, slideInVariants } from "@/lib/animations";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { fadeInVariants, slideInVariants } from "@/lib/animations";
 
 export function LanguagesSection() {
   const { getSectionHeader, getSectionTitle, getCardPattern, getTextColor, getBackgroundColor } = useThemeConfig();

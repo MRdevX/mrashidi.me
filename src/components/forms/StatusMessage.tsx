@@ -8,7 +8,9 @@ interface StatusMessageProps {
 }
 
 export function StatusMessage({ status }: StatusMessageProps) {
-  if (!status.type) return null;
+  if (!status.type) {
+    return null;
+  }
 
   return (
     <div

@@ -1,8 +1,8 @@
-import { Command } from "./types";
-import { TERMINAL_STYLES, TERMINAL_CONSTANTS } from "./constants";
-import { formatTimestamp } from "./utils";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { TERMINAL_CONSTANTS, TERMINAL_STYLES } from "./constants";
+import type { Command } from "./types";
+import { formatTimestamp } from "./utils";
 
 interface CommandOutputProps {
   command: Command;
@@ -19,7 +19,7 @@ const TerminalSpinner = () => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [spinnerFrames.length]);
+  }, []);
 
   return (
     <div className="flex items-center gap-2">

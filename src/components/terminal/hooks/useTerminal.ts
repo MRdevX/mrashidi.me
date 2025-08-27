@@ -1,9 +1,9 @@
-import { useState, useCallback } from "react";
-import { Command, CommandType } from "../types";
+import { useCallback, useState } from "react";
+import { logger } from "@/lib/logger";
 import { handleCommand } from "../commandHandlers";
 import { TERMINAL_CONSTANTS } from "../constants";
-import { normalizeCommand, isValidCommand } from "../utils";
-import { logger } from "@/lib/logger";
+import type { Command, CommandType } from "../types";
+import { isValidCommand, normalizeCommand } from "../utils";
 
 export const useTerminal = () => {
   const [commands, setCommands] = useState<Command[]>([]);
@@ -12,7 +12,9 @@ export const useTerminal = () => {
 
   const executeCommand = useCallback(
     async (cmd: string) => {
-      if (!isValidCommand(cmd)) return;
+      if (!isValidCommand(cmd)) {
+        return;
+      }
 
       const command = normalizeCommand(cmd);
       const commandIndex = commands.length;

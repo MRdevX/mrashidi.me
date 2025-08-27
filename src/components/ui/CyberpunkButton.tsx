@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Button, ButtonProps } from "./Button";
-import { cn } from "@/lib/utils";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import type { ButtonVariant } from "@/config/theme.config";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { cn } from "@/lib/utils";
+import { Button, type ButtonProps } from "./Button";
 
 interface CyberpunkButtonProps extends Omit<ButtonProps, "variant"> {
   variant?: ButtonVariant;

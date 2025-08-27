@@ -1,12 +1,12 @@
 "use client";
 
+import { Download, FileText } from "lucide-react";
 import { useState } from "react";
-import { FileText, Download } from "lucide-react";
-import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
-import { ResumeRequestData } from "@/lib/validation/schemas";
 import { CyberpunkButton } from "@/components/ui";
-import { logger } from "@/lib/logger";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { logger } from "@/lib/logger";
+import type { ResumeRequestData } from "@/lib/validation/schemas";
+import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
 
 export function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,7 +54,10 @@ export function ResumeHeader() {
         </div>
         <CyberpunkButton
           onClick={() => {
-            logger.debug({ operation: "ResumeHeader", message: "Resume request button clicked" });
+            logger.debug({
+              operation: "ResumeHeader",
+              message: "Resume request button clicked",
+            });
             setIsModalOpen(true);
           }}
           variant="neon"

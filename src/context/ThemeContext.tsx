@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark" | "system";
 
@@ -68,7 +68,9 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     return <div style={{ visibility: "hidden" }}>{children}</div>;
   }
 
-  return <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>{children}</ThemeContext.Provider>
+  );
 };
 
 export function useTheme(): ThemeContextType {

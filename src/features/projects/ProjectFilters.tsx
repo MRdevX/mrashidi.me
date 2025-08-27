@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Filter, Globe, X, Layers } from "lucide-react";
-import { getTechIcon } from "@/lib/techIconMap";
-import { TechnologyCategory, CATEGORY_DISPLAY_NAMES } from "@/lib/constants";
+import { Filter, Globe, Layers, X } from "lucide-react";
 import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { CATEGORY_DISPLAY_NAMES, type TechnologyCategory } from "@/lib/constants";
+import { getTechIcon } from "@/lib/techIconMap";
 
 interface ProjectFiltersProps {
   categorizedStacks: Record<TechnologyCategory, string[]>;

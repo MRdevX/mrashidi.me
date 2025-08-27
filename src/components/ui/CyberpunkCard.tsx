@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
-import { cn } from "@/lib/utils";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import * as React from "react";
 import type { CardVariant } from "@/config/theme.config";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
 
 interface CyberpunkCardProps {
   children: React.ReactNode;
@@ -64,12 +64,13 @@ export const CyberpunkCardTitle = React.forwardRef<HTMLParagraphElement, React.H
 );
 CyberpunkCardTitle.displayName = "CyberpunkCardTitle";
 
-export const CyberpunkCardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => {
-    const { getTextColor } = useThemeConfig();
-    return <CardDescription ref={ref} className={cn(getTextColor("secondary"), className)} {...props} />;
-  }
-);
+export const CyberpunkCardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => {
+  const { getTextColor } = useThemeConfig();
+  return <CardDescription ref={ref} className={cn(getTextColor("secondary"), className)} {...props} />;
+});
 CyberpunkCardDescription.displayName = "CyberpunkCardDescription";
 
 export const CyberpunkCardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(

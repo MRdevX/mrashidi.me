@@ -1,13 +1,13 @@
-import { NextRequest } from "next/server";
-import { EmailService } from "@/lib/email/email.service";
-import { RecaptchaService } from "@/server/recaptcha.service";
-import { validateContactFormAPI } from "@/lib/validation/apiValidators";
-import { ContactFormData } from "@/lib/validation/schemas";
+import type { NextRequest } from "next/server";
 import { withValidation } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
+import { EmailService } from "@/lib/email/email.service";
 import { APIError } from "@/lib/errors";
+import { validateContactFormAPI } from "@/lib/validation/apiValidators";
+import type { ContactFormData } from "@/lib/validation/schemas";
+import { RecaptchaService } from "@/server/recaptcha.service";
 
-async function handleContactForm(request: NextRequest, formData: ContactFormData & { recaptchaToken: string }) {
+async function handleContactForm(_request: NextRequest, formData: ContactFormData & { recaptchaToken: string }) {
   await RecaptchaService.verify(formData.recaptchaToken);
 
   const emailService = new EmailService();

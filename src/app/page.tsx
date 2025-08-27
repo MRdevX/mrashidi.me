@@ -1,19 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState, Suspense, lazy, useMemo } from "react";
+import { Activity, ArrowRight, Code2, Mail, MapPin, MessageCircle, Send, Terminal as TerminalIcon } from "lucide-react";
 import Link from "next/link";
-import { MapPin, Mail, Send, ArrowRight, Terminal as TerminalIcon, Code2, Activity, MessageCircle } from "lucide-react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { LoadingAnimation } from "@/components/ui/LoadingAnimation";
-import { skills, personalInfo } from "@/data";
-import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 import { CyberpunkButton, PageWrapper } from "@/components/ui";
+import { LoadingAnimation } from "@/components/ui/LoadingAnimation";
+import { personalInfo, skills } from "@/data";
+import techIconMap, { getTechIcon } from "@/lib/techIconMap";
 
 const ContributionGraph = lazy(() =>
-  import("@/components/ui/ContributionGraph").then((module) => ({ default: module.ContributionGraph }))
+  import("@/components/ui/ContributionGraph").then((module) => ({
+    default: module.ContributionGraph,
+  }))
 );
-const Terminal = lazy(() => import("@/components/terminal/Terminal").then((module) => ({ default: module.Terminal })));
+const Terminal = lazy(() =>
+  import("@/components/terminal/Terminal").then((module) => ({
+    default: module.Terminal,
+  }))
+);
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -49,8 +55,12 @@ export default function Home() {
             .replace(/\s+/g, "")
             .replace(/\+/, "p")
             .replace(/#/, "sharp");
-          if (iconKey.includes("azure")) iconKey = "azure";
-          if (iconKey === "aws") iconKey = "aws";
+          if (iconKey.includes("azure")) {
+            iconKey = "azure";
+          }
+          if (iconKey === "aws") {
+            iconKey = "aws";
+          }
           if (techIconMap[iconKey]) {
             mainStack.push({ name: skill.name, iconKey });
           }
@@ -60,7 +70,9 @@ export default function Home() {
     return Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <PageWrapper>
@@ -70,7 +82,9 @@ export default function Home() {
           <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-orange-500 to-orange-300 font-cyberpunk glow-text relative z-10">
             {personalInfo.name}
           </h1>
-          <p className="text-2xl text-gray-700 dark:text-gray-300 mb-3 font-terminal relative z-10">{personalInfo.title}</p>
+          <p className="text-2xl text-gray-700 dark:text-gray-300 mb-3 font-terminal relative z-10">
+            {personalInfo.title}
+          </p>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 relative z-10 max-w-3xl mx-auto leading-relaxed font-albert">
             {personalInfo.intro}
           </p>
@@ -144,7 +158,9 @@ export default function Home() {
                     className="flex flex-col items-center gap-2 p-3 rounded-lg bg-white/30 dark:bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
                   >
                     <Icon className={`w-10 h-10 ${colorClass}`} />
-                    <span className="text-xs text-gray-700 dark:text-gray-200 font-mono text-center mt-1">{tech.name}</span>
+                    <span className="text-xs text-gray-700 dark:text-gray-200 font-mono text-center mt-1">
+                      {tech.name}
+                    </span>
                   </div>
                 );
               })}

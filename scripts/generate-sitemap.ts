@@ -1,8 +1,7 @@
 import { writeFile } from "node:fs/promises";
-import fg from "fast-glob";
-import prettier from "prettier";
-import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import fg from "fast-glob";
 import pino from "pino";
 
 const logger = pino({
@@ -18,16 +17,15 @@ const logger = pino({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-interface PrettierConfig {
-  parser: string;
-  [key: string]: unknown;
-}
-
 async function generate(): Promise<void> {
-  const prettierConfig = (await prettier.resolveConfig(resolve(__dirname, "../.prettierrc.js"))) as PrettierConfig;
-
   const pages = await fg(
-    ["src/app/**/page.tsx", "!src/app/api/**/*", "!src/app/error.tsx", "!src/app/loading.tsx", "!src/app/not-found.tsx"],
+    [
+      "src/app/**/page.tsx",
+      "!src/app/api/**/*",
+      "!src/app/error.tsx",
+      "!src/app/loading.tsx",
+      "!src/app/not-found.tsx",
+    ],
     {
       cwd: resolve(__dirname, ".."),
       absolute: false,
@@ -46,35 +44,29 @@ async function generate(): Promise<void> {
     "/resume": { priority: "0.8", changefreq: "monthly" },
   };
 
-  const sitemap = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${pages
-        .map((page) => {
-          const path = page.replace("src/app", "").replace("/page.tsx", "").replace(/\/\(/g, "/").replace(/\)/g, "");
-          const route = path === "/index" ? "" : path;
-          const config = pageConfig[route as keyof typeof pageConfig] || { priority: "0.6", changefreq: "monthly" };
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages
+  .map((page) => {
+    const path = page.replace("src/app", "").replace("/page.tsx", "").replace(/\/\(/g, "/").replace(/\)/g, "");
+    const route = path === "/index" ? "" : path;
+    const config = pageConfig[route as keyof typeof pageConfig] || {
+      priority: "0.6",
+      changefreq: "monthly",
+    };
 
-          return `
-            <url>
-              <loc>${baseUrl}${route}</loc>
-              <lastmod>${currentDate}</lastmod>
-              <changefreq>${config.changefreq}</changefreq>
-              <priority>${config.priority}</priority>
-            </url>
-          `;
-        })
-        .join("")}
-    </urlset>
-  `;
+    return `  <url>
+    <loc>${baseUrl}${route}</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>${config.changefreq}</changefreq>
+    <priority>${config.priority}</priority>
+  </url>`;
+  })
+  .join("\n")}
+</urlset>`;
 
   try {
-    const formatted = await prettier.format(sitemap, {
-      ...prettierConfig,
-      parser: "html",
-    });
-
-    await writeFile(resolve(__dirname, "../public/sitemap.xml"), formatted);
+    await writeFile(resolve(__dirname, "../public/sitemap.xml"), sitemap);
     logger.info("✅ Enhanced sitemap generated successfully!");
   } catch (error) {
     logger.error({ error }, "❌ Error generating sitemap");

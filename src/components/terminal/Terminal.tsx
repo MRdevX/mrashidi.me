@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, KeyboardEvent } from "react";
-import { useTerminal, useCommandHistory, useTerminalFocus } from "./hooks";
-import { TerminalInput } from "./TerminalInput";
-import { TerminalHistory } from "./TerminalHistory";
-import { TERMINAL_STYLES } from "./constants";
 import { motion } from "framer-motion";
+import React, { type KeyboardEvent, useState } from "react";
+import { TERMINAL_STYLES } from "./constants";
+import { useCommandHistory, useTerminal, useTerminalFocus } from "./hooks";
+import { TerminalHistory } from "./TerminalHistory";
+import { TerminalInput } from "./TerminalInput";
 
 const TerminalContainer = React.memo(() => {
   const [input, setInput] = useState("");

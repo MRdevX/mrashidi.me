@@ -1,7 +1,7 @@
-import { KeyboardEvent, RefObject, useState, useEffect } from "react";
-import { Terminal } from "lucide-react";
-import { TERMINAL_CONSTANTS, TERMINAL_STYLES } from "./constants";
 import { motion } from "framer-motion";
+import { Terminal } from "lucide-react";
+import { type KeyboardEvent, type RefObject, useEffect, useState } from "react";
+import { TERMINAL_CONSTANTS, TERMINAL_STYLES } from "./constants";
 
 interface TerminalInputProps {
   inputRef: RefObject<HTMLInputElement | null>;

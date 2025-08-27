@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Users, Star } from "lucide-react";
-import { ADPListWidget } from "./ADPListWidget";
-import { ContactSection, ADPListWidget as ADPListWidgetType } from "./types";
+import { Star, Users } from "lucide-react";
 import { ContactFormRefactored as ContactForm } from "@/components/forms/ContactForm";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { ADPListWidget } from "./ADPListWidget";
+import type { ADPListWidget as ADPListWidgetType, ContactSection } from "./types";
 
 interface ContactHeaderProps {
   title: string;

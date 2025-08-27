@@ -165,7 +165,9 @@ export class ErrorHandler {
   }
 }
 
-export function asyncHandler<T extends readonly unknown[], R>(fn: (...args: T) => Promise<R>): (...args: T) => Promise<R> {
+export function asyncHandler<T extends readonly unknown[], R>(
+  fn: (...args: T) => Promise<R>
+): (...args: T) => Promise<R> {
   return async (...args: T): Promise<R> => {
     try {
       return await fn(...args);

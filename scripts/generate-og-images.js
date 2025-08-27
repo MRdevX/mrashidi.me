@@ -19,8 +19,8 @@
  * - /public/twitter-image.jpg
  */
 
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const requiredImages = [
   "og-image.jpg",
@@ -36,7 +36,7 @@ const publicDir = path.join(__dirname, "../public");
 
 console.log("🔍 Checking for required OG images...\n");
 
-let missingImages = [];
+const missingImages = [];
 
 requiredImages.forEach((image) => {
   const imagePath = path.join(publicDir, image);

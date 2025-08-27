@@ -1,16 +1,16 @@
+import type { BadgeVariant, ButtonVariant, CardVariant, InputVariant, TextareaVariant } from "@/config/theme.config";
 import {
-  THEME_CONFIG,
-  getVariant,
+  getBorderRadius,
   getColor,
   getFont,
-  getSpacing,
-  getBorderRadius,
-  getShadow,
-  getSemanticColor,
   getPattern,
   getProjectBadge,
+  getSemanticColor,
+  getShadow,
+  getSpacing,
+  getVariant,
+  THEME_CONFIG,
 } from "@/config/theme.config";
-import type { ButtonVariant, InputVariant, TextareaVariant, BadgeVariant, CardVariant } from "@/config/theme.config";
 
 export const useThemeConfig = () => {
   return {

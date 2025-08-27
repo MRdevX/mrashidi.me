@@ -1,9 +1,9 @@
-import { NextRequest } from "next/server";
-import { BlogService } from "@/server/blog.service";
+import type { NextRequest } from "next/server";
 import { withPagination } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
+import { BlogService } from "@/server/blog.service";
 
-async function handleBlogPosts(request: NextRequest, pagination: { page: number; limit: number }) {
+async function handleBlogPosts(_request: NextRequest, pagination: { page: number; limit: number }) {
   const result = await BlogService.getAllPosts(pagination.page, pagination.limit);
 
   const response = ApiResponseHandler.success(result.posts, {

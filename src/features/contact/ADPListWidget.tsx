@@ -1,4 +1,4 @@
-import { ADPListWidget as ADPListWidgetType } from "./types";
+import type { ADPListWidget as ADPListWidgetType } from "./types";
 
 interface ADPListWidgetProps {
   widget: ADPListWidgetType;

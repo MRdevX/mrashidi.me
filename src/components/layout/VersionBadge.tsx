@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Disclosure } from "@headlessui/react";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { GitBranch } from "lucide-react";
+import { useEffect, useState } from "react";
 import { githubLink } from "@/data";
 
 interface VersionBadgeProps {
@@ -34,7 +34,9 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
     getVersion();
   }, []);
 
-  if (!version) return null;
+  if (!version) {
+    return null;
+  }
 
   const mobileProps = isMobile
     ? {

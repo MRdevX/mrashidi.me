@@ -1,22 +1,20 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { Disclosure } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useScrollPosition } from "@/hooks";
-import { navigation } from "@/data";
-import { BrandLogo } from "./BrandLogo";
-import { NavigationItem } from "./NavigationItem";
-import { MobileNavigationItem } from "./MobileNavigationItem";
-import { VersionBadge } from "./VersionBadge";
-import { MobileMenuButton } from "./MobileMenuButton";
 import { ThemeToggle } from "@/components/ui";
-
+import { navigation } from "@/data";
+import { useScrollPosition } from "@/hooks";
+import { BrandLogo } from "./BrandLogo";
+import { MobileMenuButton } from "./MobileMenuButton";
+import { MobileNavigationItem } from "./MobileNavigationItem";
+import { NavigationItem } from "./NavigationItem";
+import { VersionBadge } from "./VersionBadge";
 
 export default function Navbar() {
   const isScrolled = useScrollPosition();
   const pathname = usePathname();
-
 
   const getNavbarClasses = () => {
     return `fixed w-full z-50 transition-all duration-300 ${
@@ -36,16 +34,12 @@ export default function Navbar() {
                   <VersionBadge variant="desktop" />
                 </div>
 
-                <div
-                  className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8"
-                  role="navigation"
-                  aria-label="Main Menu"
-                >
+                <nav className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8" aria-label="Main Menu">
                   {navigation.map((item) => (
                     <NavigationItem key={item.name} item={item} isActive={pathname === item.href} />
                   ))}
                   <ThemeToggle size="sm" />
-                </div>
+                </nav>
               </div>
 
               <div className="-mr-2 flex items-center space-x-2 sm:hidden">

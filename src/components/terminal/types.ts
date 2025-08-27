@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { AVAILABLE_COMMANDS } from "./constants";
+import type { ReactElement } from "react";
+import type { AVAILABLE_COMMANDS } from "./constants";
 
 export interface Command {
   input: string;

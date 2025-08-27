@@ -47,8 +47,8 @@ export function ProjectSearchBox({ searchQuery, onSearchChange, onClear }: Proje
             </span>
           </p>
           <p className={`text-xs mt-2 ${getTextColor("muted")}`}>
-            Supports regex patterns. Examples: &quot;microservice&quot;, &quot;docker|kubernetes&quot;, &quot;202[45]&quot;,
-            &quot;auth.*service&quot;
+            Supports regex patterns. Examples: &quot;microservice&quot;, &quot;docker|kubernetes&quot;,
+            &quot;202[45]&quot;, &quot;auth.*service&quot;
           </p>
         </div>
       )}

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Input } from "./input";
-import { cn } from "@/lib/utils";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import type { InputVariant } from "@/config/theme.config";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { cn } from "@/lib/utils";
+import { Input } from "./input";
 
 interface CyberpunkInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;

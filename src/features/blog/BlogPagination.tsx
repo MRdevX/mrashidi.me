@@ -1,5 +1,5 @@
-import { CyberpunkButton } from "@/components/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface BlogPaginationProps {

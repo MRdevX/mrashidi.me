@@ -1,5 +1,5 @@
-import { ContactFormData } from "@/lib/validation/schemas";
-import { ITemplateConfig } from "../types";
+import type { ContactFormData } from "@/lib/validation/schemas";
+import type { ITemplateConfig } from "../types";
 import { BaseTemplate } from "./base-template";
 
 export class ContactTemplates {

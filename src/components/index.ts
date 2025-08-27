@@ -1,10 +1,9 @@
-export { BackgroundEffects } from "./ui/BackgroundEffects";
 export { ContactFormRefactored as ContactForm } from "./forms/ContactForm";
-export { LoadingAnimation } from "./ui/LoadingAnimation";
+export { FormInputWithValidation } from "./forms/FormInputWithValidation";
+export { StatusMessage } from "./forms/StatusMessage";
 
 export * from "./layout";
 
 export * from "./ui";
-
-export { FormInputWithValidation } from "./forms/FormInputWithValidation";
-export { StatusMessage } from "./forms/StatusMessage";
+export { BackgroundEffects } from "./ui/BackgroundEffects";
+export { LoadingAnimation } from "./ui/LoadingAnimation";

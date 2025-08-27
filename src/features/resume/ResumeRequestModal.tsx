@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { resumeRequestSchema, ResumeRequestData } from "@/lib/validation/schemas";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
 import { StatusMessage } from "@/components/forms/StatusMessage";
 import {
+  CyberpunkButton,
   CyberpunkDialog,
   CyberpunkDialogContent,
+  CyberpunkDialogFooter,
   CyberpunkDialogHeader,
   CyberpunkDialogTitle,
-  CyberpunkDialogFooter,
-  CyberpunkButton,
 } from "@/components/ui";
+import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation/schemas";
 
 interface ResumeRequestModalRefactoredProps {
   isOpen: boolean;
@@ -24,7 +24,10 @@ interface ResumeRequestModalRefactoredProps {
 
 export function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: ResumeRequestModalRefactoredProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({
     type: null,
     message: "",
   });

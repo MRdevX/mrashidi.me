@@ -11,12 +11,12 @@ export class BlobService {
       throw new Error("BLOB_STORE_URL environment variable is not configured");
     }
 
-    return `${blobStoreUrl}/${this.CV_PATH}`;
+    return `${blobStoreUrl}/${BlobService.CV_PATH}`;
   }
 
   static async uploadCV(file: File | Buffer): Promise<string> {
     try {
-      const blob = await put(this.CV_PATH, file, {
+      const blob = await put(BlobService.CV_PATH, file, {
         access: "public",
         addRandomSuffix: false,
         allowOverwrite: true,

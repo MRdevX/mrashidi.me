@@ -17,7 +17,9 @@ export const useTerminalFocus = (isExecuting: boolean) => {
   useEffect(() => {
     if (terminalRef.current) {
       const scrollToBottom = () => {
-        terminalRef.current!.scrollTop = terminalRef.current!.scrollHeight;
+        if (terminalRef.current) {
+          terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+        }
       };
       requestAnimationFrame(scrollToBottom);
     }

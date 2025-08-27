@@ -1,9 +1,9 @@
 "use client";
 
-import { Moon, Sun, Monitor } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { cn } from "@/lib/utils";
 
 interface ThemeToggleProps {
   className?: string;

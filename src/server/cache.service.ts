@@ -1,6 +1,6 @@
 import NodeCache from "node-cache";
-import { IBlogPost } from "@/types/blog";
 import { logger } from "@/lib/logger";
+import type { IBlogPost } from "@/types/blog";
 
 export class CacheService {
   private cache: NodeCache;

@@ -1,17 +1,17 @@
+import { Mail } from "lucide-react";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "@/styles/globals.css";
-import Navbar from "@/components/layout/Navbar";
-import { BlogPreloader } from "@/features/blog";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
 import { GoogleTagManager } from "@next/third-parties/google";
-import { personalInfo, siteConfig, siteMetadata } from "@/data";
-import { ThemeProvider } from "@/context/ThemeContext";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Navbar from "@/components/layout/Navbar";
 import { StructuredData } from "@/components/SEO";
 import { BackgroundEffects } from "@/components/ui";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { personalInfo, siteConfig, siteMetadata } from "@/data";
+import { BlogPreloader } from "@/features/blog";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,13 +90,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main-content" className="pt-16 relative z-10">
             {children}
           </main>
-          <footer className="mt-12 py-8 relative z-10" role="contentinfo" aria-label="Site Footer">
+          <footer className="mt-12 py-8 relative z-10">
             <div className="max-w-4xl mx-auto px-4">
               <div className="glass-card p-8 text-center">
                 <p className="text-gray-600 dark:text-gray-400 mb-4 flex items-center justify-center gap-2">
                   © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
                 </p>
-                <div className="flex justify-center space-x-6" aria-label="Social Media Links">
+                <div className="flex justify-center space-x-6">
                   <a
                     href={personalInfo.social.github}
                     target="_blank"

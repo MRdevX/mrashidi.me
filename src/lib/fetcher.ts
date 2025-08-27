@@ -53,7 +53,12 @@ export async function fetcher<T = unknown>(
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new FetcherError(`HTTP ${response.status}: ${response.statusText}`, response.status, response.statusText, url);
+        throw new FetcherError(
+          `HTTP ${response.status}: ${response.statusText}`,
+          response.status,
+          response.statusText,
+          url
+        );
       }
 
       const data = await response.json();
@@ -86,7 +91,7 @@ export async function fetcher<T = unknown>(
         throw lastError;
       }
 
-      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+      const delay = Math.min(1000 * 2 ** (attempt - 1), 5000);
       await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }

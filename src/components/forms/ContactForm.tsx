@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Script from "next/script";
-import { SubmitHandler } from "react-hook-form";
-import { contactFormSchema, ContactFormData } from "@/lib/validation/schemas";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, User, Mail, MessageSquare, FileText } from "lucide-react";
-import { FormInputWithValidation } from "./FormInputWithValidation";
-import { StatusMessage } from "./StatusMessage";
+import { motion } from "framer-motion";
+import { FileText, Mail, MessageSquare, Send, User } from "lucide-react";
+import Script from "next/script";
+import { useEffect, useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { CyberpunkButton } from "@/components/ui";
 import { logger } from "@/lib/logger";
+import { type ContactFormData, contactFormSchema } from "@/lib/validation/schemas";
+import { FormInputWithValidation } from "./FormInputWithValidation";
+import { StatusMessage } from "./StatusMessage";
 
 declare global {
   interface Window {
@@ -24,7 +24,10 @@ declare global {
 
 export function ContactFormRefactored() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({
     type: null,
     message: "",
   });
@@ -46,16 +49,25 @@ export function ContactFormRefactored() {
   useEffect(() => {
     if (!siteKey) {
       logger.error("reCAPTCHA site key is not configured");
-      setSubmitStatus({ type: "error", message: "Contact form is temporarily unavailable" });
+      setSubmitStatus({
+        type: "error",
+        message: "Contact form is temporarily unavailable",
+      });
       return;
     }
     setRecaptchaLoaded(true);
   }, [siteKey]);
 
   const executeRecaptcha = async (): Promise<string> => {
+    if (!siteKey) {
+      throw new Error("reCAPTCHA site key is not configured");
+    }
+
     try {
       await window.grecaptcha.ready(() => {});
-      const token = await window.grecaptcha.execute(siteKey!, { action: "submit" });
+      const token = await window.grecaptcha.execute(siteKey, {
+        action: "submit",
+      });
       return token;
     } catch (error) {
       logger.error({ error }, "Error executing reCAPTCHA");

@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Code2 } from "lucide-react";
 import { skills } from "@/data";
-import { getTechIcon } from "@/lib/techIconMap";
-import { fadeInVariants } from "@/lib/animations";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { fadeInVariants } from "@/lib/animations";
+import { getTechIcon } from "@/lib/techIconMap";
 
 const levelConfig = {
   expert: { color: "#9A3412", label: "Expert" },

@@ -1,6 +1,6 @@
-import { Command } from "./types";
+import { AnimatePresence, motion } from "framer-motion";
 import { CommandOutput } from "./CommandOutput";
-import { motion, AnimatePresence } from "framer-motion";
+import type { Command } from "./types";
 import { generateCommandKey } from "./utils";
 
 interface TerminalHistoryProps {

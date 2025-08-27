@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { personalInfo, coreConfig } from "@/data";
+import { coreConfig, personalInfo } from "@/data";
 
 export const metadata: Metadata = {
   title: `Projects - ${personalInfo.name} | Software Engineer Portfolio`,

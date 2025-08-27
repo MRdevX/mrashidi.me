@@ -1,5 +1,5 @@
-import { logger } from "@/lib/logger";
 import { NetworkError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 interface LatestCommitInfo {
   date: Date;

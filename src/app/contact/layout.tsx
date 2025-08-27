@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { personalInfo, coreConfig } from "@/data";
+import { coreConfig, personalInfo } from "@/data";
 
 export const metadata: Metadata = {
   title: `Contact - ${personalInfo.name} | Get In Touch`,

@@ -1,11 +1,10 @@
-export { default as personalInfo } from "./personalInfo";
-export { skillCategories as skills } from "./skills";
-export { default as education } from "./education";
-export { default as workExperience } from "./workExperience";
-export { default as certificates } from "./certificates";
-
-export type { PersonalInfo, SocialLinks, Language } from "./personalInfo";
-export type { SkillCategory, Skill, SkillLevel } from "./skills";
-export type { Education } from "./education";
-export type { WorkExperience } from "./workExperience";
 export type { Certificate, CertificateCategory } from "./certificates";
+export { default as certificates } from "./certificates";
+export type { Education } from "./education";
+export { default as education } from "./education";
+export type { Language, PersonalInfo, SocialLinks } from "./personalInfo";
+export { default as personalInfo } from "./personalInfo";
+export type { Skill, SkillCategory, SkillLevel } from "./skills";
+export { skillCategories as skills } from "./skills";
+export type { WorkExperience } from "./workExperience";
+export { default as workExperience } from "./workExperience";

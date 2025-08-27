@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import { X, Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 interface MobileMenuButtonProps {
@@ -15,7 +15,11 @@ export const MobileMenuButton = ({ isOpen }: MobileMenuButtonProps) => {
       aria-label={isOpen ? "Close main menu" : "Open main menu"}
     >
       <span className="sr-only">{isOpen ? "Close main menu" : "Open main menu"}</span>
-      {isOpen ? <X className="block h-6 w-6" aria-hidden="true" /> : <Menu className="block h-6 w-6" aria-hidden="true" />}
+      {isOpen ? (
+        <X className="block h-6 w-6" aria-hidden="true" />
+      ) : (
+        <Menu className="block h-6 w-6" aria-hidden="true" />
+      )}
     </Disclosure.Button>
   );
 };

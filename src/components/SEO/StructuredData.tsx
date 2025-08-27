@@ -1,9 +1,9 @@
 import Script from "next/script";
 import {
+  generateBreadcrumbSchema,
+  generateOrganizationSchema,
   generatePersonSchema,
   generateWebsiteSchema,
-  generateOrganizationSchema,
-  generateBreadcrumbSchema,
 } from "@/lib/structuredData";
 
 interface StructuredDataProps {
@@ -30,7 +30,9 @@ export default function StructuredData({ type, path, title }: StructuredDataProp
 
   const schema = getSchema();
 
-  if (!schema) return null;
+  if (!schema) {
+    return null;
+  }
 
   return (
     <Script

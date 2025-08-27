@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { type ReactNode, useEffect, useState } from "react";
 import { animationClasses, staggerDelays } from "@/lib/animations";
 
 interface PerformanceWrapperProps {

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import type { BadgeVariant } from "@/config/theme.config";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { cn } from "@/lib/utils";
 
 interface CyberpunkBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: BadgeVariant;

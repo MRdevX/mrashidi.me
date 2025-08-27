@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSWR, { preload } from "swr";
-import { BlogResponse, BlogData } from "./types";
+import type { BlogData, BlogResponse } from "./types";
 
 const preloadBlogData = async (page: number, postsPerPage: number): Promise<BlogData> => {
   const response = await fetch(`/api/blog?page=${page}&limit=${postsPerPage}`);

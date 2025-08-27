@@ -1,9 +1,9 @@
 import { parseString } from "xml2js";
-import { IBlogPost, IBlogAuthor, IMediumRssFeed } from "@/types/blog";
-import { cacheService } from "./cache.service";
-import { cachePerformanceMonitor } from "@/lib/utils/cachePerformance";
 import { API_CONFIG } from "@/lib/config/api";
 import { logger } from "@/lib/logger";
+import { cachePerformanceMonitor } from "@/lib/utils/cachePerformance";
+import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
+import { cacheService } from "./cache.service";
 
 const authors: IBlogAuthor[] = [
   {
@@ -81,7 +81,7 @@ export class BlogService {
         xmlDataLength: xmlData.length,
       });
 
-      const feed = await this.parseMediumFeed(xmlData);
+      const feed = await BlogService.parseMediumFeed(xmlData);
 
       if (!feed?.rss?.channel?.item) {
         logger.warn({
@@ -101,10 +101,10 @@ export class BlogService {
 
       return items.map((item) => ({
         title: item.title || "Untitled",
-        content: this.cleanHtmlContent(item["content:encoded"] || ""),
+        content: BlogService.cleanHtmlContent(item["content:encoded"] || ""),
         url: item.link,
         publishedAt: new Date(item.pubDate),
-        imageUrl: this.extractImageUrl(item["content:encoded"] || ""),
+        imageUrl: BlogService.extractImageUrl(item["content:encoded"] || ""),
         author: {
           username: author.username,
           name: author.name,
@@ -122,15 +122,18 @@ export class BlogService {
   }
 
   static async preloadBlogPosts(): Promise<void> {
-    if (this.isPreloaded) {
-      logger.debug({ operation: "preloadBlogPosts", message: "Already preloaded" });
+    if (BlogService.isPreloaded) {
+      logger.debug({
+        operation: "preloadBlogPosts",
+        message: "Already preloaded",
+      });
       return;
     }
 
     try {
       logger.info({ operation: "preloadBlogPosts", status: "started" });
-      await this.updateCache();
-      this.isPreloaded = true;
+      await BlogService.updateCache();
+      BlogService.isPreloaded = true;
       logger.info({ operation: "preloadBlogPosts", status: "completed" });
     } catch (error) {
       logger.error({
@@ -142,15 +145,15 @@ export class BlogService {
   }
 
   static async updateCache() {
-    if (this.isUpdating) return;
+    if (BlogService.isUpdating) return;
 
     try {
-      this.isUpdating = true;
+      BlogService.isUpdating = true;
       logger.info({ operation: "updateCache", status: "started" });
 
       const allPosts: IBlogPost[] = [];
       for (const author of authors) {
-        const posts = await this.fetchMediumPosts(author);
+        const posts = await BlogService.fetchMediumPosts(author);
         allPosts.push(...posts);
       }
 
@@ -169,7 +172,7 @@ export class BlogService {
         error: error instanceof Error ? error.message : String(error),
       });
     } finally {
-      this.isUpdating = false;
+      BlogService.isUpdating = false;
     }
   }
 
@@ -182,12 +185,12 @@ export class BlogService {
       return;
     }
 
-    if (this.updateInterval) {
-      clearInterval(this.updateInterval);
+    if (BlogService.updateInterval) {
+      clearInterval(BlogService.updateInterval);
     }
 
     if (process.env.NODE_ENV === "development") {
-      this.preloadBlogPosts().catch((error) => {
+      BlogService.preloadBlogPosts().catch((error) => {
         logger.error({
           operation: "startCacheUpdateInterval",
           message: "Failed to preload blog posts",
@@ -196,9 +199,9 @@ export class BlogService {
       });
     }
 
-    this.updateInterval = setInterval(() => {
-      if (!this.isUpdating) {
-        this.updateCache().catch((error) => {
+    BlogService.updateInterval = setInterval(() => {
+      if (!BlogService.isUpdating) {
+        BlogService.updateCache().catch((error) => {
           logger.error({
             operation: "startCacheUpdateInterval",
             message: "Failed to update cache",
@@ -238,7 +241,7 @@ export class BlogService {
         const endIndex = startIndex + limit;
         const paginatedPosts = posts.slice(startIndex, endIndex);
 
-        this.triggerBackgroundRefresh();
+        BlogService.triggerBackgroundRefresh();
 
         return {
           posts: paginatedPosts,
@@ -255,7 +258,7 @@ export class BlogService {
           status: "fetching_author",
           author: author.username,
         });
-        const posts = await this.fetchMediumPosts(author);
+        const posts = await BlogService.fetchMediumPosts(author);
         allPosts.push(...posts);
       }
 
@@ -304,7 +307,7 @@ export class BlogService {
         operation: "triggerBackgroundRefresh",
         message: "Cache is stale, triggering background refresh",
       });
-      this.updateCache().catch((error) => {
+      BlogService.updateCache().catch((error) => {
         logger.error({
           operation: "triggerBackgroundRefresh",
           message: "Failed to update cache",

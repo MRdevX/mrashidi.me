@@ -6,5 +6,5 @@ export { BlogLoading } from "./BlogLoading";
 export { BlogPagination } from "./BlogPagination";
 export { BlogPostCard } from "./BlogPostCard";
 export { BlogPreloader } from "./BlogPreloader";
-export { useBlogData } from "./useBlogData";
 export type { BlogData, BlogResponse } from "./types";
+export { useBlogData } from "./useBlogData";

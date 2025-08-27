@@ -1,14 +1,19 @@
+export { API_CONFIG } from "@/lib/config/api";
 export { APP_CONFIG } from "./app.config";
+
+export {
+  ANIMATION_CONSTANTS,
+  API_CONSTANTS,
+  CACHE_CONSTANTS,
+  TERMINAL_CONSTANTS,
+  UI_CONSTANTS,
+} from "./constants";
 export { THEME_CONFIG } from "./theme.config";
 
-export { API_CONSTANTS, UI_CONSTANTS, ANIMATION_CONSTANTS, TERMINAL_CONSTANTS, CACHE_CONSTANTS } from "./constants";
-
-export { API_CONFIG } from "@/lib/config/api";
-
-import { APP_CONFIG } from "./app.config";
-import { THEME_CONFIG } from "./theme.config";
 import { API_CONFIG } from "@/lib/config/api";
-import { API_CONSTANTS, UI_CONSTANTS, ANIMATION_CONSTANTS, TERMINAL_CONSTANTS, CACHE_CONSTANTS } from "./constants";
+import { APP_CONFIG } from "./app.config";
+import { ANIMATION_CONSTANTS, API_CONSTANTS, CACHE_CONSTANTS, TERMINAL_CONSTANTS, UI_CONSTANTS } from "./constants";
+import { THEME_CONFIG } from "./theme.config";
 
 export const CONFIG = {
   app: APP_CONFIG,

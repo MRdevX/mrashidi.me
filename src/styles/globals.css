@@ -559,7 +559,13 @@
     opacity: 0.1;
     background:
       linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-      repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.2) 0%, rgba(0, 255, 0, 0.2) 1px, transparent 1px, transparent 2px);
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 0, 0.2) 0%,
+        rgba(0, 255, 0, 0.2) 1px,
+        transparent 1px,
+        transparent 2px
+      );
     background-size: 100% 2px;
     animation: matrix 20s linear infinite;
   }
@@ -652,7 +658,12 @@
   .circuit-bg {
     background-color: var(--background-dark);
     background-image:
-      radial-gradient(circle at 100% 150%, var(--background-dark) 24%, var(--neon-orange) 25%, var(--background-dark) 28%),
+      radial-gradient(
+        circle at 100% 150%,
+        var(--background-dark) 24%,
+        var(--neon-orange) 25%,
+        var(--background-dark) 28%
+      ),
       radial-gradient(circle at 0 150%, var(--background-dark) 24%, var(--neon-orange) 25%, var(--background-dark) 28%),
       radial-gradient(circle at 50% 100%, var(--neon-orange) 10%, var(--background-dark) 11%),
       radial-gradient(circle at 100% 50%, var(--neon-orange) 5%, var(--background-dark) 6%),

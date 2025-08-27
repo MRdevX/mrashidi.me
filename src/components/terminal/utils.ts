@@ -1,5 +1,5 @@
-import { CommandType } from "./types";
 import { AVAILABLE_COMMANDS } from "./constants";
+import type { CommandType } from "./types";
 
 export const formatTimestamp = (timestamp: Date): string => {
   return timestamp.toLocaleTimeString("en-US", {

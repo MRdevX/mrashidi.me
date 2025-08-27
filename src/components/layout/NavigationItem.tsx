@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NavigationItem as NavigationItemType } from "@/data";
+import type { NavigationItem as NavigationItemType } from "@/data";
 import { useBlogPreload } from "@/hooks";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 

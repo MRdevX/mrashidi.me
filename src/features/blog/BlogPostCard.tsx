@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { BlogPost } from "./types";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import type { BlogPost } from "./types";
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -35,9 +35,13 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
       )}
       <div className="space-y-4 relative z-10">
         <Link href={post.url} target="_blank" rel="noopener noreferrer" className="block">
-          <h2 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{post.title}</h2>
+          <h2 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
+            {post.title}
+          </h2>
         </Link>
-        <p className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors line-clamp-3`}>
+        <p
+          className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors line-clamp-3`}
+        >
           {post.content}
         </p>
         <div className="flex justify-between items-center">

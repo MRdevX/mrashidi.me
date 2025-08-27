@@ -1,11 +1,13 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
 export const useCommandHistory = (commandHistory: string[]) => {
   const [historyPosition, setHistoryPosition] = useState(-1);
 
   const navigateHistory = useCallback(
     (direction: "up" | "down", currentInput: string) => {
-      if (commandHistory.length === 0) return currentInput;
+      if (commandHistory.length === 0) {
+        return currentInput;
+      }
 
       if (direction === "up") {
         const newPosition = Math.min(historyPosition + 1, commandHistory.length - 1);

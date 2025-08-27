@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { projects } from "@/data";
-import { TechnologyCategory } from "@/lib/constants";
-import { processTechnologyData, filterProjects } from "@/lib/techUtils";
-import { githubService } from "@/server/github.service";
+import type { TechnologyCategory } from "@/lib/constants";
 import { logger } from "@/lib/logger";
+import { filterProjects, processTechnologyData } from "@/lib/techUtils";
+import { githubService } from "@/server/github.service";
 
 const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
 const CACHE_DURATION = 24 * 60 * 60 * 1000;

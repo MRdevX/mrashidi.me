@@ -1,8 +1,8 @@
-import { InputHTMLAttributes, TextareaHTMLAttributes, ReactNode } from "react";
-import { FieldError, UseFormReturn, Path } from "react-hook-form";
+import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import type { FieldError, Path, UseFormReturn } from "react-hook-form";
 import { CyberpunkInput, CyberpunkTextarea } from "@/components/ui";
-import { cn } from "@/lib/utils";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { cn } from "@/lib/utils";
 
 interface FormInputWithValidationProps<T extends Record<string, unknown>> {
   form: UseFormReturn<T>;
@@ -49,7 +49,7 @@ export function FormInputWithValidation<T extends Record<string, unknown>>({
     required,
     "aria-required": required,
     "aria-describedby": error ? errorId : undefined,
-    "aria-invalid": error ? true : false,
+    "aria-invalid": !!error,
   } as const;
 
   const inputProps: InputHTMLAttributes<HTMLInputElement> = {

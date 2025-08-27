@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 
 interface LatestCommitInfo {
@@ -43,7 +43,9 @@ class GitHubService {
   async getLatestCommitInfo(githubUrl: string): Promise<LatestCommitInfo | null> {
     try {
       const repoInfo = this.extractRepoInfo(githubUrl);
-      if (!repoInfo) return null;
+      if (!repoInfo) {
+        return null;
+      }
 
       const branches = ["main", "master"];
 
@@ -59,9 +61,7 @@ class GitHubService {
               hash: commits[0].sha,
             };
           }
-        } catch {
-          continue;
-        }
+        } catch {}
       }
 
       return null;
@@ -78,7 +78,9 @@ class GitHubService {
   private extractRepoInfo(githubUrl: string): { owner: string; name: string } | null {
     try {
       const url = new URL(githubUrl);
-      if (url.hostname !== "github.com") return null;
+      if (url.hostname !== "github.com") {
+        return null;
+      }
 
       const [, owner, name] = url.pathname.split("/");
       return owner && name ? { owner, name } : null;

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Briefcase, MapPin, Building2, Calendar, CheckCircle2 } from "lucide-react";
-import { CyberpunkCard, CyberpunkCardHeader, CyberpunkCardTitle, CyberpunkCardContent } from "@/components/ui";
+import { Briefcase, Building2, Calendar, CheckCircle2, MapPin } from "lucide-react";
+import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCardTitle } from "@/components/ui";
 import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
@@ -86,7 +86,9 @@ export function WorkExperienceSection() {
                     <div className="space-y-4">
                       <div className="flex items-center gap-3 mb-4 mt-6">
                         <div className="w-1 h-5 bg-linear-to-b from-orange-500 to-orange-600 rounded-full" />
-                        <h4 className="text-base font-bold text-orange-400 tracking-wide uppercase">Key Achievements</h4>
+                        <h4 className="text-base font-bold text-orange-400 tracking-wide uppercase">
+                          Key Achievements
+                        </h4>
                         <div className="flex-1 h-px bg-linear-to-r from-orange-500/30 to-transparent" />
                       </div>
                       <ul className="space-y-3">

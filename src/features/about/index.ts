@@ -1,5 +1,5 @@
 export { BioSection } from "./BioSection";
-export { SkillsSection } from "./SkillsSection";
-export { LanguagesSection } from "./LanguagesSection";
 export { EducationSection } from "./EducationSection";
+export { LanguagesSection } from "./LanguagesSection";
 export { ProfileImage } from "./ProfileImage";
+export { SkillsSection } from "./SkillsSection";

@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
+import { PageWrapper } from "@/components/ui";
+import { BioSection, EducationSection, LanguagesSection, SkillsSection } from "@/features/about";
 import { useMouseTracking } from "@/hooks/useMouseTracking";
 import { fadeInVariants } from "@/lib/animations";
-import { BioSection, SkillsSection, LanguagesSection, EducationSection } from "@/features/about";
-import { PageWrapper } from "@/components/ui";
 
 export default function About() {
   useMouseTracking(".glitch-image");

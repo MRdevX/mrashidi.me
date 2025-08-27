@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Users } from "lucide-react";
-import { ContactSection, ADPListWidget as ADPListWidgetType } from "./types";
-import { ADPListWidget } from "./ADPListWidget";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { ADPListWidget } from "./ADPListWidget";
+import type { ADPListWidget as ADPListWidgetType, ContactSection } from "./types";
 
 interface MentorshipSectionProps {
   section: ContactSection;

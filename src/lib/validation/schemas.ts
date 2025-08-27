@@ -6,10 +6,10 @@ const baseNameSchema = z
   .min(2, "Name must be at least 2 characters")
   .max(50, "Name must be less than 50 characters")
   .trim()
-  .regex(/^[a-zA-ZÀ-ÿ\s\-'\.]+$/, "Name can only contain letters, spaces, hyphens, apostrophes, and periods")
+  .regex(/^[a-zA-ZÀ-ÿ\s\-'.]+$/, "Name can only contain letters, spaces, hyphens, apostrophes, and periods")
   .refine((val) => !/\s{2,}/.test(val), "Name cannot contain multiple consecutive spaces")
   .refine(
-    (val) => !/^[\s\-'\.]+|[\s\-'\.]+$/.test(val),
+    (val) => !/^[\s\-'.]+|[\s\-'.]+$/.test(val),
     "Name cannot start or end with spaces, hyphens, apostrophes, or periods"
   );
 
@@ -82,7 +82,7 @@ const stackSchema = z
   .string()
   .min(1, "Stack name is required")
   .max(50, "Stack name too long")
-  .regex(/^[a-zA-Z0-9\-\_]+$/, "Stack name can only contain letters, numbers, hyphens, and underscores");
+  .regex(/^[a-zA-Z0-9\-_]+$/, "Stack name can only contain letters, numbers, hyphens, and underscores");
 
 export const projectFilterSchema = z.object({
   search: projectSearchSchema,

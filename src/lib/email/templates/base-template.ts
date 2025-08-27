@@ -1,4 +1,4 @@
-import { ITemplateConfig } from "../types";
+import type { ITemplateConfig } from "../types";
 
 export interface IBaseTemplateData {
   title: string;
@@ -90,7 +90,7 @@ export class BaseTemplate {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>${title}</title>
           <style type="text/css">
-            ${this.getBaseStyles()}
+            ${BaseTemplate.getBaseStyles()}
           </style>
         </head>
         <body style="margin: 0; padding: 0; background-color: #121212;">
@@ -98,13 +98,13 @@ export class BaseTemplate {
             <tr>
               <td align="center" style="padding: 20px 0;">
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #1e1e1e; border-radius: 8px; border: 1px solid #333333; box-shadow: 0 4px 16px rgba(0,0,0,0.5);">
-                  ${this.getHeader(title)}
+                  ${BaseTemplate.getHeader(title)}
                   <tr>
                     <td style="padding: 30px 25px; background-color: #1e1e1e;">
                       ${content}
                     </td>
                   </tr>
-                  ${this.getFooter(templateConfig, showSocialLinks)}
+                  ${BaseTemplate.getFooter(templateConfig, showSocialLinks)}
                 </table>
               </td>
             </tr>
@@ -115,7 +115,7 @@ export class BaseTemplate {
   }
 
   static getDividerElement(): string {
-    return this.getDivider();
+    return BaseTemplate.getDivider();
   }
 
   static formatMessage(message: string): string {
@@ -127,7 +127,7 @@ export class BaseTemplate {
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 25px;">
         <tr>
           <td style="background-color: #2a2a2a; border: 1px solid #333333; border-radius: 4px; padding: 20px; color: #ffffff;">
-            ${this.formatMessage(content)}
+            ${BaseTemplate.formatMessage(content)}
           </td>
         </tr>
       </table>

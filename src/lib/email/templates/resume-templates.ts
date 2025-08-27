@@ -1,5 +1,5 @@
-import { ResumeRequestData } from "@/lib/validation/schemas";
-import { ITemplateConfig } from "../types";
+import type { ResumeRequestData } from "@/lib/validation/schemas";
+import type { ITemplateConfig } from "../types";
 import { BaseTemplate } from "./base-template";
 
 export class ResumeTemplates {

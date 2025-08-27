@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const useScrollPosition = (threshold: number = 10) => {
   const [isScrolled, setIsScrolled] = useState(false);

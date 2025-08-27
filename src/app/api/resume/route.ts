@@ -1,12 +1,12 @@
-import { NextRequest } from "next/server";
-import { EmailService } from "@/lib/email/email.service";
-import { validateResumeRequestAPI } from "@/lib/validation/apiValidators";
-import { ResumeRequestData } from "@/lib/validation/schemas";
+import type { NextRequest } from "next/server";
 import { withValidation } from "@/lib/api/middleware";
 import { ApiResponseHandler } from "@/lib/api/response";
+import { EmailService } from "@/lib/email/email.service";
 import { APIError } from "@/lib/errors";
+import { validateResumeRequestAPI } from "@/lib/validation/apiValidators";
+import type { ResumeRequestData } from "@/lib/validation/schemas";
 
-async function handleResumeRequest(request: NextRequest, formData: ResumeRequestData) {
+async function handleResumeRequest(_request: NextRequest, formData: ResumeRequestData) {
   const emailService = new EmailService();
   const emailSent = await emailService.sendResumeRequestEmail(formData);
 

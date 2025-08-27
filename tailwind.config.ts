@@ -54,10 +54,12 @@ export default {
       keyframes: {
         glow: {
           "0%, 100%": {
-            textShadow: "0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2)",
+            textShadow:
+              "0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2)",
           },
           "50%": {
-            textShadow: "0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3)",
+            textShadow:
+              "0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3)",
           },
         },
         glitch: {
@@ -90,10 +92,12 @@ export default {
         },
         "neon-pulse": {
           "0%, 100%": {
-            boxShadow: "0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2)",
+            boxShadow:
+              "0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2)",
           },
           "50%": {
-            boxShadow: "0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3)",
+            boxShadow:
+              "0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3)",
           },
         },
         fadeIn: {
@@ -123,7 +127,7 @@ export default {
     },
   },
   plugins: [
-    function ({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string>>) => void }) {
+    ({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string>>) => void }) => {
       const newUtilities = {
         ".text-neon-orange": {
           color: "#ff5f1f",

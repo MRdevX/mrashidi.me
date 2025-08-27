@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ValidationError, AppError, createSafeErrorResponse } from "@/lib/errors";
+import { AppError, createSafeErrorResponse, ValidationError } from "@/lib/errors";
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
@@ -43,11 +43,13 @@ export class ApiResponseHandler {
       response.fields = error.fields;
     }
 
-    return NextResponse.json(response, { status: safeResponse.error.statusCode });
+    return NextResponse.json(response, {
+      status: safeResponse.error.statusCode,
+    });
   }
 
   static validationError(fields: Record<string, string>): NextResponse {
     const validationError = new ValidationError("Validation failed", fields);
-    return this.error(validationError, 400);
+    return ApiResponseHandler.error(validationError, 400);
   }
 }

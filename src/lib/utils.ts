@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const extractGitHubRepoInfo = (githubUrl: string): { owner: string; name: string } | null => {
-  const match = githubUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  const match = githubUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
   if (!match) return null;
   return { owner: match[1], name: match[2] };
 };

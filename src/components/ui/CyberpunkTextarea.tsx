@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Textarea } from "./textarea";
-import { cn } from "@/lib/utils";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import type { TextareaVariant } from "@/config/theme.config";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { cn } from "@/lib/utils";
+import { Textarea } from "./textarea";
 
 interface CyberpunkTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: boolean;

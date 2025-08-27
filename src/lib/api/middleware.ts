@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest, NextResponse } from "next/server";
+import { API_CONFIG } from "@/lib/config/api";
 import { ErrorHandler } from "@/lib/errors";
 import { ApiResponseHandler } from "./response";
-import { API_CONFIG } from "@/lib/config/api";
 
 export type ApiHandler = (request: NextRequest) => Promise<NextResponse>;
 
