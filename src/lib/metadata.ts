@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { coreConfig, personalInfo } from "@/data";
+import type { Metadata, Viewport } from "next";
+import { coreConfig, personalInfo, siteConfig } from "@/data";
 
 interface PageMetadataConfig {
   page: string;
@@ -47,7 +47,51 @@ export function generatePageMetadata(config: PageMetadataConfig): Metadata {
   };
 }
 
+export function generateRootMetadata(): Metadata {
+  const homeConfig = pageMetadataConfigs.home;
+  const baseMetadata = generatePageMetadata(homeConfig);
+
+  return {
+    ...baseMetadata,
+    creator: personalInfo.name,
+    authors: [{ name: personalInfo.name, url: coreConfig.site.url }],
+    robots: "index, follow",
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon.ico",
+      apple: "/apple-touch-icon.png",
+    },
+  };
+}
+
+export function generateViewport(): Viewport {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    themeColor: siteConfig.themeColor,
+  };
+}
+
 export const pageMetadataConfigs = {
+  home: {
+    page: "",
+    title: "Home",
+    description: personalInfo.intro,
+    keywords: [
+      personalInfo.name,
+      personalInfo.title,
+      "software engineer",
+      "backend developer",
+      "portfolio",
+      "full-stack",
+      "node.js",
+      "typescript",
+      "react",
+      personalInfo.location,
+    ],
+    ogImage: "og-image.jpg",
+  },
   about: {
     page: "about",
     title: "About",
