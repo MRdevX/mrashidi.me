@@ -10,13 +10,13 @@
  * - https://www.figma.com/
  */
 
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas } = require("canvas");
 const fs = require("fs");
 const path = require("path");
 
 try {
   require("canvas");
-} catch (error) {
+} catch (_error) {
   console.log("❌ Canvas package not found. Installing...");
   console.log("Run: npm install canvas");
   console.log("Or: yarn add canvas");

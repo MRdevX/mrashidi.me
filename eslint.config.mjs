@@ -10,7 +10,17 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [{
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
+  ignores: [
+    "node_modules/**", 
+    ".next/**", 
+    "out/**", 
+    "build/**", 
+    "next-env.d.ts",
+    "public/sw.js",
+    "public/workbox-*.js",
+    "public/sw.js.map",
+    "public/workbox-*.js.map"
+  ]
 }, ...compat.extends("next/core-web-vitals", "next/typescript"), {
   rules: {
     "@typescript-eslint/no-unused-vars": [
@@ -23,6 +33,22 @@ const eslintConfig = [{
     ],
 
     "no-empty": ["error", { allowEmptyCatch: true }],
+  },
+}, {
+  files: ["scripts/**/*.js"],
+  languageOptions: {
+    sourceType: "commonjs",
+  },
+  rules: {
+    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
   },
 }];
 
