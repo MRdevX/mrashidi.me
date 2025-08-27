@@ -1,8 +1,19 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import withPWA from "next-pwa";
 
+const withBundleAnalyzer =
+  process.env.ANALYZE === "true" ? (await import("@next/bundle-analyzer")).default({ enabled: true }) : (config) => config;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: ["framer-motion", "lucide-react", "react-icons"],
+  },
+
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+
   images: {
     remotePatterns: [
       {
@@ -20,7 +31,6 @@ const nextConfig = {
 
   turbopack: {
     resolveExtensions: [".tsx", ".ts", ".jsx", ".js", ".mjs", ".json", ".css", ".scss"],
-
     resolveAlias: {},
   },
 
@@ -83,12 +93,14 @@ const nextConfig = {
   },
 };
 
-const config = withPWA({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
-})(nextConfig);
+const config = withBundleAnalyzer(
+  withPWA({
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+    disable: process.env.NODE_ENV === "development",
+  })(nextConfig)
+);
 
 export default withSentryConfig(config, {
   org: "notable-nomads",

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, KeyboardEvent } from "react";
+import React, { useState, KeyboardEvent } from "react";
 import { useTerminal, useCommandHistory, useTerminalFocus } from "./hooks";
 import { TerminalInput } from "./TerminalInput";
 import { TerminalHistory } from "./TerminalHistory";
 import { TERMINAL_STYLES } from "./constants";
 import { motion } from "framer-motion";
 
-function TerminalContainer() {
+const TerminalContainer = React.memo(() => {
   const [input, setInput] = useState("");
 
   const { commands, commandHistory, isExecuting, executeCommand } = useTerminal();
@@ -53,6 +53,8 @@ function TerminalContainer() {
       />
     </motion.div>
   );
-}
+});
+
+TerminalContainer.displayName = "TerminalContainer";
 
 export { TerminalContainer as Terminal };

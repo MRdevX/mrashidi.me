@@ -10,6 +10,7 @@
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
     "check-og-images": "node scripts/generate-og-images.js",
     "generate-og-images": "node scripts/generate-placeholder-og.js",
+    "analyze": "ANALYZE=true next build",
     "release": "npx standard-version"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@next/bundle-analyzer": "^15.5.2",
     "@next/eslint-plugin-next": "^15.4.7",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/next-pwa": "^5.6.9",

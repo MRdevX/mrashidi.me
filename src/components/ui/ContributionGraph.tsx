@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContributionGraph = () => {
+const ContributionGraph = React.memo(() => {
   return (
     <div className="glass-card-no-shadow p-4 lg:p-6 overflow-hidden relative w-full border border-orange-500/10 rounded-xl shadow-lg">
       <h3 className={`text-lg font-semibold text-orange-500 mb-4`}>Contribution Activity</h3>
@@ -17,6 +17,8 @@ const ContributionGraph = () => {
       </div>
     </div>
   );
-};
+});
+
+ContributionGraph.displayName = "ContributionGraph";
 
 export { ContributionGraph };

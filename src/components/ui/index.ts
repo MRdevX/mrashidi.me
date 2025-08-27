@@ -1,6 +1,7 @@
 export { BackgroundEffects } from "./BackgroundEffects";
 export { ContributionGraph } from "./ContributionGraph";
 export { LoadingAnimation } from "./LoadingAnimation";
+export { PerformanceWrapper, StaggerWrapper } from "./PerformanceWrapper";
 
 export { Button, buttonVariants } from "./Button";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";

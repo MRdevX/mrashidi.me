@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState, Suspense, lazy } from "react";
+import { useEffect, useState, Suspense, lazy, useMemo } from "react";
 import Link from "next/link";
 import { MapPin, Mail, Send, ArrowRight, Terminal as TerminalIcon, Code2, Activity, MessageCircle } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -37,28 +37,30 @@ export default function Home() {
     show: { opacity: 1, y: 0 },
   };
 
-  if (!mounted) return null;
-
-  const mainStack: { name: string; iconKey: string }[] = [];
-  skills.forEach((cat) => {
-    cat.skills.forEach((skill) => {
-      if (skill.includeInMainStack) {
-        let iconKey = skill.name
-          .toLowerCase()
-          .replace(/\s*\(.*\)/, "")
-          .replace(/\./g, "")
-          .replace(/\s+/g, "")
-          .replace(/\+/, "p")
-          .replace(/#/, "sharp");
-        if (iconKey.includes("azure")) iconKey = "azure";
-        if (iconKey === "aws") iconKey = "aws";
-        if (techIconMap[iconKey]) {
-          mainStack.push({ name: skill.name, iconKey });
+  const uniqueMainStack = useMemo(() => {
+    const mainStack: { name: string; iconKey: string }[] = [];
+    skills.forEach((cat) => {
+      cat.skills.forEach((skill) => {
+        if (skill.includeInMainStack) {
+          let iconKey = skill.name
+            .toLowerCase()
+            .replace(/\s*\(.*\)/, "")
+            .replace(/\./g, "")
+            .replace(/\s+/g, "")
+            .replace(/\+/, "p")
+            .replace(/#/, "sharp");
+          if (iconKey.includes("azure")) iconKey = "azure";
+          if (iconKey === "aws") iconKey = "aws";
+          if (techIconMap[iconKey]) {
+            mainStack.push({ name: skill.name, iconKey });
+          }
         }
-      }
+      });
     });
-  });
-  const uniqueMainStack = Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
+    return Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <PageWrapper>

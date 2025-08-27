@@ -17,6 +17,8 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  preload: true,
+  fallback: ["system-ui", "arial"],
 });
 
 export const viewport: Viewport = {
@@ -64,6 +66,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Performance optimizations */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn-images-1.medium.com" />
+        <link rel="dns-prefetch" href="https://miro.medium.com" />
+        <link rel="dns-prefetch" href="https://git-graph.vercel.app" />
 
         {/* Structured Data */}
         <StructuredData type="person" />

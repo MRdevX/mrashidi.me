@@ -209,13 +209,10 @@ import { ProjectCard, ProjectFilters } from "@/features/projects";
 Enhanced path aliases and development tools for better productivity:
 
 ```typescript
-// Clean imports with path aliases
 import { Button } from "@components/ui/Button";
 import { BlogHeader } from "@features/blog";
 import { env } from "@lib/env";
 import { BlogService } from "@server/blog.service";
-
-// VSCode settings provide format-on-save and better intellisense
 ```
 
 ### **Enhanced Core Utilities**
@@ -223,9 +220,9 @@ import { BlogService } from "@server/blog.service";
 New utilities provide better type safety, error handling, and developer experience:
 
 ```typescript
-import { env } from "@/lib/env"; // Zod-validated environment variables
-import { fetcher, fetcherGet, fetcherPost } from "@/lib/fetcher"; // Robust fetch wrapper
-import { logger } from "@/lib/logger"; // Server/client-safe logging
+import { env } from "@/lib/env";
+import { fetcher, fetcherGet, fetcherPost } from "@/lib/fetcher";
+import { logger } from "@/lib/logger";
 import { formatDate, truncateText, isValidEmail } from "@/lib/utils";
 ```
 
@@ -285,7 +282,6 @@ import { BlogService } from "@/server/blog.service";
 import { GitHubService } from "@/server/github.service";
 import { BlobService } from "@/server/blob.service";
 
-// Server actions and database operations
 import { createSession, getUserByEmail } from "@/server/auth";
 ```
 
