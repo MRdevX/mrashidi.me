@@ -7,19 +7,13 @@ interface MobileMenuButtonProps {
 }
 
 export const MobileMenuButton = ({ isOpen }: MobileMenuButtonProps) => {
-  const { getTextColor, getBackgroundColor, getFocusPattern } = useThemeConfig();
-
   return (
     <Disclosure.Button
-      className={`inline-flex items-center justify-center p-2 rounded-md ${getTextColor("secondary")} hover:text-orange-500 hover:${getBackgroundColor("muted")} ${getFocusPattern()}`}
+      className="button-base button-secondary hover:button-hover focus-visible-orange"
       aria-label={isOpen ? "Close main menu" : "Open main menu"}
     >
       <span className="sr-only">{isOpen ? "Close main menu" : "Open main menu"}</span>
-      {isOpen ? (
-        <X className="block h-6 w-6" aria-hidden="true" />
-      ) : (
-        <Menu className="block h-6 w-6" aria-hidden="true" />
-      )}
+      {isOpen ? <X className="icon-size-md" aria-hidden="true" /> : <Menu className="icon-size-md" aria-hidden="true" />}
     </Disclosure.Button>
   );
 };

@@ -1,26 +1,11 @@
-import { Mail } from "lucide-react";
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "@/styles/globals.css";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { MainContent } from "@/components/layout/MainContent";
-import Navbar from "@/components/layout/Navbar";
-import { StructuredData } from "@/components/SEO";
+import { AnalyticsWrapper, Footer, HeadMeta, MainContent, Navbar } from "@/components/layout";
 import { BackgroundEffects } from "@/components/ui";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { personalInfo, siteConfig, siteMetadata } from "@/data";
 import { BlogPreloader } from "@/features/blog";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-  preload: true,
-  fallback: ["system-ui", "arial"],
-});
+import { inter } from "@/lib/fonts";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -52,29 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content={siteConfig.themeColor} />
-        <meta name="msapplication-TileColor" content={siteConfig.msTileColor} />
-        <meta name="apple-mobile-web-app-capable" content={siteConfig.appleMobileWebAppCapable ? "yes" : "no"} />
-        <meta name="apple-mobile-web-app-status-bar-style" content={siteConfig.appleMobileWebAppStatusBarStyle} />
-        <meta name="apple-mobile-web-app-title" content={siteConfig.appleMobileWebAppTitle} />
-        <meta name="mobile-web-app-capable" content={siteConfig.mobileWebAppCapable ? "yes" : "no"} />
-        <meta name="application-name" content={siteConfig.appName} />
-
-        {/* Performance optimizations */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://cdn-images-1.medium.com" />
-        <link rel="dns-prefetch" href="https://miro.medium.com" />
-        <link rel="dns-prefetch" href="https://git-graph.vercel.app" />
-
-        {/* Structured Data */}
-        <StructuredData type="person" />
-        <StructuredData type="website" />
-        <StructuredData type="organization" />
+        <HeadMeta />
       </head>
       <body className={`${inter.className} min-h-screen relative`}>
         <ThemeProvider>
@@ -82,45 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <BlogPreloader />
           <Navbar />
           <MainContent>{children}</MainContent>
-          <footer className="mt-12 py-8 relative z-10">
-            <div className="max-w-4xl mx-auto px-4">
-              <div className="glass-card p-8 text-center">
-                <p className="text-gray-600 dark:text-gray-400 mb-4 flex items-center justify-center gap-2">
-                  © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
-                </p>
-                <div className="flex justify-center space-x-6">
-                  <a
-                    href={personalInfo.social.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"
-                    aria-label={`Visit ${personalInfo.name}'s GitHub Profile`}
-                  >
-                    <FaGithub className="h-6 w-6" />
-                  </a>
-                  <a
-                    href={personalInfo.social.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"
-                    aria-label={`Visit ${personalInfo.name}'s LinkedIn Profile`}
-                  >
-                    <FaLinkedin className="h-6 w-6" />
-                  </a>
-                  <a
-                    href={`mailto:${personalInfo.social.email}`}
-                    className="social-link focus-visible:outline-offset-4 focus-visible:outline-orange-500"
-                    aria-label={`Email ${personalInfo.name}`}
-                  >
-                    <Mail className="h-6 w-6" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </footer>
-          <SpeedInsights />
-          <Analytics />
-          <GoogleTagManager gtmId={siteConfig.gtmId} />
+          <Footer />
+          <AnalyticsWrapper />
         </ThemeProvider>
       </body>
     </html>

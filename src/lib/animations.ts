@@ -41,7 +41,6 @@ export const slideInRightVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
-// Common page animation variants
 export const pageContainerVariants = {
   hidden: { opacity: 0 },
   show: {

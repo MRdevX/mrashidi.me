@@ -19,9 +19,7 @@ export default function Navbar() {
   const mobileMenuId = useId();
 
   const getNavbarClasses = () => {
-    return `fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? "glass-card border-b border-gray-200/20 dark:border-gray-700/20" : "bg-transparent"
-    }`;
+    return `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "navbar-glass" : "bg-transparent"}`;
   };
 
   return (
@@ -59,7 +57,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="sm:hidden glass-card border-b border-gray-200/20 dark:border-gray-700/20"
+                className="sm:hidden navbar-glass"
                 id={mobileMenuId}
                 aria-label="Mobile Menu"
               >
