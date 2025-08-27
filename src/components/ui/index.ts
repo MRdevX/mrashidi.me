@@ -35,3 +35,7 @@ export { PageWrapper } from "./PageWrapper";
 export { PerformanceWrapper, StaggerWrapper } from "./PerformanceWrapper";
 export { ThemeToggle } from "./ThemeToggle";
 export { Textarea } from "./textarea";
+export { SocialButton } from "./SocialButton";
+export { LazyLoader } from "./LazyLoader";
+export { MotionSection } from "./MotionSection";
+export { TechStackGrid } from "./TechStackGrid";
