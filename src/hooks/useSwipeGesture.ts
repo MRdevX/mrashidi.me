@@ -62,7 +62,6 @@ export function useSwipeGesture(options: SwipeGestureOptions = {}) {
       }
     }
 
-    // Reset
     touchStart.current = null;
     touchEnd.current = null;
   }, [onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, threshold, velocity]);

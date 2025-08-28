@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui";
-import { navigation } from "@/data";
+import { desktopNavigationItems } from "@/data/navigation";
 import { useScrollPosition } from "@/hooks";
 import { BrandLogo } from "./BrandLogo";
 import { NavigationItem } from "./NavigationItem";
@@ -27,7 +27,7 @@ export default function Navbar() {
             </div>
 
             <nav className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8" aria-label="Main Menu">
-              {navigation.map((item) => (
+              {desktopNavigationItems.map((item) => (
                 <NavigationItem key={item.name} item={item} isActive={pathname === item.href} />
               ))}
               <ThemeToggle size="sm" />

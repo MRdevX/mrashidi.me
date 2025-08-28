@@ -24,7 +24,6 @@ export function getMainTechStack(): TechStackItem[] {
       if (skill.includeInMainStack) {
         let iconKey = normalizeIconKey(skill.name);
 
-        // Handle special cases
         if (iconKey.includes("azure")) {
           iconKey = "azure";
         }
@@ -39,6 +38,5 @@ export function getMainTechStack(): TechStackItem[] {
     }
   }
 
-  // Remove duplicates by name
   return Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
 }

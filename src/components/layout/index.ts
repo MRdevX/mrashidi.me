@@ -1,6 +1,8 @@
 export { AnalyticsWrapper } from "./Analytics";
 export { BottomNavigation } from "./BottomNavigation";
+export { BottomNavigationItem } from "./BottomNavigationItem";
 export { BrandLogo } from "./BrandLogo";
+export { FloatingActionButton } from "./FloatingActionButton";
 export { Footer } from "./Footer";
 export { HeadMeta } from "./HeadMeta";
 export { MainContent } from "./MainContent";

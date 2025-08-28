@@ -6,3 +6,4 @@ export { useProjectFilters } from "./useProjectFilters";
 export { useScrollPosition } from "./useScrollPosition";
 export { useSwipeGesture } from "./useSwipeGesture";
 export { useThemeConfig } from "./useThemeConfig";
+export { useBottomNavigation } from "./useBottomNavigation";
