@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
-import { AnalyticsWrapper, Footer, HeadMeta, MainContent, Navbar } from "@/components/layout";
+import { AnalyticsWrapper, BottomNavigation, Footer, HeadMeta, MainContent, Navbar } from "@/components/layout";
 import { BackgroundEffects } from "@/components/ui";
 import { ThemeProvider } from "@/context/ThemeContext";
 
@@ -24,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <MainContent>{children}</MainContent>
           <Footer />
+          <BottomNavigation />
           <AnalyticsWrapper />
         </ThemeProvider>
       </body>

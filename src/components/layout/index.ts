@@ -1,4 +1,5 @@
 export { AnalyticsWrapper } from "./Analytics";
+export { BottomNavigation } from "./BottomNavigation";
 export { BrandLogo } from "./BrandLogo";
 export { Footer } from "./Footer";
 export { HeadMeta } from "./HeadMeta";

@@ -159,18 +159,13 @@
 
   /* Card hover effect */
   .hover-card-effect {
-    transition:
-      transform 0.3s ease-in-out,
-      box-shadow 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     border: 1px solid rgba(255, 95, 31, 0.2);
   }
 
   .hover-card-effect:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow:
-      0 0 20px rgba(255, 95, 31, 0.2),
-      0 0 40px rgba(255, 95, 31, 0.1),
-      0 0 60px rgba(255, 95, 31, 0.05);
+    box-shadow: 0 0 20px rgba(255, 95, 31, 0.2), 0 0 40px rgba(255, 95, 31, 0.1), 0 0 60px rgba(255, 95, 31, 0.05);
     border-color: var(--neon-orange);
   }
 
@@ -507,45 +502,27 @@
 
   @keyframes glitch {
     0% {
-      text-shadow:
-        0.05em 0 0 var(--neon-orange),
-        -0.05em -0.025em 0 var(--neon-blue),
-        -0.025em 0.05em 0 var(--neon-purple);
+      text-shadow: 0.05em 0 0 var(--neon-orange), -0.05em -0.025em 0 var(--neon-blue), -0.025em 0.05em 0 var(--neon-purple);
     }
     14% {
-      text-shadow:
-        0.05em 0 0 var(--neon-orange),
-        -0.05em -0.025em 0 var(--neon-blue),
-        -0.025em 0.05em 0 var(--neon-purple);
+      text-shadow: 0.05em 0 0 var(--neon-orange), -0.05em -0.025em 0 var(--neon-blue), -0.025em 0.05em 0 var(--neon-purple);
     }
     15% {
-      text-shadow:
-        -0.05em -0.025em 0 var(--neon-orange),
-        0.025em 0.025em 0 var(--neon-blue),
+      text-shadow: -0.05em -0.025em 0 var(--neon-orange), 0.025em 0.025em 0 var(--neon-blue),
         -0.05em -0.05em 0 var(--neon-purple);
     }
     49% {
-      text-shadow:
-        -0.05em -0.025em 0 var(--neon-orange),
-        0.025em 0.025em 0 var(--neon-blue),
+      text-shadow: -0.05em -0.025em 0 var(--neon-orange), 0.025em 0.025em 0 var(--neon-blue),
         -0.05em -0.05em 0 var(--neon-purple);
     }
     50% {
-      text-shadow:
-        0.025em 0.05em 0 var(--neon-orange),
-        0.05em 0 0 var(--neon-blue),
-        0 -0.05em 0 var(--neon-purple);
+      text-shadow: 0.025em 0.05em 0 var(--neon-orange), 0.05em 0 0 var(--neon-blue), 0 -0.05em 0 var(--neon-purple);
     }
     99% {
-      text-shadow:
-        0.025em 0.05em 0 var(--neon-orange),
-        0.05em 0 0 var(--neon-blue),
-        0 -0.05em 0 var(--neon-purple);
+      text-shadow: 0.025em 0.05em 0 var(--neon-orange), 0.05em 0 0 var(--neon-blue), 0 -0.05em 0 var(--neon-purple);
     }
     100% {
-      text-shadow:
-        -0.025em 0 0 var(--neon-orange),
-        -0.025em -0.025em 0 var(--neon-blue),
+      text-shadow: -0.025em 0 0 var(--neon-orange), -0.025em -0.025em 0 var(--neon-blue),
         -0.025em -0.05em 0 var(--neon-purple);
     }
   }
@@ -559,15 +536,8 @@
     height: 100%;
     z-index: -1;
     opacity: 0.1;
-    background:
-      linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-      repeating-linear-gradient(
-        0deg,
-        rgba(0, 255, 0, 0.2) 0%,
-        rgba(0, 255, 0, 0.2) 1px,
-        transparent 1px,
-        transparent 2px
-      );
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+      repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.2) 0%, rgba(0, 255, 0, 0.2) 1px, transparent 1px, transparent 2px);
     background-size: 100% 2px;
     animation: matrix 20s linear infinite;
   }
@@ -659,8 +629,7 @@
   /* Circuit board background */
   .circuit-bg {
     background-color: var(--background-dark);
-    background-image:
-      radial-gradient(
+    background-image: radial-gradient(
         circle at 100% 150%,
         var(--background-dark) 24%,
         var(--neon-orange) 25%,
@@ -677,9 +646,7 @@
   /* Typing animation */
   .typing {
     border-right: 2px solid var(--terminal-green);
-    animation:
-      typing 3.5s steps(40, end),
-      blink-caret 0.75s step-end infinite;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -800,16 +767,10 @@
 
   @keyframes glow {
     from {
-      text-shadow:
-        0 0 5px var(--primary),
-        0 0 10px var(--primary),
-        0 0 15px var(--secondary);
+      text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 15px var(--secondary);
     }
     to {
-      text-shadow:
-        0 0 10px var(--primary),
-        0 0 20px var(--primary),
-        0 0 30px var(--secondary);
+      text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--secondary);
     }
   }
 
@@ -962,10 +923,7 @@
 
   .feature-card:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow:
-      0 0 20px rgba(255, 95, 31, 0.2),
-      0 0 40px rgba(255, 95, 31, 0.1),
-      0 0 60px rgba(255, 95, 31, 0.05);
+    box-shadow: 0 0 20px rgba(255, 95, 31, 0.2), 0 0 40px rgba(255, 95, 31, 0.1), 0 0 60px rgba(255, 95, 31, 0.05);
     border-color: var(--neon-orange);
   }
 
@@ -1032,16 +990,10 @@
   @keyframes glow {
     0%,
     100% {
-      text-shadow:
-        0 0 10px rgba(255, 95, 31, 0.5),
-        0 0 20px rgba(255, 95, 31, 0.3),
-        0 0 30px rgba(255, 95, 31, 0.2);
+      text-shadow: 0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2);
     }
     50% {
-      text-shadow:
-        0 0 20px rgba(255, 95, 31, 0.7),
-        0 0 30px rgba(255, 95, 31, 0.5),
-        0 0 40px rgba(255, 95, 31, 0.3);
+      text-shadow: 0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3);
     }
   }
 
@@ -1241,19 +1193,13 @@
   .glitch-image {
     position: relative;
     animation: neonPulse 4s ease-in-out infinite;
-    box-shadow:
-      0 0 20px rgba(255, 95, 31, 0.5),
-      0 0 40px rgba(255, 95, 31, 0.3),
-      0 0 60px rgba(255, 95, 31, 0.2);
+    box-shadow: 0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2);
     transition: all 0.3s ease-in-out;
   }
 
   .glitch-image:hover {
     border-color: rgba(255, 95, 31, 0.8);
-    box-shadow:
-      0 0 30px rgba(255, 95, 31, 0.8),
-      0 0 60px rgba(255, 95, 31, 0.5),
-      0 0 90px rgba(255, 95, 31, 0.3),
+    box-shadow: 0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3),
       inset 0 0 20px rgba(255, 95, 31, 0.2);
   }
 
@@ -1290,16 +1236,10 @@
   @keyframes neonPulse {
     0%,
     100% {
-      box-shadow:
-        0 0 20px rgba(255, 95, 31, 0.5),
-        0 0 40px rgba(255, 95, 31, 0.3),
-        0 0 60px rgba(255, 95, 31, 0.2);
+      box-shadow: 0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2);
     }
     50% {
-      box-shadow:
-        0 0 30px rgba(255, 95, 31, 0.8),
-        0 0 60px rgba(255, 95, 31, 0.5),
-        0 0 90px rgba(255, 95, 31, 0.3);
+      box-shadow: 0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3);
     }
   }
 
@@ -1637,5 +1577,113 @@
   body {
     color: hsl(var(--foreground));
     background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
+  }
+}
+
+/* PWA Bottom Navigation Styles */
+@layer components {
+  /* Safe area support for devices with notches */
+  .bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Bottom navigation glass effect */
+  .bottom-nav-glass {
+    background-color: rgb(255 255 255 / 0.8);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgb(0 0 0 / 0.1);
+    box-shadow: 0 -4px 20px -4px rgb(0 0 0 / 0.1);
+  }
+
+  .dark .bottom-nav-glass {
+    background-color: rgb(31 41 55 / 0.8);
+    border-top-color: rgb(55 65 81 / 0.3);
+    box-shadow: 0 -4px 20px -4px rgb(0 0 0 / 0.3);
+  }
+
+  /* Floating action button styles */
+  .floating-action {
+    background-color: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.15);
+    transition: all 0.2s ease;
+  }
+
+  .dark .floating-action {
+    background-color: rgb(31 41 55 / 0.9);
+    border-color: rgb(55 65 81 / 0.3);
+    box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.3);
+  }
+
+  .floating-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.2);
+  }
+
+  .dark .floating-action:hover {
+    box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.4);
+  }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 640px) {
+    /* Prevent horizontal scroll on mobile */
+    body {
+      overflow-x: hidden;
+    }
+
+    /* Ensure bottom navigation is always visible */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+    }
+
+    /* Add touch-friendly tap targets */
+    .nav-item {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  /* PWA standalone mode adjustments */
+  @media (display-mode: standalone) {
+    .bottom-nav {
+      padding-bottom: max(env(safe-area-inset-bottom), 8px);
+    }
+  }
+
+  /* Swipe gesture feedback */
+  .swipe-feedback {
+    transition: transform 0.2s ease-out;
+  }
+
+  .swipe-feedback:active {
+    transform: scale(0.98);
+  }
+
+  /* Swipe direction indicators */
+  .swipe-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .swipe-indicator.left {
+    left: 10px;
+  }
+
+  .swipe-indicator.right {
+    right: 10px;
+  }
+
+  .swipe-indicator.visible {
+    opacity: 0.6;
   }
 }

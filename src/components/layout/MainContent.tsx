@@ -17,7 +17,7 @@ export function MainContent({ children }: MainContentProps) {
       >
         Skip to content
       </a>
-      <main id={mainId} className="pt-16 relative z-10">
+      <main id={mainId} className="pt-16 pb-20 sm:pb-0 relative z-10">
         {children}
       </main>
     </>

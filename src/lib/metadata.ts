@@ -69,7 +69,10 @@ export function generateViewport(): Viewport {
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
+    minimumScale: 1,
+    userScalable: true,
     themeColor: siteConfig.themeColor,
+    viewportFit: "cover",
   };
 }
 
