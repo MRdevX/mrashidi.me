@@ -1665,9 +1665,11 @@
     flex: 1;
     padding: 0.5rem;
     border-radius: 0.5rem;
-    transition: all 0.2s ease;
+    transition: background-color 0.15s ease;
     min-height: 44px;
     min-width: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .bottom-nav-item:hover {
@@ -1686,7 +1688,7 @@
     width: 1.25rem;
     height: 1.25rem;
     margin-bottom: 0.25rem;
-    transition: color 0.2s ease;
+    transition: color 0.15s ease;
   }
 
   .bottom-nav-item-icon.active {
@@ -1708,7 +1710,7 @@
   .bottom-nav-item-text {
     font-size: 0.75rem;
     font-weight: 500;
-    transition: color 0.2s ease;
+    transition: color 0.15s ease;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1794,6 +1796,7 @@
     align-items: center;
     justify-content: space-around;
     padding: 0.5rem 0.25rem;
+    touch-action: manipulation;
   }
 
   /* Reusable Mobile Navigation Styles */
@@ -1804,6 +1807,7 @@
     right: 0;
     z-index: 50;
     padding-bottom: env(safe-area-inset-bottom);
+    touch-action: manipulation;
   }
 
   @media (display-mode: standalone) {
@@ -1814,15 +1818,25 @@
 
   /* Reusable Navigation Item States */
   .nav-item-state {
-    transition: all 0.2s ease;
+    transition: background-color 0.15s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-item-state:hover {
-    transform: translateY(-1px);
+    background-color: rgb(243 244 246);
+  }
+
+  .dark .nav-item-state:hover {
+    background-color: rgb(55 65 81);
   }
 
   .nav-item-state:active {
-    transform: translateY(0) scale(0.95);
+    background-color: rgb(229 231 235);
+  }
+
+  .dark .nav-item-state:active {
+    background-color: rgb(75 85 99);
   }
 
   /* Reusable Icon Container Styles */
