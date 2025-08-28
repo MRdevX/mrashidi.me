@@ -16,16 +16,7 @@ interface CyberpunkButtonProps extends Omit<ButtonProps, "variant"> {
 
 export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButtonProps>(
   (
-    {
-      className,
-      variant = "default",
-      animate = true,
-      loading: _loading,
-      icon,
-      iconPosition: _iconPosition,
-      children,
-      ...props
-    },
+    { className, variant = "default", animate = true, loading: _loading, icon, iconPosition = "left", children, ...props },
     ref
   ) => {
     const { getButtonVariant } = useThemeConfig();
@@ -39,10 +30,13 @@ export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButt
 
     const { asChild: _asChild, ...buttonProps } = props;
 
+    const iconElement = icon && <span className="inline-flex items-center">{icon}</span>;
+
     return (
       <Button ref={ref} variant="ghost" className={buttonClasses} {...buttonProps}>
-        {icon && <span className="inline-flex items-center">{icon}</span>}
+        {iconPosition === "left" && iconElement}
         {children}
+        {iconPosition === "right" && iconElement}
       </Button>
     );
   }
