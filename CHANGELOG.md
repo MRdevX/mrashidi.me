@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.46](https://github.com/MRdevX/mrashidi.me/compare/v0.1.45...v0.1.46) (2025-08-28)
+
+
+### Features
+
+* add BottomNavigation component with swipe gesture support and integrate into layout ([178e65c](https://github.com/MRdevX/mrashidi.me/commit/178e65cdfd386a8f8f8fac8806337431dc4e7fd8))
+
 ### [0.1.45](https://github.com/MRdevX/mrashidi.me/compare/v0.1.44...v0.1.45) (2025-08-27)
 
 ### [0.1.44](https://github.com/MRdevX/mrashidi.me/compare/v0.1.43...v0.1.44) (2025-08-27)
