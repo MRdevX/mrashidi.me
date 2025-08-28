@@ -1746,14 +1746,14 @@
   }
 
   .floating-action-btn.bottom-right {
-    bottom: 6rem;
+    bottom: 5.5rem;
     right: 1rem;
   }
 
   /* PWA standalone mode adjustments for floating action button */
   @media (display-mode: standalone) {
     .floating-action-btn.bottom-right {
-      bottom: 7rem;
+      bottom: 6.5rem;
     }
   }
 
@@ -1773,21 +1773,33 @@
   }
 
   .floating-action-btn-container {
-    background-color: rgb(255 255 255 / 0.8);
+    background-color: rgb(255 255 255 / 0.9);
     backdrop-filter: blur(20px);
-    border-radius: 9999px;
+    border-radius: 0.5rem;
     padding: 0.5rem;
     box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.15);
     transition: all 0.2s ease;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .dark .floating-action-btn-container {
-    background-color: rgb(31 41 55 / 0.8);
+    background-color: rgb(31 41 55 / 0.9);
     box-shadow: 0 4px 20px -4px rgb(0 0 0 / 0.3);
   }
 
   .floating-action-btn-container:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.2), 0 0 20px rgba(255, 95, 31, 0.2);
+    background-color: rgb(255 255 255 / 0.95);
+  }
+
+  .dark .floating-action-btn-container:hover {
+    box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.4), 0 0 20px rgba(255, 95, 31, 0.3);
+    background-color: rgb(31 41 55 / 0.95);
   }
 
   /* Reusable Navigation Container Styles */

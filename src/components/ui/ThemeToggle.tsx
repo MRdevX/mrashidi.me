@@ -65,7 +65,7 @@ function ThemeToggleInner({ className, size = "md", variant = "cyberpunk" }: The
       <button
         type="button"
         className={cn(
-          "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
           SIZE_CLASSES[size],
           VARIANT_CLASSES[variant],
           className
@@ -84,7 +84,7 @@ function ThemeToggleInner({ className, size = "md", variant = "cyberpunk" }: The
       type="button"
       onClick={toggleTheme}
       className={cn(
-        "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
         SIZE_CLASSES[size],
         VARIANT_CLASSES[variant],
         className
@@ -110,7 +110,7 @@ export function ThemeToggle(props: ThemeToggleProps) {
       <button
         type="button"
         className={cn(
-          "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
           SIZE_CLASSES[props.size || "md"],
           VARIANT_CLASSES[props.variant || "cyberpunk"],
           props.className
