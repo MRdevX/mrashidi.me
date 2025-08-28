@@ -6,17 +6,14 @@ import { useBottomNavigation } from "@/hooks";
 import { mobileNavigationItems } from "@/data/navigation";
 
 export function BottomNavigation() {
-  const { swipeHandlers, isActive } = useBottomNavigation({
+  const { isActive } = useBottomNavigation({
     items: mobileNavigationItems,
-    enableSwipe: true,
-    swipeThreshold: 80,
-    swipeVelocity: 0.2,
   });
 
   return (
     <>
       {/* Bottom Navigation */}
-      <nav className="mobile-nav bottom-nav-glass swipe-enabled sm:hidden" {...swipeHandlers}>
+      <nav className="mobile-nav bottom-nav-glass sm:hidden">
         <div className="nav-container">
           {mobileNavigationItems.map((item) => (
             <BottomNavigationItem

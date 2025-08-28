@@ -1655,38 +1655,6 @@
     }
   }
 
-  /* Swipe gesture feedback */
-  .swipe-feedback {
-    transition: transform 0.2s ease-out;
-  }
-
-  .swipe-feedback:active {
-    transform: scale(0.98);
-  }
-
-  /* Swipe direction indicators */
-  .swipe-indicator {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .swipe-indicator.left {
-    left: 10px;
-  }
-
-  .swipe-indicator.right {
-    right: 10px;
-  }
-
-  .swipe-indicator.visible {
-    opacity: 0.6;
-  }
-
   /* Reusable Bottom Navigation Component Styles */
   .bottom-nav-item {
     display: flex;
@@ -1776,8 +1744,15 @@
   }
 
   .floating-action-btn.bottom-right {
-    bottom: 5rem;
+    bottom: 6rem;
     right: 1rem;
+  }
+
+  /* PWA standalone mode adjustments for floating action button */
+  @media (display-mode: standalone) {
+    .floating-action-btn.bottom-right {
+      bottom: 7rem;
+    }
   }
 
   .floating-action-btn.bottom-left {
@@ -1819,15 +1794,6 @@
     align-items: center;
     justify-content: space-around;
     padding: 0.5rem 0.25rem;
-  }
-
-  /* Reusable Swipe Gesture Styles */
-  .swipe-enabled {
-    transition: transform 0.2s ease-out;
-  }
-
-  .swipe-enabled:active {
-    transform: scale(0.98);
   }
 
   /* Reusable Mobile Navigation Styles */

@@ -4,6 +4,6 @@ export { useLocalStorage } from "./useLocalStorage";
 export { useMouseTracking } from "./useMouseTracking";
 export { useProjectFilters } from "./useProjectFilters";
 export { useScrollPosition } from "./useScrollPosition";
-export { useSwipeGesture } from "./useSwipeGesture";
+
 export { useThemeConfig } from "./useThemeConfig";
 export { useBottomNavigation } from "./useBottomNavigation";
