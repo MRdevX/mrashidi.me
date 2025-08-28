@@ -1,5 +1,4 @@
 export interface SiteConfig {
-  gtmId: string;
   themeColor: string;
   msTileColor: string;
   appName: string;
@@ -13,7 +12,6 @@ export interface SiteConfig {
 import coreConfig from "../core";
 
 const siteConfig: SiteConfig = {
-  gtmId: "GTM-T27QBF7L",
   themeColor: "#f97316",
   msTileColor: "#f97316",
   appName: coreConfig.site.name,
