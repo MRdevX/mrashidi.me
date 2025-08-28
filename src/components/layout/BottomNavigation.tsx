@@ -16,8 +16,8 @@ export function BottomNavigation() {
   return (
     <>
       {/* Bottom Navigation */}
-      <nav className="bottom-nav bottom-nav-glass swipe-feedback sm:hidden" {...swipeHandlers}>
-        <div className="flex items-center justify-around px-2 py-1">
+      <nav className="mobile-nav bottom-nav-glass swipe-enabled sm:hidden" {...swipeHandlers}>
+        <div className="nav-container">
           {mobileNavigationItems.map((item) => (
             <BottomNavigationItem
               key={item.name}
