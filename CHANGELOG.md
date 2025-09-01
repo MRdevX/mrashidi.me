@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.48](https://github.com/MRdevX/mrashidi.me/compare/v0.1.47...v0.1.48) (2025-09-01)
+
+
+### Bug Fixes
+
+* pagination buttons arrows ([e5b55c1](https://github.com/MRdevX/mrashidi.me/commit/e5b55c10c4dd35068fcdf9ffb42a79ab16edcb68))
+
 ### [0.1.47](https://github.com/MRdevX/mrashidi.me/compare/v0.1.46...v0.1.47) (2025-08-28)
 
 ### [0.1.46](https://github.com/MRdevX/mrashidi.me/compare/v0.1.45...v0.1.46) (2025-08-28)
