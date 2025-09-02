@@ -24,7 +24,7 @@ export interface CoreConfig {
 
 const coreConfig: CoreConfig = {
   person: {
-    name: "Mahdi Rashidi",
+    name: "Dee Rashidi",
     title: "Software Engineer",
     location: "Berlin, Germany",
     email: "contact@mrashidi.me",
@@ -40,7 +40,7 @@ const coreConfig: CoreConfig = {
   site: {
     url: "https://mrashidi.me",
     name: "MR Portfolio",
-    title: "Mahdi Rashidi | Software Backend Engineer",
+    title: "Dee Rashidi | Software Backend Engineer",
     description:
       "Software engineer with 9 years of experience in backend development. I work primarily with Node.js and TypeScript, with experience across various frameworks and languages. I focus on building systems that are reliable and easy to maintain.",
     keywords:

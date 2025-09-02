@@ -8,7 +8,7 @@ import { cacheService } from "./cache.service";
 const authors: IBlogAuthor[] = [
   {
     username: "mrdevx",
-    name: "Mahdi Rashidi",
+    name: "Dee Rashidi",
     mediumUrl: "https://mrdevx.medium.com",
   },
 ];
@@ -241,12 +241,9 @@ export function startCacheUpdateInterval(): void {
     }
   }, CACHE_UPDATE_INTERVAL);
 
-  setInterval(
-    () => {
-      cachePerformanceMonitor.logMetrics();
-    },
-    10 * 60 * 1000
-  );
+  setInterval(() => {
+    cachePerformanceMonitor.logMetrics();
+  }, 10 * 60 * 1000);
 }
 
 export async function getAllPosts(page: number, limit: number) {

@@ -49,7 +49,7 @@ export function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: Resu
     try {
       const downloadLink = document.createElement("a");
       downloadLink.href = "/api/cv/download";
-      downloadLink.download = "Mahdi_Rashidi_CV.pdf";
+      downloadLink.download = "Dee_Rashidi_CV.pdf";
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

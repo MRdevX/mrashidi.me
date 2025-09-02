@@ -22,7 +22,7 @@ export const PAGINATION = {
 export const BLOG_AUTHORS = [
   {
     username: "mrdevx",
-    name: "Mahdi Rashidi",
+    name: "Dee Rashidi",
     mediumUrl: "https://mrdevx.medium.com",
   },
 ] as const;

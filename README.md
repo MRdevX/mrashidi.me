@@ -160,7 +160,7 @@ Deployed on Vercel with:
 
 ## 📄 License
 
-Copyright (c) 2025 Mahdi Rashidi. All rights reserved.
+Copyright (c) 2025 Dee Rashidi. All rights reserved.
 
 This source code is provided for educational and demonstration purposes only.
 

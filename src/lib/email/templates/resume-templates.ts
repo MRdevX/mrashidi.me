@@ -61,7 +61,7 @@ export function createUserConfirmationHtml(data: ResumeRequestData, templateConf
       <tr>
         <td style="padding-top: 10px;">
           <p style="margin: 0 0 16px 0; color: #ffffff;">If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my website or via the contact information below. I'm always open to discussing new opportunities!</p>
-          <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
+          <p style="margin: 0; color: #ffffff;">Best,<br>Dee</p>
         </td>
       </tr>
     </table>
@@ -102,7 +102,7 @@ ${templateConfig.companyWebsite}
 If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my website or via the contact information below. I'm always open to discussing new opportunities!
 
 Best regards,
-Mahdi Rashidi
+Dee Rashidi
 
 ---
 GitHub: ${templateConfig.socialLinks.github}

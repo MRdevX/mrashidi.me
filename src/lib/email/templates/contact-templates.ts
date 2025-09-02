@@ -77,7 +77,7 @@ export function createUserConfirmationHtml(data: ContactFormData, templateConfig
       </tr>
       <tr>
         <td style="padding-top: 10px;">
-          <p style="margin: 0; color: #ffffff;">Best regards,<br>Mahdi Rashidi</p>
+          <p style="margin: 0; color: #ffffff;">Best regards,<br>Dee Rashidi</p>
         </td>
       </tr>
     </table>
@@ -119,8 +119,8 @@ ${data.message}
 While you wait for my response, feel free to explore my portfolio:
 ${templateConfig.companyWebsite}
 
-Best regards,
-Mahdi Rashidi
+Best,
+Dee
 
 ---
 GitHub: ${templateConfig.socialLinks.github}

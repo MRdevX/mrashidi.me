@@ -16,10 +16,8 @@ export function BioSection() {
       transition={{ delay: 0.2 }}
     >
       <div className="relative">
-        <ProfileImage src="/profile.jpeg" alt="Mahdi Rashidi" />
-        <p className={`text-lg leading-relaxed ${getTextColor("secondary")} font-albert text-justify`}>
-          {personalInfo.bio}
-        </p>
+        <ProfileImage src="/profile.jpeg" alt="Dee Rashidi" />
+        <p className={`text-lg leading-relaxed ${getTextColor("secondary")} font-albert text-justify`}>{personalInfo.bio}</p>
       </div>
     </motion.section>
   );

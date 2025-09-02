@@ -1,7 +1,7 @@
 import { put } from "@vercel/blob";
 import { logger } from "@/lib/logger";
 
-const CV_PATH = "cv/Mahdi_Rashidi_CV.pdf";
+const CV_PATH = "cv/Dee_Rashidi_CV.pdf";
 
 export function getCVUrl(): string {
   const blobStoreUrl = process.env.BLOB_STORE_URL;
