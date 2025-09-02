@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
-import { Briefcase, Building2, Calendar, CheckCircle2, MapPin } from "lucide-react";
+import { useState } from "react";
+import { Briefcase, Building2, Calendar, CheckCircle2, MapPin, Trophy, ChevronDown, ChevronUp } from "lucide-react";
 import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCardTitle } from "@/components/ui";
 import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
 export function WorkExperienceSection() {
   const { getSectionTitle, getTextColor } = useThemeConfig();
+  const [openAchievements, setOpenAchievements] = useState<Set<string>>(new Set());
 
   return (
     <section className="mb-16">
@@ -83,34 +85,67 @@ export function WorkExperienceSection() {
 
                   {/* Achievements */}
                   <CyberpunkCardContent className="pt-0">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3 mb-4 mt-6">
-                        <div className="w-1 h-5 bg-linear-to-b from-orange-500 to-orange-600 rounded-full" />
-                        <h4 className="text-base font-bold text-orange-400 tracking-wide uppercase">
-                          Key Achievements
-                        </h4>
-                        <div className="flex-1 h-px bg-linear-to-r from-orange-500/30 to-transparent" />
-                      </div>
-                      <ul className="space-y-3">
-                        {job.achievements.map((achievement, index) => (
-                          <motion.li
-                            key={achievement}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                            className="flex items-start gap-3 group/achievement"
-                          >
-                            <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
-                            <span
-                              className={`${getTextColor("primary")} group-hover/achievement:${getTextColor(
-                                "primary"
-                              )} transition-colors leading-relaxed`}
-                            >
-                              {achievement}
-                            </span>
-                          </motion.li>
-                        ))}
-                      </ul>
+                    <div className="mt-6">
+                      <button
+                        onClick={() => {
+                          const key = `${job.company}-${job.title}`;
+                          const newOpen = new Set(openAchievements);
+                          if (newOpen.has(key)) {
+                            newOpen.delete(key);
+                          } else {
+                            newOpen.add(key);
+                          }
+                          setOpenAchievements(newOpen);
+                        }}
+                        className="w-full flex items-center justify-between p-2 rounded-md border border-orange-500/20 hover:border-orange-500/40 transition-all duration-200 hover:bg-gray-800/30 group/trigger relative z-10 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Trophy className="w-4 h-4 text-orange-500" />
+                          <span className="text-orange-400 font-medium text-sm">Key Achievements</span>
+                        </div>
+                        <motion.div
+                          animate={{ rotate: openAchievements.has(`${job.company}-${job.title}`) ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="text-orange-500/60"
+                        >
+                          {openAchievements.has(`${job.company}-${job.title}`) ? (
+                            <ChevronUp className="w-4 h-4" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4" />
+                          )}
+                        </motion.div>
+                      </button>
+
+                      {openAchievements.has(`${job.company}-${job.title}`) && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <ul className="space-y-2 mt-3 px-2 pb-2">
+                            {job.achievements.map((achievement, index) => (
+                              <motion.li
+                                key={achievement}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                className="flex items-start gap-3 group/achievement"
+                              >
+                                <CheckCircle2 className="w-5 h-5 text-orange-500 mt-0.5 shrink-0 group-hover/achievement:text-orange-400 transition-colors" />
+                                <span
+                                  className={`${getTextColor("primary")} group-hover/achievement:${getTextColor(
+                                    "primary"
+                                  )} transition-colors leading-relaxed`}
+                                >
+                                  {achievement}
+                                </span>
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      )}
                     </div>
                   </CyberpunkCardContent>
                 </CyberpunkCard>

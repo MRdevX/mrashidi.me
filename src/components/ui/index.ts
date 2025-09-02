@@ -2,6 +2,7 @@ export { BackgroundEffects } from "./BackgroundEffects";
 export { Button, buttonVariants } from "./Button";
 export { Badge } from "./badge";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
+export { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./collapsible";
 export { ContributionGraph } from "./ContributionGraph";
 export { CyberpunkBadge } from "./CyberpunkBadge";
 export { CyberpunkButton } from "./CyberpunkButton";
@@ -24,15 +25,7 @@ export {
 } from "./CyberpunkDialog";
 export { CyberpunkInput } from "./CyberpunkInput";
 export { CyberpunkTextarea } from "./CyberpunkTextarea";
-export {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./dialog";
+export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
 export * from "./icons";
 export { Input } from "./input";
 export { LazyLoader } from "./LazyLoader";
