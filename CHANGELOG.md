@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.51](https://github.com/MRdevX/mrashidi.me/compare/v0.1.50...v0.1.51) (2025-09-02)
+
+
+### Features
+
+* add achievements toggle ([b3e9d11](https://github.com/MRdevX/mrashidi.me/commit/b3e9d11612cebd023edd6d9fd531d74fc1b6d0a8))
+
 ### [0.1.50](https://github.com/MRdevX/mrashidi.me/compare/v0.1.49...v0.1.50) (2025-09-02)
 
 ### [0.1.49](https://github.com/MRdevX/mrashidi.me/compare/v0.1.48...v0.1.49) (2025-09-02)
