@@ -1,17 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { formatTimestamp, normalizeCommand, isValidCommand } from "@/components/terminal/utils";
-import { mockTimestamps } from "./mocks";
-import { validCommands, invalidCommands } from "./fixtures";
+import { validCommands, invalidCommands, timestampFixtures } from "./fixtures";
 
 describe("Terminal Utils", () => {
   describe("formatTimestamp", () => {
     it("should format timestamp correctly", () => {
-      const formatted = formatTimestamp(mockTimestamps.now);
+      const formatted = formatTimestamp(timestampFixtures.now);
       expect(formatted).toBe("14:30:45");
     });
 
     it("should handle different times", () => {
-      const formatted = formatTimestamp(mockTimestamps.past);
+      const formatted = formatTimestamp(timestampFixtures.past);
       expect(formatted).toBe("14:29:30");
     });
   });
