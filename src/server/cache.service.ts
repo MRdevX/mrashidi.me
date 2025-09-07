@@ -1,12 +1,8 @@
 import NodeCache from "node-cache";
 import { logger } from "@/lib/logger";
-import type { IBlogPost } from "@/types/blog";
 
 export class CacheService {
   private cache: NodeCache;
-  private readonly BLOG_POSTS_KEY = "blog_posts";
-  private readonly BLOG_POSTS_TOTAL_KEY = "blog_posts_total";
-  private readonly BLOG_LAST_UPDATE_KEY = "blog_last_update";
   private readonly CACHE_TTL = 60 * 60;
 
   constructor() {
@@ -16,48 +12,54 @@ export class CacheService {
     });
   }
 
-  async getBlogPosts(): Promise<{ posts: IBlogPost[]; total: number } | null> {
+  get<T>(key: string): T | undefined {
     try {
-      const posts = this.cache.get<IBlogPost[]>(this.BLOG_POSTS_KEY);
-      const total = this.cache.get<number>(this.BLOG_POSTS_TOTAL_KEY);
-
-      if (!posts || total === undefined) {
-        return null;
-      }
-
-      return { posts, total };
+      return this.cache.get<T>(key);
     } catch (error) {
       logger.error({
-        operation: "getBlogPosts",
+        operation: "cache.get",
+        key,
         error: error instanceof Error ? error.message : String(error),
       });
-      return null;
+      return undefined;
     }
   }
 
-  async setBlogPosts(posts: IBlogPost[], total: number): Promise<void> {
+  set<T>(key: string, value: T, ttl?: number): void {
     try {
-      this.cache.set(this.BLOG_POSTS_KEY, posts);
-      this.cache.set(this.BLOG_POSTS_TOTAL_KEY, total);
-      this.cache.set(this.BLOG_LAST_UPDATE_KEY, Date.now());
+      if (ttl !== undefined) {
+        this.cache.set(key, value, ttl);
+      } else {
+        this.cache.set(key, value);
+      }
     } catch (error) {
       logger.error({
-        operation: "setBlogPosts",
+        operation: "cache.set",
+        key,
         error: error instanceof Error ? error.message : String(error),
       });
     }
+  }
+
+  getBlogPosts<T>(): { posts: T[]; total: number } | null {
+    const posts = this.get<T[]>("blog_posts");
+    const total = this.get<number>("blog_posts_total");
+
+    if (!posts || total === undefined) {
+      return null;
+    }
+
+    return { posts, total };
+  }
+
+  setBlogPosts<T>(posts: T[], total: number): void {
+    this.set("blog_posts", posts);
+    this.set("blog_posts_total", total);
+    this.set("blog_last_update", Date.now());
   }
 
   getLastUpdateTime(): number | null {
-    try {
-      return this.cache.get<number>(this.BLOG_LAST_UPDATE_KEY) || null;
-    } catch (error) {
-      logger.error({
-        operation: "getLastUpdateTime",
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return null;
-    }
+    return this.get<number>("blog_last_update") || null;
   }
 }
 

@@ -1,7 +1,6 @@
 import { parseString } from "xml2js";
 import { API_CONFIG } from "@/lib/config/api";
 import { logger } from "@/lib/logger";
-import { cachePerformanceMonitor } from "@/lib/utils/cachePerformance";
 import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
 import { cacheService } from "./cache.service";
 
@@ -14,10 +13,7 @@ const authors: IBlogAuthor[] = [
 ];
 
 const CACHE_UPDATE_INTERVAL = API_CONFIG.CACHE.BLOG_UPDATE_INTERVAL;
-
 let isUpdating = false;
-let updateInterval: NodeJS.Timeout | null = null;
-let isPreloaded = false;
 
 export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> {
   return new Promise((resolve, reject) => {
@@ -138,67 +134,36 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
   }
 }
 
-export async function preloadBlogPosts(): Promise<void> {
-  if (isPreloaded) {
-    logger.debug({ operation: "preloadBlogPosts", status: "already_preloaded" });
-    return;
-  }
+async function fetchAllPosts(): Promise<IBlogPost[]> {
+  const allPosts: IBlogPost[] = [];
 
-  try {
-    logger.info({ operation: "preloadBlogPosts", status: "started" });
-    isPreloaded = true;
-
-    const allPosts: IBlogPost[] = [];
-    for (const author of authors) {
+  for (const author of authors) {
+    try {
       const posts = await fetchMediumPosts(author);
       allPosts.push(...posts);
+    } catch (error) {
+      logger.error({
+        operation: "fetchAllPosts",
+        author: author.username,
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
-
-    const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
-
-    await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
-    logger.info({
-      operation: "preloadBlogPosts",
-      status: "completed",
-      postsCount: sortedPosts.length,
-    });
-  } catch (error) {
-    isPreloaded = false;
-    logger.error({
-      operation: "preloadBlogPosts",
-      status: "failed",
-      error: error instanceof Error ? error.message : String(error),
-    });
   }
+
+  return allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 }
 
-export async function updateCache(): Promise<void> {
-  if (isUpdating) {
-    return;
-  }
+async function updateCache(): Promise<void> {
+  if (isUpdating) return;
 
   try {
     isUpdating = true;
-    logger.info({ operation: "updateCache", status: "started" });
-
-    const allPosts: IBlogPost[] = [];
-    for (const author of authors) {
-      const posts = await fetchMediumPosts(author);
-      allPosts.push(...posts);
-    }
-
-    const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
-
-    await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
-    logger.info({
-      operation: "updateCache",
-      status: "completed",
-      postsCount: sortedPosts.length,
-    });
+    const posts = await fetchAllPosts();
+    cacheService.setBlogPosts(posts, posts.length);
+    logger.info({ operation: "updateCache", postsCount: posts.length });
   } catch (error) {
     logger.error({
       operation: "updateCache",
-      status: "failed",
       error: error instanceof Error ? error.message : String(error),
     });
   } finally {
@@ -215,132 +180,56 @@ export function startCacheUpdateInterval(): void {
     return;
   }
 
-  if (updateInterval) {
-    clearInterval(updateInterval);
-  }
-
-  if (process.env.NODE_ENV === "development") {
-    preloadBlogPosts().catch((error) => {
-      logger.error({
-        operation: "startCacheUpdateInterval",
-        message: "Failed to preload blog posts",
-        error: error instanceof Error ? error.message : String(error),
-      });
+  updateCache().catch((error) => {
+    logger.error({
+      operation: "startCacheUpdateInterval",
+      error: error instanceof Error ? error.message : String(error),
     });
-  }
+  });
 
-  updateInterval = setInterval(() => {
+  setInterval(() => {
     if (!isUpdating) {
       updateCache().catch((error) => {
         logger.error({
           operation: "startCacheUpdateInterval",
-          message: "Failed to update cache",
           error: error instanceof Error ? error.message : String(error),
         });
       });
     }
   }, CACHE_UPDATE_INTERVAL);
-
-  setInterval(() => {
-    cachePerformanceMonitor.logMetrics();
-  }, 10 * 60 * 1000);
 }
 
 export async function getAllPosts(page: number, limit: number) {
-  const startTime = Date.now();
-
   try {
-    logger.debug({ operation: "getAllPosts", status: "checking_cache" });
-    const cachedData = await cacheService.getBlogPosts();
+    const cachedData = cacheService.getBlogPosts<IBlogPost>();
 
     if (cachedData) {
-      const responseTime = Date.now() - startTime;
-      cachePerformanceMonitor.recordHit(responseTime);
-
-      logger.debug({
-        operation: "getAllPosts",
-        status: "cache_hit",
-        postsCount: cachedData.total,
-      });
-
       const { posts, total } = cachedData;
       const startIndex = (page - 1) * limit;
-      const endIndex = startIndex + limit;
-      const paginatedPosts = posts.slice(startIndex, endIndex);
+      const paginatedPosts = posts.slice(startIndex, startIndex + limit);
 
-      triggerBackgroundRefresh();
+      const lastUpdate = cacheService.getLastUpdateTime();
+      const thirtyMinutes = 30 * 60 * 1000;
+      if (lastUpdate && Date.now() - lastUpdate > thirtyMinutes) {
+        updateCache().catch(() => {});
+      }
 
-      return {
-        posts: paginatedPosts,
-        total,
-        fromCache: true,
-      };
+      return { posts: paginatedPosts, total, fromCache: true };
     }
 
-    logger.debug({ operation: "getAllPosts", status: "cache_miss" });
-    const allPosts: IBlogPost[] = [];
-    for (const author of authors) {
-      logger.debug({
-        operation: "getAllPosts",
-        status: "fetching_author",
-        author: author.username,
-      });
-      const posts = await fetchMediumPosts(author);
-      allPosts.push(...posts);
-    }
-
-    logger.debug({
-      operation: "getAllPosts",
-      status: "fetched_all",
-      totalPosts: allPosts.length,
-    });
-
-    const sortedPosts = allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
-
-    await cacheService.setBlogPosts(sortedPosts, sortedPosts.length);
-    logger.debug({ operation: "getAllPosts", status: "cached_successfully" });
+    const posts = await fetchAllPosts();
+    cacheService.setBlogPosts(posts, posts.length);
 
     const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
+    const paginatedPosts = posts.slice(startIndex, startIndex + limit);
 
-    const responseTime = Date.now() - startTime;
-    cachePerformanceMonitor.recordMiss(responseTime);
-
-    return {
-      posts: paginatedPosts,
-      total: sortedPosts.length,
-      fromCache: false,
-    };
+    return { posts: paginatedPosts, total: posts.length, fromCache: false };
   } catch (error) {
-    const responseTime = Date.now() - startTime;
-    cachePerformanceMonitor.recordMiss(responseTime);
-
     logger.error({
       operation: "getAllPosts",
-      status: "failed",
       error: error instanceof Error ? error.message : String(error),
     });
     throw error;
-  }
-}
-
-function triggerBackgroundRefresh(): void {
-  const lastUpdate = cacheService.getLastUpdateTime();
-  const thirtyMinutes = 30 * 60 * 1000;
-
-  if (lastUpdate && Date.now() - lastUpdate > thirtyMinutes) {
-    logger.debug({
-      operation: "triggerBackgroundRefresh",
-      message: "Cache is stale, triggering background refresh",
-    });
-    updateCache().catch((error) => {
-      logger.error({
-        operation: "triggerBackgroundRefresh",
-        message: "Failed to update cache",
-        error: error instanceof Error ? error.message : String(error),
-      });
-    });
   }
 }
 
@@ -354,5 +243,4 @@ export const blogService = {
       total: result.total,
     };
   },
-  preloadBlogPosts: () => preloadBlogPosts(),
 };
