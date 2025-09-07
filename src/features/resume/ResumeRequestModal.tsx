@@ -14,7 +14,7 @@ import {
   CyberpunkDialogHeader,
   CyberpunkDialogTitle,
 } from "@/components/ui";
-import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation/schemas";
+import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
 
 interface ResumeRequestModalRefactoredProps {
   isOpen: boolean;

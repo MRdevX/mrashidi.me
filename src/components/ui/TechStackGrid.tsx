@@ -1,5 +1,5 @@
-import type { TechStackItem } from "@/lib/skills";
-import { getTechIcon } from "@/lib/techIconMap";
+import type { TechStackItem } from "@/lib/tech";
+import { getTechIcon } from "@/lib/tech";
 
 interface TechStackGridProps {
   techStack: TechStackItem[];

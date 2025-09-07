@@ -46,9 +46,7 @@ export const performanceUtils = {
 export const usePerformanceMonitoring = () => {
   if (typeof window !== "undefined") {
     performanceUtils.trackBundleSize();
-
     performanceUtils.preloadCriticalResources();
-
     performanceUtils.optimizeImages();
   }
 };

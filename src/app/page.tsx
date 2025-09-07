@@ -16,7 +16,7 @@ import {
 } from "@/components/ui";
 import { config, personalInfo } from "@/data";
 import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
-import { getMainTechStack } from "@/lib/skills";
+import { getMainTechStack } from "@/lib/tech";
 
 const ContributionGraph = lazy(() =>
   import("@/components/ui/ContributionGraph").then((module) => ({

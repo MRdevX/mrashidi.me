@@ -1,29 +1,6 @@
-import { logger } from "@/lib/logger";
-import { getTechnologyCategory, TECHNOLOGY_CATEGORIES, type TechnologyCategory } from "./constants";
-
-export interface TechnologyUsage {
-  tech: string;
-  count: number;
-}
-
-export interface CategorizedTechnologies {
-  categorizedStacks: Record<TechnologyCategory, string[]>;
-  stackUsageCount: Record<string, number>;
-}
-
-export interface Project {
-  title: string;
-  description: string;
-  highlights?: string[];
-  stack: string[];
-  clientName?: string;
-  role?: string;
-  openSource?: boolean;
-  visibility: "public" | "private";
-  type: "personal" | "client";
-  year?: string;
-  githubUrl?: string;
-}
+import { logger } from "@/lib/core";
+import { getTechnologyCategory, TECHNOLOGY_CATEGORIES, type TechnologyCategory } from "@/lib/core";
+import type { Project, TechnologyUsage, CategorizedTechnologies } from "./types";
 
 export const matchesSearch = (project: Project, query: string): boolean => {
   if (!query.trim()) {

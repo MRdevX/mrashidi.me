@@ -1,4 +1,4 @@
-import { API_CONFIG } from "@/lib/config/api";
+import { API_CONFIG } from "@/lib/core";
 import { AuthenticationError, NetworkError, ValidationError } from "@/lib/errors";
 
 interface RecaptchaResponse {

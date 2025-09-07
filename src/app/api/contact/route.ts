@@ -1,10 +1,9 @@
 import type { NextRequest } from "next/server";
 import { withValidation } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
-import { EmailService } from "@/lib/email/email.service";
+import { EmailService } from "@/lib/services/email";
 import { APIError } from "@/lib/errors";
-import { validateContactFormAPI } from "@/lib/validation/apiValidators";
-import type { ContactFormData } from "@/lib/validation/schemas";
+import { validateContactFormAPI, type ContactFormData } from "@/lib/validation";
 import { verifyRecaptcha } from "@/server/recaptcha.service";
 
 async function handleContactForm(_request: NextRequest, formData: ContactFormData & { recaptchaToken: string }) {

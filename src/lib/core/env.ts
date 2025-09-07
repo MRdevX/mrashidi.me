@@ -15,6 +15,12 @@ const EnvSchema = z.object({
   EMAIL_SERVICE_DOMAIN: z.string().optional(),
   EMAIL_FROM: z.string().email().optional(),
   EMAIL_TO: z.string().email().optional(),
+
+  AWS_REGION: z.string().optional(),
+  AWS_ACCESS_KEY_ID: z.string().optional(),
+  AWS_SECRET_ACCESS_KEY: z.string().optional(),
+  EMAIL_FROM_ADDRESS: z.string().email().optional(),
+  EMAIL_TO_ADDRESS: z.string().email().optional(),
 });
 
 export const env = EnvSchema.parse({
@@ -32,4 +38,11 @@ export const env = EnvSchema.parse({
   EMAIL_SERVICE_DOMAIN: process.env.EMAIL_SERVICE_DOMAIN,
   EMAIL_FROM: process.env.EMAIL_FROM,
   EMAIL_TO: process.env.EMAIL_TO,
+  AWS_REGION: process.env.AWS_REGION,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+  EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
+  EMAIL_TO_ADDRESS: process.env.EMAIL_TO_ADDRESS,
 });
+
+export type Env = z.infer<typeof EnvSchema>;

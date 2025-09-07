@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { APIError } from "@/lib/errors";
-import { logger } from "@/lib/logger";
+import { logger } from "@/lib/core";
 import { getCVUrl } from "@/server/blob.service";
 
 const logRedirect = (cvUrl: string) => {

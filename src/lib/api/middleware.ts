@@ -1,9 +1,8 @@
 import type { NextRequest, NextResponse } from "next/server";
-import { API_CONFIG } from "@/lib/config/api";
+import { API_CONFIG } from "@/lib/core";
 import { handleError, logError } from "@/lib/errors";
 import { createErrorResponse } from "./response";
-
-export type ApiHandler = (request: NextRequest) => Promise<NextResponse>;
+import type { ApiHandler } from "./types";
 
 export function withErrorHandling(handler: ApiHandler): ApiHandler {
   return async (request: NextRequest) => {

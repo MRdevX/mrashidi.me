@@ -19,3 +19,11 @@ export interface IEmailTemplateOptions {
   content: string;
   showSocialLinks?: boolean;
 }
+
+export interface EmailTemplateData {
+  name: string;
+  email: string;
+  subject?: string;
+  message?: string;
+  company?: string;
+}

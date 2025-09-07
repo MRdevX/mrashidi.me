@@ -1,10 +1,9 @@
 import type { NextRequest } from "next/server";
 import { withValidation } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
-import { EmailService } from "@/lib/email/email.service";
+import { EmailService } from "@/lib/services/email";
 import { APIError } from "@/lib/errors";
-import { validateResumeRequestAPI } from "@/lib/validation/apiValidators";
-import type { ResumeRequestData } from "@/lib/validation/schemas";
+import { validateResumeRequestAPI, type ResumeRequestData } from "@/lib/validation";
 
 async function handleResumeRequest(_request: NextRequest, formData: ResumeRequestData) {
   const emailService = new EmailService();

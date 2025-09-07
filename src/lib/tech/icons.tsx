@@ -288,6 +288,7 @@ const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?:
 
   default: { Icon: FaTools, colorClass: "text-gray-400" },
 };
+
 const getIconKey = (techName: string): string => {
   const normalized = techName.toLowerCase().trim();
 

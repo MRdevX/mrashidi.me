@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { projects } from "@/data";
-import type { TechnologyCategory } from "@/lib/constants";
-import { logger } from "@/lib/logger";
-import { filterProjects, processTechnologyData } from "@/lib/techUtils";
+import type { TechnologyCategory } from "@/lib/core";
+import { logger } from "@/lib/core";
+import { filterProjects, processTechnologyData } from "@/lib/tech";
 import { githubService } from "@/server/github.service";
 import { useCache } from "./useCache";
 

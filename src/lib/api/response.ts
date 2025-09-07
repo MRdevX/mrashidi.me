@@ -1,22 +1,6 @@
 import { NextResponse } from "next/server";
 import { AppError, createSafeErrorResponse, ValidationError } from "@/lib/errors";
-
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  fields?: Record<string, string>;
-  meta?: {
-    fromCache?: boolean;
-    total?: number;
-    page?: number;
-    limit?: number;
-  };
-  debug?: {
-    originalMessage?: string;
-    stack?: string;
-  };
-}
+import type { ApiResponse } from "./types";
 
 export function createSuccessResponse<T>(data: T, meta?: ApiResponse["meta"]): NextResponse {
   const response: ApiResponse<T> = {

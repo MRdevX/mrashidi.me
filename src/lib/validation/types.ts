@@ -51,7 +51,14 @@ export const projectFilterSchema = z.object({
   type: z.enum(["all", "personal", "client"]).default("all"),
 });
 
+const contactFormAPISchema = contactFormSchema.extend({
+  recaptchaToken: z.string().min(1, "reCAPTCHA token is required"),
+});
+
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 export type ResumeRequestData = z.infer<typeof resumeRequestSchema>;
 export type BlogSearchData = z.infer<typeof blogSearchSchema>;
 export type ProjectFilterData = z.infer<typeof projectFilterSchema>;
+
+export const validateContactFormAPI = (data: unknown) => contactFormAPISchema.parse(data);
+export const validateResumeRequestAPI = (data: unknown) => resumeRequestSchema.parse(data);

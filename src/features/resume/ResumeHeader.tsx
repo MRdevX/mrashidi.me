@@ -4,8 +4,8 @@ import { Download, FileText } from "lucide-react";
 import { useState } from "react";
 import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { logger } from "@/lib/logger";
-import type { ResumeRequestData } from "@/lib/validation/schemas";
+import { logger } from "@/lib/core";
+import type { ResumeRequestData } from "@/lib/validation";
 import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
 
 export function ResumeHeader() {

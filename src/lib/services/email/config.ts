@@ -1,5 +1,5 @@
 import { config } from "@/data";
-import type { ITemplateConfig } from "../types";
+import type { ITemplateConfig } from "./types";
 
 export const getTemplateConfig = (): ITemplateConfig => ({
   companyName: config.person.name,

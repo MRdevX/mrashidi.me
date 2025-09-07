@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { logger } from "@/lib/logger";
+import { logger } from "@/lib/core";
 import { handleCommand } from "../commandHandlers";
 import { TERMINAL_CONSTANTS } from "../constants";
 import type { Command, CommandType } from "../types";

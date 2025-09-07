@@ -1,5 +1,5 @@
 import NodeCache from "node-cache";
-import { logger } from "@/lib/logger";
+import { logger } from "@/lib/core";
 
 export class CacheService {
   private cache: NodeCache;

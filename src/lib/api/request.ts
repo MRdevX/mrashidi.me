@@ -1,9 +1,5 @@
 import type { NextRequest } from "next/server";
-
-export interface PaginationParams {
-  page: number;
-  limit: number;
-}
+import type { PaginationParams } from "./types";
 
 export function getPaginationParams(request: NextRequest): PaginationParams {
   const searchParams = request.nextUrl.searchParams;

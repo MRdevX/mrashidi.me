@@ -42,7 +42,7 @@ export const TECHNOLOGY_CATEGORIES = {
   languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash"],
   databases: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "PostgREST"],
   clouds: ["AWS", "Azure", "Docker", "Kubernetes"],
-};
+} as const;
 
 export type TechnologyCategory = keyof typeof TECHNOLOGY_CATEGORIES;
 
@@ -59,7 +59,7 @@ export const getAllTechnologies = (): string[] => {
 
 export const getTechnologyCategory = (technology: string): TechnologyCategory | null => {
   for (const [category, technologies] of Object.entries(TECHNOLOGY_CATEGORIES)) {
-    if (technologies.includes(technology)) {
+    if ((technologies as readonly string[]).includes(technology)) {
       return category as TechnologyCategory;
     }
   }

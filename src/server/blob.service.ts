@@ -1,5 +1,5 @@
 import { put } from "@vercel/blob";
-import { logger } from "@/lib/logger";
+import { logger } from "@/lib/core";
 
 const CV_PATH = "cv/Dee_Rashidi_CV.pdf";
 

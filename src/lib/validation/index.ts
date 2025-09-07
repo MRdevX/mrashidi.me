@@ -1,2 +1,1 @@
-export * from "./apiValidators";
-export * from "./schemas";
+export * from "./types";

@@ -3,7 +3,7 @@ import { Code2 } from "lucide-react";
 import { skills } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { fadeInVariants } from "@/lib/animations";
-import { getTechIcon } from "@/lib/techIconMap";
+import { getTechIcon } from "@/lib/tech";
 import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 const levelConfig = {

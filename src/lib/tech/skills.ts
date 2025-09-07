@@ -1,10 +1,6 @@
 import { skills } from "@/data";
-import techIconMap from "@/lib/techIconMap";
-
-export interface TechStackItem {
-  name: string;
-  iconKey: string;
-}
+import { getTechIcon } from "./icons";
+import type { TechStackItem } from "./types";
 
 export function normalizeIconKey(skillName: string): string {
   return skillName
@@ -31,7 +27,7 @@ export function getMainTechStack(): TechStackItem[] {
           iconKey = "aws";
         }
 
-        if (techIconMap[iconKey]) {
+        if (getTechIcon(iconKey)) {
           mainStack.push({ name: skill.name, iconKey });
         }
       }

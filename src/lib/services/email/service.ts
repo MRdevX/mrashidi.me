@@ -1,8 +1,9 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { AuthenticationError } from "@/lib/errors";
-import { logger } from "@/lib/logger";
-import type { ContactFormData, ResumeRequestData } from "@/lib/validation/schemas";
-import { getTemplateConfig, createEmailTemplate } from "./templates";
+import { logger } from "@/lib/core";
+import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
+import { getTemplateConfig } from "./config";
+import { createEmailTemplate } from "./templates";
 
 export class EmailService {
   private readonly sesClient: SESClient;

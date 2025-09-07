@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import type { BlogData, BlogResponse } from "@/features/blog/types";
-import { logger } from "@/lib/logger";
+import { logger } from "@/lib/core";
 
 export function useBlogPreload() {
   const preloadBlogPosts = useCallback(async (page: number = 1, postsPerPage: number = 6) => {

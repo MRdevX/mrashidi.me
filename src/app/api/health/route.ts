@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { env } from "@/lib/env";
+import { env } from "@/lib/core";
 
 export async function GET() {
   const health = {
