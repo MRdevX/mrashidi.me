@@ -7,6 +7,7 @@ interface FloatingActionButtonProps {
   className?: string;
   position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
   onClick?: () => void;
+  asButton?: boolean;
 }
 
 export function FloatingActionButton({
@@ -14,6 +15,7 @@ export function FloatingActionButton({
   className,
   position = "bottom-right",
   onClick,
+  asButton = true,
 }: FloatingActionButtonProps) {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Enter" || event.key === " ") {
@@ -24,9 +26,13 @@ export function FloatingActionButton({
 
   return (
     <div className={`floating-action-btn ${position} ${className || ""}`}>
-      <button className="floating-action-btn-container" onClick={onClick} onKeyDown={handleKeyDown} type="button">
-        {children}
-      </button>
+      {asButton ? (
+        <button className="floating-action-btn-container" onClick={onClick} onKeyDown={handleKeyDown} type="button">
+          {children}
+        </button>
+      ) : (
+        <div className="floating-action-btn-container">{children}</div>
+      )}
     </div>
   );
 }
