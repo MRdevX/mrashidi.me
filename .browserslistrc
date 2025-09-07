@@ -1,0 +1,13 @@
+# Next.js recommended modern browser targets
+# Based on Next.js 15+ defaults and Baseline Widely Available
+chrome >= 64
+edge >= 79
+firefox >= 67
+safari >= 12
+ios_saf >= 12
+android >= 67
+
+# Exclude legacy browsers
+not IE 11
+not IE_Mob 11
+not dead
