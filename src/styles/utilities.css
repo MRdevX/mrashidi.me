@@ -9,16 +9,6 @@
     text-shadow: 0 0 5px var(--neon-orange);
   }
 
-  .text-neon-blue {
-    color: var(--neon-blue);
-    text-shadow: 0 0 5px var(--neon-blue);
-  }
-
-  .text-neon-purple {
-    color: var(--neon-purple);
-    text-shadow: 0 0 5px var(--neon-purple);
-  }
-
   .text-neon-green {
     color: var(--terminal-green);
     text-shadow: 0 0 5px var(--terminal-green);
@@ -29,60 +19,13 @@
     text-shadow: 0 0 5px #0f0;
   }
 
-  /* Theme classes */
-  .cyberpunk-theme {
-    --primary: var(--neon-orange);
-    --secondary: var(--neon-blue);
-    --accent: var(--neon-purple);
-  }
-
-  .hacker-theme {
-    --primary: #0f0;
-    --secondary: #00ff95;
-    --accent: #0fa;
-  }
-
   /* Line clamp utilities for v4 compatibility */
-  .line-clamp-1 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-  }
-
-  .line-clamp-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
 
   .line-clamp-3 {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
-  }
-
-  .line-clamp-4 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-  }
-
-  .line-clamp-5 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
-  }
-
-  .line-clamp-6 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
   }
 
   /* Icon utilities */

@@ -54,12 +54,10 @@ export default {
       keyframes: {
         glow: {
           "0%, 100%": {
-            textShadow:
-              "0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2)",
+            textShadow: "0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2)",
           },
           "50%": {
-            textShadow:
-              "0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3)",
+            textShadow: "0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3)",
           },
         },
         glitch: {
@@ -92,12 +90,10 @@ export default {
         },
         "neon-pulse": {
           "0%, 100%": {
-            boxShadow:
-              "0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2)",
+            boxShadow: "0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2)",
           },
           "50%": {
-            boxShadow:
-              "0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3)",
+            boxShadow: "0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3)",
           },
         },
         fadeIn: {
@@ -132,14 +128,6 @@ export default {
         ".text-neon-orange": {
           color: "#ff5f1f",
           "text-shadow": "0 0 5px rgba(255, 95, 31, 0.8)",
-        },
-        ".text-neon-blue": {
-          color: "#00fff5",
-          "text-shadow": "0 0 5px rgba(0, 255, 245, 0.8)",
-        },
-        ".text-neon-purple": {
-          color: "#bc13fe",
-          "text-shadow": "0 0 5px rgba(188, 19, 254, 0.8)",
         },
         ".text-neon-green": {
           color: "#00ff00",
