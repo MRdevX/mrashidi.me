@@ -2,19 +2,7 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { AuthenticationError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation/schemas";
-import { getTemplateConfig } from "./templates";
-import {
-  createAdminNotificationHtml as createContactAdminHtml,
-  createAdminNotificationText as createContactAdminText,
-  createUserConfirmationHtml as createContactUserHtml,
-  createUserConfirmationText as createContactUserText,
-} from "./templates/contact-templates";
-import {
-  createAdminNotificationHtml as createResumeAdminHtml,
-  createAdminNotificationText as createResumeAdminText,
-  createUserConfirmationHtml as createResumeUserHtml,
-  createUserConfirmationText as createResumeUserText,
-} from "./templates/resume-templates";
+import { getTemplateConfig, createEmailTemplate } from "./templates";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -47,17 +35,29 @@ export class EmailService {
   async sendContactFormEmail(data: ContactFormData): Promise<boolean> {
     try {
       logger.info({ operation: "sendContactFormEmail", status: "started" });
-      const adminEmailSuccess = await this.sendAdminNotification(data);
-      const userEmailSuccess = await this.sendUserConfirmation(data);
+
+      const adminSuccess = await this.sendEmail(
+        this.toEmail,
+        `Contact Form Submission from ${data.name}`,
+        data,
+        "contact-admin"
+      );
+
+      const userSuccess = await this.sendEmail(
+        data.email,
+        `Thanks for reaching out, ${data.name}! | ${this.templateConfig.companyName}`,
+        data,
+        "contact-user"
+      );
 
       logger.info({
         operation: "sendContactFormEmail",
         status: "completed",
-        adminEmailSuccess,
-        userEmailSuccess,
+        adminEmailSuccess: adminSuccess,
+        userEmailSuccess: userSuccess,
       });
 
-      return adminEmailSuccess && userEmailSuccess;
+      return adminSuccess && userSuccess;
     } catch (error) {
       logger.error({
         operation: "sendContactFormEmail",
@@ -71,17 +71,24 @@ export class EmailService {
   async sendResumeRequestEmail(data: ResumeRequestData): Promise<boolean> {
     try {
       logger.info({ operation: "sendResumeRequestEmail", status: "started" });
-      const adminEmailSuccess = await this.sendResumeRequestNotification(data);
-      const userEmailSuccess = await this.sendResumeToUser(data);
+
+      const adminSuccess = await this.sendEmail(this.toEmail, `Resume Request from ${data.name}`, data, "resume-admin");
+
+      const userSuccess = await this.sendEmail(
+        data.email,
+        `Thanks for downloading my CV! Let's connect - ${this.templateConfig.companyName}`,
+        data,
+        "resume-user"
+      );
 
       logger.info({
         operation: "sendResumeRequestEmail",
         status: "completed",
-        adminEmailSuccess,
-        userEmailSuccess,
+        adminEmailSuccess: adminSuccess,
+        userEmailSuccess: userSuccess,
       });
 
-      return adminEmailSuccess && userEmailSuccess;
+      return adminSuccess && userSuccess;
     } catch (error) {
       logger.error({
         operation: "sendResumeRequestEmail",
@@ -92,180 +99,39 @@ export class EmailService {
     }
   }
 
-  private async sendAdminNotification(data: ContactFormData): Promise<boolean> {
+  private async sendEmail(
+    to: string,
+    subject: string,
+    data: ContactFormData | ResumeRequestData,
+    templateType: string
+  ): Promise<boolean> {
     try {
-      logger.debug({
-        operation: "sendAdminNotification",
-        status: "preparing",
-        fromEmail: this.fromEmail,
-        toEmail: this.toEmail,
-      });
+      const { html, text } = createEmailTemplate(data, templateType, this.templateConfig);
 
       const command = new SendEmailCommand({
         Source: this.fromEmail,
-        Destination: {
-          ToAddresses: [this.toEmail],
-        },
+        Destination: { ToAddresses: [to] },
         Message: {
-          Subject: {
-            Data: `Contact Form Submission from ${data.name}`,
-            Charset: "UTF-8",
-          },
+          Subject: { Data: subject, Charset: "UTF-8" },
           Body: {
-            Html: {
-              Data: createContactAdminHtml(data, this.templateConfig),
-              Charset: "UTF-8",
-            },
-            Text: {
-              Data: createContactAdminText(data),
-              Charset: "UTF-8",
-            },
+            Html: { Data: html, Charset: "UTF-8" },
+            Text: { Data: text, Charset: "UTF-8" },
           },
         },
-        ReplyToAddresses: [data.email],
-      });
-
-      logger.debug({ operation: "sendAdminNotification", status: "sending" });
-      const response = await this.sesClient.send(command);
-
-      logger.info({
-        operation: "sendAdminNotification",
-        status: "success",
-        messageId: response.MessageId,
-      });
-
-      return true;
-    } catch (error) {
-      logger.error({
-        operation: "sendAdminNotification",
-        status: "failed",
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return false;
-    }
-  }
-
-  private async sendUserConfirmation(data: ContactFormData): Promise<boolean> {
-    try {
-      const command = new SendEmailCommand({
-        Source: this.fromEmail,
-        Destination: {
-          ToAddresses: [data.email],
-        },
-        Message: {
-          Subject: {
-            Data: `Thanks for reaching out, ${data.name}! | ${this.templateConfig.companyName}`,
-            Charset: "UTF-8",
-          },
-          Body: {
-            Html: {
-              Data: createContactUserHtml(data, this.templateConfig),
-              Charset: "UTF-8",
-            },
-            Text: {
-              Data: createContactUserText(data, this.templateConfig),
-              Charset: "UTF-8",
-            },
-          },
-        },
+        ...(templateType.includes("admin") && { ReplyToAddresses: [data.email] }),
       });
 
       const response = await this.sesClient.send(command);
       logger.info({
-        operation: "sendUserConfirmation",
-        status: "success",
+        operation: "sendEmail",
+        templateType,
         messageId: response.MessageId,
       });
       return true;
     } catch (error) {
       logger.error({
-        operation: "sendUserConfirmation",
-        status: "failed",
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return false;
-    }
-  }
-
-  private async sendResumeRequestNotification(data: ResumeRequestData): Promise<boolean> {
-    try {
-      const command = new SendEmailCommand({
-        Source: this.fromEmail,
-        Destination: {
-          ToAddresses: [this.toEmail],
-        },
-        Message: {
-          Subject: {
-            Data: `Resume Request from ${data.name}`,
-            Charset: "UTF-8",
-          },
-          Body: {
-            Html: {
-              Data: createResumeAdminHtml(data, this.templateConfig),
-              Charset: "UTF-8",
-            },
-            Text: {
-              Data: createResumeAdminText(data),
-              Charset: "UTF-8",
-            },
-          },
-        },
-        ReplyToAddresses: [data.email],
-      });
-
-      const response = await this.sesClient.send(command);
-      logger.info({
-        operation: "sendResumeRequestNotification",
-        status: "success",
-        messageId: response.MessageId,
-      });
-      return true;
-    } catch (error) {
-      logger.error({
-        operation: "sendResumeRequestNotification",
-        status: "failed",
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return false;
-    }
-  }
-
-  private async sendResumeToUser(data: ResumeRequestData): Promise<boolean> {
-    try {
-      const command = new SendEmailCommand({
-        Source: this.fromEmail,
-        Destination: {
-          ToAddresses: [data.email],
-        },
-        Message: {
-          Subject: {
-            Data: `Thanks for downloading my CV! Let's connect - ${this.templateConfig.companyName}`,
-            Charset: "UTF-8",
-          },
-          Body: {
-            Html: {
-              Data: createResumeUserHtml(data, this.templateConfig),
-              Charset: "UTF-8",
-            },
-            Text: {
-              Data: createResumeUserText(data, this.templateConfig),
-              Charset: "UTF-8",
-            },
-          },
-        },
-      });
-
-      const response = await this.sesClient.send(command);
-      logger.info({
-        operation: "sendResumeToUser",
-        status: "success",
-        messageId: response.MessageId,
-      });
-      return true;
-    } catch (error) {
-      logger.error({
-        operation: "sendResumeToUser",
-        status: "failed",
+        operation: "sendEmail",
+        templateType,
         error: error instanceof Error ? error.message : String(error),
       });
       return false;

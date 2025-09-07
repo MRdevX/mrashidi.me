@@ -1,136 +1,43 @@
-import { logger } from "./utils/logger";
+import { logger } from "./logger";
 
 interface FetcherOptions extends RequestInit {
   timeout?: number;
-  retries?: number;
 }
 
-interface CacheOptions {
-  ttl?: number;
-  key?: string;
-}
+export async function fetcher<T = unknown>(url: string, options: FetcherOptions = {}): Promise<T> {
+  const { timeout = 10000, ...fetchOptions } = options;
 
-class FetcherError extends Error {
-  constructor(
-    message: string,
-    public status: number,
-    public statusText: string,
-    public url: string
-  ) {
-    super(message);
-    this.name = "FetcherError";
-  }
-}
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-const cache = new Map<string, { data: unknown; timestamp: number; ttl: number }>();
+    const response = await fetch(url, {
+      ...fetchOptions,
+      signal: controller.signal,
+    });
 
-export async function fetcher<T = unknown>(
-  url: string,
-  options: FetcherOptions = {},
-  cacheOptions?: CacheOptions
-): Promise<T> {
-  const { timeout = 10000, retries = 3, ...fetchOptions } = options;
+    clearTimeout(timeoutId);
 
-  if (cacheOptions?.key) {
-    const cached = cache.get(cacheOptions.key);
-    if (cached && Date.now() - cached.timestamp < cached.ttl * 1000) {
-      return cached.data as T;
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
+
+    return await response.json();
+  } catch (error) {
+    logger.error({
+      operation: "fetcher",
+      url,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
   }
-
-  let lastError: Error | null = null;
-
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-      const response = await fetch(url, {
-        ...fetchOptions,
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new FetcherError(
-          `HTTP ${response.status}: ${response.statusText}`,
-          response.status,
-          response.statusText,
-          url
-        );
-      }
-
-      const data = await response.json();
-
-      if (cacheOptions?.key && cacheOptions.ttl) {
-        cache.set(cacheOptions.key, {
-          data,
-          timestamp: Date.now(),
-          ttl: cacheOptions.ttl,
-        });
-      }
-
-      return data;
-    } catch (error) {
-      lastError = error as Error;
-
-      if (error instanceof FetcherError) {
-        if (error.status >= 400 && error.status < 500) {
-          throw error;
-        }
-      }
-
-      if (attempt === retries) {
-        logger.error({
-          message: `Fetcher failed after ${retries} attempts`,
-          url,
-          error: lastError.message,
-          attempt,
-        });
-        throw lastError;
-      }
-
-      const delay = Math.min(1000 * 2 ** (attempt - 1), 5000);
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-  }
-
-  throw lastError;
 }
 
-export const fetcherGet = <T = unknown>(url: string, cacheOptions?: CacheOptions) =>
-  fetcher<T>(url, { method: "GET" }, cacheOptions);
+export const fetcherGet = <T = unknown>(url: string) => fetcher<T>(url, { method: "GET" });
 
-export const fetcherPost = <T = unknown>(url: string, data?: unknown, options?: FetcherOptions) =>
+export const fetcherPost = <T = unknown>(url: string, data?: unknown) =>
   fetcher<T>(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
+    headers: { "Content-Type": "application/json" },
     body: data ? JSON.stringify(data) : undefined,
-    ...options,
   });
-
-export const fetcherPut = <T = unknown>(url: string, data?: unknown, options?: FetcherOptions) =>
-  fetcher<T>(url, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
-    body: data ? JSON.stringify(data) : undefined,
-    ...options,
-  });
-
-export const fetcherDelete = <T = unknown>(url: string, options?: FetcherOptions) =>
-  fetcher<T>(url, { method: "DELETE", ...options });
-
-export const clearCache = (key?: string) => {
-  if (key) {
-    cache.delete(key);
-  } else {
-    cache.clear();
-  }
-};
