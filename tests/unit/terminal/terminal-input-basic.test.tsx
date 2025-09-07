@@ -1,16 +1,22 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { TerminalInput } from "@/components/terminal/TerminalInput";
 
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, className, ...rest }: any) => (
-      <div className={className} {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith('data-') || k.startsWith('aria-')))}>
+      <div
+        className={className}
+        {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith("data-") || k.startsWith("aria-")))}
+      >
         {children}
       </div>
     ),
     span: ({ children, className, ...rest }: any) => (
-      <span className={className} {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith('data-') || k.startsWith('aria-')))}>
+      <span
+        className={className}
+        {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith("data-") || k.startsWith("aria-")))}
+      >
         {children}
       </span>
     ),
@@ -102,9 +108,9 @@ describe("TerminalInput - Basic Functionality", () => {
 
     const input = screen.getByRole("textbox");
     expect(input).toHaveAttribute("aria-label", "Terminal input");
-    expect(input).toHaveAttribute("autoComplete", "off");
-    expect(input).toHaveAttribute("autoCorrect", "off");
-    expect(input).toHaveAttribute("autoCapitalize", "off");
-    expect(input).toHaveAttribute("spellCheck", "false");
+    expect(input).toHaveAttribute("autocomplete", "off");
+    expect(input).toHaveAttribute("autocorrect", "off");
+    expect(input).toHaveAttribute("autocapitalize", "off");
+    expect(input).toHaveAttribute("spellcheck", "false");
   });
 });
