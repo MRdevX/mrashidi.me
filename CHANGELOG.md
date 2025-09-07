@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.55](https://github.com/MRdevX/mrashidi.me/compare/v0.1.54...v0.1.55) (2025-09-07)
+
+
+### Features
+
+* add terminal command history and input tests ([7e2893e](https://github.com/MRdevX/mrashidi.me/commit/7e2893e061471f829df8ee1a768a8bd432c707f2))
+* enhance resume request tests with PDF response handling and sample PDF fixture ([938288e](https://github.com/MRdevX/mrashidi.me/commit/938288e5f5ba9efed9058209d4f8ae3c7be7c087))
+* integrate Playwright and Vitest for testing, add configuration files, and update dependencies ([b2e15fa](https://github.com/MRdevX/mrashidi.me/commit/b2e15fa7865d7d715500177f61ca2b5f48e8ede9))
+
+
+### Bug Fixes
+
+* correct attribute casing in TerminalInput tests for consistency ([9ad038c](https://github.com/MRdevX/mrashidi.me/commit/9ad038cb20ad034a6ad63c86e92007bc068fdd97))
+* standardize timestamp formatting in mock data to include UTC designator ([5f5b716](https://github.com/MRdevX/mrashidi.me/commit/5f5b7169a60ca21b58383686fe122579dfa4364e))
+
 ### [0.1.54](https://github.com/MRdevX/mrashidi.me/compare/v0.1.53...v0.1.54) (2025-09-07)
 
 ### [0.1.53](https://github.com/MRdevX/mrashidi.me/compare/v0.1.52...v0.1.53) (2025-09-07)
