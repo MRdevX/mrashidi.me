@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.57](https://github.com/MRdevX/mrashidi.me/compare/v0.1.56...v0.1.57) (2025-09-07)
+
+
+### Features
+
+* implement lazy loading for components and add browserslist configuration ([04226e9](https://github.com/MRdevX/mrashidi.me/commit/04226e9c4a854df63f85decee5806b0dc63f1d9b))
+
 ### [0.1.56](https://github.com/MRdevX/mrashidi.me/compare/v0.1.55...v0.1.56) (2025-09-07)
 
 
