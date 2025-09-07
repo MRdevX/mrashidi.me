@@ -4,6 +4,7 @@ import { skills } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { fadeInVariants } from "@/lib/animations";
 import { getTechIcon } from "@/lib/techIconMap";
+import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 const levelConfig = {
   expert: { color: "#9A3412", label: "Expert" },
@@ -14,8 +15,7 @@ const levelConfig = {
 };
 
 export function SkillsSection() {
-  const { getSectionHeader, getSectionTitle, getCardPattern, getTextColor, getBackgroundColor, getBorderColor } =
-    useThemeConfig();
+  const { getCardPattern, getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
 
   const allSkills = skills.flatMap((cat) => cat.skills.map((skill) => ({ ...skill, category: cat.category })));
   const skillsByLevel = {
@@ -27,17 +27,8 @@ export function SkillsSection() {
   };
 
   return (
-    <motion.section
-      className="mb-12"
-      initial="hidden"
-      animate="visible"
-      variants={fadeInVariants}
-      transition={{ delay: 0.4 }}
-    >
-      <div className={getSectionHeader()}>
-        <Code2 className="w-8 h-8 text-orange-500" />
-        <h2 className={getSectionTitle()}>Skills & Technologies</h2>
-      </div>
+    <AnimatedSection delay={0.4}>
+      <SectionHeader icon={Code2} title="Skills & Technologies" size="sm" />
 
       <div className="space-y-8">
         {Object.entries(skillsByLevel).map(([level, skills]) => {
@@ -90,6 +81,6 @@ export function SkillsSection() {
           );
         })}
       </div>
-    </motion.section>
+    </AnimatedSection>
   );
 }

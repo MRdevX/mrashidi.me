@@ -35,6 +35,8 @@ export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";
 export { PageWrapper } from "./PageWrapper";
 export { PerformanceWrapper, StaggerWrapper } from "./PerformanceWrapper";
+export { AnimatedSection } from "./AnimatedSection";
+export { Pagination } from "./Pagination";
 export { SectionHeader } from "./SectionHeader";
 export { SocialButton } from "./SocialButton";
 export { TechStackGrid } from "./TechStackGrid";

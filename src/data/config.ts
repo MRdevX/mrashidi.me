@@ -1,6 +1,4 @@
-// Single source of truth for all site configuration
 export interface SiteConfig {
-  // Person information
   person: {
     name: string;
     title: string;
@@ -10,7 +8,6 @@ export interface SiteConfig {
     twitterHandle: string;
   };
 
-  // Social links
   social: {
     github: string;
     linkedin: string;
@@ -18,7 +15,6 @@ export interface SiteConfig {
     githubRepo: string;
   };
 
-  // Site metadata
   site: {
     url: string;
     name: string;
@@ -27,7 +23,6 @@ export interface SiteConfig {
     keywords: string;
   };
 
-  // UI configuration
   ui: {
     themeColor: string;
     msTileColor: string;
@@ -76,7 +71,6 @@ export const config: SiteConfig = {
   },
 };
 
-// Derived configurations for backward compatibility
 export const coreConfig = {
   person: config.person,
   social: config.social,

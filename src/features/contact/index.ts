@@ -1,5 +1,6 @@
 export { ADPListWidget } from "./ADPListWidget";
 export { ContactContainer } from "./ContactContainer";
 export { ContactHeader } from "./ContactHeader";
+export { ContactSections } from "./ContactSections";
 export * from "./types";
-export { useContactData } from "./useContactData";
+export { contactData } from "./useContactData";

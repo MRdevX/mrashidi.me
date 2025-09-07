@@ -2,10 +2,10 @@
 
 import { MessageCircle } from "lucide-react";
 import { PageHeader, PageSection } from "@/components/ui";
-import { ContactContainer, ContactHeader, useContactData } from "@/features/contact";
+import { ContactContainer, ContactHeader, contactData } from "@/features/contact";
 
 export default function Contact() {
-  const { header, sections, adpListWidgets } = useContactData();
+  const { header, sections, adpListWidgets } = contactData;
 
   return (
     <ContactContainer>

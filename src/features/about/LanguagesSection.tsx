@@ -2,23 +2,15 @@ import { motion } from "framer-motion";
 import { Languages } from "lucide-react";
 import { personalInfo } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { fadeInVariants, slideInVariants } from "@/lib/animations";
+import { slideInVariants } from "@/lib/animations";
+import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 export function LanguagesSection() {
-  const { getSectionHeader, getSectionTitle, getCardPattern, getTextColor, getBackgroundColor } = useThemeConfig();
+  const { getCardPattern, getTextColor, getBackgroundColor } = useThemeConfig();
 
   return (
-    <motion.section
-      className="mb-12"
-      initial="hidden"
-      animate="visible"
-      variants={fadeInVariants}
-      transition={{ delay: 0.8 }}
-    >
-      <div className={getSectionHeader()}>
-        <Languages className="w-8 h-8 text-orange-500" />
-        <h2 className={getSectionTitle()}>Languages</h2>
-      </div>
+    <AnimatedSection delay={0.8}>
+      <SectionHeader icon={Languages} title="Languages" size="sm" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {personalInfo.languages.map((lang, index) => (
           <motion.div
@@ -46,6 +38,6 @@ export function LanguagesSection() {
           </motion.div>
         ))}
       </div>
-    </motion.section>
+    </AnimatedSection>
   );
 }

@@ -3,16 +3,14 @@ import { ExternalLink, GraduationCap } from "lucide-react";
 import { education } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { fadeInVariants } from "@/lib/animations";
+import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 export function EducationSection() {
-  const { getSectionHeader, getSectionTitle, getCardPattern, getTextColor } = useThemeConfig();
+  const { getCardPattern, getTextColor } = useThemeConfig();
 
   return (
-    <motion.section initial="hidden" animate="visible" variants={fadeInVariants} transition={{ delay: 1.2 }}>
-      <div className={getSectionHeader()}>
-        <GraduationCap className="w-8 h-8 text-orange-500" />
-        <h2 className={getSectionTitle()}>Education</h2>
-      </div>
+    <AnimatedSection delay={1.2}>
+      <SectionHeader icon={GraduationCap} title="Education" size="sm" />
       {education.map((edu) => (
         <div className={`${getCardPattern()} mb-4`} key={edu.degree + edu.institution}>
           <div className="flex items-center justify-between">
@@ -48,6 +46,6 @@ export function EducationSection() {
           </div>
         </div>
       ))}
-    </motion.section>
+    </AnimatedSection>
   );
 }
