@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Typography System
+   ========================================================================== */
+
+@layer utilities {
+  /* Cohesive Cyberpunk Typography System */
+  .cyberpunk-text {
+    font-family: "Orbitron", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  .terminal-text {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--terminal-green);
+    text-shadow: 0 0 5px rgba(0, 100, 0, 0.5);
+    font-weight: 400;
+  }
+
+  .dark .terminal-text {
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  }
+
+  .retro-text {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .matrix-text {
+    font-family: "VT323", monospace;
+    color: var(--terminal-green);
+    text-shadow: 0 0 4px rgba(0, 100, 0, 0.6);
+    font-weight: 400;
+  }
+
+  .dark .matrix-text {
+    color: #00ff00;
+    text-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
+  }
+
+  .space-text {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    line-height: 1.6;
+  }
+
+  /* Typography Hierarchy */
+  .cyberpunk-h1 {
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 700;
+    font-family: "Orbitron", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #000000;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .cyberpunk-h1 {
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .cyberpunk-h1 {
+      font-size: 3.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cyberpunk-h1 {
+      font-size: 4.5rem;
+    }
+  }
+
+  .cyberpunk-h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    font-family: "Orbitron", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #000000;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .cyberpunk-h2 {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  @media (min-width: 768px) {
+    .cyberpunk-h2 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .cyberpunk-h2 {
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  .cyberpunk-h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    font-family: "Orbitron", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #374151;
+  }
+
+  .dark .cyberpunk-h3 {
+    color: #e5e7eb;
+  }
+
+  @media (min-width: 768px) {
+    .cyberpunk-h3 {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  .cyberpunk-h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+    font-family: "Orbitron", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #4b5563;
+  }
+
+  .dark .cyberpunk-h4 {
+    color: #d1d5db;
+  }
+
+  @media (min-width: 768px) {
+    .cyberpunk-h4 {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  .cyberpunk-body-text {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    color: #374151;
+  }
+
+  .dark .cyberpunk-body-text {
+    color: #e5e7eb;
+  }
+
+  .cyberpunk-caption {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-family: "JetBrains Mono", monospace;
+    color: #6b7280;
+    font-weight: 400;
+  }
+
+  .dark .cyberpunk-caption {
+    color: #9ca3af;
+  }
+
+  .cyberpunk-label {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 600;
+    color: #6b7280;
+  }
+
+  .dark .cyberpunk-label {
+    color: #9ca3af;
+  }
+
+  /* Text Utilities */
+  .text-body {
+    color: hsl(var(--foreground));
+    font-family: var(--font-family-albert);
+    line-height: 1.75;
+  }
+
+  .text-muted {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+}

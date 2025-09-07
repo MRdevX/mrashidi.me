@@ -1,0 +1,52 @@
+/* ==========================================================================
+   CSS Custom Properties & Variables
+   ========================================================================== */
+
+@import "@fontsource/jetbrains-mono" layer(base);
+@import "@fontsource/orbitron" layer(base);
+@import "@fontsource/albert-sans" layer(base);
+
+/* Font Variables */
+:root {
+  --font-cyberpunk: Orbitron, sans-serif;
+  --font-terminal: JetBrains Mono, monospace;
+  --font-albert: Albert Sans, sans-serif;
+  --font-family-cyberpunk: var(--font-cyberpunk);
+  --font-family-terminal: var(--font-terminal);
+  --font-family-albert: var(--font-albert);
+}
+
+/* Color Variables */
+:root {
+  /* Light theme variables */
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 245, 245, 245;
+  --neon-orange: #ff5f1f;
+  --neon-blue: #00fff5;
+  --neon-purple: #bc13fe;
+  --terminal-green: #006400;
+  --background-dark: #ffffff;
+  --foreground-neon: rgba(255, 95, 31, 0.8);
+}
+
+.dark {
+  /* Dark theme variables */
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 10, 10, 10;
+  --background-end-rgb: 0, 0, 0;
+  --neon-orange: #ff5f1f;
+  --neon-blue: #00fff5;
+  --neon-purple: #bc13fe;
+  --terminal-green: #00ff00;
+  --background-dark: #0a0a0a;
+  --foreground-neon: rgba(255, 95, 31, 0.8);
+}
+
+/* Orange color utilities for v4 compatibility */
+:root {
+  --color-orange-400: rgb(251 146 60);
+  --color-orange-500: rgb(249 115 22);
+  --color-orange-600: rgb(234 88 12);
+  --color-orange-700: rgb(194 65 12);
+}

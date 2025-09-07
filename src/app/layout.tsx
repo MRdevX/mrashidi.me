@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import "@/styles/globals.css";
+import "@/styles/index.css";
 import { AnalyticsWrapper, BottomNavigation, Footer, HeadMeta, MainContent, Navbar } from "@/components/layout";
 import { BackgroundEffects } from "@/components/ui";
 import { ThemeProvider } from "@/context/ThemeContext";

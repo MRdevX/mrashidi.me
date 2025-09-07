@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Base Styles & Global Elements
+   ========================================================================== */
+
+@layer base {
+  /* Smooth scrolling behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--background-start-rgb));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: rgba(99, 102, 241, 0.2);
+    color: inherit;
+  }
+
+  .dark ::selection {
+    background: rgba(139, 92, 246, 0.3);
+  }
+
+  /* Improved focus styles */
+  *:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+  }
+
+  /* Dark mode improvements */
+  .dark {
+    color-scheme: dark;
+  }
+
+  /* Responsive font sizes */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+  }
+}
