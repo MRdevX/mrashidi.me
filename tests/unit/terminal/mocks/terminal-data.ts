@@ -4,17 +4,17 @@ export const mockCommands: Command[] = [
   {
     input: "help",
     output: "Available commands: help, about, skills, projects, experience, achievements, contact, blog, view-source, clear",
-    timestamp: new Date("2024-01-15T14:30:45"),
+    timestamp: new Date("2024-01-15T14:30:45Z"),
   },
   {
     input: "about",
     output: "I'm a full-stack developer with expertise in React, Node.js, and modern web technologies.",
-    timestamp: new Date("2024-01-15T14:31:12"),
+    timestamp: new Date("2024-01-15T14:31:12Z"),
   },
   {
     input: "skills",
     output: "Frontend: React, TypeScript, Next.js\nBackend: Node.js, Python, PostgreSQL\nTools: Git, Docker, AWS",
-    timestamp: new Date("2024-01-15T14:32:00"),
+    timestamp: new Date("2024-01-15T14:32:00Z"),
   },
 ];
 
@@ -52,7 +52,7 @@ export const mockCommandOutputs = {
 };
 
 export const mockTimestamps = {
-  now: new Date("2024-01-15T14:30:45"),
-  past: new Date("2024-01-15T14:29:30"),
-  future: new Date("2024-01-15T14:31:00"),
+  now: new Date("2024-01-15T14:30:45Z"),
+  past: new Date("2024-01-15T14:29:30Z"),
+  future: new Date("2024-01-15T14:31:00Z"),
 };

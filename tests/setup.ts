@@ -4,6 +4,8 @@ import { cleanup } from "@testing-library/react";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import React from "react";
 
+process.env.TZ = "UTC";
+
 expect.extend(matchers);
 
 afterEach(() => {
