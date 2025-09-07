@@ -4,8 +4,16 @@ import { TerminalInput } from "@/components/terminal/TerminalInput";
 
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    div: ({ children, className, ...rest }: any) => (
+      <div className={className} {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith('data-') || k.startsWith('aria-')))}>
+        {children}
+      </div>
+    ),
+    span: ({ children, className, ...rest }: any) => (
+      <span className={className} {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith('data-') || k.startsWith('aria-')))}>
+        {children}
+      </span>
+    ),
   },
 }));
 
