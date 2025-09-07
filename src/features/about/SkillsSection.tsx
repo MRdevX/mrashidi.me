@@ -17,7 +17,7 @@ export function SkillsSection() {
   const { getSectionHeader, getSectionTitle, getCardPattern, getTextColor, getBackgroundColor, getBorderColor } =
     useThemeConfig();
 
-  const allSkills = skills.flatMap((cat) => cat.skills);
+  const allSkills = skills.flatMap((cat) => cat.skills.map((skill) => ({ ...skill, category: cat.category })));
   const skillsByLevel = {
     expert: allSkills.filter((skill) => skill.level === "expert"),
     proficient: allSkills.filter((skill) => skill.level === "proficient"),
@@ -71,7 +71,7 @@ export function SkillsSection() {
 
                   return (
                     <span
-                      key={skill.name}
+                      key={`${skill.name}-${skill.category}`}
                       className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm ${getBackgroundColor(
                         "muted"
                       )} ${getTextColor("primary")} border ${getBorderColor("secondary")} hover:${getBackgroundColor(
