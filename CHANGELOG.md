@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.56](https://github.com/MRdevX/mrashidi.me/compare/v0.1.55...v0.1.56) (2025-09-07)
+
+
+### Bug Fixes
+
+* hydration error ([ed495de](https://github.com/MRdevX/mrashidi.me/commit/ed495de95623534f26c3610004070cc530cdf5c3))
+
 ### [0.1.55](https://github.com/MRdevX/mrashidi.me/compare/v0.1.54...v0.1.55) (2025-09-07)
 
 
