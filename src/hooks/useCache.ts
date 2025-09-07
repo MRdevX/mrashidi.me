@@ -7,7 +7,9 @@ export function useCache<T>(key: string, duration: number = 24 * 60 * 60 * 1000)
   const loadFromCache = useCallback((): T | null => {
     try {
       const cached = localStorage.getItem(key);
-      if (!cached) return null;
+      if (!cached) {
+        return null;
+      }
 
       const parsed = JSON.parse(cached);
       if (Date.now() - parsed.timestamp > duration) {

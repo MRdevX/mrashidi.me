@@ -1,6 +1,5 @@
-import { logger } from "@/lib/core";
-import { getTechnologyCategory, TECHNOLOGY_CATEGORIES, type TechnologyCategory } from "@/lib/core";
-import type { Project, TechnologyUsage, CategorizedTechnologies } from "./types";
+import { getTechnologyCategory, logger, TECHNOLOGY_CATEGORIES, type TechnologyCategory } from "@/lib/core";
+import type { CategorizedTechnologies, Project, TechnologyUsage } from "./types";
 
 export const matchesSearch = (project: Project, query: string): boolean => {
   if (!query.trim()) {

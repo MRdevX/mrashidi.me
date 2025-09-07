@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { formatTimestamp, normalizeCommand, isValidCommand } from "@/components/terminal/utils";
-import { validCommands, invalidCommands, timeUtils } from "./fixtures";
+import { describe, expect, it } from "vitest";
+import { formatTimestamp, isValidCommand, normalizeCommand } from "@/components/terminal/utils";
+import { invalidCommands, validCommands } from "./fixtures";
 
 describe("Terminal Utils", () => {
   describe("formatTimestamp", () => {
@@ -44,15 +44,15 @@ describe("Terminal Utils", () => {
 
   describe("isValidCommand", () => {
     it("should validate all valid commands", () => {
-      validCommands.forEach((command) => {
+      for (const command of validCommands) {
         expect(isValidCommand(command)).toBe(true);
-      });
+      }
     });
 
     it("should reject all invalid commands", () => {
-      invalidCommands.forEach((command) => {
+      for (const command of invalidCommands) {
         expect(isValidCommand(command)).toBe(false);
-      });
+      }
     });
 
     it("should handle case insensitive commands", () => {

@@ -13,11 +13,6 @@ interface CommitInfo {
   hash: string;
 }
 
-interface CachedCommitDates {
-  commits: Record<string, CommitInfo>;
-  timestamp: number;
-}
-
 export interface ProjectFilters {
   searchQuery: string;
   selectedStacks: Set<string>;
@@ -62,7 +57,9 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
 
   const loadCachedCommitInfo = useCallback((): Map<string, { date: Date; hash: string }> => {
     const cached = loadFromCache();
-    if (!cached) return new Map();
+    if (!cached) {
+      return new Map();
+    }
 
     const infoMap = new Map<string, { date: Date; hash: string }>();
     for (const [url, info] of Object.entries(cached)) {

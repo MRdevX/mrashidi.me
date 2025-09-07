@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Star, Users } from "lucide-react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { SectionHeader } from "@/components/ui";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { ADPListWidget } from "./ADPListWidget";
 import type { ADPListWidget as ADPListWidgetType, ContactSection } from "./types";
 
@@ -25,7 +25,9 @@ export function ContactSections({ sections, adpListWidgets }: ContactSectionsPro
       transition={{ delay: 0.4 }}
     >
       {/* Mentorship Widget */}
-      <div className={`${getBackgroundColor("glass")} backdrop-blur-sm border ${getBorderColor("primary")} rounded-xl p-6`}>
+      <div
+        className={`${getBackgroundColor("glass")} backdrop-blur-sm border ${getBorderColor("primary")} rounded-xl p-6`}
+      >
         <SectionHeader icon={Users} title={sections[0]?.title || "Book a Session"} size="sm" />
         <p className={`${getTextColor("secondary")} mb-6`}>
           {sections[0]?.description || "Schedule a mentorship session with me"}
@@ -34,7 +36,9 @@ export function ContactSections({ sections, adpListWidgets }: ContactSectionsPro
       </div>
 
       {/* Reviews Widgets */}
-      <div className={`${getBackgroundColor("glass")} backdrop-blur-sm border ${getBorderColor("primary")} rounded-xl p-6`}>
+      <div
+        className={`${getBackgroundColor("glass")} backdrop-blur-sm border ${getBorderColor("primary")} rounded-xl p-6`}
+      >
         <SectionHeader icon={Star} title={sections[1]?.title || "Reviews & Impact"} size="sm" />
         <p className={`${getTextColor("secondary")} mb-6`}>
           {sections[1]?.description || "See what others say about our sessions"}

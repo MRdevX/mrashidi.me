@@ -3,11 +3,11 @@ export { config, coreConfig, siteConfig, siteMetadata } from "./config";
 
 export type { NavigationItem } from "./navigation";
 export {
-  navigationItems,
-  mobileNavigationItems,
   desktopNavigationItems,
   getNavigationItems,
   githubLink,
+  mobileNavigationItems,
+  navigationItems,
 } from "./navigation";
 
 export * from "./profile";

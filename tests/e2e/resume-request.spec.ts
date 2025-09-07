@@ -1,6 +1,6 @@
-import { test, expect } from "@playwright/test";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
+import { expect, test } from "@playwright/test";
 
 test.describe("Resume Request", () => {
   test("should open and close CV request modal", async ({ page }) => {

@@ -1,5 +1,3 @@
-import type { Command } from "@/components/terminal/types";
-
 export const validCommands = [
   "help",
   "about",

@@ -1,6 +1,5 @@
 import { parseString } from "xml2js";
-import { API_CONFIG } from "@/lib/core";
-import { logger } from "@/lib/core";
+import { API_CONFIG, logger } from "@/lib/core";
 import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
 import { cacheService } from "./cache.service";
 
@@ -154,7 +153,9 @@ async function fetchAllPosts(): Promise<IBlogPost[]> {
 }
 
 async function updateCache(): Promise<void> {
-  if (isUpdating) return;
+  if (isUpdating) {
+    return;
+  }
 
   try {
     isUpdating = true;

@@ -1,5 +1,6 @@
-import React, { ReactElement } from "react";
-import { render, RenderOptions } from "@testing-library/react";
+import { type RenderOptions, render } from "@testing-library/react";
+import type React from "react";
+import type { ReactElement } from "react";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

@@ -1,4 +1,4 @@
-import { config, personalInfo } from "@/data";
+import { config } from "@/data";
 
 export interface PersonSchema {
   "@context": "https://schema.org";

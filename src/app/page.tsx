@@ -103,7 +103,12 @@ export default function Home() {
           <div className="contact-section content-section">
             <div className="contact-section-background" />
             <div className="contact-content">
-              <SectionHeader icon={MessageCircle} title={personalInfo.contactCta} size="lg" className="justify-center" />
+              <SectionHeader
+                icon={MessageCircle}
+                title={personalInfo.contactCta}
+                size="lg"
+                className="justify-center"
+              />
               <p className="contact-description text-body">{personalInfo.contactDescription}</p>
               <Link href="/contact" className="block">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

@@ -1,5 +1,5 @@
-import { Home, FolderOpen, BookOpen, FileText, User, MessageSquare } from "lucide-react";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { BookOpen, FileText, FolderOpen, Home, MessageSquare, User } from "lucide-react";
 import { config } from "./config";
 
 export interface NavigationItem {
@@ -28,7 +28,6 @@ export function getNavigationItems(type: "mobile" | "desktop" | "all" = "all"): 
       return mobileNavigationItems;
     case "desktop":
       return desktopNavigationItems;
-    case "all":
     default:
       return navigationItems;
   }

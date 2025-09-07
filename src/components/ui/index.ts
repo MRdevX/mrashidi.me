@@ -1,3 +1,4 @@
+export { AnimatedSection } from "./AnimatedSection";
 export { BackgroundEffects } from "./BackgroundEffects";
 export { Button, buttonVariants } from "./Button";
 export { Badge } from "./badge";
@@ -22,7 +23,15 @@ export {
 } from "./CyberpunkDialog";
 export { CyberpunkInput } from "./CyberpunkInput";
 export { CyberpunkTextarea } from "./CyberpunkTextarea";
-export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
+export {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
 export * from "./icons";
 export { Input } from "./input";
 export { LazyLoader } from "./LazyLoader";
@@ -31,9 +40,8 @@ export { MotionSection } from "./MotionSection";
 export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";
 export { PageWrapper } from "./PageWrapper";
-export { PerformanceWrapper, StaggerWrapper } from "./PerformanceWrapper";
-export { AnimatedSection } from "./AnimatedSection";
 export { Pagination } from "./Pagination";
+export { PerformanceWrapper, StaggerWrapper } from "./PerformanceWrapper";
 export { SectionHeader } from "./SectionHeader";
 export { SocialButton } from "./SocialButton";
 export { TechStackGrid } from "./TechStackGrid";

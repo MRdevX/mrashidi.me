@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { config, personalInfo } from "@/data";
+import { config } from "@/data";
 
 interface SocialLinkProps {
   href: string;

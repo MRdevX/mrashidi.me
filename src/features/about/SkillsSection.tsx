@@ -1,10 +1,8 @@
-import { motion } from "framer-motion";
 import { Code2 } from "lucide-react";
+import { AnimatedSection, SectionHeader } from "@/components/ui";
 import { skills } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { fadeInVariants } from "@/lib/animations";
 import { getTechIcon } from "@/lib/tech";
-import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 const levelConfig = {
   expert: { color: "#9A3412", label: "Expert" },

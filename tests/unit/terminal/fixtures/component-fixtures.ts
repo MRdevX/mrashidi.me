@@ -1,15 +1,3 @@
-import type { KeyboardEvent } from "react";
-
-interface TerminalInputProps {
-  inputRef: { current: HTMLInputElement | null };
-  value: string;
-  onChange: (value: string) => void;
-  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-  isExecuting: boolean;
-  className?: string;
-  placeholder?: string;
-}
-
 export const terminalInputPropsFixtures = {
   default: {
     inputRef: { current: null },

@@ -3,7 +3,11 @@ import { APIError } from "@/lib/errors";
 /**
  * Simple utility for making HTTP requests with timeout
  */
-export async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout: number = 10000): Promise<Response> {
+export async function fetchWithTimeout(
+  url: string,
+  options: RequestInit = {},
+  timeout: number = 10000
+): Promise<Response> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 

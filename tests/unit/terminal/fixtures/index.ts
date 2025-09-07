@@ -7,14 +7,24 @@ export const createCommandFixture = (input: string, output: string, timestamp?: 
   timestamp: timestamp || new Date("2024-01-15T14:30:45"),
 });
 
-export const createTerminalStateFixture = (overrides: any = {}) => ({
+export const createTerminalStateFixture = (
+  overrides: Partial<{ commands: unknown[]; commandHistory: string[]; isExecuting: boolean }> = {}
+) => ({
   commands: [],
   commandHistory: [],
   isExecuting: false,
   ...overrides,
 });
 
-export const createInputPropsFixture = (overrides: any = {}) => ({
+export const createInputPropsFixture = (
+  overrides: Partial<{
+    inputRef: { current: HTMLInputElement | null };
+    value: string;
+    onChange: (value: string) => void;
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    isExecuting: boolean;
+  }> = {}
+) => ({
   inputRef: { current: null },
   value: "",
   onChange: () => {},

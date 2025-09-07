@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Languages } from "lucide-react";
+import { AnimatedSection, SectionHeader } from "@/components/ui";
 import { personalInfo } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { slideInVariants } from "@/lib/animations";
-import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 export function LanguagesSection() {
   const { getCardPattern, getTextColor, getBackgroundColor } = useThemeConfig();
