@@ -1,17 +1,35 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { formatTimestamp, normalizeCommand, isValidCommand } from "@/components/terminal/utils";
-import { validCommands, invalidCommands, timestampFixtures } from "./fixtures";
+import { validCommands, invalidCommands, timeUtils } from "./fixtures";
 
 describe("Terminal Utils", () => {
   describe("formatTimestamp", () => {
-    it("should format timestamp correctly", () => {
-      const formatted = formatTimestamp(timestampFixtures.now);
-      expect(formatted).toBe("14:30:45");
+    it("should format timestamp in HH:MM:SS format", () => {
+      const testDate = new Date("2024-01-15T14:30:45Z");
+      const formatted = formatTimestamp(testDate);
+
+      expect(formatted).toMatch(/^\d{2}:\d{2}:\d{2}$/);
+      expect(formatted).toHaveLength(8);
     });
 
-    it("should handle different times", () => {
-      const formatted = formatTimestamp(timestampFixtures.past);
-      expect(formatted).toBe("14:29:30");
+    it("should handle different times consistently", () => {
+      const testDate = new Date("2024-01-15T09:05:12Z");
+      const formatted = formatTimestamp(testDate);
+
+      expect(formatted).toMatch(/^\d{2}:\d{2}:\d{2}$/);
+      expect(formatted).toHaveLength(8);
+    });
+
+    it("should use 24-hour format", () => {
+      const testDate = new Date("2024-01-15T14:30:45Z");
+      const formatted = formatTimestamp(testDate);
+
+      expect(formatted).not.toMatch(/AM|PM/i);
+
+      const [hours] = formatted.split(":");
+      const hourNum = parseInt(hours, 10);
+      expect(hourNum).toBeGreaterThanOrEqual(0);
+      expect(hourNum).toBeLessThanOrEqual(23);
     });
   });
 

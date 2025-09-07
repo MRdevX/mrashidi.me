@@ -36,22 +36,16 @@ export const commandOutputFixtures = {
   clear: "",
 } as const;
 
+export const createCommandFixture = (input: string, output: string, timestamp?: Date) => ({
+  input,
+  output,
+  timestamp: timestamp || new Date(),
+});
+
 export const commandObjectFixtures = {
-  help: {
-    input: "help",
-    output: commandOutputFixtures.help,
-    timestamp: new Date("2024-01-15T14:30:45"),
-  },
-  about: {
-    input: "about",
-    output: commandOutputFixtures.about,
-    timestamp: new Date("2024-01-15T14:31:12"),
-  },
-  skills: {
-    input: "skills",
-    output: commandOutputFixtures.skills,
-    timestamp: new Date("2024-01-15T14:32:00"),
-  },
+  help: createCommandFixture("help", commandOutputFixtures.help),
+  about: createCommandFixture("about", commandOutputFixtures.about),
+  skills: createCommandFixture("skills", commandOutputFixtures.skills),
 } as const;
 
 export const terminalStateFixtures = {
@@ -82,10 +76,15 @@ export const inputValidationFixtures = {
   invalid: ["invalid", "random", "test123", "help me", "help-command", "help123"],
 } as const;
 
-export const timestampFixtures = {
-  now: new Date("2024-01-15T14:30:45"),
-  past: new Date("2024-01-15T14:29:30"),
-  future: new Date("2024-01-15T14:31:00"),
-  early: new Date("2024-01-15T09:00:00"),
-  late: new Date("2024-01-15T23:59:59"),
+export const timeUtils = {
+  now: () => new Date(),
+  past: (minutesAgo: number = 1) => new Date(Date.now() - minutesAgo * 60 * 1000),
+  future: (minutesFromNow: number = 1) => new Date(Date.now() + minutesFromNow * 60 * 1000),
+
+  atTime: (hours: number, minutes: number, seconds: number = 0) =>
+    new Date(
+      `2024-01-15T${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}Z`
+    ),
 } as const;
