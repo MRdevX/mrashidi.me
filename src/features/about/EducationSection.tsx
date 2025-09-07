@@ -1,9 +1,7 @@
-import { motion } from "framer-motion";
 import { ExternalLink, GraduationCap } from "lucide-react";
+import { AnimatedSection, SectionHeader } from "@/components/ui";
 import { education } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { fadeInVariants } from "@/lib/animations";
-import { AnimatedSection, SectionHeader } from "@/components/ui";
 
 export function EducationSection() {
   const { getCardPattern, getTextColor } = useThemeConfig();

@@ -9,7 +9,8 @@ export const contactData: ContactPageData = {
   sections: [
     {
       title: "Book a Mentorship Session",
-      description: "Interested in career guidance or technical mentorship? Book a free session with me through ADPList.",
+      description:
+        "Interested in career guidance or technical mentorship? Book a free session with me through ADPList.",
       delay: 0.4,
     },
     {

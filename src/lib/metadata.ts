@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { config, personalInfo, siteConfig } from "@/data";
+import { config, siteConfig } from "@/data";
 
 interface PageMetadataConfig {
   page: string;

@@ -7,7 +7,9 @@ export const createMockCommand = (input: string, output: string, timestamp?: Dat
   timestamp: timestamp || new Date("2024-01-15T14:30:45"),
 });
 
-export const createMockTerminalState = (overrides: Partial<any> = {}) => ({
+export const createMockTerminalState = (
+  overrides: Partial<{ commands: unknown[]; commandHistory: string[]; isExecuting: boolean }> = {}
+) => ({
   commands: [],
   commandHistory: [],
   isExecuting: false,

@@ -26,13 +26,18 @@
 
   /* Card hover effect */
   .hover-card-effect {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+      transform 0.3s ease-in-out,
+      box-shadow 0.3s ease-in-out;
     border: 1px solid rgba(255, 95, 31, 0.2);
   }
 
   .hover-card-effect:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 0 20px rgba(255, 95, 31, 0.2), 0 0 40px rgba(255, 95, 31, 0.1), 0 0 60px rgba(255, 95, 31, 0.05);
+    box-shadow:
+      0 0 20px rgba(255, 95, 31, 0.2),
+      0 0 40px rgba(255, 95, 31, 0.1),
+      0 0 60px rgba(255, 95, 31, 0.05);
     border-color: var(--neon-orange);
   }
 
@@ -204,7 +209,10 @@
 
   .feature-card:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 0 20px rgba(255, 95, 31, 0.2), 0 0 40px rgba(255, 95, 31, 0.1), 0 0 60px rgba(255, 95, 31, 0.05);
+    box-shadow:
+      0 0 20px rgba(255, 95, 31, 0.2),
+      0 0 40px rgba(255, 95, 31, 0.1),
+      0 0 60px rgba(255, 95, 31, 0.05);
     border-color: var(--neon-orange);
   }
 
@@ -247,13 +255,19 @@
   .glitch-image {
     position: relative;
     animation: neonPulse 4s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2);
+    box-shadow:
+      0 0 20px rgba(255, 95, 31, 0.5),
+      0 0 40px rgba(255, 95, 31, 0.3),
+      0 0 60px rgba(255, 95, 31, 0.2);
     transition: all 0.3s ease-in-out;
   }
 
   .glitch-image:hover {
     border-color: rgba(255, 95, 31, 0.8);
-    box-shadow: 0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3),
+    box-shadow:
+      0 0 30px rgba(255, 95, 31, 0.8),
+      0 0 60px rgba(255, 95, 31, 0.5),
+      0 0 90px rgba(255, 95, 31, 0.3),
       inset 0 0 20px rgba(255, 95, 31, 0.2);
   }
 
@@ -290,7 +304,8 @@
   /* Circuit board background */
   .circuit-bg {
     background-color: var(--background-dark);
-    background-image: radial-gradient(
+    background-image:
+      radial-gradient(
         circle at 100% 150%,
         var(--background-dark) 24%,
         var(--neon-orange) 25%,

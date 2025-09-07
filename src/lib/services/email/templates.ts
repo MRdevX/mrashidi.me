@@ -1,4 +1,4 @@
-import type { ITemplateConfig, EmailTemplateData } from "./types";
+import type { EmailTemplateData, ITemplateConfig } from "./types";
 
 function createBaseTemplate(title: string, content: string, templateConfig: ITemplateConfig): string {
   return `

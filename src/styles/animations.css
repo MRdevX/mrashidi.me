@@ -62,27 +62,45 @@
 
   @keyframes glitch {
     0% {
-      text-shadow: 0.05em 0 0 var(--neon-orange), -0.05em -0.025em 0 var(--neon-blue), -0.025em 0.05em 0 var(--neon-purple);
+      text-shadow:
+        0.05em 0 0 var(--neon-orange),
+        -0.05em -0.025em 0 var(--neon-blue),
+        -0.025em 0.05em 0 var(--neon-purple);
     }
     14% {
-      text-shadow: 0.05em 0 0 var(--neon-orange), -0.05em -0.025em 0 var(--neon-blue), -0.025em 0.05em 0 var(--neon-purple);
+      text-shadow:
+        0.05em 0 0 var(--neon-orange),
+        -0.05em -0.025em 0 var(--neon-blue),
+        -0.025em 0.05em 0 var(--neon-purple);
     }
     15% {
-      text-shadow: -0.05em -0.025em 0 var(--neon-orange), 0.025em 0.025em 0 var(--neon-blue),
+      text-shadow:
+        -0.05em -0.025em 0 var(--neon-orange),
+        0.025em 0.025em 0 var(--neon-blue),
         -0.05em -0.05em 0 var(--neon-purple);
     }
     49% {
-      text-shadow: -0.05em -0.025em 0 var(--neon-orange), 0.025em 0.025em 0 var(--neon-blue),
+      text-shadow:
+        -0.05em -0.025em 0 var(--neon-orange),
+        0.025em 0.025em 0 var(--neon-blue),
         -0.05em -0.05em 0 var(--neon-purple);
     }
     50% {
-      text-shadow: 0.025em 0.05em 0 var(--neon-orange), 0.05em 0 0 var(--neon-blue), 0 -0.05em 0 var(--neon-purple);
+      text-shadow:
+        0.025em 0.05em 0 var(--neon-orange),
+        0.05em 0 0 var(--neon-blue),
+        0 -0.05em 0 var(--neon-purple);
     }
     99% {
-      text-shadow: 0.025em 0.05em 0 var(--neon-orange), 0.05em 0 0 var(--neon-blue), 0 -0.05em 0 var(--neon-purple);
+      text-shadow:
+        0.025em 0.05em 0 var(--neon-orange),
+        0.05em 0 0 var(--neon-blue),
+        0 -0.05em 0 var(--neon-purple);
     }
     100% {
-      text-shadow: -0.025em 0 0 var(--neon-orange), -0.025em -0.025em 0 var(--neon-blue),
+      text-shadow:
+        -0.025em 0 0 var(--neon-orange),
+        -0.025em -0.025em 0 var(--neon-blue),
         -0.025em -0.05em 0 var(--neon-purple);
     }
   }
@@ -96,8 +114,15 @@
     height: 100%;
     z-index: -1;
     opacity: 0.1;
-    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-      repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.2) 0%, rgba(0, 255, 0, 0.2) 1px, transparent 1px, transparent 2px);
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 0, 0.2) 0%,
+        rgba(0, 255, 0, 0.2) 1px,
+        transparent 1px,
+        transparent 2px
+      );
     background-size: 100% 2px;
     animation: matrix 20s linear infinite;
   }
@@ -163,7 +188,9 @@
   /* Typing animation */
   .typing {
     border-right: 2px solid var(--terminal-green);
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    animation:
+      typing 3.5s steps(40, end),
+      blink-caret 0.75s step-end infinite;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -206,10 +233,16 @@
 
   @keyframes glow {
     from {
-      text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary), 0 0 15px var(--secondary);
+      text-shadow:
+        0 0 5px var(--primary),
+        0 0 10px var(--primary),
+        0 0 15px var(--secondary);
     }
     to {
-      text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--secondary);
+      text-shadow:
+        0 0 10px var(--primary),
+        0 0 20px var(--primary),
+        0 0 30px var(--secondary);
     }
   }
 
@@ -308,10 +341,16 @@
   @keyframes neonPulse {
     0%,
     100% {
-      box-shadow: 0 0 20px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3), 0 0 60px rgba(255, 95, 31, 0.2);
+      box-shadow:
+        0 0 20px rgba(255, 95, 31, 0.5),
+        0 0 40px rgba(255, 95, 31, 0.3),
+        0 0 60px rgba(255, 95, 31, 0.2);
     }
     50% {
-      box-shadow: 0 0 30px rgba(255, 95, 31, 0.8), 0 0 60px rgba(255, 95, 31, 0.5), 0 0 90px rgba(255, 95, 31, 0.3);
+      box-shadow:
+        0 0 30px rgba(255, 95, 31, 0.8),
+        0 0 60px rgba(255, 95, 31, 0.5),
+        0 0 90px rgba(255, 95, 31, 0.3);
     }
   }
 
@@ -329,10 +368,16 @@
   @keyframes glow {
     0%,
     100% {
-      text-shadow: 0 0 10px rgba(255, 95, 31, 0.5), 0 0 20px rgba(255, 95, 31, 0.3), 0 0 30px rgba(255, 95, 31, 0.2);
+      text-shadow:
+        0 0 10px rgba(255, 95, 31, 0.5),
+        0 0 20px rgba(255, 95, 31, 0.3),
+        0 0 30px rgba(255, 95, 31, 0.2);
     }
     50% {
-      text-shadow: 0 0 20px rgba(255, 95, 31, 0.7), 0 0 30px rgba(255, 95, 31, 0.5), 0 0 40px rgba(255, 95, 31, 0.3);
+      text-shadow:
+        0 0 20px rgba(255, 95, 31, 0.7),
+        0 0 30px rgba(255, 95, 31, 0.5),
+        0 0 40px rgba(255, 95, 31, 0.3);
     }
   }
 

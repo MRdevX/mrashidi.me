@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
-import { APIError } from "@/lib/errors";
 import { logger } from "@/lib/core";
+import { APIError } from "@/lib/errors";
 import { uploadCV } from "@/server/blob.service";
 
 const validateAuth = (request: NextRequest): void => {

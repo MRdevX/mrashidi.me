@@ -1,9 +1,9 @@
 "use client";
 
-import { ThemeToggle } from "@/components/ui";
 import { BottomNavigationItem, FloatingActionButton } from "@/components/layout";
-import { useBottomNavigation } from "@/hooks";
+import { ThemeToggle } from "@/components/ui";
 import { mobileNavigationItems } from "@/data/navigation";
+import { useBottomNavigation } from "@/hooks";
 
 export function BottomNavigation() {
   const { isActive } = useBottomNavigation({

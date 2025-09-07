@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { Briefcase, Building2, Calendar, CheckCircle2, ChevronDown, ChevronUp, MapPin, Trophy } from "lucide-react";
 import { useState } from "react";
-import { Briefcase, Building2, Calendar, CheckCircle2, MapPin, Trophy, ChevronDown, ChevronUp } from "lucide-react";
 import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCardTitle } from "@/components/ui";
 import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
@@ -87,6 +87,7 @@ export function WorkExperienceSection() {
                   <CyberpunkCardContent className="pt-0">
                     <div className="mt-6">
                       <button
+                        type="button"
                         onClick={() => {
                           const key = `${job.company}-${job.title}`;
                           const newOpen = new Set(openAchievements);

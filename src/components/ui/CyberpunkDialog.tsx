@@ -23,13 +23,14 @@ export const CyberpunkDialogContent = React.forwardRef<
 });
 CyberpunkDialogContent.displayName = "CyberpunkDialogContent";
 
-export const CyberpunkDialogHeader = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogHeader>>(
-  ({ className, ...props }, ref) => {
-    const { variants } = useThemeConfig();
+export const CyberpunkDialogHeader = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof DialogHeader>
+>(({ className, ...props }, ref) => {
+  const { variants } = useThemeConfig();
 
-    return <div ref={ref} className={cn(variants.dialog.header, className)} {...props} />;
-  }
-);
+  return <div ref={ref} className={cn(variants.dialog.header, className)} {...props} />;
+});
 CyberpunkDialogHeader.displayName = "CyberpunkDialogHeader";
 
 export const CyberpunkDialogTitle = React.forwardRef<
@@ -42,11 +43,12 @@ export const CyberpunkDialogTitle = React.forwardRef<
 });
 CyberpunkDialogTitle.displayName = "CyberpunkDialogTitle";
 
-export const CyberpunkDialogFooter = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogFooter>>(
-  ({ className, ...props }, ref) => {
-    const { variants } = useThemeConfig();
+export const CyberpunkDialogFooter = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof DialogFooter>
+>(({ className, ...props }, ref) => {
+  const { variants } = useThemeConfig();
 
-    return <div ref={ref} className={cn(variants.dialog.footer, className)} {...props} />;
-  }
-);
+  return <div ref={ref} className={cn(variants.dialog.footer, className)} {...props} />;
+});
 CyberpunkDialogFooter.displayName = "CyberpunkDialogFooter";

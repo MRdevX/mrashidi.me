@@ -18,7 +18,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
       className={`glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group`}
     >
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">{project.title}</h3>
+        <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
+          {project.title}
+        </h3>
         <div className="flex gap-2 flex-wrap items-center justify-end">
           {project.year && (
             <span className="px-2 py-0.5 rounded font-semibold text-xs bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30">
@@ -32,7 +34,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               {project.status}
             </span>
           )}
-          <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("visibility", project.visibility)}`}>
+          <span
+            className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("visibility", project.visibility)}`}
+          >
             {project.visibility}
           </span>
           <span className={`px-2 py-0.5 rounded font-semibold text-xs ${getProjectBadge("type", project.type)}`}>
@@ -61,7 +65,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
           {project.clientName && <span className="font-semibold text-orange-400">{project.clientName}</span>}
           {project.role && <span className={getTextColor("secondary")}>{project.role}</span>}
         </div>
-        <p className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors text-sm mb-1`}>
+        <p
+          className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors text-sm mb-1`}
+        >
           {project.description}
         </p>
         {project.highlights && project.highlights.length > 0 && (

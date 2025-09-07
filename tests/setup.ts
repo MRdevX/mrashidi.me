@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
-import { expect, afterEach, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
 import * as matchers from "@testing-library/jest-dom/matchers";
+import { cleanup } from "@testing-library/react";
 import React from "react";
+import { afterEach, expect, vi } from "vitest";
 
 process.env.TZ = "UTC";
 
@@ -28,15 +28,19 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("next/image", () => {
-  const MockNextImage = React.forwardRef<HTMLImageElement, any>(({ src, alt, ...props }, ref) =>
-    React.createElement("img", { src, alt, ref, ...props })
+  const MockNextImage = React.forwardRef<HTMLImageElement, React.ImgHTMLAttributes<HTMLImageElement>>(
+    ({ src, alt, ...props }, ref) => React.createElement("img", { src, alt, ref, ...props })
   );
   MockNextImage.displayName = "NextImage";
   return { default: MockNextImage };
 });
 
 vi.mock("next/link", () => ({
-  default: ({ children, href, ...props }: any) => {
+  default: ({
+    children,
+    href,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { children: React.ReactNode }) => {
     return React.createElement("a", { href, ...props }, children);
   },
 }));

@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { TerminalInput } from "@/components/terminal/TerminalInput";
 
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, className, ...rest }: any) => (
+    div: ({ children, className, ...rest }: React.HTMLAttributes<HTMLDivElement>) => (
       <div
         className={className}
         {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith("data-") || k.startsWith("aria-")))}
@@ -12,7 +12,7 @@ vi.mock("framer-motion", () => ({
         {children}
       </div>
     ),
-    span: ({ children, className, ...rest }: any) => (
+    span: ({ children, className, ...rest }: React.HTMLAttributes<HTMLSpanElement>) => (
       <span
         className={className}
         {...Object.fromEntries(Object.entries(rest).filter(([k]) => k.startsWith("data-") || k.startsWith("aria-")))}

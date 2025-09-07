@@ -3,7 +3,8 @@ import type { Command } from "@/components/terminal/types";
 export const mockCommands: Command[] = [
   {
     input: "help",
-    output: "Available commands: help, about, skills, projects, experience, achievements, contact, blog, view-source, clear",
+    output:
+      "Available commands: help, about, skills, projects, experience, achievements, contact, blog, view-source, clear",
     timestamp: new Date("2024-01-15T14:30:45Z"),
   },
   {

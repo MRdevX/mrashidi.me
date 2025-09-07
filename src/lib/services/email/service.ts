@@ -1,6 +1,6 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { AuthenticationError } from "@/lib/errors";
 import { logger } from "@/lib/core";
+import { AuthenticationError } from "@/lib/errors";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
 import { getTemplateConfig } from "./config";
 import { createEmailTemplate } from "./templates";

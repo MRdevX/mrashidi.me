@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { mockTerminalState, mockCommandHistory } from "./terminal-data";
+import { mockCommandHistory, mockTerminalState } from "./terminal-data";
 
 export const mockUseTerminal = vi.fn(() => ({
   commands: mockTerminalState.commands,
