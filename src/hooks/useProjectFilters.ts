@@ -6,9 +6,7 @@ import type { TechnologyCategory } from "@/lib/constants";
 import { logger } from "@/lib/logger";
 import { filterProjects, processTechnologyData } from "@/lib/techUtils";
 import { githubService } from "@/server/github.service";
-
-const COMMIT_DATES_CACHE_KEY = "project_commit_dates";
-const CACHE_DURATION = 24 * 60 * 60 * 1000;
+import { useCache } from "./useCache";
 
 interface CommitInfo {
   date: string;
@@ -60,59 +58,29 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
     return Object.values(categorizedStacks).flat().sort();
   }, [categorizedStacks]);
 
+  const { loadFromCache, saveToCache } = useCache<Record<string, CommitInfo>>("project_commit_dates");
+
   const loadCachedCommitInfo = useCallback((): Map<string, { date: Date; hash: string }> => {
-    try {
-      const cached = localStorage.getItem(COMMIT_DATES_CACHE_KEY);
-      if (!cached) {
-        return new Map();
-      }
+    const cached = loadFromCache();
+    if (!cached) return new Map();
 
-      const parsed: CachedCommitDates = JSON.parse(cached);
-      const now = Date.now();
-
-      if (now - parsed.timestamp > CACHE_DURATION) {
-        localStorage.removeItem(COMMIT_DATES_CACHE_KEY);
-        return new Map();
-      }
-
-      const infoMap = new Map<string, { date: Date; hash: string }>();
-      for (const [url, info] of Object.entries(parsed.commits)) {
-        infoMap.set(url, { date: new Date(info.date), hash: info.hash });
-      }
-
-      return infoMap;
-    } catch (error) {
-      logger.warn({
-        operation: "loadCachedCommitInfo",
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return new Map();
+    const infoMap = new Map<string, { date: Date; hash: string }>();
+    for (const [url, info] of Object.entries(cached)) {
+      infoMap.set(url, { date: new Date(info.date), hash: info.hash });
     }
-  }, []);
+    return infoMap;
+  }, [loadFromCache]);
 
-  const saveCommitInfoToCache = useCallback((info: Map<string, { date: Date; hash: string }>) => {
-    try {
+  const saveCommitInfoToCache = useCallback(
+    (info: Map<string, { date: Date; hash: string }>) => {
       const commitsRecord: Record<string, CommitInfo> = {};
       info.forEach((commitData, url) => {
-        commitsRecord[url] = {
-          date: commitData.date.toISOString(),
-          hash: commitData.hash,
-        };
+        commitsRecord[url] = { date: commitData.date.toISOString(), hash: commitData.hash };
       });
-
-      const cacheData: CachedCommitDates = {
-        commits: commitsRecord,
-        timestamp: Date.now(),
-      };
-
-      localStorage.setItem(COMMIT_DATES_CACHE_KEY, JSON.stringify(cacheData));
-    } catch (error) {
-      logger.warn({
-        operation: "saveCommitInfoToCache",
-        error: error instanceof Error ? error.message : String(error),
-      });
-    }
-  }, []);
+      saveToCache(commitsRecord);
+    },
+    [saveToCache]
+  );
 
   const fetchCommitDates = useCallback(async () => {
     setIsLoadingCommitDates(true);
@@ -150,10 +118,7 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
       }
       setCommitInfo(newCommitInfo);
     } catch (error) {
-      logger.error({
-        operation: "fetchCommitDates",
-        error: error instanceof Error ? error.message : String(error),
-      });
+      logger.error({ operation: "fetchCommitDates", error: String(error) });
     } finally {
       setIsLoadingCommitDates(false);
     }

@@ -35,7 +35,7 @@ export interface SiteConfig {
   };
 }
 
-export const config: SiteConfig = {
+const config: SiteConfig = {
   person: {
     name: "Dee Rashidi",
     title: "Software Engineer",
@@ -70,6 +70,8 @@ export const config: SiteConfig = {
     appleMobileWebAppStatusBarStyle: "black-translucent",
   },
 };
+
+export { config };
 
 export const coreConfig = {
   person: config.person,

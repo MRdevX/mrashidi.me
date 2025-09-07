@@ -9,30 +9,15 @@ export function useBlogPreload() {
     try {
       const response = await fetch(`/api/blog?page=${page}&limit=${postsPerPage}`);
       const data: BlogResponse = await response.json();
-
-      if (!data.success) {
-        throw new Error("Failed to preload blog posts");
-      }
-
-      return {
-        posts: data.data,
-        total: data.meta?.total || 0,
-      } as BlogData;
+      return data.success ? ({ posts: data.data, total: data.meta?.total || 0 } as BlogData) : null;
     } catch (error) {
-      logger.error({
-        operation: "useBlogPreload",
-        error: error instanceof Error ? error.message : String(error),
-      });
+      logger.error({ operation: "useBlogPreload", error: String(error) });
       return null;
     }
   }, []);
 
-  const preloadFirstPage = useCallback(() => {
-    return preloadBlogPosts(1, 6);
-  }, [preloadBlogPosts]);
-
   return {
     preloadBlogPosts,
-    preloadFirstPage,
+    preloadFirstPage: () => preloadBlogPosts(1, 6),
   };
 }

@@ -14,8 +14,6 @@ import {
 
 export const useThemeConfig = () => {
   return {
-    config: THEME_CONFIG,
-
     getVariant,
     getColor,
     getFont,
@@ -44,15 +42,6 @@ export const useThemeConfig = () => {
     getFocusPattern: () => getPattern("focus"),
 
     colors: THEME_CONFIG.colors,
-    fonts: THEME_CONFIG.typography.fonts,
-    spacing: THEME_CONFIG.spacing,
-    borderRadius: THEME_CONFIG.borderRadius,
-    shadows: THEME_CONFIG.shadows,
     variants: THEME_CONFIG.variants,
-    animations: THEME_CONFIG.animations,
-    utilities: THEME_CONFIG.utilities,
-    semantic: THEME_CONFIG.semantic,
-    patterns: THEME_CONFIG.patterns,
-    projectBadges: THEME_CONFIG.projectBadges,
   };
 };
