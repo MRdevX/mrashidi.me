@@ -17,16 +17,4 @@ export default defineConfig({
       exclude: ["node_modules/", "tests/", "**/*.d.ts", "**/*.config.*", "**/coverage/**", ".next/", "dist/", "build/"],
     },
   },
-  resolve: {
-    alias: {
-      "@": "/src",
-      "@app": "/src/app",
-      "@components": "/src/components",
-      "@features": "/src/features",
-      "@lib": "/src/lib",
-      "@server": "/src/server",
-      "@types": "/src/types",
-      "@/tests": "/tests",
-    },
-  },
 });
