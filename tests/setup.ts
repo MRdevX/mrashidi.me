@@ -25,11 +25,13 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/",
 }));
 
-vi.mock("next/image", () => ({
-  default: ({ src, alt, ...props }: any) => {
-    return React.createElement("img", { src, alt, ...props });
-  },
-}));
+vi.mock("next/image", () => {
+  const MockNextImage = React.forwardRef<HTMLImageElement, any>(({ src, alt, ...props }, ref) =>
+    React.createElement("img", { src, alt, ref, ...props })
+  );
+  MockNextImage.displayName = "NextImage";
+  return { default: MockNextImage };
+});
 
 vi.mock("next/link", () => ({
   default: ({ children, href, ...props }: any) => {
