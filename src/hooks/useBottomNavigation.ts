@@ -1,12 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-
-interface NavigationItem {
-  name: string;
-  href: string;
-  icon: any;
-}
+import type { NavigationItem } from "@/data/navigation";
 
 interface UseBottomNavigationOptions {
   items: NavigationItem[];
