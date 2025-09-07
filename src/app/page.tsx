@@ -14,7 +14,7 @@ import {
   SocialButton,
   TechStackGrid,
 } from "@/components/ui";
-import { personalInfo } from "@/data";
+import { config, personalInfo } from "@/data";
 import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
 import { getMainTechStack } from "@/lib/skills";
 
@@ -47,25 +47,25 @@ export default function Home() {
       <motion.div initial="hidden" animate="show" variants={pageContainerVariants}>
         <motion.div className="hero-section content-section" variants={pageItemVariants}>
           <div className="hero-background" />
-          <h1 className="text-5xl font-bold text-orange-500 font-cyberpunk glow-text">{personalInfo.name}</h1>
-          <p className="hero-subtitle text-body">{personalInfo.title}</p>
-          <p className="hero-description text-body">{personalInfo.intro}</p>
+          <h1 className="text-5xl font-bold text-orange-500 font-cyberpunk glow-text">{config.person.name}</h1>
+          <p className="hero-subtitle text-body">{config.person.title}</p>
+          <p className="hero-description text-body">{config.site.description}</p>
           <p className="hero-location text-body">
             <MapPin className="w-5 h-5 icon-primary" />
-            {personalInfo.location}
+            {config.person.location}
           </p>
 
           <div className="social-buttons-container">
-            <SocialButton href={`mailto:${personalInfo.email}`} icon={Mail} isExternal={false}>
+            <SocialButton href={`mailto:${config.person.email}`} icon={Mail} isExternal={false}>
               Email
             </SocialButton>
-            <SocialButton href={personalInfo.social.github} icon={FaGithub}>
+            <SocialButton href={config.social.github} icon={FaGithub}>
               GitHub
             </SocialButton>
-            <SocialButton href={personalInfo.social.linkedin} icon={FaLinkedin}>
+            <SocialButton href={config.social.linkedin} icon={FaLinkedin}>
               LinkedIn
             </SocialButton>
-            <SocialButton href={personalInfo.social.telegram} icon={Send}>
+            <SocialButton href={config.social.telegram} icon={Send}>
               Telegram
             </SocialButton>
           </div>
@@ -103,12 +103,7 @@ export default function Home() {
           <div className="contact-section content-section">
             <div className="contact-section-background" />
             <div className="contact-content">
-              <SectionHeader
-                icon={MessageCircle}
-                title={personalInfo.contactCta}
-                size="lg"
-                className="justify-center"
-              />
+              <SectionHeader icon={MessageCircle} title={personalInfo.contactCta} size="lg" className="justify-center" />
               <p className="contact-description text-body">{personalInfo.contactDescription}</p>
               <Link href="/contact" className="block">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

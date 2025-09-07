@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { coreConfig, personalInfo, siteConfig } from "@/data";
+import { config, personalInfo, siteConfig } from "@/data";
 
 interface PageMetadataConfig {
   page: string;
@@ -10,10 +10,10 @@ interface PageMetadataConfig {
   ogImage?: string;
 }
 
-export function generatePageMetadata(config: PageMetadataConfig): Metadata {
-  const { page, title, description, keywords, ogType = "website", ogImage = `og-${page}.jpg` } = config;
+export function generatePageMetadata(pageConfig: PageMetadataConfig): Metadata {
+  const { page, title, description, keywords, ogType = "website", ogImage = `og-${page}.jpg` } = pageConfig;
 
-  const fullTitle = `${title} - ${personalInfo.name}`;
+  const fullTitle = `${title} - ${config.person.name}`;
   const fullDescription = description;
   const fullKeywords = keywords.join(", ");
 
@@ -24,14 +24,14 @@ export function generatePageMetadata(config: PageMetadataConfig): Metadata {
     openGraph: {
       title: fullTitle,
       description: fullDescription,
-      url: `${coreConfig.site.url}/${page}`,
+      url: `${config.site.url}/${page}`,
       type: ogType,
       images: [
         {
-          url: `${coreConfig.site.url}/${ogImage}`,
+          url: `${config.site.url}/${ogImage}`,
           width: 1200,
           height: 630,
-          alt: `${personalInfo.name} - ${title}`,
+          alt: `${config.person.name} - ${title}`,
         },
       ],
     },
@@ -39,10 +39,10 @@ export function generatePageMetadata(config: PageMetadataConfig): Metadata {
       card: "summary_large_image",
       title: fullTitle,
       description: fullDescription,
-      images: [`${coreConfig.site.url}/${ogImage}`],
+      images: [`${config.site.url}/${ogImage}`],
     },
     alternates: {
-      canonical: `${coreConfig.site.url}/${page}`,
+      canonical: `${config.site.url}/${page}`,
     },
   };
 }
@@ -53,8 +53,8 @@ export function generateRootMetadata(): Metadata {
 
   return {
     ...baseMetadata,
-    creator: personalInfo.name,
-    authors: [{ name: personalInfo.name, url: coreConfig.site.url }],
+    creator: config.person.name,
+    authors: [{ name: config.person.name, url: config.site.url }],
     robots: "index, follow",
     icons: {
       icon: "/favicon.ico",
@@ -80,10 +80,10 @@ export const pageMetadataConfigs = {
   home: {
     page: "",
     title: "Home",
-    description: personalInfo.intro,
+    description: config.site.description,
     keywords: [
-      personalInfo.name,
-      personalInfo.title,
+      config.person.name,
+      config.person.title,
       "software engineer",
       "backend developer",
       "portfolio",
@@ -91,20 +91,20 @@ export const pageMetadataConfigs = {
       "node.js",
       "typescript",
       "react",
-      personalInfo.location,
+      config.person.location,
     ],
     ogImage: "og-image.jpg",
   },
   about: {
     page: "about",
     title: "About",
-    description: `Learn more about ${personalInfo.name}, a ${personalInfo.title} based in ${personalInfo.location}. Discover my background, skills, and experience in software development.`,
+    description: `Learn more about ${config.person.name}, a ${config.person.title} based in ${config.person.location}. Discover my background, skills, and experience in software development.`,
     keywords: [
-      personalInfo.name,
+      config.person.name,
       "about",
       "software engineer",
       "backend developer",
-      personalInfo.location,
+      config.person.location,
       "skills",
       "experience",
     ],
@@ -113,9 +113,9 @@ export const pageMetadataConfigs = {
   blog: {
     page: "blog",
     title: "Blog",
-    description: `Read ${personalInfo.name}'s software engineering articles, technical insights, and development tutorials. Learn about backend development, system design, and modern web technologies.`,
+    description: `Read ${config.person.name}'s software engineering articles, technical insights, and development tutorials. Learn about backend development, system design, and modern web technologies.`,
     keywords: [
-      personalInfo.name,
+      config.person.name,
       "blog",
       "software engineering",
       "technical articles",
@@ -128,23 +128,23 @@ export const pageMetadataConfigs = {
   contact: {
     page: "contact",
     title: "Contact",
-    description: `Get in touch with ${personalInfo.name}, a ${personalInfo.title} based in ${personalInfo.location}. Available for freelance work, collaboration, and technical discussions.`,
+    description: `Get in touch with ${config.person.name}, a ${config.person.title} based in ${config.person.location}. Available for freelance work, collaboration, and technical discussions.`,
     keywords: [
-      personalInfo.name,
+      config.person.name,
       "contact",
       "freelance",
       "software engineer",
       "collaboration",
-      personalInfo.location,
+      config.person.location,
       "backend developer",
     ],
   },
   projects: {
     page: "projects",
     title: "Projects",
-    description: `Explore ${personalInfo.name}'s software engineering projects. View open source contributions, full-stack applications, and technical solutions built with modern technologies.`,
+    description: `Explore ${config.person.name}'s software engineering projects. View open source contributions, full-stack applications, and technical solutions built with modern technologies.`,
     keywords: [
-      personalInfo.name,
+      config.person.name,
       "projects",
       "portfolio",
       "software engineer",
@@ -159,14 +159,14 @@ export const pageMetadataConfigs = {
   resume: {
     page: "resume",
     title: "Resume",
-    description: `Download ${personalInfo.name}'s professional resume and CV. View work experience, skills, and qualifications as a ${personalInfo.title} based in ${personalInfo.location}.`,
+    description: `Download ${config.person.name}'s professional resume and CV. View work experience, skills, and qualifications as a ${config.person.title} based in ${config.person.location}.`,
     keywords: [
-      personalInfo.name,
+      config.person.name,
       "resume",
       "cv",
       "professional experience",
-      personalInfo.title,
-      personalInfo.location,
+      config.person.title,
+      config.person.location,
       "software engineer",
       "backend developer",
     ],

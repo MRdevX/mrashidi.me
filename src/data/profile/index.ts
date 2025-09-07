@@ -2,7 +2,7 @@ export type { Certificate, CertificateCategory } from "./certificates";
 export { default as certificates } from "./certificates";
 export type { Education } from "./education";
 export { default as education } from "./education";
-export type { Language, PersonalInfo, SocialLinks } from "./personalInfo";
+export type { Language, PersonalInfo } from "./personalInfo";
 export { default as personalInfo } from "./personalInfo";
 export type { Skill, SkillCategory, SkillLevel } from "./skills";
 export { skillCategories as skills } from "./skills";

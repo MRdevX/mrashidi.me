@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { certificates, personalInfo, projects, skills, workExperience } from "@/data";
+import { certificates, config, personalInfo, projects, skills, workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { AVAILABLE_COMMANDS } from "./constants";
 import type { CommandType } from "./types";
@@ -137,19 +137,19 @@ const renderContactInfo = () => (
   <div className="space-y-2">
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Email:</span>
-      <TerminalLink href={`mailto:${personalInfo.email}`}>{personalInfo.email}</TerminalLink>
+      <TerminalLink href={`mailto:${config.person.email}`}>{config.person.email}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">GitHub:</span>
-      <TerminalLink href={personalInfo.social.github}>{personalInfo.social.github.replace("https://", "")}</TerminalLink>
+      <TerminalLink href={config.social.github}>{config.social.github.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">LinkedIn:</span>
-      <TerminalLink href={personalInfo.social.linkedin}>{personalInfo.social.linkedin.replace("https://", "")}</TerminalLink>
+      <TerminalLink href={config.social.linkedin}>{config.social.linkedin.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Location:</span>
-      <span className="text-green-400">{personalInfo.location}</span>
+      <span className="text-green-400">{config.person.location}</span>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Languages:</span>

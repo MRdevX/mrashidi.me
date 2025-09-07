@@ -1,4 +1,4 @@
-import { coreConfig, personalInfo } from "@/data";
+import { config, personalInfo } from "@/data";
 
 export interface PersonSchema {
   "@context": "https://schema.org";
@@ -66,16 +66,16 @@ export function generatePersonSchema(): PersonSchema {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: personalInfo.name,
-    jobTitle: personalInfo.title,
-    url: personalInfo.website,
-    email: personalInfo.email,
+    name: config.person.name,
+    jobTitle: config.person.title,
+    url: config.person.website,
+    email: config.person.email,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Berlin",
       addressCountry: "DE",
     },
-    sameAs: [personalInfo.social.github, personalInfo.social.linkedin, personalInfo.social.telegram],
+    sameAs: [config.social.github, config.social.linkedin, config.social.telegram],
     worksFor: {
       "@type": "Organization",
       name: "Freelance",
@@ -101,19 +101,19 @@ export function generateWebsiteSchema(): WebsiteSchema {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: coreConfig.site.name,
-    url: coreConfig.site.url,
-    description: coreConfig.site.description,
+    name: config.site.name,
+    url: config.site.url,
+    description: config.site.description,
     author: {
       "@type": "Person",
-      name: personalInfo.name,
+      name: config.person.name,
     },
     publisher: {
       "@type": "Organization",
-      name: personalInfo.name,
+      name: config.person.name,
       logo: {
         "@type": "ImageObject",
-        url: `${coreConfig.site.url}/profile.jpeg`,
+        url: `${config.site.url}/profile.jpeg`,
       },
     },
   };
@@ -123,24 +123,24 @@ export function generateOrganizationSchema(): OrganizationSchema {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: `${personalInfo.name} - ${personalInfo.title}`,
-    url: coreConfig.site.url,
-    logo: `${coreConfig.site.url}/profile.jpeg`,
-    description: coreConfig.site.description,
+    name: `${config.person.name} - ${config.person.title}`,
+    url: config.site.url,
+    logo: `${config.site.url}/profile.jpeg`,
+    description: config.site.description,
     founder: {
       "@type": "Person",
-      name: personalInfo.name,
+      name: config.person.name,
     },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer service",
-      email: personalInfo.email,
+      email: config.person.email,
     },
   };
 }
 
 export function generateBreadcrumbSchema(path: string, _title: string) {
-  const baseUrl = coreConfig.site.url;
+  const baseUrl = config.site.url;
   const pathSegments = path.split("/").filter(Boolean);
 
   const breadcrumbItems = [

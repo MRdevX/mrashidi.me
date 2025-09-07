@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { personalInfo } from "@/data";
+import { config, personalInfo } from "@/data";
 
 interface SocialLinkProps {
   href: string;
@@ -28,19 +28,19 @@ export function Footer() {
 
   const socialLinks = [
     {
-      href: personalInfo.social.github,
+      href: config.social.github,
       icon: <FaGithub className="icon-size-lg" />,
-      ariaLabel: `Visit ${personalInfo.name}'s GitHub Profile`,
+      ariaLabel: `Visit ${config.person.name}'s GitHub Profile`,
     },
     {
-      href: personalInfo.social.linkedin,
+      href: config.social.linkedin,
       icon: <FaLinkedin className="icon-size-lg" />,
-      ariaLabel: `Visit ${personalInfo.name}'s LinkedIn Profile`,
+      ariaLabel: `Visit ${config.person.name}'s LinkedIn Profile`,
     },
     {
-      href: `mailto:${personalInfo.social.email}`,
+      href: `mailto:${config.person.email}`,
       icon: <Mail className="icon-size-lg" />,
-      ariaLabel: `Email ${personalInfo.name}`,
+      ariaLabel: `Email ${config.person.name}`,
       isEmail: true,
     },
   ];
@@ -50,7 +50,7 @@ export function Footer() {
       <div className="footer-content">
         <div className="footer-card">
           <p className="footer-copyright">
-            © {currentYear} {personalInfo.name}. All rights reserved.
+            © {currentYear} {config.person.name}. All rights reserved.
           </p>
           <div className="social-links-container">
             {socialLinks.map((link) => (

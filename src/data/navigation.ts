@@ -1,5 +1,6 @@
 import { Home, FolderOpen, BookOpen, FileText, User, MessageSquare } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { config } from "./config";
 
 export interface NavigationItem {
   name: string;
@@ -9,7 +10,7 @@ export interface NavigationItem {
   showInDesktop?: boolean;
 }
 
-export const allNavigationItems: NavigationItem[] = [
+export const navigationItems: NavigationItem[] = [
   { name: "Home", href: "/", icon: Home, showInMobile: true, showInDesktop: true },
   { name: "Projects", href: "/projects", icon: FolderOpen, showInMobile: true, showInDesktop: true },
   { name: "Blog", href: "/blog", icon: BookOpen, showInMobile: true, showInDesktop: true },
@@ -18,9 +19,8 @@ export const allNavigationItems: NavigationItem[] = [
   { name: "Contact", href: "/contact", icon: MessageSquare, showInMobile: false, showInDesktop: true },
 ];
 
-export const mobileNavigationItems = allNavigationItems.filter((item) => item.showInMobile);
-
-export const desktopNavigationItems = allNavigationItems.filter((item) => item.showInDesktop);
+export const mobileNavigationItems = navigationItems.filter((item) => item.showInMobile);
+export const desktopNavigationItems = navigationItems.filter((item) => item.showInDesktop);
 
 export function getNavigationItems(type: "mobile" | "desktop" | "all" = "all"): NavigationItem[] {
   switch (type) {
@@ -30,6 +30,13 @@ export function getNavigationItems(type: "mobile" | "desktop" | "all" = "all"): 
       return desktopNavigationItems;
     case "all":
     default:
-      return allNavigationItems;
+      return navigationItems;
   }
 }
+
+export const githubLink = {
+  url: config.social.githubRepo,
+  label: "Open Source",
+  mobileLabel: "View Code",
+  ariaLabel: "View source code on GitHub",
+};

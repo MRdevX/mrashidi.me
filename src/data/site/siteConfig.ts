@@ -9,17 +9,17 @@ export interface SiteConfig {
   appleMobileWebAppStatusBarStyle: string;
 }
 
-import coreConfig from "../core";
+import { config } from "../config";
 
 const siteConfig: SiteConfig = {
-  themeColor: "#f97316",
-  msTileColor: "#f97316",
-  appName: coreConfig.site.name,
-  appTitle: coreConfig.site.name,
-  appleMobileWebAppTitle: coreConfig.site.name,
-  mobileWebAppCapable: true,
-  appleMobileWebAppCapable: true,
-  appleMobileWebAppStatusBarStyle: "black-translucent",
+  themeColor: config.ui.themeColor,
+  msTileColor: config.ui.msTileColor,
+  appName: config.ui.appName,
+  appTitle: config.ui.appTitle,
+  appleMobileWebAppTitle: config.ui.appleMobileWebAppTitle,
+  mobileWebAppCapable: config.ui.mobileWebAppCapable,
+  appleMobileWebAppCapable: config.ui.appleMobileWebAppCapable,
+  appleMobileWebAppStatusBarStyle: config.ui.appleMobileWebAppStatusBarStyle,
 };
 
 export default siteConfig;

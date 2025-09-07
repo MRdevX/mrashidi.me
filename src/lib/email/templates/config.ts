@@ -1,12 +1,12 @@
-import { coreConfig } from "@/data";
+import { config } from "@/data";
 import type { ITemplateConfig } from "../types";
 
 export const getTemplateConfig = (): ITemplateConfig => ({
-  companyName: coreConfig.person.name,
-  companyWebsite: coreConfig.site.url,
+  companyName: config.person.name,
+  companyWebsite: config.site.url,
   socialLinks: {
-    github: coreConfig.social.github,
-    linkedin: coreConfig.social.linkedin,
+    github: config.social.github,
+    linkedin: config.social.linkedin,
   },
   footerText: "Software Backend Engineer specializing in Backend Development, Cloud & DevOps, and Database Design",
   skills: [

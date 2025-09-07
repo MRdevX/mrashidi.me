@@ -33,37 +33,37 @@ export interface SiteMetadata {
   };
 }
 
-import coreConfig from "../core";
+import { config } from "../config";
 
 const siteMetadata: SiteMetadata = {
-  title: coreConfig.site.title,
-  keywords: coreConfig.site.keywords,
-  creator: coreConfig.person.name,
-  authors: [{ name: coreConfig.person.name, url: coreConfig.site.url }],
+  title: config.site.title,
+  keywords: config.site.keywords,
+  creator: config.person.name,
+  authors: [{ name: config.person.name, url: config.site.url }],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: coreConfig.site.url,
-    siteName: `${coreConfig.person.name} - ${coreConfig.person.title}`,
-    title: coreConfig.site.title,
+    url: config.site.url,
+    siteName: `${config.person.name} - ${config.person.title}`,
+    title: config.site.title,
     images: [
       {
-        url: `${coreConfig.site.url}/og-image.jpg`,
+        url: `${config.site.url}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: `${coreConfig.person.name} - ${coreConfig.person.title}`,
+        alt: `${config.person.name} - ${config.person.title}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: coreConfig.site.title,
-    creator: coreConfig.person.twitterHandle,
-    images: [`${coreConfig.site.url}/twitter-image.jpg`],
+    title: config.site.title,
+    creator: config.person.twitterHandle,
+    images: [`${config.site.url}/twitter-image.jpg`],
   },
   robots: "index, follow",
   alternates: {
-    canonical: coreConfig.site.url,
+    canonical: config.site.url,
   },
   icons: {
     icon: "/favicon.ico",
