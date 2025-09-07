@@ -301,12 +301,12 @@ const getIconKey = (techName: string): string => {
     return noSpaces;
   }
 
-  const noDots = normalized.replace(/[.\s]+/g, "");
+  const noDots = normalized.replace(/[.\s/]+/g, "");
   if (ICON_DEFINITIONS[noDots]) {
     return noDots;
   }
 
-  const keywords = normalized.split(/[\s.-]+/);
+  const keywords = normalized.split(/[\s.-/]+/);
   for (const keyword of keywords) {
     if (keyword && ICON_DEFINITIONS[keyword]) {
       return keyword;

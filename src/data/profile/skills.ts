@@ -74,7 +74,7 @@ const skillCategories: SkillCategory[] = [
     category: "Architecture",
     skills: [
       { name: "Microservices", level: SkillLevel.PROFICIENT, includeInMainStack: true },
-      { name: "Event-Driven Architecture (EDA)", level: SkillLevel.PROFICIENT, includeInMainStack: true },
+      { name: "Event-Driven Architecture (EDA)", level: SkillLevel.PROFICIENT },
       { name: "API Gateway", level: SkillLevel.EXPERIENCED },
       { name: "Domain-Driven Design (DDD)", level: SkillLevel.EXPERIENCED },
       { name: "Serverless", level: SkillLevel.FAMILIAR },
