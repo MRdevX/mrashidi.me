@@ -47,7 +47,7 @@ const personalInfo: PersonalInfo = {
     { language: "German", level: "Pre-Intermediate (A2)", progress: 40 },
     { language: "Turkish", level: "Elementary (A1)", progress: 20 },
   ],
-  bio: "I'm a software engineer with 9 years of experience building backend systems. I've been working mainly with Node.js and TypeScript for the past 6 years, though I started out with Java and use Python for scripting and automation. I enjoy working on microservice architectures and have experience with cloud platforms like AWS and Azure. My experience covers backend development, infrastructure, and DevOps - working with tools like Docker, Kubernetes, and CI/CD pipelines. I've been part of teams building solutions across different industries including e-mobility, fintech, aviation, and education. I like writing clean, maintainable code and working on systems that can grow with the business needs.",
+  bio: "I’m a software engineer with 9 years of experience building scalable backend systems and microservices. For the past 6 years, I’ve specialized in Node.js and TypeScript, with earlier experience in Java and Python for scripting and automation. My background spans backend development, cloud infrastructure, and DevOps, working with tools like Docker, Kubernetes, and CI/CD pipelines on AWS and Azure. I’ve contributed to projects in e-mobility, fintech, aviation, and education, always focusing on clean, maintainable code and systems that grow with business needs.",
   intro: coreConfig.site.description,
   contactCta: "Feel Free to Reach Out",
   contactDescription:

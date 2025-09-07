@@ -42,7 +42,7 @@ const coreConfig: CoreConfig = {
     name: "MR Portfolio",
     title: "Dee Rashidi | Software Backend Engineer",
     description:
-      "Software engineer with 9 years of experience in backend development. I work primarily with Node.js and TypeScript, with experience across various frameworks and languages. I focus on building systems that are reliable and easy to maintain.",
+      "Software engineer with 9 years of experience in backend development. I work primarily with Node.js and TypeScript, with additional experience across frameworks and languages. I focus on building reliable, maintainable systems that scale with business needs.",
     keywords:
       "Software Backend Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, AWS, Azure, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST API",
   },
