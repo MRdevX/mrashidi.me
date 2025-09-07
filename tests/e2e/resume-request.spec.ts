@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import fs from "fs";
+import path from "path";
 
 test.describe("Resume Request", () => {
   test("should open and close CV request modal", async ({ page }) => {
@@ -18,7 +20,7 @@ test.describe("Resume Request", () => {
   });
 
   test("should fill and submit CV request form", async ({ page }) => {
-    await page.route("/api/resume", async (route) => {
+    await page.route("**/api/resume", async (route) => {
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -26,11 +28,15 @@ test.describe("Resume Request", () => {
       });
     });
 
-    await page.route("/api/cv/download", async (route) => {
+    await page.route("**/api/cv/download", async (route) => {
+      const pdfBuffer = fs.readFileSync(path.join(__dirname, "../fixtures/sample.pdf"));
       await route.fulfill({
         status: 200,
         contentType: "application/pdf",
-        body: Buffer.from("fake-pdf-content"),
+        headers: {
+          "content-length": pdfBuffer.length.toString(),
+        },
+        body: pdfBuffer,
       });
     });
 
