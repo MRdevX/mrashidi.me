@@ -250,6 +250,21 @@
     }
   }
 
+  /* Navigation Glass Effect */
+  .navbar-glass {
+    background-color: rgb(255 255 255 / 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+  }
+
+  .dark .navbar-glass {
+    background-color: rgb(17 24 39 / 0.8);
+    border-bottom-color: rgb(55 65 81 / 0.3);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -1px rgb(0 0 0 / 0.2);
+  }
+
   /* Responsive Layout */
   @media (max-width: 640px) {
     .footer-card {
