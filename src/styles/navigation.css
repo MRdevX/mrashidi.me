@@ -213,12 +213,16 @@
 
   .floating-action-btn-container:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.2), 0 0 20px rgba(255, 95, 31, 0.2);
+    box-shadow:
+      0 6px 25px -4px rgb(0 0 0 / 0.2),
+      0 0 20px rgba(255, 95, 31, 0.2);
     background-color: rgb(255 255 255 / 0.95);
   }
 
   .dark .floating-action-btn-container:hover {
-    box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.4), 0 0 20px rgba(255, 95, 31, 0.3);
+    box-shadow:
+      0 6px 25px -4px rgb(0 0 0 / 0.4),
+      0 0 20px rgba(255, 95, 31, 0.3);
     background-color: rgb(31 41 55 / 0.95);
   }
 
@@ -305,7 +309,7 @@
     inset: 0;
     border-top: 2px solid hsl(var(--primary));
     border-bottom: 2px solid hsl(var(--primary));
-    transform: scale-y(2);
+    transform: scaleY(2);
     opacity: 0;
     transition: all 0.3s ease;
     transform-origin: center;
@@ -326,17 +330,17 @@
 
   /* Hover effects - higher specificity to override other classes */
   .nav-item-hover-effect:hover .nav-item-text {
-    color: #000000 !important;
+    color: #000000;
     font-weight: 600;
   }
 
   /* Dark mode hover effects */
   .dark .nav-item-hover-effect:hover .nav-item-text {
-    color: #ffffff !important;
+    color: #ffffff;
   }
 
   .nav-item-hover-effect:hover .nav-item-border {
-    transform: scale-y(1);
+    transform: scaleY(1);
     opacity: 1;
   }
 
@@ -351,7 +355,7 @@
   }
 
   .nav-item-hover-effect.nav-item-active .nav-item-border {
-    transform: scale-y(1);
+    transform: scaleY(1);
     opacity: 1;
   }
 

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.58](https://github.com/MRdevX/mrashidi.me/compare/v0.1.57...v0.1.58) (2025-09-08)
+
+
+### Features
+
+* add glass effect to navbar for enhanced visual appeal ([d82a9f6](https://github.com/MRdevX/mrashidi.me/commit/d82a9f6bf064eb8a75361ee5bba90039c931449e))
+* enhance navigation item with hover effects and animations ([e725da2](https://github.com/MRdevX/mrashidi.me/commit/e725da20e1a1c9d8d20b054e37a3346dbf7936a9))
+
 ### [0.1.57](https://github.com/MRdevX/mrashidi.me/compare/v0.1.56...v0.1.57) (2025-09-07)
 
 

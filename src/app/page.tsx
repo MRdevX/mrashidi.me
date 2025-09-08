@@ -1,9 +1,9 @@
 "use client";
 
-import { lazy, useEffect, useState, Suspense } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Activity, ArrowRight, Code2, Mail, MapPin, MessageCircle, Send, Terminal as TerminalIcon } from "lucide-react";
+import Link from "next/link";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const ContributionGraph = lazy(() =>
@@ -127,7 +127,12 @@ export default function Home() {
           <div className="contact-section content-section">
             <div className="contact-section-background" />
             <div className="contact-content">
-              <SectionHeader icon={MessageCircle} title={personalInfo.contactCta} size="lg" className="justify-center" />
+              <SectionHeader
+                icon={MessageCircle}
+                title={personalInfo.contactCta}
+                size="lg"
+                className="justify-center"
+              />
               <p className="contact-description text-body">{personalInfo.contactDescription}</p>
               <Link href="/contact" className="block">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
