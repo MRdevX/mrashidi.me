@@ -147,6 +147,78 @@ pnpm dev
 - Rate limiting
 - Secure error handling
 
+## 🛠 Development Workflow
+
+This project uses modern development tools to ensure code quality and consistency:
+
+### Pre-commit Hooks (Husky + lint-staged)
+
+- **Automatic Linting**: Biome checks and fixes code issues
+- **Code Formatting**: Consistent formatting across all files
+- **Type Checking**: TypeScript validation before commits
+- **Staged Files Only**: Only processes files you're committing
+
+#### Setup
+
+```bash
+# Install dependencies (already done)
+pnpm install
+
+# Husky is automatically initialized with the prepare script
+pnpm run prepare
+```
+
+#### What happens on commit:
+
+1. **JavaScript/TypeScript files** (`*.{js,jsx,ts,tsx}`):
+   - Biome check and fix issues
+   - Biome format for consistent styling
+2. **Configuration files** (`*.{json,md,yml,yaml}`):
+   - Biome format for consistent formatting
+3. **CSS files** (`*.{css,scss}`):
+   - Biome check for CSS issues
+
+#### What happens on push:
+
+- Full codebase check with `biome check`
+- Ensures no issues slip through
+
+### Available Scripts
+
+```bash
+# Development
+pnpm dev                 # Start development server with Turbopack
+pnpm build              # Build for production
+pnpm start              # Start production server
+
+# Code Quality
+pnpm check              # Check code with Biome
+pnpm check:fix          # Check and fix code issues
+pnpm lint               # Lint code only
+pnpm lint:fix           # Lint and fix issues
+pnpm format             # Format code only
+pnpm format:fix         # Format and fix issues
+
+# Testing
+pnpm test               # Run tests in watch mode
+pnpm test:run           # Run tests once
+pnpm test:coverage      # Run tests with coverage
+pnpm test:e2e           # Run end-to-end tests
+
+# Utilities
+pnpm generate-sitemap   # Generate sitemap.xml
+pnpm clean              # Clean node_modules and build files
+pnpm reinstall          # Clean and reinstall dependencies
+```
+
+### Code Quality Standards
+
+- **TypeScript**: Strict mode enabled with comprehensive type checking
+- **Biome**: Fast linter and formatter with sensible defaults
+- **Pre-commit**: Automatic code quality checks before commits
+- **Pre-push**: Full codebase validation before pushing
+- **Consistent Formatting**: 2-space indentation, double quotes, semicolons
+
 ## 🚀 Deployment
 
 Deployed on Vercel with:

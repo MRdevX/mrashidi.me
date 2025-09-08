@@ -22,6 +22,8 @@
     "format:fix": "biome format --write .",
     "check": "biome check .",
     "check:fix": "biome check --write .",
+    "prepare": "husky",
+    "pre-commit": "lint-staged",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
     "check-og-images": "node scripts/generate-og-images.js",
     "generate-og-images": "node scripts/generate-placeholder-og.js",
@@ -84,7 +86,9 @@
     "@types/xml2js": "^0.4.14",
     "@vitejs/plugin-react": "^5.0.2",
     "fast-glob": "^3.3.3",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
+    "lint-staged": "^16.1.6",
     "pino-pretty": "^13.1.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.12",
@@ -97,5 +101,21 @@
   "engines": {
     "node": "22.x",
     "pnpm": "10.x"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "biome check --write",
+      "biome format --write"
+    ],
+    "scripts/**/*.{js,ts}": [
+      "biome check --write",
+      "biome format --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "biome format --write"
+    ],
+    "src/**/*.{css,scss}": [
+      "biome check --write"
+    ]
   }
 }
