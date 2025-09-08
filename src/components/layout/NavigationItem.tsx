@@ -19,11 +19,16 @@ export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
   return (
     <Link
       href={item.href}
-      className={`nav-item ${isActive ? "nav-item-active" : "nav-item-inactive hover:nav-item-hover"}`}
+      className={`nav-item-hover-effect ${isActive ? "nav-item-active" : "nav-item-inactive"}`}
       aria-current={isActive ? "page" : undefined}
       onMouseEnter={handleMouseEnter}
     >
-      {item.name}
+      {/* Link text */}
+      <span className="nav-item-text">{item.name}</span>
+      {/* Top & bottom border animation */}
+      <span className="nav-item-border" />
+      {/* Background fill animation */}
+      <span className="nav-item-background" />
     </Link>
   );
 };
