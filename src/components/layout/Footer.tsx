@@ -15,7 +15,7 @@ function SocialLink({ href, icon, ariaLabel, isEmail = false }: SocialLinkProps)
       href={href}
       target={isEmail ? undefined : "_blank"}
       rel={isEmail ? undefined : "noopener noreferrer"}
-      className="social-link"
+      className="text-muted-foreground hover:text-primary block duration-150"
       aria-label={ariaLabel}
     >
       {icon}
@@ -29,35 +29,33 @@ export function Footer() {
   const socialLinks = [
     {
       href: config.social.github,
-      icon: <FaGithub className="icon-size-lg" />,
+      icon: <FaGithub className="size-6" />,
       ariaLabel: `Visit ${config.person.name}'s GitHub Profile`,
     },
     {
       href: config.social.linkedin,
-      icon: <FaLinkedin className="icon-size-lg" />,
+      icon: <FaLinkedin className="size-6" />,
       ariaLabel: `Visit ${config.person.name}'s LinkedIn Profile`,
     },
     {
       href: `mailto:${config.person.email}`,
-      icon: <Mail className="icon-size-lg" />,
+      icon: <Mail className="size-6" />,
       ariaLabel: `Email ${config.person.name}`,
       isEmail: true,
     },
   ];
 
   return (
-    <footer className="footer-container">
-      <div className="footer-content">
-        <div className="footer-card">
-          <p className="footer-copyright">
-            © {currentYear} {config.person.name}. All rights reserved.
-          </p>
-          <div className="social-links-container">
-            {socialLinks.map((link) => (
-              <SocialLink key={link.ariaLabel} {...link} />
-            ))}
-          </div>
+    <footer className="py-8 md:py-12">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
+          {socialLinks.map((link) => (
+            <SocialLink key={link.ariaLabel} {...link} />
+          ))}
         </div>
+        <span className="text-muted-foreground block text-center text-sm">
+          © {currentYear} {config.person.name}. All rights reserved.
+        </span>
       </div>
     </footer>
   );
