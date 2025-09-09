@@ -1,33 +1,26 @@
-"use client";
-
-import { useUser } from "@auth0/nextjs-auth0";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { auth0 } from "@/lib/auth0";
 
-export default function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
-  const { user, isLoading, error } = useUser();
-  const router = useRouter();
+export default async function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
+  const session = await auth0.getSession();
 
-  console.log("Admin layout - user:", user, "isLoading:", isLoading, "error:", error);
-
-  useEffect(() => {
-    if (!isLoading && !user) {
-      console.log("No user found, redirecting to login");
-      router.push("/admin/login");
-    }
-  }, [user, isLoading, router]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    );
+  if (!session || !session.user) {
+    redirect("/auth/login?returnTo=/admin");
   }
 
-  if (!user) {
-    return null;
+  const userRoles =
+    session.user["https://mrashidi.eu.auth0.com/roles"] ||
+    session.user.roles ||
+    session.user["https://mrashidi.me/roles"] ||
+    [];
+
+  const isAdmin = Array.isArray(userRoles)
+    ? userRoles.includes("admin") || userRoles.includes("Admin") || userRoles.includes("ADMIN")
+    : userRoles === "admin" || userRoles === "Admin" || userRoles === "ADMIN";
+
+  if (!isAdmin) {
+    redirect("/");
   }
 
   return <AdminLayout>{children}</AdminLayout>;
