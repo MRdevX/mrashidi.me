@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { lazy, Suspense } from "react";
+import { lazy, type ReactNode, Suspense } from "react";
 import { MainContent } from "./MainContent";
 
 const Navbar = lazy(() =>
@@ -23,11 +23,11 @@ const Footer = lazy(() =>
 );
 
 interface LayoutWrapperProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function LayoutWrapper({ children }: LayoutWrapperProps) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const isAdminRoute = pathname.startsWith("/admin");
 
   if (isAdminRoute) {
