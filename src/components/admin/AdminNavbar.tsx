@@ -85,7 +85,7 @@ export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
                 </button>
                 <hr className="my-1 border-primary/20" />
                 <a
-                  href="/api/auth/logout"
+                  href="/auth/logout?returnTo=/"
                   className="flex items-center w-full px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300"
                 >
                   Logout

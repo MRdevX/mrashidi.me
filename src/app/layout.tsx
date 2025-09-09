@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/index.css";
+import { Auth0Provider } from "@auth0/nextjs-auth0";
 import { lazy, Suspense } from "react";
-import { UserProvider } from "@/components/auth";
 import { HeadMeta, LayoutWrapper } from "@/components/layout";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { inter } from "@/lib/fonts";
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <HeadMeta />
       </head>
       <body className={`${inter.className} min-h-screen relative`}>
-        <UserProvider>
+        <Auth0Provider>
           <ThemeProvider>
             <Suspense fallback={null}>
               <BackgroundEffects />
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <AnalyticsWrapper />
             </Suspense>
           </ThemeProvider>
-        </UserProvider>
+        </Auth0Provider>
       </body>
     </html>
   );

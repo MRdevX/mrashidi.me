@@ -6,11 +6,14 @@ import { useEffect } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export default function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
-  const { user, isLoading } = useUser();
+  const { user, isLoading, error } = useUser();
   const router = useRouter();
+
+  console.log("Admin layout - user:", user, "isLoading:", isLoading, "error:", error);
 
   useEffect(() => {
     if (!isLoading && !user) {
+      console.log("No user found, redirecting to login");
       router.push("/admin/login");
     }
   }, [user, isLoading, router]);
@@ -24,7 +27,7 @@ export default function AdminLayoutWrapper({ children }: { children: React.React
   }
 
   if (!user) {
-    return null; // Will redirect via useEffect
+    return null;
   }
 
   return <AdminLayout>{children}</AdminLayout>;
