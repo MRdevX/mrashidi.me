@@ -4,6 +4,7 @@ import { API_CONFIG } from "@/lib/core";
 import { handleError, logError } from "@/lib/errors";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
 import { createErrorResponse } from "./response";
+import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
 
 export function withErrorHandling(handler: ApiHandler): ApiHandler {
@@ -51,21 +52,23 @@ export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHa
       const rateLimitResult = await checkRateLimit(rateLimiterType, identifier);
 
       if (!rateLimitResult.success) {
-        return NextResponse.json(
-          {
-            error: "Rate limit exceeded",
-            message: "Too many requests. Please try again later.",
-            retryAfter: Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000),
-          },
-          {
-            status: 429,
-            headers: {
-              "Retry-After": Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000).toString(),
-              "X-RateLimit-Limit": rateLimitResult.limit.toString(),
-              "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
-              "X-RateLimit-Reset": rateLimitResult.reset.toISOString(),
+        return addSecurityHeaders(
+          NextResponse.json(
+            {
+              error: "Rate limit exceeded",
+              message: "Too many requests. Please try again later.",
+              retryAfter: Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000),
             },
-          }
+            {
+              status: 429,
+              headers: {
+                "Retry-After": Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000).toString(),
+                "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+                "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+                "X-RateLimit-Reset": rateLimitResult.reset.toISOString(),
+              },
+            }
+          )
         );
       }
 
@@ -75,7 +78,7 @@ export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHa
       response.headers.set("X-RateLimit-Remaining", rateLimitResult.remaining.toString());
       response.headers.set("X-RateLimit-Reset", rateLimitResult.reset.toISOString());
 
-      return response;
+      return addSecurityHeaders(response);
     });
   };
 }
