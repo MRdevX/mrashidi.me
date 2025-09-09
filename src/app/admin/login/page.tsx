@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
         </div>
         <div className="mt-8 space-y-6">
           <a
-            href="/auth/login?returnTo=/admin"
+            href="/api/auth/login?returnTo=/admin"
             className="group relative w-full flex justify-center py-4 px-6 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 shadow-lg hover:shadow-neon"
           >
             <span className="relative z-10">Sign in with Auth0</span>

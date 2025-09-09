@@ -13,14 +13,23 @@ const EnvSchema = z.object({
   RECAPTCHA_SITE_KEY: z.string().optional(),
   EMAIL_SERVICE_API_KEY: z.string().optional(),
   EMAIL_SERVICE_DOMAIN: z.string().optional(),
-  EMAIL_FROM: z.string().email().optional(),
-  EMAIL_TO: z.string().email().optional(),
+  EMAIL_FROM: z.email().optional(),
+  EMAIL_TO: z.email().optional(),
 
   AWS_REGION: z.string().optional(),
   AWS_ACCESS_KEY_ID: z.string().optional(),
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
-  EMAIL_FROM_ADDRESS: z.string().email().optional(),
-  EMAIL_TO_ADDRESS: z.string().email().optional(),
+  EMAIL_FROM_ADDRESS: z.email().optional(),
+  EMAIL_TO_ADDRESS: z.email().optional(),
+
+  AUTH0_SECRET: z.string().min(1).optional(),
+  AUTH0_BASE_URL: z.url().optional(),
+  AUTH0_ISSUER_BASE_URL: z.url().optional(),
+  AUTH0_CLIENT_ID: z.string().min(1).optional(),
+  AUTH0_CLIENT_SECRET: z.string().min(1).optional(),
+  AUTH0_DOMAIN: z.string().optional(),
+  APP_BASE_URL: z.url().optional(),
+  PREFERRED_ROLE_CLAIM: z.string().optional(),
 });
 
 export const env = EnvSchema.parse({
@@ -43,6 +52,15 @@ export const env = EnvSchema.parse({
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
   EMAIL_TO_ADDRESS: process.env.EMAIL_TO_ADDRESS,
+
+  AUTH0_SECRET: process.env.AUTH0_SECRET,
+  AUTH0_BASE_URL: process.env.AUTH0_BASE_URL,
+  AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
+  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+  AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
+  AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+  APP_BASE_URL: process.env.APP_BASE_URL,
+  PREFERRED_ROLE_CLAIM: process.env.PREFERRED_ROLE_CLAIM,
 });
 
 export type Env = z.infer<typeof EnvSchema>;
