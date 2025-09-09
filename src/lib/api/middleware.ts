@@ -1,7 +1,10 @@
-import type { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/core";
 import { handleError, logError } from "@/lib/errors";
+import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
 import { createErrorResponse } from "./response";
+import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
 
 export function withErrorHandling(handler: ApiHandler): ApiHandler {
@@ -40,4 +43,42 @@ export function withPagination(
       limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
     });
   });
+}
+
+export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHandler) => ApiHandler {
+  return (handler: ApiHandler): ApiHandler => {
+    return withErrorHandling(async (request: NextRequest) => {
+      const identifier = getClientIdentifier(request);
+      const rateLimitResult = await checkRateLimit(rateLimiterType, identifier);
+
+      if (!rateLimitResult.success) {
+        return addSecurityHeaders(
+          NextResponse.json(
+            {
+              error: "Rate limit exceeded",
+              message: "Too many requests. Please try again later.",
+              retryAfter: Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000),
+            },
+            {
+              status: 429,
+              headers: {
+                "Retry-After": Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000).toString(),
+                "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+                "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+                "X-RateLimit-Reset": rateLimitResult.reset.toISOString(),
+              },
+            }
+          )
+        );
+      }
+
+      const response = await handler(request);
+
+      response.headers.set("X-RateLimit-Limit", rateLimitResult.limit.toString());
+      response.headers.set("X-RateLimit-Remaining", rateLimitResult.remaining.toString());
+      response.headers.set("X-RateLimit-Reset", rateLimitResult.reset.toISOString());
+
+      return addSecurityHeaders(response);
+    });
+  };
 }

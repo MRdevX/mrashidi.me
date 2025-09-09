@@ -5,7 +5,7 @@ import { projects } from "@/data";
 import type { TechnologyCategory } from "@/lib/core";
 import { logger } from "@/lib/core";
 import { filterProjects, processTechnologyData } from "@/lib/tech";
-import { githubService } from "@/server/github.service";
+import { githubService } from "@/services/github.service";
 import { useCache } from "./useCache";
 
 interface CommitInfo {

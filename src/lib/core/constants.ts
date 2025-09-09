@@ -21,6 +21,20 @@ export const API_CONFIG = {
     GRAPHQL_URL: "https://api.github.com/graphql",
     USERNAME: "mrdevx",
   },
+  RATE_LIMIT: {
+    CONTACT_FORM: {
+      requests: 5,
+      window: "1 m",
+    },
+    CV_UPLOAD: {
+      requests: 3,
+      window: "1 h",
+    },
+    GENERAL_API: {
+      requests: 100,
+      window: "1 m",
+    },
+  },
 } as const;
 
 export const BLOG_AUTHORS = [
