@@ -31,11 +31,9 @@ export function LayoutWrapper({ children }: LayoutWrapperProps) {
   const isAdminRoute = pathname.startsWith("/admin");
 
   if (isAdminRoute) {
-    // For admin routes, only render the children without any main site layout
     return <>{children}</>;
   }
 
-  // For regular routes, render the full layout
   return (
     <>
       <Suspense fallback={null}>

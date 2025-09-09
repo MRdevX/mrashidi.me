@@ -12,7 +12,6 @@ export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const pathname = usePathname();
 
-  // Get page title based on current path
   const getPageTitle = () => {
     switch (pathname) {
       case "/admin":
