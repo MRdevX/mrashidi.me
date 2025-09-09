@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.62](https://github.com/MRdevX/mrashidi.me/compare/v0.1.59...v0.1.62) (2025-09-09)
+
+
+### Features
+
+* enhance file upload security with validation and sanitization ([1b0ed59](https://github.com/MRdevX/mrashidi.me/commit/1b0ed59a089cbfca192dfb8e6519cc6e186c2d6e))
+* enhance file upload security with validation and sanitization ([6146821](https://github.com/MRdevX/mrashidi.me/commit/614682185423d2789fc83615ab97c02703d02ab3))
+* implement rate limiting for API endpoints using Upstash ([177756f](https://github.com/MRdevX/mrashidi.me/commit/177756fc20f258979be72e580edb11f9c33404ca))
+
+
+### Bug Fixes
+
+* update reCAPTCHA verification request to use POST method with form-urlencoded body ([3b881ac](https://github.com/MRdevX/mrashidi.me/commit/3b881acf349f0cdd1195e0a121a918acc202bcbf))
+
+### [0.1.61](https://github.com/MRdevX/mrashidi.me/compare/v0.1.59...v0.1.61) (2025-09-09)
+
+
+### Features
+
+* enhance file upload security with validation and sanitization ([1b0ed59](https://github.com/MRdevX/mrashidi.me/commit/1b0ed59a089cbfca192dfb8e6519cc6e186c2d6e))
+* enhance file upload security with validation and sanitization ([6146821](https://github.com/MRdevX/mrashidi.me/commit/614682185423d2789fc83615ab97c02703d02ab3))
+* implement rate limiting for API endpoints using Upstash ([177756f](https://github.com/MRdevX/mrashidi.me/commit/177756fc20f258979be72e580edb11f9c33404ca))
+
+
+### Bug Fixes
+
+* update reCAPTCHA verification request to use POST method with form-urlencoded body ([3b881ac](https://github.com/MRdevX/mrashidi.me/commit/3b881acf349f0cdd1195e0a121a918acc202bcbf))
+
+### [0.1.60](https://github.com/MRdevX/mrashidi.me/compare/v0.1.59...v0.1.60) (2025-09-09)
+
+
+### Features
+
+* enhance file upload security with validation and sanitization ([1b0ed59](https://github.com/MRdevX/mrashidi.me/commit/1b0ed59a089cbfca192dfb8e6519cc6e186c2d6e))
+* enhance file upload security with validation and sanitization ([6146821](https://github.com/MRdevX/mrashidi.me/commit/614682185423d2789fc83615ab97c02703d02ab3))
+* implement rate limiting for API endpoints using Upstash ([177756f](https://github.com/MRdevX/mrashidi.me/commit/177756fc20f258979be72e580edb11f9c33404ca))
+
+
+### Bug Fixes
+
+* update reCAPTCHA verification request to use POST method with form-urlencoded body ([3b881ac](https://github.com/MRdevX/mrashidi.me/commit/3b881acf349f0cdd1195e0a121a918acc202bcbf))
+
 ### [0.1.59](https://github.com/MRdevX/mrashidi.me/compare/v0.1.57...v0.1.59) (2025-09-09)
 
 
