@@ -42,7 +42,7 @@ export function AdminDashboard() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange">Dashboard Overview</h1>
+        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">Dashboard Overview</h1>
         <p className="text-gray-300">Welcome to your admin dashboard</p>
       </div>
 

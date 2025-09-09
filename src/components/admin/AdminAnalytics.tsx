@@ -2,9 +2,14 @@
 
 export function AdminAnalytics() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-6">Analytics</h1>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">Analytics</h1>
+        <p className="text-gray-300">Website performance and user analytics</p>
+      </div>
 
+      {/* Analytics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-gray-800/50 backdrop-blur-sm border border-primary/20 rounded-lg p-6 glass-card">
           <p className="text-sm text-gray-300 mb-1">Page Views</p>

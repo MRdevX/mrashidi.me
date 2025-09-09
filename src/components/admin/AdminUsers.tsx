@@ -9,9 +9,14 @@ const mockUsers = [
 
 export function AdminUsers() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-6">User Management</h1>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">User Management</h1>
+        <p className="text-gray-300">Manage user accounts and permissions</p>
+      </div>
 
+      {/* Users Table */}
       <div className="bg-gray-800/50 backdrop-blur-sm border border-primary/20 rounded-lg overflow-hidden glass-card">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

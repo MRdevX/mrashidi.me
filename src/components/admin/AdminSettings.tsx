@@ -18,9 +18,14 @@ export function AdminSettings() {
   const sessionTimeoutId = useId();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-6">Settings</h1>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">Settings</h1>
+        <p className="text-gray-300">Configure system settings and preferences</p>
+      </div>
 
+      {/* Settings Content */}
       <div className="space-y-6">
         {/* General Settings */}
         <div className="bg-gray-800/50 backdrop-blur-sm border border-primary/20 rounded-lg p-6 glass-card">
