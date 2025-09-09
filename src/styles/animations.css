@@ -105,7 +105,7 @@
     }
   }
 
-  /* Matrix rain effect */
+  /* Matrix rain effect - optimized for performance */
   .matrix-bg {
     position: fixed;
     top: 0;
@@ -113,18 +113,19 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.1;
+    opacity: 0.05; /* Reduced opacity */
     background:
       linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
       repeating-linear-gradient(
         0deg,
-        rgba(0, 255, 0, 0.2) 0%,
-        rgba(0, 255, 0, 0.2) 1px,
+        rgba(0, 255, 0, 0.1) 0%,
+        /* Reduced opacity */ rgba(0, 255, 0, 0.1) 1px,
         transparent 1px,
-        transparent 2px
+        transparent 3px /* Increased spacing */
       );
-    background-size: 100% 2px;
-    animation: matrix 20s linear infinite;
+    background-size: 100% 3px; /* Increased size for less frequent updates */
+    animation: matrix 30s linear infinite; /* Slower animation */
+    will-change: background-position; /* Optimize for GPU */
   }
 
   @keyframes matrix {
@@ -136,7 +137,7 @@
     }
   }
 
-  /* Scanline effect */
+  /* Scanline effect - optimized for performance */
   .scanline {
     position: relative;
     overflow: hidden;
@@ -146,9 +147,10 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.1);
-    animation: scanning 3s linear infinite;
+    height: 1px; /* Reduced height */
+    background: rgba(255, 255, 255, 0.05); /* Reduced opacity */
+    animation: scanning 8s linear infinite; /* Slower animation */
+    will-change: transform; /* Optimize for GPU */
   }
 
   @keyframes scanning {
@@ -246,11 +248,17 @@
     }
   }
 
-  /* Matrix rain */
+  /* Matrix rain - optimized for performance */
   .matrix-rain {
-    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 70, 0.1) 50%, transparent 100%);
-    background-size: 100% 20px;
-    animation: matrix-rain 1s linear infinite;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 255, 70, 0.05) 50%,
+      transparent 100%
+    ); /* Reduced opacity */
+    background-size: 100% 30px; /* Increased size for less frequent updates */
+    animation: matrix-rain 2s linear infinite; /* Slower animation */
+    will-change: background-position; /* Optimize for GPU */
   }
 
   @keyframes matrix-rain {
@@ -258,7 +266,7 @@
       background-position: 0 0;
     }
     100% {
-      background-position: 0 20px;
+      background-position: 0 30px;
     }
   }
 
