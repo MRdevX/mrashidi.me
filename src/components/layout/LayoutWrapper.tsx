@@ -1,0 +1,51 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { lazy, type ReactNode, Suspense } from "react";
+import { MainContent } from "./MainContent";
+
+const Navbar = lazy(() =>
+  import("@/components/layout").then((module) => ({
+    default: module.Navbar,
+  }))
+);
+
+const BottomNavigation = lazy(() =>
+  import("@/components/layout").then((module) => ({
+    default: module.BottomNavigation,
+  }))
+);
+
+const Footer = lazy(() =>
+  import("@/components/layout").then((module) => ({
+    default: module.Footer,
+  }))
+);
+
+interface LayoutWrapperProps {
+  children: ReactNode;
+}
+
+export function LayoutWrapper({ children }: LayoutWrapperProps) {
+  const pathname = usePathname() ?? "";
+  const isAdminRoute = pathname.startsWith("/admin");
+
+  if (isAdminRoute) {
+    return <>{children}</>;
+  }
+
+  return (
+    <>
+      <Suspense fallback={null}>
+        <Navbar />
+      </Suspense>
+      <MainContent>{children}</MainContent>
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
+      <Suspense fallback={null}>
+        <BottomNavigation />
+      </Suspense>
+    </>
+  );
+}
