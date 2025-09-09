@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@/styles/index.css";
 import { lazy, Suspense } from "react";
 
-import { HeadMeta, MainContent, Navbar } from "@/components/layout";
+import { HeadMeta, LayoutWrapper } from "@/components/layout";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { inter } from "@/lib/fonts";
 import { generateRootMetadata, generateViewport } from "@/lib/metadata";
@@ -10,18 +10,6 @@ import { generateRootMetadata, generateViewport } from "@/lib/metadata";
 const AnalyticsWrapper = lazy(() =>
   import("@/components/layout").then((module) => ({
     default: module.AnalyticsWrapper,
-  }))
-);
-
-const BottomNavigation = lazy(() =>
-  import("@/components/layout").then((module) => ({
-    default: module.BottomNavigation,
-  }))
-);
-
-const Footer = lazy(() =>
-  import("@/components/layout").then((module) => ({
-    default: module.Footer,
   }))
 );
 
@@ -54,14 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={null}>
             <BlogPreloader />
           </Suspense>
-          <Navbar />
-          <MainContent>{children}</MainContent>
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-          <Suspense fallback={null}>
-            <BottomNavigation />
-          </Suspense>
+          <LayoutWrapper>{children}</LayoutWrapper>
           <Suspense fallback={null}>
             <AnalyticsWrapper />
           </Suspense>

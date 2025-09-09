@@ -5,6 +5,7 @@ export { BrandLogo } from "./BrandLogo";
 export { FloatingActionButton } from "./FloatingActionButton";
 export { Footer } from "./Footer";
 export { HeadMeta } from "./HeadMeta";
+export { LayoutWrapper } from "./LayoutWrapper";
 export { MainContent } from "./MainContent";
 export { MobileMenuButton } from "./MobileMenuButton";
 export { MobileNavigationItem } from "./MobileNavigationItem";
