@@ -18,8 +18,10 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
     throw new AuthenticationError("reCAPTCHA secret key not configured");
   }
 
-  const response = await fetch(`${VERIFY_URL}?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`, {
+  const response = await fetch(VERIFY_URL, {
     method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
   });
 
   if (!response.ok) {
