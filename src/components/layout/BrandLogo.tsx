@@ -2,10 +2,18 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { performanceUtils } from "@/lib/utils/performance";
 
 export const BrandLogo = () => {
   const { getSectionTitle, getColor } = useThemeConfig();
+  const [isLowPerformance, setIsLowPerformance] = useState(false);
+
+  useEffect(() => {
+    const { isLowEnd } = performanceUtils.detectDeviceCapabilities();
+    setIsLowPerformance(isLowEnd);
+  }, []);
 
   return (
     <Link href="/" className="flex items-center shrink-0 group" aria-label="Mahdi Rashidi - Home">
@@ -13,36 +21,34 @@ export const BrandLogo = () => {
         className="relative"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
       >
         <motion.span
           className={`text-lg font-bold ${getSectionTitle()} relative z-10`}
-          whileHover={{
-            scale: 1.05,
-            textShadow: `0 0 8px ${getColor("primary")}99`,
-          }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.2 }}
+          whileHover={
+            !isLowPerformance
+              ? {
+                  scale: 1.02,
+                  textShadow: `0 0 4px ${getColor("primary")}66`,
+                }
+              : {}
+          }
+          whileTap={!isLowPerformance ? { scale: 0.98 } : {}}
+          transition={{ duration: 0.15 }}
         >
           MR
         </motion.span>
-        <motion.div
-          className="absolute -inset-1 bg-orange-500/20 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          initial={false}
-        />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          initial={false}
-          animate={{
-            x: ["-100%", "100%"],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            repeatDelay: 2,
-            ease: "easeInOut",
-          }}
-        />
+
+        {/* Simplified effects for better performance */}
+        {!isLowPerformance && (
+          <>
+            <motion.div
+              className="absolute -inset-1 bg-orange-500/10 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              initial={false}
+            />
+            {/* Removed the infinite animation for better performance */}
+          </>
+        )}
       </motion.div>
     </Link>
   );

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { performanceUtils } from "@/lib/utils/performance";
 
 interface Particle {
   x: number;
@@ -15,11 +16,19 @@ export function BackgroundEffects() {
   const matrixRef = useRef<Particle[]>([]);
   const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isLowPerformance, setIsLowPerformance] = useState(false);
+  const [shouldDisableEffects, setShouldDisableEffects] = useState(false);
+  const lastFrameTime = useRef(0);
+  const frameCount = useRef(0);
 
   const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
 
   useEffect(() => {
     setMounted(true);
+
+    const { isLowEnd, shouldDisableEffects: disableEffects } = performanceUtils.detectDeviceCapabilities();
+    setIsLowPerformance(isLowEnd);
+    setShouldDisableEffects(disableEffects);
 
     const isDarkMode = document.documentElement.classList.contains("dark");
     setIsDark(isDarkMode);
@@ -64,23 +73,36 @@ export function BackgroundEffects() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    const particleCount = Math.floor(canvas.width / 50);
+    const baseParticleCount = isLowPerformance ? 20 : Math.floor(canvas.width / 100);
+    const particleCount = Math.min(baseParticleCount, 60);
+
     matrixRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      speed: 0.8 + Math.random() * 2,
+      speed: 0.8 + Math.random() * 1.5,
       char: chars[Math.floor(Math.random() * chars.length)],
     }));
 
     let animationFrame: number;
-    const animate = () => {
-      const bgColor = isDark ? "rgba(0, 0, 0, 0.03)" : "rgba(255, 255, 255, 0.03)";
+    const targetFPS = isLowPerformance ? 20 : 30;
+    const frameInterval = 1000 / targetFPS;
+
+    const animate = (currentTime: number) => {
+      if (currentTime - lastFrameTime.current < frameInterval) {
+        animationFrame = requestAnimationFrame(animate);
+        return;
+      }
+
+      lastFrameTime.current = currentTime;
+      frameCount.current++;
+
+      const bgColor = isDark ? "rgba(0, 0, 0, 0.02)" : "rgba(255, 255, 255, 0.02)";
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const textColor = isDark ? "#0f0" : "#006400";
       ctx.fillStyle = textColor;
-      ctx.font = "12px monospace";
+      ctx.font = "11px monospace";
 
       for (const particle of matrixRef.current) {
         ctx.fillText(particle.char, particle.x, particle.y);
@@ -96,54 +118,69 @@ export function BackgroundEffects() {
       animationFrame = requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(0);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrame);
     };
-  }, [isDark, mounted]);
+  }, [isDark, mounted, isLowPerformance]);
 
   if (!mounted) {
     return null;
   }
 
+  if (shouldDisableEffects) {
+    return (
+      <>
+        {/* Minimal gradient overlays only */}
+        <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/10 to-transparent dark:from-black/20 pointer-events-none z-0" />
+        <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/10 to-transparent dark:from-black/20 pointer-events-none z-0" />
+      </>
+    );
+  }
+
   return (
     <>
-      {/* Matrix animation */}
+      {/* Matrix animation - reduced opacity for better performance */}
       <canvas
         ref={canvasRef}
-        className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${isDark ? "opacity-30" : "opacity-15"}`}
+        className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
+          isLowPerformance ? (isDark ? "opacity-10" : "opacity-5") : isDark ? "opacity-20" : "opacity-10"
+        }`}
       />
 
       {/* Gradient overlays */}
       <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
       <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
 
-      {/* Radial gradient effects */}
-      <motion.div
-        className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
-        animate={{
-          background: [
-            "radial-gradient(circle at 0% 0%, rgba(255,95,31,0.1) 0%, transparent 50%)",
-            "radial-gradient(circle at 100% 100%, rgba(255,95,31,0.1) 0%, transparent 50%)",
-            "radial-gradient(circle at 0% 100%, rgba(255,95,31,0.1) 0%, transparent 50%)",
-            "radial-gradient(circle at 100% 0%, rgba(255,95,31,0.1) 0%, transparent 50%)",
-          ],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-      />
+      {/* Radial gradient effects - simplified for performance */}
+      {!isLowPerformance && (
+        <motion.div
+          className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
+          animate={{
+            background: [
+              "radial-gradient(circle at 0% 0%, rgba(255,95,31,0.05) 0%, transparent 40%)",
+              "radial-gradient(circle at 100% 100%, rgba(255,95,31,0.05) 0%, transparent 40%)",
+            ],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+        />
+      )}
 
-      {/* Scanline effect */}
-      <div
-        className={`scanline fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
-          isDark ? "opacity-10" : "opacity-5"
-        }`}
-      />
+      {/* Scanline effect - reduced for performance */}
+      {!isLowPerformance && (
+        <div
+          className={`scanline fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
+            isDark ? "opacity-5" : "opacity-3"
+          }`}
+        />
+      )}
     </>
   );
 }
