@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { AdminNavbar } from "./AdminNavbar";
 import { AdminSidebar } from "./AdminSidebar";
 
 interface AdminLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function AdminLayout({ children }: AdminLayoutProps) {
