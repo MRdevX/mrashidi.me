@@ -26,14 +26,11 @@ export default function AdminLoginPage() {
   }
 
   if (error) {
-    // Log the full error for developers (only in development)
     if (process.env.NODE_ENV !== "production") {
       console.error("Auth0 login error:", error);
     }
 
-    // Log to error tracking service in production
     if (process.env.NODE_ENV === "production") {
-      // You can integrate with Sentry, LogRocket, or other error tracking services here
       console.error("Auth0 login error:", error);
     }
 

@@ -1,4 +1,4 @@
-import { Auth0Client } from "@auth0/nextjs-auth0/server";
+import { Auth0Client } from "@auth0/nextjs-auth0/edge";
 
 function getAuth0Scope(): string {
   const envScope = process.env.AUTH0_SCOPE;
@@ -14,7 +14,7 @@ function getAuth0Scope(): string {
   return envScope;
 }
 
-export const auth0 = new Auth0Client({
+export const auth0Edge = new Auth0Client({
   authorizationParameters: {
     scope: getAuth0Scope(),
 
