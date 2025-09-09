@@ -35,10 +35,6 @@ export const rateLimiters = {
 
 export type RateLimiterType = keyof typeof rateLimiters;
 
-/**
- * Get client identifier for rate limiting
- * Uses IP address from headers, falls back to a default identifier
- */
 export function getClientIdentifier(request: Request): string {
   const forwardedFor = request.headers.get("x-forwarded-for");
   const realIp = request.headers.get("x-real-ip");
@@ -49,9 +45,6 @@ export function getClientIdentifier(request: Request): string {
   return ip || "unknown";
 }
 
-/**
- * Check rate limit for a specific endpoint
- */
 export async function checkRateLimit(
   rateLimiterType: RateLimiterType,
   identifier: string

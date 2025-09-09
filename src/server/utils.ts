@@ -1,8 +1,5 @@
 import { APIError } from "@/lib/errors";
 
-/**
- * Simple utility for making HTTP requests with timeout
- */
 export async function fetchWithTimeout(
   url: string,
   options: RequestInit = {},
@@ -24,9 +21,6 @@ export async function fetchWithTimeout(
   }
 }
 
-/**
- * Simple utility for fetching JSON with error handling
- */
 export async function fetchJSON<T>(url: string, options: RequestInit = {}): Promise<T> {
   const response = await fetchWithTimeout(url, options);
 

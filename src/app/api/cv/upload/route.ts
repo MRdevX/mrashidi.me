@@ -1,6 +1,8 @@
+import { pdfUploadSecurity } from "@server/upload-security.service";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { withRateLimit } from "@/lib/api/middleware";
+import { withSecurityHeaders } from "@/lib/api/securityHeaders";
 import { logger } from "@/lib/core";
 import { APIError } from "@/lib/errors";
 import { uploadCV } from "@/server/blob.service";
@@ -19,13 +21,15 @@ const validateAuth = (request: NextRequest): void => {
   }
 };
 
-const validateFile = (file: File | null): File => {
+const validateFile = async (file: File | null): Promise<File> => {
   if (!file) {
     throw new APIError("No file provided", 400);
   }
 
-  if (!file.type.includes("pdf")) {
-    throw new APIError("File must be a PDF", 400);
+  const validationResult = await pdfUploadSecurity.validateFile(file);
+
+  if (!validationResult.isValid) {
+    throw new APIError(`File validation failed: ${validationResult.errors.join(", ")}`, 400);
   }
 
   return file;
@@ -46,7 +50,7 @@ async function handleCVUpload(request: NextRequest) {
     validateAuth(request);
 
     const formData = await request.formData();
-    const file = validateFile(formData.get("file") as File);
+    const file = await validateFile(formData.get("file") as File);
     const url = await uploadCV(file);
 
     logSuccess(url, file);
@@ -71,4 +75,4 @@ async function handleCVUpload(request: NextRequest) {
   }
 }
 
-export const POST = withRateLimit("cvUpload")(handleCVUpload);
+export const POST = withRateLimit("cvUpload")(withSecurityHeaders(handleCVUpload));
