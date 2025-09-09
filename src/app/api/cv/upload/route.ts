@@ -1,4 +1,6 @@
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { withRateLimit } from "@/lib/api/middleware";
 import { logger } from "@/lib/core";
 import { APIError } from "@/lib/errors";
 import { uploadCV } from "@/server/blob.service";
@@ -39,7 +41,7 @@ const logSuccess = (url: string, file: File) => {
   });
 };
 
-export async function POST(request: NextRequest) {
+async function handleCVUpload(request: NextRequest) {
   try {
     validateAuth(request);
 
@@ -49,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     logSuccess(url, file);
 
-    return Response.json({
+    return NextResponse.json({
       success: true,
       message: "CV uploaded and replaced successfully",
       url,
@@ -68,3 +70,5 @@ export async function POST(request: NextRequest) {
     throw new APIError("Failed to upload CV");
   }
 }
+
+export const POST = withRateLimit("cvUpload")(handleCVUpload);

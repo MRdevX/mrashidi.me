@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { withRateLimit } from "@/lib/api/middleware";
 import { logger } from "@/lib/core";
 
 interface LatestCommitInfo {
@@ -82,7 +83,7 @@ const getLatestCommitInfo = async (githubUrl: string): Promise<LatestCommitInfo 
   return null;
 };
 
-export async function GET(request: NextRequest) {
+async function handleGitHubRequest(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get("action");
@@ -103,3 +104,5 @@ export async function GET(request: NextRequest) {
     return createErrorResponse("Internal server error", 500);
   }
 }
+
+export const GET = withRateLimit("generalApi")(handleGitHubRequest);
