@@ -52,39 +52,51 @@ export function AdminSettings() {
               <label htmlFor={notificationsId} className="text-sm font-medium text-gray-300">
                 Enable Notifications
               </label>
-              <button
-                id={notificationsId}
-                type="button"
-                onClick={() => setNotifications(!notifications)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  notifications ? "bg-primary" : "bg-gray-600"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    notifications ? "translate-x-6" : "translate-x-1"
-                  }`}
+              <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
+                <input
+                  id={notificationsId}
+                  type="checkbox"
+                  checked={notifications}
+                  onChange={() => setNotifications(!notifications)}
+                  className="sr-only"
                 />
-              </button>
+                <span
+                  className={`inline-block h-6 w-11 rounded-full transition-colors cursor-pointer ${
+                    notifications ? "bg-primary" : "bg-gray-600"
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      notifications ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </span>
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <label htmlFor={maintenanceId} className="text-sm font-medium text-gray-300">
                 Maintenance Mode
               </label>
-              <button
-                id={maintenanceId}
-                type="button"
-                onClick={() => setMaintenanceMode(!maintenanceMode)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  maintenanceMode ? "bg-primary" : "bg-gray-600"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    maintenanceMode ? "translate-x-6" : "translate-x-1"
-                  }`}
+              <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
+                <input
+                  id={maintenanceId}
+                  type="checkbox"
+                  checked={maintenanceMode}
+                  onChange={() => setMaintenanceMode(!maintenanceMode)}
+                  className="sr-only"
                 />
-              </button>
+                <span
+                  className={`inline-block h-6 w-11 rounded-full transition-colors cursor-pointer ${
+                    maintenanceMode ? "bg-primary" : "bg-gray-600"
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      maintenanceMode ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -97,58 +109,76 @@ export function AdminSettings() {
               <label htmlFor={twoFactorId} className="text-sm font-medium text-gray-300">
                 Two-Factor Authentication
               </label>
-              <button
-                id={twoFactorId}
-                type="button"
-                onClick={() => setTwoFactor(!twoFactor)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  twoFactor ? "bg-primary" : "bg-gray-600"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    twoFactor ? "translate-x-6" : "translate-x-1"
-                  }`}
+              <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
+                <input
+                  id={twoFactorId}
+                  type="checkbox"
+                  checked={twoFactor}
+                  onChange={() => setTwoFactor(!twoFactor)}
+                  className="sr-only"
                 />
-              </button>
+                <span
+                  className={`inline-block h-6 w-11 rounded-full transition-colors cursor-pointer ${
+                    twoFactor ? "bg-primary" : "bg-gray-600"
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      twoFactor ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </span>
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <label htmlFor={emailVerificationId} className="text-sm font-medium text-gray-300">
                 Email Verification
               </label>
-              <button
-                id={emailVerificationId}
-                type="button"
-                onClick={() => setEmailVerification(!emailVerification)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  emailVerification ? "bg-primary" : "bg-gray-600"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    emailVerification ? "translate-x-6" : "translate-x-1"
-                  }`}
+              <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
+                <input
+                  id={emailVerificationId}
+                  type="checkbox"
+                  checked={emailVerification}
+                  onChange={() => setEmailVerification(!emailVerification)}
+                  className="sr-only"
                 />
-              </button>
+                <span
+                  className={`inline-block h-6 w-11 rounded-full transition-colors cursor-pointer ${
+                    emailVerification ? "bg-primary" : "bg-gray-600"
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      emailVerification ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </span>
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <label htmlFor={sessionTimeoutId} className="text-sm font-medium text-gray-300">
                 Session Timeout
               </label>
-              <button
-                id={sessionTimeoutId}
-                type="button"
-                onClick={() => setSessionTimeout(!sessionTimeout)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  sessionTimeout ? "bg-primary" : "bg-gray-600"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    sessionTimeout ? "translate-x-6" : "translate-x-1"
-                  }`}
+              <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
+                <input
+                  id={sessionTimeoutId}
+                  type="checkbox"
+                  checked={sessionTimeout}
+                  onChange={() => setSessionTimeout(!sessionTimeout)}
+                  className="sr-only"
                 />
-              </button>
+                <span
+                  className={`inline-block h-6 w-11 rounded-full transition-colors cursor-pointer ${
+                    sessionTimeout ? "bg-primary" : "bg-gray-600"
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      sessionTimeout ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </span>
+              </div>
             </div>
           </div>
         </div>
