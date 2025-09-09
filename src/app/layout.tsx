@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/index.css";
 import { lazy, Suspense } from "react";
-
+import { UserProvider } from "@/components/auth";
 import { HeadMeta, LayoutWrapper } from "@/components/layout";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { inter } from "@/lib/fonts";
@@ -35,18 +35,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <HeadMeta />
       </head>
       <body className={`${inter.className} min-h-screen relative`}>
-        <ThemeProvider>
-          <Suspense fallback={null}>
-            <BackgroundEffects />
-          </Suspense>
-          <Suspense fallback={null}>
-            <BlogPreloader />
-          </Suspense>
-          <LayoutWrapper>{children}</LayoutWrapper>
-          <Suspense fallback={null}>
-            <AnalyticsWrapper />
-          </Suspense>
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider>
+            <Suspense fallback={null}>
+              <BackgroundEffects />
+            </Suspense>
+            <Suspense fallback={null}>
+              <BlogPreloader />
+            </Suspense>
+            <LayoutWrapper>{children}</LayoutWrapper>
+            <Suspense fallback={null}>
+              <AnalyticsWrapper />
+            </Suspense>
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   );

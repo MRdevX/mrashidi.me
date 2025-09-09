@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@auth0/nextjs-auth0";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MdAccountCircle, MdMenu, MdNotifications } from "react-icons/md";
@@ -11,6 +12,7 @@ interface AdminNavbarProps {
 export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const pathname = usePathname();
+  const { user, isLoading } = useUser();
 
   const getPageTitle = () => {
     switch (pathname) {
@@ -57,13 +59,17 @@ export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
               className="flex items-center space-x-2 p-2 rounded-md hover:bg-primary/10"
             >
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-medium">
-                A
+                {isLoading ? "..." : user?.name?.charAt(0).toUpperCase() || "U"}
               </div>
             </button>
 
             {/* Dropdown Menu */}
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg border border-primary/20 py-1 z-50">
+                <div className="px-4 py-2 text-sm text-gray-300 border-b border-primary/20">
+                  <div className="font-medium">{user?.name || "User"}</div>
+                  <div className="text-xs text-gray-400">{user?.email}</div>
+                </div>
                 <button
                   type="button"
                   className="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-primary/10 hover:text-primary"
@@ -78,12 +84,12 @@ export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
                   Settings
                 </button>
                 <hr className="my-1 border-primary/20" />
-                <button
-                  type="button"
+                <a
+                  href="/api/auth/logout"
                   className="flex items-center w-full px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300"
                 >
                   Logout
-                </button>
+                </a>
               </div>
             )}
           </div>
