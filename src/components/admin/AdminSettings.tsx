@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { AdminPageLayout } from "./AdminPageLayout";
 
 export function AdminSettings() {
   const [notifications, setNotifications] = useState(true);
@@ -18,13 +19,7 @@ export function AdminSettings() {
   const sessionTimeoutId = useId();
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">Settings</h1>
-        <p className="text-gray-300">Configure system settings and preferences</p>
-      </div>
-
+    <AdminPageLayout title="Settings" description="Configure system settings and preferences">
       {/* Settings Content */}
       <div className="space-y-6">
         {/* General Settings */}
@@ -168,6 +163,6 @@ export function AdminSettings() {
           </button>
         </div>
       </div>
-    </div>
+    </AdminPageLayout>
   );
 }

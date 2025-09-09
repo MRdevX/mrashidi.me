@@ -1,5 +1,7 @@
 "use client";
 
+import { AdminPageLayout } from "./AdminPageLayout";
+
 const mockUsers = [
   { id: 1, name: "John Doe", email: "john@example.com", role: "Admin", status: "Active" },
   { id: 2, name: "Jane Smith", email: "jane@example.com", role: "User", status: "Active" },
@@ -9,13 +11,7 @@ const mockUsers = [
 
 export function AdminUsers() {
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">User Management</h1>
-        <p className="text-gray-300">Manage user accounts and permissions</p>
-      </div>
-
+    <AdminPageLayout title="User Management" description="Manage user accounts and permissions">
       {/* Users Table */}
       <div className="bg-gray-800/50 backdrop-blur-sm border border-primary/20 rounded-lg overflow-hidden glass-card">
         <div className="overflow-x-auto">
@@ -66,6 +62,6 @@ export function AdminUsers() {
           </table>
         </div>
       </div>
-    </div>
+    </AdminPageLayout>
   );
 }

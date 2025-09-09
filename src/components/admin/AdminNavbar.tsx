@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MdAccountCircle, MdMenu, MdNotifications } from "react-icons/md";
 
@@ -9,9 +10,26 @@ interface AdminNavbarProps {
 
 export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const pathname = usePathname();
+
+  // Get page title based on current path
+  const getPageTitle = () => {
+    switch (pathname) {
+      case "/admin":
+        return "Dashboard";
+      case "/admin/analytics":
+        return "Analytics";
+      case "/admin/users":
+        return "User Management";
+      case "/admin/settings":
+        return "Settings";
+      default:
+        return "Admin Panel";
+    }
+  };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-20 bg-gray-900/95 backdrop-blur-sm border-b border-primary/20 px-4 md:px-6 py-4 ml-0 lg:ml-72 transition-all duration-300">
+    <div className="fixed top-0 left-0 right-0 z-20 bg-gray-900/95 backdrop-blur-sm border-b border-primary/20 px-4 md:px-6 py-4 lg:left-72 transition-all duration-300">
       <div className="flex items-center justify-between">
         {/* Mobile Menu Button */}
         <button
@@ -23,7 +41,7 @@ export function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
         </button>
 
         {/* Page Title */}
-        <h2 className="text-lg font-semibold text-white font-cyberpunk">Admin Dashboard</h2>
+        <h2 className="text-lg font-semibold text-white font-cyberpunk">{getPageTitle()}</h2>
 
         {/* Right Side Actions */}
         <div className="flex items-center space-x-4">

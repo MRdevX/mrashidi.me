@@ -23,7 +23,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           <AdminNavbar onToggleSidebar={() => setToggleSidebar(!toggleSidebar)} />
 
           {/* Page Content */}
-          <div className="p-4 md:p-6 pt-20">{children}</div>
+          <div className="p-4 md:p-6" style={{ paddingTop: "120px" }}>
+            {children}
+          </div>
         </div>
       </div>
     </div>

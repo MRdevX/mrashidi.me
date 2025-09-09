@@ -1,6 +1,7 @@
 "use client";
 
 import { MdAnalytics, MdAttachMoney, MdPeople, MdTrendingUp } from "react-icons/md";
+import { AdminPageLayout } from "./AdminPageLayout";
 
 export function AdminDashboard() {
   const stats = [
@@ -39,13 +40,7 @@ export function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white font-cyberpunk text-neon-orange mb-2">Dashboard Overview</h1>
-        <p className="text-gray-300">Welcome to your admin dashboard</p>
-      </div>
-
+    <AdminPageLayout title="Dashboard Overview" description="Welcome to your admin dashboard">
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
@@ -85,6 +80,6 @@ export function AdminDashboard() {
           </div>
         </div>
       </div>
-    </div>
+    </AdminPageLayout>
   );
 }

@@ -2,6 +2,8 @@ export { AdminAnalytics } from "./AdminAnalytics";
 export { AdminDashboard } from "./AdminDashboard";
 export { AdminLayout } from "./AdminLayout";
 export { AdminNavbar } from "./AdminNavbar";
+export { AdminPageHeader } from "./AdminPageHeader";
+export { AdminPageLayout } from "./AdminPageLayout";
 export { AdminSettings } from "./AdminSettings";
 export { AdminSidebar } from "./AdminSidebar";
 export { AdminUsers } from "./AdminUsers";
