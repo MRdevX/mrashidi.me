@@ -9,15 +9,44 @@ export default async function AdminLayoutWrapper({ children }: { children: React
     redirect("/admin/login?returnTo=/admin");
   }
 
-  const userRoles =
-    session.user["https://mrashidi.eu.auth0.com/roles"] ||
-    session.user.roles ||
-    session.user["https://mrashidi.me/roles"] ||
-    [];
+  if (!session.user || typeof session.user !== "object") {
+    redirect("/admin/login?returnTo=/admin");
+  }
 
-  const isAdmin = Array.isArray(userRoles)
-    ? userRoles.includes("admin") || userRoles.includes("Admin") || userRoles.includes("ADMIN")
-    : userRoles === "admin" || userRoles === "Admin" || userRoles === "ADMIN";
+  const preferredRoleClaim = process.env.PREFERRED_ROLE_CLAIM;
+  const fallbackRoleClaims = [
+    "https://mrashidi.eu.auth0.com/roles",
+    "roles",
+    "https://mrashidi.me/roles",
+    "user_roles",
+    "app_metadata.roles",
+  ];
+
+  const roleClaimNames = preferredRoleClaim ? [preferredRoleClaim, ...fallbackRoleClaims] : fallbackRoleClaims;
+
+  let rawRoles: unknown = null;
+  for (const claimName of roleClaimNames) {
+    if (session.user[claimName] !== undefined) {
+      rawRoles = session.user[claimName];
+      break;
+    }
+  }
+
+  const normalizeRoles = (roles: unknown): string[] => {
+    if (!roles) {
+      return [];
+    }
+
+    if (Array.isArray(roles)) {
+      return roles.map((role) => String(role).trim().toLowerCase()).filter((role) => role.length > 0);
+    }
+
+    return [String(roles).trim().toLowerCase()].filter((role) => role.length > 0);
+  };
+
+  const normalizedRoles = normalizeRoles(rawRoles);
+
+  const isAdmin = normalizedRoles.includes("admin");
 
   if (!isAdmin) {
     redirect("/");
