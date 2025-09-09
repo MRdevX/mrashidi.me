@@ -26,12 +26,31 @@ export default function AdminLoginPage() {
   }
 
   if (error) {
+    // Log the full error for developers (only in development)
+    if (process.env.NODE_ENV !== "production") {
+      console.error("Auth0 login error:", error);
+    }
+
+    // Log to error tracking service in production
+    if (process.env.NODE_ENV === "production") {
+      // You can integrate with Sentry, LogRocket, or other error tracking services here
+      console.error("Auth0 login error:", error);
+    }
+
     return (
       <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center">
         <div className="max-w-md w-full space-y-8 p-8 bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 shadow-2xl">
           <div className="text-center">
-            <h2 className="mt-6 text-3xl font-bold text-white font-cyberpunk text-red-500">Auth Error</h2>
-            <p className="mt-2 text-sm text-gray-300">Error: {error.message}</p>
+            <h2 className="mt-6 text-3xl font-bold text-red-500 font-cyberpunk">Authentication Error</h2>
+            <p className="mt-2 text-sm text-gray-300">An error occurred while signing in. Please try again.</p>
+            {process.env.NODE_ENV !== "production" && (
+              <details className="mt-4 text-left">
+                <summary className="text-xs text-gray-400 cursor-pointer hover:text-gray-300">
+                  Developer Details
+                </summary>
+                <pre className="mt-2 text-xs text-red-400 bg-gray-900 p-2 rounded overflow-auto">{error.message}</pre>
+              </details>
+            )}
           </div>
         </div>
       </div>
