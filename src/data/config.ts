@@ -37,7 +37,7 @@ export interface SiteConfig {
 
 const config: SiteConfig = {
   person: {
-    name: "Dee Rashidi",
+    name: "Mahdi Rashidi",
     title: "Software Engineer",
     location: "Berlin, Germany",
     email: "contact@mrashidi.me",
@@ -53,7 +53,7 @@ const config: SiteConfig = {
   site: {
     url: "https://mrashidi.me",
     name: "MR Portfolio",
-    title: "Dee Rashidi | Software Backend Engineer",
+    title: "Mahdi Rashidi | Software Backend Engineer",
     description:
       "Software engineer with 9 years of experience in backend development. I work primarily with Node.js and TypeScript, with additional experience across frameworks and languages. I focus on building reliable, maintainable systems that scale with business needs.",
     keywords:

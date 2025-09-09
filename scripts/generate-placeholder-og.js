@@ -32,13 +32,13 @@ if (!fs.existsSync(publicDir)) {
 const images = [
   {
     name: "og-image.jpg",
-    title: "Dee Rashidi",
+    title: "Mahdi Rashidi",
     subtitle: "Software Backend Engineer",
     description: "Building reliable and maintainable systems",
   },
   {
     name: "og-about.jpg",
-    title: "About Dee",
+    title: "About Mahdi",
     subtitle: "Software Backend Engineer",
     description: "Learn about my background and experience",
   },
@@ -68,7 +68,7 @@ const images = [
   },
   {
     name: "twitter-image.jpg",
-    title: "Dee Rashidi",
+    title: "Mahdi Rashidi",
     subtitle: "Software Backend Engineer",
     description: "Backend Development • Node.js • TypeScript",
   },

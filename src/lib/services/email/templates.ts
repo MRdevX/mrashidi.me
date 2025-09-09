@@ -92,7 +92,7 @@ function createContactUserTemplate(data: EmailTemplateData, templateConfig: ITem
     <div style="text-align: center;">
       <a href="${templateConfig.companyWebsite}" class="button">Visit My Portfolio</a>
     </div>
-    <p>Best regards,<br>Dee Rashidi</p>
+    <p>Best regards,<br>Mahdi Rashidi</p>
   `;
 
   const html = createBaseTemplate("Message Received", content, templateConfig);
@@ -107,7 +107,7 @@ I personally review every message and will get back to you as soon as possible, 
 Visit my portfolio: ${templateConfig.companyWebsite}
 
 Best regards,
-Dee Rashidi
+Mahdi Rashidi
 
 ---
 GitHub: ${templateConfig.socialLinks.github}
@@ -151,7 +151,7 @@ function createResumeUserTemplate(data: EmailTemplateData, templateConfig: ITemp
       <a href="${templateConfig.companyWebsite}" class="button">Visit My Portfolio</a>
     </div>
     <p>If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my website.</p>
-    <p>Best regards,<br>Dee Rashidi</p>
+    <p>Best regards,<br>Mahdi Rashidi</p>
   `;
 
   const html = createBaseTemplate("Resume Request Confirmation", content, templateConfig);
@@ -168,7 +168,7 @@ Visit my portfolio: ${templateConfig.companyWebsite}
 If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my website.
 
 Best regards,
-Dee Rashidi
+Mahdi Rashidi
 
 ---
 GitHub: ${templateConfig.socialLinks.github}

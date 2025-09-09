@@ -285,7 +285,7 @@ const commandHandlers = {
       <p className="text-gray-500 text-sm mt-2">Built with Next.js, TypeScript, and Tailwind CSS</p>
       <p className="text-gray-500 text-sm">Features: Interactive terminal, GitHub integration, blog posts</p>
       <p className="text-gray-500 text-xs mt-2">Feel free to explore, contribute, or use as inspiration!</p>
-      <p className="text-gray-500 text-xs">— Dee Rashidi</p>
+      <p className="text-gray-500 text-xs">— Mahdi Rashidi</p>
     </div>
   ),
 

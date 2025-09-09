@@ -9,7 +9,7 @@ export function BioSection() {
   return (
     <AnimatedSection delay={0.2}>
       <div className="relative">
-        <ProfileImage src="/profile.jpeg" alt="Dee Rashidi" />
+        <ProfileImage src="/profile.jpeg" alt="Mahdi Rashidi" />
         <p className={`text-lg leading-relaxed ${getTextColor("secondary")} font-albert text-justify`}>
           {personalInfo.bio}
         </p>

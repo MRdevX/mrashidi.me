@@ -26,7 +26,7 @@ export const API_CONFIG = {
 export const BLOG_AUTHORS = [
   {
     username: "mrdevx",
-    name: "Dee Rashidi",
+    name: "Mahdi Rashidi",
     mediumUrl: "https://mrdevx.medium.com",
   },
 ] as const;

@@ -8,7 +8,7 @@ export const BrandLogo = () => {
   const { getSectionTitle, getColor } = useThemeConfig();
 
   return (
-    <Link href="/" className="flex items-center shrink-0 group" aria-label="Dee Rashidi - Home">
+    <Link href="/" className="flex items-center shrink-0 group" aria-label="Mahdi Rashidi - Home">
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: -20 }}
