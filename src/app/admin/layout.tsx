@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { auth0 } from "@/lib/auth0";
+import { getServerSession } from "@/lib/auth0-server";
 
 export default async function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
-  const session = await auth0.getSession();
+  const session = await getServerSession();
 
   if (!session || !session.user) {
     redirect("/auth/login?returnTo=/admin");
