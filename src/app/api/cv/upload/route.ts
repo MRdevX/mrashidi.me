@@ -75,4 +75,4 @@ async function handleCVUpload(request: NextRequest) {
   }
 }
 
-export const POST = withRateLimit("cvUpload")(withSecurityHeaders(handleCVUpload));
+export const POST = withSecurityHeaders(withRateLimit("cvUpload")(handleCVUpload));
