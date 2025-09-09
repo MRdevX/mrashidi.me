@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { auth0Edge } from "./lib/auth0-edge";
+import { auth0 } from "./lib/auth0";
 
 export async function middleware(request: NextRequest) {
-  const authRes = await auth0Edge.middleware(request);
+  const authRes = await auth0.middleware(request);
 
   if (request.nextUrl.pathname.startsWith("/auth")) {
     return authRes;
@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
 
   if (request.nextUrl.pathname.startsWith("/admin")) {
     const { origin } = new URL(request.url);
-    const session = await auth0Edge.getSession(request);
+    const session = await auth0.getSession(request);
 
     if (!session) {
       return NextResponse.redirect(`${origin}/auth/login`);
