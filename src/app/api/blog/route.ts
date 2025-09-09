@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { withPagination, withRateLimit } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
-import { getAllPosts } from "@/server/blog.service";
+import { getAllPosts } from "@/services/blog.service";
 
 async function handleBlogPosts(_request: NextRequest, pagination: { page: number; limit: number }) {
   const result = await getAllPosts(pagination.page, pagination.limit);

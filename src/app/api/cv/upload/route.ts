@@ -1,11 +1,11 @@
-import { pdfUploadSecurity } from "@server/upload-security.service";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { withRateLimit } from "@/lib/api/middleware";
 import { withSecurityHeaders } from "@/lib/api/securityHeaders";
 import { logger } from "@/lib/core";
 import { APIError } from "@/lib/errors";
-import { uploadCV } from "@/server/blob.service";
+import { uploadCV } from "@/services/blob.service";
+import { pdfUploadSecurity } from "@/services/upload-security.service";
 
 const validateAuth = (request: NextRequest): void => {
   const authHeader = request.headers.get("authorization");

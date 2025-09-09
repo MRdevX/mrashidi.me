@@ -1,8 +1,8 @@
-import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@server/rate-limit.service";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/core";
 import { handleError, logError } from "@/lib/errors";
+import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
 import { createErrorResponse } from "./response";
 import type { ApiHandler } from "./types";
 

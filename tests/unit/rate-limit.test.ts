@@ -1,5 +1,5 @@
-import { checkRateLimit, getClientIdentifier } from "@server/rate-limit.service";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { checkRateLimit, getClientIdentifier } from "@/services/rate-limit.service";
 
 vi.mock("@upstash/ratelimit", () => ({
   Ratelimit: {
