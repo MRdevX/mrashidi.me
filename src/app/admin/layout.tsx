@@ -10,9 +10,7 @@ export default async function AdminLayoutWrapper({ children }: { children: React
       redirect("/api/auth/login?returnTo=/admin");
     }
 
-    // Allow all authenticated users to access admin for now
     // TODO: Re-enable role checking later
-    console.log("User authenticated:", session.user.email);
 
     return <AdminLayout>{children}</AdminLayout>;
   } catch (error) {
