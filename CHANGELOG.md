@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.63](https://github.com/MRdevX/mrashidi.me/compare/v0.1.62...v0.1.63) (2025-09-09)
+
+
+### Features
+
+* add security headers to rate limit responses for enhanced API security ([034bbf6](https://github.com/MRdevX/mrashidi.me/commit/034bbf63954877ef24d997a0a9702bd3569ba86e))
+* optimize performance for BrandLogo and BackgroundEffects components with device capability detection ([d8baea5](https://github.com/MRdevX/mrashidi.me/commit/d8baea5ae702b4ecd7a8ef5735358bff252180b2))
+
 ### [0.1.62](https://github.com/MRdevX/mrashidi.me/compare/v0.1.59...v0.1.62) (2025-09-09)
 
 
