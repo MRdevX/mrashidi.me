@@ -6,7 +6,7 @@ export default async function AdminLayoutWrapper({ children }: { children: React
   const session = await getServerSession();
 
   if (!session || !session.user) {
-    redirect("/auth/login?returnTo=/admin");
+    redirect("/admin/login?returnTo=/admin");
   }
 
   const userRoles =
