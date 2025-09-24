@@ -11,9 +11,11 @@ export function BaseEmailTemplate({ title, children, templateConfig }: BaseEmail
   return (
     <Html>
       <Head>
+        <meta name="color-scheme" content="light dark" />
+        <meta name="supported-color-schemes" content="light dark" />
         <style>{darkModeStyles}</style>
       </Head>
-      <Body style={bodyStyle} className="dark-mode-body">
+      <Body style={bodyStyle} className="dark-mode-body" data-ogsc="">
         <Container style={containerStyle} className="dark-mode-container">
           {/* Header */}
           <Section style={headerStyle} className="dark-mode-header">
@@ -132,6 +134,7 @@ const linkStyle = {
 };
 
 const darkModeStyles = `
+  /* Dark mode support for various email clients */
   @media (prefers-color-scheme: dark) {
     .dark-mode-body {
       background-color: #0f172a !important;
@@ -176,10 +179,6 @@ const darkModeStyles = `
       color: #ff6b35 !important;
     }
     
-    .dark-mode-icon {
-      filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
-    }
-    
     .dark-mode-button {
       background-color: #ff6b35 !important;
       color: #ffffff !important;
@@ -211,10 +210,6 @@ const darkModeStyles = `
       color: #f1f5f9 !important;
     }
     
-    .dark-mode-text {
-      color: #cbd5e1 !important;
-    }
-    
     .dark-mode-footer-text {
       color: #94a3b8 !important;
     }
@@ -222,5 +217,59 @@ const darkModeStyles = `
     .dark-mode-link {
       color: #ff6b35 !important;
     }
+  }
+  
+  /* Apple Mail specific dark mode support */
+  @media (prefers-color-scheme: dark) and (-webkit-min-device-pixel-ratio: 1) {
+    .dark-mode-body {
+      background-color: #0f172a !important;
+      color: #e2e8f0 !important;
+    }
+    
+    .dark-mode-container {
+      background-color: #1e293b !important;
+    }
+    
+    .dark-mode-header {
+      background-color: #1e293b !important;
+    }
+    
+    .dark-mode-content {
+      background-color: #1e293b !important;
+    }
+    
+    .dark-mode-footer {
+      background-color: #0f172a !important;
+    }
+  }
+  
+  /* Outlook dark mode support */
+  [data-ogsc] .dark-mode-body {
+    background-color: #0f172a !important;
+    color: #e2e8f0 !important;
+  }
+  
+  [data-ogsc] .dark-mode-container {
+    background-color: #1e293b !important;
+  }
+  
+  [data-ogsc] .dark-mode-header {
+    background-color: #1e293b !important;
+  }
+  
+  [data-ogsc] .dark-mode-content {
+    background-color: #1e293b !important;
+  }
+  
+  [data-ogsc] .dark-mode-footer {
+    background-color: #0f172a !important;
+  }
+  
+  [data-ogsc] .dark-mode-text {
+    color: #cbd5e1 !important;
+  }
+  
+  [data-ogsc] .dark-mode-title {
+    color: #f1f5f9 !important;
   }
 `;
