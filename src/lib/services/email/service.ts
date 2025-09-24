@@ -3,7 +3,7 @@ import { logger } from "@/lib/core";
 import { AuthenticationError } from "@/lib/errors";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
 import { getTemplateConfig } from "./config";
-import { createEmailTemplate } from "./templates";
+import { createEmailTemplate } from "./renderer";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -107,7 +107,7 @@ export class EmailService {
     templateType: string
   ): Promise<boolean> {
     try {
-      const { html, text } = createEmailTemplate(data, templateType, this.templateConfig);
+      const { html, text } = await createEmailTemplate(data, templateType, this.templateConfig);
 
       const command = new SendEmailCommand({
         Source: this.fromEmail,
