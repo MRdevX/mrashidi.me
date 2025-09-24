@@ -8,7 +8,7 @@ interface ContactAdminTemplateProps {
 
 export function ContactAdminTemplate({ data, templateConfig }: ContactAdminTemplateProps) {
   return (
-    <BaseEmailTemplate title="New Message from Your Website! 📧" templateConfig={templateConfig}>
+    <BaseEmailTemplate title="New Message from Your Website" templateConfig={templateConfig}>
       <InfoRow label="Name" value={data.name} />
       <InfoRow label="Email" value={data.email} />
       <InfoRow label="Subject" value={data.subject || "No subject"} />

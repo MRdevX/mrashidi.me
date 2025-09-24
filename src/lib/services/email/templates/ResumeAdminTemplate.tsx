@@ -9,13 +9,13 @@ interface ResumeAdminTemplateProps {
 
 export function ResumeAdminTemplate({ data, templateConfig }: ResumeAdminTemplateProps) {
   return (
-    <BaseEmailTemplate title="Someone Downloaded Your CV! 🎯" templateConfig={templateConfig}>
+    <BaseEmailTemplate title="Someone Downloaded Your CV" templateConfig={templateConfig}>
       <InfoRow label="Name" value={data.name} />
       <InfoRow label="Email" value={data.email} />
       {data.company && <InfoRow label="Company" value={data.company} />}
 
       <Text style={messageStyle}>
-        Great news! Someone just downloaded your resume from your portfolio. Time to follow up! 🚀
+        Great news! Someone just downloaded your resume from your portfolio. Time to follow up!
       </Text>
     </BaseEmailTemplate>
   );
