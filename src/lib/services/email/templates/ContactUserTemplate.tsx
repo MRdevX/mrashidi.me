@@ -13,8 +13,8 @@ export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplat
       <Text style={greetingStyle}>Hey {data.name}! 👋</Text>
 
       <Text style={paragraphStyle}>
-        Thanks for reaching out! I just got your message about <strong>"{data.subject}"</strong> and wanted to let you
-        know it's safely in my inbox.
+        Thanks for reaching out! I just got your message{data.subject ? ` about "${data.subject}"` : ""} and wanted to
+        let you know it's safely in my inbox.
       </Text>
 
       <Text style={paragraphStyle}>

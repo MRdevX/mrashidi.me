@@ -6,14 +6,16 @@ interface MessageBoxProps {
 }
 
 export function MessageBox({ label, message }: MessageBoxProps) {
+  const lines = message.split("\n");
+
   return (
     <Section style={messageBoxStyle}>
       <Text style={labelStyle}>{label}</Text>
       <Text style={messageStyle}>
-        {message.split("\n").map((line, index) => (
+        {lines.map((line, index) => (
           <span key={`line-${index}-${line.slice(0, 10)}`}>
             {line}
-            {index < message.split("\n").length - 1 && <br />}
+            {index < lines.length - 1 && <br />}
           </span>
         ))}
       </Text>

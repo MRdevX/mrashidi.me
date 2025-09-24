@@ -1,4 +1,4 @@
-import { render } from "@react-email/render";
+import { render, toPlainText } from "@react-email/render";
 import { createElement } from "react";
 import type { getTemplateConfig } from "./config";
 import { ContactAdminTemplate, ContactUserTemplate, ResumeAdminTemplate, ResumeUserTemplate } from "./templates";
@@ -37,7 +37,7 @@ export async function createEmailTemplate(
   const emailElement = createElement(TemplateComponent, { data, templateConfig });
 
   const html = await render(emailElement);
-  const text = await render(emailElement, { plainText: true });
+  const text = toPlainText(html);
 
   return { html, text };
 }
