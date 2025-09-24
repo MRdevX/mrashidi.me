@@ -1,8 +1,9 @@
 import { Link, Section } from "@react-email/components";
+import type { ReactNode } from "react";
 
 interface CallToActionButtonProps {
   href: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function CallToActionButton({ href, children }: CallToActionButtonProps) {

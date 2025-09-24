@@ -10,24 +10,28 @@ interface ContactUserTemplateProps {
 export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplateProps) {
   return (
     <BaseEmailTemplate title="Message Received" templateConfig={templateConfig}>
-      <Text style={greetingStyle}>Hi {data.name},</Text>
+      <Text style={greetingStyle}>Hey {data.name}! 👋</Text>
 
       <Text style={paragraphStyle}>
-        Thank you for reaching out! I've received your message about <strong>"{data.subject}"</strong> and wanted to
-        confirm that it's safely in my inbox.
+        Thanks for reaching out! I just got your message about <strong>"{data.subject}"</strong> and wanted to let you
+        know it's safely in my inbox.
       </Text>
 
       <Text style={paragraphStyle}>
-        I personally review every message and will get back to you as soon as possible, typically within 1-2 business
-        days.
+        I read every message personally and love connecting with new people. I'll get back to you as soon as I can -
+        usually within a day or two!
       </Text>
 
-      <CallToActionButton href={templateConfig.companyWebsite}>Visit My Portfolio</CallToActionButton>
+      <Text style={paragraphStyle}>
+        While you're waiting, feel free to check out my portfolio to see what I've been working on lately.
+      </Text>
+
+      <CallToActionButton href={templateConfig.companyWebsite}>Check Out My Work</CallToActionButton>
 
       <Text style={signatureStyle}>
-        Best regards,
+        Talk soon!
         <br />
-        <strong>Mahdi Rashidi</strong>
+        <strong>Mahdi</strong> 🚀
       </Text>
     </BaseEmailTemplate>
   );

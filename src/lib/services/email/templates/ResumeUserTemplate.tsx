@@ -10,28 +10,29 @@ interface ResumeUserTemplateProps {
 export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateProps) {
   return (
     <BaseEmailTemplate title="Resume Request Confirmation" templateConfig={templateConfig}>
-      <Text style={greetingStyle}>Hi {data.name},</Text>
+      <Text style={greetingStyle}>Hey {data.name}! 🎉</Text>
 
       <Text style={paragraphStyle}>
-        Thank you for your interest in my professional background! I hope you found my CV helpful.
+        Awesome! Thanks for downloading my CV. I hope it gives you a good overview of what I've been up to
+        professionally.
       </Text>
 
       <Text style={paragraphStyle}>
-        I invite you to explore my portfolio website where you can find detailed information about my experience,
-        projects, and skills.
+        If you want to dive deeper, my portfolio has all the juicy details about my projects, the tech I love working
+        with, and some of the cool stuff I've built.
       </Text>
 
-      <CallToActionButton href={templateConfig.companyWebsite}>Visit My Portfolio</CallToActionButton>
+      <CallToActionButton href={templateConfig.companyWebsite}>Explore My Portfolio</CallToActionButton>
 
       <Text style={paragraphStyle}>
-        If you'd like to get in touch or have any questions, feel free to reach out through the contact form on my
-        website.
+        Got questions or want to chat about potential opportunities? I'd love to hear from you! Just hit me up through
+        the contact form on my site.
       </Text>
 
       <Text style={signatureStyle}>
-        Best regards,
+        Looking forward to connecting!
         <br />
-        <strong>Mahdi Rashidi</strong>
+        <strong>Mahdi</strong> ✨
       </Text>
     </BaseEmailTemplate>
   );
