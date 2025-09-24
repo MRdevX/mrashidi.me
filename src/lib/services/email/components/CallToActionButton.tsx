@@ -17,16 +17,20 @@ export function CallToActionButton({ href, children }: CallToActionButtonProps) 
 
 const buttonContainerStyle = {
   textAlign: "center" as const,
-  margin: "20px 0",
+  margin: "32px 0",
 };
 
 const buttonStyle = {
   display: "inline-block",
-  backgroundColor: "#ff5f1f",
+  backgroundColor: "#ff6b35",
   color: "#ffffff",
-  padding: "12px 24px",
+  padding: "16px 32px",
   textDecoration: "none",
-  borderRadius: "4px",
-  fontSize: "14px",
-  fontWeight: "bold",
+  borderRadius: "8px",
+  fontSize: "15px",
+  fontWeight: "600",
+  letterSpacing: "0.5px",
+  textTransform: "uppercase" as const,
+  boxShadow: "0 4px 6px -1px rgba(255, 107, 53, 0.3), 0 2px 4px -1px rgba(255, 107, 53, 0.2)",
+  transition: "all 0.2s ease",
 };

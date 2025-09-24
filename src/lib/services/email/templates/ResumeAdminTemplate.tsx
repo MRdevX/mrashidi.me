@@ -20,7 +20,10 @@ export function ResumeAdminTemplate({ data, templateConfig }: ResumeAdminTemplat
 }
 
 const messageStyle = {
-  fontSize: "14px",
-  lineHeight: "1.6",
-  marginTop: "20px",
+  fontSize: "16px",
+  lineHeight: "1.7",
+  color: "#475569",
+  marginTop: "24px",
+  padding: "16px 0",
+  borderTop: "1px solid #f1f5f9",
 };

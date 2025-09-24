@@ -31,24 +31,29 @@ export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateP
       <Text style={signatureStyle}>
         Best regards,
         <br />
-        Mahdi Rashidi
+        <strong>Mahdi Rashidi</strong>
       </Text>
     </BaseEmailTemplate>
   );
 }
 
 const greetingStyle = {
-  fontSize: "16px",
-  marginBottom: "20px",
+  fontSize: "18px",
+  fontWeight: "600",
+  color: "#1e293b",
+  marginBottom: "24px",
 };
 
 const paragraphStyle = {
-  fontSize: "14px",
-  lineHeight: "1.6",
+  fontSize: "16px",
+  lineHeight: "1.7",
+  color: "#475569",
   marginBottom: "20px",
 };
 
 const signatureStyle = {
-  fontSize: "14px",
-  marginTop: "20px",
+  fontSize: "16px",
+  color: "#475569",
+  marginTop: "32px",
+  lineHeight: "1.6",
 };

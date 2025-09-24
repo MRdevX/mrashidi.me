@@ -13,8 +13,8 @@ export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplat
       <Text style={greetingStyle}>Hi {data.name},</Text>
 
       <Text style={paragraphStyle}>
-        Thank you for reaching out! I've received your message about "{data.subject}" and wanted to confirm that it's
-        safely in my inbox.
+        Thank you for reaching out! I've received your message about <strong>"{data.subject}"</strong> and wanted to
+        confirm that it's safely in my inbox.
       </Text>
 
       <Text style={paragraphStyle}>
@@ -27,24 +27,29 @@ export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplat
       <Text style={signatureStyle}>
         Best regards,
         <br />
-        Mahdi Rashidi
+        <strong>Mahdi Rashidi</strong>
       </Text>
     </BaseEmailTemplate>
   );
 }
 
 const greetingStyle = {
-  fontSize: "16px",
-  marginBottom: "20px",
+  fontSize: "18px",
+  fontWeight: "600",
+  color: "#1e293b",
+  marginBottom: "24px",
 };
 
 const paragraphStyle = {
-  fontSize: "14px",
-  lineHeight: "1.6",
+  fontSize: "16px",
+  lineHeight: "1.7",
+  color: "#475569",
   marginBottom: "20px",
 };
 
 const signatureStyle = {
-  fontSize: "14px",
-  marginTop: "20px",
+  fontSize: "16px",
+  color: "#475569",
+  marginTop: "32px",
+  lineHeight: "1.6",
 };
