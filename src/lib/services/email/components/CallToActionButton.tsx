@@ -9,9 +9,15 @@ interface CallToActionButtonProps {
 export function CallToActionButton({ href, children }: CallToActionButtonProps) {
   return (
     <Section style={buttonContainerStyle}>
-      <Link href={href} style={buttonStyle} className="dark-mode-button">
-        {children}
-      </Link>
+      <table style={tableStyle} role="presentation" cellPadding="0" cellSpacing="0">
+        <tr>
+          <td style={tdStyle}>
+            <Link href={href} style={buttonStyle} className="dark-mode-button">
+              {children}
+            </Link>
+          </td>
+        </tr>
+      </table>
     </Section>
   );
 }
@@ -19,6 +25,15 @@ export function CallToActionButton({ href, children }: CallToActionButtonProps) 
 const buttonContainerStyle = {
   textAlign: "center" as const,
   margin: "32px 0",
+};
+
+const tableStyle = {
+  margin: "0 auto",
+  width: "auto",
+};
+
+const tdStyle = {
+  textAlign: "center" as const,
 };
 
 const buttonStyle = {
@@ -33,11 +48,4 @@ const buttonStyle = {
   letterSpacing: "0.5px",
   textTransform: "uppercase" as const,
   boxShadow: "0 4px 6px -1px rgba(255, 107, 53, 0.3), 0 2px 4px -1px rgba(255, 107, 53, 0.2)",
-  transition: "all 0.2s ease",
-
-  "&:hover": {
-    backgroundColor: "#e55a2b",
-    transform: "translateY(-1px)",
-    boxShadow: "0 6px 8px -1px rgba(255, 107, 53, 0.4), 0 4px 6px -1px rgba(255, 107, 53, 0.3)",
-  },
 };

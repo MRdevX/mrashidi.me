@@ -8,7 +8,7 @@ export const getTemplateConfig = (): ITemplateConfig => ({
     github: config.social.github,
     linkedin: config.social.linkedin,
   },
-  footerText: "Software Backend Engineer specializing in Backend Development, Cloud & DevOps, and Database Design",
+  footerText: "Software Engineer | Cloud & DevOps",
   skills: [
     {
       name: "Backend Development",

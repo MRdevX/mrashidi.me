@@ -1,6 +1,5 @@
-import { Body, Container, Head, Hr, Html, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Hr, Html, Link, Section, Text } from "@react-email/components";
 import type { ITemplateConfig } from "../types";
-import { SocialLinks } from "./SocialLinks";
 
 interface BaseEmailTemplateProps {
   title: string;
@@ -34,10 +33,15 @@ export function BaseEmailTemplate({ title, children, templateConfig }: BaseEmail
           {/* Footer */}
           <Section style={footerStyle} className="dark-mode-footer">
             <Hr style={hrStyle} className="dark-mode-hr" />
-            <SocialLinks
-              githubUrl={templateConfig.socialLinks.github}
-              linkedinUrl={templateConfig.socialLinks.linkedin}
-            />
+            <Text style={footerTextStyle} className="dark-mode-footer-text">
+              <Link href={templateConfig.socialLinks.github} style={linkStyle} className="dark-mode-link">
+                GitHub
+              </Link>
+              {" • "}
+              <Link href={templateConfig.socialLinks.linkedin} style={linkStyle} className="dark-mode-link">
+                LinkedIn
+              </Link>
+            </Text>
             <Text style={footerSubTextStyle} className="dark-mode-subtext">
               {templateConfig.footerText}
             </Text>
@@ -107,11 +111,24 @@ const footerStyle = {
   textAlign: "center" as const,
 };
 
+const footerTextStyle = {
+  color: "#64748b",
+  fontSize: "14px",
+  margin: "0 0 12px 0",
+  fontWeight: "500",
+};
+
 const footerSubTextStyle = {
   color: "#94a3b8",
   fontSize: "12px",
   margin: "0",
   lineHeight: "1.5",
+};
+
+const linkStyle = {
+  color: "#ff6b35",
+  textDecoration: "none",
+  fontWeight: "500",
 };
 
 const darkModeStyles = `
@@ -169,11 +186,6 @@ const darkModeStyles = `
       box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.4), 0 2px 4px -1px rgba(255, 107, 53, 0.3) !important;
     }
     
-    .dark-mode-button:hover {
-      background-color: #e55a2b !important;
-      box-shadow: 0 6px 8px -1px rgba(255, 107, 53, 0.5), 0 4px 6px -1px rgba(255, 107, 53, 0.4) !important;
-    }
-    
     .dark-mode-message-box {
       background-color: #334155 !important;
       border-color: #475569 !important;
@@ -201,6 +213,14 @@ const darkModeStyles = `
     
     .dark-mode-text {
       color: #cbd5e1 !important;
+    }
+    
+    .dark-mode-footer-text {
+      color: #94a3b8 !important;
+    }
+    
+    .dark-mode-link {
+      color: #ff6b35 !important;
     }
   }
 `;
