@@ -14,7 +14,7 @@ export function ResumeAdminTemplate({ data, templateConfig }: ResumeAdminTemplat
       <InfoRow label="Email" value={data.email} />
       {data.company && <InfoRow label="Company" value={data.company} />}
 
-      <Text style={messageStyle}>
+      <Text style={messageStyle} className="dark-mode-text">
         Great news! Someone just downloaded your resume from your portfolio. Time to follow up!
       </Text>
     </BaseEmailTemplate>

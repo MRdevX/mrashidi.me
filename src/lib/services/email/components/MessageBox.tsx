@@ -9,9 +9,11 @@ export function MessageBox({ label, message }: MessageBoxProps) {
   const lines = message.split("\n");
 
   return (
-    <Section style={messageBoxStyle}>
-      <Text style={labelStyle}>{label}</Text>
-      <Text style={messageStyle}>
+    <Section style={messageBoxStyle} className="dark-mode-message-box">
+      <Text style={labelStyle} className="dark-mode-label">
+        {label}
+      </Text>
+      <Text style={messageStyle} className="dark-mode-message-text">
         {lines.map((line, index) => (
           <span key={`line-${index}-${line.slice(0, 10)}`}>
             {line}

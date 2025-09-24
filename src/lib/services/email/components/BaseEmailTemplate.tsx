@@ -1,5 +1,6 @@
-import { Body, Container, Head, Hr, Html, Link, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Hr, Html, Section, Text } from "@react-email/components";
 import type { ITemplateConfig } from "../types";
+import { SocialLinks } from "./SocialLinks";
 
 interface BaseEmailTemplateProps {
   title: string;
@@ -10,31 +11,36 @@ interface BaseEmailTemplateProps {
 export function BaseEmailTemplate({ title, children, templateConfig }: BaseEmailTemplateProps) {
   return (
     <Html>
-      <Head />
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+      <Head>
+        <style>{darkModeStyles}</style>
+      </Head>
+      <Body style={bodyStyle} className="dark-mode-body">
+        <Container style={containerStyle} className="dark-mode-container">
           {/* Header */}
-          <Section style={headerStyle}>
-            <Text style={brandStyle}>{templateConfig.companyName}</Text>
-            <Text style={titleStyle}>{title}</Text>
+          <Section style={headerStyle} className="dark-mode-header">
+            <Text style={brandStyle} className="dark-mode-brand">
+              {templateConfig.companyName}
+            </Text>
+            <Text style={titleStyle} className="dark-mode-title">
+              {title}
+            </Text>
           </Section>
 
           {/* Content */}
-          <Section style={contentStyle}>{children}</Section>
+          <Section style={contentStyle} className="dark-mode-content">
+            {children}
+          </Section>
 
           {/* Footer */}
-          <Section style={footerStyle}>
-            <Hr style={hrStyle} />
-            <Text style={footerTextStyle}>
-              <Link href={templateConfig.socialLinks.github} style={linkStyle}>
-                GitHub
-              </Link>
-              {" • "}
-              <Link href={templateConfig.socialLinks.linkedin} style={linkStyle}>
-                LinkedIn
-              </Link>
+          <Section style={footerStyle} className="dark-mode-footer">
+            <Hr style={hrStyle} className="dark-mode-hr" />
+            <SocialLinks
+              githubUrl={templateConfig.socialLinks.github}
+              linkedinUrl={templateConfig.socialLinks.linkedin}
+            />
+            <Text style={footerSubTextStyle} className="dark-mode-subtext">
+              {templateConfig.footerText}
             </Text>
-            <Text style={footerSubTextStyle}>{templateConfig.footerText}</Text>
           </Section>
         </Container>
       </Body>
@@ -101,13 +107,6 @@ const footerStyle = {
   textAlign: "center" as const,
 };
 
-const footerTextStyle = {
-  color: "#64748b",
-  fontSize: "14px",
-  margin: "0 0 12px 0",
-  fontWeight: "500",
-};
-
 const footerSubTextStyle = {
   color: "#94a3b8",
   fontSize: "12px",
@@ -115,8 +114,93 @@ const footerSubTextStyle = {
   lineHeight: "1.5",
 };
 
-const linkStyle = {
-  color: "#ff6b35",
-  textDecoration: "none",
-  fontWeight: "500",
-};
+const darkModeStyles = `
+  @media (prefers-color-scheme: dark) {
+    .dark-mode-body {
+      background-color: #0f172a !important;
+      color: #e2e8f0 !important;
+    }
+    
+    .dark-mode-container {
+      background-color: #1e293b !important;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .dark-mode-header {
+      background-color: #1e293b !important;
+      border-bottom-color: #334155 !important;
+    }
+    
+    .dark-mode-content {
+      background-color: #1e293b !important;
+    }
+    
+    .dark-mode-footer {
+      background-color: #0f172a !important;
+    }
+    
+    .dark-mode-title {
+      color: #f1f5f9 !important;
+    }
+    
+    .dark-mode-text {
+      color: #cbd5e1 !important;
+    }
+    
+    .dark-mode-subtext {
+      color: #94a3b8 !important;
+    }
+    
+    .dark-mode-hr {
+      border-top-color: #334155 !important;
+    }
+    
+    .dark-mode-brand {
+      color: #ff6b35 !important;
+    }
+    
+    .dark-mode-icon {
+      filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
+    }
+    
+    .dark-mode-button {
+      background-color: #ff6b35 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.4), 0 2px 4px -1px rgba(255, 107, 53, 0.3) !important;
+    }
+    
+    .dark-mode-button:hover {
+      background-color: #e55a2b !important;
+      box-shadow: 0 6px 8px -1px rgba(255, 107, 53, 0.5), 0 4px 6px -1px rgba(255, 107, 53, 0.4) !important;
+    }
+    
+    .dark-mode-message-box {
+      background-color: #334155 !important;
+      border-color: #475569 !important;
+    }
+    
+    .dark-mode-label {
+      color: #ff6b35 !important;
+    }
+    
+    .dark-mode-message-text {
+      color: #e2e8f0 !important;
+    }
+    
+    .dark-mode-info-row {
+      border-bottom-color: #334155 !important;
+    }
+    
+    .dark-mode-info-label {
+      color: #94a3b8 !important;
+    }
+    
+    .dark-mode-info-value {
+      color: #f1f5f9 !important;
+    }
+    
+    .dark-mode-text {
+      color: #cbd5e1 !important;
+    }
+  }
+`;

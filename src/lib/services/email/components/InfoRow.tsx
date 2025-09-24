@@ -7,9 +7,13 @@ interface InfoRowProps {
 
 export function InfoRow({ label, value }: InfoRowProps) {
   return (
-    <Text style={infoRowStyle}>
-      <span style={labelStyle}>{label}</span>
-      <span style={valueStyle}>{value}</span>
+    <Text style={infoRowStyle} className="dark-mode-info-row">
+      <span style={labelStyle} className="dark-mode-info-label">
+        {label}
+      </span>
+      <span style={valueStyle} className="dark-mode-info-value">
+        {value}
+      </span>
     </Text>
   );
 }

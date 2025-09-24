@@ -9,7 +9,7 @@ interface CallToActionButtonProps {
 export function CallToActionButton({ href, children }: CallToActionButtonProps) {
   return (
     <Section style={buttonContainerStyle}>
-      <Link href={href} style={buttonStyle}>
+      <Link href={href} style={buttonStyle} className="dark-mode-button">
         {children}
       </Link>
     </Section>
@@ -34,4 +34,10 @@ const buttonStyle = {
   textTransform: "uppercase" as const,
   boxShadow: "0 4px 6px -1px rgba(255, 107, 53, 0.3), 0 2px 4px -1px rgba(255, 107, 53, 0.2)",
   transition: "all 0.2s ease",
+
+  "&:hover": {
+    backgroundColor: "#e55a2b",
+    transform: "translateY(-1px)",
+    boxShadow: "0 6px 8px -1px rgba(255, 107, 53, 0.4), 0 4px 6px -1px rgba(255, 107, 53, 0.3)",
+  },
 };
