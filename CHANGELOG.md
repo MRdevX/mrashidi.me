@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.64](https://github.com/MRdevX/mrashidi.me/compare/v0.1.63...v0.1.64) (2025-09-25)
+
+
+### Features
+
+* add social media icons and implement dark mode ([ac0ee93](https://github.com/MRdevX/mrashidi.me/commit/ac0ee93e8ef554719f5ca1766d1070a362d20eea))
+* enhance dark mode support in email templates with additional styling for various email clients ([49f7525](https://github.com/MRdevX/mrashidi.me/commit/49f7525495818d721b5c4a3e9935dc8902b92134))
+* enhance email rendering and messaging components for improved text handling and user experience ([f803a3b](https://github.com/MRdevX/mrashidi.me/commit/f803a3be3dadd86d5afefcb385bc034a6af59cef))
+* enhance email templates with updated titles and improved messaging for better user engagement ([2c74643](https://github.com/MRdevX/mrashidi.me/commit/2c74643c6ee1dc6efdb810037f32758a29803305))
+* refactor email service to use new template rendering system and add email components ([cec2f01](https://github.com/MRdevX/mrashidi.me/commit/cec2f018bfc89913837a6a2efc9e1d55a44da8c0))
+* update email templates and components for improved styling and layout ([9e9fc17](https://github.com/MRdevX/mrashidi.me/commit/9e9fc1794bea83ed098f7271a36ba93782f00d7e))
+* update email templates with refined messaging and simplified titles for enhanced clarity ([e276c9c](https://github.com/MRdevX/mrashidi.me/commit/e276c9c42eee5db12becb17a41f5599a6126b547))
+
 ### [0.1.63](https://github.com/MRdevX/mrashidi.me/compare/v0.1.62...v0.1.63) (2025-09-09)
 
 
