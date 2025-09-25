@@ -54,10 +54,6 @@ export function ResumeHeader() {
         </div>
         <CyberpunkButton
           onClick={() => {
-            logger.debug({
-              operation: "ResumeHeader",
-              message: "Resume request button clicked",
-            });
             setIsModalOpen(true);
           }}
           variant="neon"

@@ -1,18 +1,17 @@
-import { useEffect, useRef } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 
-export const useTerminalFocus = (isExecuting: boolean) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+export const useTerminalFocus = (isExecuting: boolean, inputRef: RefObject<HTMLInputElement | null>) => {
   const terminalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
-  }, []);
+  }, [inputRef]);
 
   useEffect(() => {
     if (!isExecuting && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isExecuting]);
+  }, [isExecuting, inputRef]);
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -32,7 +31,6 @@ export const useTerminalFocus = (isExecuting: boolean) => {
   };
 
   return {
-    inputRef,
     terminalRef,
     handleTerminalClick,
   };

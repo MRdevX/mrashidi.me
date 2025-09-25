@@ -54,11 +54,6 @@ export function extractImageUrl(html: string): string | undefined {
 export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
   try {
     const feedUrl = `${author.mediumUrl}/feed`;
-    logger.debug({
-      operation: "fetchMediumPosts",
-      author: author.username,
-      feedUrl,
-    });
 
     const response = await fetch(feedUrl, {
       headers: {
@@ -73,11 +68,6 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
     }
 
     const xmlData = await response.text();
-    logger.debug({
-      operation: "fetchMediumPosts",
-      author: author.username,
-      xmlDataLength: xmlData.length,
-    });
 
     const feed = await parseMediumFeed(xmlData);
 
@@ -91,11 +81,6 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
     }
 
     const items = Array.isArray(feed.rss.channel.item) ? feed.rss.channel.item : [feed.rss.channel.item];
-    logger.debug({
-      operation: "fetchMediumPosts",
-      author: author.username,
-      itemsCount: items.length,
-    });
 
     const posts: IBlogPost[] = items.map((item: Record<string, unknown>) => {
       const content = (item["content:encoded"] as string) || (item.description as string) || "";
@@ -114,12 +99,6 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
           mediumUrl: author.mediumUrl,
         },
       };
-    });
-
-    logger.debug({
-      operation: "fetchMediumPosts",
-      author: author.username,
-      postsCount: posts.length,
     });
 
     return posts;

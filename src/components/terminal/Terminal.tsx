@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, { type KeyboardEvent, useState } from "react";
+import React, { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { TERMINAL_STYLES } from "./constants";
 import { useCommandHistory, useTerminal, useTerminalFocus } from "./hooks";
 import { TerminalHistory } from "./TerminalHistory";
@@ -9,10 +9,25 @@ import { TerminalInput } from "./TerminalInput";
 
 const TerminalContainer = React.memo(() => {
   const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { commands, commandHistory, isExecuting, executeCommand } = useTerminal();
   const { navigateHistory, resetHistoryPosition } = useCommandHistory(commandHistory);
-  const { inputRef, terminalRef, handleTerminalClick } = useTerminalFocus(isExecuting);
+  const { terminalRef, handleTerminalClick } = useTerminalFocus(isExecuting, inputRef);
+
+  useEffect(() => {
+    const handleCommandClick = (event: CustomEvent) => {
+      const { command } = event.detail;
+      setInput(command);
+      inputRef.current?.focus();
+    };
+
+    window.addEventListener("terminal-command-click", handleCommandClick as EventListener);
+
+    return () => {
+      window.removeEventListener("terminal-command-click", handleCommandClick as EventListener);
+    };
+  }, []);
 
   const handleInputChange = (value: string) => {
     setInput(value);

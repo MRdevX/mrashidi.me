@@ -192,18 +192,30 @@ const renderAchievements = () => {
   return <ul className="space-y-1">{achievements}</ul>;
 };
 
+const HelpCommandOutput = () => (
+  <div className="mt-2">
+    <p className="text-orange-500 font-bold mb-2">Available commands:</p>
+    {Object.entries(AVAILABLE_COMMANDS).map(([cmd, desc]) => (
+      <div key={cmd} className="grid grid-cols-[120px_1fr] gap-2 mt-1 group">
+        <button
+          type="button"
+          className="text-green-400 font-bold group-hover:text-green-300 transition-colors cursor-pointer hover:underline bg-transparent border-none p-0 text-left"
+          onClick={() => {
+            const event = new CustomEvent("terminal-command-click", { detail: { command: cmd } });
+            window.dispatchEvent(event);
+          }}
+          title={`Click to run: ${cmd}`}
+        >
+          {cmd}
+        </button>
+        <span className="text-gray-400 group-hover:text-gray-300 transition-colors">{desc}</span>
+      </div>
+    ))}
+  </div>
+);
+
 const commandHandlers = {
-  help: () => (
-    <div className="mt-2">
-      <p className="text-orange-500 font-bold mb-2">Available commands:</p>
-      {Object.entries(AVAILABLE_COMMANDS).map(([cmd, desc]) => (
-        <div key={cmd} className="grid grid-cols-[120px_1fr] gap-2 mt-1 group">
-          <span className="text-green-400 font-bold group-hover:text-green-300 transition-colors">{cmd}</span>
-          <span className="text-gray-400 group-hover:text-gray-300 transition-colors">{desc}</span>
-        </div>
-      ))}
-    </div>
-  ),
+  help: () => <HelpCommandOutput />,
 
   about: () => (
     <div className="mt-2 space-y-2">

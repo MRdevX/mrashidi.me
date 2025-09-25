@@ -1,4 +1,4 @@
-import { getTechnologyCategory, logger, TECHNOLOGY_CATEGORIES, type TechnologyCategory } from "@/lib/core";
+import { getTechnologyCategory, TECHNOLOGY_CATEGORIES, type TechnologyCategory } from "@/lib/core";
 import type { CategorizedTechnologies, Project, TechnologyUsage } from "./types";
 
 export const matchesSearch = (project: Project, query: string): boolean => {
@@ -146,8 +146,6 @@ export const getSortedTechnologiesByUsage = (
 };
 
 export const sortProjectsByDate = (projects: Project[], commitDates: Map<string, Date> = new Map()): Project[] => {
-  logger.debug({ commitDatesSize: commitDates.size }, "Sorting projects by date. Commit dates available");
-
   return [...projects].sort((a, b) => {
     const dateA = getProjectDate(a, commitDates);
     const dateB = getProjectDate(b, commitDates);
