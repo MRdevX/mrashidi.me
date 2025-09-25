@@ -43,14 +43,9 @@ export function SkillsSection() {
               )} rounded-xl`}
             >
               <div className="flex items-center gap-3 mb-4">
-                <span
-                  className={`inline-flex items-center gap-1 px-3 py-1 rounded-lg font-bold text-sm ${getBackgroundColor(
-                    "muted"
-                  )} ${getTextColor("primary")} border ${getBorderColor("secondary")}`}
-                  style={{ boxShadow: `0 0 12px 2px ${config.color}` }}
-                >
+                <h3 className={`text-xl font-bold ${getTextColor("primary")}`} style={{ color: config.color }}>
                   {config.label}
-                </span>
+                </h3>
                 <span className={`${getTextColor("secondary")} text-sm`}>({skills.length})</span>
               </div>
 
