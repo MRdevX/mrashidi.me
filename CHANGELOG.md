@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.66](https://github.com/MRdevX/mrashidi.me/compare/v0.1.65...v0.1.66) (2025-09-26)
+
 ### [0.1.65](https://github.com/MRdevX/mrashidi.me/compare/v0.1.63...v0.1.65) (2025-09-25)
 
 
