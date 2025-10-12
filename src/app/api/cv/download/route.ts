@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { apiMiddleware } from "@/lib/api/middleware";
 import { logger } from "@/lib/core";
-import { APIError } from "@/lib/errors";
 import { getCVUrl } from "@/services/blob.service";
 
 const logRedirect = (cvUrl: string) => {
@@ -11,18 +12,10 @@ const logRedirect = (cvUrl: string) => {
   });
 };
 
-export async function GET(_request: NextRequest) {
-  try {
-    const cvUrl = getCVUrl();
-    logRedirect(cvUrl);
-    return Response.redirect(cvUrl);
-  } catch (error) {
-    logger.error({
-      operation: "cvDownload",
-      status: "error",
-      error: error instanceof Error ? error.message : String(error),
-    });
-
-    throw new APIError("Failed to get CV download URL");
-  }
+async function handleCVDownload(_request: NextRequest) {
+  const cvUrl = getCVUrl();
+  logRedirect(cvUrl);
+  return NextResponse.redirect(cvUrl);
 }
+
+export const GET = apiMiddleware.basic("generalApi")(handleCVDownload);

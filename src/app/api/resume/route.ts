@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { withValidation } from "@/lib/api/middleware";
+import { apiMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
 import { EmailService } from "@/lib/services/email";
@@ -16,4 +16,4 @@ async function handleResumeRequest(_request: NextRequest, formData: ResumeReques
   return createSuccessResponse({ message: "Resume sent successfully" });
 }
 
-export const POST = withValidation(handleResumeRequest, validateResumeRequestAPI);
+export const POST = apiMiddleware.withValidation("contactForm", validateResumeRequestAPI)(handleResumeRequest);

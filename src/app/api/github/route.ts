@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { withRateLimit } from "@/lib/api/middleware";
-import { logger } from "@/lib/core";
+import { apiMiddleware } from "@/lib/api/middleware";
+import { APIError } from "@/lib/errors";
 
 interface LatestCommitInfo {
   date: Date;
@@ -15,16 +15,6 @@ interface GitHubCommit {
     };
   };
 }
-
-const createErrorResponse = (message: string, status: number) => NextResponse.json({ error: message }, { status });
-
-const logError = (operation: string, error: unknown, context?: Record<string, unknown>) => {
-  logger.error({
-    operation,
-    error: error instanceof Error ? error.message : String(error),
-    ...context,
-  });
-};
 
 const extractRepoInfo = (githubUrl: string): { owner: string; name: string } | null => {
   try {
@@ -51,7 +41,7 @@ const fetchGitHubAPI = async <T>(endpoint: string): Promise<T> => {
   const response = await fetch(`https://api.github.com${endpoint}`, { headers });
 
   if (!response.ok) {
-    throw new Error(`GitHub API error: ${response.status}`);
+    throw new APIError(`GitHub API error: ${response.status}`, response.status);
   }
 
   return response.json();
@@ -84,25 +74,20 @@ const getLatestCommitInfo = async (githubUrl: string): Promise<LatestCommitInfo 
 };
 
 async function handleGitHubRequest(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const action = searchParams.get("action");
-    const githubUrl = searchParams.get("url");
+  const { searchParams } = new URL(request.url);
+  const action = searchParams.get("action");
+  const githubUrl = searchParams.get("url");
 
-    if (action !== "commit-info") {
-      return createErrorResponse("Invalid action", 400);
-    }
-
-    if (!githubUrl) {
-      return createErrorResponse("GitHub URL is required", 400);
-    }
-
-    const result = await getLatestCommitInfo(githubUrl);
-    return NextResponse.json(result);
-  } catch (error) {
-    logError("GET", error, { endpoint: "/api/github" });
-    return createErrorResponse("Internal server error", 500);
+  if (action !== "commit-info") {
+    throw new APIError("Invalid action", 400);
   }
+
+  if (!githubUrl) {
+    throw new APIError("GitHub URL is required", 400);
+  }
+
+  const result = await getLatestCommitInfo(githubUrl);
+  return NextResponse.json(result);
 }
 
-export const GET = withRateLimit("generalApi")(handleGitHubRequest);
+export const GET = apiMiddleware.basic("generalApi")(handleGitHubRequest);

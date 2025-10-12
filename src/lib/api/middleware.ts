@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/core";
-import { handleError, logError } from "@/lib/errors";
+import { APIError, handleError, logError } from "@/lib/errors";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
 import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
@@ -16,6 +16,18 @@ export function withErrorHandling(handler: ApiHandler): ApiHandler {
       logError(appError, "API");
       return createErrorResponse(appError, appError.statusCode || 500);
     }
+  };
+}
+
+export function withAuth(expectedToken: string): (handler: ApiHandler) => ApiHandler {
+  return (handler: ApiHandler): ApiHandler => {
+    return withErrorHandling(async (request: NextRequest) => {
+      const authHeader = request.headers.get("authorization");
+      if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
+        throw new APIError("Unauthorized", 401);
+      }
+      return await handler(request);
+    });
   };
 }
 
@@ -82,3 +94,50 @@ export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHa
     });
   };
 }
+
+export function withSecurityHeaders(handler: ApiHandler): ApiHandler {
+  return async (request: NextRequest) => {
+    const response = await handler(request);
+    return addSecurityHeaders(response);
+  };
+}
+
+export function withCacheHeaders(ttl: number, staleWhileRevalidate?: number): (handler: ApiHandler) => ApiHandler {
+  return (handler: ApiHandler): ApiHandler => {
+    return async (request: NextRequest) => {
+      const response = await handler(request);
+
+      const cacheControl = `public, s-maxage=${ttl}${staleWhileRevalidate ? `, stale-while-revalidate=${staleWhileRevalidate}` : ""}`;
+      response.headers.set("Cache-Control", cacheControl);
+      response.headers.set("Vary", "Accept-Encoding");
+
+      return response;
+    };
+  };
+}
+
+export const apiMiddleware = {
+  basic: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) =>
+    withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler))),
+
+  withValidation:
+    <T>(rateLimiterType: RateLimiterType, validator: (data: unknown) => T) =>
+    (handler: (request: NextRequest, validatedData: T) => Promise<NextResponse>) =>
+      withSecurityHeaders(withRateLimit(rateLimiterType)(withValidation(handler, validator))),
+
+  withPagination:
+    (rateLimiterType: RateLimiterType) =>
+    (handler: (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>) =>
+      withSecurityHeaders(withRateLimit(rateLimiterType)(withPagination(handler))),
+
+  withAuth: (rateLimiterType: RateLimiterType, token: string) => (handler: ApiHandler) =>
+    withSecurityHeaders(withRateLimit(rateLimiterType)(withAuth(token)(withErrorHandling(handler)))),
+
+  withCache: (rateLimiterType: RateLimiterType, ttl: number, staleWhileRevalidate?: number) => (handler: ApiHandler) =>
+    withCacheHeaders(
+      ttl,
+      staleWhileRevalidate
+    )(withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)))),
+
+  simple: (handler: ApiHandler) => withSecurityHeaders(withErrorHandling(handler)),
+};

@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { withRateLimit, withValidation } from "@/lib/api/middleware";
+import { apiMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
 import { EmailService } from "@/lib/services/email";
@@ -24,4 +24,4 @@ async function handleContactForm(_request: NextRequest, formData: ContactFormDat
   return createSuccessResponse({ message: "Message sent successfully" });
 }
 
-export const POST = withRateLimit("contactForm")(withValidation(handleContactForm, validateContactFormAPI));
+export const POST = apiMiddleware.withValidation("contactForm", validateContactFormAPI)(handleContactForm);
