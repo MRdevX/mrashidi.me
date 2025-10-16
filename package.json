@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "build": "NEXT_TELEMETRY_DISABLED=1 pnpm generate-sitemap && pnpm generate-og-images && next build",
     "build:fast": "SKIP_PWA=true next build",
     "build:with-sitemap": "NEXT_TELEMETRY_DISABLED=1 pnpm generate-sitemap && next build",
     "start": "next start",
