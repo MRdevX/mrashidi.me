@@ -73,6 +73,7 @@ export const metadata = {
 To modify the design, edit the shared template:
 - **Shared Template**: `src/components/og-template.tsx` (for Next.js/API routes)
 - **Script Template**: `scripts/og-template.jsx` (for Node.js scripts)
+- **Generation Script**: `scripts/generate-og-images.jsx` (main script for static generation)
 
 Both templates use the same React-based styling approach with your brand colors. The shared template ensures consistency between static and dynamic generation.
 
@@ -87,4 +88,4 @@ The `OgImageTemplate` component accepts three props:
 
 1. **Update the shared template** in `src/components/og-template.tsx`
 2. **Sync changes** to `scripts/og-template.jsx` (Node.js version)
-3. **Test both** static generation and API route
+3. **Test both** static generation (`scripts/generate-og-images.jsx`) and API route
