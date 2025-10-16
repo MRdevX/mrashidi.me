@@ -19,8 +19,7 @@ try {
   require("@vercel/og");
 } catch (_error) {
   console.log("❌ @vercel/og package not found. Installing...");
-  console.log("Run: npm install @vercel/og");
-  console.log("Or: yarn add @vercel/og");
+  console.log("Run: pnpm install @vercel/og");
   process.exit(1);
 }
 
@@ -130,6 +129,5 @@ try {
 } catch (error) {
   console.log("❌ Error:", error.message);
   console.log("\n💡 To install @vercel/og:");
-  console.log("npm install @vercel/og");
-  console.log("Or: yarn add @vercel/og");
+  console.log("pnpm install @vercel/og");
 }
