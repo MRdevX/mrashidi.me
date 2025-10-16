@@ -11,7 +11,7 @@ interface ContactHeaderProps {
   sections?: ContactSection[];
 }
 
-export function ContactHeader({ description, sections }: ContactHeaderProps) {
+export function ContactHeader({ description }: ContactHeaderProps) {
   const { getTextColor } = useThemeConfig();
 
   return (

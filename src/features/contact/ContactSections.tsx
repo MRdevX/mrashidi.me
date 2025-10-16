@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
-import type { ContactSection } from "./types";
 
-interface ContactSectionsProps {
-  sections: ContactSection[];
-}
-
-export function ContactSections({ sections }: ContactSectionsProps) {
+export function ContactSections() {
   return (
     <motion.div
       className="space-y-8"
