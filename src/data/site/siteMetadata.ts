@@ -48,7 +48,7 @@ const siteMetadata: SiteMetadata = {
     title: config.site.title,
     images: [
       {
-        url: `${config.site.url}/og-image.jpg`,
+        url: `${config.site.url}/og-image.png`,
         width: 1200,
         height: 630,
         alt: `${config.person.name} - ${config.person.title}`,
@@ -59,7 +59,7 @@ const siteMetadata: SiteMetadata = {
     card: "summary_large_image",
     title: config.site.title,
     creator: config.person.twitterHandle,
-    images: [`${config.site.url}/twitter-image.jpg`],
+    images: [`${config.site.url}/twitter-image.png`],
   },
   robots: "index, follow",
   alternates: {
