@@ -11,6 +11,7 @@ const EnvSchema = z.object({
   SENTRY_AUTH_TOKEN: z.string().optional(),
   RECAPTCHA_SECRET_KEY: z.string().optional(),
   RECAPTCHA_SITE_KEY: z.string().optional(),
+  NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().optional(),
   EMAIL_SERVICE_API_KEY: z.string().optional(),
   EMAIL_SERVICE_DOMAIN: z.string().optional(),
   EMAIL_FROM: z.string().email().optional(),
@@ -21,6 +22,9 @@ const EnvSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
   EMAIL_FROM_ADDRESS: z.string().email().optional(),
   EMAIL_TO_ADDRESS: z.string().email().optional(),
+
+  UPSTASH_REDIS_REST_URL: z.string().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
 });
 
 export const env = EnvSchema.parse({
@@ -34,6 +38,7 @@ export const env = EnvSchema.parse({
   SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
   RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
   RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
+  NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
   EMAIL_SERVICE_API_KEY: process.env.EMAIL_SERVICE_API_KEY,
   EMAIL_SERVICE_DOMAIN: process.env.EMAIL_SERVICE_DOMAIN,
   EMAIL_FROM: process.env.EMAIL_FROM,
@@ -43,6 +48,9 @@ export const env = EnvSchema.parse({
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
   EMAIL_TO_ADDRESS: process.env.EMAIL_TO_ADDRESS,
+
+  UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+  UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
 export type Env = z.infer<typeof EnvSchema>;

@@ -55,7 +55,21 @@ export function ContactFormRefactored() {
       });
       return;
     }
-    setRecaptchaLoaded(true);
+
+    if (window.grecaptcha) {
+      setRecaptchaLoaded(true);
+      return;
+    }
+
+    const checkRecaptcha = () => {
+      if (window.grecaptcha) {
+        setRecaptchaLoaded(true);
+      } else {
+        setTimeout(checkRecaptcha, 100);
+      }
+    };
+
+    checkRecaptcha();
   }, [siteKey]);
 
   const executeRecaptcha = async (): Promise<string> => {
@@ -106,7 +120,8 @@ export function ContactFormRefactored() {
           message: errorData.message || "Failed to send message. Please try again.",
         });
       }
-    } catch (_error) {
+    } catch (error) {
+      logger.error({ error }, "Contact form submission error");
       setSubmitStatus({
         type: "error",
         message: "Something went wrong. Please try again later.",
