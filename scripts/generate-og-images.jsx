@@ -8,7 +8,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const _React = require("react");
 
-// Make React available for JSX (required for tsx with legacy JSX transform)
 global.React = _React;
 
 const { OgImageTemplate } = require("./og-template.jsx");
