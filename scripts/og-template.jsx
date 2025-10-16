@@ -1,6 +1,3 @@
-
-
-
 export const OgImageTemplate = ({ title, subtitle, description }) => (
   <div
     style={{

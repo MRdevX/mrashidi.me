@@ -4,19 +4,19 @@
  * This script generates placeholder OG images using @vercel/og
  */
 
-const { ImageResponse } = require("@vercel/og");
 const fs = require("node:fs");
 const path = require("node:path");
 const _React = require("react");
 
-
+// Make React available for JSX (required for tsx with legacy JSX transform)
 global.React = _React;
-
 
 const { OgImageTemplate } = require("./og-template.jsx");
 
+let ImageResponse;
 try {
-  require("@vercel/og");
+  const vercelOg = require("@vercel/og");
+  ImageResponse = vercelOg.ImageResponse;
 } catch (_error) {
   console.log("❌ @vercel/og package not found. Installing...");
   console.log("Run: pnpm install @vercel/og");
