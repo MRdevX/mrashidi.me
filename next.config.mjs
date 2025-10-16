@@ -16,10 +16,9 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  
   productionBrowserSourceMaps: false,
   compress: true,
-  
+
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -121,7 +120,6 @@ const pwaConfig =
         skipWaiting: true,
         disable: process.env.NODE_ENV === "development",
 
-        
         exclude: [
           /\.map$/,
           /_manifest\.js$/,
@@ -174,7 +172,6 @@ export default withSentryConfig(config, {
 
   automaticVercelMonitors: true,
 
-  
   hideSourceMaps: true,
   disableServerWebpackPlugin: process.env.NODE_ENV !== "production",
   disableClientWebpackPlugin: process.env.NODE_ENV !== "production",

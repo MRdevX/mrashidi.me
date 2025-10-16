@@ -72,123 +72,121 @@ const images = [
 async function generateOGImage(config) {
   try {
     const imageResponse = new ImageResponse(
-      (
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#000000",
+          backgroundImage: "linear-gradient(135deg, #000000 0%, #1a1a1a 100%)",
+          position: "relative",
+        }}
+      >
+        {/* Background accent shapes */}
         <div
           style={{
-            height: "100%",
-            width: "100%",
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "200px",
+            height: "200px",
+            background: "linear-gradient(135deg, #ff5f1f 0%, #ff5f1f20 100%)",
+            clipPath: "polygon(100% 0%, 0% 0%, 100% 100%)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "200px",
+            height: "200px",
+            background: "linear-gradient(135deg, #ff5f1f 0%, #ff5f1f20 100%)",
+            clipPath: "polygon(0% 100%, 0% 0%, 100% 100%)",
+          }}
+        />
+
+        {/* Main content */}
+        <div
+          style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#000000",
-            backgroundImage: "linear-gradient(135deg, #000000 0%, #1a1a1a 100%)",
-            position: "relative",
+            textAlign: "center",
+            zIndex: 1,
           }}
         >
-          {/* Background accent shapes */}
-          <div
+          {/* Title */}
+          <h1
             style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              width: "200px",
-              height: "200px",
-              background: "linear-gradient(135deg, #ff5f1f 0%, #ff5f1f20 100%)",
-              clipPath: "polygon(100% 0%, 0% 0%, 100% 100%)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "200px",
-              height: "200px",
-              background: "linear-gradient(135deg, #ff5f1f 0%, #ff5f1f20 100%)",
-              clipPath: "polygon(0% 100%, 0% 0%, 100% 100%)",
-            }}
-          />
-
-          {/* Main content */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              zIndex: 1,
+              fontSize: "64px",
+              fontWeight: "bold",
+              color: "#ffffff",
+              margin: "0 0 20px 0",
+              textShadow: "0 0 20px rgba(255, 95, 31, 0.5)",
             }}
           >
-            {/* Title */}
-            <h1
-              style={{
-                fontSize: "64px",
-                fontWeight: "bold",
-                color: "#ffffff",
-                margin: "0 0 20px 0",
-                textShadow: "0 0 20px rgba(255, 95, 31, 0.5)",
-              }}
-            >
-              {config.title}
-            </h1>
+            {config.title}
+          </h1>
 
-            {/* Subtitle */}
-            <h2
-              style={{
-                fontSize: "32px",
-                fontWeight: "600",
-                color: "#ff5f1f",
-                margin: "0 0 20px 0",
-              }}
-            >
-              {config.subtitle}
-            </h2>
+          {/* Subtitle */}
+          <h2
+            style={{
+              fontSize: "32px",
+              fontWeight: "600",
+              color: "#ff5f1f",
+              margin: "0 0 20px 0",
+            }}
+          >
+            {config.subtitle}
+          </h2>
 
-            {/* Description */}
-            <p
-              style={{
-                fontSize: "24px",
-                color: "#cccccc",
-                margin: "0 0 40px 0",
-                maxWidth: "800px",
-                lineHeight: "1.4",
-              }}
-            >
-              {config.description}
-            </p>
+          {/* Description */}
+          <p
+            style={{
+              fontSize: "24px",
+              color: "#cccccc",
+              margin: "0 0 40px 0",
+              maxWidth: "800px",
+              lineHeight: "1.4",
+            }}
+          >
+            {config.description}
+          </p>
 
-            {/* Website URL */}
-            <div
-              style={{
-                fontSize: "18px",
-                color: "#888888",
-                border: "2px solid #ff5f1f",
-                padding: "12px 24px",
-                borderRadius: "8px",
-                backgroundColor: "rgba(255, 95, 31, 0.1)",
-              }}
-            >
-              mrashidi.me
-            </div>
-          </div>
-
-          {/* Border accent */}
+          {/* Website URL */}
           <div
             style={{
-              position: "absolute",
-              top: "20px",
-              left: "20px",
-              right: "20px",
-              bottom: "20px",
-              border: "4px solid #ff5f1f",
-              borderRadius: "12px",
-              opacity: 0.3,
+              fontSize: "18px",
+              color: "#888888",
+              border: "2px solid #ff5f1f",
+              padding: "12px 24px",
+              borderRadius: "8px",
+              backgroundColor: "rgba(255, 95, 31, 0.1)",
             }}
-          />
+          >
+            mrashidi.me
+          </div>
         </div>
-      ),
+
+        {/* Border accent */}
+        <div
+          style={{
+            position: "absolute",
+            top: "20px",
+            left: "20px",
+            right: "20px",
+            bottom: "20px",
+            border: "4px solid #ff5f1f",
+            borderRadius: "12px",
+            opacity: 0.3,
+          }}
+        />
+      </div>,
       {
         width: 1200,
         height: 630,
@@ -210,7 +208,7 @@ async function generateAllImages() {
     try {
       console.log(`🔄 Generating: ${imageConfig.name}...`);
       const buffer = await generateOGImage(imageConfig);
-      
+
       if (buffer) {
         const filePath = path.join(publicDir, imageConfig.name);
         fs.writeFileSync(filePath, buffer);
