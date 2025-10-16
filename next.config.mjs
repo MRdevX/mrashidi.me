@@ -16,6 +16,23 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
+  
+  productionBrowserSourceMaps: false,
+  compress: true,
+  
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  modularizeImports: {
+    "framer-motion": {
+      transform: "framer-motion/{{member}}",
+    },
+    "react-icons": {
+      transform: "react-icons/{{member}}",
+    },
+  },
+
   images: {
     remotePatterns: [
       {
@@ -104,7 +121,28 @@ const pwaConfig =
         skipWaiting: true,
         disable: process.env.NODE_ENV === "development",
 
-        exclude: [/\.map$/, /_manifest\.js$/, /\.(jpg|jpeg|png|gif|webp|svg)$/, /\.(txt|xml)$/],
+        
+        exclude: [
+          /\.map$/,
+          /_manifest\.js$/,
+          /\.(jpg|jpeg|png|gif|webp|svg|ico)$/,
+          /\.(txt|xml|json)$/,
+          /\.(woff|woff2|ttf|eot)$/,
+          /sw\.js$/,
+          /workbox-.*\.js$/,
+          /\.ts$/,
+          /\.tsx$/,
+          /\.js\.map$/,
+          /\.css\.map$/,
+        ],
+
+        buildExcludes: [
+          /middleware-manifest\.json$/,
+          /build-manifest\.json$/,
+          /react-loadable-manifest\.json$/,
+          /\.js\.map$/,
+          /\.css\.map$/,
+        ],
 
         runtimeCaching: [
           {
@@ -130,11 +168,15 @@ export default withSentryConfig(config, {
 
   silent: !process.env.CI,
 
-  widenClientFileUpload: true,
-
   tunnelRoute: "/monitoring",
 
   disableLogger: true,
 
   automaticVercelMonitors: true,
+
+  
+  hideSourceMaps: true,
+  disableServerWebpackPlugin: process.env.NODE_ENV !== "production",
+  disableClientWebpackPlugin: process.env.NODE_ENV !== "production",
+  widenClientFileUpload: process.env.NODE_ENV === "production",
 });
