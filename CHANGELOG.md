@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.71](https://github.com/MRdevX/mrashidi.me/compare/v0.1.69...v0.1.71) (2025-10-16)
+
+
+### Features
+
+* introduce shared Open Graph image template for consistent styling across static and dynamic generations ([9ef5fc1](https://github.com/MRdevX/mrashidi.me/commit/9ef5fc155daf8039e23ca3ee087bd5cf4151fb61))
+* optimize build and implement Open Graph image generation using @vercel/og ([76a09b1](https://github.com/MRdevX/mrashidi.me/commit/76a09b17fd7db4c46adb32bbb3b9793f0fbc0d8f))
+* update Open Graph images to PNG format and add new image files ([4b93fe7](https://github.com/MRdevX/mrashidi.me/commit/4b93fe79aae8e74739de0181d6e8c8196ad71f8e))
+
+
+### Bug Fixes
+
+* handle missing @vercel/og package gracefully and ensure React is available for JSX ([398b2f6](https://github.com/MRdevX/mrashidi.me/commit/398b2f664e47f093cde9e20e40cc8232964ad9eb))
+* limit character length for title, subtitle, and description to prevent DoS attacks ([314e3a4](https://github.com/MRdevX/mrashidi.me/commit/314e3a44957a23694e57fe5987584d3ec40c5adc))
+* update installation instructions for @vercel/og to use pnpm ([a0390bf](https://github.com/MRdevX/mrashidi.me/commit/a0390bf3bfe14d84b12d87c413b67793bd5daeda))
+
 ### [0.1.70](https://github.com/MRdevX/mrashidi.me/compare/v0.1.69...v0.1.70) (2025-10-16)
 
 

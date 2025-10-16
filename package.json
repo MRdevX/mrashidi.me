@@ -1,6 +1,6 @@
 {
   "name": "mrashidi.me",
-  "version": "0.1.70",
+  "version": "0.1.71",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
