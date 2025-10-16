@@ -7,7 +7,10 @@
 const { ImageResponse } = require("@vercel/og");
 const fs = require("node:fs");
 const path = require("node:path");
-const React = require("react");
+const _React = require("react");
+
+// Make React available for JSX (required for tsx with legacy JSX transform)
+global.React = _React;
 
 try {
   require("@vercel/og");

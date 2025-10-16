@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.70](https://github.com/MRdevX/mrashidi.me/compare/v0.1.69...v0.1.70) (2025-10-16)
+
+
+### Features
+
+* optimize build and implement Open Graph image generation using @vercel/og ([76a09b1](https://github.com/MRdevX/mrashidi.me/commit/76a09b17fd7db4c46adb32bbb3b9793f0fbc0d8f))
+
 ### [0.1.69](https://github.com/MRdevX/mrashidi.me/compare/v0.1.67...v0.1.69) (2025-10-12)
 
 ### [0.1.68](https://github.com/MRdevX/mrashidi.me/compare/v0.1.67...v0.1.68) (2025-10-12)
