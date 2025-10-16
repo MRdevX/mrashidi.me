@@ -31,43 +31,43 @@ if (!fs.existsSync(publicDir)) {
 
 const images = [
   {
-    name: "og-image.jpg",
+    name: "og-image.png",
     title: "Mahdi Rashidi",
     subtitle: "Software Backend Engineer",
     description: "Building reliable and maintainable systems",
   },
   {
-    name: "og-about.jpg",
+    name: "og-about.png",
     title: "About Mahdi",
     subtitle: "Software Backend Engineer",
     description: "Learn about my background and experience",
   },
   {
-    name: "og-projects.jpg",
+    name: "og-projects.png",
     title: "Projects",
     subtitle: "Software Backend Engineer",
     description: "Explore my work and open source contributions",
   },
   {
-    name: "og-contact.jpg",
+    name: "og-contact.png",
     title: "Get In Touch",
     subtitle: "Software Backend Engineer",
     description: "Let's discuss your next project",
   },
   {
-    name: "og-blog.jpg",
+    name: "og-blog.png",
     title: "Blog",
     subtitle: "Software Backend Engineer",
     description: "Technical articles and insights",
   },
   {
-    name: "og-resume.jpg",
+    name: "og-resume.png",
     title: "Resume",
     subtitle: "Software Backend Engineer",
     description: "Professional experience and skills",
   },
   {
-    name: "twitter-image.jpg",
+    name: "twitter-image.png",
     title: "Mahdi Rashidi",
     subtitle: "Software Backend Engineer",
     description: "Backend Development • Node.js • TypeScript",

@@ -11,7 +11,7 @@ interface PageMetadataConfig {
 }
 
 export function generatePageMetadata(pageConfig: PageMetadataConfig): Metadata {
-  const { page, title, description, keywords, ogType = "website", ogImage = `og-${page}.jpg` } = pageConfig;
+  const { page, title, description, keywords, ogType = "website", ogImage = `og-${page}.png` } = pageConfig;
 
   const fullTitle = `${title} - ${config.person.name}`;
   const fullDescription = description;
@@ -93,7 +93,7 @@ export const pageMetadataConfigs = {
       "react",
       config.person.location,
     ],
-    ogImage: "og-image.jpg",
+    ogImage: "og-image.png",
   },
   about: {
     page: "about",

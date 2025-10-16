@@ -20,13 +20,13 @@ pnpm generate-og-images
 ```
 
 This creates images in `/public/`:
-- `og-image.jpg` - Homepage
-- `og-about.jpg` - About page
-- `og-projects.jpg` - Projects page
-- `og-contact.jpg` - Contact page
-- `og-blog.jpg` - Blog page
-- `og-resume.jpg` - Resume page
-- `twitter-image.jpg` - Twitter card
+- `og-image.png` - Homepage
+- `og-about.png` - About page
+- `og-projects.png` - Projects page
+- `og-contact.png` - Contact page
+- `og-blog.png` - Blog page
+- `og-resume.png` - Resume page
+- `twitter-image.png` - Twitter card
 
 ### Dynamic Images
 
@@ -48,7 +48,7 @@ In your metadata, you can use either:
 
 export const metadata = {
   openGraph: {
-    images: ['/og-image.jpg'],
+    images: ['/og-image.png'],
   },
 };
 
