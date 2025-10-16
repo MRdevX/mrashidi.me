@@ -1,4 +1,3 @@
-export { ADPListWidget } from "./ADPListWidget";
 export { ContactContainer } from "./ContactContainer";
 export { ContactHeader } from "./ContactHeader";
 export { ContactSections } from "./ContactSections";

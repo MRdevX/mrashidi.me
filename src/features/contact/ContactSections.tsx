@@ -1,22 +1,11 @@
 import { motion } from "framer-motion";
-import { Star, Users } from "lucide-react";
-import { SectionHeader } from "@/components/ui";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { ADPListWidget } from "./ADPListWidget";
-import type { ADPListWidget as ADPListWidgetType, ContactSection } from "./types";
+import type { ContactSection } from "./types";
 
 interface ContactSectionsProps {
   sections: ContactSection[];
-  adpListWidgets: {
-    booking: ADPListWidgetType;
-    impact: ADPListWidgetType;
-    reviews: ADPListWidgetType;
-  };
 }
 
-export function ContactSections({ sections, adpListWidgets }: ContactSectionsProps) {
-  const { getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
-
+export function ContactSections({ sections }: ContactSectionsProps) {
   return (
     <motion.div
       className="space-y-8"
@@ -24,34 +13,7 @@ export function ContactSections({ sections, adpListWidgets }: ContactSectionsPro
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
     >
-      {/* Mentorship Widget */}
-      <div
-        className={`${getBackgroundColor("glass")} backdrop-blur-sm border ${getBorderColor("primary")} rounded-xl p-6`}
-      >
-        <SectionHeader icon={Users} title={sections[0]?.title || "Book a Session"} size="sm" />
-        <p className={`${getTextColor("secondary")} mb-6`}>
-          {sections[0]?.description || "Schedule a mentorship session with me"}
-        </p>
-        <ADPListWidget widget={adpListWidgets.booking} className="w-full" />
-      </div>
-
-      {/* Reviews Widgets */}
-      <div
-        className={`${getBackgroundColor("glass")} backdrop-blur-sm border ${getBorderColor("primary")} rounded-xl p-6`}
-      >
-        <SectionHeader icon={Star} title={sections[1]?.title || "Reviews & Impact"} size="sm" />
-        <p className={`${getTextColor("secondary")} mb-6`}>
-          {sections[1]?.description || "See what others say about our sessions"}
-        </p>
-        <div className="grid grid-cols-5 gap-6">
-          <div className="col-span-3">
-            <ADPListWidget widget={adpListWidgets.reviews} className="w-full" />
-          </div>
-          <div className="col-span-2">
-            <ADPListWidget widget={adpListWidgets.impact} className="w-full" />
-          </div>
-        </div>
-      </div>
+      {/* No widgets - clean contact page */}
     </motion.div>
   );
 }
