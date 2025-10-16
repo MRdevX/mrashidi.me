@@ -23,15 +23,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  modularizeImports: {
-    "framer-motion": {
-      transform: "framer-motion/{{member}}",
-    },
-    "react-icons": {
-      transform: "react-icons/{{member}}",
-    },
-  },
-
   images: {
     remotePatterns: [
       {
