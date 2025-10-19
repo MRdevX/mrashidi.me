@@ -55,22 +55,11 @@ export function ContactFormRefactored() {
       });
       return;
     }
-
-    if (window.grecaptcha) {
-      setRecaptchaLoaded(true);
-      return;
-    }
-
-    const checkRecaptcha = () => {
-      if (window.grecaptcha) {
-        setRecaptchaLoaded(true);
-      } else {
-        setTimeout(checkRecaptcha, 100);
-      }
-    };
-
-    checkRecaptcha();
   }, [siteKey]);
+
+  const handleRecaptchaLoad = () => {
+    setRecaptchaLoaded(true);
+  };
 
   const executeRecaptcha = async (): Promise<string> => {
     if (!siteKey) {
@@ -153,7 +142,11 @@ export function ContactFormRefactored() {
 
   return (
     <>
-      <Script src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`} strategy="lazyOnload" />
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+        strategy="lazyOnload"
+        onLoad={handleRecaptchaLoad}
+      />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
