@@ -55,15 +55,37 @@ export function ContactFormRefactored() {
       });
       return;
     }
+
+    if (window.grecaptcha) {
+      setRecaptchaLoaded(true);
+      return;
+    }
+
+    const fallbackTimeout = setTimeout(() => {
+      logger.warn("reCAPTCHA script failed to load, enabling form without reCAPTCHA");
+      setRecaptchaLoaded(true);
+    }, 5000);
+
+    return () => clearTimeout(fallbackTimeout);
   }, [siteKey]);
 
   const handleRecaptchaLoad = () => {
     setRecaptchaLoaded(true);
   };
 
+  const handleRecaptchaError = () => {
+    logger.error("reCAPTCHA script failed to load");
+    setRecaptchaLoaded(true);
+  };
+
   const executeRecaptcha = async (): Promise<string> => {
     if (!siteKey) {
       throw new Error("reCAPTCHA site key is not configured");
+    }
+
+    if (!window.grecaptcha) {
+      logger.warn("reCAPTCHA not available, skipping verification");
+      return "no-recaptcha";
     }
 
     try {
@@ -130,12 +152,13 @@ export function ContactFormRefactored() {
 
   if (!recaptchaLoaded) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
+      <div className="flex flex-col justify-center items-center min-h-[400px] space-y-4">
         <div className="loading-dots">
           <span></span>
           <span></span>
           <span></span>
         </div>
+        <p className="text-sm text-gray-500 animate-pulse">Initializing secure form...</p>
       </div>
     );
   }
@@ -146,6 +169,7 @@ export function ContactFormRefactored() {
         src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
         strategy="lazyOnload"
         onLoad={handleRecaptchaLoad}
+        onError={handleRecaptchaError}
       />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -181,19 +205,25 @@ export function ContactFormRefactored() {
             icon={<FileText className="w-4 h-4" />}
           />
 
-          <FormInputWithValidation
-            form={form}
-            name="message"
-            label="Message"
-            placeholder="Your message here..."
-            multiline
-            rows={5}
-            icon={<MessageSquare className="w-4 h-4" />}
-          />
+          <div>
+            <FormInputWithValidation
+              form={form}
+              name="message"
+              label="Message"
+              placeholder="Your message here..."
+              multiline
+              rows={5}
+              icon={<MessageSquare className="w-4 h-4" />}
+            />
+            <div className="flex justify-between items-center mt-1">
+              <p className="text-xs text-gray-500">Tell me about your project, question, or how I can help you</p>
+              <p className="text-xs text-gray-500">{form.watch("message")?.length || 0}/1000</p>
+            </div>
+          </div>
 
           <CyberpunkButton
             type="submit"
-            disabled={isSubmitting || !form.formState.isValid}
+            disabled={isSubmitting || !form.watch("message") || form.watch("message").length < 10}
             loading={isSubmitting}
             icon={<Send className="w-4 h-4" />}
             className="w-full"

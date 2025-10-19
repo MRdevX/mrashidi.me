@@ -1,6 +1,7 @@
 export interface ContactSection {
   title: string;
   description: string;
+  icon?: string;
   delay?: number;
 }
 
