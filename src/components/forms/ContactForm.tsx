@@ -55,8 +55,11 @@ export function ContactFormRefactored() {
       });
       return;
     }
-    setRecaptchaLoaded(true);
   }, [siteKey]);
+
+  const handleRecaptchaLoad = () => {
+    setRecaptchaLoaded(true);
+  };
 
   const executeRecaptcha = async (): Promise<string> => {
     if (!siteKey) {
@@ -106,7 +109,8 @@ export function ContactFormRefactored() {
           message: errorData.message || "Failed to send message. Please try again.",
         });
       }
-    } catch (_error) {
+    } catch (error) {
+      logger.error({ error }, "Contact form submission error");
       setSubmitStatus({
         type: "error",
         message: "Something went wrong. Please try again later.",
@@ -138,7 +142,11 @@ export function ContactFormRefactored() {
 
   return (
     <>
-      <Script src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`} strategy="lazyOnload" />
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+        strategy="lazyOnload"
+        onLoad={handleRecaptchaLoad}
+      />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
