@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/core";
 import { APIError, handleError, logError } from "@/lib/errors";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
+import { handleCorsPrelight, isCorsPrelight, withCors } from "./cors";
 import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
@@ -17,6 +18,7 @@ interface MiddlewareBuilder {
   withValidation<T>(validator: (data: unknown) => T): MiddlewareBuilder;
   withAuth(token: string): MiddlewareBuilder;
   withCache(ttl: number, staleWhileRevalidate?: number): MiddlewareBuilder;
+  withCors(): MiddlewareBuilder;
   build(handler: ApiHandler): ApiHandler;
   buildWithPagination(handler: PaginationHandler): ApiHandler;
   buildWithValidation<T>(handler: ValidationHandler<T>): ApiHandler;
@@ -199,6 +201,11 @@ class MiddlewareBuilderImpl implements MiddlewareBuilder {
     return this;
   }
 
+  withCors(): MiddlewareBuilder {
+    this.features.push((handler: ApiHandler) => withCors(handler));
+    return this;
+  }
+
   build(handler: ApiHandler): ApiHandler {
     let wrappedHandler = handler;
 
@@ -268,5 +275,15 @@ export const apiMiddleware = {
       staleWhileRevalidate
     )(withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)))),
 
+  withCors: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) =>
+    withCors(withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)))),
+
   simple: (handler: ApiHandler) => withSecurityHeaders(withErrorHandling(handler)),
+
+  corsPrelight: (request: NextRequest) => {
+    if (isCorsPrelight(request)) {
+      return handleCorsPrelight(request);
+    }
+    return null;
+  },
 };

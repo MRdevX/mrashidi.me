@@ -1,3 +1,4 @@
+export * from "./cors";
 export * from "./middleware";
 export * from "./request";
 export * from "./response";

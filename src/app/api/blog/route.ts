@@ -48,16 +48,13 @@ async function handleBlogPosts(_request: NextRequest, pagination: { page: number
   }
 }
 
-export const GET = apiMiddleware.create("generalApi").withCache(300, 600).buildWithPagination(handleBlogPosts);
+export const GET = apiMiddleware
+  .create("generalApi")
+  .withCache(300, 600)
+  .withCors()
+  .buildWithPagination(handleBlogPosts);
 
-export const OPTIONS = async () => {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Access-Control-Max-Age": "86400",
-    },
-  });
+export const OPTIONS = async (request: NextRequest) => {
+  const preflightResponse = apiMiddleware.corsPrelight(request);
+  return preflightResponse || new NextResponse(null, { status: 200 });
 };
