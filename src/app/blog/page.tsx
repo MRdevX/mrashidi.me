@@ -16,7 +16,7 @@ export default function Blog() {
           {isLoading ? (
             <BlogLoading />
           ) : error ? (
-            <BlogError />
+            <BlogError onRetry={() => window.location.reload()} />
           ) : (
             <>
               <BlogGrid posts={posts} />

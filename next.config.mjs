@@ -58,7 +58,7 @@ const nextConfig = {
               "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net",
               "img-src 'self' data: https: blob:",
               "media-src 'self' https:",
-              "connect-src 'self' https: wss: https://www.google.com",
+              "connect-src 'self' https: wss: https://www.google.com https://mrdevx.medium.com",
               "frame-src 'self' https://git-graph.vercel.app https://adplist.org https://www.google.com",
               "object-src 'none'",
               "base-uri 'self'",
