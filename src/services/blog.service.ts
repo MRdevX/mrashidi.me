@@ -29,21 +29,86 @@ export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> 
   });
 }
 
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number = 10000): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    throw error;
+  }
+}
+
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<Response> {
+  let lastError: Error | undefined;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetchWithTimeout(url, options);
+
+      if (response.ok) {
+        return response;
+      }
+
+      if (response.status >= 400 && response.status < 500) {
+        throw new Error(`Client error: ${response.status} ${response.statusText}`);
+      }
+
+      if (attempt === maxRetries) {
+        throw new Error(`Server error after ${maxRetries + 1} attempts: ${response.status} ${response.statusText}`);
+      }
+
+      const delay = baseDelay * 2 ** attempt;
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+
+      if (attempt === maxRetries) {
+        break;
+      }
+
+      if (lastError.name === "AbortError") {
+        break;
+      }
+
+      const delay = baseDelay * 2 ** attempt;
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+
+  throw lastError ?? new Error("Unknown error occurred during fetch");
+}
+
 export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
   try {
     const feedUrl = `${author.mediumUrl}/feed`;
 
-    const response = await fetch(feedUrl, {
+    logger.info({
+      operation: "fetchMediumPosts",
+      author: author.username,
+      message: "Attempting to fetch Medium posts",
+      url: feedUrl,
+    });
+
+    const response = await fetchWithRetry(feedUrl, {
       headers: {
         "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
         Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
       },
       next: { revalidate: API_CONFIG.CACHE.BLOG_REVALIDATE },
     });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch feed: ${response.status} ${response.statusText}`);
-    }
 
     const xmlData = await response.text();
 
@@ -79,25 +144,37 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
       };
     });
 
+    logger.info({
+      operation: "fetchMediumPosts",
+      author: author.username,
+      message: "Successfully fetched Medium posts",
+      postCount: posts.length,
+    });
+
     return posts;
   } catch (error) {
     logger.error({
       operation: "fetchMediumPosts",
       author: author.username,
       error: error instanceof Error ? error.message : String(error),
+      errorName: error instanceof Error ? error.name : undefined,
+      stack: error instanceof Error ? error.stack : undefined,
     });
-    throw error;
+
+    return [];
   }
 }
 
 async function fetchAllPosts(): Promise<IBlogPost[]> {
   const allPosts: IBlogPost[] = [];
+  let hasErrors = false;
 
   for (const author of authors) {
     try {
       const posts = await fetchMediumPosts(author);
       allPosts.push(...posts);
     } catch (error) {
+      hasErrors = true;
       logger.error({
         operation: "fetchAllPosts",
         author: author.username,
@@ -106,20 +183,44 @@ async function fetchAllPosts(): Promise<IBlogPost[]> {
     }
   }
 
+  if (hasErrors && allPosts.length === 0) {
+    logger.warn({
+      operation: "fetchAllPosts",
+      message: "No posts could be fetched from any author",
+    });
+  }
+
   return allPosts.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 }
 
 export async function getAllPosts(page: number, limit: number) {
   try {
+    logger.info({
+      operation: "getAllPosts",
+      message: "Starting to fetch blog posts",
+      page,
+      limit,
+    });
+
     const posts = await fetchAllPosts();
     const startIndex = (page - 1) * limit;
     const paginatedPosts = posts.slice(startIndex, startIndex + limit);
+
+    logger.info({
+      operation: "getAllPosts",
+      message: "Successfully fetched blog posts",
+      totalPosts: posts.length,
+      paginatedPosts: paginatedPosts.length,
+      page,
+      limit,
+    });
 
     return { posts: paginatedPosts, total: posts.length, fromCache: false };
   } catch (error) {
     logger.error({
       operation: "getAllPosts",
       error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
     });
 
     return { posts: [], total: 0, fromCache: false };
