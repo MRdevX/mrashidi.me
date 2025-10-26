@@ -36,12 +36,9 @@ export const API_CONFIG = {
     },
   },
   CORS: {
-    ALLOWED_ORIGINS:
-      process.env.NODE_ENV === "production"
-        ? ["https://mrashidi.me", "https://www.mrashidi.me", "https://medium.com", "https://www.medium.com"]
-        : ["http://localhost:3000", "https://medium.com", "https://www.medium.com"],
-    ALLOWED_METHODS: ["GET", "POST", "OPTIONS"],
-    ALLOWED_HEADERS: ["Content-Type", "Authorization"],
+    ALLOWED_ORIGINS: ["*"],
+    ALLOWED_METHODS: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
+    ALLOWED_HEADERS: ["*"],
     MAX_AGE: 86400,
   },
 } as const;

@@ -3,16 +3,13 @@ import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/core";
 
 /**
- * Get CORS headers based on the request origin
+ * Get CORS headers - now allows all origins, methods, and headers
  */
 export function getCorsHeaders(origin?: string | null): Record<string, string> {
-  const { ALLOWED_ORIGINS, ALLOWED_METHODS, ALLOWED_HEADERS, MAX_AGE } = API_CONFIG.CORS;
-
-  const isAllowedOrigin = origin && ALLOWED_ORIGINS.includes(origin);
-  const allowOrigin = isAllowedOrigin ? origin : ALLOWED_ORIGINS[0];
+  const { ALLOWED_METHODS, ALLOWED_HEADERS, MAX_AGE } = API_CONFIG.CORS;
 
   return {
-    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": ALLOWED_METHODS.join(", "),
     "Access-Control-Allow-Headers": ALLOWED_HEADERS.join(", "),
     "Access-Control-Max-Age": MAX_AGE.toString(),
@@ -41,9 +38,9 @@ export function withCors(handler: (request: NextRequest) => Promise<NextResponse
     const response = await handler(request);
 
     const corsHeaders = getCorsHeaders(origin);
-    Object.entries(corsHeaders).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(corsHeaders)) {
       response.headers.set(key, value);
-    });
+    }
 
     return response;
   };
