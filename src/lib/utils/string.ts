@@ -1,4 +1,3 @@
-// @ts-expect-error - html-to-text doesn't have types but works perfectly
 import { convert } from "html-to-text";
 import validator from "validator";
 

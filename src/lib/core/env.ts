@@ -9,7 +9,7 @@ const EnvSchema = z.object({
   SENTRY_ORG: z.string().optional(),
   SENTRY_PROJECT: z.string().optional(),
   SENTRY_AUTH_TOKEN: z.string().optional(),
-  RECAPTCHA_SECRET_KEY: z.string().optional(),
+  RECAPTCHA_SECRET_KEY: z.string().min(1, "RECAPTCHA_SECRET_KEY is required for security"),
   RECAPTCHA_SITE_KEY: z.string().optional(),
   NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().optional(),
   EMAIL_SERVICE_API_KEY: z.string().optional(),
@@ -18,8 +18,8 @@ const EnvSchema = z.object({
   EMAIL_TO: z.string().email().optional(),
 
   AWS_REGION: z.string().optional(),
-  AWS_ACCESS_KEY_ID: z.string().optional(),
-  AWS_SECRET_ACCESS_KEY: z.string().optional(),
+  AWS_ACCESS_KEY_ID: z.string().min(1, "AWS_ACCESS_KEY_ID is required for email service"),
+  AWS_SECRET_ACCESS_KEY: z.string().min(1, "AWS_SECRET_ACCESS_KEY is required for email service"),
   EMAIL_FROM_ADDRESS: z.string().email().optional(),
   EMAIL_TO_ADDRESS: z.string().email().optional(),
 
