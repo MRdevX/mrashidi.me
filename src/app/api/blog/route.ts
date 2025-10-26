@@ -14,8 +14,4 @@ async function handleBlogPosts(_request: NextRequest, pagination: { page: number
   });
 }
 
-export const GET = apiMiddleware.withCache(
-  "generalApi",
-  300,
-  600
-)(apiMiddleware.withPagination("generalApi")(handleBlogPosts));
+export const GET = apiMiddleware.create("generalApi").withCache(300, 600).buildWithPagination(handleBlogPosts);

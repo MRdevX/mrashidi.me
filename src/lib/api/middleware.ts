@@ -7,6 +7,26 @@ import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
 
+type PaginationHandler = (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>;
+type ValidationHandler<T> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
+type AuthHandler = ApiHandler;
+type CacheHandler = ApiHandler;
+
+interface MiddlewareBuilder {
+  withPagination(): MiddlewareBuilder;
+  withValidation<T>(validator: (data: unknown) => T): MiddlewareBuilder;
+  withAuth(token: string): MiddlewareBuilder;
+  withCache(ttl: number, staleWhileRevalidate?: number): MiddlewareBuilder;
+  build(handler: ApiHandler): ApiHandler;
+  buildWithPagination(handler: PaginationHandler): ApiHandler;
+  buildWithValidation<T>(handler: ValidationHandler<T>): ApiHandler;
+  buildWithAuth(handler: AuthHandler): ApiHandler;
+}
+
+export function withBase(rateLimiterType: RateLimiterType, handler: ApiHandler): ApiHandler {
+  return withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)));
+}
+
 export function withErrorHandling(handler: ApiHandler): ApiHandler {
   return async (request: NextRequest) => {
     try {
@@ -40,6 +60,21 @@ export function withValidation<T>(
     const validatedData = validator(body);
     return await handler(request, validatedData);
   });
+}
+
+export function withPaginationFeature(
+  handler: (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>
+): ApiHandler {
+  return async (request: NextRequest) => {
+    const searchParams = request.nextUrl.searchParams;
+    const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
+    const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
+
+    return await handler(request, {
+      page: Math.max(1, page),
+      limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
+    });
+  };
 }
 
 export function withPagination(
@@ -116,7 +151,100 @@ export function withCacheHeaders(ttl: number, staleWhileRevalidate?: number): (h
   };
 }
 
+class MiddlewareBuilderImpl implements MiddlewareBuilder {
+  private rateLimiterType: RateLimiterType;
+  private features: Array<(handler: ApiHandler) => ApiHandler> = [];
+
+  constructor(rateLimiterType: RateLimiterType) {
+    this.rateLimiterType = rateLimiterType;
+  }
+
+  withPagination(): MiddlewareBuilder {
+    this.features.push((handler) => {
+      return async (request: NextRequest) => {
+        const searchParams = request.nextUrl.searchParams;
+        const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
+        const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
+
+        const pagination = {
+          page: Math.max(1, page),
+          limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
+        };
+
+        return await (handler as PaginationHandler)(request, pagination);
+      };
+    });
+    return this;
+  }
+
+  withValidation<T>(validator: (data: unknown) => T): MiddlewareBuilder {
+    this.features.push((handler) => {
+      return async (request: NextRequest) => {
+        const body = await request.json();
+        const validatedData = validator(body);
+        return await (handler as ValidationHandler<T>)(request, validatedData);
+      };
+    });
+    return this;
+  }
+
+  withAuth(token: string): MiddlewareBuilder {
+    this.features.push((handler) => withAuth(token)(handler));
+    return this;
+  }
+
+  withCache(ttl: number, staleWhileRevalidate?: number): MiddlewareBuilder {
+    this.features.push((handler: CacheHandler) => withCacheHeaders(ttl, staleWhileRevalidate)(handler));
+    return this;
+  }
+
+  build(handler: ApiHandler): ApiHandler {
+    let wrappedHandler = handler;
+
+    for (let i = this.features.length - 1; i >= 0; i--) {
+      wrappedHandler = this.features[i](wrappedHandler);
+    }
+
+    return withBase(this.rateLimiterType, wrappedHandler);
+  }
+
+  buildWithPagination(handler: PaginationHandler): ApiHandler {
+    const apiHandler: ApiHandler = async (request: NextRequest) => {
+      const searchParams = request.nextUrl.searchParams;
+      const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
+      const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
+
+      const pagination = {
+        page: Math.max(1, page),
+        limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
+      };
+
+      return await handler(request, pagination);
+    };
+
+    return this.build(apiHandler);
+  }
+
+  buildWithValidation<T>(handler: ValidationHandler<T>): ApiHandler {
+    return this.build(handler as ApiHandler);
+  }
+
+  buildWithAuth(handler: AuthHandler): ApiHandler {
+    return this.build(handler);
+  }
+
+  buildWithCache(handler: CacheHandler): ApiHandler {
+    return this.build(handler);
+  }
+}
+
+export function createMiddleware(rateLimiterType: RateLimiterType): MiddlewareBuilder {
+  return new MiddlewareBuilderImpl(rateLimiterType);
+}
+
 export const apiMiddleware = {
+  create: createMiddleware,
+
   basic: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) =>
     withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler))),
 
