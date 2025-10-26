@@ -1,5 +1,4 @@
 import { Text } from "@react-email/components";
-import { sanitizeUserInput } from "@/lib/utils/sanitize";
 import { BaseEmailTemplate, InfoRow } from "../components";
 import type { EmailTemplateData, ITemplateConfig } from "../types";
 
@@ -11,9 +10,9 @@ interface ResumeAdminTemplateProps {
 export function ResumeAdminTemplate({ data, templateConfig }: ResumeAdminTemplateProps) {
   return (
     <BaseEmailTemplate title="Someone Downloaded Your CV" templateConfig={templateConfig}>
-      <InfoRow label="Name" value={sanitizeUserInput(data.name)} />
-      <InfoRow label="Email" value={sanitizeUserInput(data.email)} />
-      {data.company && <InfoRow label="Company" value={sanitizeUserInput(data.company)} />}
+      <InfoRow label="Name" value={data.name} />
+      <InfoRow label="Email" value={data.email} />
+      {data.company && <InfoRow label="Company" value={data.company} />}
 
       <Text style={messageStyle} className="dark-mode-text">
         Great news! Someone just downloaded your resume from your portfolio. Time to follow up!

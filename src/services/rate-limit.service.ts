@@ -10,12 +10,7 @@ try {
   redisAvailable = true;
   logger.info("Redis rate limiting initialized successfully");
 } catch (error) {
-  const isProduction = process.env.NODE_ENV === "production";
-  if (isProduction) {
-    logger.error({ error }, "CRITICAL: Redis not available in production! Rate limiting will be per-instance only");
-  } else {
-    logger.warn({ error }, "Redis not available, using in-memory rate limiting fallback");
-  }
+  logger.warn({ error }, "Redis not available, using in-memory rate limiting fallback");
   redisAvailable = false;
 }
 
