@@ -15,6 +15,20 @@ const authors: IBlogAuthor[] = [
 const CACHE_UPDATE_INTERVAL = API_CONFIG.CACHE.BLOG_UPDATE_INTERVAL;
 let isUpdating = false;
 
+function serializeBlogPost(post: IBlogPost) {
+  return {
+    ...post,
+    publishedAt: post.publishedAt.toISOString(),
+  };
+}
+
+function deserializeBlogPost(post: Record<string, unknown> & { publishedAt: string }): IBlogPost {
+  return {
+    ...post,
+    publishedAt: new Date(post.publishedAt),
+  } as IBlogPost;
+}
+
 export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> {
   return new Promise((resolve, reject) => {
     parseString(xmlData, { explicitArray: false }, (error, result) => {
@@ -121,8 +135,9 @@ async function updateCache(): Promise<void> {
   try {
     isUpdating = true;
     const posts = await fetchAllPosts();
-    cacheService.setBlogPosts(posts, posts.length);
-    logger.info({ operation: "updateCache", postsCount: posts.length });
+    cacheService.setBlogPosts(posts.map(serializeBlogPost), posts.length);
+
+    console.log(`[updateCache] Cached ${posts.length} blog posts`);
   } catch (error) {
     logger.error({
       operation: "updateCache",
@@ -134,28 +149,21 @@ async function updateCache(): Promise<void> {
 }
 
 export function startCacheUpdateInterval(): void {
-  if (typeof window !== "undefined" || process.env.NODE_ENV === "test") {
-    return;
-  }
-
-  if (process.env.NODE_ENV !== "production") {
+  if (typeof window !== "undefined") {
     return;
   }
 
   updateCache().catch((error) => {
-    logger.error({
-      operation: "startCacheUpdateInterval",
-      error: error instanceof Error ? error.message : String(error),
-    });
+    console.error(`[startCacheUpdateInterval] Error:`, error instanceof Error ? error.message : String(error));
   });
 
   setInterval(() => {
     if (!isUpdating) {
       updateCache().catch((error) => {
-        logger.error({
-          operation: "startCacheUpdateInterval",
-          error: error instanceof Error ? error.message : String(error),
-        });
+        console.error(
+          `[startCacheUpdateInterval] Interval error:`,
+          error instanceof Error ? error.message : String(error)
+        );
       });
     }
   }, CACHE_UPDATE_INTERVAL);
@@ -163,12 +171,13 @@ export function startCacheUpdateInterval(): void {
 
 export async function getAllPosts(page: number, limit: number) {
   try {
-    const cachedData = cacheService.getBlogPosts<IBlogPost>();
+    const cachedData = cacheService.getBlogPosts<Record<string, unknown> & { publishedAt: string }>();
 
     if (cachedData) {
       const { posts, total } = cachedData;
+      const deserializedPosts = posts.map(deserializeBlogPost);
       const startIndex = (page - 1) * limit;
-      const paginatedPosts = posts.slice(startIndex, startIndex + limit);
+      const paginatedPosts = deserializedPosts.slice(startIndex, startIndex + limit);
 
       const lastUpdate = cacheService.getLastUpdateTime();
       const thirtyMinutes = 30 * 60 * 1000;
@@ -180,7 +189,7 @@ export async function getAllPosts(page: number, limit: number) {
     }
 
     const posts = await fetchAllPosts();
-    cacheService.setBlogPosts(posts, posts.length);
+    cacheService.setBlogPosts(posts.map(serializeBlogPost), posts.length);
 
     const startIndex = (page - 1) * limit;
     const paginatedPosts = posts.slice(startIndex, startIndex + limit);
@@ -191,7 +200,8 @@ export async function getAllPosts(page: number, limit: number) {
       operation: "getAllPosts",
       error: error instanceof Error ? error.message : String(error),
     });
-    throw error;
+
+    return { posts: [], total: 0, fromCache: false };
   }
 }
 
