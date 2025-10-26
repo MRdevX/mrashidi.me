@@ -16,9 +16,7 @@ export function useCache<T>(key: string, duration: number = 24 * 60 * 60 * 1000)
           const parsed = JSON.parse(stored);
           setCachedData(parsed);
         }
-      } catch {
-        // Ignore parsing errors
-      }
+      } catch {}
     }
   }, [key]);
 

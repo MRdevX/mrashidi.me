@@ -115,8 +115,8 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             <div>
               <h3 className="text-lg font-semibold mb-2">Key Highlights</h3>
               <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                {project.highlights.map((highlight, index) => (
-                  <li key={`highlight-${index}-${Math.random()}`}>{highlight}</li>
+                {project.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
                 ))}
               </ul>
             </div>

@@ -31,5 +31,3 @@ export function Skeleton({ className, variant = "default", width, height, animat
     />
   );
 }
-
-// Shimmer animation keyframes will be added to animations.css

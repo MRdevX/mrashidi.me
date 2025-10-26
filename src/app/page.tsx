@@ -118,8 +118,8 @@ export default function Home() {
             fallback={
               <div className="content-section p-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div key={`skeleton-${i}-${Math.random()}`} className="flex flex-col items-center gap-2">
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <div key={`tech-skeleton-${Date.now()}-${i}`} className="flex flex-col items-center gap-2">
                       <Skeleton className="h-12 w-12 rounded-lg" />
                       <Skeleton className="h-4 w-16" />
                     </div>

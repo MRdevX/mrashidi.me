@@ -41,19 +41,15 @@ export function TypingAnimation({
     const timer = setTimeout(
       () => {
         if (!isDeleting) {
-          // Typing
           if (currentText.length < currentString.length) {
             setCurrentText(currentString.slice(0, currentText.length + 1));
           } else {
-            // Finished typing, pause then start deleting
             setIsPaused(true);
           }
         } else {
-          // Deleting
           if (currentText.length > 0) {
             setCurrentText(currentText.slice(0, -1));
           } else {
-            // Finished deleting, move to next string
             setIsDeleting(false);
             setCurrentStringIndex((prev) => (prev + 1) % strings.length);
           }

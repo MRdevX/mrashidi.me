@@ -1,7 +1,6 @@
 import ky, { type KyInstance } from "ky";
 import { logger } from "./core";
 
-// Create a ky instance with default configuration
 const api: KyInstance = ky.create({
   timeout: 10000,
   retry: {
