@@ -80,9 +80,13 @@
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted-foreground: 0 0% 35.1%;
     --accent: 16 100% 56%; /* Your neon orange for accents */
     --accent-foreground: 0 0% 0%;
+    --success: 120 100% 50%; /* Green for success states */
+    --success-foreground: 0 0% 0%;
+    --info: 180 100% 48%; /* Cyan for info states */
+    --info-foreground: 0 0% 0%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
@@ -109,9 +113,13 @@
     --secondary: 0 0% 10%; /* Dark gray */
     --secondary-foreground: 0 0% 90%; /* Light gray text */
     --muted: 0 0% 15%; /* Muted background */
-    --muted-foreground: 0 0% 65%; /* Muted text */
+    --muted-foreground: 0 0% 75%; /* Muted text */
     --accent: 16 100% 56%; /* Your neon orange for accents */
     --accent-foreground: 0 0% 0%;
+    --success: 120 100% 50%; /* Green for success states */
+    --success-foreground: 0 0% 0%;
+    --info: 180 100% 48%; /* Cyan for info states */
+    --info-foreground: 0 0% 0%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 20%; /* Border color */

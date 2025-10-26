@@ -31,6 +31,9 @@ const TechStackGrid = lazy(() =>
 );
 
 import { CyberpunkButton, MotionSection, PageWrapper, SectionHeader, SocialButton } from "@/components/ui";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { TerminalSkeleton } from "@/components/ui/skeletons/TerminalSkeleton";
+import { TypingAnimation } from "@/components/ui/TypingAnimation";
 import { config, personalInfo } from "@/data";
 import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
 import { getMainTechStack } from "@/lib/tech";
@@ -51,29 +54,45 @@ export default function Home() {
   return (
     <PageWrapper>
       <motion.div initial="hidden" animate="show" variants={pageContainerVariants}>
-        <motion.div className="hero-section content-section" variants={pageItemVariants}>
+        <motion.div className="hero-section content-section relative overflow-hidden" variants={pageItemVariants}>
           <div className="hero-background" />
-          <h1 className="text-5xl font-bold text-orange-500 font-cyberpunk glow-text">{config.person.name}</h1>
-          <p className="hero-subtitle text-body">{config.person.title}</p>
-          <p className="hero-description text-body">{config.site.description}</p>
-          <p className="hero-location text-body">
-            <MapPin className="w-5 h-5 icon-primary" />
-            {config.person.location}
-          </p>
+          <div className="hero-gradient-bg absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-purple-500/10 animate-gradient-shift" />
+          <div className="relative z-10">
+            <h1 className="cyberpunk-h1 text-orange-500 hover:glitch">{config.person.name}</h1>
+            <p className="hero-subtitle text-body">
+              <TypingAnimation
+                strings={[
+                  config.person.title,
+                  "DevOps/Cloud Practitioner",
+                  "Node.js & TypeScript Specialist",
+                  "Open Source Contributor",
+                ]}
+                typeSpeed={80}
+                deleteSpeed={40}
+                pauseAtEnd={1500}
+                className="text-orange-400 font-terminal"
+              />
+            </p>
+            <p className="hero-description text-body">{config.site.description}</p>
+            <p className="hero-location text-body">
+              <MapPin className="w-5 h-5 icon-primary" />
+              {config.person.location}
+            </p>
 
-          <div className="social-buttons-container">
-            <SocialButton href={`mailto:${config.person.email}`} icon={Mail} isExternal={false}>
-              Email
-            </SocialButton>
-            <SocialButton href={config.social.github} icon={FaGithub}>
-              GitHub
-            </SocialButton>
-            <SocialButton href={config.social.linkedin} icon={FaLinkedin}>
-              LinkedIn
-            </SocialButton>
-            <SocialButton href={config.social.telegram} icon={Send}>
-              Telegram
-            </SocialButton>
+            <div className="social-buttons-container">
+              <SocialButton href={`mailto:${config.person.email}`} icon={Mail} isExternal={false}>
+                Email
+              </SocialButton>
+              <SocialButton href={config.social.github} icon={FaGithub}>
+                GitHub
+              </SocialButton>
+              <SocialButton href={config.social.linkedin} icon={FaLinkedin}>
+                LinkedIn
+              </SocialButton>
+              <SocialButton href={config.social.telegram} icon={Send}>
+                Telegram
+              </SocialButton>
+            </div>
           </div>
 
           <div className="scanline absolute inset-0 pointer-events-none" />
@@ -81,13 +100,7 @@ export default function Home() {
 
         <MotionSection className="mb-16" variants={pageItemVariants}>
           <SectionHeader icon={TerminalIcon} title="Interact with Terminal" size="sm" className="justify-center" />
-          <Suspense
-            fallback={
-              <div className="terminal-window w-full h-96 content-section overflow-hidden rounded-lg flex items-center justify-center">
-                Loading terminal...
-              </div>
-            }
-          >
+          <Suspense fallback={<TerminalSkeleton />}>
             <LazyLoader
               loadingText="Loading terminal..."
               loadingColor="green"
@@ -102,7 +115,18 @@ export default function Home() {
         <MotionSection className="mb-16" variants={pageItemVariants}>
           <SectionHeader icon={Code2} title="My Tech Stack" size="sm" className="justify-center" />
           <Suspense
-            fallback={<div className="content-section p-6 flex justify-center items-center">Loading tech stack...</div>}
+            fallback={
+              <div className="content-section p-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <div key={`tech-skeleton-${Date.now()}-${i}`} className="flex flex-col items-center gap-2">
+                      <Skeleton className="h-12 w-12 rounded-lg" />
+                      <Skeleton className="h-4 w-16" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            }
           >
             <TechStackGrid techStack={techStack} />
           </Suspense>
@@ -113,7 +137,9 @@ export default function Home() {
           <MotionSection variants={pageItemVariants} className="w-full overflow-x-auto pb-4">
             <Suspense
               fallback={
-                <div className="content-section p-6 flex justify-center items-center">Loading GitHub activity...</div>
+                <div className="content-section p-6">
+                  <Skeleton className="h-32 w-full rounded-lg" />
+                </div>
               }
             >
               <LazyLoader loadingText="Loading GitHub activity...">

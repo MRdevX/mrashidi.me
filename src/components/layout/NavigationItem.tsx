@@ -19,7 +19,7 @@ export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
   return (
     <Link
       href={item.href}
-      className={`nav-item-hover-effect ${isActive ? "nav-item-active" : "nav-item-inactive"}`}
+      className={`nav-item-hover-effect focus-ring ${isActive ? "nav-item-active" : "nav-item-inactive"}`}
       aria-current={isActive ? "page" : undefined}
       onMouseEnter={handleMouseEnter}
     >

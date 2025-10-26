@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.75](https://github.com/MRdevX/mrashidi.me/compare/v0.1.74...v0.1.75) (2025-10-26)
+
+
+### Features
+
+* add skeleton loading components and typing animation for enhanced user experience ([919b3c0](https://github.com/MRdevX/mrashidi.me/commit/919b3c0c064a4bb822aace10dd953e7011b6ffca))
+* enhance ProjectModal UI with improved styling and badge integration ([fd1e667](https://github.com/MRdevX/mrashidi.me/commit/fd1e66786a82faa09a0d50b3c1f86186efcf4d55))
+* enhance ui and accessibility features across components ([16af4e2](https://github.com/MRdevX/mrashidi.me/commit/16af4e2a61e2ee6a923d6852dc1e9bf27c0ac4fb))
+* integrate popular libraries to reduce manual implementations ([e79a45c](https://github.com/MRdevX/mrashidi.me/commit/e79a45c360291f9da0810460e91fc33e8933b114))
+
+
+### Bug Fixes
+
+* update titles and enhance gradient animation for improved visual appeal ([f40641c](https://github.com/MRdevX/mrashidi.me/commit/f40641c60507c67184cec1666c596cdb6d0a35e3))
+
 ### [0.1.74](https://github.com/MRdevX/mrashidi.me/compare/v0.1.72...v0.1.74) (2025-10-19)
 
 ### [0.1.73](https://github.com/MRdevX/mrashidi.me/compare/v0.1.72...v0.1.73) (2025-10-19)

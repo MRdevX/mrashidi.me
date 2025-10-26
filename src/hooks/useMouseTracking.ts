@@ -1,21 +1,46 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const useMouseTracking = (selector: string) => {
+  const selectorRef = useRef(selector);
+  const elementsRef = useRef<HTMLElement[]>([]);
+
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const elements = document.querySelectorAll(selector);
+    selectorRef.current = selector;
+
+    elementsRef.current = Array.from(document.querySelectorAll(selector)) as HTMLElement[];
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const elements = elementsRef.current;
+
       for (const element of elements) {
         const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        (element as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
-        (element as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
+        const relativeX = event.clientX - rect.left;
+        const relativeY = event.clientY - rect.top;
+
+        const currentX = element.style.getPropertyValue("--mouse-x");
+        const currentY = element.style.getPropertyValue("--mouse-y");
+        const newX = `${relativeX}px`;
+        const newY = `${relativeY}px`;
+
+        if (currentX !== newX) {
+          element.style.setProperty("--mouse-x", newX);
+        }
+        if (currentY !== newY) {
+          element.style.setProperty("--mouse-y", newY);
+        }
       }
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => document.removeEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
   }, [selector]);
+
+  useEffect(() => {
+    elementsRef.current = Array.from(document.querySelectorAll(selectorRef.current)) as HTMLElement[];
+  }, []);
 };

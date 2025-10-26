@@ -15,4 +15,4 @@ export interface CategorizedTechnologies {
   stackUsageCount: Record<string, number>;
 }
 
-export type { Project } from "@/data/site/projects";
+export type { Project } from "@/data/projects";

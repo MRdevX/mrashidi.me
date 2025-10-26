@@ -179,7 +179,12 @@ export function ContactFormRefactored() {
       >
         <StatusMessage status={submitStatus} />
 
-        <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6" aria-label="Contact form">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+          className="space-y-6 focus-within:ring-2 focus-within:ring-orange-500/20 focus-within:ring-offset-2 rounded-lg p-1"
+          aria-label="Contact form"
+        >
           <FormInputWithValidation
             form={form}
             name="name"

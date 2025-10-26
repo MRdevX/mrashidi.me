@@ -44,13 +44,20 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
         >
           {post.content}
         </p>
-        <div className="flex justify-between items-center">
-          <span className={`text-sm ${getTextColor("muted")}`}>{new Date(post.publishedAt).toLocaleDateString()}</span>
+        <div className="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-3">
+            <span className={`text-sm ${getTextColor("muted")}`}>
+              {new Date(post.publishedAt).toLocaleDateString()}
+            </span>
+            <span className="text-xs px-2 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400">
+              Blog Post
+            </span>
+          </div>
           <Link
             href={post.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-orange-500 hover:text-orange-400 transition-colors flex items-center gap-1"
+            className="text-orange-500 hover:text-orange-400 transition-colors flex items-center gap-1 text-sm font-medium"
           >
             Read More
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

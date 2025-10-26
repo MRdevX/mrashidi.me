@@ -1,5 +1,6 @@
 import { parseString } from "xml2js";
 import { API_CONFIG, logger } from "@/lib/core";
+import { cleanHtmlContent, extractImageUrl } from "@/lib/utils/string";
 import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
 import { cacheService } from "./cache.service";
 
@@ -30,25 +31,6 @@ export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> 
       resolve(result);
     });
   });
-}
-
-export function cleanHtmlContent(html: string): string {
-  if (!html) {
-    return "";
-  }
-  return html
-    .replace(/<[^>]*>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/\n\s*\n/g, "\n")
-    .trim();
-}
-
-export function extractImageUrl(html: string): string | undefined {
-  if (!html) {
-    return undefined;
-  }
-  const imgMatch = html.match(/<img[^>]+src="([^">]+)"/);
-  return imgMatch ? imgMatch[1] : undefined;
 }
 
 export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {

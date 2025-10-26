@@ -31,9 +31,9 @@ export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButt
     const { getButtonVariant } = useThemeConfig();
 
     const buttonClasses = cn(
-      "transition-all duration-300",
+      "transition-all duration-300 focus-ring",
       getButtonVariant(variant),
-      animate && "hover:scale-105 active:scale-95",
+      animate && "hover:scale-105 active:scale-95 hover:-translate-y-0.5",
       className
     );
 

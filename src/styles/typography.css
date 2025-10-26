@@ -51,18 +51,26 @@
   /* Typography Hierarchy */
   .cyberpunk-h1 {
     font-size: 3rem;
-    line-height: 1;
-    font-weight: 700;
-    font-family: "Orbitron", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #000000;
-    text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    line-height: 1.1;
+    font-weight: 600;
+    font-family: "Exo 2", "Orbitron", sans-serif;
+    text-transform: none;
+    letter-spacing: 1px;
+    color: #ff5f1f;
+    text-shadow:
+      0 0 10px rgba(255, 95, 31, 0.5),
+      0 0 20px rgba(255, 95, 31, 0.3),
+      0 0 30px rgba(255, 95, 31, 0.2);
+    animation: cyberpunk-glow 3s ease-in-out infinite alternate;
   }
 
   .dark .cyberpunk-h1 {
-    color: #ffffff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    color: #ff5f1f;
+    text-shadow:
+      0 0 10px rgba(255, 95, 31, 0.7),
+      0 0 20px rgba(255, 95, 31, 0.5),
+      0 0 30px rgba(255, 95, 31, 0.3),
+      0 0 40px rgba(255, 95, 31, 0.2);
   }
 
   @media (min-width: 768px) {
@@ -151,8 +159,8 @@
 
   .cyberpunk-body-text {
     font-size: 1.125rem;
-    line-height: 1.75;
-    font-family: "Space Grotesk", sans-serif;
+    line-height: 1.8;
+    font-family: "Albert Sans", sans-serif;
     font-weight: 400;
     letter-spacing: 0.2px;
     color: #374151;
@@ -201,5 +209,44 @@
 
   .text-primary {
     color: hsl(var(--primary));
+  }
+
+  /* Cyberpunk glow animation for hero title */
+  @keyframes cyberpunk-glow {
+    0% {
+      text-shadow:
+        0 0 10px rgba(255, 95, 31, 0.5),
+        0 0 20px rgba(255, 95, 31, 0.3),
+        0 0 30px rgba(255, 95, 31, 0.2);
+    }
+    100% {
+      text-shadow:
+        0 0 15px rgba(255, 95, 31, 0.8),
+        0 0 25px rgba(255, 95, 31, 0.6),
+        0 0 35px rgba(255, 95, 31, 0.4),
+        0 0 45px rgba(255, 95, 31, 0.3);
+    }
+  }
+
+  /* Dark mode cyberpunk glow animation */
+  .dark .cyberpunk-h1 {
+    animation: cyberpunk-glow-dark 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes cyberpunk-glow-dark {
+    0% {
+      text-shadow:
+        0 0 10px rgba(255, 95, 31, 0.7),
+        0 0 20px rgba(255, 95, 31, 0.5),
+        0 0 30px rgba(255, 95, 31, 0.3),
+        0 0 40px rgba(255, 95, 31, 0.2);
+    }
+    100% {
+      text-shadow:
+        0 0 20px rgba(255, 95, 31, 1),
+        0 0 30px rgba(255, 95, 31, 0.8),
+        0 0 40px rgba(255, 95, 31, 0.6),
+        0 0 50px rgba(255, 95, 31, 0.4);
+    }
   }
 }

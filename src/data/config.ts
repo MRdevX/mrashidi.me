@@ -38,7 +38,7 @@ export interface SiteConfig {
 const config: SiteConfig = {
   person: {
     name: "Mahdi Rashidi",
-    title: "Software Engineer",
+    title: "Senior Software Engineer",
     location: "Berlin, Germany",
     email: "contact@mrashidi.me",
     website: "https://mrashidi.me",

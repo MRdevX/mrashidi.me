@@ -86,7 +86,15 @@
   /* Responsive Utilities */
   @media (max-width: 640px) {
     .content-section {
-      padding: 1rem;
+      padding: 1.5rem;
+    }
+
+    .page-container {
+      padding: 2rem 0;
+    }
+
+    .page-content {
+      padding: 0 1rem;
     }
   }
 
