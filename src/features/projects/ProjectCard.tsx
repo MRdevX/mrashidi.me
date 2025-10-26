@@ -58,9 +58,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-1 text-right">
+          <div className="flex flex-col gap-1 text-right items-end">
             {project.year && (
-              <span className="px-2 py-0.5 rounded-full font-semibold text-xs bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30">
+              <span className="px-2 py-0.5 rounded-full font-semibold text-xs bg-slate-500/20 text-slate-700 dark:text-slate-300 border border-slate-500/30">
                 {project.year}
               </span>
             )}

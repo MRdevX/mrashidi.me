@@ -2,10 +2,9 @@
 
 import { Building, Calendar, Code, ExternalLink, Github, Shield, User } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { Project } from "@/data/site/projects";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { getTechIcon } from "@/lib/tech";
 
 interface ProjectModalProps {
@@ -15,11 +14,13 @@ interface ProjectModalProps {
 }
 
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
+  const { getProjectBadge } = useThemeConfig();
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-2 border-orange-500/30 shadow-[0_0_30px_rgba(255,95,31,0.2)]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-orange-500 flex items-center gap-3">
+          <DialogTitle className="text-2xl font-bold text-orange-500 font-cyberpunk glow-text flex items-center gap-3">
             {project.logoUrl && (
               <Image
                 src={project.logoUrl}
@@ -52,36 +53,36 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             <div className="space-y-3">
               {project.year && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Year: {project.year}</span>
+                  <Calendar className="w-4 h-4 text-orange-500/70" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Year: {project.year}</span>
                 </div>
               )}
               {project.role && (
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Role: {project.role}</span>
+                  <User className="w-4 h-4 text-orange-500/70" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Role: {project.role}</span>
                 </div>
               )}
               {project.clientName && (
                 <div className="flex items-center gap-2">
-                  <Building className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Client: {project.clientName}</span>
+                  <Building className="w-4 h-4 text-orange-500/70" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Client: {project.clientName}</span>
                 </div>
               )}
             </div>
 
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Code className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Type: {project.type}</span>
+                <Code className="w-4 h-4 text-orange-500/70" />
+                <span className="text-sm text-gray-600 dark:text-gray-400">Type: {project.type}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Visibility: {project.visibility}</span>
+                <Shield className="w-4 h-4 text-orange-500/70" />
+                <span className="text-sm text-gray-600 dark:text-gray-400">Visibility: {project.visibility}</span>
               </div>
               {project.status && (
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Status: {project.status}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Status: {project.status}</span>
                 </div>
               )}
             </div>
@@ -90,31 +91,45 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           {/* Badges */}
           <div className="flex flex-wrap gap-2">
             {project.status && (
-              <Badge variant="secondary" className="capitalize">
+              <span
+                className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("status", project.status)} capitalize`}
+              >
                 {project.status}
-              </Badge>
+              </span>
             )}
-            <Badge variant="outline">{project.visibility}</Badge>
-            <Badge variant="outline">{project.type}</Badge>
+            <span
+              className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("visibility", project.visibility)}`}
+            >
+              {project.visibility}
+            </span>
+            <span className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("type", project.type)}`}>
+              {project.type}
+            </span>
             {project.openSource && (
-              <Badge variant="default" className="bg-green-500">
+              <span className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("openSource")}`}>
                 Open Source
-              </Badge>
+              </span>
             )}
-            {project.license && <Badge variant="outline">{project.license}</Badge>}
+            {project.license && (
+              <span
+                className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("license", project.license)}`}
+              >
+                {project.license}
+              </span>
+            )}
           </div>
 
           {/* Description */}
           <div>
-            <h3 className="text-lg font-semibold mb-2">Description</h3>
-            <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+            <h3 className="text-lg font-semibold mb-2 text-orange-500 dark:text-orange-400">Description</h3>
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project.description}</p>
           </div>
 
           {/* Highlights */}
           {project.highlights && project.highlights.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-2">Key Highlights</h3>
-              <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+              <h3 className="text-lg font-semibold mb-2 text-orange-500 dark:text-orange-400">Key Highlights</h3>
+              <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300">
                 {project.highlights.map((highlight) => (
                   <li key={highlight}>{highlight}</li>
                 ))}
@@ -124,12 +139,15 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
           {/* Tech Stack */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Technology Stack</h3>
+            <h3 className="text-lg font-semibold mb-3 text-orange-500 dark:text-orange-400">Technology Stack</h3>
             <div className="flex flex-wrap gap-2">
               {project.stack.map((tech) => {
                 const techIcon = getTechIcon(tech);
                 return (
-                  <div key={tech} className="flex items-center gap-2 px-3 py-1 bg-muted rounded-full text-sm">
+                  <div
+                    key={tech}
+                    className="flex items-center gap-2 px-3 py-1 bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/20 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:border-orange-500/40 transition-colors"
+                  >
                     {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} />}
                     {tech}
                   </div>
@@ -139,30 +157,39 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-3 pt-4 border-t">
+          <div className="flex flex-wrap gap-3 pt-4 border-t border-orange-500/20">
             {project.githubUrl && (
-              <Button asChild variant="outline" className="flex items-center gap-2">
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                  <Github className="w-4 h-4" />
-                  View Code
-                </a>
-              </Button>
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
+              >
+                <Github className="w-4 h-4" />
+                View Code
+              </a>
             )}
             {project.liveUrl && (
-              <Button asChild variant="default" className="flex items-center gap-2">
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="w-4 h-4" />
-                  Live Demo
-                </a>
-              </Button>
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20 hover:text-green-300 transition-colors text-xs font-semibold"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Live Demo
+              </a>
             )}
             {project.caseStudyUrl && (
-              <Button asChild variant="secondary" className="flex items-center gap-2">
-                <a href={project.caseStudyUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="w-4 h-4" />
-                  Case Study
-                </a>
-              </Button>
+              <a
+                href={project.caseStudyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Case Study
+              </a>
             )}
           </div>
         </div>
