@@ -6,12 +6,6 @@ import pino from "pino";
 
 const logger = pino({
   level: "info",
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true,
-    },
-  },
 });
 
 const __filename = fileURLToPath(import.meta.url);
