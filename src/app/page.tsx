@@ -58,7 +58,7 @@ export default function Home() {
           <div className="hero-background" />
           <div className="hero-gradient-bg absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-purple-500/10 animate-gradient-shift" />
           <div className="relative z-10">
-            <h1 className="cyberpunk-h1 text-orange-500 hover:glitch">{config.person.name}</h1>
+            <h1 className="cyberpunk-h1 text-orange-500">{config.person.name}</h1>
             <p className="hero-subtitle text-body">
               <TypingAnimation
                 strings={[

@@ -58,19 +58,19 @@
     letter-spacing: 1px;
     color: #ff5f1f;
     text-shadow:
-      0 0 10px rgba(255, 95, 31, 0.5),
-      0 0 20px rgba(255, 95, 31, 0.3),
-      0 0 30px rgba(255, 95, 31, 0.2);
-    animation: cyberpunk-glow 3s ease-in-out infinite alternate;
+      0 0 8px rgba(255, 95, 31, 0.6),
+      0 0 16px rgba(255, 95, 31, 0.4),
+      0 0 24px rgba(255, 95, 31, 0.3);
+    animation: cyberpunk-glow-balanced 3s ease-in-out infinite alternate;
   }
 
   .dark .cyberpunk-h1 {
     color: #ff5f1f;
     text-shadow:
-      0 0 10px rgba(255, 95, 31, 0.7),
-      0 0 20px rgba(255, 95, 31, 0.5),
-      0 0 30px rgba(255, 95, 31, 0.3),
-      0 0 40px rgba(255, 95, 31, 0.2);
+      0 0 8px rgba(255, 95, 31, 0.7),
+      0 0 16px rgba(255, 95, 31, 0.5),
+      0 0 24px rgba(255, 95, 31, 0.4),
+      0 0 32px rgba(255, 95, 31, 0.2);
   }
 
   @media (min-width: 768px) {
@@ -211,42 +211,25 @@
     color: hsl(var(--primary));
   }
 
-  /* Cyberpunk glow animation for hero title */
-  @keyframes cyberpunk-glow {
+  /* Cyberpunk glow animation for hero title - balanced version */
+  @keyframes cyberpunk-glow-balanced {
     0% {
       text-shadow:
-        0 0 10px rgba(255, 95, 31, 0.5),
-        0 0 20px rgba(255, 95, 31, 0.3),
-        0 0 30px rgba(255, 95, 31, 0.2);
+        0 0 8px rgba(255, 95, 31, 0.6),
+        0 0 16px rgba(255, 95, 31, 0.4),
+        0 0 24px rgba(255, 95, 31, 0.3);
     }
     100% {
       text-shadow:
-        0 0 15px rgba(255, 95, 31, 0.8),
-        0 0 25px rgba(255, 95, 31, 0.6),
-        0 0 35px rgba(255, 95, 31, 0.4),
-        0 0 45px rgba(255, 95, 31, 0.3);
+        0 0 12px rgba(255, 95, 31, 0.8),
+        0 0 20px rgba(255, 95, 31, 0.6),
+        0 0 28px rgba(255, 95, 31, 0.4),
+        0 0 36px rgba(255, 95, 31, 0.2);
     }
   }
 
-  /* Dark mode cyberpunk glow animation */
+  /* Dark mode cyberpunk glow animation - balanced version */
   .dark .cyberpunk-h1 {
-    animation: cyberpunk-glow-dark 3s ease-in-out infinite alternate;
-  }
-
-  @keyframes cyberpunk-glow-dark {
-    0% {
-      text-shadow:
-        0 0 10px rgba(255, 95, 31, 0.7),
-        0 0 20px rgba(255, 95, 31, 0.5),
-        0 0 30px rgba(255, 95, 31, 0.3),
-        0 0 40px rgba(255, 95, 31, 0.2);
-    }
-    100% {
-      text-shadow:
-        0 0 20px rgba(255, 95, 31, 1),
-        0 0 30px rgba(255, 95, 31, 0.8),
-        0 0 40px rgba(255, 95, 31, 0.6),
-        0 0 50px rgba(255, 95, 31, 0.4);
-    }
+    animation: cyberpunk-glow-balanced 3s ease-in-out infinite alternate;
   }
 }
