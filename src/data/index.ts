@@ -12,4 +12,4 @@ export {
 
 export * from "./profile";
 
-export * from "./site";
+export * from "./projects";

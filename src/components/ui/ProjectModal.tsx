@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import type { Project } from "@/data/site/projects";
+import type { Project } from "@/data/projects";
 import { getTechIcon } from "@/lib/tech";
 
 interface ProjectModalProps {
