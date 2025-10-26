@@ -1,11 +1,18 @@
-import DOMPurify from "isomorphic-dompurify";
+// @ts-expect-error - html-to-text doesn't have types but works perfectly
+import { convert } from "html-to-text";
 import validator from "validator";
 
 export function cleanHtmlContent(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-    KEEP_CONTENT: true,
+  if (!html?.trim()) {
+    return "";
+  }
+
+  return convert(html, {
+    wordwrap: false,
+    selectors: [
+      { selector: "img", format: "skip" },
+      { selector: "a", options: { ignoreHref: true } },
+    ],
   }).trim();
 }
 

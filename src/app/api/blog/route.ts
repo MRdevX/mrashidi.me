@@ -43,7 +43,7 @@ async function handleBlogPosts(_request: NextRequest, pagination: { page: number
       stack: errorStack,
       pagination,
       timestamp: new Date().toISOString(),
-      url: error instanceof Error && "url" in error ? (error as any).url : undefined,
+      url: error instanceof Error && "url" in error ? (error as Error & { url?: string }).url : undefined,
     });
 
     return NextResponse.json(

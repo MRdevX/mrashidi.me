@@ -34,6 +34,13 @@ async function fetchMediumFeed(url: string): Promise<Response> {
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
   try {
+    logger.info({
+      operation: "fetchMediumFeed",
+      message: "Attempting to fetch Medium RSS feed",
+      url,
+      userAgent: API_CONFIG.MEDIUM.USER_AGENT,
+    });
+
     const response = await fetch(url, {
       headers: {
         "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
@@ -46,9 +53,29 @@ async function fetchMediumFeed(url: string): Promise<Response> {
 
     clearTimeout(timeoutId);
 
+    logger.info({
+      operation: "fetchMediumFeed",
+      message: "Received response from Medium RSS feed",
+      url,
+      status: response.status,
+      statusText: response.statusText,
+      headers: Object.fromEntries(response.headers.entries()),
+    });
+
     if (!response.ok) {
       const errorText = await response.text().catch(() => "Unable to read response body");
-      throw new Error(`Failed to fetch Medium feed: ${response.status} ${response.statusText}. Response: ${errorText}`);
+      const errorMessage = `Failed to fetch Medium feed: ${response.status} ${response.statusText}. Response: ${errorText}`;
+
+      logger.error({
+        operation: "fetchMediumFeed",
+        message: "Medium RSS feed returned error status",
+        url,
+        status: response.status,
+        statusText: response.statusText,
+        responseBody: errorText,
+      });
+
+      throw new Error(errorMessage);
     }
 
     return response;
@@ -57,12 +84,37 @@ async function fetchMediumFeed(url: string): Promise<Response> {
 
     if (error instanceof Error) {
       if (error.name === "AbortError") {
-        throw new Error(`Medium feed request timed out after 15 seconds: ${url}`);
+        const timeoutError = `Medium feed request timed out after 15 seconds: ${url}`;
+        logger.error({
+          operation: "fetchMediumFeed",
+          message: "Medium RSS feed request timed out",
+          url,
+          timeout: 15000,
+        });
+        throw new Error(timeoutError);
       }
+
+      logger.error({
+        operation: "fetchMediumFeed",
+        message: "Network error fetching Medium RSS feed",
+        url,
+        error: error.message,
+        errorName: error.name,
+        stack: error.stack,
+      });
+
       throw new Error(`Network error fetching Medium feed: ${error.message}`);
     }
 
-    throw new Error(`Unknown error fetching Medium feed: ${String(error)}`);
+    const unknownError = `Unknown error fetching Medium feed: ${String(error)}`;
+    logger.error({
+      operation: "fetchMediumFeed",
+      message: "Unknown error occurred",
+      url,
+      error: String(error),
+    });
+
+    throw new Error(unknownError);
   }
 }
 
@@ -185,13 +237,19 @@ export async function getAllPosts(page: number, limit: number) {
 
     return { posts: paginatedPosts, total: posts.length, fromCache: false };
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+
     logger.error({
       operation: "getAllPosts",
-      error: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
+      message: "Failed to fetch blog posts",
+      error: errorMessage,
+      stack: errorStack,
+      page,
+      limit,
     });
 
-    return { posts: [], total: 0, fromCache: false };
+    throw new Error(`Failed to fetch blog posts: ${errorMessage}`);
   }
 }
 

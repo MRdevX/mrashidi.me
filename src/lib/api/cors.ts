@@ -5,7 +5,7 @@ import { API_CONFIG } from "@/lib/core";
 /**
  * Get CORS headers - now allows all origins, methods, and headers
  */
-export function getCorsHeaders(origin?: string | null): Record<string, string> {
+export function getCorsHeaders(_origin?: string | null): Record<string, string> {
   const { ALLOWED_METHODS, ALLOWED_HEADERS, MAX_AGE } = API_CONFIG.CORS;
 
   return {
