@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.80](https://github.com/MRdevX/mrashidi.me/compare/v0.1.79...v0.1.80) (2025-10-26)
+
+
+### Features
+
+* configure Sentry integration with source maps support in Next.js ([a15242c](https://github.com/MRdevX/mrashidi.me/commit/a15242cf8009ed29afa87fc3893753613ecc826e))
+* enhance error handling in blog API and improve Medium feed fetching with timeout management ([39fe9b5](https://github.com/MRdevX/mrashidi.me/commit/39fe9b50f17cf5218760c1057e24ef3328d00b1e))
+* replace isomorphic-dompurify with html-to-text ([538a5f6](https://github.com/MRdevX/mrashidi.me/commit/538a5f6ec65c2b802a659cfbdd87e9c6c19c3536))
+* update CORS configuration to allow all origins, methods, and headers ([1a7e4ca](https://github.com/MRdevX/mrashidi.me/commit/1a7e4ca66c2d4255a0da56e4150ff07d1d832d6d))
+
+
+### Bug Fixes
+
+* adjust cyberpunk glow effects and remove hover glitch from hero title ([f80316b](https://github.com/MRdevX/mrashidi.me/commit/f80316b2c51c7d3196fcdadcd98d2736de6eafab))
+
 ### [0.1.79](https://github.com/MRdevX/mrashidi.me/compare/v0.1.78...v0.1.79) (2025-10-26)
 
 
