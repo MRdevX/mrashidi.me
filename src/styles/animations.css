@@ -410,4 +410,63 @@
   .animate-stagger {
     animation-delay: calc(var(--stagger-index, 0) * 0.1s);
   }
+
+  /* Skeleton shimmer animation */
+  .animate-shimmer {
+    background: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted) / 0.3) 50%, hsl(var(--muted)) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Terminal-style loading animation */
+  .animate-terminal-loading {
+    animation: terminal-dots 1.5s ease-in-out infinite;
+  }
+
+  @keyframes terminal-dots {
+    0%,
+    20% {
+      content: "";
+    }
+    40% {
+      content: ".";
+    }
+    60% {
+      content: "..";
+    }
+    80%,
+    100% {
+      content: "...";
+    }
+  }
+
+  /* Gradient shift animation for hero background */
+  .animate-gradient-shift {
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%,
+    100% {
+      background: linear-gradient(135deg, rgba(255, 95, 31, 0.1) 0%, transparent 50%, rgba(188, 19, 254, 0.1) 100%);
+    }
+    25% {
+      background: linear-gradient(135deg, rgba(0, 255, 245, 0.1) 0%, transparent 50%, rgba(255, 95, 31, 0.1) 100%);
+    }
+    50% {
+      background: linear-gradient(135deg, rgba(188, 19, 254, 0.1) 0%, transparent 50%, rgba(0, 255, 245, 0.1) 100%);
+    }
+    75% {
+      background: linear-gradient(135deg, rgba(255, 95, 31, 0.1) 0%, transparent 50%, rgba(0, 255, 245, 0.1) 100%);
+    }
+  }
 }
