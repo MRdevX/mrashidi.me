@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.77](https://github.com/MRdevX/mrashidi.me/compare/v0.1.76...v0.1.77) (2025-10-26)
+
+
+### Features
+
+* add serialization and deserialization functions for blog posts, update cache handling in blog service ([1bac227](https://github.com/MRdevX/mrashidi.me/commit/1bac22711cae56d4831b6af974ccde8eecab3062))
+
+
+### Bug Fixes
+
+* update environment check in blog service to differentiate between production and development modes ([fbdee3e](https://github.com/MRdevX/mrashidi.me/commit/fbdee3e0b82c647a1c88feae1b29b8437bcf52df))
+
 ### [0.1.76](https://github.com/MRdevX/mrashidi.me/compare/v0.1.75...v0.1.76) (2025-10-26)
 
 ### [0.1.75](https://github.com/MRdevX/mrashidi.me/compare/v0.1.74...v0.1.75) (2025-10-26)
