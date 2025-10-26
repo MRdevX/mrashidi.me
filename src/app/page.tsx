@@ -63,7 +63,7 @@ export default function Home() {
               <TypingAnimation
                 strings={[
                   config.person.title,
-                  "DevOps/Cloud Practitioner",
+                  "Cloud Practitioner",
                   "Node.js & TypeScript Specialist",
                   "Open Source Contributor",
                 ]}

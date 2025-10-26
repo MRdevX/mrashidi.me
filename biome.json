@@ -1,5 +1,10 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "assist": {
     "actions": {
       "source": {
@@ -12,10 +17,12 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedVariables": "error"
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "warn"
       },
       "suspicious": {
-        "noDoubleEquals": "error"
+        "noDoubleEquals": "error",
+        "noExplicitAny": "warn"
       },
       "style": {
         "useConst": "error",
@@ -25,11 +32,15 @@
           "options": {
             "syntax": "shorthand"
           }
-        }
+        },
+        "noNonNullAssertion": "warn"
       },
       "complexity": {
         "noForEach": "warn",
         "useFlatMap": "warn"
+      },
+      "performance": {
+        "noAccumulatingSpread": "warn"
       }
     }
   },
@@ -52,27 +63,29 @@
       "quoteProperties": "asNeeded"
     }
   },
-  "overrides": [
-    {
-      "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-      "formatter": {
-        "lineWidth": 120
-      },
-      "javascript": {
-        "formatter": {
-          "lineWidth": 120
-        }
-      }
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineWidth": 120
     },
-    {
-      "includes": ["**/scripts/**/*.js"],
-      "javascript": {
-        "formatter": {
-          "semicolons": "always"
-        }
-      }
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": false
     }
-  ],
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineWidth": 120
+    },
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "files": {
     "ignoreUnknown": false,
     "maxSize": 1048576,
@@ -89,8 +102,11 @@
       "!**/next-env.d.ts",
       "!**/public/sw.js",
       "!**/public/workbox-*.js",
-      "!**/public/sw.js.map",
-      "!**/public/workbox-*.js.map"
+      "!**/public/*.js.map",
+      "!**/.turbo",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/tsconfig.tsbuildinfo"
     ]
   }
 }

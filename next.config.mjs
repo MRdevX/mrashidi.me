@@ -19,10 +19,6 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   compress: true,
 
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   images: {
     remotePatterns: [
       {

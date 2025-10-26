@@ -4,10 +4,8 @@
 
 @import "tailwindcss";
 
-/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind CSS custom variant */
 @custom-variant dark (&:is(.dark *));
 
-/* biome-ignore lint/suspicious/noUnknownAtRules: Tailwind CSS theme directive */
 @theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
