@@ -4,6 +4,7 @@ import { Building, Calendar, Code, ExternalLink, Github, Shield, User } from "lu
 import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { Project } from "@/data/projects";
+import { useThemeConfig } from "@/hooks";
 import { getTechIcon } from "@/lib/tech";
 
 interface ProjectModalProps {
