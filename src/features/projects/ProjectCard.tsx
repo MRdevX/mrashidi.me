@@ -2,7 +2,7 @@ import { Calendar, ExternalLink, Eye, GitCommit, Github } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { ProjectModal } from "@/components/ui/ProjectModal";
-import type { Project } from "@/data/site/projects";
+import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { getTechIcon } from "@/lib/tech";
 import { createCommitUrl, formatDate } from "@/lib/utils/index";

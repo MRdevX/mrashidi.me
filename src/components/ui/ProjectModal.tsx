@@ -3,8 +3,7 @@
 import { Building, Calendar, Code, ExternalLink, Github, Shield, User } from "lucide-react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import type { Project } from "@/data/site/projects";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import type { Project } from "@/data/projects";
 import { getTechIcon } from "@/lib/tech";
 
 interface ProjectModalProps {

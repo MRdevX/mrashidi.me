@@ -10,7 +10,7 @@ const _React = require("react");
 
 global.React = _React;
 
-const { OgImageTemplate } = require("./og-template.jsx");
+const { OgImageTemplate } = require("../src/components/og-template.tsx");
 
 let ImageResponse;
 try {
