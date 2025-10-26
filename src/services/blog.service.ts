@@ -29,66 +29,20 @@ export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> 
   });
 }
 
-async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number = 10000): Promise<Response> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+async function fetchMediumFeed(url: string): Promise<Response> {
+  const response = await fetch(url, {
+    headers: {
+      "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
+      Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
+    },
+    next: { revalidate: API_CONFIG.CACHE.BLOG_REVALIDATE },
+  });
 
-  try {
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
-    return response;
-  } catch (error) {
-    clearTimeout(timeoutId);
-    throw error;
-  }
-}
-
-async function fetchWithRetry(
-  url: string,
-  options: RequestInit,
-  maxRetries: number = 3,
-  baseDelay: number = 1000
-): Promise<Response> {
-  let lastError: Error | undefined;
-
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      const response = await fetchWithTimeout(url, options);
-
-      if (response.ok) {
-        return response;
-      }
-
-      if (response.status >= 400 && response.status < 500) {
-        throw new Error(`Client error: ${response.status} ${response.statusText}`);
-      }
-
-      if (attempt === maxRetries) {
-        throw new Error(`Server error after ${maxRetries + 1} attempts: ${response.status} ${response.statusText}`);
-      }
-
-      const delay = baseDelay * 2 ** attempt;
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error(String(error));
-
-      if (attempt === maxRetries) {
-        break;
-      }
-
-      if (lastError.name === "AbortError") {
-        break;
-      }
-
-      const delay = baseDelay * 2 ** attempt;
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Medium feed: ${response.status} ${response.statusText}`);
   }
 
-  throw lastError ?? new Error("Unknown error occurred during fetch");
+  return response;
 }
 
 export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
@@ -102,14 +56,7 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
       url: feedUrl,
     });
 
-    const response = await fetchWithRetry(feedUrl, {
-      headers: {
-        "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
-        Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
-      },
-      next: { revalidate: API_CONFIG.CACHE.BLOG_REVALIDATE },
-    });
-
+    const response = await fetchMediumFeed(feedUrl);
     const xmlData = await response.text();
 
     const feed = await parseMediumFeed(xmlData);

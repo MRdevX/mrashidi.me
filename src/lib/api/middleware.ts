@@ -34,7 +34,8 @@ export function withErrorHandling(handler: ApiHandler): ApiHandler {
     } catch (error) {
       const appError = handleError(error);
       logError(appError, "API");
-      return createErrorResponse(appError, appError.statusCode || 500);
+      const errorResponse = createErrorResponse(appError, appError.statusCode || 500);
+      return addSecurityHeaders(errorResponse);
     }
   };
 }

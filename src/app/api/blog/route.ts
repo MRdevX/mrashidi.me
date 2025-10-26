@@ -5,6 +5,8 @@ import { createSuccessResponse } from "@/lib/api/response";
 import { logger } from "@/lib/core";
 import { getAllPosts } from "@/services/blog.service";
 
+export const runtime = "nodejs";
+
 async function handleBlogPosts(_request: NextRequest, pagination: { page: number; limit: number }) {
   try {
     logger.info({
