@@ -1,4 +1,5 @@
 import { Text } from "@react-email/components";
+import { sanitizeUserInput } from "@/lib/utils/sanitize";
 import { BaseEmailTemplate, CallToActionButton } from "../components";
 import type { EmailTemplateData, ITemplateConfig } from "../types";
 
@@ -11,7 +12,7 @@ export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateP
   return (
     <BaseEmailTemplate title="Resume Request Confirmation" templateConfig={templateConfig}>
       <Text style={greetingStyle} className="dark-mode-text">
-        Hi {data.name},
+        Hi {sanitizeUserInput(data.name)},
       </Text>
 
       <Text style={paragraphStyle} className="dark-mode-text">

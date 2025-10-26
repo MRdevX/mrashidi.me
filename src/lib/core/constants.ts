@@ -9,7 +9,7 @@ export const API_CONFIG = {
     BLOG_REVALIDATE: 3600,
   },
   RECAPTCHA: {
-    THRESHOLD: 0.5,
+    THRESHOLD: 0.7,
     VERIFY_URL: "https://www.google.com/recaptcha/api/siteverify",
   },
   MEDIUM: {
@@ -36,9 +36,9 @@ export const API_CONFIG = {
     },
   },
   CORS: {
-    ALLOWED_ORIGINS: ["*"],
+    ALLOWED_ORIGINS: ["https://mrashidi.me", "https://www.mrashidi.me"],
     ALLOWED_METHODS: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
-    ALLOWED_HEADERS: ["*"],
+    ALLOWED_HEADERS: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
     MAX_AGE: 86400,
   },
 } as const;

@@ -1,4 +1,5 @@
 import { Text } from "@react-email/components";
+import { sanitizeUserInput } from "@/lib/utils/sanitize";
 import { BaseEmailTemplate, CallToActionButton } from "../components";
 import type { EmailTemplateData, ITemplateConfig } from "../types";
 
@@ -11,12 +12,13 @@ export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplat
   return (
     <BaseEmailTemplate title="Message Received" templateConfig={templateConfig}>
       <Text style={greetingStyle} className="dark-mode-text">
-        Hi {data.name},
+        Hi {sanitizeUserInput(data.name)},
       </Text>
 
       <Text style={paragraphStyle} className="dark-mode-text">
-        Thanks for getting in touch! I received your message{data.subject ? ` about "${data.subject}"` : ""} and wanted
-        to let you know it came through perfectly.
+        Thanks for getting in touch! I received your message
+        {data.subject ? ` about "${sanitizeUserInput(data.subject)}"` : ""} and wanted to let you know it came through
+        perfectly.
       </Text>
 
       <Text style={paragraphStyle} className="dark-mode-text">

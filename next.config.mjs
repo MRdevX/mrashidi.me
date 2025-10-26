@@ -16,7 +16,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   compress: true,
 
   images: {
@@ -48,13 +48,13 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://www.google.com https://www.gstatic.com",
-              "script-src-elem 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://www.google.com https://www.gstatic.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-              "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net",
+              "script-src 'self' https://www.google.com https://www.gstatic.com https://va.vercel-scripts.com",
+              "script-src-elem 'self' https://www.google.com https://www.gstatic.com https://va.vercel-scripts.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "media-src 'self' https:",
-              "connect-src 'self' https: wss: https://www.google.com https://mrdevx.medium.com https://medium.com https://*.medium.com",
+              "connect-src 'self' https: wss: https://www.google.com https://mrdevx.medium.com https://medium.com https://*.medium.com https://vitals.vercel-insights.com",
               "frame-src 'self' https://git-graph.vercel.app https://adplist.org https://www.google.com",
               "object-src 'none'",
               "base-uri 'self'",
