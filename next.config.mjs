@@ -16,7 +16,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  productionBrowserSourceMaps: false,
+  productionBrowserSourceMaps: true,
   compress: true,
 
   images: {
@@ -160,8 +160,11 @@ export default withSentryConfig(config, {
 
   automaticVercelMonitors: true,
 
-  hideSourceMaps: true,
+  hideSourceMaps: false,
   disableServerWebpackPlugin: process.env.NODE_ENV !== "production",
   disableClientWebpackPlugin: process.env.NODE_ENV !== "production",
   widenClientFileUpload: process.env.NODE_ENV === "production",
+  sourcemaps: {
+    assets: [".next/static/**/*.js", ".next/static/**/*.js.map"],
+  },
 });

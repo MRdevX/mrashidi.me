@@ -1,0 +1,6 @@
+[defaults]
+org=notable-nomads
+project=mrashidi-me
+
+[build]
+include_sourcemaps=true
