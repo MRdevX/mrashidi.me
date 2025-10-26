@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.78](https://github.com/MRdevX/mrashidi.me/compare/v0.1.77...v0.1.78) (2025-10-26)
+
+
+### Features
+
+* enhance blog post handling with improved logging, error management, and CORS support ([ee2e4a0](https://github.com/MRdevX/mrashidi.me/commit/ee2e4a094a52d0326f350dedaea91ba983dea000))
+* introduce runtime specification for blog API and streamline error handling in middleware ([ac5e900](https://github.com/MRdevX/mrashidi.me/commit/ac5e900f64a0a3d506ffcc35aaeeddcc8e88d977))
+
 ### [0.1.77](https://github.com/MRdevX/mrashidi.me/compare/v0.1.76...v0.1.77) (2025-10-26)
 
 
