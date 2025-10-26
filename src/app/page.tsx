@@ -63,10 +63,9 @@ export default function Home() {
               <TypingAnimation
                 strings={[
                   config.person.title,
-                  "Senior Software Engineer",
-                  "DevOps & Cloud Practitioner",
-                  "Node.js & TypeScript Developer",
-                  "Open Source Enthusiast",
+                  "DevOps/Cloud Practitioner",
+                  "Node.js & TypeScript Specialist",
+                  "Open Source Contributor",
                 ]}
                 typeSpeed={80}
                 deleteSpeed={40}

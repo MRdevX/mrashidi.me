@@ -451,22 +451,48 @@
 
   /* Gradient shift animation for hero background */
   .animate-gradient-shift {
-    animation: gradient-shift 8s ease-in-out infinite;
+    background:
+      linear-gradient(135deg, rgba(255, 95, 31, 0.08) 0%, transparent 40%, rgba(0, 255, 245, 0.06) 100%),
+      linear-gradient(45deg, rgba(0, 255, 245, 0.05) 0%, transparent 60%, rgba(255, 95, 31, 0.06) 100%),
+      linear-gradient(225deg, rgba(255, 95, 31, 0.04) 0%, transparent 70%, rgba(0, 255, 245, 0.05) 100%);
+    background-size:
+      300% 300%,
+      400% 400%,
+      350% 350%;
+    animation: gradient-shift 20s ease-in-out infinite;
   }
 
   @keyframes gradient-shift {
     0%,
     100% {
-      background: linear-gradient(135deg, rgba(255, 95, 31, 0.1) 0%, transparent 50%, rgba(188, 19, 254, 0.1) 100%);
+      background-position:
+        0% 0%,
+        0% 0%,
+        0% 0%;
     }
-    25% {
-      background: linear-gradient(135deg, rgba(0, 255, 245, 0.1) 0%, transparent 50%, rgba(255, 95, 31, 0.1) 100%);
+    20% {
+      background-position:
+        30% 20%,
+        20% 30%,
+        10% 40%;
     }
-    50% {
-      background: linear-gradient(135deg, rgba(188, 19, 254, 0.1) 0%, transparent 50%, rgba(0, 255, 245, 0.1) 100%);
+    40% {
+      background-position:
+        60% 40%,
+        40% 60%,
+        30% 20%;
     }
-    75% {
-      background: linear-gradient(135deg, rgba(255, 95, 31, 0.1) 0%, transparent 50%, rgba(0, 255, 245, 0.1) 100%);
+    60% {
+      background-position:
+        40% 60%,
+        60% 40%,
+        50% 30%;
+    }
+    80% {
+      background-position:
+        20% 30%,
+        30% 20%,
+        40% 10%;
     }
   }
 }
