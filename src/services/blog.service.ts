@@ -30,19 +30,40 @@ export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> 
 }
 
 async function fetchMediumFeed(url: string): Promise<Response> {
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
-      Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
-    },
-    next: { revalidate: API_CONFIG.CACHE.BLOG_REVALIDATE },
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch Medium feed: ${response.status} ${response.statusText}`);
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
+        Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
+        "Cache-Control": "no-cache",
+      },
+      signal: controller.signal,
+      next: { revalidate: API_CONFIG.CACHE.BLOG_REVALIDATE },
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "Unable to read response body");
+      throw new Error(`Failed to fetch Medium feed: ${response.status} ${response.statusText}. Response: ${errorText}`);
+    }
+
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+
+    if (error instanceof Error) {
+      if (error.name === "AbortError") {
+        throw new Error(`Medium feed request timed out after 15 seconds: ${url}`);
+      }
+      throw new Error(`Network error fetching Medium feed: ${error.message}`);
+    }
+
+    throw new Error(`Unknown error fetching Medium feed: ${String(error)}`);
   }
-
-  return response;
 }
 
 export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {

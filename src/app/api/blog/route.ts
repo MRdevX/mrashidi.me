@@ -32,19 +32,33 @@ async function handleBlogPosts(_request: NextRequest, pagination: { page: number
       limit: pagination.limit,
     });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    const errorName = error instanceof Error ? error.name : "UnknownError";
+
     logger.error({
       operation: "handleBlogPosts",
-      error: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
+      error: errorMessage,
+      errorName,
+      stack: errorStack,
       pagination,
+      timestamp: new Date().toISOString(),
+      url: error instanceof Error && "url" in error ? (error as any).url : undefined,
     });
 
-    return createSuccessResponse([], {
-      fromCache: false,
-      total: 0,
-      page: pagination.page,
-      limit: pagination.limit,
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to fetch blog posts",
+        details: process.env.NODE_ENV === "development" ? errorMessage : "Internal server error",
+        posts: [],
+        total: 0,
+        page: pagination.page,
+        limit: pagination.limit,
+        fromCache: false,
+      },
+      { status: 500 }
+    );
   }
 }
 
