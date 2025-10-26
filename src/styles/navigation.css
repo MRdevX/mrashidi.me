@@ -166,14 +166,14 @@
   }
 
   .floating-action-btn.bottom-right {
-    bottom: 5.5rem;
+    bottom: 6rem;
     right: 1rem;
   }
 
   /* PWA standalone mode adjustments for floating action button */
   @media (display-mode: standalone) {
     .floating-action-btn.bottom-right {
-      bottom: 6.5rem;
+      bottom: 7rem;
     }
   }
 
@@ -294,7 +294,8 @@
     font-size: 0.875rem;
     font-weight: 500;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    border-radius: 0.375rem;
   }
 
   .nav-item-text {

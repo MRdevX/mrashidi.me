@@ -53,6 +53,19 @@
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
   }
 
+  /* Enhanced focus indicators for accessibility */
+  .focus-visible:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #f97316;
+  }
+
   .modern-button:hover {
     background-position: right center;
     transform: translateY(-2px);

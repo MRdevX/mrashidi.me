@@ -37,6 +37,7 @@
   "dependencies": {
     "@aws-sdk/client-ses": "^3.913.0",
     "@fontsource/albert-sans": "^5.2.8",
+    "@fontsource/exo-2": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/orbitron": "^5.2.8",
     "@fontsource/press-start-2p": "^5.2.7",

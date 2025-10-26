@@ -3,6 +3,18 @@
    ========================================================================== */
 
 @layer utilities {
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      transition-duration: 0.01ms;
+      scroll-behavior: auto;
+    }
+  }
+
   /* Gradient text animation */
   .animated-gradient-text {
     background: linear-gradient(to right, var(--neon-orange), var(--neon-purple), var(--neon-blue));

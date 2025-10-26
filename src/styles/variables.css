@@ -5,10 +5,11 @@
 @import "@fontsource/jetbrains-mono" layer(base);
 @import "@fontsource/orbitron" layer(base);
 @import "@fontsource/albert-sans" layer(base);
+@import "@fontsource/exo-2" layer(base);
 
 /* Font Variables */
 :root {
-  --font-cyberpunk: Orbitron, sans-serif;
+  --font-cyberpunk: "Exo 2", Orbitron, sans-serif;
   --font-terminal: JetBrains Mono, monospace;
   --font-albert: Albert Sans, sans-serif;
   --font-family-cyberpunk: var(--font-cyberpunk);

@@ -14,6 +14,9 @@ importers:
       '@fontsource/albert-sans':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource/exo-2':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@fontsource/jetbrains-mono':
         specifier: ^5.2.8
         version: 5.2.8
@@ -1147,6 +1150,9 @@ packages:
 
   '@fontsource/albert-sans@5.2.8':
     resolution: {integrity: sha512-DCBojiRL/lxTC+fQPwg2eoszTo4dX3uH6iWmpsZ0ytn8rGfhUNl5QJjZNEVQmbZgeRRDZqc5iaPTl1+9AxU2Lg==}
+
+  '@fontsource/exo-2@5.2.8':
+    resolution: {integrity: sha512-cOZuiqW+gKg2SJAjymCicup0A8qto4M/lpyGahal3twMeLCRma8x/okFCdLYlTvYeQesF7d3WLKi+N04iPb40A==}
 
   '@fontsource/jetbrains-mono@5.2.8':
     resolution: {integrity: sha512-6w8/SG4kqvIMu7xd7wt6x3idn1Qux3p9N62s6G3rfldOUYHpWcc2FKrqf+Vo44jRvqWj2oAtTHrZXEP23oSKwQ==}
@@ -7168,6 +7174,8 @@ snapshots:
   '@floating-ui/utils@0.2.10': {}
 
   '@fontsource/albert-sans@5.2.8': {}
+
+  '@fontsource/exo-2@5.2.8': {}
 
   '@fontsource/jetbrains-mono@5.2.8': {}
 
