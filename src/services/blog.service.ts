@@ -1,3 +1,4 @@
+import DOMPurify from "isomorphic-dompurify";
 import { parseString } from "xml2js";
 import { API_CONFIG, logger } from "@/lib/core";
 import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
@@ -36,9 +37,11 @@ export function cleanHtmlContent(html: string): string {
   if (!html) {
     return "";
   }
-  return html
-    .replace(/<[^>]*>/g, "")
-    .replace(/&nbsp;/g, " ")
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+    KEEP_CONTENT: true,
+  })
     .replace(/\n\s*\n/g, "\n")
     .trim();
 }

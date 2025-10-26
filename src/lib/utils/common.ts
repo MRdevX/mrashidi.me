@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { nanoid } from "nanoid";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -14,5 +15,5 @@ export function debounce<T extends readonly unknown[], R>(func: (...args: T) => 
 }
 
 export function generateId(): string {
-  return Math.random().toString(36).substr(2, 9);
+  return nanoid();
 }

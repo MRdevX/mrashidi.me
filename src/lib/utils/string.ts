@@ -1,13 +1,12 @@
+import DOMPurify from "isomorphic-dompurify";
+import validator from "validator";
+
 export function cleanHtmlContent(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .trim();
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+    KEEP_CONTENT: true,
+  }).trim();
 }
 
 export function extractImageUrl(html: string): string | undefined {
@@ -20,7 +19,7 @@ export function truncateText(text: string, maxLength: number): string {
 }
 
 export function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return validator.isEmail(email);
 }
 
 export function calculateReadingTime(text: string): number {

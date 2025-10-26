@@ -1,28 +1,30 @@
+import ky, { type KyInstance } from "ky";
 import { logger } from "./core";
 
-interface FetcherOptions extends RequestInit {
-  timeout?: number;
-}
+// Create a ky instance with default configuration
+const api: KyInstance = ky.create({
+  timeout: 10000,
+  retry: {
+    limit: 2,
+    methods: ["get", "put", "head", "delete", "options", "trace"],
+  },
+  hooks: {
+    beforeError: [
+      (error) => {
+        logger.error({
+          operation: "fetcher",
+          url: error.request?.url,
+          error: error.message,
+        });
+        return error;
+      },
+    ],
+  },
+});
 
-export async function fetcher<T = unknown>(url: string, options: FetcherOptions = {}): Promise<T> {
-  const { timeout = 10000, ...fetchOptions } = options;
-
+export async function fetcher<T = unknown>(url: string, options?: RequestInit): Promise<T> {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-    const response = await fetch(url, {
-      ...fetchOptions,
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-
-    return await response.json();
+    return await api(url, options).json<T>();
   } catch (error) {
     logger.error({
       operation: "fetcher",
