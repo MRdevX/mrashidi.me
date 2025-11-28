@@ -38,7 +38,7 @@ export interface SiteConfig {
 const config: SiteConfig = {
   person: {
     name: "Mahdi Rashidi",
-    title: "Senior Software Engineer",
+    title: "Software Engineer",
     location: "Berlin, Germany",
     email: "contact@mrashidi.me",
     website: "https://mrashidi.me",
@@ -53,11 +53,11 @@ const config: SiteConfig = {
   site: {
     url: "https://mrashidi.me",
     name: "MR Portfolio",
-    title: "Mahdi Rashidi | Software Backend Engineer",
+    title: "Mahdi Rashidi | Software Engineer",
     description:
       "Software engineer with 9 years of experience in backend development. I work primarily with Node.js and TypeScript, with additional experience across frameworks and languages. I focus on building reliable, maintainable systems that scale with business needs.",
     keywords:
-      "Software Backend Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, AWS, Azure, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST API",
+      "Software Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, AWS, Azure, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST API",
   },
   ui: {
     themeColor: "#f97316",
