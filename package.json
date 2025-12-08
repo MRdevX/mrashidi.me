@@ -79,7 +79,7 @@
     "sanitize-html": "^2.17.0",
     "swr": "^2.3.6",
     "tailwind-merge": "^3.3.1",
-    "validator": "^13.15.20",
+    "validator": "^13.15.22",
     "xml2js": "^0.6.2",
     "zod": "^4.1.12"
   },
