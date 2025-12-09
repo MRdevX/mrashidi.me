@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import type { BlogPost } from "./types";
 
@@ -12,6 +13,7 @@ interface BlogPostCardProps {
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
   const { getTextColor, getCardPattern } = useThemeConfig();
+  const [imageError, setImageError] = useState(false);
 
   return (
     <motion.article
@@ -22,7 +24,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
       }}
       whileHover={{ scale: 1.02 }}
     >
-      {post.imageUrl && (
+      {post.imageUrl && !imageError && (
         <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
           <Image
             src={post.imageUrl}
@@ -30,6 +32,8 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onError={() => setImageError(true)}
+            unoptimized
           />
         </div>
       )}

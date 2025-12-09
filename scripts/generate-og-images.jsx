@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-/**
- * This script generates placeholder OG images using @vercel/og
- */
-
 const fs = require("node:fs");
 const path = require("node:path");
 const _React = require("react");

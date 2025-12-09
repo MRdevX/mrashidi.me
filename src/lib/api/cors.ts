@@ -2,9 +2,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { API_CONFIG } from "@/lib/core";
 
-/**
- * Get CORS headers - now allows all origins, methods, and headers
- */
 export function getCorsHeaders(_origin?: string | null): Record<string, string> {
   const { ALLOWED_METHODS, ALLOWED_HEADERS, MAX_AGE } = API_CONFIG.CORS;
 
@@ -16,9 +13,6 @@ export function getCorsHeaders(_origin?: string | null): Record<string, string> 
   };
 }
 
-/**
- * Handle CORS preflight requests (OPTIONS)
- */
 export function handleCorsPrelight(request: NextRequest): NextResponse {
   const origin = request.headers.get("origin");
   const corsHeaders = getCorsHeaders(origin);
@@ -29,9 +23,6 @@ export function handleCorsPrelight(request: NextRequest): NextResponse {
   });
 }
 
-/**
- * Middleware wrapper to add CORS headers to responses
- */
 export function withCors(handler: (request: NextRequest) => Promise<NextResponse>) {
   return async (request: NextRequest): Promise<NextResponse> => {
     const origin = request.headers.get("origin");
@@ -46,9 +37,6 @@ export function withCors(handler: (request: NextRequest) => Promise<NextResponse
   };
 }
 
-/**
- * Check if a request is a CORS preflight request
- */
 export function isCorsPrelight(request: NextRequest): boolean {
   return request.method === "OPTIONS" && request.headers.get("origin") !== null;
 }

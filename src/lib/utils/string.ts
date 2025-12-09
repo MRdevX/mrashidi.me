@@ -1,4 +1,6 @@
-// @ts-expect-error - html-to-text doesn't have types but works perfectly
+import * as cheerio from "cheerio";
+import he from "he";
+
 import { convert } from "html-to-text";
 import validator from "validator";
 
@@ -17,8 +19,29 @@ export function cleanHtmlContent(html: string): string {
 }
 
 export function extractImageUrl(html: string): string | undefined {
-  const imgMatch = html.match(/<img[^>]+src="([^"]+)"/);
-  return imgMatch ? imgMatch[1] : undefined;
+  if (!html) {
+    return undefined;
+  }
+
+  try {
+    const $ = cheerio.load(html);
+
+    const imgSrc = $("img").first().attr("src");
+
+    if (!imgSrc) {
+      return undefined;
+    }
+
+    const decodedUrl = he.decode(imgSrc.trim());
+
+    if (decodedUrl.startsWith("http://") || decodedUrl.startsWith("https://")) {
+      return decodedUrl;
+    }
+
+    return undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export function truncateText(text: string, maxLength: number): string {
