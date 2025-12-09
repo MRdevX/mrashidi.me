@@ -19,6 +19,8 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
   compress: true,
 
+  serverExternalPackages: ["pino", "pino-pretty", "thread-stream"],
+
   images: {
     remotePatterns: [
       {
