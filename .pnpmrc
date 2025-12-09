@@ -1,0 +1,9 @@
+# Performance optimizations
+side-effects-cache=true
+dedupe-injected-deps=true
+
+# Enable public hoisting for better compatibility with tools that expect flat node_modules
+public-hoist-pattern[]=*eslint*
+public-hoist-pattern[]=*prettier*
+public-hoist-pattern[]=*typescript*
+

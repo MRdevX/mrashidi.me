@@ -6,7 +6,7 @@ packages:
   - "!**/node_modules/**"
   - "!**/.pnpm-store/**"
 
-# Optimize dependency resolution for personal projects
+# Optimize dependency resolution for faster installs
 resolutionMode: "lowest-direct"
 
 # Enable optimistic repeat installs for faster development
@@ -15,13 +15,15 @@ optimisticRepeatInstall: true
 # Enable shell emulator for cross-platform compatibility
 shellEmulator: true
 
-# Optimize hoisting for better performance
+# Optimize hoisting for better performance and tool compatibility
 hoist: true
 hoistPattern:
   - "*typescript*"
   - "*biome*"
+  - "*eslint*"
+  - "*prettier*"
 
-# Only build dependencies that need it
+# Only build dependencies that need native compilation
 onlyBuiltDependencies:
   - "@sentry/cli"
   - "@tailwindcss/oxide"
@@ -30,6 +32,6 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
 
-# Flexible peer dependency handling for personal projects
+# Flexible peer dependency handling for development
 strictPeerDependencies: false
 autoInstallPeers: true
