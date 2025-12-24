@@ -2,9 +2,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 import withPWA from "next-pwa";
 
 const withBundleAnalyzer =
-  process.env.ANALYZE === "true"
-    ? (await import("@next/bundle-analyzer")).default({ enabled: true })
-    : (config) => config;
+  process.env.ANALYZE === "true" ? (await import("@next/bundle-analyzer")).default({ enabled: true }) : (config) => config;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -153,9 +151,12 @@ export default withSentryConfig(config, {
 
   tunnelRoute: "/monitoring",
 
-  disableLogger: true,
-
-  automaticVercelMonitors: true,
+  webpack: {
+    treeshake: {
+      removeDebugLogging: true,
+    },
+    automaticVercelMonitors: true,
+  },
 
   hideSourceMaps: false,
   disableServerWebpackPlugin: process.env.NODE_ENV !== "production",
