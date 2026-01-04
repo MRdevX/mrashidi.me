@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 import { apiMiddleware } from "@/lib/api/middleware";
 import { logger } from "@/lib/core";
 import { APIError } from "@/lib/errors";
-import { uploadCV } from "@/services/blob.service";
-import { pdfUploadSecurity } from "@/services/upload-security.service";
+import { uploadCV } from "@/lib/services/blob";
+import { pdfUploadSecurity } from "@/lib/services/upload-security";
 
 const validateFile = async (file: File | null): Promise<File> => {
   if (!file) {

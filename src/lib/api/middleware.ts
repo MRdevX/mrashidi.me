@@ -1,8 +1,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { APIError, handleError, logError } from "@/lib/errors";
+import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/lib/services/rate-limit";
 import { extractPaginationParams, type PaginationParams } from "@/lib/utils/pagination";
-import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
 import { handleCorsPrelight, isCorsPrelight, withCors } from "./cors";
 import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";

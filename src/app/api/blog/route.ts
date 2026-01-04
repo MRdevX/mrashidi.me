@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { apiMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { logger } from "@/lib/core";
-import { getAllPosts } from "@/services/blog.service";
+import { getAllPosts } from "@/lib/services/blog";
 
 export const runtime = "nodejs";
 

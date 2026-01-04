@@ -3,8 +3,8 @@ import { apiMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
 import { EmailService } from "@/lib/services/email";
+import { verifyRecaptcha } from "@/lib/services/recaptcha";
 import { type ContactFormData, validateContactFormAPI } from "@/lib/validation";
-import { verifyRecaptcha } from "@/services/recaptcha.service";
 
 async function handleContactForm(_request: NextRequest, formData: ContactFormData & { recaptchaToken: string }) {
   try {

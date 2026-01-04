@@ -4,8 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { projects } from "@/data";
 import type { TechnologyCategory } from "@/lib/core";
 import { logger } from "@/lib/core";
+import { githubService } from "@/lib/services/github";
 import { filterProjects, processTechnologyData } from "@/lib/tech";
-import { githubService } from "@/services/github.service";
 import { useCache } from "./useCache";
 
 interface CommitInfo {

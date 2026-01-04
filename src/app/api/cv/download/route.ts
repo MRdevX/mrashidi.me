@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { apiMiddleware } from "@/lib/api/middleware";
 import { logger } from "@/lib/core";
-import { getCVUrl } from "@/services/blob.service";
+import { getCVUrl } from "@/lib/services/blob";
 
 const logRedirect = (cvUrl: string) => {
   logger.info({
