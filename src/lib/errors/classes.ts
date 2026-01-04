@@ -18,7 +18,7 @@ const ERROR_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   { pattern: /network|fetch|timeout|connection|econnrefused|enotfound/i, message: SAFE_ERROR_MESSAGES.NETWORK },
   { pattern: /database|sql|query|transaction|constraint|foreign key/i, message: SAFE_ERROR_MESSAGES.DATABASE },
   { pattern: /auth|login|credential|token|unauthorized|jwt/i, message: SAFE_ERROR_MESSAGES.AUTHENTICATION },
-  { pattern: /permission|access|forbidden|denied|unauthorized/i, message: SAFE_ERROR_MESSAGES.AUTHORIZATION },
+  { pattern: /permission|access|forbidden|denied/i, message: SAFE_ERROR_MESSAGES.AUTHORIZATION },
   { pattern: /rate limit|too many|throttle|429/i, message: SAFE_ERROR_MESSAGES.RATE_LIMIT },
   { pattern: /api|endpoint|request failed|http error/i, message: SAFE_ERROR_MESSAGES.API },
 ];
