@@ -14,7 +14,7 @@ describe("GitHub Utilities", () => {
       const repoUrl = "https://github.com/user/repo/";
       const commitHash = "def456";
       const result = createCommitUrl(repoUrl, commitHash);
-      expect(result).toBe("https://github.com/user/repo//commit/def456");
+      expect(result).toBe("https://github.com/user/repo/commit/def456");
     });
 
     it("should handle different commit hash formats", () => {
