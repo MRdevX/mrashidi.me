@@ -8,8 +8,15 @@ export interface PaginationParams {
 
 export function extractPaginationParams(request: NextRequest): PaginationParams {
   const searchParams = request.nextUrl.searchParams;
-  const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
-  const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
+  let page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
+  let limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
+
+  if (Number.isNaN(page)) {
+    page = API_CONFIG.PAGINATION.DEFAULT_PAGE;
+  }
+  if (Number.isNaN(limit)) {
+    limit = API_CONFIG.PAGINATION.DEFAULT_LIMIT;
+  }
 
   return {
     page: Math.max(1, page),
