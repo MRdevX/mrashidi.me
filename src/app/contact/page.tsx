@@ -2,7 +2,7 @@ import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
 import { ContactHeader, contactData } from "@/features/contact";
 
 export default function Contact() {
-  const { header, sections } = contactData;
+  const { header } = contactData;
 
   return (
     <PageWrapper>
@@ -10,7 +10,7 @@ export default function Contact() {
 
       <PageSection>
         <div className="content-section">
-          <ContactHeader title={header.title} description={header.description} sections={sections} />
+          <ContactHeader description={header.description} />
         </div>
       </PageSection>
     </PageWrapper>

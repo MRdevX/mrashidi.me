@@ -4,12 +4,9 @@ import { motion } from "framer-motion";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { ContactFormRefactored as ContactForm } from "@/components/forms/ContactForm";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import type { ContactSection } from "./types";
 
 interface ContactHeaderProps {
-  title: string;
   description: string;
-  sections?: ContactSection[];
 }
 
 export function ContactHeader({ description }: ContactHeaderProps) {
