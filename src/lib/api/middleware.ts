@@ -165,8 +165,6 @@ class MiddlewareChain {
       wrappedHandler = handler as ApiHandler;
     }
 
-    wrappedHandler = errorHandlingMiddleware(wrappedHandler);
-
     if (this.authToken) {
       wrappedHandler = authMiddleware(this.authToken)(wrappedHandler);
     }
@@ -184,6 +182,8 @@ class MiddlewareChain {
     if (this.hasCors) {
       wrappedHandler = corsMiddleware(wrappedHandler);
     }
+
+    wrappedHandler = errorHandlingMiddleware(wrappedHandler);
 
     return wrappedHandler;
   }
