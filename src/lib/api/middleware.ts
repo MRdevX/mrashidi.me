@@ -64,6 +64,15 @@ export function withPagination(
   });
 }
 
+export function withPaginationCore(
+  handler: (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>
+): ApiHandler {
+  return async (request: NextRequest) => {
+    const pagination = extractPaginationParams(request);
+    return await handler(request, pagination);
+  };
+}
+
 export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
     return withErrorHandling(async (request: NextRequest) => {
@@ -169,7 +178,7 @@ class MiddlewareBuilder {
   }
 
   buildWithPagination(handler: PaginationHandler): ApiHandler {
-    const paginationWrapped = withPagination(handler);
+    const paginationWrapped = withPaginationCore(handler);
     return this.build(paginationWrapped);
   }
 }
