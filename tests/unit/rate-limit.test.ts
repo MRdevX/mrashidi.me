@@ -1,13 +1,23 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { checkRateLimit, getClientIdentifier } from "@/lib/services/rate-limit";
 
-vi.mock("@upstash/ratelimit", () => ({
-  Ratelimit: {
-    slidingWindow: vi.fn(() => ({
-      limit: vi.fn(),
-    })),
-  },
-}));
+vi.mock("@upstash/ratelimit", () => {
+  const mockLimit = vi.fn().mockResolvedValue({
+    success: true,
+    limit: 10,
+    remaining: 5,
+    reset: Date.now() + 60000,
+  });
+
+  class MockRatelimit {
+    static slidingWindow = vi.fn(() => ({}));
+    limit = mockLimit;
+  }
+
+  return {
+    Ratelimit: MockRatelimit,
+  };
+});
 
 vi.mock("@upstash/redis", () => ({
   Redis: {
@@ -77,25 +87,8 @@ describe("Rate Limiting Service", () => {
 
   describe("checkRateLimit", () => {
     it("should return rate limit result", async () => {
-      const mockLimit = vi.fn().mockResolvedValue({
-        success: true,
-        limit: 10,
-        remaining: 5,
-        reset: Date.now() + 60000,
-      });
-
-      vi.doMock("@/lib/services/rate-limit", async () => {
-        const actual = await vi.importActual("@/lib/services/rate-limit");
-        return {
-          ...actual,
-          rateLimiters: {
-            generalApi: {
-              limit: mockLimit,
-            },
-          },
-        };
-      });
-
+      // The mock is set up at the top level, so rateLimiters will use the mocked Ratelimit
+      // Since Redis is mocked to return an object (truthy), it will use the Ratelimit class
       const result = await checkRateLimit("generalApi", "test-identifier");
 
       expect(result.success).toBe(true);
