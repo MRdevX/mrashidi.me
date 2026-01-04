@@ -84,7 +84,7 @@ describe("File Upload Security", () => {
 
     it("should reject when file type cannot be detected", async () => {
       const { fileTypeFromBuffer } = await import("file-type");
-      vi.mocked(fileTypeFromBuffer).mockResolvedValue(null);
+      vi.mocked(fileTypeFromBuffer).mockResolvedValue(undefined);
 
       const file = createMockFile("test.pdf", 1024, "application/pdf");
       vi.spyOn(file, "slice").mockReturnValue({
