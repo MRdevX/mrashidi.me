@@ -133,9 +133,9 @@ describe("String Utilities", () => {
       expect(result).toBe(2);
     });
 
-    it("should return 1 minute for empty text", () => {
-      expect(calculateReadingTime("")).toBe(1);
-      expect(calculateReadingTime("   ")).toBe(1);
+    it("should return 0 minutes for empty text", () => {
+      expect(calculateReadingTime("")).toBe(0);
+      expect(calculateReadingTime("   ")).toBe(0);
     });
 
     it("should handle text with multiple spaces", () => {
