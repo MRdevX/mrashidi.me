@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { checkRateLimit, getClientIdentifier } from "@/services/rate-limit.service";
+import { checkRateLimit, getClientIdentifier } from "@/lib/services/rate-limit";
 
 vi.mock("@upstash/ratelimit", () => ({
   Ratelimit: {
@@ -84,8 +84,8 @@ describe("Rate Limiting Service", () => {
         reset: Date.now() + 60000,
       });
 
-      vi.doMock("@/server/rateLimit.service", async () => {
-        const actual = await vi.importActual("@/server/rateLimit.service");
+      vi.doMock("@/lib/services/rate-limit", async () => {
+        const actual = await vi.importActual("@/lib/services/rate-limit");
         return {
           ...actual,
           rateLimiters: {
