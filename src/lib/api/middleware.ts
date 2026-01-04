@@ -73,11 +73,12 @@ function rateLimitMiddleware(rateLimiterType: RateLimiterType): (handler: ApiHan
   };
 }
 
-function authMiddleware(token: string): (handler: ApiHandler) => ApiHandler {
+function authMiddleware(token: string | (() => string)): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
     return async (request: NextRequest) => {
+      const actualToken = typeof token === "function" ? token() : token;
       const authHeader = request.headers.get("authorization");
-      if (!token || authHeader !== `Bearer ${token}`) {
+      if (!actualToken || authHeader !== `Bearer ${actualToken}`) {
         throw new APIError("Unauthorized", 401);
       }
       return await handler(request);
@@ -121,7 +122,7 @@ class MiddlewareChain {
   private hasCors = false;
   private cacheTtl?: number;
   private cacheStaleWhileRevalidate?: number;
-  private authToken?: string;
+  private authToken?: string | (() => string);
   private validator?: <T>(data: unknown) => T;
   private hasPagination = false;
 
@@ -140,7 +141,7 @@ class MiddlewareChain {
     return this;
   }
 
-  auth(token: string): this {
+  auth(token: string | (() => string)): this {
     this.authToken = token;
     return this;
   }

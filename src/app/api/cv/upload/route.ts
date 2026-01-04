@@ -44,4 +44,6 @@ async function handleCVUpload(request: NextRequest) {
   });
 }
 
-export const POST = createMiddleware("cvUpload").auth(getRequiredEnv("CV_UPLOAD_TOKEN")).build(handleCVUpload);
+const getAuthToken = (): string => getRequiredEnv("CV_UPLOAD_TOKEN");
+
+export const POST = createMiddleware("cvUpload").auth(getAuthToken).build(handleCVUpload);
