@@ -11,7 +11,6 @@ import type { ApiHandler } from "./types";
 export type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
 export type ValidationHandler<T = unknown> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
 
-// Individual middleware functions (pure, composable)
 function corsMiddleware(handler: ApiHandler): ApiHandler {
   return withCors(handler);
 }
@@ -116,7 +115,6 @@ function errorHandlingMiddleware(handler: ApiHandler): ApiHandler {
   };
 }
 
-// MiddlewareChain class with fluent API
 class MiddlewareChain {
   private rateLimiterType?: RateLimiterType;
   private hasCors = false;
@@ -157,59 +155,44 @@ class MiddlewareChain {
   }
 
   build(handler: ApiHandler | PaginationHandler | ValidationHandler<any>): ApiHandler {
-    // Build middleware chain in fixed order:
-    // CORS → Cache → Security → Rate Limit → Auth → Validation → Pagination → Error Handling → Handler
-
     let wrappedHandler: ApiHandler;
 
-    // Apply pagination if needed
     if (this.hasPagination) {
       wrappedHandler = paginationMiddleware(handler as PaginationHandler);
     } else if (this.validator) {
-      // Apply validation if needed
-      // Type assertion is safe here because we know validator is set and handler matches ValidationHandler signature
       wrappedHandler = validationMiddleware(this.validator)(handler as ValidationHandler<unknown>);
     } else {
       wrappedHandler = handler as ApiHandler;
     }
 
-    // Apply middleware in reverse order (last applied executes first)
-    // Error handling is always last (applied first in reverse)
-    wrappedHandler = errorHandlingMiddleware(wrappedHandler);
-
-    // Auth middleware
     if (this.authToken) {
       wrappedHandler = authMiddleware(this.authToken)(wrappedHandler);
     }
 
-    // Rate limit middleware
     if (this.rateLimiterType) {
       wrappedHandler = rateLimitMiddleware(this.rateLimiterType)(wrappedHandler);
     }
 
-    // Security headers (always applied)
     wrappedHandler = securityHeadersMiddleware(wrappedHandler);
 
-    // Cache headers
     if (this.cacheTtl !== undefined) {
       wrappedHandler = cacheMiddleware(this.cacheTtl, this.cacheStaleWhileRevalidate)(wrappedHandler);
     }
 
-    // CORS middleware
     if (this.hasCors) {
       wrappedHandler = corsMiddleware(wrappedHandler);
     }
+
+    wrappedHandler = errorHandlingMiddleware(wrappedHandler);
 
     return wrappedHandler;
   }
 }
 
-// Factory function
 export function createMiddleware(rateLimiterType?: RateLimiterType): MiddlewareChain {
   return new MiddlewareChain(rateLimiterType);
 }
 
-// CORS preflight utility (standalone, not part of chain)
 export function corsPrelight(request: NextRequest): NextResponse | null {
   if (isCorsPrelight(request)) {
     return handleCorsPrelight(request);
