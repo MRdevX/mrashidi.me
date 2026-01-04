@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -34,10 +35,34 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run Biome check
+        id: biome-check
         run: pnpm check
 
       - name: Type check
+        id: ts-check
         run: pnpm exec tsc --noEmit
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request' && (steps.biome-check.outcome != 'success' || steps.ts-check.outcome != 'success')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const biomeStatus = '${{ steps.biome-check.outcome }}' === 'success' ? '✅ Passed' : '❌ Failed';
+            const tsStatus = '${{ steps.ts-check.outcome }}' === 'success' ? '✅ Passed' : '❌ Failed';
+
+            const body = `## Code Quality Check Results
+
+            - **Biome Check**: ${biomeStatus}
+            - **TypeScript Check**: ${tsStatus}
+
+            Please fix the issues above before merging.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
 
   unit-tests:
     name: Unit Tests

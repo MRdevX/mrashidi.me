@@ -7,14 +7,12 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   auto-release:
     name: Automatic Version & Release
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # Skip if this is a tag push (to avoid infinite loop)
     if: "!startsWith(github.ref, 'refs/tags/')"
 
     steps:
@@ -41,147 +39,60 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Get last tag
-        id: last_tag
+      - name: Check for new commits and run standard-version
+        id: version
         run: |
+          # Check if there are new commits since last tag
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -z "$LAST_TAG" ]; then
-            echo "No previous tag found"
-            echo "has_tag=false" >> $GITHUB_OUTPUT
-          else
-            echo "Last tag: $LAST_TAG"
-            echo "tag=$LAST_TAG" >> $GITHUB_OUTPUT
-            echo "has_tag=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Check for new commits since last tag
-        id: check_commits
-        run: |
-          if [ "${{ steps.last_tag.outputs.has_tag }}" == "true" ]; then
-            COMMITS_SINCE_TAG=$(git rev-list ${{ steps.last_tag.outputs.tag }}..HEAD --count)
-            echo "Commits since last tag: $COMMITS_SINCE_TAG"
+          if [ -n "$LAST_TAG" ]; then
+            COMMITS_SINCE_TAG=$(git rev-list $LAST_TAG..HEAD --count)
             if [ "$COMMITS_SINCE_TAG" -eq 0 ]; then
               echo "No new commits since last tag, skipping release"
               echo "should_release=false" >> $GITHUB_OUTPUT
-            else
-              echo "Found $COMMITS_SINCE_TAG new commits, proceeding with release"
-              echo "should_release=true" >> $GITHUB_OUTPUT
+              exit 0
             fi
-          else
-            echo "No previous tag found, proceeding with release"
-            echo "should_release=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Get current version
-        id: current_version
-        if: steps.check_commits.outputs.should_release == 'true'
-        run: |
+          # Get current version
           OLD_VERSION=$(node -p "require('./package.json').version")
-          echo "Current version: $OLD_VERSION"
-          echo "version=$OLD_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Run standard-version and check version bump
-        id: version_check
-        if: steps.check_commits.outputs.should_release == 'true'
-        run: |
-          # Run standard-version to analyze commits and bump version
-          set +e
-          pnpm release
-          STANDARD_VERSION_EXIT=$?
-          set -e
+          # Run standard-version
+          pnpm release || true
 
-          # Get the new version from package.json
+          # Get new version
           NEW_VERSION=$(node -p "require('./package.json').version")
-          OLD_VERSION="${{ steps.current_version.outputs.version }}"
 
-          echo "Old version: $OLD_VERSION"
-          echo "New version: $NEW_VERSION"
-          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-
-          # Check if version changed or if files were modified
+          # Check if version changed
           if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
-            echo "✅ Version bumped from $OLD_VERSION to $NEW_VERSION"
-            echo "version_bumped=true" >> $GITHUB_OUTPUT
-          elif ! git diff --quiet HEAD -- package.json CHANGELOG.md 2>/dev/null; then
-            echo "✅ Files modified (version may be same but changelog updated)"
+            echo "Version bumped from $OLD_VERSION to $NEW_VERSION"
+            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
             echo "version_bumped=true" >> $GITHUB_OUTPUT
           else
-            echo "⏭️ No version bump detected (standard-version exit code: $STANDARD_VERSION_EXIT)"
-            echo "No conventional commits found since last release"
+            echo "No version bump detected"
             echo "version_bumped=false" >> $GITHUB_OUTPUT
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes and tags
-        if: |
-          steps.check_commits.outputs.should_release == 'true' &&
-          steps.version_check.outputs.version_bumped == 'true'
+        if: steps.version.outputs.version_bumped == 'true'
         run: |
           git push origin main --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract changelog for version
-        id: changelog
-        if: |
-          steps.check_commits.outputs.should_release == 'true' &&
-          steps.version_check.outputs.version_bumped == 'true'
+      - name: Extract changelog
+        if: steps.version.outputs.version_bumped == 'true'
         run: |
-          VERSION="${{ steps.version_check.outputs.version }}"
-          python3 << 'EOF' > changelog.txt
-          import sys
-          version_num = "${{ steps.version_check.outputs.version }}"
-          try:
-              with open('CHANGELOG.md', 'r') as f:
-                  lines = f.readlines()
-              in_section = False
-              output = []
-              for line in lines:
-                  if line.startswith(f'### [{version_num}]'):
-                      in_section = True
-                      output.append(line)
-                  elif in_section and line.startswith('### ['):
-                      break
-                  elif in_section:
-                      output.append(line)
-
-              if not output:
-                  print("Changelog section for version not found. See CHANGELOG.md for details.")
-                  sys.exit(1)
-
-              result = ''.join(output).strip()
-              print(result)
-          except FileNotFoundError:
-              print("CHANGELOG.md not found. See CHANGELOG.md for details.")
-              sys.exit(1)
-          except Exception as e:
-              print(f"Error extracting changelog: {e}")
-              print("See CHANGELOG.md for details")
-              sys.exit(1)
-          EOF
-          cat changelog.txt
+          VERSION="${{ steps.version.outputs.version }}"
+          sed -n "/^### \[$VERSION\]/,/^### \[/p" CHANGELOG.md | sed '$d' > changelog.txt || echo "See CHANGELOG.md for details" > changelog.txt
 
       - name: Create GitHub Release
-        if: |
-          steps.check_commits.outputs.should_release == 'true' &&
-          steps.version_check.outputs.version_bumped == 'true'
+        if: steps.version.outputs.version_bumped == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.version_check.outputs.version }}
-          name: Release v${{ steps.version_check.outputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
           body_path: changelog.txt
           draft: false
           prerelease: false
-          generate_release_notes: false
-
-      - name: Skip message
-        if: |
-          steps.check_commits.outputs.should_release == 'false' ||
-          steps.version_check.outputs.version_bumped == 'false'
-        run: |
-          if [ "${{ steps.check_commits.outputs.should_release }}" == "false" ]; then
-            echo "⏭️ Skipping release: No new commits since last tag"
-          elif [ "${{ steps.version_check.outputs.version_bumped }}" == "false" ]; then
-            echo "⏭️ Skipping release: No version bump detected (no conventional commits found)"
-          fi
