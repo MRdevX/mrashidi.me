@@ -40,17 +40,18 @@ function parseWindow(window: string): number {
   return value * (multipliers[unit] || 1000);
 }
 
-function createInMemoryRateLimit(requests: number, window: string) {
+function createInMemoryRateLimit(limiterName: string, requests: number, window: string) {
   const windowMs = parseWindow(window);
 
   return {
     limit: async (identifier: string) => {
       const now = Date.now();
-      const entry = inMemoryLimits.get(identifier);
+      const key = `${limiterName}:${identifier}`;
+      const entry = inMemoryLimits.get(key);
 
       if (!entry || now >= entry.resetTime) {
         const resetTime = now + windowMs;
-        inMemoryLimits.set(identifier, { count: 1, resetTime });
+        inMemoryLimits.set(key, { count: 1, resetTime });
         return {
           success: true,
           limit: requests,
@@ -104,14 +105,17 @@ export const rateLimiters =
       }
     : {
         contactForm: createInMemoryRateLimit(
+          "contactForm",
           API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
           API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
         ),
         cvUpload: createInMemoryRateLimit(
+          "cvUpload",
           API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
           API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
         ),
         generalApi: createInMemoryRateLimit(
+          "generalApi",
           API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
           API_CONFIG.RATE_LIMIT.GENERAL_API.window
         ),
