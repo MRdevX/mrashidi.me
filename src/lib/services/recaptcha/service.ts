@@ -1,5 +1,5 @@
-import { API_CONFIG, logger } from "@/lib/core";
-import { AuthenticationError, NetworkError, ValidationError } from "@/lib/errors";
+import { API_CONFIG, getRequiredEnv, logger } from "@/lib/core";
+import { NetworkError, ValidationError } from "@/lib/errors";
 
 interface RecaptchaResponse {
   success: boolean;
@@ -19,14 +19,12 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
     return true;
   }
 
-  if (!process.env.RECAPTCHA_SECRET_KEY) {
-    throw new AuthenticationError("reCAPTCHA secret key not configured");
-  }
+  const secretKey = getRequiredEnv("RECAPTCHA_SECRET_KEY");
 
   const response = await fetch(VERIFY_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+    body: `secret=${secretKey}&response=${token}`,
   });
 
   if (!response.ok) {

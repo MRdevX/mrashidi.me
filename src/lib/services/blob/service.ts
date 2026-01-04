@@ -1,15 +1,10 @@
 import { put } from "@vercel/blob";
-import { logger } from "@/lib/core";
+import { getRequiredEnv, logger } from "@/lib/core";
 
 const CV_PATH = "cv/Mahdi_Rashidi_CV.pdf";
 
 export function getCVUrl(): string {
-  const blobStoreUrl = process.env.BLOB_STORE_URL;
-
-  if (!blobStoreUrl) {
-    throw new Error("BLOB_STORE_URL environment variable is not configured");
-  }
-
+  const blobStoreUrl = getRequiredEnv("BLOB_STORE_URL");
   return `${blobStoreUrl}/${CV_PATH}`;
 }
 

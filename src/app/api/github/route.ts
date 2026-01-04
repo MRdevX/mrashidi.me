@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { apiMiddleware } from "@/lib/api/middleware";
+import { getEnv } from "@/lib/core";
 import { APIError } from "@/lib/errors";
 
 interface LatestCommitInfo {
@@ -31,7 +32,7 @@ const extractRepoInfo = (githubUrl: string): { owner: string; name: string } | n
 };
 
 const fetchGitHubAPI = async <T>(endpoint: string): Promise<T> => {
-  const token = process.env.GITHUB_TOKEN;
+  const token = getEnv("GITHUB_TOKEN");
   const headers: HeadersInit = {
     Accept: "application/vnd.github.v3+json",
     "User-Agent": "mrashidi.me-portfolio",

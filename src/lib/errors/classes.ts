@@ -1,6 +1,5 @@
+import { isDevelopment } from "@/lib/core";
 import type { ErrorContext } from "./types";
-
-const isDevelopment = process.env.NODE_ENV === "development";
 
 const SAFE_ERROR_MESSAGES = {
   DEFAULT: "An unexpected error occurred",

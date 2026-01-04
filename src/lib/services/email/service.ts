@@ -1,6 +1,5 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { logger } from "@/lib/core";
-import { AuthenticationError } from "@/lib/errors";
+import { getEnv, getRequiredEnv, logger } from "@/lib/core";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
 import { getTemplateConfig } from "./config";
 import { createEmailTemplate } from "./renderer";
@@ -12,13 +11,9 @@ export class EmailService {
   private readonly templateConfig: ReturnType<typeof getTemplateConfig>;
 
   constructor() {
-    const region = process.env.AWS_REGION || "eu-central-1";
-    const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-
-    if (!accessKeyId || !secretAccessKey) {
-      throw new AuthenticationError("Missing AWS credentials");
-    }
+    const region = getEnv("AWS_REGION") || "eu-central-1";
+    const accessKeyId = getRequiredEnv("AWS_ACCESS_KEY_ID");
+    const secretAccessKey = getRequiredEnv("AWS_SECRET_ACCESS_KEY");
 
     this.sesClient = new SESClient({
       region,
@@ -28,8 +23,8 @@ export class EmailService {
       },
     });
 
-    this.fromEmail = process.env.EMAIL_FROM_ADDRESS || "no-reply@mrashidi.me";
-    this.toEmail = process.env.EMAIL_TO_ADDRESS || "contact@mrashidi.me";
+    this.fromEmail = getEnv("EMAIL_FROM_ADDRESS") || "no-reply@mrashidi.me";
+    this.toEmail = getEnv("EMAIL_TO_ADDRESS") || "contact@mrashidi.me";
     this.templateConfig = getTemplateConfig();
   }
 

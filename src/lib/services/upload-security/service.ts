@@ -16,7 +16,7 @@ export interface ValidationOptions {
 }
 
 const DEFAULT_OPTIONS: ValidationOptions = {
-  maxSize: 5 * 1024 * 1024, // 5MB
+  maxSize: 5 * 1024 * 1024,
   allowedMimeTypes: ["application/pdf"],
   allowedExtensions: [".pdf"],
 };
@@ -30,7 +30,6 @@ function sanitizeFileName(fileName: string): string {
 }
 
 const validationRules: ValidationRule[] = [
-  // Check file size
   (file: File, options: ValidationOptions) =>
     file.size === 0
       ? "File is empty"
@@ -38,13 +37,11 @@ const validationRules: ValidationRule[] = [
         ? `File too large. Maximum size is ${prettyBytes(options.maxSize)}`
         : null,
 
-  // Check file extension
   (file: File, options: ValidationOptions) => {
     const extension = file.name.toLowerCase().substring(file.name.lastIndexOf("."));
     return !options.allowedExtensions.includes(extension) ? `File extension '${extension}' is not allowed` : null;
   },
 
-  // Check MIME type (async)
   async (file: File, options: ValidationOptions) => {
     try {
       const buffer = await file.slice(0, 4100).arrayBuffer();

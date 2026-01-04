@@ -24,7 +24,7 @@ const inMemoryLimits = new Map<string, RateLimitEntry>();
 function parseWindow(window: string): number {
   const match = window.match(/^(\d+)\s*(s|m|h|d)$/);
   if (!match) {
-    return 60000; // Default to 1 minute
+    return 60000;
   }
 
   const value = parseInt(match[1], 10);
@@ -48,7 +48,6 @@ function createInMemoryRateLimit(requests: number, window: string) {
       const now = Date.now();
       const entry = inMemoryLimits.get(identifier);
 
-      // Reset if expired or doesn't exist
       if (!entry || now >= entry.resetTime) {
         const resetTime = now + windowMs;
         inMemoryLimits.set(identifier, { count: 1, resetTime });
@@ -60,12 +59,10 @@ function createInMemoryRateLimit(requests: number, window: string) {
         };
       }
 
-      // Check if limit exceeded
       if (entry.count >= requests) {
         return { success: false, limit: requests, remaining: 0, reset: new Date(entry.resetTime) };
       }
 
-      // Increment count
       entry.count++;
       return { success: true, limit: requests, remaining: requests - entry.count, reset: new Date(entry.resetTime) };
     },
