@@ -1,5 +1,5 @@
 import { logger } from "@/lib/core";
-import { fetchJSON } from "./utils";
+import { fetchJSON } from "@/lib/fetcher";
 
 interface LatestCommitInfo {
   date: Date;

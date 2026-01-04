@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Award, CheckCircle, ExternalLink } from "lucide-react";
 import { certificates } from "@/data";

@@ -1,5 +1,6 @@
 import ky, { type KyInstance } from "ky";
 import { logger } from "./core";
+import { APIError } from "./errors";
 
 const api: KyInstance = ky.create({
   timeout: 10000,
@@ -31,6 +32,20 @@ export async function fetcher<T = unknown>(url: string, options?: RequestInit): 
       error: error instanceof Error ? error.message : String(error),
     });
     throw error;
+  }
+}
+
+export async function fetchJSON<T>(url: string, options: RequestInit = {}): Promise<T> {
+  try {
+    return await api(url, options).json<T>();
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message.includes("timeout")) {
+        throw new APIError(`Request timed out: ${url}`);
+      }
+      throw new APIError(`Request failed: ${error.message}`);
+    }
+    throw new APIError("Request failed: Unknown error");
   }
 }
 

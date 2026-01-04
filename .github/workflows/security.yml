@@ -1,0 +1,103 @@
+name: Security
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Run weekly on Monday at 00:00 UTC
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  codeql-analysis:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+
+      - name: Check for disallowed licenses
+        run: |
+          DISALLOWED_LICENSES=("GPL-2.0" "GPL-3.0" "GPL-2.0-only" "GPL-2.0-or-later" "GPL-3.0-only" "GPL-3.0-or-later")
+          FOUND_DISALLOWED=false
+
+          # Check package.json
+          if [ -f "package.json" ]; then
+            for license in "${DISALLOWED_LICENSES[@]}"; do
+              if grep -qi "\"license\".*\"$license\"" package.json 2>/dev/null; then
+                echo "::error::Found disallowed license in package.json: $license"
+                FOUND_DISALLOWED=true
+              fi
+            done
+          fi
+
+          # Check dependencies via pnpm
+          if command -v pnpm &> /dev/null; then
+            pnpm list --depth=0 --long 2>/dev/null | while IFS= read -r line; do
+              for license in "${DISALLOWED_LICENSES[@]}"; do
+                if echo "$line" | grep -qi "$license"; then
+                  echo "::error::Found dependency with disallowed license: $license"
+                  echo "$line"
+                  FOUND_DISALLOWED=true
+                fi
+              done
+            done || true
+          fi
+
+          if [ "$FOUND_DISALLOWED" = true ]; then
+            echo "::error::Dependencies with disallowed licenses (GPL-2.0, GPL-3.0) detected."
+            exit 1
+          else
+            echo "✅ No disallowed licenses found"
+          fi

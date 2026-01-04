@@ -1,17 +1,17 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
-import { logger } from "@/lib/core";
+import { createMiddleware } from "@/lib/api/middleware";
+import { getRequiredEnv, logger } from "@/lib/core";
 import { APIError } from "@/lib/errors";
-import { uploadCV } from "@/services/blob.service";
-import { pdfUploadSecurity } from "@/services/upload-security.service";
+import { uploadCV } from "@/lib/services/blob";
+import { pdfUploadSecurity } from "@/lib/services/upload-security";
 
 const validateFile = async (file: File | null): Promise<File> => {
   if (!file) {
     throw new APIError("No file provided", 400);
   }
 
-  const validationResult = await pdfUploadSecurity.validateFile(file);
+  const validationResult = await pdfUploadSecurity.validateFile(file as File);
 
   if (!validationResult.isValid) {
     throw new APIError(`File validation failed: ${validationResult.errors.join(", ")}`, 400);
@@ -44,4 +44,6 @@ async function handleCVUpload(request: NextRequest) {
   });
 }
 
-export const POST = apiMiddleware.withAuth("cvUpload", process.env.CV_UPLOAD_TOKEN || "")(handleCVUpload);
+const getAuthToken = (): string => getRequiredEnv("CV_UPLOAD_TOKEN");
+
+export const POST = createMiddleware("cvUpload").auth(getAuthToken).build(handleCVUpload);

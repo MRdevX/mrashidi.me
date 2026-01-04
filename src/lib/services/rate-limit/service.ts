@@ -14,26 +14,58 @@ try {
   redisAvailable = false;
 }
 
-const inMemoryLimits = new Map<string, { count: number; resetTime: number }>();
+interface RateLimitEntry {
+  count: number;
+  resetTime: number;
+}
 
-function createInMemoryRateLimit(requests: number, windowMs: number) {
+const inMemoryLimits = new Map<string, RateLimitEntry>();
+
+function parseWindow(window: string): number {
+  const match = window.match(/^(\d+)\s*(s|m|h|d)$/);
+  if (!match) {
+    return 60000;
+  }
+
+  const value = parseInt(match[1], 10);
+  const unit = match[2];
+
+  const multipliers: Record<string, number> = {
+    s: 1000,
+    m: 60000,
+    h: 3600000,
+    d: 86400000,
+  };
+
+  return value * (multipliers[unit] || 1000);
+}
+
+function createInMemoryRateLimit(limiterName: string, requests: number, window: string) {
+  const windowMs = parseWindow(window);
+
   return {
     limit: async (identifier: string) => {
       const now = Date.now();
-      const key = identifier;
-      const limit = inMemoryLimits.get(key);
+      const key = `${limiterName}:${identifier}`;
+      const entry = inMemoryLimits.get(key);
 
-      if (!limit || now > limit.resetTime) {
-        inMemoryLimits.set(key, { count: 1, resetTime: now + windowMs });
-        return { success: true, limit: requests, remaining: requests - 1, reset: new Date(now + windowMs) };
+      if (!entry || now >= entry.resetTime) {
+        const resetTime = now + windowMs;
+        inMemoryLimits.set(key, { count: 1, resetTime });
+        return {
+          success: true,
+          limit: requests,
+          remaining: requests - 1,
+          reset: new Date(resetTime),
+        };
       }
 
-      if (limit.count >= requests) {
-        return { success: false, limit: requests, remaining: 0, reset: new Date(limit.resetTime) };
+      if (entry.count >= requests) {
+        return { success: false, limit: requests, remaining: 0, reset: new Date(entry.resetTime) };
       }
 
-      limit.count++;
-      return { success: true, limit: requests, remaining: requests - limit.count, reset: new Date(limit.resetTime) };
+      entry.count++;
+      return { success: true, limit: requests, remaining: requests - entry.count, reset: new Date(entry.resetTime) };
     },
   };
 }
@@ -71,11 +103,23 @@ export const rateLimiters =
           prefix: "ratelimit:api",
         }),
       }
-    : ({
-        contactForm: createInMemoryRateLimit(API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests, 60 * 1000),
-        cvUpload: createInMemoryRateLimit(API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests, 60 * 60 * 1000),
-        generalApi: createInMemoryRateLimit(API_CONFIG.RATE_LIMIT.GENERAL_API.requests, 60 * 1000),
-      } as const);
+    : {
+        contactForm: createInMemoryRateLimit(
+          "contactForm",
+          API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
+          API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
+        ),
+        cvUpload: createInMemoryRateLimit(
+          "cvUpload",
+          API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
+          API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
+        ),
+        generalApi: createInMemoryRateLimit(
+          "generalApi",
+          API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
+          API_CONFIG.RATE_LIMIT.GENERAL_API.window
+        ),
+      };
 
 export type RateLimiterType = keyof typeof rateLimiters;
 

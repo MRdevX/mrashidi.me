@@ -1,6 +1,5 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
 import { PageHeader, PageSection } from "@/components/ui";
 import { BlogContainer, BlogError, BlogGrid, BlogLoading, BlogPagination, useBlogData } from "@/features/blog";
 
@@ -9,7 +8,7 @@ export default function Blog() {
 
   return (
     <BlogContainer>
-      <PageHeader icon={BookOpen} title="Blog Posts" />
+      <PageHeader iconName="BookOpen" title="Blog Posts" />
 
       <PageSection>
         <div className="content-section">

@@ -1,27 +1,23 @@
-"use client";
-
-import { User } from "lucide-react";
 import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
-import { BioSection, EducationSection, LanguagesSection, SkillsSection } from "@/features/about";
-import { useMouseTracking } from "@/hooks/useMouseTracking";
+import { BioSection, EducationSection, LanguagesSection, MouseTrackingWrapper, SkillsSection } from "@/features/about";
 
 export default function About() {
-  useMouseTracking(".glitch-image");
-
   return (
-    <PageWrapper>
-      <PageHeader icon={User} title="About Me" />
+    <MouseTrackingWrapper>
+      <PageWrapper>
+        <PageHeader iconName="User" title="About Me" />
 
-      <PageSection>
-        <div className="content-section">
-          <div className="prose dark:prose-invert max-w-none">
-            <BioSection />
-            <SkillsSection />
-            <LanguagesSection />
-            <EducationSection />
+        <PageSection>
+          <div className="content-section">
+            <div className="prose dark:prose-invert max-w-none">
+              <BioSection />
+              <SkillsSection />
+              <LanguagesSection />
+              <EducationSection />
+            </div>
           </div>
-        </div>
-      </PageSection>
-    </PageWrapper>
+        </PageSection>
+      </PageWrapper>
+    </MouseTrackingWrapper>
   );
 }

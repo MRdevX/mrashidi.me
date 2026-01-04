@@ -1,4 +1,6 @@
-import { ExternalLink, GraduationCap } from "lucide-react";
+"use client";
+
+import { ExternalLink } from "lucide-react";
 import { AnimatedSection, SectionHeader } from "@/components/ui";
 import { education } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
@@ -8,7 +10,7 @@ export function EducationSection() {
 
   return (
     <AnimatedSection delay={1.2}>
-      <SectionHeader icon={GraduationCap} title="Education" size="sm" />
+      <SectionHeader iconName="GraduationCap" title="Education" size="sm" />
       {education.map((edu) => (
         <div className={`${getCardPattern()} mb-4`} key={edu.degree + edu.institution}>
           <div className="flex items-center justify-between">

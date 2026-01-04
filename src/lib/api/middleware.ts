@@ -1,103 +1,43 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { API_CONFIG } from "@/lib/core";
 import { APIError, handleError, logError } from "@/lib/errors";
-import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/services/rate-limit.service";
+import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/lib/services/rate-limit";
+import { extractPaginationParams, type PaginationParams } from "@/lib/utils/pagination";
 import { handleCorsPrelight, isCorsPrelight, withCors } from "./cors";
 import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
 
-type PaginationHandler = (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>;
-type ValidationHandler<T> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
-type AuthHandler = ApiHandler;
-type CacheHandler = ApiHandler;
+export type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
+export type ValidationHandler<T = unknown> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
 
-interface MiddlewareBuilder {
-  withPagination(): MiddlewareBuilder;
-  withValidation<T>(validator: (data: unknown) => T): MiddlewareBuilder;
-  withAuth(token: string): MiddlewareBuilder;
-  withCache(ttl: number, staleWhileRevalidate?: number): MiddlewareBuilder;
-  withCors(): MiddlewareBuilder;
-  build(handler: ApiHandler): ApiHandler;
-  buildWithPagination(handler: PaginationHandler): ApiHandler;
-  buildWithValidation<T>(handler: ValidationHandler<T>): ApiHandler;
-  buildWithAuth(handler: AuthHandler): ApiHandler;
+// Individual middleware functions (pure, composable)
+function corsMiddleware(handler: ApiHandler): ApiHandler {
+  return withCors(handler);
 }
 
-export function withBase(rateLimiterType: RateLimiterType, handler: ApiHandler): ApiHandler {
-  return withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)));
-}
-
-export function withErrorHandling(handler: ApiHandler): ApiHandler {
-  return async (request: NextRequest) => {
-    try {
-      return await handler(request);
-    } catch (error) {
-      const appError = handleError(error);
-      logError(appError, "API");
-      const errorResponse = createErrorResponse(appError, appError.statusCode || 500);
-      return addSecurityHeaders(errorResponse);
-    }
-  };
-}
-
-export function withAuth(expectedToken: string): (handler: ApiHandler) => ApiHandler {
+function cacheMiddleware(ttl: number, staleWhileRevalidate?: number): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
-    return withErrorHandling(async (request: NextRequest) => {
-      const authHeader = request.headers.get("authorization");
-      if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
-        throw new APIError("Unauthorized", 401);
-      }
-      return await handler(request);
-    });
+    return async (request: NextRequest) => {
+      const response = await handler(request);
+      const cacheControl = `public, s-maxage=${ttl}${staleWhileRevalidate ? `, stale-while-revalidate=${staleWhileRevalidate}` : ""}`;
+      response.headers.set("Cache-Control", cacheControl);
+      response.headers.set("Vary", "Accept-Encoding");
+      return response;
+    };
   };
 }
 
-export function withValidation<T>(
-  handler: (request: NextRequest, validatedData: T) => Promise<NextResponse>,
-  validator: (data: unknown) => T
-): ApiHandler {
-  return withErrorHandling(async (request: NextRequest) => {
-    const body = await request.json();
-    const validatedData = validator(body);
-    return await handler(request, validatedData);
-  });
-}
-
-export function withPaginationFeature(
-  handler: (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>
-): ApiHandler {
+function securityHeadersMiddleware(handler: ApiHandler): ApiHandler {
   return async (request: NextRequest) => {
-    const searchParams = request.nextUrl.searchParams;
-    const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
-    const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
-
-    return await handler(request, {
-      page: Math.max(1, page),
-      limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
-    });
+    const response = await handler(request);
+    return addSecurityHeaders(response);
   };
 }
 
-export function withPagination(
-  handler: (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>
-): ApiHandler {
-  return withErrorHandling(async (request: NextRequest) => {
-    const searchParams = request.nextUrl.searchParams;
-    const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
-    const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
-
-    return await handler(request, {
-      page: Math.max(1, page),
-      limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
-    });
-  });
-}
-
-export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHandler) => ApiHandler {
+function rateLimitMiddleware(rateLimiterType: RateLimiterType): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
-    return withErrorHandling(async (request: NextRequest) => {
+    return async (request: NextRequest) => {
       const identifier = getClientIdentifier(request);
       const rateLimitResult = await checkRateLimit(rateLimiterType, identifier);
 
@@ -128,162 +68,151 @@ export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHa
       response.headers.set("X-RateLimit-Remaining", rateLimitResult.remaining.toString());
       response.headers.set("X-RateLimit-Reset", rateLimitResult.reset.toISOString());
 
-      return addSecurityHeaders(response);
-    });
-  };
-}
-
-export function withSecurityHeaders(handler: ApiHandler): ApiHandler {
-  return async (request: NextRequest) => {
-    const response = await handler(request);
-    return addSecurityHeaders(response);
-  };
-}
-
-export function withCacheHeaders(ttl: number, staleWhileRevalidate?: number): (handler: ApiHandler) => ApiHandler {
-  return (handler: ApiHandler): ApiHandler => {
-    return async (request: NextRequest) => {
-      const response = await handler(request);
-
-      const cacheControl = `public, s-maxage=${ttl}${staleWhileRevalidate ? `, stale-while-revalidate=${staleWhileRevalidate}` : ""}`;
-      response.headers.set("Cache-Control", cacheControl);
-      response.headers.set("Vary", "Accept-Encoding");
-
       return response;
     };
   };
 }
 
-class MiddlewareBuilderImpl implements MiddlewareBuilder {
-  private rateLimiterType: RateLimiterType;
-  private features: Array<(handler: ApiHandler) => ApiHandler> = [];
+function authMiddleware(token: string | (() => string)): (handler: ApiHandler) => ApiHandler {
+  return (handler: ApiHandler): ApiHandler => {
+    return async (request: NextRequest) => {
+      const actualToken = typeof token === "function" ? token() : token;
+      const authHeader = request.headers.get("authorization");
+      if (!actualToken || authHeader !== `Bearer ${actualToken}`) {
+        throw new APIError("Unauthorized", 401);
+      }
+      return await handler(request);
+    };
+  };
+}
 
-  constructor(rateLimiterType: RateLimiterType) {
+function validationMiddleware<T>(validator: (data: unknown) => T): (handler: ValidationHandler<T>) => ApiHandler {
+  return (handler: ValidationHandler<T>): ApiHandler => {
+    return async (request: NextRequest) => {
+      const body = await request.json();
+      const validatedData = validator(body);
+      return await handler(request, validatedData);
+    };
+  };
+}
+
+function paginationMiddleware(handler: PaginationHandler): ApiHandler {
+  return async (request: NextRequest) => {
+    const pagination = extractPaginationParams(request);
+    return await handler(request, pagination);
+  };
+}
+
+function errorHandlingMiddleware(handler: ApiHandler): ApiHandler {
+  return async (request: NextRequest) => {
+    try {
+      return await handler(request);
+    } catch (error) {
+      const appError = handleError(error);
+      logError(appError, "API");
+      const errorResponse = createErrorResponse(appError, appError.statusCode || 500);
+      return addSecurityHeaders(errorResponse);
+    }
+  };
+}
+
+// MiddlewareChain class with fluent API
+class MiddlewareChain {
+  private rateLimiterType?: RateLimiterType;
+  private hasCors = false;
+  private cacheTtl?: number;
+  private cacheStaleWhileRevalidate?: number;
+  private authToken?: string | (() => string);
+  private validator?: (data: unknown) => unknown;
+  private hasPagination = false;
+
+  constructor(rateLimiterType?: RateLimiterType) {
     this.rateLimiterType = rateLimiterType;
   }
 
-  withPagination(): MiddlewareBuilder {
-    this.features.push((handler) => {
-      return async (request: NextRequest) => {
-        const searchParams = request.nextUrl.searchParams;
-        const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
-        const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
-
-        const pagination = {
-          page: Math.max(1, page),
-          limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
-        };
-
-        return await (handler as PaginationHandler)(request, pagination);
-      };
-    });
+  cors(): this {
+    this.hasCors = true;
     return this;
   }
 
-  withValidation<T>(validator: (data: unknown) => T): MiddlewareBuilder {
-    this.features.push((handler) => {
-      return async (request: NextRequest) => {
-        const body = await request.json();
-        const validatedData = validator(body);
-        return await (handler as ValidationHandler<T>)(request, validatedData);
-      };
-    });
+  cache(ttl: number, staleWhileRevalidate?: number): this {
+    this.cacheTtl = ttl;
+    this.cacheStaleWhileRevalidate = staleWhileRevalidate;
     return this;
   }
 
-  withAuth(token: string): MiddlewareBuilder {
-    this.features.push((handler) => withAuth(token)(handler));
+  auth(token: string | (() => string)): this {
+    this.authToken = token;
     return this;
   }
 
-  withCache(ttl: number, staleWhileRevalidate?: number): MiddlewareBuilder {
-    this.features.push((handler: CacheHandler) => withCacheHeaders(ttl, staleWhileRevalidate)(handler));
+  validate<T>(validator: (data: unknown) => T): this {
+    this.validator = validator;
     return this;
   }
 
-  withCors(): MiddlewareBuilder {
-    this.features.push((handler: ApiHandler) => withCors(handler));
+  pagination(): this {
+    this.hasPagination = true;
     return this;
   }
 
-  build(handler: ApiHandler): ApiHandler {
-    let wrappedHandler = handler;
+  build(handler: ApiHandler | PaginationHandler | ValidationHandler<any>): ApiHandler {
+    // Build middleware chain in fixed order:
+    // CORS → Cache → Security → Rate Limit → Auth → Validation → Pagination → Error Handling → Handler
 
-    for (let i = this.features.length - 1; i >= 0; i--) {
-      wrappedHandler = this.features[i](wrappedHandler);
+    let wrappedHandler: ApiHandler;
+
+    // Apply pagination if needed
+    if (this.hasPagination) {
+      wrappedHandler = paginationMiddleware(handler as PaginationHandler);
+    } else if (this.validator) {
+      // Apply validation if needed
+      // Type assertion is safe here because we know validator is set and handler matches ValidationHandler signature
+      wrappedHandler = validationMiddleware(this.validator)(handler as ValidationHandler<unknown>);
+    } else {
+      wrappedHandler = handler as ApiHandler;
     }
 
-    return withBase(this.rateLimiterType, wrappedHandler);
-  }
+    // Apply middleware in reverse order (last applied executes first)
+    // Error handling is always last (applied first in reverse)
+    wrappedHandler = errorHandlingMiddleware(wrappedHandler);
 
-  buildWithPagination(handler: PaginationHandler): ApiHandler {
-    const apiHandler: ApiHandler = async (request: NextRequest) => {
-      const searchParams = request.nextUrl.searchParams;
-      const page = parseInt(searchParams.get("page") || API_CONFIG.PAGINATION.DEFAULT_PAGE.toString(), 10);
-      const limit = parseInt(searchParams.get("limit") || API_CONFIG.PAGINATION.DEFAULT_LIMIT.toString(), 10);
+    // Auth middleware
+    if (this.authToken) {
+      wrappedHandler = authMiddleware(this.authToken)(wrappedHandler);
+    }
 
-      const pagination = {
-        page: Math.max(1, page),
-        limit: Math.min(API_CONFIG.PAGINATION.MAX_LIMIT, Math.max(1, limit)),
-      };
+    // Rate limit middleware
+    if (this.rateLimiterType) {
+      wrappedHandler = rateLimitMiddleware(this.rateLimiterType)(wrappedHandler);
+    }
 
-      return await handler(request, pagination);
-    };
+    // Security headers (always applied)
+    wrappedHandler = securityHeadersMiddleware(wrappedHandler);
 
-    return this.build(apiHandler);
-  }
+    // Cache headers
+    if (this.cacheTtl !== undefined) {
+      wrappedHandler = cacheMiddleware(this.cacheTtl, this.cacheStaleWhileRevalidate)(wrappedHandler);
+    }
 
-  buildWithValidation<T>(handler: ValidationHandler<T>): ApiHandler {
-    return this.build(handler as ApiHandler);
-  }
+    // CORS middleware
+    if (this.hasCors) {
+      wrappedHandler = corsMiddleware(wrappedHandler);
+    }
 
-  buildWithAuth(handler: AuthHandler): ApiHandler {
-    return this.build(handler);
-  }
-
-  buildWithCache(handler: CacheHandler): ApiHandler {
-    return this.build(handler);
+    return wrappedHandler;
   }
 }
 
-export function createMiddleware(rateLimiterType: RateLimiterType): MiddlewareBuilder {
-  return new MiddlewareBuilderImpl(rateLimiterType);
+// Factory function
+export function createMiddleware(rateLimiterType?: RateLimiterType): MiddlewareChain {
+  return new MiddlewareChain(rateLimiterType);
 }
 
-export const apiMiddleware = {
-  create: createMiddleware,
-
-  basic: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) =>
-    withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler))),
-
-  withValidation:
-    <T>(rateLimiterType: RateLimiterType, validator: (data: unknown) => T) =>
-    (handler: (request: NextRequest, validatedData: T) => Promise<NextResponse>) =>
-      withSecurityHeaders(withRateLimit(rateLimiterType)(withValidation(handler, validator))),
-
-  withPagination:
-    (rateLimiterType: RateLimiterType) =>
-    (handler: (request: NextRequest, pagination: { page: number; limit: number }) => Promise<NextResponse>) =>
-      withSecurityHeaders(withRateLimit(rateLimiterType)(withPagination(handler))),
-
-  withAuth: (rateLimiterType: RateLimiterType, token: string) => (handler: ApiHandler) =>
-    withSecurityHeaders(withRateLimit(rateLimiterType)(withAuth(token)(withErrorHandling(handler)))),
-
-  withCache: (rateLimiterType: RateLimiterType, ttl: number, staleWhileRevalidate?: number) => (handler: ApiHandler) =>
-    withCacheHeaders(
-      ttl,
-      staleWhileRevalidate
-    )(withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)))),
-
-  withCors: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) =>
-    withCors(withSecurityHeaders(withRateLimit(rateLimiterType)(withErrorHandling(handler)))),
-
-  simple: (handler: ApiHandler) => withSecurityHeaders(withErrorHandling(handler)),
-
-  corsPrelight: (request: NextRequest) => {
-    if (isCorsPrelight(request)) {
-      return handleCorsPrelight(request);
-    }
-    return null;
-  },
-};
+// CORS preflight utility (standalone, not part of chain)
+export function corsPrelight(request: NextRequest): NextResponse | null {
+  if (isCorsPrelight(request)) {
+    return handleCorsPrelight(request);
+  }
+  return null;
+}

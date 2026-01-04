@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatedSection } from "@/components/ui";
 import { personalInfo } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";

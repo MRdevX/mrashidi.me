@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { fadeInVariants } from "@/lib/animations";

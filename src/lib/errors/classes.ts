@@ -1,6 +1,5 @@
+import { isDevelopment } from "@/lib/core";
 import type { ErrorContext } from "./types";
-
-const isDevelopment = process.env.NODE_ENV === "development";
 
 const SAFE_ERROR_MESSAGES = {
   DEFAULT: "An unexpected error occurred",
@@ -14,32 +13,33 @@ const SAFE_ERROR_MESSAGES = {
   SERVER_ERROR: "Internal server error",
 } as const;
 
+const ERROR_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
+  { pattern: /validation|invalid.*input|malformed/i, message: SAFE_ERROR_MESSAGES.VALIDATION },
+  { pattern: /network|fetch|timeout|connection|econnrefused|enotfound/i, message: SAFE_ERROR_MESSAGES.NETWORK },
+  { pattern: /database|sql|query|transaction|constraint|foreign key/i, message: SAFE_ERROR_MESSAGES.DATABASE },
+  { pattern: /auth|login|credential|token|unauthorized|jwt/i, message: SAFE_ERROR_MESSAGES.AUTHENTICATION },
+  { pattern: /permission|access|forbidden|denied/i, message: SAFE_ERROR_MESSAGES.AUTHORIZATION },
+  { pattern: /rate limit|too many|throttle|429/i, message: SAFE_ERROR_MESSAGES.RATE_LIMIT },
+  { pattern: /api|endpoint|request failed|http error/i, message: SAFE_ERROR_MESSAGES.API },
+];
+
+function isValidErrorType(errorType: string): errorType is keyof typeof SAFE_ERROR_MESSAGES {
+  return errorType in SAFE_ERROR_MESSAGES;
+}
+
 function sanitizeErrorMessage(message: string, errorType?: string): string {
   if (isDevelopment) {
     return message;
   }
 
-  if (errorType && SAFE_ERROR_MESSAGES[errorType as keyof typeof SAFE_ERROR_MESSAGES]) {
-    return SAFE_ERROR_MESSAGES[errorType as keyof typeof SAFE_ERROR_MESSAGES];
+  if (errorType && isValidErrorType(errorType)) {
+    return SAFE_ERROR_MESSAGES[errorType];
   }
 
-  if (message.toLowerCase().includes("validation")) {
-    return SAFE_ERROR_MESSAGES.VALIDATION;
-  }
-  if (message.toLowerCase().includes("network") || message.toLowerCase().includes("fetch")) {
-    return SAFE_ERROR_MESSAGES.NETWORK;
-  }
-  if (message.toLowerCase().includes("database") || message.toLowerCase().includes("sql")) {
-    return SAFE_ERROR_MESSAGES.DATABASE;
-  }
-  if (message.toLowerCase().includes("auth") || message.toLowerCase().includes("login")) {
-    return SAFE_ERROR_MESSAGES.AUTHENTICATION;
-  }
-  if (message.toLowerCase().includes("permission") || message.toLowerCase().includes("access")) {
-    return SAFE_ERROR_MESSAGES.AUTHORIZATION;
-  }
-  if (message.toLowerCase().includes("rate limit") || message.toLowerCase().includes("too many")) {
-    return SAFE_ERROR_MESSAGES.RATE_LIMIT;
+  for (const { pattern, message: safeMessage } of ERROR_PATTERNS) {
+    if (pattern.test(message)) {
+      return safeMessage;
+    }
   }
 
   return SAFE_ERROR_MESSAGES.DEFAULT;

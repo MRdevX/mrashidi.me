@@ -1,16 +1,28 @@
+"use client";
+
 import { motion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
+import { BookOpen, FolderOpen, MessageCircle, User } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { fadeInVariants } from "@/lib/animations";
 
+const iconMap = {
+  User,
+  MessageCircle,
+  BookOpen,
+  FolderOpen,
+} as const;
+
+type IconName = keyof typeof iconMap;
+
 interface PageHeaderProps {
-  icon: LucideIcon;
+  iconName: IconName;
   title: string;
   className?: string;
 }
 
-export function PageHeader({ icon: Icon, title, className = "" }: PageHeaderProps) {
+export function PageHeader({ iconName, title, className = "" }: PageHeaderProps) {
   const { getSectionTitle } = useThemeConfig();
+  const Icon = iconMap[iconName];
 
   return (
     <motion.div

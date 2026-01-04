@@ -2,11 +2,6 @@ import type { NextRequest, NextResponse } from "next/server";
 
 export type ApiHandler = (request: NextRequest) => Promise<NextResponse>;
 
-export interface PaginationParams {
-  page: number;
-  limit: number;
-}
-
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;

@@ -1,5 +1,3 @@
-"use client";
-
 import { PageSection, PageWrapper } from "@/components/ui";
 import { CertificatesSection, ResumeHeader, WorkExperienceSection } from "@/features/resume";
 

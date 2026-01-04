@@ -1,5 +1,6 @@
+"use client";
+
 import { motion } from "framer-motion";
-import { Languages } from "lucide-react";
 import { AnimatedSection, SectionHeader } from "@/components/ui";
 import { personalInfo } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
@@ -10,7 +11,7 @@ export function LanguagesSection() {
 
   return (
     <AnimatedSection delay={0.8}>
-      <SectionHeader icon={Languages} title="Languages" size="sm" />
+      <SectionHeader iconName="Languages" title="Languages" size="sm" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {personalInfo.languages.map((lang, index) => (
           <motion.div

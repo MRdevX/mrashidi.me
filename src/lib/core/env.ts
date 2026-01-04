@@ -25,6 +25,10 @@ const EnvSchema = z.object({
 
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
+
+  BLOB_STORE_URL: z.string().url().optional(),
+  CV_UPLOAD_TOKEN: z.string().optional(),
+  NEXT_PUBLIC_APP_VERSION: z.string().optional(),
 });
 
 export const env = EnvSchema.parse({
@@ -48,9 +52,29 @@ export const env = EnvSchema.parse({
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   EMAIL_FROM_ADDRESS: process.env.EMAIL_FROM_ADDRESS,
   EMAIL_TO_ADDRESS: process.env.EMAIL_TO_ADDRESS,
-
   UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
   UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+  BLOB_STORE_URL: process.env.BLOB_STORE_URL,
+  CV_UPLOAD_TOKEN: process.env.CV_UPLOAD_TOKEN,
+  NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION,
 });
 
 export type Env = z.infer<typeof EnvSchema>;
+
+export function getEnv<K extends keyof Env>(key: K): Env[K] {
+  return env[key];
+}
+
+export function getRequiredEnv<K extends keyof Env>(key: K): NonNullable<Env[K]> {
+  const value = env[key];
+  if (value === undefined || value === null) {
+    throw new Error(`Required environment variable ${key} is not set`);
+  }
+  return value as NonNullable<Env[K]>;
+}
+
+export const isDevelopment = env.NODE_ENV === "development";
+
+export const isProduction = env.NODE_ENV === "production";
+
+export const isTest = env.NODE_ENV === "test";

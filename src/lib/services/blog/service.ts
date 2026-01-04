@@ -1,4 +1,5 @@
-import { parseString } from "xml2js";
+import { XMLParser } from "fast-xml-parser";
+import ky from "ky";
 import { API_CONFIG, logger } from "@/lib/core";
 import { cleanHtmlContent, extractImageUrl } from "@/lib/utils/string";
 import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
@@ -11,110 +12,68 @@ const authors: IBlogAuthor[] = [
   },
 ];
 
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: "@_",
+  textNodeName: "#text",
+  parseAttributeValue: true,
+  parseTagValue: true,
+  trimValues: true,
+});
+
 export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> {
-  return new Promise((resolve, reject) => {
-    parseString(xmlData, { explicitArray: false }, (error, result) => {
-      if (error) {
-        reject(error);
-        return;
-      }
+  try {
+    const result = xmlParser.parse(xmlData) as IMediumRssFeed;
 
-      if (!result?.rss?.channel) {
-        reject(new Error("Invalid RSS feed structure"));
-        return;
-      }
+    if (!result?.rss?.channel) {
+      throw new Error("Invalid RSS feed structure");
+    }
 
-      resolve(result);
-    });
-  });
+    return result;
+  } catch (error) {
+    throw new Error(`Failed to parse RSS feed: ${error instanceof Error ? error.message : String(error)}`);
+  }
 }
 
-async function fetchMediumFeed(url: string): Promise<Response> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000);
+const mediumFeedClient = ky.create({
+  timeout: 15000,
+  headers: {
+    "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
+    Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
+    "Cache-Control": "no-cache",
+  },
+  retry: {
+    limit: 1,
+    methods: ["get"],
+  },
+});
 
+async function fetchMediumFeed(url: string): Promise<string> {
   try {
     logger.info({
       operation: "fetchMediumFeed",
       message: "Attempting to fetch Medium RSS feed",
       url,
-      userAgent: API_CONFIG.MEDIUM.USER_AGENT,
     });
 
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": API_CONFIG.MEDIUM.USER_AGENT,
-        Accept: API_CONFIG.MEDIUM.ACCEPT_HEADER,
-        "Cache-Control": "no-cache",
-      },
-      signal: controller.signal,
-      next: { revalidate: API_CONFIG.CACHE.BLOG_REVALIDATE },
-    });
-
-    clearTimeout(timeoutId);
+    const xmlData = await mediumFeedClient(url).text();
 
     logger.info({
       operation: "fetchMediumFeed",
-      message: "Received response from Medium RSS feed",
+      message: "Successfully fetched Medium RSS feed",
       url,
-      status: response.status,
-      statusText: response.statusText,
-      headers: Object.fromEntries(response.headers.entries()),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text().catch(() => "Unable to read response body");
-      const errorMessage = `Failed to fetch Medium feed: ${response.status} ${response.statusText}. Response: ${errorText}`;
-
-      logger.error({
-        operation: "fetchMediumFeed",
-        message: "Medium RSS feed returned error status",
-        url,
-        status: response.status,
-        statusText: response.statusText,
-        responseBody: errorText,
-      });
-
-      throw new Error(errorMessage);
-    }
-
-    return response;
+    return xmlData;
   } catch (error) {
-    clearTimeout(timeoutId);
-
-    if (error instanceof Error) {
-      if (error.name === "AbortError") {
-        const timeoutError = `Medium feed request timed out after 15 seconds: ${url}`;
-        logger.error({
-          operation: "fetchMediumFeed",
-          message: "Medium RSS feed request timed out",
-          url,
-          timeout: 15000,
-        });
-        throw new Error(timeoutError);
-      }
-
-      logger.error({
-        operation: "fetchMediumFeed",
-        message: "Network error fetching Medium RSS feed",
-        url,
-        error: error.message,
-        errorName: error.name,
-        stack: error.stack,
-      });
-
-      throw new Error(`Network error fetching Medium feed: ${error.message}`);
-    }
-
-    const unknownError = `Unknown error fetching Medium feed: ${String(error)}`;
     logger.error({
       operation: "fetchMediumFeed",
-      message: "Unknown error occurred",
+      message: "Failed to fetch Medium RSS feed",
       url,
-      error: String(error),
+      error: error instanceof Error ? error.message : String(error),
     });
 
-    throw new Error(unknownError);
+    throw new Error(`Failed to fetch Medium feed: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 }
 
@@ -129,9 +88,7 @@ export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]
       url: feedUrl,
     });
 
-    const response = await fetchMediumFeed(feedUrl);
-    const xmlData = await response.text();
-
+    const xmlData = await fetchMediumFeed(feedUrl);
     const feed = await parseMediumFeed(xmlData);
 
     if (!feed?.rss?.channel?.item) {

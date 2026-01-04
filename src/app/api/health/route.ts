@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
+import { createMiddleware } from "@/lib/api/middleware";
 import { env } from "@/lib/core";
 
 async function handleHealth(_request: NextRequest) {
@@ -15,4 +15,4 @@ async function handleHealth(_request: NextRequest) {
   return NextResponse.json(health);
 }
 
-export const GET = apiMiddleware.simple(handleHealth);
+export const GET = createMiddleware().build(handleHealth);

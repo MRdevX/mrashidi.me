@@ -1,8 +1,6 @@
-import { logger } from "@/lib/core";
+import { isDevelopment, logger } from "@/lib/core";
 import { AppError } from "./classes";
 import type { SafeErrorResponse } from "./types";
-
-const isDevelopment = process.env.NODE_ENV === "development";
 
 export function handleError(error: unknown): AppError {
   if (error instanceof AppError) {
