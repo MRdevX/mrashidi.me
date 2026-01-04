@@ -15,7 +15,6 @@ concurrency:
 
 permissions:
   contents: read
-  pull-requests: write
 
 jobs:
   lint-and-type-check:
@@ -23,65 +22,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
 
       - name: Run Biome check
-        id: biome-check
         run: pnpm check
 
       - name: Type check
-        id: ts-check
         run: pnpm exec tsc --noEmit
-
-      - name: Comment PR with results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const biomeStatus = '${{ steps.biome-check.outcome }}' === 'success' ? '✅ Passed' : '❌ Failed';
-            const tsStatus = '${{ steps.ts-check.outcome }}' === 'success' ? '✅ Passed' : '❌ Failed';
-            const overallStatus = (steps.biome-check.outcome === 'success' && steps.ts-check.outcome === 'success') ? '✅' : '❌';
-
-            const body = `## Code Quality Check Results ${overallStatus}
-
-            - **Biome Check**: ${biomeStatus}
-            - **TypeScript Check**: ${tsStatus}
-
-            ${overallStatus === '❌' ? 'Please fix the issues above before merging.' : 'All checks passed!'}`;
-
-            // Find existing comment
-            const comments = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-
-            const botComment = comments.data.find(
-              comment => comment.user.type === 'Bot' && comment.body.includes('Code Quality Check Results')
-            );
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: body
-              });
-            } else {
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: body
-              });
-            }
 
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
 
@@ -103,6 +63,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
 
@@ -145,6 +108,9 @@ jobs:
       - unit-tests
       - e2e-tests
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
 
