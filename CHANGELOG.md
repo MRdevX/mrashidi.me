@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.95](https://github.com/MRdevX/mrashidi.me/compare/v0.1.94...v0.1.95) (2026-01-04)
+
+
+### Features
+
+* **github:** introduce custom setup-node action for streamlined Node… ([#26](https://github.com/MRdevX/mrashidi.me/issues/26)) ([1f0f5f1](https://github.com/MRdevX/mrashidi.me/commit/1f0f5f1db71e4aef62b98b2c8b284855d453aec6))
+
+
+### Bug Fixes
+
+* **github:** update auto-release workflow to checkout code by branch instead of SHA ([d4dde53](https://github.com/MRdevX/mrashidi.me/commit/d4dde530762f469be584fbcecd042a857e5dc820))
+
 ### [0.1.94](https://github.com/MRdevX/mrashidi.me/compare/v0.1.93...v0.1.94) (2026-01-04)
 
 ### [0.1.93](https://github.com/MRdevX/mrashidi.me/compare/v0.1.92...v0.1.93) (2026-01-04)
