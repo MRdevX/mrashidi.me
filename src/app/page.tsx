@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Activity, ArrowRight, Code2, Mail, MapPin, MessageCircle, Send, Terminal as TerminalIcon } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Send } from "lucide-react";
 import Link from "next/link";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -99,7 +99,7 @@ export default function Home() {
         </motion.div>
 
         <MotionSection className="mb-16" variants={pageItemVariants}>
-          <SectionHeader icon={TerminalIcon} title="Interact with Terminal" size="sm" className="justify-center" />
+          <SectionHeader iconName="Terminal" title="Interact with Terminal" size="sm" className="justify-center" />
           <Suspense fallback={<TerminalSkeleton />}>
             <LazyLoader
               loadingText="Loading terminal..."
@@ -113,7 +113,7 @@ export default function Home() {
         </MotionSection>
 
         <MotionSection className="mb-16" variants={pageItemVariants}>
-          <SectionHeader icon={Code2} title="My Tech Stack" size="sm" className="justify-center" />
+          <SectionHeader iconName="Code2" title="My Tech Stack" size="sm" className="justify-center" />
           <Suspense
             fallback={
               <div className="content-section p-6">
@@ -133,7 +133,7 @@ export default function Home() {
         </MotionSection>
 
         <MotionSection className="mb-16" variants={pageItemVariants}>
-          <SectionHeader icon={Activity} title="GitHub Activity" size="sm" className="justify-center" />
+          <SectionHeader iconName="Activity" title="GitHub Activity" size="sm" className="justify-center" />
           <MotionSection variants={pageItemVariants} className="w-full overflow-x-auto pb-4">
             <Suspense
               fallback={
@@ -154,7 +154,7 @@ export default function Home() {
             <div className="contact-section-background" />
             <div className="contact-content">
               <SectionHeader
-                icon={MessageCircle}
+                iconName="MessageCircle"
                 title={personalInfo.contactCta}
                 size="lg"
                 className="justify-center"

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FolderOpen } from "lucide-react";
 import { PageHeader, PageSection } from "@/components/ui";
 import { ProjectFilters, ProjectPagination, ProjectResults, ProjectSearchBox } from "@/features/projects";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
@@ -28,7 +27,7 @@ export default function Projects() {
     <div className="page-container">
       <motion.div className="page-content" initial="hidden" animate="show" variants={pageContainerVariants}>
         <motion.div variants={pageItemVariants}>
-          <PageHeader icon={FolderOpen} title="Projects" />
+          <PageHeader iconName="FolderOpen" title="Projects" />
         </motion.div>
 
         <motion.div variants={pageItemVariants}>

@@ -24,13 +24,17 @@ const ERROR_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   { pattern: /api|endpoint|request failed|http error/i, message: SAFE_ERROR_MESSAGES.API },
 ];
 
+function isValidErrorType(errorType: string): errorType is keyof typeof SAFE_ERROR_MESSAGES {
+  return errorType in SAFE_ERROR_MESSAGES;
+}
+
 function sanitizeErrorMessage(message: string, errorType?: string): string {
   if (isDevelopment) {
     return message;
   }
 
-  if (errorType && SAFE_ERROR_MESSAGES[errorType as keyof typeof SAFE_ERROR_MESSAGES]) {
-    return SAFE_ERROR_MESSAGES[errorType as keyof typeof SAFE_ERROR_MESSAGES];
+  if (errorType && isValidErrorType(errorType)) {
+    return SAFE_ERROR_MESSAGES[errorType];
   }
 
   for (const { pattern, message: safeMessage } of ERROR_PATTERNS) {

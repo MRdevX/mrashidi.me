@@ -4,4 +4,3 @@ export * from "./github.service";
 export * from "./rate-limit.service";
 export * from "./recaptcha.service";
 export * from "./upload-security.service";
-export * from "./utils";

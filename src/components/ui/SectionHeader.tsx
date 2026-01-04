@@ -1,17 +1,32 @@
+"use client";
+
 import { motion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
+import { Activity, BookOpen, Code2, GraduationCap, Languages, MessageCircle, Terminal } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
+const iconMap = {
+  Activity,
+  BookOpen,
+  Code2,
+  GraduationCap,
+  Languages,
+  MessageCircle,
+  Terminal,
+} as const;
+
+type IconName = keyof typeof iconMap;
+
 interface SectionHeaderProps {
-  icon: LucideIcon;
+  iconName: IconName;
   title: string;
   className?: string;
   delay?: number;
   size?: "sm" | "md" | "lg";
 }
 
-export function SectionHeader({ icon: Icon, title, className = "", delay = 0, size = "md" }: SectionHeaderProps) {
+export function SectionHeader({ iconName, title, className = "", delay = 0, size = "md" }: SectionHeaderProps) {
   const { getSectionTitle } = useThemeConfig();
+  const Icon = iconMap[iconName];
 
   const sizeClasses = {
     sm: "w-6 h-6",

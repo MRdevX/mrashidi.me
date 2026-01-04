@@ -1,4 +1,5 @@
-import { Code2 } from "lucide-react";
+"use client";
+
 import { AnimatedSection, SectionHeader } from "@/components/ui";
 import { skills } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
@@ -26,7 +27,7 @@ export function SkillsSection() {
 
   return (
     <AnimatedSection delay={0.4}>
-      <SectionHeader icon={Code2} title="Skills & Technologies" size="sm" />
+      <SectionHeader iconName="Code2" title="Skills & Technologies" size="sm" />
 
       <div className="space-y-8">
         {Object.entries(skillsByLevel).map(([level, skills]) => {

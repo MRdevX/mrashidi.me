@@ -1,8 +1,13 @@
+function isPerformanceNavigationTiming(entry: PerformanceEntry): entry is PerformanceNavigationTiming {
+  return entry.entryType === "navigation" && "transferSize" in entry;
+}
+
 export const performanceUtils = {
   trackBundleSize: () => {
     if (typeof window !== "undefined" && "performance" in window) {
-      const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
-      if (navigation) {
+      const entries = performance.getEntriesByType("navigation");
+      const navigation = entries[0];
+      if (navigation && isPerformanceNavigationTiming(navigation)) {
         console.log("Bundle size metrics:", {
           transferSize: navigation.transferSize,
           encodedBodySize: navigation.encodedBodySize,

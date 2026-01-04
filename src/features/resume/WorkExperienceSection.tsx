@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Briefcase, Building2, Calendar, CheckCircle2, ChevronDown, ChevronUp, MapPin, Trophy } from "lucide-react";
 import { useState } from "react";
