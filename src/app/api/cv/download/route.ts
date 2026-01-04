@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
+import { createMiddleware } from "@/lib/api/middleware";
 import { logger } from "@/lib/core";
 import { getCVUrl } from "@/lib/services/blob";
 
@@ -18,4 +18,4 @@ async function handleCVDownload(_request: NextRequest) {
   return NextResponse.redirect(cvUrl);
 }
 
-export const GET = apiMiddleware.basic("generalApi")(handleCVDownload);
+export const GET = createMiddleware("generalApi").build(handleCVDownload);

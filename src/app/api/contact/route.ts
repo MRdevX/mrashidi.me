@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
+import { createMiddleware, type ValidationHandler } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
 import { getEmailService } from "@/lib/services";
@@ -28,4 +28,6 @@ async function handleContactForm(_request: NextRequest, formData: ContactFormDat
   return createSuccessResponse({ message: "Message sent successfully" });
 }
 
-export const POST = apiMiddleware.withValidation("contactForm", validateContactFormAPI)(handleContactForm);
+export const POST = createMiddleware("contactForm")
+  .validate(validateContactFormAPI)
+  .build(handleContactForm as ValidationHandler<any>);

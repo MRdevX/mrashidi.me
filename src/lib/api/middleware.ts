@@ -8,74 +8,36 @@ import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
 
-type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
-type ValidationHandler<T> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
+export type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
+export type ValidationHandler<T = unknown> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
 
-function composeMiddleware(
-  ...middlewares: Array<(handler: ApiHandler) => ApiHandler>
-): (handler: ApiHandler) => ApiHandler {
-  return (handler: ApiHandler) => {
-    return middlewares.reduceRight((acc, middleware) => middleware(acc), handler);
-  };
+// Individual middleware functions (pure, composable)
+function corsMiddleware(handler: ApiHandler): ApiHandler {
+  return withCors(handler);
 }
 
-export function withErrorHandling(handler: ApiHandler): ApiHandler {
-  return async (request: NextRequest) => {
-    try {
-      return await handler(request);
-    } catch (error) {
-      const appError = handleError(error);
-      logError(appError, "API");
-      const errorResponse = createErrorResponse(appError, appError.statusCode || 500);
-      return addSecurityHeaders(errorResponse);
-    }
-  };
-}
-
-export function withAuth(expectedToken: string): (handler: ApiHandler) => ApiHandler {
+function cacheMiddleware(ttl: number, staleWhileRevalidate?: number): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
-    return withErrorHandling(async (request: NextRequest) => {
-      const authHeader = request.headers.get("authorization");
-      if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
-        throw new APIError("Unauthorized", 401);
-      }
-      return await handler(request);
-    });
+    return async (request: NextRequest) => {
+      const response = await handler(request);
+      const cacheControl = `public, s-maxage=${ttl}${staleWhileRevalidate ? `, stale-while-revalidate=${staleWhileRevalidate}` : ""}`;
+      response.headers.set("Cache-Control", cacheControl);
+      response.headers.set("Vary", "Accept-Encoding");
+      return response;
+    };
   };
 }
 
-export function withValidation<T>(
-  handler: (request: NextRequest, validatedData: T) => Promise<NextResponse>,
-  validator: (data: unknown) => T
-): ApiHandler {
-  return withErrorHandling(async (request: NextRequest) => {
-    const body = await request.json();
-    const validatedData = validator(body);
-    return await handler(request, validatedData);
-  });
-}
-
-export function withPagination(
-  handler: (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>
-): ApiHandler {
-  return withErrorHandling(async (request: NextRequest) => {
-    const pagination = extractPaginationParams(request);
-    return await handler(request, pagination);
-  });
-}
-
-export function withPaginationCore(
-  handler: (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>
-): ApiHandler {
+function securityHeadersMiddleware(handler: ApiHandler): ApiHandler {
   return async (request: NextRequest) => {
-    const pagination = extractPaginationParams(request);
-    return await handler(request, pagination);
+    const response = await handler(request);
+    return addSecurityHeaders(response);
   };
 }
 
-export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHandler) => ApiHandler {
+function rateLimitMiddleware(rateLimiterType: RateLimiterType): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
-    return withErrorHandling(async (request: NextRequest) => {
+    return async (request: NextRequest) => {
       const identifier = getClientIdentifier(request);
       const rateLimitResult = await checkRateLimit(rateLimiterType, identifier);
 
@@ -106,116 +68,150 @@ export function withRateLimit(rateLimiterType: RateLimiterType): (handler: ApiHa
       response.headers.set("X-RateLimit-Remaining", rateLimitResult.remaining.toString());
       response.headers.set("X-RateLimit-Reset", rateLimitResult.reset.toISOString());
 
-      return addSecurityHeaders(response);
-    });
-  };
-}
-
-export function withSecurityHeaders(handler: ApiHandler): ApiHandler {
-  return async (request: NextRequest) => {
-    const response = await handler(request);
-    return addSecurityHeaders(response);
-  };
-}
-
-export function withCacheHeaders(ttl: number, staleWhileRevalidate?: number): (handler: ApiHandler) => ApiHandler {
-  return (handler: ApiHandler): ApiHandler => {
-    return async (request: NextRequest) => {
-      const response = await handler(request);
-
-      const cacheControl = `public, s-maxage=${ttl}${staleWhileRevalidate ? `, stale-while-revalidate=${staleWhileRevalidate}` : ""}`;
-      response.headers.set("Cache-Control", cacheControl);
-      response.headers.set("Vary", "Accept-Encoding");
-
       return response;
     };
   };
 }
 
-function createBaseMiddleware(rateLimiterType: RateLimiterType) {
-  return composeMiddleware(withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling);
+function authMiddleware(token: string): (handler: ApiHandler) => ApiHandler {
+  return (handler: ApiHandler): ApiHandler => {
+    return async (request: NextRequest) => {
+      const authHeader = request.headers.get("authorization");
+      if (!token || authHeader !== `Bearer ${token}`) {
+        throw new APIError("Unauthorized", 401);
+      }
+      return await handler(request);
+    };
+  };
 }
 
-class MiddlewareBuilder {
-  private middlewares: Array<(handler: ApiHandler) => ApiHandler> = [];
+function validationMiddleware<T>(validator: (data: unknown) => T): (handler: ValidationHandler<T>) => ApiHandler {
+  return (handler: ValidationHandler<T>): ApiHandler => {
+    return async (request: NextRequest) => {
+      const body = await request.json();
+      const validatedData = validator(body);
+      return await handler(request, validatedData);
+    };
+  };
+}
+
+function paginationMiddleware(handler: PaginationHandler): ApiHandler {
+  return async (request: NextRequest) => {
+    const pagination = extractPaginationParams(request);
+    return await handler(request, pagination);
+  };
+}
+
+function errorHandlingMiddleware(handler: ApiHandler): ApiHandler {
+  return async (request: NextRequest) => {
+    try {
+      return await handler(request);
+    } catch (error) {
+      const appError = handleError(error);
+      logError(appError, "API");
+      const errorResponse = createErrorResponse(appError, appError.statusCode || 500);
+      return addSecurityHeaders(errorResponse);
+    }
+  };
+}
+
+// MiddlewareChain class with fluent API
+class MiddlewareChain {
+  private rateLimiterType?: RateLimiterType;
+  private hasCors = false;
   private cacheTtl?: number;
   private cacheStaleWhileRevalidate?: number;
-  private hasCors = false;
+  private authToken?: string;
+  private validator?: <T>(data: unknown) => T;
+  private hasPagination = false;
 
-  constructor(rateLimiterType: RateLimiterType) {
-    this.middlewares.push(withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling);
+  constructor(rateLimiterType?: RateLimiterType) {
+    this.rateLimiterType = rateLimiterType;
   }
 
-  withCors() {
+  cors(): this {
     this.hasCors = true;
     return this;
   }
 
-  withCache(ttl: number, staleWhileRevalidate?: number) {
+  cache(ttl: number, staleWhileRevalidate?: number): this {
     this.cacheTtl = ttl;
     this.cacheStaleWhileRevalidate = staleWhileRevalidate;
     return this;
   }
 
-  withPagination() {
+  auth(token: string): this {
+    this.authToken = token;
     return this;
   }
 
-  build(handler: ApiHandler): ApiHandler {
-    const middlewares: Array<(handler: ApiHandler) => ApiHandler> = [];
-
-    if (this.hasCors) {
-      middlewares.push(withCors);
-    }
-
-    if (this.cacheTtl !== undefined) {
-      middlewares.push(withCacheHeaders(this.cacheTtl, this.cacheStaleWhileRevalidate));
-    }
-
-    middlewares.push(...this.middlewares);
-
-    return composeMiddleware(...middlewares)(handler);
+  validate<T>(validator: (data: unknown) => T): this {
+    this.validator = validator as <T>(data: unknown) => T;
+    return this;
   }
 
-  buildWithPagination(handler: PaginationHandler): ApiHandler {
-    const paginationWrapped = withPaginationCore(handler);
-    return this.build(paginationWrapped);
+  pagination(): this {
+    this.hasPagination = true;
+    return this;
+  }
+
+  build(handler: ApiHandler | PaginationHandler | ValidationHandler<any>): ApiHandler {
+    // Build middleware chain in fixed order:
+    // CORS → Cache → Security → Rate Limit → Auth → Validation → Pagination → Error Handling → Handler
+
+    let wrappedHandler: ApiHandler;
+
+    // Apply pagination if needed
+    if (this.hasPagination) {
+      wrappedHandler = paginationMiddleware(handler as PaginationHandler);
+    } else if (this.validator) {
+      // Apply validation if needed
+      // Type assertion is safe here because we know validator is set and handler matches ValidationHandler signature
+      wrappedHandler = validationMiddleware(this.validator)(handler as ValidationHandler<unknown>);
+    } else {
+      wrappedHandler = handler as ApiHandler;
+    }
+
+    // Apply middleware in reverse order (last applied executes first)
+    // Error handling is always last (applied first in reverse)
+    wrappedHandler = errorHandlingMiddleware(wrappedHandler);
+
+    // Auth middleware
+    if (this.authToken) {
+      wrappedHandler = authMiddleware(this.authToken)(wrappedHandler);
+    }
+
+    // Rate limit middleware
+    if (this.rateLimiterType) {
+      wrappedHandler = rateLimitMiddleware(this.rateLimiterType)(wrappedHandler);
+    }
+
+    // Security headers (always applied)
+    wrappedHandler = securityHeadersMiddleware(wrappedHandler);
+
+    // Cache headers
+    if (this.cacheTtl !== undefined) {
+      wrappedHandler = cacheMiddleware(this.cacheTtl, this.cacheStaleWhileRevalidate)(wrappedHandler);
+    }
+
+    // CORS middleware
+    if (this.hasCors) {
+      wrappedHandler = corsMiddleware(wrappedHandler);
+    }
+
+    return wrappedHandler;
   }
 }
 
-export const apiMiddleware = {
-  basic: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) => createBaseMiddleware(rateLimiterType)(handler),
+// Factory function
+export function createMiddleware(rateLimiterType?: RateLimiterType): MiddlewareChain {
+  return new MiddlewareChain(rateLimiterType);
+}
 
-  withValidation:
-    <T>(rateLimiterType: RateLimiterType, validator: (data: unknown) => T) =>
-    (handler: ValidationHandler<T>) =>
-      createBaseMiddleware(rateLimiterType)(withValidation(handler, validator)),
-
-  withPagination: (rateLimiterType: RateLimiterType) => (handler: PaginationHandler) =>
-    createBaseMiddleware(rateLimiterType)(withPagination(handler)),
-
-  withAuth: (rateLimiterType: RateLimiterType, token: string) => (handler: ApiHandler) =>
-    createBaseMiddleware(rateLimiterType)(withAuth(token)(handler)),
-
-  withCache: (rateLimiterType: RateLimiterType, ttl: number, staleWhileRevalidate?: number) => (handler: ApiHandler) =>
-    composeMiddleware(
-      withCacheHeaders(ttl, staleWhileRevalidate),
-      withSecurityHeaders,
-      withRateLimit(rateLimiterType),
-      withErrorHandling
-    )(handler),
-
-  withCors: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) =>
-    composeMiddleware(withCors, withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling)(handler),
-
-  simple: (handler: ApiHandler) => composeMiddleware(withSecurityHeaders, withErrorHandling)(handler),
-
-  corsPrelight: (request: NextRequest) => {
-    if (isCorsPrelight(request)) {
-      return handleCorsPrelight(request);
-    }
-    return null;
-  },
-
-  create: (rateLimiterType: RateLimiterType) => new MiddlewareBuilder(rateLimiterType),
-};
+// CORS preflight utility (standalone, not part of chain)
+export function corsPrelight(request: NextRequest): NextResponse | null {
+  if (isCorsPrelight(request)) {
+    return handleCorsPrelight(request);
+  }
+  return null;
+}

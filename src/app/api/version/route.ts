@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
+import { createMiddleware } from "@/lib/api/middleware";
 import { APIError } from "@/lib/errors";
 
 async function handleVersion(_request: NextRequest) {
@@ -19,4 +19,4 @@ async function handleVersion(_request: NextRequest) {
   }
 }
 
-export const GET = apiMiddleware.simple(handleVersion);
+export const GET = createMiddleware().build(handleVersion);

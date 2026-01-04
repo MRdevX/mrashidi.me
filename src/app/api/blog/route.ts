@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
+import { corsPrelight, createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { logger } from "@/lib/core";
 import { getAllPosts } from "@/lib/services/blog";
@@ -32,13 +32,9 @@ async function handleBlogPosts(_request: NextRequest, pagination: { page: number
   });
 }
 
-export const GET = apiMiddleware
-  .create("generalApi")
-  .withCache(300, 600)
-  .withCors()
-  .buildWithPagination(handleBlogPosts);
+export const GET = createMiddleware("generalApi").cache(300, 600).cors().pagination().build(handleBlogPosts);
 
 export const OPTIONS = async (request: NextRequest) => {
-  const preflightResponse = apiMiddleware.corsPrelight(request);
+  const preflightResponse = corsPrelight(request);
   return preflightResponse || new NextResponse(null, { status: 200 });
 };

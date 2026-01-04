@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { apiMiddleware } from "@/lib/api/middleware";
+import { createMiddleware } from "@/lib/api/middleware";
 import { getEnv } from "@/lib/core";
 import { APIError } from "@/lib/errors";
 
@@ -91,4 +91,4 @@ async function handleGitHubRequest(request: NextRequest) {
   return NextResponse.json(result);
 }
 
-export const GET = apiMiddleware.basic("generalApi")(handleGitHubRequest);
+export const GET = createMiddleware("generalApi").build(handleGitHubRequest);
