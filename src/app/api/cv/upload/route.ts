@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { apiMiddleware } from "@/lib/api/middleware";
-import { getEnv, logger } from "@/lib/core";
+import { getRequiredEnv, logger } from "@/lib/core";
 import { APIError } from "@/lib/errors";
 import { uploadCV } from "@/lib/services/blob";
 import { pdfUploadSecurity } from "@/lib/services/upload-security";
@@ -44,4 +44,4 @@ async function handleCVUpload(request: NextRequest) {
   });
 }
 
-export const POST = apiMiddleware.withAuth("cvUpload", getEnv("CV_UPLOAD_TOKEN") || "")(handleCVUpload);
+export const POST = apiMiddleware.withAuth("cvUpload", getRequiredEnv("CV_UPLOAD_TOKEN"))(handleCVUpload);
