@@ -87,8 +87,6 @@ describe("Rate Limiting Service", () => {
 
   describe("checkRateLimit", () => {
     it("should return rate limit result", async () => {
-      // The mock is set up at the top level, so rateLimiters will use the mocked Ratelimit
-      // Since Redis is mocked to return an object (truthy), it will use the Ratelimit class
       const result = await checkRateLimit("generalApi", "test-identifier");
 
       expect(result.success).toBe(true);
