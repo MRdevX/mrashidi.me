@@ -1,9 +1,16 @@
 name: Auto Release
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
     branches:
       - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -13,26 +20,21 @@ jobs:
     name: Automatic Version & Release
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: "!startsWith(github.ref, 'refs/tags/')"
+    if: |
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch != '' &&
+      github.event.workflow_run.head_branch == 'main'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and dependencies
+        uses: ./.github/actions/setup-node
 
       - name: Configure Git
         run: |
@@ -57,7 +59,7 @@ jobs:
           OLD_VERSION=$(node -p "require('./package.json').version")
 
           # Run standard-version
-          pnpm release || true
+          pnpm release || exit 1
 
           # Get new version
           NEW_VERSION=$(node -p "require('./package.json').version")
@@ -66,29 +68,27 @@ jobs:
           if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
             echo "Version bumped from $OLD_VERSION to $NEW_VERSION"
             echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-            echo "version_bumped=true" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_OUTPUT
           else
             echo "No version bump detected"
-            echo "version_bumped=false" >> $GITHUB_OUTPUT
+            echo "should_release=false" >> $GITHUB_OUTPUT
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push changes and tags
-        if: steps.version.outputs.version_bumped == 'true'
+        if: steps.version.outputs.should_release == 'true'
         run: |
           git push origin main --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract changelog
-        if: steps.version.outputs.version_bumped == 'true'
+        if: steps.version.outputs.should_release == 'true'
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           sed -n "/^### \[$VERSION\]/,/^### \[/p" CHANGELOG.md | sed '$d' > changelog.txt || echo "See CHANGELOG.md for details" > changelog.txt
 
       - name: Create GitHub Release
-        if: steps.version.outputs.version_bumped == 'true'
+        if: steps.version.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
