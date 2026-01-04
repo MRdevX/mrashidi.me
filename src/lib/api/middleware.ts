@@ -127,6 +127,53 @@ function createBaseMiddleware(rateLimiterType: RateLimiterType) {
   return composeMiddleware(withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling);
 }
 
+class MiddlewareBuilder {
+  private middlewares: Array<(handler: ApiHandler) => ApiHandler> = [];
+  private cacheTtl?: number;
+  private cacheStaleWhileRevalidate?: number;
+  private hasCors = false;
+
+  constructor(rateLimiterType: RateLimiterType) {
+    this.middlewares.push(withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling);
+  }
+
+  withCors() {
+    this.hasCors = true;
+    return this;
+  }
+
+  withCache(ttl: number, staleWhileRevalidate?: number) {
+    this.cacheTtl = ttl;
+    this.cacheStaleWhileRevalidate = staleWhileRevalidate;
+    return this;
+  }
+
+  withPagination() {
+    return this;
+  }
+
+  build(handler: ApiHandler): ApiHandler {
+    const middlewares: Array<(handler: ApiHandler) => ApiHandler> = [];
+
+    if (this.hasCors) {
+      middlewares.push(withCors);
+    }
+
+    if (this.cacheTtl !== undefined) {
+      middlewares.push(withCacheHeaders(this.cacheTtl, this.cacheStaleWhileRevalidate));
+    }
+
+    middlewares.push(...this.middlewares);
+
+    return composeMiddleware(...middlewares)(handler);
+  }
+
+  buildWithPagination(handler: PaginationHandler): ApiHandler {
+    const paginationWrapped = withPagination(handler);
+    return this.build(paginationWrapped);
+  }
+}
+
 export const apiMiddleware = {
   basic: (rateLimiterType: RateLimiterType) => (handler: ApiHandler) => createBaseMiddleware(rateLimiterType)(handler),
 
@@ -161,110 +208,5 @@ export const apiMiddleware = {
     return null;
   },
 
-  create: (rateLimiterType: RateLimiterType) => ({
-    withPagination: () => ({
-      withCache: (ttl: number, staleWhileRevalidate?: number) => ({
-        withCors: () => ({
-          build: (handler: ApiHandler) =>
-            composeMiddleware(
-              withCors,
-              withCacheHeaders(ttl, staleWhileRevalidate),
-              withSecurityHeaders,
-              withRateLimit(rateLimiterType),
-              withErrorHandling
-            )(handler),
-          buildWithPagination: (handler: PaginationHandler) => {
-            const paginationWrapped = withPagination(handler);
-            return composeMiddleware(
-              withCors,
-              withCacheHeaders(ttl, staleWhileRevalidate),
-              withSecurityHeaders,
-              withRateLimit(rateLimiterType),
-              withErrorHandling
-            )(paginationWrapped);
-          },
-        }),
-        build: (handler: ApiHandler) =>
-          composeMiddleware(
-            withCacheHeaders(ttl, staleWhileRevalidate),
-            withSecurityHeaders,
-            withRateLimit(rateLimiterType),
-            withErrorHandling
-          )(handler),
-        buildWithPagination: (handler: PaginationHandler) => {
-          const paginationWrapped = withPagination(handler);
-          return composeMiddleware(
-            withCacheHeaders(ttl, staleWhileRevalidate),
-            withSecurityHeaders,
-            withRateLimit(rateLimiterType),
-            withErrorHandling
-          )(paginationWrapped);
-        },
-      }),
-      withCors: () => ({
-        build: (handler: ApiHandler) =>
-          composeMiddleware(withCors, withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling)(handler),
-        buildWithPagination: (handler: PaginationHandler) => {
-          const paginationWrapped = withPagination(handler);
-          return composeMiddleware(
-            withCors,
-            withSecurityHeaders,
-            withRateLimit(rateLimiterType),
-            withErrorHandling
-          )(paginationWrapped);
-        },
-      }),
-      buildWithPagination: (handler: PaginationHandler) => {
-        const paginationWrapped = withPagination(handler);
-        return composeMiddleware(
-          withSecurityHeaders,
-          withRateLimit(rateLimiterType),
-          withErrorHandling
-        )(paginationWrapped);
-      },
-    }),
-    withCache: (ttl: number, staleWhileRevalidate?: number) => ({
-      withCors: () => ({
-        build: (handler: ApiHandler) =>
-          composeMiddleware(
-            withCors,
-            withCacheHeaders(ttl, staleWhileRevalidate),
-            withSecurityHeaders,
-            withRateLimit(rateLimiterType),
-            withErrorHandling
-          )(handler),
-        buildWithPagination: (handler: PaginationHandler) => {
-          const paginationWrapped = withPagination(handler);
-          return composeMiddleware(
-            withCors,
-            withCacheHeaders(ttl, staleWhileRevalidate),
-            withSecurityHeaders,
-            withRateLimit(rateLimiterType),
-            withErrorHandling
-          )(paginationWrapped);
-        },
-      }),
-      build: (handler: ApiHandler) =>
-        composeMiddleware(
-          withCacheHeaders(ttl, staleWhileRevalidate),
-          withSecurityHeaders,
-          withRateLimit(rateLimiterType),
-          withErrorHandling
-        )(handler),
-      buildWithPagination: (handler: PaginationHandler) => {
-        const paginationWrapped = withPagination(handler);
-        return composeMiddleware(
-          withCacheHeaders(ttl, staleWhileRevalidate),
-          withSecurityHeaders,
-          withRateLimit(rateLimiterType),
-          withErrorHandling
-        )(paginationWrapped);
-      },
-    }),
-    withCors: () => ({
-      build: (handler: ApiHandler) =>
-        composeMiddleware(withCors, withSecurityHeaders, withRateLimit(rateLimiterType), withErrorHandling)(handler),
-    }),
-    build: (handler: ApiHandler) => createBaseMiddleware(rateLimiterType)(handler),
-  }),
+  create: (rateLimiterType: RateLimiterType) => new MiddlewareBuilder(rateLimiterType),
 };
