@@ -123,7 +123,7 @@ class MiddlewareChain {
   private cacheTtl?: number;
   private cacheStaleWhileRevalidate?: number;
   private authToken?: string | (() => string);
-  private validator?: <T>(data: unknown) => T;
+  private validator?: (data: unknown) => unknown;
   private hasPagination = false;
 
   constructor(rateLimiterType?: RateLimiterType) {
@@ -147,7 +147,7 @@ class MiddlewareChain {
   }
 
   validate<T>(validator: (data: unknown) => T): this {
-    this.validator = validator as <T>(data: unknown) => T;
+    this.validator = validator;
     return this;
   }
 
