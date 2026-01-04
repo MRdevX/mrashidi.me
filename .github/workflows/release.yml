@@ -82,6 +82,7 @@ jobs:
         id: changelog
         run: |
           python3 << 'EOF' > changelog.txt
+          import sys
           version_num = "${{ steps.get_version.outputs.version }}"
           try:
               with open('CHANGELOG.md', 'r') as f:
@@ -96,11 +97,20 @@ jobs:
                       break
                   elif in_section:
                       output.append(line)
-              result = ''.join(output).strip() if output else ''.join(lines[:30]).strip()
+
+              if not output:
+                  print("Changelog section for version not found. See CHANGELOG.md for details.")
+                  sys.exit(1)
+
+              result = ''.join(output).strip()
               print(result)
+          except FileNotFoundError:
+              print("CHANGELOG.md not found. See CHANGELOG.md for details.")
+              sys.exit(1)
           except Exception as e:
               print(f"Error extracting changelog: {e}")
               print("See CHANGELOG.md for details")
+              sys.exit(1)
           EOF
 
       - name: Create GitHub Release
