@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.91](https://github.com/MRdevX/mrashidi.me/compare/v0.1.90...v0.1.91) (2026-01-04)
+
+
+### Features
+
+* **core:** export API_CONFIG from constants for improved configuration access ([3bccf97](https://github.com/MRdevX/mrashidi.me/commit/3bccf976b15d339a2f69f333bd09fd3edf63adde))
+* **github:** add license checking for disallowed dependencies in security workflow ([11609fe](https://github.com/MRdevX/mrashidi.me/commit/11609fe165c0a531d7a40637f55bcc32ffb512dc))
+* **github:** enhance release workflow with existence check and tag push improvements ([34848f4](https://github.com/MRdevX/mrashidi.me/commit/34848f4d03e55415df4cb275b6c6bae67baf5653))
+* **middleware:** add withPaginationCore for enhanced pagination handling ([bf1b788](https://github.com/MRdevX/mrashidi.me/commit/bf1b788a046d20903a17586952bc6fd3390e2282))
+* **middleware:** introduce MiddlewareBuilder for flexible middleware composition ([e36fe01](https://github.com/MRdevX/mrashidi.me/commit/e36fe016ffb96f01dd425d353f0363059cb297e0))
+
+
+### Bug Fixes
+
+* **errors:** update authorization error pattern to exclude 'unauthorized' ([8b53d2d](https://github.com/MRdevX/mrashidi.me/commit/8b53d2d5ec8d2c42f2090bdbbd018a66ae632945))
+* **github:** improve changelog extraction in release workflow ([0c6a9aa](https://github.com/MRdevX/mrashidi.me/commit/0c6a9aabc91135af62002675ac4f2c3f4625e814))
+* **pagination:** handle NaN values for page and limit in extractPaginationParams function ([ea4631d](https://github.com/MRdevX/mrashidi.me/commit/ea4631dcc40141b54b1721be77b36df7b0dab0db))
+* **upload:** replace getEnv with getRequiredEnv for CV_UPLOAD_TOKEN ([f50d7ca](https://github.com/MRdevX/mrashidi.me/commit/f50d7ca396756bbeee596061a5011743f1498a30))
+
 ### [0.1.90](https://github.com/MRdevX/mrashidi.me/compare/v0.1.89...v0.1.90) (2026-01-04)
 
 ### [0.1.89](https://github.com/MRdevX/mrashidi.me/compare/v0.1.88...v0.1.89) (2026-01-04)
