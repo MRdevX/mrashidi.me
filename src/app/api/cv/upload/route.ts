@@ -11,7 +11,7 @@ const validateFile = async (file: File | null): Promise<File> => {
     throw new APIError("No file provided", 400);
   }
 
-  const validationResult = await pdfUploadSecurity.validateFile(file);
+  const validationResult = await pdfUploadSecurity.validateFile(file as File);
 
   if (!validationResult.isValid) {
     throw new APIError(`File validation failed: ${validationResult.errors.join(", ")}`, 400);

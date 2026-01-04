@@ -1,6 +1,4 @@
 import * as cheerio from "cheerio";
-import he from "he";
-
 import { convert } from "html-to-text";
 import validator from "validator";
 
@@ -25,17 +23,16 @@ export function extractImageUrl(html: string): string | undefined {
 
   try {
     const $ = cheerio.load(html);
-
     const imgSrc = $("img").first().attr("src");
 
     if (!imgSrc) {
       return undefined;
     }
 
-    const decodedUrl = he.decode(imgSrc.trim());
+    const trimmedUrl = imgSrc.trim();
 
-    if (decodedUrl.startsWith("http://") || decodedUrl.startsWith("https://")) {
-      return decodedUrl;
+    if (trimmedUrl.startsWith("http://") || trimmedUrl.startsWith("https://")) {
+      return trimmedUrl;
     }
 
     return undefined;

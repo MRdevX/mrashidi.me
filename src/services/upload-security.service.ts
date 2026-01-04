@@ -1,4 +1,5 @@
 import { fileTypeFromBuffer } from "file-type";
+import prettyBytes from "pretty-bytes";
 import sanitize from "sanitize-filename";
 import { logger } from "@/lib/core";
 
@@ -8,129 +9,137 @@ export interface FileValidationResult {
   errors: string[];
 }
 
-export class FileUploadSecurityService {
-  private readonly maxSize: number;
-  private readonly allowedMimeTypes: string[];
+export interface ValidationOptions {
+  maxSize: number;
+  allowedMimeTypes: string[];
+  allowedExtensions: string[];
+}
 
-  constructor(maxSize: number = 5 * 1024 * 1024, allowedMimeTypes: string[] = ["application/pdf"]) {
-    this.maxSize = maxSize;
-    this.allowedMimeTypes = allowedMimeTypes;
-  }
+const DEFAULT_OPTIONS: ValidationOptions = {
+  maxSize: 5 * 1024 * 1024, // 5MB
+  allowedMimeTypes: ["application/pdf"],
+  allowedExtensions: [".pdf"],
+};
 
-  async validateFile(file: File): Promise<FileValidationResult> {
-    const result: FileValidationResult = {
-      isValid: true,
-      sanitizedFileName: "",
-      errors: [],
-    };
+type ValidationRule = (file: File, options: ValidationOptions) => Promise<string | null> | string | null;
 
-    try {
-      if (!file) {
-        result.errors.push("No file provided");
-        return result;
-      }
+function sanitizeFileName(fileName: string): string {
+  const sanitized = sanitize(fileName, { replacement: "_" });
+  const maxLength = 255;
+  return sanitized.length > maxLength ? sanitized.substring(0, maxLength) : sanitized;
+}
 
-      if (file.size === 0) {
-        result.errors.push("File is empty");
-      }
+const validationRules: ValidationRule[] = [
+  // Check file size
+  (file: File, options: ValidationOptions) =>
+    file.size === 0
+      ? "File is empty"
+      : file.size > options.maxSize
+        ? `File too large. Maximum size is ${prettyBytes(options.maxSize)}`
+        : null,
 
-      if (file.size > this.maxSize) {
-        result.errors.push(`File too large. Maximum size is ${this.formatBytes(this.maxSize)}`);
-      }
+  // Check file extension
+  (file: File, options: ValidationOptions) => {
+    const extension = file.name.toLowerCase().substring(file.name.lastIndexOf("."));
+    return !options.allowedExtensions.includes(extension) ? `File extension '${extension}' is not allowed` : null;
+  },
 
-      result.sanitizedFileName = this.sanitizeFileName(file.name);
-
-      await this.validateMimeType(file, result);
-
-      this.validateFileExtension(file.name, result);
-
-      result.isValid = result.errors.length === 0;
-
-      this.logValidationResult(file, result);
-
-      return result;
-    } catch (error) {
-      logger.error({
-        operation: "fileValidation",
-        status: "failed",
-        error: error instanceof Error ? error.message : String(error),
-        fileName: file.name,
-        fileSize: file.size,
-      });
-
-      result.isValid = false;
-      result.errors.push("File validation failed");
-      return result;
-    }
-  }
-
-  private sanitizeFileName(fileName: string): string {
-    const sanitized = sanitize(fileName, { replacement: "_" });
-
-    const maxLength = 255;
-    return sanitized.length > maxLength ? sanitized.substring(0, maxLength) : sanitized;
-  }
-
-  private async validateMimeType(file: File, result: FileValidationResult): Promise<void> {
+  // Check MIME type (async)
+  async (file: File, options: ValidationOptions) => {
     try {
       const buffer = await file.slice(0, 4100).arrayBuffer();
       const fileType = await fileTypeFromBuffer(buffer);
 
-      if (fileType) {
-        if (!this.allowedMimeTypes.includes(fileType.mime)) {
-          result.errors.push(`File type '${fileType.mime}' is not allowed`);
-        }
-      } else {
-        result.errors.push("Could not detect file type");
+      if (fileType && !options.allowedMimeTypes.includes(fileType.mime)) {
+        return `File type '${fileType.mime}' is not allowed`;
       }
 
-      if (file.type && !this.allowedMimeTypes.includes(file.type)) {
-        result.errors.push(`Declared file type '${file.type}' is not allowed`);
+      if (!fileType) {
+        return "Could not detect file type";
       }
+
+      if (file.type && !options.allowedMimeTypes.includes(file.type)) {
+        return `Declared file type '${file.type}' is not allowed`;
+      }
+
+      return null;
     } catch (error) {
-      result.errors.push("Failed to validate file type");
       logger.error({
         operation: "mimeTypeValidation",
         error: error instanceof Error ? error.message : String(error),
       });
+      return "Failed to validate file type";
+    }
+  },
+];
+
+async function collectValidationErrors(file: File | null, options: ValidationOptions): Promise<string[]> {
+  if (!file) {
+    return ["No file provided"];
+  }
+
+  const errors: string[] = [];
+
+  for (const rule of validationRules) {
+    const error = await rule(file, options);
+    if (error) {
+      errors.push(error);
     }
   }
 
-  private validateFileExtension(fileName: string, result: FileValidationResult): void {
-    const extension = fileName.toLowerCase().substring(fileName.lastIndexOf("."));
-    const allowedExtensions = [".pdf"];
+  return errors;
+}
 
-    if (!allowedExtensions.includes(extension)) {
-      result.errors.push(`File extension '${extension}' is not allowed`);
-    }
-  }
+export async function validateFile(
+  file: File | null,
+  options: Partial<ValidationOptions> = {}
+): Promise<FileValidationResult> {
+  const opts = { ...DEFAULT_OPTIONS, ...options };
+  const sanitizedFileName = file ? sanitizeFileName(file.name) : "";
 
-  private logValidationResult(file: File, result: FileValidationResult): void {
-    const logData = {
-      operation: "fileValidation",
-      status: result.isValid ? "success" : "failed",
-      fileName: file.name,
-      sanitizedFileName: result.sanitizedFileName,
-      fileSize: file.size,
-      errors: result.errors,
-    };
+  try {
+    const errors = await collectValidationErrors(file, opts);
+    const isValid = errors.length === 0;
 
-    if (result.isValid) {
-      logger.info(logData);
+    if (isValid) {
+      logger.info({
+        operation: "fileValidation",
+        status: "success",
+        fileName: file?.name,
+        sanitizedFileName,
+        fileSize: file?.size,
+      });
     } else {
-      logger.warn(logData);
+      logger.warn({
+        operation: "fileValidation",
+        status: "failed",
+        fileName: file?.name,
+        errors,
+      });
     }
-  }
 
-  private formatBytes(bytes: number): string {
-    if (bytes === 0) {
-      return "0 Bytes";
-    }
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return `${parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
+    return {
+      isValid,
+      sanitizedFileName,
+      errors,
+    };
+  } catch (error) {
+    logger.error({
+      operation: "fileValidation",
+      status: "failed",
+      error: error instanceof Error ? error.message : String(error),
+      fileName: file?.name,
+      fileSize: file?.size,
+    });
+
+    return {
+      isValid: false,
+      sanitizedFileName,
+      errors: ["File validation failed"],
+    };
   }
 }
 
-export const pdfUploadSecurity = new FileUploadSecurityService(5 * 1024 * 1024, ["application/pdf"]);
+export const pdfUploadSecurity = {
+  validateFile: (file: File | null) => validateFile(file, DEFAULT_OPTIONS),
+};

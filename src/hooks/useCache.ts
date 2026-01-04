@@ -1,61 +1,54 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { logger } from "@/lib/core";
 
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
 export function useCache<T>(key: string, duration: number = 24 * 60 * 60 * 1000) {
-  const [cachedData, setCachedData] = useState<{ data: T; timestamp: number } | null>(null);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    if (typeof window !== "undefined") {
-      try {
-        const stored = localStorage.getItem(key);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          setCachedData(parsed);
-        }
-      } catch {}
-    }
-  }, [key]);
-
   const loadFromCache = useCallback((): T | null => {
-    if (!isClient || !cachedData) {
+    if (typeof window === "undefined") {
       return null;
     }
 
     try {
-      if (Date.now() - cachedData.timestamp > duration) {
-        setCachedData(null);
-        if (typeof window !== "undefined") {
-          localStorage.removeItem(key);
-        }
+      const stored = localStorage.getItem(key);
+      if (!stored) {
         return null;
       }
-      return cachedData.data;
-    } catch {
+
+      const entry: CacheEntry<T> = JSON.parse(stored);
+      const isExpired = Date.now() - entry.timestamp > duration;
+
+      if (isExpired) {
+        localStorage.removeItem(key);
+        return null;
+      }
+
+      return entry.data;
+    } catch (error) {
+      logger.warn({ operation: "useCache", action: "loading", key, error: String(error) });
       return null;
     }
-  }, [cachedData, duration, key, isClient]);
+  }, [key, duration]);
 
   const saveToCache = useCallback(
     (data: T) => {
-      if (!isClient) {
+      if (typeof window === "undefined") {
         return;
       }
 
       try {
-        const cacheData = { data, timestamp: Date.now() };
-        setCachedData(cacheData);
-        if (typeof window !== "undefined") {
-          localStorage.setItem(key, JSON.stringify(cacheData));
-        }
+        const entry: CacheEntry<T> = { data, timestamp: Date.now() };
+        localStorage.setItem(key, JSON.stringify(entry));
       } catch (error) {
         logger.warn({ operation: "useCache", action: "saving", key, error: String(error) });
       }
     },
-    [key, isClient]
+    [key]
   );
 
   return { loadFromCache, saveToCache };
