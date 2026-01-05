@@ -63,7 +63,7 @@
     "date-fns": "^4.1.0",
     "fast-xml-parser": "^5.3.3",
     "file-type": "^21.3.0",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.23.27",
     "html-react-parser": "^5.2.11",
     "html-to-text": "^9.0.5",
     "ky": "^1.14.2",
