@@ -171,7 +171,7 @@ const renderContactInfo = () => (
 const renderCertificates = () => {
   const allCertificates = certificates.slice(0, 8).flatMap((category) =>
     category.certificates.map((cert) => (
-      <TerminalListItem key={`${category.name}-${cert.name}-${cert.year}`} className="text-green-400">
+      <TerminalListItem key={`${category.category}-${cert.name}-${cert.year}`} className="text-green-400">
         {cert.name} ({cert.year})
       </TerminalListItem>
     ))

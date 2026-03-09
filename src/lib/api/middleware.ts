@@ -154,13 +154,13 @@ class MiddlewareChain {
     return this;
   }
 
-  build(handler: ApiHandler | PaginationHandler | ValidationHandler<unknown>): ApiHandler {
+  build<T = unknown>(handler: ApiHandler | PaginationHandler | ValidationHandler<T>): ApiHandler {
     let wrappedHandler: ApiHandler;
 
     if (this.hasPagination) {
       wrappedHandler = paginationMiddleware(handler as PaginationHandler);
     } else if (this.validator) {
-      wrappedHandler = validationMiddleware(this.validator)(handler as ValidationHandler<unknown>);
+      wrappedHandler = validationMiddleware(this.validator as (data: unknown) => T)(handler as ValidationHandler<T>);
     } else {
       wrappedHandler = handler as ApiHandler;
     }
