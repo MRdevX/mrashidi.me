@@ -9,13 +9,14 @@ interface CommandOutputProps {
   className?: string;
 }
 
+const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+
 const TerminalSpinner = () => {
   const [frame, setFrame] = useState(0);
-  const spinnerFrames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFrame((prev) => (prev + 1) % spinnerFrames.length);
+      setFrame((prev) => (prev + 1) % SPINNER_FRAMES.length);
     }, 100);
 
     return () => clearInterval(interval);
@@ -23,7 +24,7 @@ const TerminalSpinner = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-green-400 font-mono">{spinnerFrames[frame]}</span>
+      <span className="text-green-400 font-mono">{SPINNER_FRAMES[frame]}</span>
       <span className={TERMINAL_STYLES.TEXT.SECONDARY}>Processing...</span>
     </div>
   );

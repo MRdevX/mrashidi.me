@@ -18,4 +18,4 @@ async function handleResumeRequest(_request: NextRequest, formData: ResumeReques
 
 export const POST = createMiddleware("contactForm")
   .validate(validateResumeRequestAPI)
-  .build(handleResumeRequest as ValidationHandler<any>);
+  .build(handleResumeRequest as ValidationHandler<ResumeRequestData>);

@@ -97,8 +97,8 @@ const formatSkillsByLevel = () => {
 const renderWorkExperience = (limit?: number) => {
   const experiences = limit ? workExperience.slice(0, limit) : workExperience;
 
-  return experiences.map((exp, idx) => (
-    <div key={`${exp.title}-${idx}`} className="mb-4">
+  return experiences.map((exp) => (
+    <div key={`${exp.title}-${exp.company}-${exp.period}`} className="mb-4">
       <p className="text-orange-500 font-bold">{exp.title}</p>
       <p className="text-green-400">{exp.company}</p>
       <p className="text-gray-400">• {exp.period}</p>
@@ -114,8 +114,8 @@ const renderWorkExperience = (limit?: number) => {
 const renderProjects = (limit?: number) => {
   const projectList = limit ? projects.slice(0, limit) : projects;
 
-  return projectList.map((project, idx) => (
-    <div key={`${project.title}-${idx}`} className="mb-4">
+  return projectList.map((project) => (
+    <div key={project.title} className="mb-4">
       <p className="text-orange-500 font-bold">{project.title}</p>
       <p className="text-gray-400">{project.description}</p>
       <p className="text-green-400 text-sm">Tech: {project.stack.join(", ")}</p>
@@ -170,8 +170,8 @@ const renderContactInfo = () => (
 
 const renderCertificates = () => {
   const allCertificates = certificates.slice(0, 8).flatMap((category) =>
-    category.certificates.map((cert, idx) => (
-      <TerminalListItem key={`${cert.name}-${idx}`} className="text-green-400">
+    category.certificates.map((cert) => (
+      <TerminalListItem key={`${category.name}-${cert.name}-${cert.year}`} className="text-green-400">
         {cert.name} ({cert.year})
       </TerminalListItem>
     ))
@@ -186,7 +186,7 @@ const renderAchievements = () => {
     .flatMap((exp) =>
       exp.achievements
         .slice(0, 3)
-        .map((achievement, idx) => <TerminalListItem key={`${exp.title}-${idx}`}>{achievement}</TerminalListItem>)
+        .map((achievement) => <TerminalListItem key={`${exp.title}-${achievement}`}>{achievement}</TerminalListItem>)
     );
 
   return <ul className="space-y-1">{achievements}</ul>;

@@ -154,7 +154,7 @@ class MiddlewareChain {
     return this;
   }
 
-  build(handler: ApiHandler | PaginationHandler | ValidationHandler<any>): ApiHandler {
+  build(handler: ApiHandler | PaginationHandler | ValidationHandler<unknown>): ApiHandler {
     let wrappedHandler: ApiHandler;
 
     if (this.hasPagination) {

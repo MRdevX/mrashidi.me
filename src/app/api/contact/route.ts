@@ -30,4 +30,4 @@ async function handleContactForm(_request: NextRequest, formData: ContactFormDat
 
 export const POST = createMiddleware("contactForm")
   .validate(validateContactFormAPI)
-  .build(handleContactForm as ValidationHandler<any>);
+  .build(handleContactForm as ValidationHandler<ContactFormData & { recaptchaToken: string }>);

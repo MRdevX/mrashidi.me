@@ -15,7 +15,8 @@ export function MessageBox({ label, message }: MessageBoxProps) {
       </Text>
       <Text style={messageStyle} className="dark-mode-message-text">
         {lines.map((line, index) => (
-          <span key={`line-${index}-${line.slice(0, 10)}`}>
+          // biome-ignore lint/suspicious/noArrayIndexKey: Lines can duplicate; index ensures unique keys for <br /> positioning
+          <span key={`line-${line}-${index}`}>
             {line}
             {index < lines.length - 1 && <br />}
           </span>

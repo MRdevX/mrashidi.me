@@ -1,7 +1,7 @@
 "use client";
 
 import { type MotionProps, motion } from "framer-motion";
-import { type ReactNode, useEffect, useState } from "react";
+import { Children, type ReactNode, useEffect, useState } from "react";
 import { animationClasses, staggerDelays } from "@/lib/animations";
 
 interface PerformanceWrapperProps {
@@ -58,9 +58,13 @@ export function StaggerWrapper({ children, className = "", staggerDelay = "norma
   return (
     <div className={className}>
       {Array.isArray(children)
-        ? children.map((child, index) => (
+        ? Children.toArray(children).map((child, index) => (
             <PerformanceWrapper
-              key={`performance-wrapper-${index}-${typeof child === "string" ? child : "element"}`}
+              key={
+                typeof child === "object" && child !== null && "key" in child && child.key != null
+                  ? child.key
+                  : `performance-wrapper-${index}`
+              }
               animation="slideUp"
               delay={index * staggerDelays[staggerDelay]}
             >

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AppError, NetworkError, ValidationError } from "@/lib/errors";
+import { AppError, ValidationError } from "@/lib/errors";
 import {
   asyncHandler,
   createSafeErrorResponse,
