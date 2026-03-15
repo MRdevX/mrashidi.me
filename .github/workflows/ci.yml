@@ -4,14 +4,32 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".versionrc.json"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
   push:
     branches:
       - main
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".versionrc.json"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
   workflow_dispatch:
+
+run-name: CI — ${{ github.event.pull_request.title || github.ref_name }} by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
 
 permissions:
   contents: read
