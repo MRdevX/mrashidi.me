@@ -1,0 +1,14 @@
+---
+description: Next.js 16 and React patterns for this project
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Next.js 16 & React
+
+- Use Next.js 16 App Router conventions; components under `src/app/` are RSC by default.
+- Mark client components with `"use client"` only when needed (hooks, browser APIs, event handlers).
+- Prefer server components for data fetching; use `async` server components or server actions where appropriate.
+- Use path aliases: `@/`, `@components/`, `@lib/`, `@app/`, `@features/`, `@server/`, `@types/`.
+- Lint and format with Biome only (`pnpm check`, `pnpm check --write`). No ESLint or Prettier.
+- Colocate components and styles; use shadcn/ui (new-york) and CVA for variants.
