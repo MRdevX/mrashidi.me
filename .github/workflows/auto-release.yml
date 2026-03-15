@@ -44,35 +44,21 @@ jobs:
       - name: Check for new commits and run standard-version
         id: version
         run: |
-          # Check if there are new commits since last tag
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -n "$LAST_TAG" ]; then
-            COMMITS_SINCE_TAG=$(git rev-list $LAST_TAG..HEAD --count)
-            if [ "$COMMITS_SINCE_TAG" -eq 0 ]; then
-              echo "No new commits since last tag, skipping release"
-              echo "should_release=false" >> $GITHUB_OUTPUT
-              exit 0
-            fi
-          fi
-
-          # Get current version
-          OLD_VERSION=$(node -p "require('./package.json').version")
-
-          # Run standard-version
-          pnpm release || exit 1
-
-          # Get new version
-          NEW_VERSION=$(node -p "require('./package.json').version")
-
-          # Check if version changed
-          if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
-            echo "Version bumped from $OLD_VERSION to $NEW_VERSION"
-            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-            echo "should_release=true" >> $GITHUB_OUTPUT
-          else
-            echo "No version bump detected"
+          set -e
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          if [ -n "$LAST_TAG" ] && [ "$(git rev-list "$LAST_TAG..HEAD" --count)" -eq 0 ]; then
             echo "should_release=false" >> $GITHUB_OUTPUT
+            exit 0
           fi
+          OLD=$(node -p "require('./package.json').version")
+          pnpm release
+          NEW=$(node -p "require('./package.json').version")
+          if [ "$OLD" = "$NEW" ]; then
+            echo "should_release=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          echo "version=$NEW" >> $GITHUB_OUTPUT
+          echo "should_release=true" >> $GITHUB_OUTPUT
 
       - name: Push changes and tags
         if: steps.version.outputs.should_release == 'true'
@@ -81,18 +67,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract changelog
-        if: steps.version.outputs.should_release == 'true'
-        run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          sed -n "/^### \[$VERSION\]/,/^### \[/p" CHANGELOG.md | sed '$d' > changelog.txt || echo "See CHANGELOG.md for details" > changelog.txt
-
+      # Octokit release with generate_release_notes; prerelease when version contains '-'.
       - name: Create GitHub Release
         if: steps.version.outputs.should_release == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: actions/github-script@v7
         with:
-          tag_name: v${{ steps.version.outputs.version }}
-          name: Release v${{ steps.version.outputs.version }}
-          body_path: changelog.txt
-          draft: false
-          prerelease: false
+          script: |
+            const version = '${{ steps.version.outputs.version }}';
+            const prerelease = version.includes('-');
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: `v${version}`,
+              name: `Release v${version}`,
+              generate_release_notes: true,
+              draft: false,
+              prerelease,
+            });
