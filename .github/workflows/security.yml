@@ -11,7 +11,7 @@ on:
     - cron: "0 0 * * 1"
   workflow_dispatch:
 
-run-name: Security
+run-name: Security: ${{ github.event.pull_request.title || github.ref_name }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
