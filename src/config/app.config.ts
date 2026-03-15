@@ -1,6 +1,5 @@
 export const APP_CONFIG = {
   name: "MR Portfolio",
-  version: "0.1.22",
   description: "Mahdi Rashidi's Personal Portfolio",
 
   animations: {

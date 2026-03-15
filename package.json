@@ -23,6 +23,7 @@
     "format:fix": "biome format --write .",
     "check": "biome check .",
     "check:fix": "biome check --write .",
+    "commitlint": "commitlint",
     "prepare": "husky",
     "pre-commit": "lint-staged",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
@@ -88,6 +89,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.7",
+    "@commitlint/cli": "^20.4.4",
+    "@commitlint/config-conventional": "^20.4.4",
     "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4.2.1",
