@@ -1,0 +1,12 @@
+---
+description: Biome lint and format conventions
+globs: "**/*.{ts,tsx,js,jsx,json,css}"
+alwaysApply: false
+---
+
+# Biome
+
+- This project uses **Biome** for linting and formatting. Do not use ESLint or Prettier.
+- To check: `pnpm check`. To fix and format: `pnpm check --write` (or `pnpm check:fix`).
+- Lint-only: `pnpm lint` / `pnpm lint:fix`. Format-only: `pnpm format` / `pnpm format:fix`.
+- Config lives in `biome.json` (VCS-aware, organize imports on). Follow existing rule severities and formatter options when suggesting changes.
