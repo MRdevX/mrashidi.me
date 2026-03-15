@@ -7,15 +7,22 @@ on:
     paths-ignore:
       - "**.md"
       - "docs/**"
+      - ".versionrc.json"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
   schedule:
     - cron: "0 0 * * 1"
   workflow_dispatch:
 
-run-name: Security: ${{ github.event.pull_request.title || github.ref_name }}
+run-name: "Security: ${{ github.event.pull_request.title || github.ref_name }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
 
 permissions:
   contents: read

@@ -21,7 +21,7 @@ on:
       - "CONTRIBUTING.md"
   workflow_dispatch:
 
-run-name: CI: ${{ github.event.pull_request.title || github.ref_name }}
+run-name: "CI: ${{ github.event.pull_request.title || github.ref_name }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -118,20 +118,14 @@ jobs:
       - name: Run E2E tests
         run: pnpm test:e2e
 
-      - name: Upload Playwright report
+      - name: Upload E2E artifacts
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
-
-      - name: Upload test results
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: e2e-test-results
-          path: test-results/
+          name: e2e-artifacts
+          path: |
+            playwright-report/
+            test-results/
           retention-days: 7
 
   build:
