@@ -21,7 +21,7 @@ on:
       - "CONTRIBUTING.md"
   workflow_dispatch:
 
-run-name: CI — ${{ github.event.pull_request.title || github.ref_name }} by @${{ github.actor }}
+run-name: CI
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -36,7 +36,7 @@ permissions:
 
 jobs:
   commitlint:
-    name: Commit message lint
+    name: Commitlint
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: github.event_name == 'pull_request'
@@ -53,7 +53,7 @@ jobs:
         run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
   lint-and-type-check:
-    name: Lint & Type Check
+    name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -70,7 +70,7 @@ jobs:
         run: pnpm exec tsc --noEmit
 
   unit-tests:
-    name: Unit Tests
+    name: Unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -94,7 +94,7 @@ jobs:
           retention-days: 7
 
   e2e-tests:
-    name: E2E Tests
+    name: E2E tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
