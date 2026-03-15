@@ -21,7 +21,7 @@ on:
       - "CONTRIBUTING.md"
   workflow_dispatch:
 
-run-name: CI
+run-name: CI: ${{ github.event.pull_request.title || github.ref_name }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
