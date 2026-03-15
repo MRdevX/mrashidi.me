@@ -1,0 +1,28 @@
+# Dependencies and build output
+node_modules
+.next
+.pnpm-store
+.turbo
+dist
+build
+out
+
+# Test and coverage artifacts
+coverage
+test-results
+playwright-report
+
+# Lockfiles and generated files
+pnpm-lock.yaml
+*.tsbuildinfo
+sitemap.xml
+
+# PWA and Sentry
+sw.js
+sw.js.map
+workbox-*.js
+workbox-*.js.map
+.env.sentry-build-plugin
+
+# Optional exclude
+public/cv

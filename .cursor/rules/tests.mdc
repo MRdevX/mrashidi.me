@@ -1,0 +1,11 @@
+---
+description: Vitest and Playwright test commands and locations
+globs: "**/tests/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing
+
+- **Unit tests:** Vitest in `tests/unit/`. Run: `pnpm test`, `pnpm test:run`, `pnpm test:watch`, `pnpm test:coverage`.
+- **E2E tests:** Playwright in `tests/e2e/`. Run: `pnpm test:e2e`, `pnpm test:e2e:ui`, `pnpm test:e2e:debug`.
+- When touching code, run `pnpm check` and relevant tests. Prefer Vitest for unit tests and Playwright for E2E.
