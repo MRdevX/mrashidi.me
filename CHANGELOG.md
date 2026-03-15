@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
 ### [0.1.103](https://github.com/MRdevX/mrashidi.me/compare/v0.1.99...v0.1.103) (2026-03-15)
 
