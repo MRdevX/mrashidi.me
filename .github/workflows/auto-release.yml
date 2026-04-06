@@ -1,6 +1,9 @@
 name: Auto Release
 
 on:
+  push:
+    branches:
+      - main
   workflow_run:
     workflows: ["CI"]
     types:
@@ -23,15 +26,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: |
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch != '' &&
-      github.event.workflow_run.head_branch == 'main'
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch != '' &&
+       github.event.workflow_run.head_branch == 'main')
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ github.event.workflow_run.head_branch || github.ref_name }}
           fetch-depth: 0
 
       - name: Setup Node.js and dependencies
