@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.111](https://github.com/MRdevX/mrashidi.me/compare/v0.1.110...v0.1.111) (2026-04-06)
+
+
+### Bug Fixes
+
+* build ([be62e7a](https://github.com/MRdevX/mrashidi.me/commit/be62e7a33853511c4270192496208ac380876f20))
+* update auto-release workflow to handle push events and improve branch reference logic ([fb7cdd8](https://github.com/MRdevX/mrashidi.me/commit/fb7cdd8705d0a5fb3203d3f519fa148b09afb311))
+
 ### [0.1.110](https://github.com/MRdevX/mrashidi.me/compare/v0.1.109...v0.1.110) (2026-03-30)
 
 ### [0.1.109](https://github.com/MRdevX/mrashidi.me/compare/v0.1.108...v0.1.109) (2026-03-15)
