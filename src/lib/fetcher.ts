@@ -10,10 +10,10 @@ const api: KyInstance = ky.create({
   },
   hooks: {
     beforeError: [
-      (error) => {
+      ({ error, request }) => {
         logger.error({
           operation: "fetcher",
-          url: error.request?.url,
+          url: request.url,
           error: error.message,
         });
         return error;

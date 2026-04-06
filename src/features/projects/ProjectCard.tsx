@@ -1,6 +1,7 @@
-import { Calendar, ExternalLink, Eye, GitCommit, Github } from "lucide-react";
+import { Calendar, ExternalLink, Eye, GitCommit } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { ProjectModal } from "@/components/ui/ProjectModal";
 import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
@@ -147,7 +148,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
             >
-              <Github className="w-4 h-4" />
+              <FaGithub className="w-4 h-4" />
               GitHub
             </a>
           )}

@@ -1,7 +1,8 @@
 "use client";
 
-import { Building, Calendar, Code, ExternalLink, Github, Shield, User } from "lucide-react";
+import { Building, Calendar, Code, ExternalLink, Shield, User } from "lucide-react";
 import Image from "next/image";
+import { FaGithub } from "react-icons/fa";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks";
@@ -165,7 +166,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
               >
-                <Github className="w-4 h-4" />
+                <FaGithub className="w-4 h-4" />
                 View Code
               </a>
             )}
