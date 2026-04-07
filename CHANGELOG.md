@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.112](https://github.com/MRdevX/mrashidi.me/compare/v0.1.111...v0.1.112) (2026-04-07)
+
 ### [0.1.111](https://github.com/MRdevX/mrashidi.me/compare/v0.1.110...v0.1.111) (2026-04-06)
 
 
