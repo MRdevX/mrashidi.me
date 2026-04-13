@@ -1,9 +1,8 @@
 name: Auto Release
 
+# Only run after CI succeeds on main. A separate `push` trigger caused two runs per
+# push (push + workflow_run), which could race and both try to create the same tag.
 on:
-  push:
-    branches:
-      - main
   workflow_run:
     workflows: ["CI"]
     types:
@@ -11,10 +10,10 @@ on:
     branches:
       - main
 
-run-name: "Release: ${{ github.ref_name }}"
+run-name: "Release: ${{ github.event.workflow_run.head_branch }}"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: auto-release-${{ github.repository }}
   cancel-in-progress: false
 
 permissions:
@@ -26,17 +25,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch != '' &&
-       github.event.workflow_run.head_branch == 'main')
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch != '' &&
+      github.event.workflow_run.head_branch == 'main'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_branch || github.ref_name }}
+          ref: ${{ github.event.workflow_run.head_branch }}
           fetch-depth: 0
+          fetch-tags: true
 
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
@@ -50,6 +49,7 @@ jobs:
         id: version
         run: |
           set -e
+          git fetch origin "${{ github.event.workflow_run.head_branch }}" --tags
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
           if [ -n "$LAST_TAG" ] && [ "$(git rev-list "$LAST_TAG..HEAD" --count)" -eq 0 ]; then
             echo "should_release=false" >> $GITHUB_OUTPUT
