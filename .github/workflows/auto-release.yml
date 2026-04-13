@@ -74,7 +74,7 @@ jobs:
 
       - name: Create GitHub Release
         if: steps.version.outputs.should_release == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const version = '${{ steps.version.outputs.version }}';
