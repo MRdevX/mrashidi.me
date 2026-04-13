@@ -31,21 +31,70 @@ jobs:
       github.event.workflow_run.head_branch == 'main'
 
     steps:
-      - name: Prepare repository
-        uses: ./.github/actions/prepare-repo
+      - name: Checkout code
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
-          fetch-depth: "0"
-          fetch-tags: "true"
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Node.js and dependencies
+        uses: ./.github/actions/setup-node
 
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      # Orphan-tag policy (A): if vX.Y.Z exists but not on HEAD, delete local + remote tag and recreate on the release commit.
       - name: Version bump and tag
         id: version
-        run: bash scripts/ci-auto-release.sh "${{ github.event.workflow_run.head_branch }}"
+        env:
+          HUSKY: "0"
+          RELEASE_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          skip_release() { echo "should_release=false" >> "$GITHUB_OUTPUT"; }
+
+          git fetch origin "$RELEASE_BRANCH" --tags
+
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          if [ -n "$LAST_TAG" ] && [ "$(git rev-list "$LAST_TAG..HEAD" --count)" -eq 0 ]; then
+            skip_release
+            exit 0
+          fi
+
+          OLD=$(node -p "require('./package.json').version")
+          # --skip.tag: orphan vX.Y.Z on the remote is invisible to git describe but blocks git tag -a.
+          pnpm release -- --skip.tag
+          NEW=$(node -p "require('./package.json').version")
+
+          if [ "$OLD" = "$NEW" ]; then
+            skip_release
+            exit 0
+          fi
+
+          TAG="v${NEW}"
+          HEAD_SHA=$(git rev-parse HEAD)
+
+          if git rev-parse "refs/tags/${TAG}" >/dev/null 2>&1; then
+            TAG_SHA=$(git rev-parse "refs/tags/${TAG}^{}")
+            if [ "${TAG_SHA}" = "${HEAD_SHA}" ]; then
+              echo "Tag ${TAG} already points at this release commit."
+            else
+              echo "Replacing orphan tag ${TAG} (was ${TAG_SHA}, release commit ${HEAD_SHA})."
+              git tag -d "${TAG}"
+              if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q .; then
+                git push origin ":refs/tags/${TAG}"
+              fi
+              git tag -a "${TAG}" -m "chore(release): ${NEW}"
+            fi
+          else
+            git tag -a "${TAG}" -m "chore(release): ${NEW}"
+          fi
+
+          echo "version=${NEW}" >> "$GITHUB_OUTPUT"
+          echo "should_release=true" >> "$GITHUB_OUTPUT"
 
       - name: Push changes and tags
         if: steps.version.outputs.should_release == 'true'

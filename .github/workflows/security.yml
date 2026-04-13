@@ -46,10 +46,8 @@ jobs:
       security-events: write
       actions: read
     steps:
-      - name: Prepare repository (checkout only)
-        uses: ./.github/actions/prepare-repo
-        with:
-          install-dependencies: "false"
+      - name: Checkout code
+        uses: actions/checkout@v6
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
