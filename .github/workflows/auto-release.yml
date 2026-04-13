@@ -1,8 +1,6 @@
 name: Auto Release
 
-# Runs only after CI succeeds on main (workflow_run). Do not add push: main here — a second
-# trigger races and duplicates version tags. See:
-# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
+# workflow_run after CI on main only; do not add push:main (tag races). https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
 on:
   workflow_run:
     workflows: ["CI"]
@@ -28,7 +26,8 @@ jobs:
     if: |
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch != '' &&
-      github.event.workflow_run.head_branch == 'main'
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
 
     steps:
       - name: Checkout code
@@ -46,7 +45,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Orphan-tag policy (A): if vX.Y.Z exists but not on HEAD, delete local + remote tag and recreate on the release commit.
+      # Orphan tags: if vX.Y exists off HEAD, delete local/remote and recreate on the release commit.
       - name: Version bump and tag
         id: version
         env:
@@ -98,9 +97,9 @@ jobs:
 
       - name: Push changes and tags
         if: steps.version.outputs.should_release == 'true'
-        run: git push origin main --follow-tags
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: git push origin "$RELEASE_BRANCH" --follow-tags
 
       - name: Create GitHub Release
         if: steps.version.outputs.should_release == 'true'

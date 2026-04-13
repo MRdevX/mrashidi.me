@@ -1,5 +1,6 @@
 name: Security
 
+# Keep paths-ignore in sync with CI workflow.
 on:
   pull_request:
     branches:
