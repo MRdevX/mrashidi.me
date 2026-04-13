@@ -41,13 +41,10 @@ jobs:
     timeout-minutes: 5
     if: github.event_name == 'pull_request'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repo
         with:
-          fetch-depth: 0
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+          fetch-depth: "0"
 
       - name: Validate commit messages
         run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
@@ -57,11 +54,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repo
 
       - name: Run Biome check
         run: pnpm check
@@ -74,11 +68,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repo
 
       - name: Run unit tests
         run: pnpm test:run
@@ -98,11 +89,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repo
 
       - name: Cache Playwright browsers
         uses: actions/cache@v5
@@ -137,11 +125,8 @@ jobs:
       - unit-tests
       - e2e-tests
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repo
 
       - name: Build application
         run: pnpm build:fast

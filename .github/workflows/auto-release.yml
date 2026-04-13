@@ -1,7 +1,8 @@
 name: Auto Release
 
-# Only run after CI succeeds on main. A separate `push` trigger caused two runs per
-# push (push + workflow_run), which could race and both try to create the same tag.
+# Runs only after CI succeeds on main (workflow_run). Do not add push: main here — a second
+# trigger races and duplicates version tags. See:
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
 on:
   workflow_run:
     workflows: ["CI"]
@@ -30,45 +31,25 @@ jobs:
       github.event.workflow_run.head_branch == 'main'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - name: Prepare repository
+        uses: ./.github/actions/prepare-repo
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
-          fetch-depth: 0
-          fetch-tags: true
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+          fetch-depth: "0"
+          fetch-tags: "true"
 
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Check for new commits and run standard-version
+      - name: Version bump and tag
         id: version
-        run: |
-          set -e
-          git fetch origin "${{ github.event.workflow_run.head_branch }}" --tags
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
-          if [ -n "$LAST_TAG" ] && [ "$(git rev-list "$LAST_TAG..HEAD" --count)" -eq 0 ]; then
-            echo "should_release=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          OLD=$(node -p "require('./package.json').version")
-          pnpm release
-          NEW=$(node -p "require('./package.json').version")
-          if [ "$OLD" = "$NEW" ]; then
-            echo "should_release=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          echo "version=$NEW" >> $GITHUB_OUTPUT
-          echo "should_release=true" >> $GITHUB_OUTPUT
+        run: bash scripts/ci-auto-release.sh "${{ github.event.workflow_run.head_branch }}"
 
       - name: Push changes and tags
         if: steps.version.outputs.should_release == 'true'
-        run: |
-          git push origin main --follow-tags
+        run: git push origin main --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -78,13 +59,21 @@ jobs:
         with:
           script: |
             const version = '${{ steps.version.outputs.version }}';
+            const tag = `v${version}`;
             const prerelease = version.includes('-');
-            await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: `v${version}`,
-              name: `Release v${version}`,
-              generate_release_notes: true,
-              draft: false,
-              prerelease,
-            });
+            const { owner, repo } = context.repo;
+            const statusOf = (e) => e.status ?? e.response?.status;
+            try {
+              await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+            } catch (e) {
+              if (statusOf(e) !== 404) throw e;
+              await github.rest.repos.createRelease({
+                owner,
+                repo,
+                tag_name: tag,
+                name: `Release v${version}`,
+                generate_release_notes: true,
+                draft: false,
+                prerelease,
+              });
+            }

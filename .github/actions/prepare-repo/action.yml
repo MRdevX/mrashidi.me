@@ -1,0 +1,48 @@
+name: "Prepare repository"
+description: "Checkout the repository and optionally install Node.js and pnpm dependencies"
+
+inputs:
+  ref:
+    description: "Git ref to checkout; leave default empty to use the ref from the workflow event"
+    required: false
+    default: ""
+  fetch-depth:
+    description: "Number of commits to fetch (0 = full history)"
+    required: false
+    default: "1"
+  fetch-tags:
+    description: "Whether to fetch tags (recommended with fetch-depth 0 for releases)"
+    required: false
+    default: "false"
+  install-dependencies:
+    description: "Run setup-node and pnpm install (set false when another tool must run between checkout and install)"
+    required: false
+    default: "true"
+  node-version:
+    description: "Node.js version passed to setup-node"
+    required: false
+    default: "24"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      if: inputs.ref == ''
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: ${{ inputs.fetch-depth }}
+        fetch-tags: ${{ inputs.fetch-tags == 'true' }}
+
+    - name: Checkout
+      if: inputs.ref != ''
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ inputs.ref }}
+        fetch-depth: ${{ inputs.fetch-depth }}
+        fetch-tags: ${{ inputs.fetch-tags == 'true' }}
+
+    - name: Setup Node.js and dependencies
+      if: inputs.install-dependencies == 'true'
+      uses: ./.github/actions/setup-node
+      with:
+        node-version: ${{ inputs.node-version }}

@@ -10,6 +10,15 @@ on:
       - ".versionrc.json"
       - "AGENTS.md"
       - "CONTRIBUTING.md"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".versionrc.json"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
   schedule:
     - cron: "0 0 * * 1"
   workflow_dispatch:
@@ -37,8 +46,10 @@ jobs:
       security-events: write
       actions: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - name: Prepare repository (checkout only)
+        uses: ./.github/actions/prepare-repo
+        with:
+          install-dependencies: "false"
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
