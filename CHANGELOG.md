@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.114](https://github.com/MRdevX/mrashidi.me/compare/v0.1.112...v0.1.114) (2026-04-13)
+
+
+### Features
+
+* add prepare-repo action for streamlined repository setup in workflows ([1fa07ee](https://github.com/MRdevX/mrashidi.me/commit/1fa07ee227b154121d93fc28bcb4370c892fd6b8))
+
+
+### Bug Fixes
+
+* refine auto-release workflow to prevent duplicate runs and improve branch handling ([ce2a1be](https://github.com/MRdevX/mrashidi.me/commit/ce2a1bed0a3bd955fa877394a029eaefb2888e26))
+* update TypeScript paths in tsconfig.json to use relative paths ([7d19e38](https://github.com/MRdevX/mrashidi.me/commit/7d19e38b169f91aaa3d4d309fb0a3b18f52a1083))
+
+
+### Continuous Integration
+
+* **deps:** bump actions/github-script from 8 to 9 ([#60](https://github.com/MRdevX/mrashidi.me/issues/60)) ([04c8d3f](https://github.com/MRdevX/mrashidi.me/commit/04c8d3f4f92f6e397ca68cf1d5fac15107a12644))
+
+
+### Code Refactoring
+
+* remove prepare-repo action and streamline workflows with direct checkout steps ([947eb6a](https://github.com/MRdevX/mrashidi.me/commit/947eb6af748f3dbfb8089e3b80347f807079c779))
+
 ### [0.1.113](https://github.com/MRdevX/mrashidi.me/compare/v0.1.112...v0.1.113) (2026-04-13)
 
 
