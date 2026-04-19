@@ -174,10 +174,6 @@
     margin-left: 2px;
   }
 
-  .dark .terminal-cursor {
-    background: #00ff00;
-  }
-
   @keyframes blink {
     0%,
     100% {
@@ -198,10 +194,6 @@
     overflow: hidden;
   }
 
-  .dark .typing {
-    border-right-color: #00ff00;
-  }
-
   @keyframes typing {
     from {
       width: 0;
@@ -219,14 +211,6 @@
     50% {
       border-right-color: var(--terminal-green);
     }
-  }
-
-  .dark .typing {
-    border-right-color: #00ff00;
-  }
-
-  .dark .typing .blink-caret {
-    border-color: #00ff00;
   }
 
   /* Glow animation */

@@ -3,6 +3,12 @@
    ========================================================================== */
 
 @layer utilities {
+  /* Terminal / matrix accent — follows :root / .dark tokens in variables.css */
+  .text-neon-green {
+    color: var(--terminal-green);
+    text-shadow: 0 0 6px var(--terminal-green-glow);
+  }
+
   /* Line clamp utilities for v4 compatibility */
 
   .line-clamp-3 {

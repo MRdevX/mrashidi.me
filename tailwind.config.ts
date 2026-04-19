@@ -32,8 +32,8 @@ export default {
           500: "#475569",
         },
         terminal: {
-          DEFAULT: "#00ff00",
-          500: "#00ff00",
+          DEFAULT: "var(--terminal-green)",
+          500: "var(--terminal-green)",
         },
       },
       fontFamily: {
@@ -136,14 +136,6 @@ export default {
         ".text-neon-orange": {
           color: "#ff5f1f",
           "text-shadow": "0 0 5px rgba(255, 95, 31, 0.8)",
-        },
-        ".text-neon-green": {
-          color: "#047857",
-          "text-shadow": "0 0 4px rgba(4, 120, 87, 0.35)",
-        },
-        ".dark .text-neon-green": {
-          color: "#4ade80",
-          "text-shadow": "0 0 6px rgba(74, 222, 128, 0.35)",
         },
         ".glass-effect": {
           "backdrop-filter": "blur(10px)",

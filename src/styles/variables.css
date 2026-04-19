@@ -26,7 +26,9 @@
   --neon-orange: #ff5f1f;
   --neon-blue: #94a3b8;
   --neon-purple: #64748b;
-  --terminal-green: #006400;
+  /* Terminal accent — single source; used by Tailwind utilities and TS theme tokens */
+  --terminal-green: #047857;
+  --terminal-green-glow: rgb(4 120 87 / 0.32);
   --background-dark: #ffffff;
   --foreground-neon: rgba(255, 95, 31, 0.8);
 }
@@ -39,7 +41,8 @@
   --neon-orange: #ff5f1f;
   --neon-blue: #64748b;
   --neon-purple: #475569;
-  --terminal-green: #22c55e;
+  --terminal-green: #4ade80;
+  --terminal-green-glow: rgb(74 222 128 / 0.32);
   --background-dark: #111318;
   --foreground-neon: rgba(255, 95, 31, 0.75);
 }

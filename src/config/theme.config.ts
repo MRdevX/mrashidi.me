@@ -21,8 +21,8 @@ const COLORS = {
     500: "#475569",
   },
   terminal: {
-    DEFAULT: "#00ff00",
-    500: "#00ff00",
+    DEFAULT: "var(--terminal-green)",
+    500: "var(--terminal-green)",
   },
   success: {
     DEFAULT: "#10b981",

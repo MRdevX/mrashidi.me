@@ -107,8 +107,12 @@ export function BackgroundEffects() {
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const textColor = isDark ? "rgba(74, 222, 128, 0.55)" : "#047857";
-      ctx.fillStyle = textColor;
+      const root = document.documentElement;
+      const chroma = getComputedStyle(root).getPropertyValue("--terminal-green").trim();
+      const fill = chroma || (isDark ? "#4ade80" : "#047857");
+      ctx.save();
+      ctx.globalAlpha = isDark ? 0.55 : 0.72;
+      ctx.fillStyle = fill;
       ctx.font = "11px monospace";
 
       for (const particle of matrixRef.current) {
@@ -121,6 +125,8 @@ export function BackgroundEffects() {
           particle.char = chars[Math.floor(Math.random() * chars.length)];
         }
       }
+
+      ctx.restore();
 
       animationFrame = requestAnimationFrame(animate);
     };
