@@ -4,7 +4,8 @@ const EnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
   NEXT_PUBLIC_GITHUB_USERNAME: z.string().optional(),
-  GITHUB_TOKEN: z.string().optional(),
+  /** GitHub REST API PAT for server routes (not `GITHUB_*` — reserved on Vercel). */
+  GH_REST_API_TOKEN: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
   SENTRY_ORG: z.string().optional(),
   SENTRY_PROJECT: z.string().optional(),
@@ -35,7 +36,7 @@ export const env = EnvSchema.parse({
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   NEXT_PUBLIC_GITHUB_USERNAME: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
-  GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+  GH_REST_API_TOKEN: process.env.GH_REST_API_TOKEN,
   SENTRY_DSN: process.env.SENTRY_DSN,
   SENTRY_ORG: process.env.SENTRY_ORG,
   SENTRY_PROJECT: process.env.SENTRY_PROJECT,
