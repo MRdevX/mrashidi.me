@@ -24,24 +24,27 @@
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 245, 245, 245;
   --neon-orange: #ff5f1f;
-  --neon-blue: #00fff5;
-  --neon-purple: #bc13fe;
-  --terminal-green: #006400;
+  --neon-blue: #94a3b8;
+  --neon-purple: #64748b;
+  /* Terminal accent — single source; used by Tailwind utilities and TS theme tokens */
+  --terminal-green: #047857;
+  --terminal-green-glow: rgb(4 120 87 / 0.32);
   --background-dark: #ffffff;
   --foreground-neon: rgba(255, 95, 31, 0.8);
 }
 
 .dark {
-  /* Dark theme variables */
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 10, 10, 10;
-  --background-end-rgb: 0, 0, 0;
+  /* Dark theme — soft body gradient, orange accent; cyan/purple demoted for decor */
+  --foreground-rgb: 248, 250, 252;
+  --background-start-rgb: 17, 19, 24;
+  --background-end-rgb: 12, 14, 18;
   --neon-orange: #ff5f1f;
-  --neon-blue: #00fff5;
-  --neon-purple: #bc13fe;
-  --terminal-green: #00ff00;
-  --background-dark: #0a0a0a;
-  --foreground-neon: rgba(255, 95, 31, 0.8);
+  --neon-blue: #64748b;
+  --neon-purple: #475569;
+  --terminal-green: #4ade80;
+  --terminal-green-glow: rgb(74 222 128 / 0.32);
+  --background-dark: #111318;
+  --foreground-neon: rgba(255, 95, 31, 0.75);
 }
 
 /* Orange color utilities for v4 compatibility */

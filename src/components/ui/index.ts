@@ -1,10 +1,7 @@
-export { AnimatedSection } from "./AnimatedSection";
 export { BackgroundEffects } from "./BackgroundEffects";
 export { Button, buttonVariants } from "./Button";
-export { Badge } from "./badge";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
 export { ContributionGraph } from "./ContributionGraph";
-export { CyberpunkBadge } from "./CyberpunkBadge";
 export { CyberpunkButton } from "./CyberpunkButton";
 export {
   CyberpunkCard,
@@ -41,7 +38,6 @@ export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";
 export { PageWrapper } from "./PageWrapper";
 export { Pagination } from "./Pagination";
-export { PerformanceWrapper, StaggerWrapper } from "./PerformanceWrapper";
 export { ProjectModal } from "./ProjectModal";
 export { SectionHeader } from "./SectionHeader";
 export { Skeleton } from "./Skeleton";

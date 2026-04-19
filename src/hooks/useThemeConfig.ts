@@ -1,4 +1,4 @@
-import type { BadgeVariant, ButtonVariant, CardVariant, InputVariant, TextareaVariant } from "@/config/theme.config";
+import type { ButtonVariant, CardVariant, InputVariant, TextareaVariant } from "@/config/theme.config";
 import {
   getBorderRadius,
   getColor,
@@ -27,7 +27,6 @@ export const useThemeConfig = () => {
     getButtonVariant: (variant: ButtonVariant) => getVariant("button", variant),
     getInputVariant: (variant: InputVariant) => getVariant("input", variant),
     getTextareaVariant: (variant: TextareaVariant) => getVariant("textarea", variant),
-    getBadgeVariant: (variant: BadgeVariant) => getVariant("badge", variant),
     getCardVariant: (variant: CardVariant) => getVariant("card", variant),
 
     getTextColor: (variant: string) => getSemanticColor("text", variant),

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AnimatedSection, SectionHeader } from "@/components/ui";
+import { MotionSection, SectionHeader } from "@/components/ui";
 import { personalInfo } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { slideInVariants } from "@/lib/animations";
@@ -10,7 +10,7 @@ export function LanguagesSection() {
   const { getCardPattern, getTextColor, getBackgroundColor } = useThemeConfig();
 
   return (
-    <AnimatedSection delay={0.8}>
+    <MotionSection as="section" delay={0.8}>
       <SectionHeader iconName="Languages" title="Languages" size="sm" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {personalInfo.languages.map((lang, index) => (
@@ -39,6 +39,6 @@ export function LanguagesSection() {
           </motion.div>
         ))}
       </div>
-    </AnimatedSection>
+    </MotionSection>
   );
 }

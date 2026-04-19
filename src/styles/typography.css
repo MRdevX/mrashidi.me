@@ -3,74 +3,21 @@
    ========================================================================== */
 
 @layer utilities {
-  /* Cohesive Cyberpunk Typography System */
-  .cyberpunk-text {
-    font-family: "Orbitron", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
-  }
-
-  .terminal-text {
-    font-family: "JetBrains Mono", monospace;
-    color: var(--terminal-green);
-    text-shadow: 0 0 5px rgba(0, 100, 0, 0.5);
-    font-weight: 400;
-  }
-
-  .dark .terminal-text {
-    color: #00ff00;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-  }
-
-  .retro-text {
-    font-family: "Press Start 2P", cursive;
-    line-height: 1.5;
-    font-weight: 400;
-  }
-
-  .matrix-text {
-    font-family: "VT323", monospace;
-    color: var(--terminal-green);
-    text-shadow: 0 0 4px rgba(0, 100, 0, 0.6);
-    font-weight: 400;
-  }
-
-  .dark .matrix-text {
-    color: #00ff00;
-    text-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
-  }
-
-  .space-text {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    letter-spacing: 0.2px;
-    line-height: 1.6;
-  }
-
-  /* Typography Hierarchy */
+  /* Typography hierarchy */
   .cyberpunk-h1 {
     font-size: 3rem;
     line-height: 1.1;
     font-weight: 600;
     font-family: "Exo 2", "Orbitron", sans-serif;
     text-transform: none;
-    letter-spacing: 1px;
+    letter-spacing: 0.02em;
     color: #ff5f1f;
-    text-shadow:
-      0 0 8px rgba(255, 95, 31, 0.6),
-      0 0 16px rgba(255, 95, 31, 0.4),
-      0 0 24px rgba(255, 95, 31, 0.3);
-    animation: cyberpunk-glow-balanced 3s ease-in-out infinite alternate;
+    text-shadow: 0 0 24px rgba(255, 95, 31, 0.22);
   }
 
   .dark .cyberpunk-h1 {
-    color: #ff5f1f;
-    text-shadow:
-      0 0 8px rgba(255, 95, 31, 0.7),
-      0 0 16px rgba(255, 95, 31, 0.5),
-      0 0 24px rgba(255, 95, 31, 0.4),
-      0 0 32px rgba(255, 95, 31, 0.2);
+    color: #ff7a3d;
+    text-shadow: 0 0 28px rgba(255, 95, 31, 0.28);
   }
 
   @media (min-width: 768px) {
@@ -88,17 +35,15 @@
   .cyberpunk-h2 {
     font-size: 1.875rem;
     line-height: 2.25rem;
-    font-weight: 700;
-    font-family: "Orbitron", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #000000;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    font-family: var(--font-family-albert), ui-sans-serif, system-ui, sans-serif;
+    text-transform: none;
+    letter-spacing: -0.02em;
+    color: #111827;
   }
 
   .dark .cyberpunk-h2 {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
   }
 
   @media (min-width: 768px) {
@@ -119,14 +64,14 @@
     font-size: 1.5rem;
     line-height: 2rem;
     font-weight: 600;
-    font-family: "Orbitron", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-family: var(--font-family-albert), ui-sans-serif, system-ui, sans-serif;
+    text-transform: none;
+    letter-spacing: -0.015em;
     color: #374151;
   }
 
   .dark .cyberpunk-h3 {
-    color: #e5e7eb;
+    color: #e2e8f0;
   }
 
   @media (min-width: 768px) {
@@ -139,15 +84,15 @@
   .cyberpunk-h4 {
     font-size: 1.25rem;
     line-height: 1.75rem;
-    font-weight: 500;
-    font-family: "Orbitron", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
+    font-weight: 600;
+    font-family: var(--font-family-albert), ui-sans-serif, system-ui, sans-serif;
+    text-transform: none;
+    letter-spacing: -0.01em;
     color: #4b5563;
   }
 
   .dark .cyberpunk-h4 {
-    color: #d1d5db;
+    color: #cbd5e1;
   }
 
   @media (min-width: 768px) {
@@ -186,14 +131,14 @@
     font-size: 0.75rem;
     line-height: 1rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: "Orbitron", sans-serif;
+    letter-spacing: 0.06em;
+    font-family: var(--font-family-albert), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
     color: #6b7280;
   }
 
   .dark .cyberpunk-label {
-    color: #9ca3af;
+    color: #94a3b8;
   }
 
   /* Text Utilities */
@@ -211,25 +156,18 @@
     color: hsl(var(--primary));
   }
 
-  /* Cyberpunk glow animation for hero title - balanced version */
   @keyframes cyberpunk-glow-balanced {
     0% {
-      text-shadow:
-        0 0 8px rgba(255, 95, 31, 0.6),
-        0 0 16px rgba(255, 95, 31, 0.4),
-        0 0 24px rgba(255, 95, 31, 0.3);
+      text-shadow: 0 0 20px rgba(255, 95, 31, 0.18);
     }
     100% {
-      text-shadow:
-        0 0 12px rgba(255, 95, 31, 0.8),
-        0 0 20px rgba(255, 95, 31, 0.6),
-        0 0 28px rgba(255, 95, 31, 0.4),
-        0 0 36px rgba(255, 95, 31, 0.2);
+      text-shadow: 0 0 32px rgba(255, 95, 31, 0.32);
     }
   }
 
-  /* Dark mode cyberpunk glow animation - balanced version */
-  .dark .cyberpunk-h1 {
-    animation: cyberpunk-glow-balanced 3s ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: no-preference) {
+    .cyberpunk-h1 {
+      animation: cyberpunk-glow-balanced 5s ease-in-out infinite alternate;
+    }
   }
 }

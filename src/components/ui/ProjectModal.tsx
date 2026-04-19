@@ -21,7 +21,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-2 border-orange-500/30 shadow-[0_0_30px_rgba(255,95,31,0.2)]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-orange-500 font-cyberpunk glow-text flex items-center gap-3">
+          <DialogTitle className="text-2xl font-semibold text-orange-500 font-albert tracking-tight flex items-center gap-3">
             {project.logoUrl && (
               <Image
                 src={project.logoUrl}

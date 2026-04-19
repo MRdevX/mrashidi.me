@@ -18,8 +18,8 @@ export function BackgroundEffects() {
   const [isDark, setIsDark] = useState(false);
   const [isLowPerformance, setIsLowPerformance] = useState(false);
   const [shouldDisableEffects, setShouldDisableEffects] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const lastFrameTime = useRef(0);
-  const frameCount = useRef(0);
 
   const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
 
@@ -47,11 +47,19 @@ export function BackgroundEffects() {
       attributeFilter: ["class"],
     });
 
-    return () => observer.disconnect();
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onMotionChange = () => setPrefersReducedMotion(motionQuery.matches);
+    onMotionChange();
+    motionQuery.addEventListener("change", onMotionChange);
+
+    return () => {
+      observer.disconnect();
+      motionQuery.removeEventListener("change", onMotionChange);
+    };
   }, []);
 
   useEffect(() => {
-    if (!mounted) {
+    if (!mounted || prefersReducedMotion || shouldDisableEffects) {
       return;
     }
 
@@ -94,14 +102,17 @@ export function BackgroundEffects() {
       }
 
       lastFrameTime.current = currentTime;
-      frameCount.current++;
 
       const bgColor = isDark ? "rgba(0, 0, 0, 0.02)" : "rgba(255, 255, 255, 0.02)";
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const textColor = isDark ? "#0f0" : "#006400";
-      ctx.fillStyle = textColor;
+      const root = document.documentElement;
+      const chroma = getComputedStyle(root).getPropertyValue("--terminal-green").trim();
+      const fill = chroma || (isDark ? "#4ade80" : "#047857");
+      ctx.save();
+      ctx.globalAlpha = isDark ? 0.55 : 0.72;
+      ctx.fillStyle = fill;
       ctx.font = "11px monospace";
 
       for (const particle of matrixRef.current) {
@@ -115,6 +126,8 @@ export function BackgroundEffects() {
         }
       }
 
+      ctx.restore();
+
       animationFrame = requestAnimationFrame(animate);
     };
 
@@ -124,18 +137,18 @@ export function BackgroundEffects() {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrame);
     };
-  }, [isDark, mounted, isLowPerformance]);
+  }, [isDark, mounted, isLowPerformance, prefersReducedMotion, shouldDisableEffects]);
 
   if (!mounted) {
     return null;
   }
 
-  if (shouldDisableEffects) {
+  if (shouldDisableEffects || prefersReducedMotion) {
     return (
       <>
         {/* Minimal gradient overlays only */}
-        <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/10 to-transparent dark:from-black/20 pointer-events-none z-0" />
-        <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/10 to-transparent dark:from-black/20 pointer-events-none z-0" />
+        <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-black/8 to-transparent dark:from-slate-950/40 pointer-events-none z-0" />
+        <div className="fixed bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/8 to-transparent dark:from-slate-950/40 pointer-events-none z-0" />
       </>
     );
   }
@@ -146,39 +159,36 @@ export function BackgroundEffects() {
       <canvas
         ref={canvasRef}
         className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
-          isLowPerformance ? (isDark ? "opacity-10" : "opacity-5") : isDark ? "opacity-20" : "opacity-10"
+          isLowPerformance
+            ? isDark
+              ? "opacity-[0.06]"
+              : "opacity-[0.03]"
+            : isDark
+              ? "opacity-[0.09]"
+              : "opacity-[0.05]"
         }`}
       />
 
       {/* Gradient overlays */}
-      <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
-      <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent dark:from-black/40 pointer-events-none z-0" />
+      <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-black/12 to-transparent dark:from-slate-950/50 pointer-events-none z-0" />
+      <div className="fixed bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/12 to-transparent dark:from-slate-950/50 pointer-events-none z-0" />
 
-      {/* Radial gradient effects - simplified for performance */}
+      {/* Radial wash — orange only, subtle */}
       {!isLowPerformance && (
         <motion.div
           className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
           animate={{
             background: [
-              "radial-gradient(circle at 0% 0%, rgba(255,95,31,0.05) 0%, transparent 40%)",
-              "radial-gradient(circle at 100% 100%, rgba(255,95,31,0.05) 0%, transparent 40%)",
+              "radial-gradient(circle at 0% 0%, rgba(255,95,31,0.04) 0%, transparent 42%)",
+              "radial-gradient(circle at 100% 100%, rgba(255,95,31,0.035) 0%, transparent 42%)",
             ],
           }}
           transition={{
-            duration: 15,
+            duration: 20,
             repeat: Infinity,
             repeatType: "reverse",
             ease: "linear",
           }}
-        />
-      )}
-
-      {/* Scanline effect - reduced for performance */}
-      {!isLowPerformance && (
-        <div
-          className={`scanline fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
-            isDark ? "opacity-5" : "opacity-3"
-          }`}
         />
       )}
     </>
