@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { projects } from "@/data";
+import type { Project } from "@/data/projects";
 import type { TechnologyCategory } from "@/lib/core";
 import { logger } from "@/lib/core";
 import { githubService } from "@/lib/services/github";
@@ -87,7 +88,9 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
     setIsLoadingCommitDates(true);
 
     try {
-      const projectsWithGithub = projects.filter((project) => project.githubUrl);
+      const projectsWithGithub = projects.filter((project): project is Project & { githubUrl: string } =>
+        Boolean(project.githubUrl)
+      );
       const requiredUrls = new Set(projectsWithGithub.map((p) => p.githubUrl));
 
       const cachedInfo = loadCachedCommitInfo();
