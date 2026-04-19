@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.116](https://github.com/MRdevX/mrashidi.me/compare/v0.1.115...v0.1.116) (2026-04-19)
+
+
+### Code Refactoring
+
+* enhance type safety in useProjectFilters by refining project filtering logic ([9dbcd03](https://github.com/MRdevX/mrashidi.me/commit/9dbcd031716b9cc3c02574e72e2a0b1c8db6b88f))
+* update GitHub API integration and commit date handling ([#64](https://github.com/MRdevX/mrashidi.me/issues/64)) ([69c9df8](https://github.com/MRdevX/mrashidi.me/commit/69c9df863df29bdbdea72737deefe58b96856ac9))
+
 ### [0.1.115](https://github.com/MRdevX/mrashidi.me/compare/v0.1.114...v0.1.115) (2026-04-19)
 
 
