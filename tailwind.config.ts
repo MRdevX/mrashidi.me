@@ -24,12 +24,12 @@ export default {
           900: "#7c2d12",
         },
         secondary: {
-          DEFAULT: "#00fff5",
-          500: "#00fff5",
+          DEFAULT: "#64748b",
+          500: "#64748b",
         },
         accent: {
-          DEFAULT: "#bc13fe",
-          500: "#bc13fe",
+          DEFAULT: "#475569",
+          500: "#475569",
         },
         terminal: {
           DEFAULT: "#00ff00",
@@ -63,25 +63,30 @@ export default {
         },
         glitch: {
           "0%": {
-            textShadow: "0.05em 0 0 #ff5f1f, -0.05em -0.025em 0 #00fff5, -0.025em 0.05em 0 #bc13fe",
+            textShadow:
+              "0.05em 0 0 #ff5f1f, -0.05em -0.025em 0 rgba(255,95,31,0.35), -0.025em 0.05em 0 rgba(255,95,31,0.25)",
           },
           "14%": {
-            textShadow: "0.05em 0 0 #ff5f1f, -0.05em -0.025em 0 #00fff5, -0.025em 0.05em 0 #bc13fe",
+            textShadow:
+              "0.05em 0 0 #ff5f1f, -0.05em -0.025em 0 rgba(255,95,31,0.35), -0.025em 0.05em 0 rgba(255,95,31,0.25)",
           },
           "15%": {
-            textShadow: "-0.05em -0.025em 0 #ff5f1f, 0.025em 0.025em 0 #00fff5, -0.05em -0.05em 0 #bc13fe",
+            textShadow:
+              "-0.05em -0.025em 0 #ff5f1f, 0.025em 0.025em 0 rgba(255,95,31,0.3), -0.05em -0.05em 0 rgba(255,95,31,0.2)",
           },
           "49%": {
-            textShadow: "-0.05em -0.025em 0 #ff5f1f, 0.025em 0.025em 0 #00fff5, -0.05em -0.05em 0 #bc13fe",
+            textShadow:
+              "-0.05em -0.025em 0 #ff5f1f, 0.025em 0.025em 0 rgba(255,95,31,0.3), -0.05em -0.05em 0 rgba(255,95,31,0.2)",
           },
           "50%": {
-            textShadow: "0.025em 0.05em 0 #ff5f1f, 0.05em 0 0 #00fff5, 0 -0.05em 0 #bc13fe",
+            textShadow: "0.025em 0.05em 0 #ff5f1f, 0.05em 0 0 rgba(255,95,31,0.35), 0 -0.05em 0 rgba(255,95,31,0.25)",
           },
           "99%": {
-            textShadow: "0.025em 0.05em 0 #ff5f1f, 0.05em 0 0 #00fff5, 0 -0.05em 0 #bc13fe",
+            textShadow: "0.025em 0.05em 0 #ff5f1f, 0.05em 0 0 rgba(255,95,31,0.35), 0 -0.05em 0 rgba(255,95,31,0.25)",
           },
           "100%": {
-            textShadow: "-0.025em 0 0 #ff5f1f, -0.025em -0.025em 0 #00fff5, -0.025em -0.05em 0 #bc13fe",
+            textShadow:
+              "-0.025em 0 0 #ff5f1f, -0.025em -0.025em 0 rgba(255,95,31,0.3), -0.025em -0.05em 0 rgba(255,95,31,0.2)",
           },
         },
 

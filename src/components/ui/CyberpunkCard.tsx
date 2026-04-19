@@ -16,7 +16,7 @@ interface CyberpunkCardProps {
 }
 
 export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps>(
-  ({ children, className, variant = "default", hover = false, animate = true, ...props }, ref) => {
+  ({ children, className, variant = "default", hover = false, animate = false, ...props }, ref) => {
     const { getCardVariant } = useThemeConfig();
 
     const cardElement = (

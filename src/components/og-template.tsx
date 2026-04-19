@@ -15,8 +15,8 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#000000",
-      backgroundImage: "linear-gradient(135deg, #000000 0%, #1a1a1a 100%)",
+      backgroundColor: "#12151c",
+      backgroundImage: "linear-gradient(135deg, #12151c 0%, #1a1f2a 100%)",
       position: "relative",
     }}
   >
@@ -62,7 +62,7 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
           fontWeight: "bold",
           color: "#ffffff",
           margin: "0 0 20px 0",
-          textShadow: "0 0 20px rgba(255, 95, 31, 0.5)",
+          textShadow: "0 0 24px rgba(255, 95, 31, 0.25)",
         }}
       >
         {title}
@@ -84,7 +84,7 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
       <p
         style={{
           fontSize: "24px",
-          color: "#cccccc",
+          color: "#cbd5e1",
           margin: "0 0 40px 0",
           maxWidth: "800px",
           lineHeight: "1.4",
@@ -97,8 +97,8 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
       <div
         style={{
           fontSize: "18px",
-          color: "#888888",
-          border: "2px solid #ff5f1f",
+          color: "#94a3b8",
+          border: "1px solid rgba(255, 95, 31, 0.45)",
           padding: "12px 24px",
           borderRadius: "8px",
           backgroundColor: "rgba(255, 95, 31, 0.1)",
@@ -116,9 +116,9 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
         left: "20px",
         right: "20px",
         bottom: "20px",
-        border: "4px solid #ff5f1f",
+        border: "1px solid rgba(255, 95, 31, 0.35)",
         borderRadius: "12px",
-        opacity: 0.3,
+        opacity: 0.9,
       }}
     />
   </div>

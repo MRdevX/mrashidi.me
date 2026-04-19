@@ -60,7 +60,7 @@ const config: SiteConfig = {
       "Software Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, AWS, Azure, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST API",
   },
   ui: {
-    themeColor: "#f97316",
+    themeColor: "#12151c",
     msTileColor: "#f97316",
     appName: "MR Portfolio",
     appTitle: "MR Portfolio",

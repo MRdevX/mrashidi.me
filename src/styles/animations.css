@@ -17,17 +17,22 @@
 
   /* Gradient text animation */
   .animated-gradient-text {
-    background: linear-gradient(to right, var(--neon-orange), var(--neon-purple), var(--neon-blue));
+    background: linear-gradient(to right, var(--neon-orange), #fb923c, var(--neon-orange));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     background-size: 200% auto;
-    animation: gradient 8s linear infinite;
   }
 
   @keyframes gradient {
     to {
       background-position: 200% center;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animated-gradient-text {
+      animation: gradient 8s linear infinite;
     }
   }
 
@@ -69,51 +74,56 @@
   /* Glitch effect */
   .glitch {
     position: relative;
-    animation: glitch 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .glitch {
+      animation: glitch 1s infinite;
+    }
   }
 
   @keyframes glitch {
     0% {
       text-shadow:
         0.05em 0 0 var(--neon-orange),
-        -0.05em -0.025em 0 var(--neon-blue),
-        -0.025em 0.05em 0 var(--neon-purple);
+        -0.05em -0.025em 0 rgba(255, 95, 31, 0.35),
+        -0.025em 0.05em 0 rgba(255, 95, 31, 0.25);
     }
     14% {
       text-shadow:
         0.05em 0 0 var(--neon-orange),
-        -0.05em -0.025em 0 var(--neon-blue),
-        -0.025em 0.05em 0 var(--neon-purple);
+        -0.05em -0.025em 0 rgba(255, 95, 31, 0.35),
+        -0.025em 0.05em 0 rgba(255, 95, 31, 0.25);
     }
     15% {
       text-shadow:
         -0.05em -0.025em 0 var(--neon-orange),
-        0.025em 0.025em 0 var(--neon-blue),
-        -0.05em -0.05em 0 var(--neon-purple);
+        0.025em 0.025em 0 rgba(255, 95, 31, 0.3),
+        -0.05em -0.05em 0 rgba(255, 95, 31, 0.2);
     }
     49% {
       text-shadow:
         -0.05em -0.025em 0 var(--neon-orange),
-        0.025em 0.025em 0 var(--neon-blue),
-        -0.05em -0.05em 0 var(--neon-purple);
+        0.025em 0.025em 0 rgba(255, 95, 31, 0.3),
+        -0.05em -0.05em 0 rgba(255, 95, 31, 0.2);
     }
     50% {
       text-shadow:
         0.025em 0.05em 0 var(--neon-orange),
-        0.05em 0 0 var(--neon-blue),
-        0 -0.05em 0 var(--neon-purple);
+        0.05em 0 0 rgba(255, 95, 31, 0.35),
+        0 -0.05em 0 rgba(255, 95, 31, 0.25);
     }
     99% {
       text-shadow:
         0.025em 0.05em 0 var(--neon-orange),
-        0.05em 0 0 var(--neon-blue),
-        0 -0.05em 0 var(--neon-purple);
+        0.05em 0 0 rgba(255, 95, 31, 0.35),
+        0 -0.05em 0 rgba(255, 95, 31, 0.25);
     }
     100% {
       text-shadow:
         -0.025em 0 0 var(--neon-orange),
-        -0.025em -0.025em 0 var(--neon-blue),
-        -0.025em -0.05em 0 var(--neon-purple);
+        -0.025em -0.025em 0 rgba(255, 95, 31, 0.3),
+        -0.025em -0.05em 0 rgba(255, 95, 31, 0.2);
     }
   }
 
@@ -353,8 +363,13 @@
   }
 
   .scanline {
-    animation: scanline 8s linear infinite;
     pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scanline {
+      animation: scanline 8s linear infinite;
+    }
   }
 
   /* Neon pulse animation */
@@ -389,21 +404,24 @@
     0%,
     100% {
       text-shadow:
-        0 0 10px rgba(255, 95, 31, 0.5),
-        0 0 20px rgba(255, 95, 31, 0.3),
-        0 0 30px rgba(255, 95, 31, 0.2);
+        0 0 8px rgba(255, 95, 31, 0.25),
+        0 0 16px rgba(255, 95, 31, 0.15);
     }
     50% {
       text-shadow:
-        0 0 20px rgba(255, 95, 31, 0.7),
-        0 0 30px rgba(255, 95, 31, 0.5),
-        0 0 40px rgba(255, 95, 31, 0.3);
+        0 0 14px rgba(255, 95, 31, 0.35),
+        0 0 22px rgba(255, 95, 31, 0.2);
     }
   }
 
   .glow-text {
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-    animation: glow 2s ease-in-out infinite;
+    text-shadow: 0 0 18px rgba(255, 95, 31, 0.2);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .glow-text {
+      animation: glow 3s ease-in-out infinite;
+    }
   }
 
   /* Animation utilities */
@@ -452,14 +470,19 @@
   /* Gradient shift animation for hero background */
   .animate-gradient-shift {
     background:
-      linear-gradient(135deg, rgba(255, 95, 31, 0.08) 0%, transparent 40%, rgba(0, 255, 245, 0.06) 100%),
-      linear-gradient(45deg, rgba(0, 255, 245, 0.05) 0%, transparent 60%, rgba(255, 95, 31, 0.06) 100%),
-      linear-gradient(225deg, rgba(255, 95, 31, 0.04) 0%, transparent 70%, rgba(0, 255, 245, 0.05) 100%);
+      linear-gradient(135deg, rgba(255, 95, 31, 0.06) 0%, transparent 45%, rgba(255, 95, 31, 0.04) 100%),
+      linear-gradient(45deg, rgba(255, 95, 31, 0.04) 0%, transparent 55%, rgba(251, 146, 60, 0.05) 100%),
+      linear-gradient(225deg, rgba(251, 146, 60, 0.03) 0%, transparent 65%, rgba(255, 95, 31, 0.04) 100%);
     background-size:
       300% 300%,
       400% 400%,
       350% 350%;
-    animation: gradient-shift 20s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-gradient-shift {
+      animation: gradient-shift 24s ease-in-out infinite;
+    }
   }
 
   @keyframes gradient-shift {

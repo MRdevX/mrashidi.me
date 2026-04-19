@@ -84,7 +84,7 @@ export function ProjectFilters({
       {/* Technology Stack Icons - Categorized */}
       <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-orange-400 mb-3 font-cyberpunk glow-text flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-orange-400 mb-3 font-albert tracking-tight flex items-center gap-2">
             <Filter className="w-5 h-5" />
             Filter by Technology Stack
           </h3>

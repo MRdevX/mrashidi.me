@@ -52,11 +52,11 @@ export default function Home() {
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper containerClassName="max-w-5xl mx-auto">
       <motion.div initial="hidden" animate="show" variants={pageContainerVariants}>
         <motion.div className="hero-section content-section relative overflow-hidden" variants={pageItemVariants}>
           <div className="hero-background" />
-          <div className="hero-gradient-bg absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-purple-500/10 animate-gradient-shift" />
+          <div className="hero-gradient-bg absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-orange-400/5 animate-gradient-shift" />
           <div className="relative z-10">
             <h1 className="cyberpunk-h1 text-orange-500">{config.person.name}</h1>
             <p className="hero-subtitle text-body">
@@ -94,8 +94,6 @@ export default function Home() {
               </SocialButton>
             </div>
           </div>
-
-          <div className="scanline absolute inset-0 pointer-events-none" />
         </motion.div>
 
         <MotionSection className="mb-16" variants={pageItemVariants}>
