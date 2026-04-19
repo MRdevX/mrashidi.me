@@ -6,7 +6,7 @@ import { ProjectModal } from "@/components/ui/ProjectModal";
 import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { getTechIcon } from "@/lib/tech";
-import { createCommitUrl, formatDate } from "@/lib/utils/index";
+import { createCommitUrl, formatDate, formatRelativeTime } from "@/lib/utils/index";
 
 interface ProjectCardProps {
   project: Project;
@@ -100,7 +100,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               <>
                 <div className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
-                  <span>Last commit: {formatDate(commitInfo.date)}</span>
+                  <span title={formatDate(commitInfo.date)}>Last commit: {formatRelativeTime(commitInfo.date)}</span>
                 </div>
                 <a
                   href={createCommitUrl(project.githubUrl, commitInfo.hash)}

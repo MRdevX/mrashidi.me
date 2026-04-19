@@ -53,7 +53,7 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
     return Object.values(categorizedStacks).flat().sort();
   }, [categorizedStacks]);
 
-  const { loadFromCache, saveToCache } = useCache<Record<string, CommitInfo>>("project_commit_dates");
+  const { loadFromCache, saveToCache } = useCache<Record<string, CommitInfo>>("project_commit_dates_v2");
 
   const loadCachedCommitInfo = useCallback((): Map<string, { date: Date; hash: string }> => {
     const cached = loadFromCache();
@@ -63,7 +63,11 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
 
     const infoMap = new Map<string, { date: Date; hash: string }>();
     for (const [url, info] of Object.entries(cached)) {
-      infoMap.set(url, { date: new Date(info.date), hash: info.hash });
+      const date = new Date(info.date);
+      if (Number.isNaN(date.getTime()) || !info.hash) {
+        continue;
+      }
+      infoMap.set(url, { date, hash: info.hash });
     }
     return infoMap;
   }, [loadFromCache]);
@@ -83,22 +87,26 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
     setIsLoadingCommitDates(true);
 
     try {
+      const projectsWithGithub = projects.filter((project) => project.githubUrl);
+      const requiredUrls = new Set(projectsWithGithub.map((p) => p.githubUrl));
+
       const cachedInfo = loadCachedCommitInfo();
-      if (cachedInfo.size > 0) {
-        setCommitInfo(cachedInfo);
-        setIsLoadingCommitDates(false);
+      const merged = new Map<string, { date: Date; hash: string }>();
+      for (const url of requiredUrls) {
+        const hit = cachedInfo.get(url);
+        if (hit) {
+          merged.set(url, hit);
+        }
+      }
+      setCommitInfo(new Map(merged));
+
+      const toFetch = projectsWithGithub.filter((p) => !merged.has(p.githubUrl));
+      if (toFetch.length === 0) {
         return;
       }
 
-      const newCommitInfo = new Map<string, { date: Date; hash: string }>();
-      const projectsWithGithub = projects.filter((project) => project.githubUrl);
-
       const results = await Promise.allSettled(
-        projectsWithGithub.map(async (project) => {
-          if (!project.githubUrl) {
-            return null;
-          }
-
+        toFetch.map(async (project) => {
           const commitInfo = await githubService.getLatestCommitInfo(project.githubUrl);
           return { url: project.githubUrl, commitInfo };
         })
@@ -106,14 +114,14 @@ export function useProjectFilters(itemsPerPage: number = 6): UseProjectFiltersRe
 
       for (const result of results) {
         if (result.status === "fulfilled" && result.value?.commitInfo) {
-          newCommitInfo.set(result.value.url, result.value.commitInfo);
+          merged.set(result.value.url, result.value.commitInfo);
         }
       }
 
-      if (newCommitInfo.size > 0) {
-        saveCommitInfoToCache(newCommitInfo);
+      setCommitInfo(new Map(merged));
+      if (merged.size > 0) {
+        saveCommitInfoToCache(merged);
       }
-      setCommitInfo(newCommitInfo);
     } catch (error) {
       logger.error({ operation: "fetchCommitDates", error: String(error) });
     } finally {
