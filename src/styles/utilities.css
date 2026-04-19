@@ -3,22 +3,6 @@
    ========================================================================== */
 
 @layer utilities {
-  /* Neon text colors */
-  .text-neon-orange {
-    color: var(--neon-orange);
-    text-shadow: 0 0 5px var(--neon-orange);
-  }
-
-  .text-neon-green {
-    color: var(--terminal-green);
-    text-shadow: 0 0 5px var(--terminal-green);
-  }
-
-  .dark .text-neon-green {
-    color: #0f0;
-    text-shadow: 0 0 5px #0f0;
-  }
-
   /* Line clamp utilities for v4 compatibility */
 
   .line-clamp-3 {
@@ -80,11 +64,6 @@
   @media (max-width: 640px) {
     .glass-card {
       padding: 1rem;
-    }
-
-    .neon-button {
-      width: 100%;
-      justify-content: center;
     }
 
     .feature-card {

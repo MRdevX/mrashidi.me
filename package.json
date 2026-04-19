@@ -41,8 +41,6 @@
     "@fontsource/exo-2": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/orbitron": "^5.2.8",
-    "@fontsource/press-start-2p": "^5.2.7",
-    "@fontsource/vt323": "^5.2.7",
     "@headlessui/react": "^2.2.10",
     "@hookform/resolvers": "^5.2.2",
     "@next/third-parties": "^16.2.3",

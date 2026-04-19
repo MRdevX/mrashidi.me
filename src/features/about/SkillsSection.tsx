@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedSection, SectionHeader } from "@/components/ui";
+import { MotionSection, SectionHeader } from "@/components/ui";
 import { skills } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { getTechIcon } from "@/lib/tech";
@@ -26,7 +26,7 @@ export function SkillsSection() {
   };
 
   return (
-    <AnimatedSection delay={0.4}>
+    <MotionSection as="section" delay={0.4}>
       <SectionHeader iconName="Code2" title="Skills & Technologies" size="sm" />
 
       <div className="space-y-8">
@@ -75,6 +75,6 @@ export function SkillsSection() {
           );
         })}
       </div>
-    </AnimatedSection>
+    </MotionSection>
   );
 }

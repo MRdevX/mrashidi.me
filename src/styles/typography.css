@@ -3,52 +3,7 @@
    ========================================================================== */
 
 @layer utilities {
-  /* Cohesive Cyberpunk Typography System */
-  .cyberpunk-text {
-    font-family: "Orbitron", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
-  }
-
-  .terminal-text {
-    font-family: "JetBrains Mono", monospace;
-    color: var(--terminal-green);
-    text-shadow: 0 0 5px rgba(0, 100, 0, 0.5);
-    font-weight: 400;
-  }
-
-  .dark .terminal-text {
-    color: #4ade80;
-    text-shadow: 0 0 6px rgba(74, 222, 128, 0.35);
-  }
-
-  .retro-text {
-    font-family: "Press Start 2P", cursive;
-    line-height: 1.5;
-    font-weight: 400;
-  }
-
-  .matrix-text {
-    font-family: "VT323", monospace;
-    color: var(--terminal-green);
-    text-shadow: 0 0 4px rgba(0, 100, 0, 0.6);
-    font-weight: 400;
-  }
-
-  .dark .matrix-text {
-    color: #4ade80;
-    text-shadow: 0 0 4px rgba(74, 222, 128, 0.35);
-  }
-
-  .space-text {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    letter-spacing: 0.2px;
-    line-height: 1.6;
-  }
-
-  /* Typography Hierarchy */
+  /* Typography hierarchy */
   .cyberpunk-h1 {
     font-size: 3rem;
     line-height: 1.1;

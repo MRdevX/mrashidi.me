@@ -1,7 +1,7 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
-import { AnimatedSection, SectionHeader } from "@/components/ui";
+import { MotionSection, SectionHeader } from "@/components/ui";
 import { education } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
@@ -9,7 +9,7 @@ export function EducationSection() {
   const { getCardPattern, getTextColor } = useThemeConfig();
 
   return (
-    <AnimatedSection delay={1.2}>
+    <MotionSection as="section" delay={1.2}>
       <SectionHeader iconName="GraduationCap" title="Education" size="sm" />
       {education.map((edu) => (
         <div className={`${getCardPattern()} mb-4`} key={edu.degree + edu.institution}>
@@ -46,6 +46,6 @@ export function EducationSection() {
           </div>
         </div>
       ))}
-    </AnimatedSection>
+    </MotionSection>
   );
 }

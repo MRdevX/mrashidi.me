@@ -15,27 +15,6 @@
     }
   }
 
-  /* Gradient text animation */
-  .animated-gradient-text {
-    background: linear-gradient(to right, var(--neon-orange), #fb923c, var(--neon-orange));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    background-size: 200% auto;
-  }
-
-  @keyframes gradient {
-    to {
-      background-position: 200% center;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .animated-gradient-text {
-      animation: gradient 8s linear infinite;
-    }
-  }
-
   /* Loading animation */
   .loading-dots {
     display: inline-flex;
