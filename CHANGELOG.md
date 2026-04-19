@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.115](https://github.com/MRdevX/mrashidi.me/compare/v0.1.114...v0.1.115) (2026-04-19)
+
+
+### Features
+
+* minimal redesign ([#63](https://github.com/MRdevX/mrashidi.me/issues/63)) ([7f2c968](https://github.com/MRdevX/mrashidi.me/commit/7f2c968fd4e9382a850acb07354263b2e0cf6b5a))
+
 ### [0.1.114](https://github.com/MRdevX/mrashidi.me/compare/v0.1.112...v0.1.114) (2026-04-13)
 
 
