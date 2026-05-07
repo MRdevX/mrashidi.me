@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.120](https://github.com/MRdevX/mrashidi.me/compare/v0.1.119...v0.1.120) (2026-05-07)
+
+
+### Code Refactoring
+
+* update VSCode settings and extensions for improved development experience ([ee8559b](https://github.com/MRdevX/mrashidi.me/commit/ee8559b4e73b7a634b6b247b8405a179a193f4ce))
+* update work experience entries in profile data ([bee37cf](https://github.com/MRdevX/mrashidi.me/commit/bee37cf2d1847b5c3c7fb5e7f55a05c68bdf8a1a))
+
 ### [0.1.119](https://github.com/MRdevX/mrashidi.me/compare/v0.1.118...v0.1.119) (2026-05-07)
 
 ### [0.1.118](https://github.com/MRdevX/mrashidi.me/compare/v0.1.117...v0.1.118) (2026-04-29)
