@@ -36,7 +36,7 @@
     "outdated": "pnpm outdated"
   },
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.1037.0",
+    "@aws-sdk/client-ses": "^3.1041.0",
     "@fontsource/albert-sans": "^5.2.8",
     "@fontsource/exo-2": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
@@ -47,8 +47,8 @@
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@react-email/components": "^1.0.12",
-    "@react-email/render": "^2.0.7",
-    "@sentry/nextjs": "^10.50.0",
+    "@react-email/render": "^2.0.8",
+    "@sentry/nextjs": "^10.51.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
@@ -66,8 +66,8 @@
     "html-react-parser": "^6.0.1",
     "html-to-text": "^9.0.5",
     "ky": "^2.0.2",
-    "lucide-react": "^1.11.0",
-    "nanoid": "^5.1.9",
+    "lucide-react": "^1.14.0",
+    "nanoid": "^5.1.11",
     "next": "^16.2.4",
     "next-pwa": "^5.6.0",
     "pino": "^10.3.1",
@@ -76,14 +76,14 @@
     "react-dom": "^19.2.5",
     "react-email": "^5.2.11",
     "react-google-recaptcha-v3": "^1.11.0",
-    "react-hook-form": "^7.74.0",
+    "react-hook-form": "^7.75.0",
     "react-icons": "^5.6.0",
     "sanitize-filename": "^1.6.4",
     "sanitize-html": "^2.17.3",
     "swr": "^2.4.1",
     "tailwind-merge": "^3.5.0",
     "validator": "^13.15.35",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.13",
