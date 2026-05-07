@@ -8,8 +8,22 @@ export interface WorkExperience {
 
 const workExperience: WorkExperience[] = [
   {
-    title: "Senior Software Engineer & Technical Lead",
-    company: "Fakir Technology Consultants GmbH (Client: SE inno2fleet E-Mobility Services)",
+    title: "Software Engineer",
+    company: "MindDoc GmbH",
+    location: "Berlin, Germany (Full-Time, Hybrid)",
+    period: "Nov 2026 – Present",
+    achievements: [],
+  },
+  {
+    title: "Software Engineer & Co-Founder",
+    company: "Notable Nomads",
+    location: "Berlin, Germany (Freelance, Remote)",
+    period: "Nov 2024 – Present",
+    achievements: [],
+  },
+  {
+    title: "Technical Team Lead at inno2fleet",
+    company: "Schneider Electric (Outsourced by Fakir Tech)",
     location: "Berlin, Germany (Full-Time, Remote)",
     period: "Mar 2022 – Jan 2025",
     achievements: [
@@ -29,8 +43,8 @@ const workExperience: WorkExperience[] = [
     ],
   },
   {
-    title: "Senior Backend Engineer",
-    company: "Fakir Technology Consultants GmbH (Client: SE inno2fleet E-Mobility Services)",
+    title: "Senior Software Engineer at inno2fleet",
+    company: "Schneider Electric (Outsourced by Fakir Tech)",
     location: "Berlin, Germany (Full-Time, Remote)",
     period: "Mar 2021 – Feb 2022",
     achievements: [
