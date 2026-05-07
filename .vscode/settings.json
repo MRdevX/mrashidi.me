@@ -11,15 +11,22 @@
   "editor.rulers": [120],
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 120,
+  "editor.linkedEditing": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.smoothScrolling": true,
 
-  "typescript.preferences.importModuleSpecifier": "nonRelative",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.quoteStyle": "double",
-
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "js/ts.preferences.quoteStyle": "double",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "js/ts.suggest.autoImports": true,
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
+  "js/ts.inlayHints.parameterNames.enabled": "literals",
+  "js/ts.inlayHints.enumMemberValues.enabled": true,
+  "css.validate": false,
+  "scss.validate": false,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
@@ -78,22 +85,21 @@
     "**/build/**": true,
     "**/out/**": true
   },
-
-  "tailwindCSS.includeLanguages": {
-    "typescript": "javascript",
-    "typescriptreact": "javascript"
-  },
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-
-  "emmet.includeLanguages": {
-    "typescript": "html",
-    "typescriptreact": "html"
-  },
-
-  "next.serverComponents": true,
-  "git.ignoreLimitWarning": true
+  "npm.packageManager": "pnpm",
+  "git.autofetch": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.test.ts, ${capture}.spec.ts, ${capture}.d.ts",
+    "*.tsx": "${capture}.test.tsx, ${capture}.spec.tsx, ${capture}.stories.tsx",
+    "package.json": "package-lock.json, pnpm-lock.yaml, .npmrc, .pnpmrc, pnpm-workspace.yaml, .nvmrc",
+    "next.config.*": "next-env.d.ts, postcss.config.*, tailwind.config.*",
+    "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo, next-env.d.ts",
+    ".env": ".env.*, .env.example, .env.local, .env.sentry-build-plugin",
+    "README.md": "CHANGELOG.md, CONTRIBUTING.md, AGENTS.md, LICENSE"
+  }
 }

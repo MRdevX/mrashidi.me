@@ -1,13 +1,20 @@
 {
   "recommendations": [
+    // Core tooling
     "biomejs.biome",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+
+    // Testing
     "ms-playwright.playwright",
     "vitest.explorer",
-    "bradlc.vscode-tailwindcss",
+
+    // Editor UX
     "usernamehw.errorlens",
     "eamodio.gitlens",
-    "formulahendry.auto-rename-tag",
     "christian-kohler.path-intellisense",
-    "ms-vscode.vscode-typescript-next"
+    "naumovs.color-highlight",
+    "streetsidesoftware.code-spell-checker",
+    "wix.vscode-import-cost"
   ]
 }
