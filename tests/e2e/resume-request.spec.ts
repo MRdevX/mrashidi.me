@@ -52,6 +52,6 @@ test.describe("Resume Request", () => {
 
     await page.getByRole("button", { name: "Download CV" }).click();
 
-    await expect(page.locator("text=CV downloaded! Check your email for confirmation.")).toBeVisible();
+    await expect(page.getByText("CV downloaded! Check your email for confirmation.", { exact: true })).toBeVisible();
   });
 });

@@ -48,32 +48,26 @@ describe("TerminalInput - Basic Functionality", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument();
   });
 
-  it("should display correct placeholder when not executing", () => {
-    render(<TerminalInput {...defaultProps} />);
-
+  it.each([
+    {
+      isExecuting: false,
+      placeholder: "Type 'help' for available commands...",
+      disabled: false,
+    },
+    {
+      isExecuting: true,
+      placeholder: "Executing command...",
+      disabled: true,
+    },
+  ])("placeholder and disabled when isExecuting=$isExecuting", ({ isExecuting, placeholder, disabled }) => {
+    render(<TerminalInput {...defaultProps} isExecuting={isExecuting} />);
     const input = screen.getByRole("textbox");
-    expect(input).toHaveAttribute("placeholder", "Type 'help' for available commands...");
-  });
-
-  it("should display executing placeholder when executing", () => {
-    render(<TerminalInput {...defaultProps} isExecuting={true} />);
-
-    const input = screen.getByRole("textbox");
-    expect(input).toHaveAttribute("placeholder", "Executing command...");
-  });
-
-  it("should be disabled when executing", () => {
-    render(<TerminalInput {...defaultProps} isExecuting={true} />);
-
-    const input = screen.getByRole("textbox");
-    expect(input).toBeDisabled();
-  });
-
-  it("should be enabled when not executing", () => {
-    render(<TerminalInput {...defaultProps} isExecuting={false} />);
-
-    const input = screen.getByRole("textbox");
-    expect(input).not.toBeDisabled();
+    expect(input).toHaveAttribute("placeholder", placeholder);
+    if (disabled) {
+      expect(input).toBeDisabled();
+    } else {
+      expect(input).not.toBeDisabled();
+    }
   });
 
   it("should call onChange when input value changes", () => {

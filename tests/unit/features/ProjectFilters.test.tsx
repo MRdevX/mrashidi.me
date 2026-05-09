@@ -57,4 +57,27 @@ describe("ProjectFilters", () => {
 
     expect(screen.getByRole("button", { name: /TypeScript/i })).toHaveAttribute("aria-pressed", "true");
   });
+
+  it("calls clear and open-source handlers", () => {
+    const onClearAll = vi.fn();
+    const onToggleOpenSource = vi.fn();
+
+    render(
+      <ProjectFilters
+        categorizedStacks={emptyCategorized}
+        stackUsageCount={{}}
+        selectedStacks={new Set()}
+        showOpenSourceOnly={false}
+        onToggleStack={vi.fn()}
+        onToggleOpenSource={onToggleOpenSource}
+        onClearAll={onClearAll}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /Clear All Filters/i }));
+    expect(onClearAll).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByRole("checkbox", { name: /Show Open Source Only/i }));
+    expect(onToggleOpenSource).toHaveBeenCalledWith(true);
+  });
 });
