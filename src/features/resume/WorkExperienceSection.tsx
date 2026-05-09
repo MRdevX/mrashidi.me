@@ -18,12 +18,9 @@ import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { cn } from "@/lib/utils";
 import { ResumeFilamentDivider } from "./ResumeFilamentDivider";
+import { ResumeHeadingBlock } from "./ResumeHeadingBlock";
+import { ResumeMetaChip, resumeDetailRowIconClass } from "./ResumeMetaChip";
 
-/** Shared styles: meta chips + left-column body text */
-const metaChipClass =
-  "inline-flex w-fit max-w-full shrink-0 items-center gap-2 rounded-md border border-orange-500/15 bg-orange-500/5 px-2.5 py-1.5 text-xs font-medium leading-tight tracking-tight text-foreground dark:border-orange-500/25 dark:bg-orange-500/10 sm:text-sm";
-const metaChipIconClass = "size-4 shrink-0 text-orange-500/80 dark:text-orange-400/90";
-const leadingIconClass = "size-4 shrink-0 text-orange-500/70 dark:text-orange-400/85";
 /**
  * Vertical sync for milestone dot + spine with job title glyph box:
  * feature-card padding (`p-6`) + CyberpunkCardHeader (`p-6`) + ~½ leading for `text-xl` / md:`text-2xl` (`leading-snug`).
@@ -32,18 +29,12 @@ const timelineAnchorTw = "top-[3.875rem] md:top-[4rem]";
 const timelineSpineClass = `pointer-events-none absolute ${timelineAnchorTw} bottom-14 left-6 z-[1] w-px -translate-x-1/2 rounded-full bg-[linear-gradient(to_bottom,_rgb(249_115_22/0.44)_0%,_rgb(249_115_22/0.44)_calc(100%-4rem),_transparent)] dark:bg-[linear-gradient(to_bottom,_rgb(251_146_60/0.36)_0%,_rgb(251_146_60/0.36)_calc(100%-4rem),_transparent)]`;
 
 export function WorkExperienceSection() {
-  const { getSectionTitle, getTextColor } = useThemeConfig();
+  const { getTextColor } = useThemeConfig();
   const [openAchievements, setOpenAchievements] = useState<Set<string>>(new Set());
 
   return (
     <section className="mb-16">
-      <header className="mb-8 space-y-5">
-        <div className="flex items-center gap-3">
-          <Briefcase className="size-8 shrink-0 text-orange-500" aria-hidden />
-          <h2 className={getSectionTitle()}>Work Experience</h2>
-        </div>
-        <ResumeFilamentDivider />
-      </header>
+      <ResumeHeadingBlock icon={Briefcase} title="Work Experience" />
 
       <div className="relative">
         <div aria-hidden className={timelineSpineClass} />
@@ -85,14 +76,14 @@ export function WorkExperienceSection() {
                             <div
                               className={`flex flex-wrap items-center gap-2 font-albert text-base font-medium leading-snug tracking-tight ${getTextColor("secondary")}`}
                             >
-                              <Building2 className={leadingIconClass} aria-hidden />
+                              <Building2 className={resumeDetailRowIconClass} aria-hidden />
                               <span>{job.company}</span>
                             </div>
 
                             <div
                               className={`flex flex-wrap items-center gap-2 font-albert text-sm leading-snug tracking-tight ${getTextColor("secondary")}`}
                             >
-                              <MapPin className={leadingIconClass} aria-hidden />
+                              <MapPin className={resumeDetailRowIconClass} aria-hidden />
                               <span className="min-w-0">{job.location}</span>
                             </div>
                           </div>
@@ -101,14 +92,12 @@ export function WorkExperienceSection() {
                           <aside
                             className={`flex w-full shrink-0 flex-col items-end gap-3 font-albert sm:ml-auto sm:w-auto sm:min-w-[11.5rem] sm:max-w-[14rem] ${getTextColor("muted")}`}
                           >
-                            <div className={metaChipClass}>
-                              <Calendar className={metaChipIconClass} aria-hidden />
+                            <ResumeMetaChip icon={Calendar}>
                               <span className="tabular-nums">{job.period}</span>
-                            </div>
-                            <div className={metaChipClass}>
-                              <Laptop className={metaChipIconClass} aria-hidden />
+                            </ResumeMetaChip>
+                            <ResumeMetaChip icon={Laptop}>
                               <span className="text-balance">{job.employmentType}</span>
-                            </div>
+                            </ResumeMetaChip>
                           </aside>
                         </div>
                         {showAchievementsBlock ? <ResumeFilamentDivider className="mt-5" /> : null}
