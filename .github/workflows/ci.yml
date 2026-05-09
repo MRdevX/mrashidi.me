@@ -1,10 +1,8 @@
 name: CI
 
-# Keep paths-ignore in sync with Security workflow.
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -12,8 +10,7 @@ on:
       - "AGENTS.md"
       - "CONTRIBUTING.md"
   push:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -21,16 +18,9 @@ on:
       - "AGENTS.md"
       - "CONTRIBUTING.md"
   workflow_dispatch:
-    inputs:
-      skip_e2e:
-        description: "Skip Playwright E2E (faster manual run)"
-        type: boolean
-        default: false
-
-run-name: "CI: ${{ github.event.pull_request.title || github.ref_name }}"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -44,46 +34,28 @@ permissions:
   contents: read
 
 jobs:
-  commitlint:
-    name: Commitlint
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
-
-      - name: Validate commit messages
-        run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
-
   quality:
-    name: Lint, types & unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      - name: Biome (format, lint, imports)
-        run: pnpm exec biome check . --reporter=github
+      - name: Commitlint
+        if: github.event_name == 'pull_request'
+        run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
-      - name: TypeScript
-        run: pnpm exec tsc --noEmit
+      - run: pnpm exec biome check . --reporter=github
 
-      - name: Unit tests
-        run: pnpm test:run
+      - run: pnpm exec tsc --noEmit
 
-      - name: Upload unit test outputs
+      - run: pnpm test:run
+
+      - uses: actions/upload-artifact@v7
         if: failure()
-        uses: actions/upload-artifact@v7
         with:
           name: unit-test-results
           path: |
@@ -92,35 +64,26 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  e2e-tests:
-    name: E2E tests
+  e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.skip_e2e != 'true' }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@v5
+      - uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
+          restore-keys: playwright-${{ runner.os }}-
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+      - run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run E2E tests
-        run: pnpm test:e2e
+      - run: pnpm test:e2e
 
-      - name: Upload E2E artifacts
+      - uses: actions/upload-artifact@v7
         if: failure()
-        uses: actions/upload-artifact@v7
         with:
           name: e2e-artifacts
           path: |
@@ -130,23 +93,13 @@ jobs:
           retention-days: 7
 
   build:
-    name: Build (production parity)
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    needs:
-      - quality
-      - e2e-tests
-    if: |
-      always() &&
-      needs.quality.result == 'success' &&
-      (needs.e2e-tests.result == 'success' || needs.e2e-tests.result == 'skipped')
+    needs: [quality, e2e]
+    if: ${{ always() && needs.quality.result == 'success' && needs.e2e.result == 'success' }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      # Full pipeline (sitemap, OG images, PWA). E2E uses build:fast + start to avoid two heavy builds.
-      - name: Build application
-        run: pnpm build
+      - run: pnpm build

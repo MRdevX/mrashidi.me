@@ -1,6 +1,6 @@
 name: Auto Release
 
-# workflow_run after CI on main only; do not add push:main (tag races). https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
+# Triggered by CI on main (avoid push:main here — tag races).
 on:
   workflow_run:
     workflows: ["CI"]
@@ -8,8 +8,6 @@ on:
       - completed
     branches:
       - main
-
-run-name: "Release: ${{ github.event.workflow_run.head_branch }}"
 
 concurrency:
   group: auto-release-${{ github.repository }}
@@ -30,17 +28,15 @@ jobs:
       github.event.workflow_run.head_repository.full_name == github.repository
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      - name: Configure Git
+      - name: Git identity
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

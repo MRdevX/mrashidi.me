@@ -1,10 +1,8 @@
 name: Security
 
-# Keep paths-ignore in sync with CI workflow.
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -12,8 +10,7 @@ on:
       - "AGENTS.md"
       - "CONTRIBUTING.md"
   push:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -24,10 +21,8 @@ on:
     - cron: "0 0 * * 1"
   workflow_dispatch:
 
-run-name: "Security: ${{ github.event.pull_request.title || github.ref_name }}"
-
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: security-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -38,8 +33,7 @@ permissions:
   contents: read
 
 jobs:
-  codeql-analysis:
-    name: CodeQL
+  codeql:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
@@ -47,30 +41,23 @@ jobs:
       security-events: write
       actions: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+      - uses: github/codeql-action/init@v4
         with:
           languages: javascript
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+      - uses: github/codeql-action/analyze@v4
 
   dependency-review:
-    name: Dependencies
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: github.event_name == 'pull_request'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v4
+      - uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: moderate
