@@ -56,7 +56,7 @@ const SEMANTIC_COLORS = {
   background: {
     primary: "bg-white dark:bg-[hsl(222_14%_7%)]",
     secondary: "bg-gray-50 dark:bg-gray-800",
-    muted: "bg-gray-100 dark:bg-gray-700",
+    muted: "bg-gray-100 dark:bg-gray-800",
     glass: "bg-white/50 dark:bg-gray-900/50",
     glassLight: "bg-white/30 dark:bg-gray-800/30",
   },

@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { Filter, Globe, Layers, X } from "lucide-react";
 import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { pageEnterTransition } from "@/lib/animations";
 import { CATEGORY_DISPLAY_NAMES, type TechnologyCategory } from "@/lib/core";
 import { getTechIcon } from "@/lib/tech";
 
@@ -25,6 +28,7 @@ export function ProjectFilters({
   onClearAll,
 }: ProjectFiltersProps) {
   const { getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
+  const prefersReducedMotion = useReducedMotion();
 
   const renderCategorySection = (category: TechnologyCategory, stacks: string[]) => {
     if (stacks.length === 0) {
@@ -51,7 +55,7 @@ export function ProjectFilters({
                 key={stack}
                 onClick={() => onToggleStack(stack)}
                 aria-pressed={isSelected}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-medium ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 motion-safe:hover:scale-[1.03] font-medium ${
                   isSelected
                     ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg shadow-orange-500/25"
                     : `${getBackgroundColor("glassLight")} ${getBorderColor("secondary")} ${getTextColor(
@@ -83,7 +87,12 @@ export function ProjectFilters({
   return (
     <>
       {/* Technology Stack Icons - Categorized */}
-      <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div
+        className="mb-8"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={pageEnterTransition(prefersReducedMotion)}
+      >
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-orange-400 mb-3 font-albert tracking-tight flex items-center gap-2">
             <Filter className="w-5 h-5" aria-hidden />
@@ -101,7 +110,12 @@ export function ProjectFilters({
       </motion.div>
 
       {/* Additional Filters */}
-      <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div
+        className="mb-8"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={pageEnterTransition(prefersReducedMotion, { delay: 0.06 })}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Open Source Toggle */}
           <div className="flex items-center">

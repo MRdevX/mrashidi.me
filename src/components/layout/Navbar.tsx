@@ -17,7 +17,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={getNavbarClasses()} aria-label="Main Navigation">
+    <nav className={getNavbarClasses()} aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex justify-between w-full">
@@ -26,12 +26,12 @@ export default function Navbar() {
               <VersionBadge variant="desktop" />
             </div>
 
-            <nav className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8" aria-label="Main Menu">
+            <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
               {desktopNavigationItems.map((item) => (
                 <NavigationItem key={item.name} item={item} isActive={pathname === item.href} />
               ))}
               <ThemeToggle size="sm" />
-            </nav>
+            </div>
           </div>
         </div>
       </div>

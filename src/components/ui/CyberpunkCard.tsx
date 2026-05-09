@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import * as React from "react";
 import type { CardVariant } from "@/config/theme.config";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { PAGE_TRANSITION_EASE } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
 
@@ -18,14 +19,15 @@ interface CyberpunkCardProps {
 export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps>(
   ({ children, className, variant = "default", hover = false, animate = false, ...props }, ref) => {
     const { getCardVariant } = useThemeConfig();
+    const prefersReducedMotion = useReducedMotion();
 
     const cardElement = (
       <Card
         ref={ref}
         className={cn(
-          "transition-all duration-300",
+          "transition-all duration-300 ease-out",
           getCardVariant(variant),
-          hover && "hover:scale-[1.01] hover:shadow-lg",
+          hover && "motion-safe:hover:scale-[1.01] hover:shadow-lg",
           className
         )}
         {...props}
@@ -36,7 +38,10 @@ export const CyberpunkCard = React.forwardRef<HTMLDivElement, CyberpunkCardProps
 
     if (animate && hover) {
       return (
-        <motion.div whileHover={{ scale: 1.01 }} transition={{ duration: 0.2 }}>
+        <motion.div
+          whileHover={prefersReducedMotion ? undefined : { scale: 1.01 }}
+          transition={{ duration: 0.22, ease: PAGE_TRANSITION_EASE }}
+        >
           {cardElement}
         </motion.div>
       );

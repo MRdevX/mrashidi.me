@@ -1,7 +1,7 @@
 "use client";
 
 import { Disclosure } from "@headlessui/react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { GitBranch } from "lucide-react";
 import { useEffect, useState } from "react";
 import { githubLink } from "@/data";
@@ -14,6 +14,8 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
   const [version, setVersion] = useState<string>("");
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = variant === "mobile";
+  const prefersReducedMotion = useReducedMotion();
+  const motionOk = !prefersReducedMotion;
 
   useEffect(() => {
     const getVersion = async () => {
@@ -50,8 +52,8 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
     ? {
         className:
           "hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-300/50 dark:border-gray-600/50 rounded-lg backdrop-blur-sm hover:bg-gray-200/80 dark:hover:bg-gray-700/80 hover:border-orange-500/50 dark:hover:border-orange-400/50 transition-all duration-200 focus-visible:outline-offset-4 focus-visible:outline-orange-500",
-        whileHover: { scale: 1.05 },
-        whileTap: { scale: 0.95 },
+        whileHover: motionOk ? { scale: 1.05 } : undefined,
+        whileTap: motionOk ? { scale: 0.95 } : undefined,
         onHoverStart: () => setIsHovered(true),
         onHoverEnd: () => setIsHovered(false),
       }
@@ -63,16 +65,19 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
     </>
   ) : (
     <>
-      <motion.div animate={{ rotate: isHovered ? 360 : 0 }} transition={{ duration: 0.6, ease: "easeInOut" }}>
+      <motion.div
+        animate={{ rotate: motionOk && isHovered ? 360 : 0 }}
+        transition={{ duration: motionOk ? 0.55 : 0, ease: "easeInOut" }}
+      >
         <GitBranch className="w-3 h-3 text-orange-600 dark:text-orange-400" />
       </motion.div>
 
       <motion.span
         className="text-xs font-mono text-gray-700 dark:text-orange-300 tracking-wider"
         animate={{
-          textShadow: isHovered ? "0 0 8px rgba(251, 146, 60, 0.8)" : "0 0 2px rgba(251, 146, 60, 0.4)",
+          textShadow: motionOk && isHovered ? "0 0 8px rgba(251, 146, 60, 0.8)" : "0 0 2px rgba(251, 146, 60, 0.4)",
         }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: motionOk ? 0.28 : 0 }}
       >
         v{version}
       </motion.span>
@@ -80,12 +85,12 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
       <motion.div
         className="w-1 h-1 bg-green-500 dark:bg-green-400 rounded-full"
         animate={{
-          scale: isHovered ? [1, 1.5, 1] : 1,
-          opacity: isHovered ? [0.7, 1, 0.7] : 0.7,
+          scale: motionOk && isHovered ? [1, 1.5, 1] : 1,
+          opacity: motionOk && isHovered ? [0.7, 1, 0.7] : 0.7,
         }}
         transition={{
-          duration: 1.5,
-          repeat: isHovered ? Infinity : 0,
+          duration: motionOk ? 1.5 : 0,
+          repeat: motionOk && isHovered ? Infinity : 0,
           ease: "easeInOut",
         }}
       />

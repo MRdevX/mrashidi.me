@@ -42,7 +42,7 @@ export const metadata: Metadata = generateRootMetadata();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
+    <html lang="en" className={inter.variable}>
       <head>
         <HeadMeta />
       </head>

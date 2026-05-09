@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
-import { fadeInVariants } from "@/lib/animations";
+import { fadeInVariants, pageEnterTransition, reducedMotionFadeVariants } from "@/lib/animations";
 
 interface PageSectionProps {
   children: ReactNode;
@@ -11,12 +11,15 @@ interface PageSectionProps {
 }
 
 export function PageSection({ children, className = "", delay = 0 }: PageSectionProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const variants = prefersReducedMotion ? reducedMotionFadeVariants : fadeInVariants;
+
   return (
     <motion.div
       initial="hidden"
       animate="visible"
-      variants={fadeInVariants}
-      transition={{ duration: 0.5, delay }}
+      variants={variants}
+      transition={pageEnterTransition(prefersReducedMotion, { delay })}
       className={className}
     >
       <div className="page-section">{children}</div>

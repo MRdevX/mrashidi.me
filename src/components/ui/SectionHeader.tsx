@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Activity, BookOpen, Code2, GraduationCap, Languages, MessageCircle, Terminal } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { pageEnterTransition } from "@/lib/animations";
 
 const iconMap = {
   Activity,
@@ -27,6 +28,7 @@ interface SectionHeaderProps {
 export function SectionHeader({ iconName, title, className = "", delay = 0, size = "md" }: SectionHeaderProps) {
   const { getSectionTitle } = useThemeConfig();
   const Icon = iconMap[iconName];
+  const prefersReducedMotion = useReducedMotion();
 
   const sizeClasses = {
     sm: "w-6 h-6",
@@ -45,9 +47,9 @@ export function SectionHeader({ iconName, title, className = "", delay = 0, size
   return (
     <motion.div
       className={`flex items-center gap-3 ${defaultSpacing} ${className}`}
-      initial={{ opacity: 0, y: -20 }}
+      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
+      transition={pageEnterTransition(prefersReducedMotion, { delay })}
     >
       <Icon className={`${sizeClasses[size]} text-orange-500`} />
       <h1 className={`${titleSizes[size]} font-bold ${getSectionTitle()}`}>{title}</h1>

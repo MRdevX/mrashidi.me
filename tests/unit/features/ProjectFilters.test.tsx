@@ -7,6 +7,7 @@ vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...rest }: React.ComponentProps<"div">) => <div {...rest}>{children}</div>,
   },
+  useReducedMotion: () => false,
 }));
 
 const emptyCategorized = {

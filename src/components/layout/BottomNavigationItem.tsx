@@ -13,7 +13,7 @@ interface BottomNavigationItemProps {
 
 export function BottomNavigationItem({ name, href, icon: Icon, isActive, onClick }: BottomNavigationItemProps) {
   return (
-    <Link href={href} onClick={onClick} className="bottom-nav-item nav-item-state" aria-label={name}>
+    <Link href={href} onClick={onClick} className="bottom-nav-item nav-item-state focus-ring" aria-label={name}>
       <Icon
         className={`bottom-nav-item-icon icon-container small ${isActive ? "active" : "inactive"}`}
         aria-hidden="true"

@@ -1,12 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
+import { PAGE_TRANSITION_EASE, pageItemVariants, reducedMotionPageItemVariants } from "@/lib/animations";
 import type { BlogPost } from "./types";
 
 interface BlogPostCardProps {
@@ -16,21 +17,21 @@ interface BlogPostCardProps {
 export function BlogPostCard({ post }: BlogPostCardProps) {
   const { getTextColor, getCardPattern } = useThemeConfig();
   const [imageError, setImageError] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const cardVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;
 
   return (
     <motion.article
       className={getCardPattern()}
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 },
-      }}
-      whileHover={{ scale: 1.02 }}
+      variants={cardVariants}
+      whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
+      transition={{ duration: 0.26, ease: PAGE_TRANSITION_EASE }}
     >
       <Link
         href={post.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 transition-[transform,box-shadow] duration-200 ease-out"
       >
         {post.imageUrl && !imageError && (
           <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">

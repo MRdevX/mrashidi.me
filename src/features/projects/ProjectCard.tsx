@@ -22,7 +22,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
   return (
     <>
       <div
-        className={`glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 hover:scale-[1.025] hover:shadow-orange-500/20 group`}
+        className={`glass-card p-6 flex flex-col gap-4 shadow-lg rounded-xl border border-orange-500/10 transition-transform duration-200 motion-safe:hover:scale-[1.025] hover:shadow-orange-500/20 group`}
       >
         {/* Project Image */}
         {project.imageUrl && (
@@ -31,7 +31,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               src={project.imageUrl}
               alt={project.title}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              className="object-cover motion-safe:group-hover:scale-105 transition-transform duration-300 ease-out"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>

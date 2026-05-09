@@ -1,10 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { PageHeader, PageSection } from "@/components/ui";
+import { motion, useReducedMotion } from "framer-motion";
+import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
 import { ProjectFilters, ProjectPagination, ProjectResults, ProjectSearchBox } from "@/features/projects";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
-import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
+import {
+  pageContainerVariants,
+  pageItemVariants,
+  reducedMotionPageContainerVariants,
+  reducedMotionPageItemVariants,
+} from "@/lib/animations";
 
 export default function Projects() {
   const {
@@ -23,14 +28,18 @@ export default function Projects() {
     commitInfo,
   } = useProjectFilters(6);
 
+  const prefersReducedMotion = useReducedMotion();
+  const containerVariants = prefersReducedMotion ? reducedMotionPageContainerVariants : pageContainerVariants;
+  const itemVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;
+
   return (
-    <div className="page-container">
-      <motion.div className="page-content" initial="hidden" animate="show" variants={pageContainerVariants}>
-        <motion.div variants={pageItemVariants}>
+    <PageWrapper>
+      <motion.div initial="hidden" animate="show" variants={containerVariants}>
+        <motion.div variants={itemVariants}>
           <PageHeader iconName="FolderOpen" title="Projects" />
         </motion.div>
 
-        <motion.div variants={pageItemVariants}>
+        <motion.div variants={itemVariants}>
           <PageSection>
             <div className="content-section">
               <ProjectSearchBox
@@ -63,6 +72,6 @@ export default function Projects() {
           </PageSection>
         </motion.div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 }

@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type { IconType } from "react-icons";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
+import { cn } from "@/lib/utils";
 import { CyberpunkButton } from "./CyberpunkButton";
 
 interface SocialButtonProps {
@@ -14,15 +17,22 @@ interface SocialButtonProps {
 
 export function SocialButton({ href, icon: Icon, children, isExternal = true, className = "" }: SocialButtonProps) {
   const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  const prefersReducedMotion = useReducedMotion();
+  const motionInteractive = prefersReducedMotion ? {} : { whileHover: { scale: 1.05 }, whileTap: { scale: 0.95 } };
 
   return (
-    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <a href={href} className={`block ${className}`} {...linkProps}>
-        <CyberpunkButton variant="neon" icon={<Icon className="w-4 h-4" aria-hidden />} className="w-full sm:w-auto">
+    <motion.div {...motionInteractive}>
+      <CyberpunkButton
+        asChild
+        variant="neon"
+        icon={<Icon className="w-4 h-4" aria-hidden />}
+        className={cn("w-full sm:w-auto", className)}
+      >
+        <a href={href} {...linkProps}>
           {children}
           {isExternal ? <NewTabSrOnly /> : null}
-        </CyberpunkButton>
-      </a>
+        </a>
+      </CyberpunkButton>
     </motion.div>
   );
 }

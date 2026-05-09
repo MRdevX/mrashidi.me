@@ -1,11 +1,5 @@
 name: "Setup Node.js and pnpm"
-description: "Setup pnpm and Node.js, and install dependencies"
-
-inputs:
-  node-version:
-    description: "Node.js version to use"
-    required: false
-    default: "24"
+description: "Setup pnpm and Node.js from .node-version, and install dependencies"
 
 runs:
   using: "composite"
@@ -16,7 +10,7 @@ runs:
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version-file: ".node-version"
         cache: "pnpm"
 
     - name: Install dependencies
