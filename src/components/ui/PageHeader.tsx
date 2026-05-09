@@ -27,13 +27,7 @@ export function PageHeader({ iconName, title, className = "" }: PageHeaderProps)
   const variants = prefersReducedMotion ? reducedMotionFadeVariants : fadeInVariants;
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={variants}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.5 }}
-      className={className}
-    >
+    <motion.div initial="hidden" animate="visible" variants={variants} className={className}>
       <div className="page-header">
         <Icon className="page-header-icon" />
         <h1 className={`text-3xl sm:text-4xl font-bold ${getSectionTitle()} text-center sm:text-left`}>{title}</h1>

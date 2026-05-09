@@ -14,7 +14,7 @@ export function TechStackGrid({ techStack }: TechStackGridProps) {
           return (
             <div
               key={tech.name}
-              className="flex flex-col items-center gap-2 p-3 rounded-lg bg-white/30 dark:bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 transition-all min-w-[90px]"
+              className="flex flex-col items-center gap-2 p-3 rounded-lg bg-white/30 dark:bg-black/30 border border-orange-500/10 shadow hover:shadow-orange-500/20 motion-safe:hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 ease-out min-w-[90px]"
             >
               <Icon className={`w-10 h-10 ${colorClass}`} aria-hidden />
               <span className="text-xs text-body font-mono text-center mt-1">{tech.name}</span>

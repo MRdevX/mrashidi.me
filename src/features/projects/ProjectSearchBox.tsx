@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { pageEnterTransition } from "@/lib/animations";
 
 interface ProjectSearchBoxProps {
   searchQuery: string;
@@ -11,9 +14,15 @@ interface ProjectSearchBoxProps {
 
 export function ProjectSearchBox({ searchQuery, onSearchChange, onClear }: ProjectSearchBoxProps) {
   const { getTextColor, getBackgroundColor } = useThemeConfig();
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.div
+      className="mb-8"
+      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={pageEnterTransition(prefersReducedMotion)}
+    >
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-orange-400" aria-hidden />
