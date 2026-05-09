@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.129](https://github.com/MRdevX/mrashidi.me/compare/v0.1.128...v0.1.129) (2026-05-09)
+
+
+### Features
+
+* add ContactContributionSection to enhance contact page ([0412641](https://github.com/MRdevX/mrashidi.me/commit/0412641e4a504d02a988fd6421570b06d912d071))
+
 ### [0.1.128](https://github.com/MRdevX/mrashidi.me/compare/v0.1.127...v0.1.128) (2026-05-09)
 
 ### [0.1.127](https://github.com/MRdevX/mrashidi.me/compare/v0.1.126...v0.1.127) (2026-05-09)
