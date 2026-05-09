@@ -9,7 +9,14 @@ const withBundleAnalyzer =
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ["framer-motion", "lucide-react", "react-icons"],
+    optimizePackageImports: [
+      "date-fns",
+      "framer-motion",
+      "lucide-react",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-slot",
+      "react-icons",
+    ],
   },
 
   compiler: {
