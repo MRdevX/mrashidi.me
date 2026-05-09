@@ -34,6 +34,7 @@ export { Input } from "./input";
 export { LazyLoader } from "./LazyLoader";
 export { LoadingAnimation } from "./LoadingAnimation";
 export { MotionSection } from "./MotionSection";
+export { PageEnterMotion } from "./PageEnterMotion";
 export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";
 export { PageWrapper } from "./PageWrapper";
