@@ -97,7 +97,7 @@ export function ContactFormRefactored() {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           noValidate
-          className="space-y-6 focus-within:ring-2 focus-within:ring-orange-500/20 focus-within:ring-offset-2 rounded-lg p-1"
+          className="space-y-6 rounded-lg"
           aria-label="Contact form"
         >
           <FormInputWithValidation
