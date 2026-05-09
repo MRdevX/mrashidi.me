@@ -2,6 +2,16 @@
 
 Thanks for your interest in contributing. This project uses **Conventional Commits** and **Semantic Versioning** for clear history and automated releases.
 
+## Local checks (before you push)
+
+Use **Node** and **pnpm** versions that match [`package.json`](package.json) `engines`.
+
+- Copy environment template: `cp .env.example .env.local` then fill values as needed for local features (contact, blog, etc.).
+- `pnpm check` — Biome lint and format (matches CI).
+- `pnpm test:run` — Vitest unit tests.
+- **`pnpm build:fast`** — Next.js production build only (quick smoke; skips PWA and does not run sitemap/OG generation).
+- **`pnpm build`** — Full production pipeline including sitemap and OG scripts; heavier and may require secrets those scripts expect (same rough path as CI `pnpm build`).
+
 ## Commit message format
 
 All commit messages must follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification:

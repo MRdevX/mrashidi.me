@@ -1,15 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { PageHeader, PageSection, PageWrapper, Pagination } from "@/components/ui";
 import { ProjectFilters, ProjectResults, ProjectSearchBox } from "@/features/projects";
+import { usePageStaggerVariants } from "@/hooks/usePageStaggerVariants";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
-import {
-  pageContainerVariants,
-  pageItemVariants,
-  reducedMotionPageContainerVariants,
-  reducedMotionPageItemVariants,
-} from "@/lib/animations";
 
 export default function Projects() {
   const {
@@ -28,9 +23,7 @@ export default function Projects() {
     commitInfo,
   } = useProjectFilters(6);
 
-  const prefersReducedMotion = useReducedMotion();
-  const containerVariants = prefersReducedMotion ? reducedMotionPageContainerVariants : pageContainerVariants;
-  const itemVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;
+  const { containerVariants, itemVariants } = usePageStaggerVariants();
 
   return (
     <PageWrapper>

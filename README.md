@@ -1,6 +1,6 @@
 # mrashidi.me
 
-A modern personal portfolio showcasing my work as a Software Engineer. Built with Next.js 15, TypeScript, and Tailwind CSS.
+A modern personal portfolio showcasing my work as a Software Engineer. Built with Next.js 16 (App Router), React 19, TypeScript (strict), and Tailwind CSS v4.
 
 > **Note**: This is my personal website and is not intended to be used as a template. The code is shared for transparency and demonstration of my work, but all rights are reserved.
 
@@ -17,11 +17,11 @@ A modern personal portfolio showcasing my work as a Software Engineer. Built wit
 
 ## 🛠 Tech Stack
 
-**Frontend**: Next.js 15, TypeScript, Tailwind CSS, Framer Motion, React Hook Form, SWR, React Email
+**Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, React Hook Form, SWR, React Email
 
-**Backend**: AWS SES, Vercel Blob, Node-cache, Sentry, Pino
+**Backend**: AWS SES, Vercel Blob, Sentry, Pino
 
-**Tools**: pnpm, Biome, Turbopack
+**Quality & DX**: pnpm, Biome, Vitest, Playwright, Turbopack (`pnpm dev`)
 
 ## 🏗 Architecture
 
@@ -47,7 +47,17 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-**Scripts**: `dev`, `build`, `check:fix`, `generate-sitemap`
+**Common verification** (run before pushing substantial changes):
+
+- `pnpm check` — Biome lint + format check
+- `pnpm test:run` — Vitest unit suite
+
+**Build**:
+
+- **`pnpm build`** — production build and also runs sitemap + OG image generation (heavier; needs env vars those scripts expect).
+- **`pnpm build:fast`** — Next.js production build only (`SKIP_PWA=true`), useful for a quicker compile/smoke without running the extra generation steps.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and local checks detail.
 
 ## 📧 Email System
 
@@ -97,4 +107,4 @@ We use [Semantic Versioning](https://semver.org/) and [Conventional Commits](htt
 
 ---
 
-_Built with ❤️ using Next.js, TypeScript, and Tailwind CSS_
+_Built with ❤️ using Next.js 16, React 19, TypeScript, and Tailwind CSS v4_

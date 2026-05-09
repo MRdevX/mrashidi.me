@@ -1,12 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  pageContainerVariants,
-  pageItemVariants,
-  reducedMotionPageContainerVariants,
-  reducedMotionPageItemVariants,
-} from "@/lib/animations";
+import { motion } from "framer-motion";
+import { usePageStaggerVariants } from "@/hooks/usePageStaggerVariants";
 import { getMainTechStack } from "@/lib/tech";
 import { HomeContactSection } from "./HomeContactSection";
 import { HomeContributionSection } from "./HomeContributionSection";
@@ -16,9 +11,7 @@ import { HomeTerminalSection } from "./HomeTerminalSection";
 
 export function HomePage() {
   const techStack = getMainTechStack();
-  const prefersReducedMotion = useReducedMotion();
-  const containerVariants = prefersReducedMotion ? reducedMotionPageContainerVariants : pageContainerVariants;
-  const itemVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;
+  const { containerVariants, itemVariants, prefersReducedMotion } = usePageStaggerVariants();
 
   return (
     <motion.div initial="hidden" animate="show" variants={containerVariants}>
