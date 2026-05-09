@@ -4,20 +4,23 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { slideInRightVariants } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 interface ProfileImageProps {
   src: string;
   alt: string;
   width?: number;
   height?: number;
+  /** Layout wrapper classes (Bio uses flex/grid; no float needed). */
+  className?: string;
 }
 
-export function ProfileImage({ src, alt, width = 256, height = 256 }: ProfileImageProps) {
+export function ProfileImage({ src, alt, width = 256, height = 256, className }: ProfileImageProps) {
   const { getBackgroundColor } = useThemeConfig();
 
   return (
     <motion.div
-      className="float-right ml-8 mb-6 lg:ml-12 lg:mb-8"
+      className={cn("relative shrink-0", className)}
       variants={slideInRightVariants}
       transition={{ delay: 0.4 }}
     >

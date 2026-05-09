@@ -14,7 +14,7 @@ type BioSegmentDef = Pick<AboutBioPiece, "text"> & { readonly style?: AboutBioSt
  */
 const ABOUT_BIO_SEGMENTS: readonly BioSegmentDef[] = [
   { text: "I'm a software engineer with " },
-  { text: "9 years", style: "brand" },
+  { text: "10 years", style: "brand" },
   { text: " of experience building " },
   { text: "scalable backend systems and microservices", style: "prominent" },
   { text: ". For the past 6 years, I've specialized in " },
@@ -31,9 +31,7 @@ const ABOUT_BIO_SEGMENTS: readonly BioSegmentDef[] = [
   { text: "e-mobility, fintech, aviation, and education", style: "subtle" },
   { text: ", always focusing on " },
   { text: "clean, maintainable code", style: "prominent" },
-  { text: " and " },
-  { text: "systems that grow with business needs", style: "brand" },
-  { text: "." },
+  { text: " and systems that grow with business needs." },
 ];
 
 export const ABOUT_BIO_PIECES: readonly AboutBioPiece[] = Object.freeze(
