@@ -29,6 +29,9 @@ const leadingIconClass = "size-4 shrink-0 text-orange-500/70 dark:text-orange-40
  */
 const timelineAnchorTw = "top-[3.875rem] md:top-[4rem]";
 const timelineSpineClass = `pointer-events-none absolute ${timelineAnchorTw} bottom-14 left-6 z-[1] w-px -translate-x-1/2 rounded-full bg-[linear-gradient(to_bottom,_rgb(249_115_22/0.44)_0%,_rgb(249_115_22/0.44)_calc(100%-4rem),_transparent)] dark:bg-[linear-gradient(to_bottom,_rgb(251_146_60/0.36)_0%,_rgb(251_146_60/0.36)_calc(100%-4rem),_transparent)]`;
+/** Gradient filament above achievements — shorter than full card width, fades on the right */
+const achievementsDividerClass =
+  "h-px rounded-full bg-[linear-gradient(90deg,_rgb(249_115_22/0.55)_0%,_rgb(249_115_22/0.22)_52%,_transparent_100%)] shadow-[0_0_14px_rgb(249_115_22/0.14)] dark:bg-[linear-gradient(90deg,_rgb(251_146_60/0.48)_0%,_rgb(251_146_60/0.18)_52%,_transparent_100%)] dark:shadow-[0_0_14px_rgb(251_146_60/0.12)]";
 
 export function WorkExperienceSection() {
   const { getSectionTitle, getTextColor } = useThemeConfig();
@@ -69,11 +72,7 @@ export function WorkExperienceSection() {
                   >
                     <div className="relative z-10">
                       <CyberpunkCardHeader
-                        className={cn(
-                          showAchievementsBlock
-                            ? "border-b border-orange-500/12 pb-5 dark:border-white/10"
-                            : "border-b-0 pb-4"
-                        )}
+                        className={cn(showAchievementsBlock ? "border-b-0 pb-3" : "border-b-0 pb-4")}
                       >
                         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
                           {/* Title · company · location */}
@@ -111,11 +110,21 @@ export function WorkExperienceSection() {
                             </div>
                           </aside>
                         </div>
+                        {showAchievementsBlock ? (
+                          <div className="mt-5 flex justify-start" aria-hidden>
+                            <span
+                              className={cn(
+                                achievementsDividerClass,
+                                "block w-[min(15rem,58%)] min-w-[10rem] sm:w-[min(19rem,50%)]"
+                              )}
+                            />
+                          </div>
+                        ) : null}
                       </CyberpunkCardHeader>
 
                       {job.achievements.length > 0 && (
                         <CyberpunkCardContent className="pt-0">
-                          <div className="pt-6">
+                          <div className="pt-3">
                             <button
                               type="button"
                               onClick={() => {
