@@ -57,44 +57,44 @@ export function WorkExperienceSection() {
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
                         {/* Title + company */}
                         <div className="min-w-0 flex-1">
-                          <CyberpunkCardTitle className="!text-xl md:!text-2xl mb-0 font-bold tracking-tight text-balance text-orange-500 transition-colors dark:text-orange-400 group-hover:text-orange-400 dark:group-hover:text-orange-300">
+                          <CyberpunkCardTitle className="!text-xl md:!text-2xl mb-0 font-albert font-semibold leading-snug tracking-tight text-balance text-orange-500 transition-colors dark:text-orange-400 group-hover:text-orange-400 dark:group-hover:text-orange-300">
                             {job.title}
                           </CyberpunkCardTitle>
 
                           <div
-                            className={`mt-6 flex flex-wrap items-center gap-2 text-sm ${getTextColor("secondary")}`}
+                            className={`mt-6 flex flex-wrap items-center gap-2 font-albert text-sm font-medium leading-snug tracking-tight md:text-base ${getTextColor("secondary")}`}
                           >
                             <Building2 className="size-4 shrink-0 text-orange-500/70" aria-hidden />
-                            <span className="font-medium leading-snug">{job.company}</span>
+                            <span className="leading-snug">{job.company}</span>
+                          </div>
+
+                          <div
+                            className={`mt-3 flex gap-2 font-albert text-sm leading-snug tracking-tight md:text-[0.9375rem] ${getTextColor("secondary")}`}
+                          >
+                            <MapPin
+                              className="mt-0.5 size-4 shrink-0 text-orange-500/60 dark:text-orange-400/75"
+                              aria-hidden
+                            />
+                            <span>{job.location}</span>
                           </div>
                         </div>
 
-                        {/* Period, location, arrangement */}
+                        {/* Period + arrangement */}
                         <aside
-                          className={`flex w-full shrink-0 flex-col gap-2.5 sm:w-auto sm:max-w-xs sm:items-end sm:gap-3 sm:text-right ${getTextColor("muted")}`}
+                          className={`flex w-full shrink-0 flex-col gap-2.5 font-albert sm:w-auto sm:max-w-xs sm:items-end sm:gap-3 sm:text-right ${getTextColor("muted")}`}
                         >
                           <div className="inline-flex w-fit items-center gap-2 self-end rounded-md border border-orange-500/15 bg-orange-500/5 px-2.5 py-1.5 dark:border-orange-500/25 dark:bg-orange-500/10">
                             <Calendar
                               className="size-3.5 shrink-0 text-orange-500/80 dark:text-orange-400/90"
                               aria-hidden
                             />
-                            <span className="text-xs font-medium tabular-nums text-foreground sm:text-sm">
+                            <span className="text-xs font-medium tracking-tight tabular-nums text-foreground sm:text-sm">
                               {job.period}
                             </span>
                           </div>
 
                           <div
-                            className={`flex items-start gap-2 self-end justify-end text-left sm:justify-end ${getTextColor("secondary")}`}
-                          >
-                            <MapPin
-                              className="mt-0.5 size-3.5 shrink-0 text-orange-500/70 dark:text-orange-400/80"
-                              aria-hidden
-                            />
-                            <span className="max-w-full text-xs leading-snug sm:text-sm">{job.location}</span>
-                          </div>
-
-                          <div
-                            className={`flex items-start gap-2 self-end justify-end text-left sm:justify-end ${getTextColor("secondary")}`}
+                            className={`flex items-start gap-2 self-end justify-end text-left tracking-tight sm:justify-end ${getTextColor("secondary")}`}
                           >
                             <Laptop
                               className="mt-0.5 size-3.5 shrink-0 text-orange-500/70 dark:text-orange-400/80"
