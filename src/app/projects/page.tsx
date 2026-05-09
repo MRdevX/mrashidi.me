@@ -33,7 +33,7 @@ export default function Projects() {
   const itemVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;
 
   return (
-    <PageWrapper containerClassName="max-w-6xl mx-auto">
+    <PageWrapper>
       <motion.div initial="hidden" animate="show" variants={containerVariants}>
         <motion.div variants={itemVariants}>
           <PageHeader iconName="FolderOpen" title="Projects" />

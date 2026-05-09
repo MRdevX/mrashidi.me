@@ -3,7 +3,7 @@ import { CertificatesSection, ResumeHeader, WorkExperienceSection } from "@/feat
 
 export default function Resume() {
   return (
-    <PageWrapper containerClassName="max-w-4xl mx-auto">
+    <PageWrapper>
       <ResumeHeader />
 
       <PageSection>

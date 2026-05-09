@@ -50,7 +50,7 @@ export default function Home() {
   const itemVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;
 
   return (
-    <PageWrapper containerClassName="max-w-5xl mx-auto">
+    <PageWrapper>
       <motion.div initial="hidden" animate="show" variants={containerVariants}>
         <motion.div className="hero-section content-section relative overflow-hidden" variants={itemVariants}>
           <div className="hero-background" />
