@@ -17,6 +17,12 @@ import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCard
 import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 
+/** Shared styles: meta chips + left-column body text */
+const metaChipClass =
+  "inline-flex w-fit max-w-full shrink-0 items-center gap-2 rounded-md border border-orange-500/15 bg-orange-500/5 px-2.5 py-1.5 text-xs font-medium leading-tight tracking-tight text-foreground dark:border-orange-500/25 dark:bg-orange-500/10 sm:text-sm";
+const metaChipIconClass = "size-4 shrink-0 text-orange-500/80 dark:text-orange-400/90";
+const leadingIconClass = "size-4 shrink-0 text-orange-500/70 dark:text-orange-400/85";
+
 export function WorkExperienceSection() {
   const { getSectionTitle, getTextColor } = useThemeConfig();
   const [openAchievements, setOpenAchievements] = useState<Set<string>>(new Set());
@@ -24,7 +30,7 @@ export function WorkExperienceSection() {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-3 mb-8">
-        <Briefcase className="w-8 h-8 text-orange-500" />
+        <Briefcase className="size-8 shrink-0 text-orange-500" aria-hidden />
         <h2 className={getSectionTitle()}>Work Experience</h2>
       </div>
 
@@ -42,7 +48,7 @@ export function WorkExperienceSection() {
               className="relative"
             >
               {/* Timeline square */}
-              <div className="absolute left-6 top-10 w-3 h-3 bg-orange-500 shadow-lg shadow-orange-500/50 transform -translate-x-1/2 z-10">
+              <div className="absolute left-6 top-9 z-10 size-3 -translate-x-1/2 bg-orange-500 shadow-lg shadow-orange-500/50">
                 <div className="absolute inset-0 bg-orange-500 animate-ping opacity-20" />
               </div>
 
@@ -54,53 +60,40 @@ export function WorkExperienceSection() {
                 >
                   <div className="relative z-10">
                     <CyberpunkCardHeader className={job.achievements.length > 0 ? "pb-4" : "border-b-0 pb-4"}>
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
-                        {/* Title + company */}
-                        <div className="min-w-0 flex-1">
+                      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
+                        {/* Title · company · location */}
+                        <div className="flex min-w-0 flex-1 flex-col gap-5">
                           <CyberpunkCardTitle className="!text-xl md:!text-2xl mb-0 font-albert font-semibold leading-snug tracking-tight text-balance text-orange-500 transition-colors dark:text-orange-400 group-hover:text-orange-400 dark:group-hover:text-orange-300">
                             {job.title}
                           </CyberpunkCardTitle>
 
                           <div
-                            className={`mt-6 flex flex-wrap items-center gap-2 font-albert text-sm font-medium leading-snug tracking-tight md:text-base ${getTextColor("secondary")}`}
+                            className={`flex flex-wrap items-center gap-2 font-albert text-base font-medium leading-snug tracking-tight ${getTextColor("secondary")}`}
                           >
-                            <Building2 className="size-4 shrink-0 text-orange-500/70" aria-hidden />
-                            <span className="leading-snug">{job.company}</span>
+                            <Building2 className={leadingIconClass} aria-hidden />
+                            <span>{job.company}</span>
                           </div>
 
                           <div
-                            className={`mt-3 flex gap-2 font-albert text-sm leading-snug tracking-tight md:text-[0.9375rem] ${getTextColor("secondary")}`}
+                            className={`flex flex-wrap items-center gap-2 font-albert text-sm leading-snug tracking-tight ${getTextColor("secondary")}`}
                           >
-                            <MapPin
-                              className="mt-0.5 size-4 shrink-0 text-orange-500/60 dark:text-orange-400/75 sm:mt-0"
-                              aria-hidden
-                            />
+                            <MapPin className={leadingIconClass} aria-hidden />
                             <span className="min-w-0">{job.location}</span>
                           </div>
                         </div>
 
-                        {/* Period + employment */}
+                        {/* Period · employment */}
                         <aside
-                          className={`flex w-full shrink-0 flex-col items-end gap-2.5 font-albert sm:w-auto sm:max-w-xs ${getTextColor("muted")}`}
+                          className={`flex w-full shrink-0 flex-col items-end gap-3 font-albert sm:ml-auto sm:w-auto sm:min-w-[11.5rem] sm:max-w-[14rem] ${getTextColor("muted")}`}
                         >
-                          <div className="inline-flex w-fit shrink-0 items-center gap-2 rounded-md border border-orange-500/15 bg-orange-500/5 px-2.5 py-1.5 dark:border-orange-500/25 dark:bg-orange-500/10">
-                            <Calendar
-                              className="size-3.5 shrink-0 text-orange-500/80 dark:text-orange-400/90"
-                              aria-hidden
-                            />
-                            <span className="text-xs font-medium tracking-tight tabular-nums text-foreground sm:text-sm">
-                              {job.period}
-                            </span>
+                          <div className={metaChipClass}>
+                            <Calendar className={metaChipIconClass} aria-hidden />
+                            <span className="tabular-nums">{job.period}</span>
                           </div>
-                          <span
-                            className="inline-flex w-fit max-w-full shrink-0 items-center justify-end gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/5 px-3 py-1 text-right text-xs font-medium tracking-tight text-orange-800 dark:border-orange-400/25 dark:bg-orange-500/15 dark:text-orange-200"
-                          >
-                            <Laptop
-                              className="size-3.5 shrink-0 text-orange-600/90 dark:text-orange-400/95"
-                              aria-hidden
-                            />
-                            <span className="leading-tight">{job.employmentType}</span>
-                          </span>
+                          <div className={metaChipClass}>
+                            <Laptop className={metaChipIconClass} aria-hidden />
+                            <span className="text-balance">{job.employmentType}</span>
+                          </div>
                         </aside>
                       </div>
                     </CyberpunkCardHeader>
@@ -120,10 +113,10 @@ export function WorkExperienceSection() {
                               }
                               setOpenAchievements(newOpen);
                             }}
-                            className="relative z-10 flex w-full cursor-pointer items-center justify-between rounded-lg border border-orange-500/20 bg-muted/20 p-3 transition-all duration-200 hover:border-orange-500/35 hover:bg-muted/40 dark:hover:bg-muted/25 group/trigger"
+                            className="relative z-10 flex min-h-[2.75rem] w-full cursor-pointer items-center justify-between gap-3 rounded-md border border-orange-500/20 bg-muted/20 px-3 py-2.5 text-left transition-colors duration-200 hover:border-orange-500/35 hover:bg-muted/40 dark:hover:bg-muted/25 group/trigger"
                           >
-                            <div className="flex items-center gap-2">
-                              <Trophy className="size-4 text-orange-500" aria-hidden />
+                            <div className="flex min-w-0 items-center gap-2">
+                              <Trophy className="size-4 shrink-0 text-orange-500" aria-hidden />
                               <span className="text-sm font-medium text-orange-500 dark:text-orange-400">
                                 Key Achievements
                               </span>
@@ -151,7 +144,7 @@ export function WorkExperienceSection() {
                               transition={{ duration: 0.3, ease: "easeInOut" }}
                               className="overflow-hidden"
                             >
-                              <ul className="mt-4 space-y-2 px-0.5 pb-1">
+                              <ul className="mt-4 space-y-3">
                                 {job.achievements.map((achievement, index) => (
                                   <motion.li
                                     key={achievement}
@@ -160,11 +153,11 @@ export function WorkExperienceSection() {
                                     transition={{ delay: index * 0.05 }}
                                     className="group/achievement flex items-start gap-3"
                                   >
-                                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-orange-500 transition-colors group-hover/achievement:text-orange-400" />
+                                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-orange-500 transition-colors group-hover/achievement:text-orange-400" />
                                     <span
                                       className={`${getTextColor("primary")} group-hover/achievement:${getTextColor(
                                         "primary"
-                                      )} leading-relaxed transition-colors`}
+                                      )} text-sm leading-relaxed transition-colors`}
                                     >
                                       {achievement}
                                     </span>
