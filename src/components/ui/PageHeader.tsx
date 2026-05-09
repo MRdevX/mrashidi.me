@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { BookOpen, FolderOpen, MessageCircle, Share2, User } from "lucide-react";
+import { BookOpen, FolderOpen, GitFork, MessageCircle, Share2, User } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { fadeInVariants, reducedMotionFadeVariants } from "@/lib/animations";
 
@@ -11,6 +11,7 @@ const iconMap = {
   BookOpen,
   FolderOpen,
   Share2,
+  GitFork,
 } as const;
 
 type IconName = keyof typeof iconMap;

@@ -1,3 +1,4 @@
+export { ContactContributionSection } from "./ContactContributionSection";
 export { ContactFormGate } from "./ContactFormGate";
 export { ContactHeader } from "./ContactHeader";
 export { ContactLeadSection } from "./ContactLeadSection";
