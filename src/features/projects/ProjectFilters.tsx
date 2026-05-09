@@ -83,7 +83,7 @@ export function ProjectFilters({
       {/* Technology Stack Icons - Categorized */}
       <motion.div
         className="mb-8"
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={pageEnterTransition(prefersReducedMotion)}
       >
@@ -106,7 +106,7 @@ export function ProjectFilters({
       {/* Additional Filters */}
       <motion.div
         className="mb-8"
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={pageEnterTransition(prefersReducedMotion, { delay: 0.06 })}
       >

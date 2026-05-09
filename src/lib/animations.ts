@@ -39,7 +39,8 @@ export const staggerDelays = {
 } as const;
 
 export const fadeInVariants = {
-  hidden: { opacity: 0, y: 20 },
+  /** Opacity stays 1 so nested motion + axe color-contrast does not blend fg/bg mid-animation */
+  hidden: { opacity: 1, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
@@ -53,22 +54,22 @@ export const reducedMotionFadeVariants: Variants = {
 };
 
 export const slideInVariants = {
-  hidden: { opacity: 0, x: -20 },
+  hidden: { opacity: 1, x: -20 },
   visible: { opacity: 1, x: 0 },
 };
 
 export const scaleVariants = {
-  hidden: { opacity: 0, scale: 0.95 },
+  hidden: { opacity: 1, scale: 0.95 },
   visible: { opacity: 1, scale: 1 },
 };
 
 export const slideInRightVariants = {
-  hidden: { opacity: 0, x: 20 },
+  hidden: { opacity: 1, x: 20 },
   visible: { opacity: 1, x: 0 },
 };
 
 export const pageContainerVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   show: {
     opacity: 1,
     transition: {
@@ -85,7 +86,7 @@ export const reducedMotionPageContainerVariants: Variants = {
 };
 
 export const pageItemVariants = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 1, y: 18 },
   show: {
     opacity: 1,
     y: 0,
@@ -100,7 +101,7 @@ export const reducedMotionPageItemVariants: Variants = {
 
 /** Blog grid: tighter stagger than full-page sections */
 export const blogGridContainerVariants: Variants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   show: {
     opacity: 1,
     transition: {
@@ -116,6 +117,6 @@ export const reducedMotionBlogGridContainerVariants: Variants = {
 };
 
 export const sectionVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 1, y: 30 },
   visible: { opacity: 1, y: 0 },
 };

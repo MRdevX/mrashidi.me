@@ -26,7 +26,7 @@ export function ProjectResults({
   return (
     <>
       {/* Results Summary */}
-      <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div className="mb-6" initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <p className={`${getTextColor("secondary")} text-sm flex items-center gap-2`}>
             <Package className="w-4 h-4" />
@@ -61,7 +61,7 @@ export function ProjectResults({
       </motion.div>
 
       {/* Projects Grid */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 gap-6">
             {filteredProjects.map((project) => (

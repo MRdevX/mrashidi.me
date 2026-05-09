@@ -52,7 +52,7 @@ function syncBmcMobilePosition(): void {
   }
 }
 
-/** BMC listens on `window` for `DOMContentLoaded`; late-loaded scripts miss the real event — dispatch once after load. */
+/** Injects the official BMC script. Dispatches `DOMContentLoaded` after load because the widget listens for that event and misses it when the script is added late (App Router / client-only). */
 export function BuyMeACoffeeWidget() {
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 640px)");
