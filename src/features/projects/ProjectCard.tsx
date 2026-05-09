@@ -1,5 +1,6 @@
 import { Calendar, ExternalLink, Eye, GitCommit } from "lucide-react";
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { ProjectModal } from "@/components/ui/ProjectModal";
@@ -7,7 +8,18 @@ import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { getTechIcon } from "@/lib/tech";
+import { cn } from "@/lib/utils";
 import { createCommitUrl, formatDate, formatRelativeTime } from "@/lib/utils/index";
+import { ProjectCardExternalLink } from "./ProjectCardExternalLink";
+
+function ProjectCardKeyedBadge({ children, className }: { children: ReactNode; className: string }) {
+  return (
+    <span className={cn("flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold", className)}>
+      <span className="size-1.5 rounded-full bg-current opacity-70" aria-hidden />
+      {children}
+    </span>
+  );
+}
 
 interface ProjectCardProps {
   project: Project;
@@ -41,22 +53,14 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
                 {project.title}
               </h3>
               <div className="flex flex-wrap gap-2">
-                {project.status && (
-                  <span
-                    className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("status", project.status)} capitalize flex items-center gap-1`}
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-current opacity-70"></div>
+                {project.status ? (
+                  <ProjectCardKeyedBadge className={`capitalize ${getProjectBadge("status", project.status)}`}>
                     {project.status}
-                  </span>
-                )}
-                {project.openSource && (
-                  <span
-                    className={`px-2 py-1 rounded-md font-semibold text-xs ${getProjectBadge("openSource")} flex items-center gap-1`}
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-current opacity-70"></div>
-                    Open Source
-                  </span>
-                )}
+                  </ProjectCardKeyedBadge>
+                ) : null}
+                {project.openSource ? (
+                  <ProjectCardKeyedBadge className={getProjectBadge("openSource")}>Open Source</ProjectCardKeyedBadge>
+                ) : null}
               </div>
             </div>
             <div className="flex flex-col gap-1 text-right items-end">
@@ -146,41 +150,29 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
             )}
           </div>
           <div className="flex gap-3 mt-4">
-            {project.githubUrl && (
-              <a
+            {project.githubUrl ? (
+              <ProjectCardExternalLink
                 href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded border border-orange-700/30 bg-orange-50 text-orange-950 hover:bg-orange-100 dark:border-orange-400/45 dark:bg-orange-950 dark:text-orange-50 dark:hover:bg-orange-900 transition-colors text-xs font-semibold"
+                variant="github"
+                icon={<FaGithub className="size-4" aria-hidden />}
               >
-                <FaGithub className="w-4 h-4" aria-hidden />
                 GitHub
-                <NewTabSrOnly />
-              </a>
-            )}
-            {project.liveUrl && (
-              <a
+              </ProjectCardExternalLink>
+            ) : null}
+            {project.liveUrl ? (
+              <ProjectCardExternalLink
                 href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded border border-green-800/30 bg-green-50 text-green-950 hover:bg-green-100 dark:border-green-400/45 dark:bg-green-950 dark:text-green-50 dark:hover:bg-green-900 transition-colors text-xs font-semibold"
+                variant="live"
+                icon={<ExternalLink className="size-4" aria-hidden />}
               >
-                <ExternalLink className="w-4 h-4" aria-hidden />
                 Live
-                <NewTabSrOnly />
-              </a>
-            )}
-            {project.caseStudyUrl && (
-              <a
-                href={project.caseStudyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded border border-blue-800/30 bg-blue-50 text-blue-950 hover:bg-blue-100 dark:border-blue-400/45 dark:bg-blue-950 dark:text-blue-50 dark:hover:bg-blue-900 transition-colors text-xs font-semibold"
-              >
+              </ProjectCardExternalLink>
+            ) : null}
+            {project.caseStudyUrl ? (
+              <ProjectCardExternalLink href={project.caseStudyUrl} variant="caseStudy">
                 Case Study
-                <NewTabSrOnly />
-              </a>
-            )}
+              </ProjectCardExternalLink>
+            ) : null}
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}

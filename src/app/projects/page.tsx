@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
-import { ProjectFilters, ProjectPagination, ProjectResults, ProjectSearchBox } from "@/features/projects";
+import { PageHeader, PageSection, PageWrapper, Pagination } from "@/components/ui";
+import { ProjectFilters, ProjectResults, ProjectSearchBox } from "@/features/projects";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
 import {
   pageContainerVariants,
@@ -67,7 +67,7 @@ export default function Projects() {
                 isLoadingCommitDates={isLoadingCommitDates}
               />
 
-              <ProjectPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
             </div>
           </PageSection>
         </motion.div>
