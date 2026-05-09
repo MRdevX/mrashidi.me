@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.127](https://github.com/MRdevX/mrashidi.me/compare/v0.1.126...v0.1.127) (2026-05-09)
+
+
+### Code Refactoring
+
+* enhance CORS handling and security measures ([4b6d190](https://github.com/MRdevX/mrashidi.me/commit/4b6d19055862c4f82dd07ad522c452522474a9fd))
+
 ### [0.1.126](https://github.com/MRdevX/mrashidi.me/compare/v0.1.125...v0.1.126) (2026-05-09)
 
 
