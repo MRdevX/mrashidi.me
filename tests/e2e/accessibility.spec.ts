@@ -2,6 +2,13 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import type { Result } from "axe-core";
 
+/** Theme applies `dark` on <html> after client mount; axe must run after it matches tokens used by components. */
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("theme", "dark");
+  });
+});
+
 const routes = [
   { path: "/", name: "home" },
   { path: "/projects", name: "projects" },
@@ -30,8 +37,16 @@ for (const { path, name } of routes) {
   test(`no automatic WCAG A/AA violations on ${name}`, async ({ page }) => {
     await page.goto(path, { waitUntil: "load" });
     await expect(page.locator("main")).toBeVisible();
+    await expect
+      .poll(async () => page.evaluate(() => document.documentElement.classList.contains("dark")), {
+        timeout: 15_000,
+      })
+      .toBe(true);
 
-    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+    const results = await new AxeBuilder({ page })
+      .exclude('[title="GitHub Contribution Graph"]') // third-party embed; scroll container not fixable cross-origin
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
 
     expect(results.violations, formatViolations(results.violations)).toEqual([]);
   });

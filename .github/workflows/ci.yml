@@ -21,6 +21,11 @@ on:
       - "AGENTS.md"
       - "CONTRIBUTING.md"
   workflow_dispatch:
+    inputs:
+      skip_e2e:
+        description: "Skip Playwright E2E (faster manual run)"
+        type: boolean
+        default: false
 
 run-name: "CI: ${{ github.event.pull_request.title || github.ref_name }}"
 
@@ -31,6 +36,9 @@ concurrency:
 defaults:
   run:
     shell: bash
+
+env:
+  NEXT_TELEMETRY_DISABLED: 1
 
 permissions:
   contents: read
@@ -53,10 +61,10 @@ jobs:
       - name: Validate commit messages
         run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
-  lint-and-type-check:
-    name: Lint
+  quality:
+    name: Lint, types & unit tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -64,27 +72,16 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
 
-      - name: Run Biome check
-        run: pnpm check
+      - name: Biome (format, lint, imports)
+        run: pnpm exec biome check . --reporter=github
 
-      - name: Type check
+      - name: TypeScript
         run: pnpm exec tsc --noEmit
 
-  unit-tests:
-    name: Unit tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
-
-      - name: Run unit tests
+      - name: Unit tests
         run: pnpm test:run
 
-      - name: Upload test results
+      - name: Upload unit test outputs
         if: failure()
         uses: actions/upload-artifact@v7
         with:
@@ -99,6 +96,7 @@ jobs:
     name: E2E tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.skip_e2e != 'true' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -110,7 +108,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
 
@@ -136,9 +134,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs:
-      - lint-and-type-check
-      - unit-tests
+      - quality
       - e2e-tests
+    if: |
+      always() &&
+      needs.quality.result == 'success' &&
+      (needs.e2e-tests.result == 'success' || needs.e2e-tests.result == 'skipped')
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -149,5 +150,3 @@ jobs:
       # Full pipeline (sitemap, OG images, PWA). E2E uses build:fast + start to avoid two heavy builds.
       - name: Build application
         run: pnpm build
-        env:
-          NEXT_TELEMETRY_DISABLED: 1

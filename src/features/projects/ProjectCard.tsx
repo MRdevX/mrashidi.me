@@ -16,7 +16,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false }: ProjectCardProps) {
-  const { getTextColor, getBackgroundColor, getProjectBadge, getBorderColor } = useThemeConfig();
+  const { getTextColor, getProjectBadge, getBorderColor } = useThemeConfig();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -38,7 +38,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
         )}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors mb-2">
+            <h3 className="text-xl font-bold text-orange-700 group-hover:text-orange-600 dark:text-orange-400 dark:group-hover:text-orange-300 transition-colors mb-2">
               {project.title}
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -73,7 +73,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap gap-2 items-center text-sm mb-1">
-            {project.clientName && <span className="font-semibold text-orange-400">{project.clientName}</span>}
+            {project.clientName && (
+              <span className="font-semibold text-orange-800 dark:text-orange-300">{project.clientName}</span>
+            )}
             {project.role && <span className={getTextColor("secondary")}>{project.role}</span>}
           </div>
           <p
@@ -107,7 +109,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
                   href={createCommitUrl(project.githubUrl, commitInfo.hash)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-orange-400 transition-colors"
+                  className="flex items-center gap-1 text-neutral-800 underline-offset-2 hover:text-orange-700 hover:underline dark:text-neutral-200 dark:hover:text-orange-400 transition-colors"
                   title="View commit on GitHub"
                 >
                   <GitCommit className="w-3 h-3" aria-hidden />
@@ -129,10 +131,10 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
             return (
               <span
                 key={tech}
-                className={`px-3 py-1 rounded-full text-xs font-medium text-gray-900 dark:text-gray-100 ${getBackgroundColor("muted")} border border-orange-500/20 hover:border-orange-500/40 transition-colors flex items-center gap-1.5`}
+                className="relative z-10 isolate px-3 py-1 rounded-full text-xs font-medium a11y-tech-chip border border-orange-500/20 hover:border-orange-500/40 transition-colors inline-flex items-center gap-1.5"
               >
                 {techIcon && <techIcon.Icon className={`w-3.5 h-3.5 ${techIcon.colorClass}`} aria-hidden />}
-                {tech}
+                <span>{tech}</span>
               </span>
             );
           })}
@@ -148,7 +150,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded border border-orange-700/30 bg-orange-50 text-orange-950 hover:bg-orange-100 dark:border-orange-400/45 dark:bg-orange-950 dark:text-orange-50 dark:hover:bg-orange-900 transition-colors text-xs font-semibold"
             >
               <FaGithub className="w-4 h-4" aria-hidden />
               GitHub
@@ -160,7 +162,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20 hover:text-green-300 transition-colors text-xs font-semibold"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded border border-green-800/30 bg-green-50 text-green-950 hover:bg-green-100 dark:border-green-400/45 dark:bg-green-950 dark:text-green-50 dark:hover:bg-green-900 transition-colors text-xs font-semibold"
             >
               <ExternalLink className="w-4 h-4" aria-hidden />
               Live
@@ -172,7 +174,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               href={project.caseStudyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded border border-blue-800/30 bg-blue-50 text-blue-950 hover:bg-blue-100 dark:border-blue-400/45 dark:bg-blue-950 dark:text-blue-50 dark:hover:bg-blue-900 transition-colors text-xs font-semibold"
             >
               Case Study
               <NewTabSrOnly />
@@ -181,7 +183,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-1 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
+            className="inline-flex items-center gap-1 px-3 py-1 rounded border border-orange-700/30 bg-orange-50 text-orange-950 hover:bg-orange-100 dark:border-orange-400/45 dark:bg-orange-950 dark:text-orange-50 dark:hover:bg-orange-900 transition-colors text-xs font-semibold"
           >
             <Eye className="w-4 h-4" aria-hidden />
             View Details

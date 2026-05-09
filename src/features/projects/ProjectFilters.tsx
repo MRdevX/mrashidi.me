@@ -55,23 +55,17 @@ export function ProjectFilters({
                 key={stack}
                 onClick={() => onToggleStack(stack)}
                 aria-pressed={isSelected}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 motion-safe:hover:scale-[1.03] font-medium ${
+                className={`relative isolate z-10 flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 motion-safe:hover:scale-[1.03] font-medium ${
                   isSelected
-                    ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg shadow-orange-500/25"
-                    : `${getBackgroundColor("glassLight")} ${getBorderColor("secondary")} ${getTextColor(
-                        "primary"
-                      )} hover:border-orange-500/60 hover:text-orange-400 hover:${getBackgroundColor(
-                        "secondary"
-                      )} hover:shadow-lg hover:shadow-orange-500/10`
+                    ? "border-orange-600 bg-orange-100 text-orange-950 shadow-md shadow-orange-900/10 dark:border-orange-500 dark:bg-orange-950 dark:text-orange-50 dark:shadow-orange-950/40"
+                    : "border-border a11y-tech-chip hover:border-orange-500/60 hover:shadow-lg hover:shadow-orange-500/10"
                 }`}
               >
                 {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} aria-hidden />}
                 <span className="text-sm font-medium">{stack}</span>
                 <span
                   className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${
-                    isSelected
-                      ? "bg-orange-500 text-black shadow-lg"
-                      : `${getBackgroundColor("muted")} ${getTextColor("primary")} border ${getBorderColor("secondary")}`
+                    isSelected ? "bg-orange-500 text-black shadow-lg" : "border border-border a11y-tech-chip-count"
                   }`}
                 >
                   {usageCount}

@@ -14,7 +14,7 @@ const levelConfig = {
 };
 
 export function SkillsSection() {
-  const { getCardPattern, getTextColor, getBackgroundColor, getBorderColor } = useThemeConfig();
+  const { getCardPattern, getTextColor, getBorderColor } = useThemeConfig();
 
   const allSkills = skills.flatMap((cat) => cat.skills.map((skill) => ({ ...skill, category: cat.category })));
   const skillsByLevel = {
@@ -26,7 +26,7 @@ export function SkillsSection() {
   };
 
   return (
-    <MotionSection as="section" delay={0.4}>
+    <MotionSection as="section" delay={0.4} className="not-prose">
       <SectionHeader iconName="Code2" title="Skills & Technologies" size="sm" />
 
       <div className="space-y-8">
@@ -39,30 +39,25 @@ export function SkillsSection() {
           return (
             <div
               key={level}
-              className={`${getCardPattern()} p-6 ${getBackgroundColor("glass")} border ${getBorderColor(
+              className={`${getCardPattern()} relative isolate z-0 p-6 bg-card text-card-foreground border ${getBorderColor(
                 "primary"
               )} rounded-xl`}
             >
-              <div className="flex items-center gap-3 mb-4">
+              <div className="relative z-10 flex items-center gap-3 mb-4">
                 <h3 className={`text-xl font-bold ${getTextColor("primary")}`} style={{ color: config.color }}>
                   {config.label}
                 </h3>
                 <span className={`${getTextColor("secondary")} text-sm`}>({skills.length})</span>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="relative z-10 flex flex-wrap gap-2">
                 {skills.map((skill) => {
                   const { Icon, colorClass } = getTechIcon(skill.name);
 
                   return (
                     <span
                       key={`${skill.name}-${skill.category}`}
-                      className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm ${getBackgroundColor(
-                        "muted"
-                      )} ${getTextColor("primary")} border ${getBorderColor("secondary")} hover:${getBackgroundColor(
-                        "secondary"
-                      )} transition-colors`}
-                      style={{ boxShadow: `0 0 8px 1px ${config.color}` }}
+                      className="relative isolate z-10 inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm a11y-tech-chip border border-border transition-colors"
                       title={skill.name}
                     >
                       <Icon className={`w-4 h-4 ${colorClass}`} aria-hidden />
