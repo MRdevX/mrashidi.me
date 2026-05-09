@@ -25,9 +25,10 @@ export function EducationSection() {
                     "primary"
                   )} transition-colors mt-2 flex items-center relative z-10 cursor-pointer hover:text-orange-400`}
                   onClick={() => window.open(edu.url, "_blank")}
+                  aria-label={`${edu.institution} (opens in new tab)`}
                 >
                   <span>{edu.institution}</span>
-                  <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />
+                  <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" aria-hidden />
                 </button>
               ) : (
                 <div

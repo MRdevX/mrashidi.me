@@ -11,7 +11,7 @@ export function CertificatesSection() {
   return (
     <section className="mb-16">
       <div className="flex items-center gap-3 mb-8">
-        <Award className="w-8 h-8 text-orange-500" />
+        <Award className="w-8 h-8 text-orange-500" aria-hidden />
         <h2 className={getSectionTitle()}>Recent Certifications</h2>
       </div>
       <div className="space-y-8">
@@ -43,9 +43,21 @@ export function CertificatesSection() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * i }}
+                  role={cert.url ? "button" : undefined}
+                  tabIndex={cert.url ? 0 : undefined}
+                  aria-label={cert.url ? `Open ${cert.name} in new tab` : undefined}
                   onClick={() => cert.url && window.open(cert.url, "_blank")}
+                  onKeyDown={(e) => {
+                    if (!cert.url) {
+                      return;
+                    }
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      window.open(cert.url, "_blank");
+                    }
+                  }}
                 >
-                  <CheckCircle className="w-5 h-5 text-orange-500 shrink-0 mr-3" />
+                  <CheckCircle className="w-5 h-5 text-orange-500 shrink-0 mr-3" aria-hidden />
                   <div className="flex-1 min-w-0">
                     <div
                       className={`font-medium ${getTextColor("primary")} hover:${getTextColor(
@@ -53,12 +65,12 @@ export function CertificatesSection() {
                       )} transition-colors flex items-center`}
                     >
                       {cert.name}
-                      {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" />}
+                      {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" aria-hidden />}
                     </div>
                   </div>
-                  <div className={`text-sm ${getTextColor("secondary")} text-right ml-4`}>
+                  <div className="text-sm text-gray-800 dark:text-gray-200 text-right ml-4">
                     <div>{cert.year}</div>
-                    <div className={`text-xs ${getTextColor("muted")}`}>{cert.provider}</div>
+                    <div className="text-xs text-gray-700 dark:text-gray-300">{cert.provider}</div>
                   </div>
                 </motion.div>
               ))}

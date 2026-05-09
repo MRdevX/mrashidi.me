@@ -102,7 +102,7 @@ export function ContactFormRefactored() {
           name="name"
           label="Name"
           placeholder="Your name"
-          icon={<User className="w-4 h-4" />}
+          icon={<User className="w-4 h-4" aria-hidden />}
         />
 
         <FormInputWithValidation
@@ -111,7 +111,7 @@ export function ContactFormRefactored() {
           label="Email"
           type="email"
           placeholder="your.email@example.com"
-          icon={<Mail className="w-4 h-4" />}
+          icon={<Mail className="w-4 h-4" aria-hidden />}
         />
 
         <FormInputWithValidation
@@ -119,7 +119,7 @@ export function ContactFormRefactored() {
           name="subject"
           label="Subject"
           placeholder="What is this about?"
-          icon={<FileText className="w-4 h-4" />}
+          icon={<FileText className="w-4 h-4" aria-hidden />}
         />
 
         <div>
@@ -130,7 +130,7 @@ export function ContactFormRefactored() {
             placeholder="Your message here..."
             multiline
             rows={5}
-            icon={<MessageSquare className="w-4 h-4" />}
+            icon={<MessageSquare className="w-4 h-4" aria-hidden />}
           />
           <div className="flex justify-between items-center mt-1">
             <p className="text-xs text-gray-500">Tell me about your project, question, or how I can help you</p>
@@ -142,7 +142,7 @@ export function ContactFormRefactored() {
           type="submit"
           disabled={isSubmitting || !form.watch("message") || form.watch("message").length < 10}
           loading={isSubmitting}
-          icon={<Send className="w-4 h-4" />}
+          icon={<Send className="w-4 h-4" aria-hidden />}
           className="w-full"
           variant="neon"
         >

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, MapPin, Send } from "lucide-react";
 import Link from "next/link";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const ContributionGraph = lazy(() =>
@@ -39,17 +39,7 @@ import { pageContainerVariants, pageItemVariants } from "@/lib/animations";
 import { getMainTechStack } from "@/lib/tech";
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const techStack = getMainTechStack();
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <PageWrapper containerClassName="max-w-5xl mx-auto">
@@ -75,7 +65,7 @@ export default function Home() {
             </p>
             <p className="hero-description text-body">{config.site.description}</p>
             <p className="hero-location text-body">
-              <MapPin className="w-5 h-5 icon-primary" />
+              <MapPin className="w-5 h-5 icon-primary" aria-hidden />
               {config.person.location}
             </p>
 
@@ -162,7 +152,7 @@ export default function Home() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <CyberpunkButton
                     variant="neon"
-                    icon={<ArrowRight className="w-5 h-5" />}
+                    icon={<ArrowRight className="w-5 h-5" aria-hidden />}
                     iconPosition="right"
                     className="text-lg px-8 py-3"
                   >

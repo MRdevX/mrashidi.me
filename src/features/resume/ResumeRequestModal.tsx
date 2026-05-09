@@ -13,6 +13,7 @@ import {
   CyberpunkDialogFooter,
   CyberpunkDialogHeader,
   CyberpunkDialogTitle,
+  DialogDescription,
 } from "@/components/ui";
 import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
 
@@ -92,10 +93,20 @@ export function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: Resu
   };
 
   return (
-    <CyberpunkDialog open={isOpen} onOpenChange={handleClose}>
+    <CyberpunkDialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          handleClose();
+        }
+      }}
+    >
       <CyberpunkDialogContent className="w-full max-w-md">
         <CyberpunkDialogHeader>
           <CyberpunkDialogTitle>Request Resume</CyberpunkDialogTitle>
+          <DialogDescription>
+            Enter your details to download the CV. You will receive a confirmation email.
+          </DialogDescription>
         </CyberpunkDialogHeader>
 
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">

@@ -47,7 +47,7 @@ export function ResumeHeader() {
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12">
         <div className="flex items-center gap-3">
-          <FileText className="w-8 h-8 text-orange-500" />
+          <FileText className="w-8 h-8 text-orange-500" aria-hidden />
           <h1 className={`text-3xl sm:text-4xl font-bold ${getSectionTitle()} text-center sm:text-left`}>
             Professional Experience
           </h1>
@@ -57,7 +57,7 @@ export function ResumeHeader() {
             setIsModalOpen(true);
           }}
           variant="neon"
-          icon={<Download className="w-5 h-5" />}
+          icon={<Download className="w-5 h-5" aria-hidden />}
           className="w-full sm:w-auto"
         >
           Request CV

@@ -16,7 +16,7 @@ function SocialLink({ href, icon, ariaLabel, isEmail = false }: SocialLinkProps)
       target={isEmail ? undefined : "_blank"}
       rel={isEmail ? undefined : "noopener noreferrer"}
       className="text-muted-foreground hover:text-primary block duration-150"
-      aria-label={ariaLabel}
+      aria-label={isEmail ? ariaLabel : `${ariaLabel} (opens in new tab)`}
     >
       {icon}
     </a>
@@ -29,17 +29,17 @@ export function Footer() {
   const socialLinks = [
     {
       href: config.social.github,
-      icon: <FaGithub className="size-6" />,
+      icon: <FaGithub className="size-6" aria-hidden />,
       ariaLabel: `Visit ${config.person.name}'s GitHub Profile`,
     },
     {
       href: config.social.linkedin,
-      icon: <FaLinkedin className="size-6" />,
+      icon: <FaLinkedin className="size-6" aria-hidden />,
       ariaLabel: `Visit ${config.person.name}'s LinkedIn Profile`,
     },
     {
       href: `mailto:${config.person.email}`,
-      icon: <Mail className="size-6" />,
+      icon: <Mail className="size-6" aria-hidden />,
       ariaLabel: `Email ${config.person.name}`,
       isEmail: true,
     },
