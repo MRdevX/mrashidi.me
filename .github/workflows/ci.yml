@@ -1,4 +1,8 @@
+# Lint, unit tests, Playwright E2E, then Next.js build (CI skips assets + PWA; see job summary).
+
 name: CI
+
+run-name: CI — ${{ github.ref_name }}
 
 on:
   pull_request:
@@ -35,26 +39,46 @@ permissions:
 
 jobs:
   quality:
+    name: Quality
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/setup-node
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
 
-      - name: Commitlint
+      - name: Commitlint (PRs only)
         if: github.event_name == 'pull_request'
         run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
-      - run: pnpm exec biome check . --reporter=github
+      - name: Lint (Biome)
+        run: pnpm exec biome check . --reporter=github
 
-      - run: pnpm exec tsc --noEmit
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
 
-      - run: pnpm test:run
+      - name: Unit tests (Vitest)
+        run: pnpm test:run
+
+      - name: Job summary — quality
+        if: success()
+        run: |
+          {
+            echo "## Quality passed"
+            echo ""
+            echo "- Lint: Biome (\`pnpm check\`)"
+            echo "- Types: TypeScript (\`tsc --noEmit\`)"
+            echo "- Unit tests: Vitest (\`pnpm test:run\`)"
+            echo ""
+            echo "_PR pushes also run Commitlint against the commit range above._"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@v7
+        name: Upload unit test artifacts (on failure)
         if: failure()
         with:
           name: unit-test-results
@@ -65,24 +89,41 @@ jobs:
           retention-days: 7
 
   e2e:
+    name: End-to-end
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: ./.github/actions/setup-node
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
 
-      - uses: actions/cache@v5
+      - name: Cache Playwright browsers
+        uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
           restore-keys: playwright-${{ runner.os }}-
 
-      - run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
 
-      - run: pnpm test:e2e
+      - name: E2E tests
+        run: pnpm test:e2e
+
+      - name: Job summary — end-to-end
+        if: success()
+        run: |
+          {
+            echo "## E2E passed"
+            echo ""
+            echo "- Runner: Chromium (Playwright, \`pnpm test:e2e\`)"
+            echo "- Cached: \`\$HOME/.cache/ms-playwright\` when lockfile/key unchanged"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@v7
+        name: Upload E2E report (on failure)
         if: failure()
         with:
           name: e2e-artifacts
@@ -93,13 +134,42 @@ jobs:
           retention-days: 7
 
   build:
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: [quality, e2e]
     if: ${{ always() && needs.quality.result == 'success' && needs.e2e.result == 'success' }}
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: ./.github/actions/setup-node
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
 
-      - run: pnpm build
+      - name: Restore Next.js cache
+        uses: actions/cache@v5
+        id: next-cache
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-next-cache-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-next-cache-
+
+      - name: Next.js build (CI profile)
+        run: pnpm build:ci
+
+      - name: Job summary — build
+        if: success()
+        run: |
+          {
+            echo "## Build passed"
+            echo ""
+            echo "- Command: \`pnpm build:ci\` (= \`build:fast\`: no asset pregeneration, **PWA off**)."
+            echo "- Production deploy should use \`pnpm build\` (assets + **PWA**)."
+            CACHE_HIT="${{ steps.next-cache.outputs.cache-hit }}"
+            if [ "$CACHE_HIT" = 'true' ]; then
+              echo "- Next cache: **hit** (restored \`.next/cache\`)."
+            else
+              echo "- Next cache: **miss** (\`pnpm-lock.yaml\` key or first run — cold compile)."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

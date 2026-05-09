@@ -7,6 +7,7 @@
     "generate-assets": "sh -c 'pnpm generate-sitemap & _s=$!; pnpm generate-og-images & _o=$!; _e=0; wait $_s || _e=1; wait $_o || _e=1; exit $_e'",
     "build": "NEXT_TELEMETRY_DISABLED=1 pnpm generate-assets && next build",
     "build:fast": "SKIP_PWA=true next build",
+    "build:ci": "pnpm build:fast",
     "start": "next start",
     "test": "vitest",
     "test:run": "vitest run",

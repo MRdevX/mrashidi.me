@@ -1,4 +1,8 @@
+# Supply chain and static analysis: dependency audit, CodeQL (JS), PR dependency review.
+
 name: Security
+
+run-name: Security — ${{ github.ref_name }}
 
 on:
   pull_request:
@@ -33,19 +37,30 @@ permissions:
   contents: read
 
 jobs:
-  # Fails CI on unresolved high CVEs until upgraded or audited false positive is documented upstream.
   pnpm-audit:
+    name: Dependency audit
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: ./.github/actions/setup-node
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
 
-      - name: Dependency audit (high+)
+      - name: Audit (high or higher fails the job)
         run: pnpm audit --audit-level=high
 
+      - name: Job summary — audit
+        if: success()
+        run: |
+          cat << EOF >> "$GITHUB_STEP_SUMMARY"
+          ## Dependency audit passed
+          \`pnpm audit --audit-level=high\` — tighten or upstream-only exceptions if this fails later.
+          EOF
+
   codeql:
+    name: CodeQL (JavaScript)
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
@@ -53,23 +68,30 @@ jobs:
       security-events: write
       actions: read
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: github/codeql-action/init@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
         with:
           languages: javascript
 
-      - uses: ./.github/actions/setup-node
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
 
-      - uses: github/codeql-action/analyze@v4
+      - name: Analyze with CodeQL
+        uses: github/codeql-action/analyze@v4
 
   dependency-review:
+    name: PR dependency diff
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: github.event_name == 'pull_request'
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: actions/dependency-review-action@v4
+      - name: Review license / severity deltas
+        uses: actions/dependency-review-action@v5
         with:
           fail-on-severity: moderate

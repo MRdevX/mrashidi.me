@@ -28,15 +28,17 @@ jobs:
       github.event.workflow_run.head_repository.full_name == github.repository
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout (release branch + tags)
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
           fetch-depth: 0
           fetch-tags: true
 
-      - uses: ./.github/actions/setup-node
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
 
-      - name: Git identity
+      - name: Git identity (bot commits)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

@@ -54,8 +54,9 @@ pnpm dev
 
 **Build**:
 
-- **`pnpm build`** — production build and also runs sitemap + OG image generation (heavier; needs env vars those scripts expect).
-- **`pnpm build:fast`** — Next.js production build only (`SKIP_PWA=true`), useful for a quicker compile/smoke without running the extra generation steps.
+- **`pnpm build`** — full production path: regenerates static sitemap XML + OG images, then Next build with **PWA** enabled.
+- **`pnpm build:fast`** — skips PWA, skips sitemap/OG regeneration (Next still serves **`/sitemap.xml`** from `src/app/sitemap.ts`; committed PNGs remain). Fastest realistic compile/smoke locally.
+- **`pnpm build:ci`** — alias of **`pnpm build:fast`** (used by GitHub Actions CI). **Production deploys should still run `pnpm build`** so PWA and image refresh stay wired.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and local checks detail.
 
