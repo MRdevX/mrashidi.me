@@ -1,4 +1,5 @@
 import { SocialButtonsRow } from "@/components/ui";
+import { ResumeFilamentDivider } from "@/features/resume";
 
 const OUTREACH_TITLE = "I genuinely enjoy hearing from people.";
 
@@ -10,9 +11,7 @@ export function ContactSocialReachCard() {
           <p className="text-lg font-semibold leading-snug tracking-tight text-foreground sm:text-xl">
             {OUTREACH_TITLE}
           </p>
-          <div className="flex justify-center" aria-hidden="true">
-            <span className="h-1 w-14 shrink-0 rounded-full bg-gradient-to-r from-orange-500/20 via-orange-500/55 to-orange-500/20 dark:from-orange-400/15 dark:via-orange-400/45 dark:to-orange-400/15" />
-          </div>
+          <ResumeFilamentDivider align="center" symmetric />
           <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base sm:leading-7">
             <p>
               <span className="mr-1 inline-block font-semibold text-foreground">Email</span>

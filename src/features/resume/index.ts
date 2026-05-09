@@ -1,5 +1,9 @@
 export { CertificatesSection } from "./CertificatesSection";
-export { ResumeFilamentDivider, resumeFilamentLineClassName } from "./ResumeFilamentDivider";
+export {
+  ResumeFilamentDivider,
+  resumeFilamentLineClassName,
+  resumeFilamentSymmetricLineClassName,
+} from "./ResumeFilamentDivider";
 export { ResumeHeader } from "./ResumeHeader";
 export { ResumeHeadingBlock, ResumeSubsectionHeading } from "./ResumeHeadingBlock";
 export {
