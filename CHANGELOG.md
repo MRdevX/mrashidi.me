@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.124](https://github.com/MRdevX/mrashidi.me/compare/v0.1.123...v0.1.124) (2026-05-09)
+
+
+### Features
+
+* integrate BuyMeACoffee widget and update configurations ([4bee9fc](https://github.com/MRdevX/mrashidi.me/commit/4bee9fcf1a63a3fae95070333f10d94485cc08a7))
+* introduce SocialButtonsRow component and refactor social buttons usage ([5b9a955](https://github.com/MRdevX/mrashidi.me/commit/5b9a955137b266960e4b32c6cf525c1a550eecf9))
+
 ### [0.1.123](https://github.com/MRdevX/mrashidi.me/compare/v0.1.122...v0.1.123) (2026-05-09)
 
 
