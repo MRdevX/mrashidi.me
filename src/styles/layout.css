@@ -71,30 +71,10 @@
     border-color: rgb(51 65 85 / 0.35);
   }
 
-  /* Layout Utilities */
-  .page-container {
-    min-height: 100vh;
-    padding: 3rem 0;
-  }
-
-  .page-content {
-    max-width: 64rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-
   /* Responsive Utilities */
   @media (max-width: 640px) {
     .content-section {
       padding: 1.5rem;
-    }
-
-    .page-container {
-      padding: 2rem 0;
-    }
-
-    .page-content {
-      padding: 0 1rem;
     }
   }
 

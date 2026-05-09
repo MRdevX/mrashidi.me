@@ -24,6 +24,7 @@ export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButt
       icon,
       iconPosition = "left",
       children,
+      asChild = false,
       ...props
     },
     ref
@@ -37,12 +38,32 @@ export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButt
       className
     );
 
-    const { asChild: _asChild, ...buttonProps } = props;
+    const iconElement = icon ? <span className="inline-flex shrink-0 items-center">{icon}</span> : null;
 
-    const iconElement = icon && <span className="inline-flex items-center">{icon}</span>;
+    if (asChild) {
+      const child = React.Children.only(children) as React.ReactElement<{
+        children?: React.ReactNode;
+      }>;
+
+      const composed = React.cloneElement(
+        child,
+        undefined,
+        <>
+          {iconPosition === "left" && iconElement}
+          {child.props.children}
+          {iconPosition === "right" && iconElement}
+        </>
+      );
+
+      return (
+        <Button ref={ref} variant="ghost" className={buttonClasses} asChild {...props}>
+          {composed}
+        </Button>
+      );
+    }
 
     return (
-      <Button ref={ref} variant="ghost" className={buttonClasses} {...buttonProps}>
+      <Button ref={ref} variant="ghost" className={buttonClasses} {...props}>
         {iconPosition === "left" && iconElement}
         {children}
         {iconPosition === "right" && iconElement}

@@ -1,3 +1,5 @@
+import type { Variants } from "framer-motion";
+
 export const cssAnimations = {
   fadeIn: "animate-fade-in",
   slideUp: "animate-slide-up",
@@ -26,6 +28,11 @@ export const fadeInVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+export const reducedMotionFadeVariants: Variants = {
+  hidden: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export const slideInVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: { opacity: 1, x: 0 },
@@ -51,8 +58,19 @@ export const pageContainerVariants = {
   },
 };
 
+/** Stable layout when user prefers reduced motion */
+export const reducedMotionPageContainerVariants: Variants = {
+  hidden: { opacity: 1 },
+  show: { opacity: 1, transition: { staggerChildren: 0 } },
+};
+
 export const pageItemVariants = {
   hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
+export const reducedMotionPageItemVariants: Variants = {
+  hidden: { opacity: 1, y: 0 },
   show: { opacity: 1, y: 0 },
 };
 

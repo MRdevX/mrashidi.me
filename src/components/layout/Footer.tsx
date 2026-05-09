@@ -47,7 +47,7 @@ export function Footer() {
 
   return (
     <footer className="py-8 md:py-12">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
           {socialLinks.map((link) => (
             <SocialLink key={link.ariaLabel} {...link} />

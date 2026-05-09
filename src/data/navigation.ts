@@ -16,7 +16,7 @@ export const navigationItems: NavigationItem[] = [
   { name: "Blog", href: "/blog", icon: BookOpen, showInMobile: true, showInDesktop: true },
   { name: "Resume", href: "/resume", icon: FileText, showInMobile: true, showInDesktop: true },
   { name: "About", href: "/about", icon: User, showInMobile: true, showInDesktop: true },
-  { name: "Contact", href: "/contact", icon: MessageSquare, showInMobile: false, showInDesktop: true },
+  { name: "Contact", href: "/contact", icon: MessageSquare, showInMobile: true, showInDesktop: true },
 ];
 
 export const mobileNavigationItems = navigationItems.filter((item) => item.showInMobile);

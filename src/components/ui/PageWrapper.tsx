@@ -14,7 +14,7 @@ export function PageWrapper({ children, className, containerClassName }: PageWra
       <div className="fixed top-16 bottom-16 left-0 right-0 bg-gradient-to-b from-white/3 via-white/1 to-white/3 dark:from-black/3 dark:via-black/1 dark:to-black/3 backdrop-blur-[0.5px] pointer-events-none z-[1]" />
 
       {/* Main content container */}
-      <div className={cn("max-w-3xl mx-auto px-4 relative z-10", containerClassName)}>{children}</div>
+      <div className={cn("max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10", containerClassName)}>{children}</div>
     </div>
   );
 }

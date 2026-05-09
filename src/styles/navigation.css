@@ -100,10 +100,6 @@
     background-color: rgb(55 65 81);
   }
 
-  .bottom-nav-item:focus {
-    outline: none;
-  }
-
   .bottom-nav-item-icon {
     width: 1.25rem;
     height: 1.25rem;

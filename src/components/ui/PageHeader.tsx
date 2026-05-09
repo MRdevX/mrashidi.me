@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { BookOpen, FolderOpen, MessageCircle, User } from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { fadeInVariants } from "@/lib/animations";
+import { fadeInVariants, reducedMotionFadeVariants } from "@/lib/animations";
 
 const iconMap = {
   User,
@@ -23,13 +23,15 @@ interface PageHeaderProps {
 export function PageHeader({ iconName, title, className = "" }: PageHeaderProps) {
   const { getSectionTitle } = useThemeConfig();
   const Icon = iconMap[iconName];
+  const prefersReducedMotion = useReducedMotion();
+  const variants = prefersReducedMotion ? reducedMotionFadeVariants : fadeInVariants;
 
   return (
     <motion.div
       initial="hidden"
       animate="visible"
-      variants={fadeInVariants}
-      transition={{ duration: 0.5 }}
+      variants={variants}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.5 }}
       className={className}
     >
       <div className="page-header">
