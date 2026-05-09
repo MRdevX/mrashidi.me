@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.126](https://github.com/MRdevX/mrashidi.me/compare/v0.1.125...v0.1.126) (2026-05-09)
+
+
+### Features
+
+* add PageEnterMotion component for enhanced entrance animations ([a4c950e](https://github.com/MRdevX/mrashidi.me/commit/a4c950e8d0038e90b081c48879a9024f9b1879fc))
+* implement AboutBio feature with structured bio segments ([b80d2c0](https://github.com/MRdevX/mrashidi.me/commit/b80d2c0b6324d9fd102d002d868e90b60e76d2cc))
+
+
+### Bug Fixes
+
+* update experience years in bio and enhance layout for BioSection ([8d4f4e6](https://github.com/MRdevX/mrashidi.me/commit/8d4f4e6f2ae9fa79b37d8495970dd552b6a9fc70))
+
+
+### Code Refactoring
+
+* add achievements divider and adjust layout in WorkExperienceSection ([f8fbe8e](https://github.com/MRdevX/mrashidi.me/commit/f8fbe8ec397837cab7465c4c77ae31baa33ddf73))
+* consolidate About section components for improved organization and functionality ([246cc06](https://github.com/MRdevX/mrashidi.me/commit/246cc060b7640f721bf949ddbe170f9fdd33f291))
+* enhance BlogCardSkeleton and BlogPostCard layout ([a501dc6](https://github.com/MRdevX/mrashidi.me/commit/a501dc6a78a1255e0e2a5b06eb3fd488539b892a))
+* enhance ContactSocialReachCard with ResumeFilamentDivider ([cd9d7b3](https://github.com/MRdevX/mrashidi.me/commit/cd9d7b33c3653b0951c12fc326d64bb098b3e72f))
+* enhance page structure and animation handling across components ([6d9fe6b](https://github.com/MRdevX/mrashidi.me/commit/6d9fe6be545d437e098e53cbab87491872bd1430))
+* enhance ProjectCard layout and styling ([c1f06c2](https://github.com/MRdevX/mrashidi.me/commit/c1f06c2442a54b1ae90c110093b120f7c36e11c6))
+* enhance work experience display with employment type ([ec02a38](https://github.com/MRdevX/mrashidi.me/commit/ec02a382e26c99d7ab9d17a1b66ea30c3a95bca8))
+* enhance WorkExperienceSection layout and functionality ([a17d7b3](https://github.com/MRdevX/mrashidi.me/commit/a17d7b3307fcfea3f3c4807b59f263f31bacf5cb))
+* enhance WorkExperienceSection layout and styling ([b04b25a](https://github.com/MRdevX/mrashidi.me/commit/b04b25a2e8456a75b3c22d1124d3c555dc9b4713))
+* enhance WorkExperienceSection styling and layout ([2886df7](https://github.com/MRdevX/mrashidi.me/commit/2886df79ed9719e0f4234315f6c1ebf5f11ca02f))
+* improve WorkExperienceSection styling and layout ([e627050](https://github.com/MRdevX/mrashidi.me/commit/e6270502abffb864304e0c9db8ebccc41c6ca8f6))
+* introduce ResumeFilamentDivider for improved section styling ([5489b21](https://github.com/MRdevX/mrashidi.me/commit/5489b212beef74c6af4ad10e201faec45622e90f))
+* introduce ResumeHeadingBlock and ResumeMetaChip components for improved section structure ([0f4d46c](https://github.com/MRdevX/mrashidi.me/commit/0f4d46c77fcbe1f171eba6e834bc0b67bb81ed21))
+* refine WorkExperienceSection layout and styling ([eb366d3](https://github.com/MRdevX/mrashidi.me/commit/eb366d33300f2365f2b40b3236d2418e57293598))
+* restructure blog components for improved organization and functionality ([9dad1c9](https://github.com/MRdevX/mrashidi.me/commit/9dad1c9403b768dcc3c2b2fed869606de9a1e486))
+* restructure contact page components for improved organization and functionality ([d2a3ebb](https://github.com/MRdevX/mrashidi.me/commit/d2a3ebbc0c8dbe4ec13947da04238be95a41bb86))
+* restructure home page components for improved organization and functionality ([8e6cf79](https://github.com/MRdevX/mrashidi.me/commit/8e6cf797a3060885d5badbbd60038dc70304155b))
+* simplify ContactForm styling for improved clarity ([f47d229](https://github.com/MRdevX/mrashidi.me/commit/f47d2296353fd3b7b49d37b4b9b7d5bc5db914bf))
+* streamline animation handling in home and projects pages ([e6fac1f](https://github.com/MRdevX/mrashidi.me/commit/e6fac1fed8b360fd56270d70558f1a878e9b1d09))
+* streamline project components and enhance layout ([cf3a94a](https://github.com/MRdevX/mrashidi.me/commit/cf3a94ae0c850480fd6b48e4b447b55fb5c61805))
+* unify card styling and enhance layout across components ([733abf1](https://github.com/MRdevX/mrashidi.me/commit/733abf16648ff4ed9dc9c2b1c8a954cb9807c4e8))
+
 ### [0.1.125](https://github.com/MRdevX/mrashidi.me/compare/v0.1.124...v0.1.125) (2026-05-09)
 
 
