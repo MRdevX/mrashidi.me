@@ -13,7 +13,7 @@ export function BottomNavigation() {
   return (
     <>
       {/* Bottom Navigation */}
-      <nav className="mobile-nav bottom-nav-glass sm:hidden">
+      <nav className="mobile-nav bottom-nav-glass sm:hidden" aria-label="Mobile primary navigation">
         <div className="nav-container">
           {mobileNavigationItems.map((item) => (
             <BottomNavigationItem

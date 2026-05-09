@@ -5,6 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import { ProjectModal } from "@/components/ui/ProjectModal";
 import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { getTechIcon } from "@/lib/tech";
 import { createCommitUrl, formatDate, formatRelativeTime } from "@/lib/utils/index";
 
@@ -99,7 +100,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
             {commitInfo ? (
               <>
                 <div className="flex items-center gap-1">
-                  <Calendar className="w-3 h-3" />
+                  <Calendar className="w-3 h-3" aria-hidden />
                   <span title={formatDate(commitInfo.date)}>Last commit: {formatRelativeTime(commitInfo.date)}</span>
                 </div>
                 <a
@@ -109,8 +110,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
                   className="flex items-center gap-1 hover:text-orange-400 transition-colors"
                   title="View commit on GitHub"
                 >
-                  <GitCommit className="w-3 h-3" />
+                  <GitCommit className="w-3 h-3" aria-hidden />
                   <span className="font-mono">{commitInfo.hash.substring(0, 7)}</span>
+                  <NewTabSrOnly />
                 </a>
               </>
             ) : isLoadingCommitDates ? (
@@ -127,15 +129,15 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
             return (
               <span
                 key={tech}
-                className={`px-3 py-1 rounded-full text-xs font-medium ${getBackgroundColor("muted")} border border-orange-500/20 hover:border-orange-500/40 transition-colors flex items-center gap-1.5`}
+                className={`px-3 py-1 rounded-full text-xs font-medium text-gray-900 dark:text-gray-100 ${getBackgroundColor("muted")} border border-orange-500/20 hover:border-orange-500/40 transition-colors flex items-center gap-1.5`}
               >
-                {techIcon && <techIcon.Icon className={`w-3.5 h-3.5 ${techIcon.colorClass}`} />}
+                {techIcon && <techIcon.Icon className={`w-3.5 h-3.5 ${techIcon.colorClass}`} aria-hidden />}
                 {tech}
               </span>
             );
           })}
           {project.stack.length > 6 && (
-            <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-500/20 text-slate-600 dark:text-slate-400 border border-slate-500/30">
+            <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-500/20 text-slate-800 dark:text-slate-200 border border-slate-500/30">
               +{project.stack.length - 6} more
             </span>
           )}
@@ -148,8 +150,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
             >
-              <FaGithub className="w-4 h-4" />
+              <FaGithub className="w-4 h-4" aria-hidden />
               GitHub
+              <NewTabSrOnly />
             </a>
           )}
           {project.liveUrl && (
@@ -159,8 +162,9 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 px-3 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20 hover:text-green-300 transition-colors text-xs font-semibold"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" aria-hidden />
               Live
+              <NewTabSrOnly />
             </a>
           )}
           {project.caseStudyUrl && (
@@ -171,6 +175,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
               className="inline-flex items-center gap-1 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
             >
               Case Study
+              <NewTabSrOnly />
             </a>
           )}
           <button
@@ -178,7 +183,7 @@ export function ProjectCard({ project, commitInfo, isLoadingCommitDates = false 
             onClick={() => setIsModalOpen(true)}
             className="inline-flex items-center gap-1 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
           >
-            <Eye className="w-4 h-4" />
+            <Eye className="w-4 h-4" aria-hidden />
             View Details
           </button>
         </div>

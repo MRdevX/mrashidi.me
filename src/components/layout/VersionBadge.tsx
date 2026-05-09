@@ -99,7 +99,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
         href={githubLink.url}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${githubLink.ariaLabel} - Version ${version}`}
+        aria-label={`${githubLink.ariaLabel} - Version ${version} (opens in new tab)`}
         {...mobileProps}
       >
         {linkContent}
@@ -112,7 +112,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
       href={githubLink.url}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${githubLink.ariaLabel} - Version ${version}`}
+      aria-label={`${githubLink.ariaLabel} - Version ${version} (opens in new tab)`}
       {...desktopProps}
     >
       {linkContent}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type { IconType } from "react-icons";
+import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { CyberpunkButton } from "./CyberpunkButton";
 
 interface SocialButtonProps {
@@ -17,8 +18,9 @@ export function SocialButton({ href, icon: Icon, children, isExternal = true, cl
   return (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       <a href={href} className={`block ${className}`} {...linkProps}>
-        <CyberpunkButton variant="neon" icon={<Icon className="w-4 h-4" />} className="w-full sm:w-auto">
+        <CyberpunkButton variant="neon" icon={<Icon className="w-4 h-4" aria-hidden />} className="w-full sm:w-auto">
           {children}
+          {isExternal ? <NewTabSrOnly /> : null}
         </CyberpunkButton>
       </a>
     </motion.div>

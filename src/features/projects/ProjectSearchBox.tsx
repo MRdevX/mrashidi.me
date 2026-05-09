@@ -16,7 +16,7 @@ export function ProjectSearchBox({ searchQuery, onSearchChange, onClear }: Proje
     <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-orange-400" />
+          <Search className="h-5 w-5 text-orange-400" aria-hidden />
         </div>
         <input
           type="text"
@@ -30,8 +30,9 @@ export function ProjectSearchBox({ searchQuery, onSearchChange, onClear }: Proje
             <CyberpunkButton
               onClick={onClear}
               variant="ghost"
-              icon={<X className="h-4 w-4" />}
+              icon={<X className="h-4 w-4" aria-hidden />}
               className={`h-8 w-8 p-0 ${getTextColor("secondary")} hover:text-orange-400`}
+              aria-label="Clear search"
             />
           </div>
         )}

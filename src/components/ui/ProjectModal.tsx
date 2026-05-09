@@ -3,9 +3,10 @@
 import { Building, Calendar, Code, ExternalLink, Shield, User } from "lucide-react";
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { Project } from "@/data/projects";
 import { useThemeConfig } from "@/hooks";
+import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { getTechIcon } from "@/lib/tech";
 
 interface ProjectModalProps {
@@ -18,7 +19,14 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const { getProjectBadge } = useThemeConfig();
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          onClose();
+        }
+      }}
+    >
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-2 border-orange-500/30 shadow-[0_0_30px_rgba(255,95,31,0.2)]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-orange-500 font-albert tracking-tight flex items-center gap-3">
@@ -33,6 +41,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             )}
             {project.title}
           </DialogTitle>
+          <DialogDescription>
+            Technology stack, highlights, and links to repositories or live demos for this project.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -54,19 +65,19 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             <div className="space-y-3">
               {project.year && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-orange-500/70" />
+                  <Calendar className="w-4 h-4 text-orange-500/70" aria-hidden />
                   <span className="text-sm text-gray-600 dark:text-gray-400">Year: {project.year}</span>
                 </div>
               )}
               {project.role && (
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-orange-500/70" />
+                  <User className="w-4 h-4 text-orange-500/70" aria-hidden />
                   <span className="text-sm text-gray-600 dark:text-gray-400">Role: {project.role}</span>
                 </div>
               )}
               {project.clientName && (
                 <div className="flex items-center gap-2">
-                  <Building className="w-4 h-4 text-orange-500/70" />
+                  <Building className="w-4 h-4 text-orange-500/70" aria-hidden />
                   <span className="text-sm text-gray-600 dark:text-gray-400">Client: {project.clientName}</span>
                 </div>
               )}
@@ -74,11 +85,11 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Code className="w-4 h-4 text-orange-500/70" />
+                <Code className="w-4 h-4 text-orange-500/70" aria-hidden />
                 <span className="text-sm text-gray-600 dark:text-gray-400">Type: {project.type}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-orange-500/70" />
+                <Shield className="w-4 h-4 text-orange-500/70" aria-hidden />
                 <span className="text-sm text-gray-600 dark:text-gray-400">Visibility: {project.visibility}</span>
               </div>
               {project.status && (
@@ -149,7 +160,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                     key={tech}
                     className="flex items-center gap-2 px-3 py-1 bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/20 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:border-orange-500/40 transition-colors"
                   >
-                    {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} />}
+                    {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} aria-hidden />}
                     {tech}
                   </div>
                 );
@@ -166,8 +177,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-300 transition-colors text-xs font-semibold"
               >
-                <FaGithub className="w-4 h-4" />
+                <FaGithub className="w-4 h-4" aria-hidden />
                 View Code
+                <NewTabSrOnly />
               </a>
             )}
             {project.liveUrl && (
@@ -177,8 +189,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20 hover:text-green-300 transition-colors text-xs font-semibold"
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" aria-hidden />
                 Live Demo
+                <NewTabSrOnly />
               </a>
             )}
             {project.caseStudyUrl && (
@@ -188,8 +201,9 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500/20 hover:text-blue-300 transition-colors text-xs font-semibold"
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" aria-hidden />
                 Case Study
+                <NewTabSrOnly />
               </a>
             )}
           </div>

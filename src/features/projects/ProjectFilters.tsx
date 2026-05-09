@@ -36,7 +36,7 @@ export function ProjectFilters({
     return (
       <div key={category} className="mb-6">
         <h4 className={`text-md font-semibold ${getTextColor("secondary")} mb-3 font-albert flex items-center gap-2`}>
-          <Layers className="w-4 h-4 text-orange-400" />
+          <Layers className="w-4 h-4 text-orange-400" aria-hidden />
           {displayName}
         </h4>
         <div className="flex flex-wrap gap-2">
@@ -50,6 +50,7 @@ export function ProjectFilters({
                 type="button"
                 key={stack}
                 onClick={() => onToggleStack(stack)}
+                aria-pressed={isSelected}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all duration-300 hover:scale-105 font-medium ${
                   isSelected
                     ? "bg-orange-500/20 border-orange-500 text-orange-400 shadow-lg shadow-orange-500/25"
@@ -60,7 +61,7 @@ export function ProjectFilters({
                       )} hover:shadow-lg hover:shadow-orange-500/10`
                 }`}
               >
-                {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} />}
+                {techIcon && <techIcon.Icon className={`w-4 h-4 ${techIcon.colorClass}`} aria-hidden />}
                 <span className="text-sm font-medium">{stack}</span>
                 <span
                   className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${
@@ -85,7 +86,7 @@ export function ProjectFilters({
       <motion.div className="mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-orange-400 mb-3 font-albert tracking-tight flex items-center gap-2">
-            <Filter className="w-5 h-5" />
+            <Filter className="w-5 h-5" aria-hidden />
             Filter by Technology Stack
           </h3>
           <p className={`${getTextColor("secondary")} text-sm mb-4 font-albert`}>
@@ -125,7 +126,7 @@ export function ProjectFilters({
                 />
               </div>
               <span className="ml-4 text-sm font-semibold text-orange-400 font-albert group-hover:text-orange-300 transition-colors flex items-center gap-2">
-                <Globe className="w-4 h-4" />
+                <Globe className="w-4 h-4" aria-hidden />
                 Show Open Source Only
               </span>
             </label>
@@ -133,7 +134,12 @@ export function ProjectFilters({
 
           {/* Clear Filters */}
           <div className="flex items-center justify-end">
-            <CyberpunkButton onClick={onClearAll} variant="neon" icon={<X className="w-4 h-4" />} className="text-sm">
+            <CyberpunkButton
+              onClick={onClearAll}
+              variant="neon"
+              icon={<X className="w-4 h-4" aria-hidden />}
+              className="text-sm"
+            >
               Clear All Filters
             </CyberpunkButton>
           </div>

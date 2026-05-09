@@ -22,7 +22,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className = 
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
         variant="neon"
-        icon={<ChevronLeft className="w-4 h-4" />}
+        icon={<ChevronLeft className="w-4 h-4" aria-hidden />}
         className={currentPage === 1 ? "opacity-50" : ""}
       >
         Previous
@@ -34,7 +34,7 @@ export function Pagination({ currentPage, totalPages, onPageChange, className = 
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
         variant="neon"
-        icon={<ChevronRight className="w-4 h-4" />}
+        icon={<ChevronRight className="w-4 h-4" aria-hidden />}
         iconPosition="right"
         className={currentPage === totalPages ? "opacity-50" : ""}
       >

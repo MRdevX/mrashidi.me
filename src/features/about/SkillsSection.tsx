@@ -65,7 +65,7 @@ export function SkillsSection() {
                       style={{ boxShadow: `0 0 8px 1px ${config.color}` }}
                       title={skill.name}
                     >
-                      <Icon className={`w-4 h-4 ${colorClass}`} />
+                      <Icon className={`w-4 h-4 ${colorClass}`} aria-hidden />
                       <span>{skill.name}</span>
                     </span>
                   );

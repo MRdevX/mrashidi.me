@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import { certificates, config, personalInfo, projects, skills, workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { AVAILABLE_COMMANDS } from "./constants";
 import type { CommandType } from "./types";
 
@@ -35,6 +36,7 @@ const TerminalLink = ({
 }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
     {children}
+    <NewTabSrOnly />
   </a>
 );
 
