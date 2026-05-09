@@ -58,8 +58,19 @@ export const ANIMATION = {
 } as const;
 
 export const TECHNOLOGY_CATEGORIES = {
-  frameworks: ["NestJS", "Next.js", "React", "Framer Motion", "TypeORM", "Drizzle ORM", "Hono"],
-  languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash"],
+  frameworks: [
+    "NestJS",
+    "Next.js",
+    "React",
+    "Framer Motion",
+    "TypeORM",
+    "Drizzle ORM",
+    "Hono",
+    "Vue.js",
+    "Vite",
+    "Wails",
+  ],
+  languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash", "Go"],
   databases: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "PostgREST"],
   clouds: ["AWS", "Azure", "Docker", "Kubernetes"],
 } as const;

@@ -88,7 +88,9 @@ import {
   SiTailwindcss,
   SiTerraform,
   SiTrpc,
+  SiVite,
   SiVitest,
+  SiVuedotjs,
   SiZod,
 } from "react-icons/si";
 import { TbApi, TbBrain, TbBrandCSharp, TbBrandGoogle, TbBrandOauth, TbBrandOpenai, TbLicense } from "react-icons/tb";
@@ -210,6 +212,8 @@ const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?:
 
   jest: { Icon: SiJest, colorClass: "text-red-500" },
   vitest: { Icon: SiVitest, colorClass: "text-green-500" },
+  vite: { Icon: SiVite, colorClass: "text-purple-500" },
+  vuejs: { Icon: SiVuedotjs, colorClass: "text-green-500" },
   supertest: { Icon: SiJest, colorClass: "text-red-500" },
   unittesting: { Icon: SiJest, colorClass: "text-green-500" },
   integrationtesting: { Icon: SiJest, colorClass: "text-blue-500" },
@@ -320,6 +324,7 @@ const getIconKey = (techName: string): string => {
     next: "nextjs",
     node: "nodejs",
     nest: "nestjs",
+    vue: "vuejs",
     spring: "springboot",
     tailwind: "tailwindcss",
     framer: "framermotion",

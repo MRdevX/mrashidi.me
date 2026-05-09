@@ -10,7 +10,10 @@ describe("technology constants helpers", () => {
 
   it("getTechnologyCategory maps known stack names", () => {
     expect(getTechnologyCategory("TypeScript")).toBe("languages");
+    expect(getTechnologyCategory("Go")).toBe("languages");
     expect(getTechnologyCategory("React")).toBe("frameworks");
+    expect(getTechnologyCategory("Vue.js")).toBe("frameworks");
+    expect(getTechnologyCategory("Vite")).toBe("frameworks");
     expect(getTechnologyCategory("PostgreSQL")).toBe("databases");
     expect(getTechnologyCategory("Docker")).toBe("clouds");
   });
