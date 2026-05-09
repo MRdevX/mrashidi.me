@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.125](https://github.com/MRdevX/mrashidi.me/compare/v0.1.124...v0.1.125) (2026-05-09)
+
+
+### Code Refactoring
+
+* improve animations and update BuyMeACoffeeWidget documentation ([5aa5d0e](https://github.com/MRdevX/mrashidi.me/commit/5aa5d0ee401f5f1550ddee943d98655b4abdc865))
+
 ### [0.1.124](https://github.com/MRdevX/mrashidi.me/compare/v0.1.123...v0.1.124) (2026-05-09)
 
 
