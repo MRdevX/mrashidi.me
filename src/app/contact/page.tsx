@@ -1,5 +1,10 @@
 import { PageWrapper } from "@/components/ui";
-import { ContactLeadSection, ContactSocialOutreachSection, contactData } from "@/features/contact";
+import {
+  ContactContributionSection,
+  ContactLeadSection,
+  ContactSocialOutreachSection,
+  contactData,
+} from "@/features/contact";
 
 export default function Contact() {
   const { header } = contactData;
@@ -7,6 +12,7 @@ export default function Contact() {
   return (
     <PageWrapper>
       <ContactLeadSection title={header.title} description={header.description} />
+      <ContactContributionSection />
       <ContactSocialOutreachSection />
     </PageWrapper>
   );
