@@ -1,10 +1,8 @@
 name: CI
 
-# Keep paths-ignore in sync with Security workflow.
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -12,8 +10,7 @@ on:
       - "AGENTS.md"
       - "CONTRIBUTING.md"
   push:
-    branches:
-      - main
+    branches: [main]
     paths-ignore:
       - "**.md"
       - "docs/**"
@@ -22,71 +19,43 @@ on:
       - "CONTRIBUTING.md"
   workflow_dispatch:
 
-run-name: "CI: ${{ github.event.pull_request.title || github.ref_name }}"
-
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
   run:
     shell: bash
 
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+
 permissions:
   contents: read
 
 jobs:
-  commitlint:
-    name: Commitlint
+  quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: github.event_name == 'pull_request'
+    timeout-minutes: 20
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      - name: Validate commit messages
+      - name: Commitlint
+        if: github.event_name == 'pull_request'
         run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
-  lint-and-type-check:
-    name: Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - run: pnpm exec biome check . --reporter=github
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - run: pnpm exec tsc --noEmit
 
-      - name: Run Biome check
-        run: pnpm check
+      - run: pnpm test:run
 
-      - name: Type check
-        run: pnpm exec tsc --noEmit
-
-  unit-tests:
-    name: Unit tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
-
-      - name: Run unit tests
-        run: pnpm test:run
-
-      - name: Upload test results
+      - uses: actions/upload-artifact@v7
         if: failure()
-        uses: actions/upload-artifact@v7
         with:
           name: unit-test-results
           path: |
@@ -95,34 +64,26 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  e2e-tests:
-    name: E2E tests
+  e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@v5
+      - uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
+          restore-keys: playwright-${{ runner.os }}-
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+      - run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run E2E tests
-        run: pnpm test:e2e
+      - run: pnpm test:e2e
 
-      - name: Upload E2E artifacts
+      - uses: actions/upload-artifact@v7
         if: failure()
-        uses: actions/upload-artifact@v7
         with:
           name: e2e-artifacts
           path: |
@@ -132,22 +93,13 @@ jobs:
           retention-days: 7
 
   build:
-    name: Build (production parity)
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    needs:
-      - lint-and-type-check
-      - unit-tests
-      - e2e-tests
+    needs: [quality, e2e]
+    if: ${{ always() && needs.quality.result == 'success' && needs.e2e.result == 'success' }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup Node.js and dependencies
-        uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/setup-node
 
-      # Full pipeline (sitemap, OG images, PWA). E2E uses build:fast + start to avoid two heavy builds.
-      - name: Build application
-        run: pnpm build
-        env:
-          NEXT_TELEMETRY_DISABLED: 1
+      - run: pnpm build
