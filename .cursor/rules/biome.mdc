@@ -7,6 +7,6 @@ alwaysApply: false
 # Biome
 
 - This project uses **Biome** for linting and formatting. Do not use ESLint or Prettier.
-- To check: `pnpm check`. To fix and format: `pnpm check --write` (or `pnpm check:fix`).
-- Lint-only: `pnpm lint` / `pnpm lint:fix`. Format-only: `pnpm format` / `pnpm format:fix`.
+- To check: `pnpm check`. To fix (lint + format + imports): `pnpm check --write` or `pnpm check:fix`.
+- Lint-only or format-only is uncommon here; use `pnpm exec biome lint .` / `pnpm exec biome format .` if you really need it.
 - Config lives in `biome.json` (VCS-aware, organize imports on). Follow existing rule severities and formatter options when suggesting changes.

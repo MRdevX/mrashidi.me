@@ -49,18 +49,18 @@
         "reveal": "always",
         "panel": "dedicated"
       },
+      "isBackground": true,
       "group": "test"
     },
     {
-      "label": "test:unit:watch",
+      "label": "test:unit:run",
       "type": "shell",
-      "command": "pnpm test:watch",
+      "command": "pnpm test:run",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "dedicated"
       },
-      "isBackground": true,
       "group": "test"
     },
     {
@@ -95,50 +95,6 @@
         "panel": "dedicated"
       },
       "group": "test"
-    },
-    {
-      "label": "lint",
-      "type": "shell",
-      "command": "pnpm lint",
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      }
-    },
-    {
-      "label": "lint:fix",
-      "type": "shell",
-      "command": "pnpm lint:fix",
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      }
-    },
-    {
-      "label": "format",
-      "type": "shell",
-      "command": "pnpm format",
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      }
-    },
-    {
-      "label": "format:fix",
-      "type": "shell",
-      "command": "pnpm format:fix",
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      }
     },
     {
       "label": "check",

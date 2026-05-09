@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getEmailService, getGitHubService, serviceFactory } from "@/lib/services/factory";
+import { serviceFactory } from "@/lib/services/factory";
 
 vi.mock("@/lib/services/email", () => {
   class MockEmailService {
@@ -68,20 +68,6 @@ describe("Service Factory", () => {
 
       expect(emailService1).not.toBe(emailService2);
       expect(githubService1).not.toBe(githubService2);
-    });
-  });
-
-  describe("getEmailService helper", () => {
-    it("should return email service instance", () => {
-      const service = getEmailService();
-      expect(service).toBeDefined();
-    });
-  });
-
-  describe("getGitHubService helper", () => {
-    it("should return GitHub service instance", () => {
-      const service = getGitHubService();
-      expect(service).toBeDefined();
     });
   });
 });

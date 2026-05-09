@@ -26,7 +26,7 @@ Prefer path aliases over relative paths for clarity.
 ## Tooling
 
 - **Lint/format:** `pnpm check` (lint + format); `pnpm check:fix` or `pnpm check --write` to fix. Use Biome only.
-- **Unit tests:** `pnpm test`, `pnpm test:run`, `pnpm test:coverage`, `pnpm test:watch`
+- **Unit tests:** `pnpm test` (watch), `pnpm test:run`, `pnpm test:coverage`, `pnpm test:ui`
 - **E2E:** `pnpm test:e2e`, `pnpm test:e2e:ui`, `pnpm test:e2e:debug`
 - **Dev:** `pnpm dev` (Turbopack)
 

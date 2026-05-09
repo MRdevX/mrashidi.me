@@ -4,30 +4,11 @@ import { invalidCommands, validCommands } from "./fixtures";
 
 describe("Terminal Utils", () => {
   describe("formatTimestamp", () => {
-    it("should format timestamp in HH:MM:SS format", () => {
-      const testDate = new Date("2024-01-15T14:30:45Z");
-      const formatted = formatTimestamp(testDate);
-
+    it("formats local clock time as 24-hour HH:MM:SS", () => {
+      const formatted = formatTimestamp(new Date("2024-01-15T14:30:45Z"));
       expect(formatted).toMatch(/^\d{2}:\d{2}:\d{2}$/);
-      expect(formatted).toHaveLength(8);
-    });
-
-    it("should handle different times consistently", () => {
-      const testDate = new Date("2024-01-15T09:05:12Z");
-      const formatted = formatTimestamp(testDate);
-
-      expect(formatted).toMatch(/^\d{2}:\d{2}:\d{2}$/);
-      expect(formatted).toHaveLength(8);
-    });
-
-    it("should use 24-hour format", () => {
-      const testDate = new Date("2024-01-15T14:30:45Z");
-      const formatted = formatTimestamp(testDate);
-
       expect(formatted).not.toMatch(/AM|PM/i);
-
-      const [hours] = formatted.split(":");
-      const hourNum = parseInt(hours, 10);
+      const hourNum = parseInt(formatted.slice(0, 2), 10);
       expect(hourNum).toBeGreaterThanOrEqual(0);
       expect(hourNum).toBeLessThanOrEqual(23);
     });

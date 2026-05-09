@@ -20,14 +20,41 @@ describe("useCommandHistory - Basic Functionality", () => {
     });
   });
 
-  it("should navigate up through command history", () => {
+  it("walks backward through history on repeated up presses", () => {
     const commandHistory = ["help", "about", "skills"];
     const { result } = renderHook(() => useCommandHistory(commandHistory));
 
     act(() => {
-      const input1 = result.current.navigateHistory("up", "");
-      expect(input1).toBe("skills");
+      expect(result.current.navigateHistory("up", "")).toBe("skills");
     });
+    act(() => {
+      expect(result.current.navigateHistory("up", "")).toBe("about");
+    });
+    act(() => {
+      expect(result.current.navigateHistory("up", "")).toBe("help");
+    });
+  });
+
+  it("navigates down toward newer commands then clears input at bottom", () => {
+    const commandHistory = ["help", "about", "skills"];
+    const { result } = renderHook(() => useCommandHistory(commandHistory));
+
+    act(() => {
+      result.current.navigateHistory("up", "");
+    });
+    act(() => {
+      result.current.navigateHistory("up", "");
+    });
+    expect(result.current.historyPosition).toBe(1);
+
+    act(() => {
+      expect(result.current.navigateHistory("down", "")).toBe("skills");
+    });
+
+    act(() => {
+      expect(result.current.navigateHistory("down", "")).toBe("");
+    });
+    expect(result.current.historyPosition).toBe(-1);
   });
 
   it("should handle navigation down", () => {
