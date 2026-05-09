@@ -6,24 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "NEXT_TELEMETRY_DISABLED=1 pnpm generate-sitemap && pnpm generate-og-images && next build",
     "build:fast": "SKIP_PWA=true next build",
-    "build:with-sitemap": "NEXT_TELEMETRY_DISABLED=1 pnpm generate-sitemap && next build",
     "start": "next start",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "test:watch": "vitest --watch",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "format": "biome format .",
-    "format:fix": "biome format --write .",
     "check": "biome check .",
     "check:fix": "biome check --write .",
-    "commitlint": "commitlint",
     "prepare": "husky",
     "pre-commit": "lint-staged",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
@@ -31,9 +24,7 @@
     "analyze": "ANALYZE=true next build",
     "release": "npx standard-version",
     "clean": "pnpm store prune && rm -rf node_modules .next",
-    "reinstall": "pnpm clean && pnpm install",
-    "update": "pnpm update --latest",
-    "outdated": "pnpm outdated"
+    "reinstall": "pnpm clean && pnpm install"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.1045.0",
@@ -104,6 +95,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/validator": "^13.15.10",
     "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/ui": "^4.1.5",
     "axe-core": "^4.11.4",
     "fast-glob": "^3.3.3",
     "husky": "^9.1.7",
@@ -122,19 +114,6 @@
     "pnpm": "10.x"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "biome check --write",
-      "biome format --write"
-    ],
-    "scripts/**/*.{js,ts}": [
-      "biome check --write",
-      "biome format --write"
-    ],
-    "*.json": [
-      "biome format --write"
-    ],
-    "src/**/*.{css,scss}": [
-      "biome check --write"
-    ]
+    "*.{js,cjs,mjs,jsx,ts,tsx,css,json}": "biome check --write --files-ignore-unknown=true --no-errors-on-unmatched"
   }
 }

@@ -6,6 +6,6 @@ alwaysApply: false
 
 # Testing
 
-- **Unit tests:** Vitest in `tests/unit/`. Run: `pnpm test`, `pnpm test:run`, `pnpm test:watch`, `pnpm test:coverage`.
+- **Unit tests:** Vitest in `tests/unit/`. Run: `pnpm test` (watch), `pnpm test:run`, `pnpm test:coverage`, `pnpm test:ui`.
 - **E2E tests:** Playwright in `tests/e2e/`. Run: `pnpm test:e2e`, `pnpm test:e2e:ui`, `pnpm test:e2e:debug`.
 - When touching code, run `pnpm check` and relevant tests. Prefer Vitest for unit tests and Playwright for E2E.
