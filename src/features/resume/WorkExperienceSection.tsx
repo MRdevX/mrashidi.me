@@ -72,18 +72,18 @@ export function WorkExperienceSection() {
                             className={`mt-3 flex gap-2 font-albert text-sm leading-snug tracking-tight md:text-[0.9375rem] ${getTextColor("secondary")}`}
                           >
                             <MapPin
-                              className="mt-0.5 size-4 shrink-0 text-orange-500/60 dark:text-orange-400/75"
+                              className="mt-0.5 size-4 shrink-0 text-orange-500/60 dark:text-orange-400/75 sm:mt-0"
                               aria-hidden
                             />
-                            <span>{job.location}</span>
+                            <span className="min-w-0">{job.location}</span>
                           </div>
                         </div>
 
-                        {/* Period + arrangement */}
+                        {/* Period + employment */}
                         <aside
-                          className={`flex w-full shrink-0 flex-col gap-2.5 font-albert sm:w-auto sm:max-w-xs sm:items-end sm:gap-3 sm:text-right ${getTextColor("muted")}`}
+                          className={`flex w-full shrink-0 flex-col items-end gap-2.5 font-albert sm:w-auto sm:max-w-xs ${getTextColor("muted")}`}
                         >
-                          <div className="inline-flex w-fit items-center gap-2 self-end rounded-md border border-orange-500/15 bg-orange-500/5 px-2.5 py-1.5 dark:border-orange-500/25 dark:bg-orange-500/10">
+                          <div className="inline-flex w-fit shrink-0 items-center gap-2 rounded-md border border-orange-500/15 bg-orange-500/5 px-2.5 py-1.5 dark:border-orange-500/25 dark:bg-orange-500/10">
                             <Calendar
                               className="size-3.5 shrink-0 text-orange-500/80 dark:text-orange-400/90"
                               aria-hidden
@@ -92,16 +92,15 @@ export function WorkExperienceSection() {
                               {job.period}
                             </span>
                           </div>
-
-                          <div
-                            className={`flex items-start gap-2 self-end justify-end text-left tracking-tight sm:justify-end ${getTextColor("secondary")}`}
+                          <span
+                            className="inline-flex w-fit max-w-full shrink-0 items-center justify-end gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/5 px-3 py-1 text-right text-xs font-medium tracking-tight text-orange-800 dark:border-orange-400/25 dark:bg-orange-500/15 dark:text-orange-200"
                           >
                             <Laptop
-                              className="mt-0.5 size-3.5 shrink-0 text-orange-500/70 dark:text-orange-400/80"
+                              className="size-3.5 shrink-0 text-orange-600/90 dark:text-orange-400/95"
                               aria-hidden
                             />
-                            <span className="max-w-full text-xs leading-snug sm:text-sm">{job.employmentType}</span>
-                          </div>
+                            <span className="leading-tight">{job.employmentType}</span>
+                          </span>
                         </aside>
                       </div>
                     </CyberpunkCardHeader>
