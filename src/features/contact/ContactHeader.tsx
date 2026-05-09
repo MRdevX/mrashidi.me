@@ -39,8 +39,10 @@ export function ContactHeader({ description }: ContactHeaderProps) {
           </GoogleReCaptchaProvider>
         )}
         {!recaptchaSiteKey && (
-          <div className="glass-card p-6">
-            <p className="text-red-500">Contact form is temporarily unavailable. Please try again later.</p>
+          <div className="feature-card relative isolate z-0 p-6">
+            <p className="relative z-10 text-red-500">
+              Contact form is temporarily unavailable. Please try again later.
+            </p>
           </div>
         )}
       </motion.div>

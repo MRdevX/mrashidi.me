@@ -14,7 +14,7 @@ const levelConfig = {
 };
 
 export function SkillsSection() {
-  const { getCardPattern, getTextColor, getBorderColor } = useThemeConfig();
+  const { getCardPattern, getTextColor } = useThemeConfig();
 
   const allSkills = skills.flatMap((cat) => cat.skills.map((skill) => ({ ...skill, category: cat.category })));
   const skillsByLevel = {
@@ -37,12 +37,7 @@ export function SkillsSection() {
           const config = levelConfig[level as keyof typeof levelConfig];
 
           return (
-            <div
-              key={level}
-              className={`${getCardPattern()} relative isolate z-0 p-6 bg-card text-card-foreground border ${getBorderColor(
-                "primary"
-              )} rounded-xl`}
-            >
+            <div key={level} className={`${getCardPattern()} relative isolate z-0`}>
               <div className="relative z-10 flex items-center gap-3 mb-4">
                 <h3 className={`text-xl font-bold ${getTextColor("primary")}`} style={{ color: config.color }}>
                   {config.label}

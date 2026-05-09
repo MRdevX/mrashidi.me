@@ -12,8 +12,8 @@ export function EducationSection() {
     <MotionSection as="section" delay={1.2}>
       <SectionHeader iconName="GraduationCap" title="Education" size="sm" />
       {education.map((edu) => (
-        <div className={`${getCardPattern()} mb-4`} key={edu.degree + edu.institution}>
-          <div className="flex items-center justify-between">
+        <div className={`${getCardPattern()} relative isolate z-0 mb-4`} key={edu.degree + edu.institution}>
+          <div className="relative z-10 flex items-center justify-between">
             <div className="flex-1">
               <h3 className="text-xl font-bold text-orange-500 group-hover:text-orange-400 transition-colors">
                 {edu.degree}

@@ -2,10 +2,9 @@ import { Skeleton } from "../Skeleton";
 
 export function BlogCardSkeleton() {
   return (
-    <div className="glass-card flex h-full min-h-0 flex-col gap-4 rounded-xl border border-orange-500/10 p-6 shadow-lg">
-      <Skeleton className="h-48 w-full shrink-0 rounded-lg" />
-
+    <div className="feature-card relative isolate z-0 flex h-full min-h-0 flex-col">
       <div className="relative z-10 flex min-h-0 flex-1 flex-col gap-4">
+        <Skeleton className="h-48 w-full shrink-0 rounded-lg" />
         <Skeleton className="h-6 w-4/5 shrink-0" />
 
         <div className="flex min-h-[3lh] flex-1 flex-col space-y-2">

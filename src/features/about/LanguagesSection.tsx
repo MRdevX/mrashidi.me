@@ -16,25 +16,29 @@ export function LanguagesSection() {
         {personalInfo.languages.map((lang, index) => (
           <motion.div
             key={lang.language}
-            className={getCardPattern()}
+            className={`${getCardPattern()} relative isolate z-0`}
             variants={slideInVariants}
             transition={{ delay: 1 + index * 0.1 }}
           >
-            <div className="flex justify-between mb-2">
-              <span className={`font-semibold text-orange-500 group-hover:text-orange-400 transition-colors`}>
-                {lang.language}
-              </span>
-              <span className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors`}>
-                {lang.level}
-              </span>
-            </div>
-            <div className={`w-full ${getBackgroundColor("muted")} rounded-full h-2.5`}>
-              <motion.div
-                className="bg-orange-500 h-2.5 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${lang.progress}%` }}
-                transition={{ duration: 1, delay: 1.2 + index * 0.1 }}
-              />
+            <div className="relative z-10">
+              <div className="flex justify-between mb-2">
+                <span className={`font-semibold text-orange-500 group-hover:text-orange-400 transition-colors`}>
+                  {lang.language}
+                </span>
+                <span
+                  className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors`}
+                >
+                  {lang.level}
+                </span>
+              </div>
+              <div className={`w-full ${getBackgroundColor("muted")} rounded-full h-2.5`}>
+                <motion.div
+                  className="bg-orange-500 h-2.5 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${lang.progress}%` }}
+                  transition={{ duration: 1, delay: 1.2 + index * 0.1 }}
+                />
+              </div>
             </div>
           </motion.div>
         ))}
