@@ -1,5 +1,5 @@
 import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
-import { BioSection, EducationSection, LanguagesSection, MouseTrackingWrapper, SkillsSection } from "@/features/about";
+import { AboutPageContent, MouseTrackingWrapper } from "@/features/about";
 
 export default function About() {
   return (
@@ -10,10 +10,7 @@ export default function About() {
         <PageSection>
           <div className="content-section">
             <div className="prose dark:prose-invert max-w-none">
-              <BioSection />
-              <SkillsSection />
-              <LanguagesSection />
-              <EducationSection />
+              <AboutPageContent />
             </div>
           </div>
         </PageSection>
