@@ -110,7 +110,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml', 'package.json') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
 
@@ -132,9 +132,9 @@ jobs:
           retention-days: 7
 
   build:
-    name: Build
+    name: Build (production parity)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     needs:
       - lint-and-type-check
       - unit-tests
@@ -146,7 +146,8 @@ jobs:
       - name: Setup Node.js and dependencies
         uses: ./.github/actions/setup-node
 
+      # Full pipeline (sitemap, OG images, PWA). E2E uses build:fast + start to avoid two heavy builds.
       - name: Build application
-        run: pnpm build:fast
+        run: pnpm build
         env:
           NEXT_TELEMETRY_DISABLED: 1
