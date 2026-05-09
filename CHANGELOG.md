@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.121](https://github.com/MRdevX/mrashidi.me/compare/v0.1.120...v0.1.121) (2026-05-09)
+
+
+### Features
+
+* improve accessiblity ([#72](https://github.com/MRdevX/mrashidi.me/issues/72)) ([68cfdaf](https://github.com/MRdevX/mrashidi.me/commit/68cfdaf52e236f085bbe10d82499f18b1324085d))
+
 ### [0.1.120](https://github.com/MRdevX/mrashidi.me/compare/v0.1.119...v0.1.120) (2026-05-07)
 
 
