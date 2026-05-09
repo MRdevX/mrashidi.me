@@ -83,6 +83,16 @@ export const rateLimiters =
           prefix: "ratelimit:contact",
         }),
 
+        resumeRequest: new Ratelimit({
+          redis,
+          limiter: Ratelimit.slidingWindow(
+            API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
+            API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
+          ),
+          analytics: true,
+          prefix: "ratelimit:resume",
+        }),
+
         cvUpload: new Ratelimit({
           redis,
           limiter: Ratelimit.slidingWindow(
@@ -108,6 +118,11 @@ export const rateLimiters =
           "contactForm",
           API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
           API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
+        ),
+        resumeRequest: createInMemoryRateLimit(
+          "resumeRequest",
+          API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
+          API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
         ),
         cvUpload: createInMemoryRateLimit(
           "cvUpload",

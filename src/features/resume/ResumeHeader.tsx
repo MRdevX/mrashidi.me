@@ -3,14 +3,13 @@
 import { Download, FileText } from "lucide-react";
 import { useState } from "react";
 import { CyberpunkButton } from "@/components/ui";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { logger } from "@/lib/core";
 import type { ResumeRequestData } from "@/lib/validation";
+import { ResumeHeadingBlock } from "./ResumeHeadingBlock";
 import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
 
 export function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { getSectionTitle } = useThemeConfig();
 
   const handleResumeRequest = async (data: ResumeRequestData): Promise<boolean> => {
     try {
@@ -45,24 +44,23 @@ export function ResumeHeader() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12">
-        <div className="flex items-center gap-3">
-          <FileText className="w-8 h-8 text-orange-500" aria-hidden />
-          <h1 className={`text-3xl sm:text-4xl font-bold ${getSectionTitle()} text-center sm:text-left`}>
-            Professional Experience
-          </h1>
-        </div>
-        <CyberpunkButton
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-          variant="neon"
-          icon={<Download className="w-5 h-5" aria-hidden />}
-          className="w-full sm:w-auto"
-        >
-          Request CV
-        </CyberpunkButton>
-      </div>
+      <ResumeHeadingBlock
+        variant="hero"
+        icon={FileText}
+        title="Professional Experience"
+        actions={
+          <CyberpunkButton
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+            variant="neon"
+            icon={<Download className="size-5" aria-hidden />}
+            className="w-full sm:w-auto"
+          >
+            Request CV
+          </CyberpunkButton>
+        }
+      />
 
       <ResumeRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleResumeRequest} />
     </>

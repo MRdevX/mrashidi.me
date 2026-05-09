@@ -1,3 +1,4 @@
+export * from "./aboutBio";
 export type { Certificate, CertificateCategory } from "./certificates";
 export { default as certificates } from "./certificates";
 export type { Education } from "./education";

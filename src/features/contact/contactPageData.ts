@@ -6,5 +6,4 @@ export const contactData: ContactPageData = {
     description:
       "Have a question or want to discuss a potential project? Feel free to reach out using the form below. I'll get back to you as soon as possible.",
   },
-  sections: [],
 };

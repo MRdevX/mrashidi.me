@@ -8,12 +8,14 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { CyberpunkButton } from "@/components/ui";
+import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { logger } from "@/lib/core";
 import { type ContactFormData, contactFormSchema } from "@/lib/validation";
 import { FormInputWithValidation } from "./FormInputWithValidation";
 import { StatusMessage } from "./StatusMessage";
 
 export function ContactFormRefactored() {
+  const { getCardPattern } = useThemeConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
@@ -87,68 +89,70 @@ export function ContactFormRefactored() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="glass-card p-6 sm:p-8"
+      className={`${getCardPattern()} relative isolate z-0 p-6 sm:p-8`}
     >
-      <StatusMessage status={submitStatus} />
+      <div className="relative z-10">
+        <StatusMessage status={submitStatus} />
 
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        noValidate
-        className="space-y-6 focus-within:ring-2 focus-within:ring-orange-500/20 focus-within:ring-offset-2 rounded-lg p-1"
-        aria-label="Contact form"
-      >
-        <FormInputWithValidation
-          form={form}
-          name="name"
-          label="Name"
-          placeholder="Your name"
-          icon={<User className="w-4 h-4" aria-hidden />}
-        />
-
-        <FormInputWithValidation
-          form={form}
-          name="email"
-          label="Email"
-          type="email"
-          placeholder="your.email@example.com"
-          icon={<Mail className="w-4 h-4" aria-hidden />}
-        />
-
-        <FormInputWithValidation
-          form={form}
-          name="subject"
-          label="Subject"
-          placeholder="What is this about?"
-          icon={<FileText className="w-4 h-4" aria-hidden />}
-        />
-
-        <div>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          noValidate
+          className="space-y-6 rounded-lg"
+          aria-label="Contact form"
+        >
           <FormInputWithValidation
             form={form}
-            name="message"
-            label="Message"
-            placeholder="Your message here..."
-            multiline
-            rows={5}
-            icon={<MessageSquare className="w-4 h-4" aria-hidden />}
+            name="name"
+            label="Name"
+            placeholder="Your name"
+            icon={<User className="w-4 h-4" aria-hidden />}
           />
-          <div className="flex justify-between items-center mt-1">
-            <p className="text-xs text-gray-500">Tell me about your project, question, or how I can help you</p>
-            <p className="text-xs text-gray-500">{form.watch("message")?.length || 0}/1000</p>
-          </div>
-        </div>
 
-        <CyberpunkButton
-          type="submit"
-          disabled={isSubmitting || !form.watch("message") || form.watch("message").length < 10}
-          loading={isSubmitting}
-          icon={<Send className="w-4 h-4" aria-hidden />}
-          className="w-full"
-          variant="neon"
-        >
-          {isSubmitting ? "Sending..." : "Send Message"}
-        </CyberpunkButton>
-      </form>
+          <FormInputWithValidation
+            form={form}
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="your.email@example.com"
+            icon={<Mail className="w-4 h-4" aria-hidden />}
+          />
+
+          <FormInputWithValidation
+            form={form}
+            name="subject"
+            label="Subject"
+            placeholder="What is this about?"
+            icon={<FileText className="w-4 h-4" aria-hidden />}
+          />
+
+          <div>
+            <FormInputWithValidation
+              form={form}
+              name="message"
+              label="Message"
+              placeholder="Your message here..."
+              multiline
+              rows={5}
+              icon={<MessageSquare className="w-4 h-4" aria-hidden />}
+            />
+            <div className="flex justify-between items-center mt-1">
+              <p className="text-xs text-gray-500">Tell me about your project, question, or how I can help you</p>
+              <p className="text-xs text-gray-500">{form.watch("message")?.length || 0}/1000</p>
+            </div>
+          </div>
+
+          <CyberpunkButton
+            type="submit"
+            disabled={isSubmitting || !form.watch("message") || form.watch("message").length < 10}
+            loading={isSubmitting}
+            icon={<Send className="w-4 h-4" aria-hidden />}
+            className="w-full"
+            variant="neon"
+          >
+            {isSubmitting ? "Sending..." : "Send Message"}
+          </CyberpunkButton>
+        </form>
+      </div>
     </motion.div>
   );
 }

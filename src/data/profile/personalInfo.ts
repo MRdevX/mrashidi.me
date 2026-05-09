@@ -1,3 +1,5 @@
+import { getAboutBioPlainText } from "./aboutBio";
+
 export interface Language {
   language: string;
   level: string;
@@ -18,7 +20,7 @@ const personalInfo: PersonalInfo = {
     { language: "German", level: "Pre-Intermediate (A2)", progress: 40 },
     { language: "Turkish", level: "Elementary (A1)", progress: 20 },
   ],
-  bio: "I'm a software engineer with 9 years of experience building scalable backend systems and microservices. For the past 6 years, I've specialized in Node.js and TypeScript, with earlier experience in Java and Python for scripting and automation. My background spans backend development, cloud infrastructure, and DevOps, working with tools like Docker, Kubernetes, and CI/CD pipelines on AWS and Azure. I've contributed to projects in e-mobility, fintech, aviation, and education, always focusing on clean, maintainable code and systems that grow with business needs.",
+  bio: getAboutBioPlainText(),
   contactCta: "Feel Free to Reach Out",
   contactDescription:
     "I'm open to discussing new opportunities. If you think I might be a good fit for what you're building, feel free to reach out and we can chat about it.",

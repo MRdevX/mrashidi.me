@@ -26,6 +26,10 @@ export const API_CONFIG = {
       requests: 5,
       window: "1 m",
     },
+    RESUME_REQUEST: {
+      requests: 5,
+      window: "1 m",
+    },
     CV_UPLOAD: {
       requests: 3,
       window: "1 h",

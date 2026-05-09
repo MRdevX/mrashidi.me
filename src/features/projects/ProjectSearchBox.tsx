@@ -1,10 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { pageEnterTransition } from "@/lib/animations";
+import { ProjectAnimatedSection } from "./ProjectAnimatedSection";
 
 interface ProjectSearchBoxProps {
   searchQuery: string;
@@ -14,54 +13,48 @@ interface ProjectSearchBoxProps {
 
 export function ProjectSearchBox({ searchQuery, onSearchChange, onClear }: ProjectSearchBoxProps) {
   const { getTextColor, getBackgroundColor } = useThemeConfig();
-  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <motion.div
-      className="mb-8"
-      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={pageEnterTransition(prefersReducedMotion)}
-    >
+    <ProjectAnimatedSection className="mb-8" startOpaque={false}>
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-orange-400" aria-hidden />
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+          <Search className="size-5 text-orange-400" aria-hidden />
         </div>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search projects by title, description, technology, or use regex patterns..."
-          className={`w-full pl-12 pr-12 py-4 ${getBackgroundColor("glassLight")} border-2 border-orange-500/30 rounded-lg ${getTextColor("primary")} placeholder-gray-500 dark:placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:${getBackgroundColor("glass")} transition-all duration-300 font-albert`}
+          className={`w-full rounded-lg border-2 border-orange-500/30 py-4 pr-12 pl-12 font-albert transition-all duration-300 ${getBackgroundColor("glassLight")} ${getTextColor("primary")} placeholder-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none dark:placeholder-gray-500 focus:${getBackgroundColor("glass")}`}
         />
-        {searchQuery && (
-          <div className="absolute inset-y-0 right-0 pr-2 flex items-center">
+        {searchQuery ? (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
             <CyberpunkButton
               onClick={onClear}
               variant="ghost"
-              icon={<X className="h-4 w-4" aria-hidden />}
+              icon={<X className="size-4" aria-hidden />}
               className={`h-8 w-8 p-0 ${getTextColor("secondary")} hover:text-orange-400`}
               aria-label="Clear search"
             />
           </div>
-        )}
+        ) : null}
       </div>
-      {searchQuery && (
-        <div className={`mt-3 text-sm ${getTextColor("secondary")} font-albert`}>
+      {searchQuery ? (
+        <div className={`mt-3 font-albert text-sm ${getTextColor("secondary")}`}>
           <p className="flex items-center gap-2">
-            <span className="text-orange-400 font-albert">Searching for:</span>
+            <span className="font-albert text-orange-400">Searching for:</span>
             <span
-              className={`text-orange-300 font-mono ${getBackgroundColor("glass")} px-2 py-1 rounded border border-orange-500/30`}
+              className={`rounded border border-orange-500/30 px-2 py-1 font-mono text-orange-300 ${getBackgroundColor("glass")}`}
             >
               {searchQuery}
             </span>
           </p>
-          <p className={`text-xs mt-2 ${getTextColor("muted")}`}>
+          <p className={`mt-2 text-xs ${getTextColor("muted")}`}>
             Supports regex patterns. Examples: &quot;microservice&quot;, &quot;docker|kubernetes&quot;,
             &quot;202[45]&quot;, &quot;auth.*service&quot;
           </p>
         </div>
-      )}
-    </motion.div>
+      ) : null}
+    </ProjectAnimatedSection>
   );
 }

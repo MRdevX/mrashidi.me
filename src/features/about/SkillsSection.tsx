@@ -1,75 +1,55 @@
 "use client";
 
-import { MotionSection, SectionHeader } from "@/components/ui";
-import { skills } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { getTechIcon } from "@/lib/tech";
-
-const levelConfig = {
-  expert: { color: "#9A3412", label: "Expert" },
-  proficient: { color: "#EA580C", label: "Proficient" },
-  experienced: { color: "#FBBF24", label: "Experienced" },
-  familiar: { color: "#FEF9C3", label: "Familiar" },
-  unspecified: { color: "#6B7280", label: "Tools & Concepts" },
-};
+import { AboutCardSurface } from "./AboutCardSurface";
+import { AboutSection } from "./AboutSection";
+import { getSkillsGroupedByLevel, SKILL_LEVEL_META, type SkillLevelBucket } from "./aboutSkillsGrouped";
 
 export function SkillsSection() {
-  const { getCardPattern, getTextColor, getBorderColor } = useThemeConfig();
-
-  const allSkills = skills.flatMap((cat) => cat.skills.map((skill) => ({ ...skill, category: cat.category })));
-  const skillsByLevel = {
-    expert: allSkills.filter((skill) => skill.level === "expert"),
-    proficient: allSkills.filter((skill) => skill.level === "proficient"),
-    experienced: allSkills.filter((skill) => skill.level === "experienced"),
-    familiar: allSkills.filter((skill) => skill.level === "familiar"),
-    unspecified: allSkills.filter((skill) => !skill.level),
-  };
+  const { getTextColor } = useThemeConfig();
+  const skillsByLevel = getSkillsGroupedByLevel();
 
   return (
-    <MotionSection as="section" delay={0.4} className="not-prose">
-      <SectionHeader iconName="Code2" title="Skills & Technologies" size="sm" />
-
+    <AboutSection delay={0.4} iconName="Code2" title="Skills & Technologies" className="not-prose">
       <div className="space-y-8">
-        {Object.entries(skillsByLevel).map(([level, skills]) => {
-          if (skills.length === 0) {
+        {(Object.keys(SKILL_LEVEL_META) as SkillLevelBucket[]).map((level) => {
+          const list = skillsByLevel[level];
+          if (list.length === 0) {
             return null;
           }
-          const config = levelConfig[level as keyof typeof levelConfig];
+
+          const config = SKILL_LEVEL_META[level];
 
           return (
-            <div
-              key={level}
-              className={`${getCardPattern()} relative isolate z-0 p-6 bg-card text-card-foreground border ${getBorderColor(
-                "primary"
-              )} rounded-xl`}
-            >
-              <div className="relative z-10 flex items-center gap-3 mb-4">
+            <AboutCardSurface key={level}>
+              <div className="relative z-10 mb-4 flex items-center gap-3">
                 <h3 className={`text-xl font-bold ${getTextColor("primary")}`} style={{ color: config.color }}>
                   {config.label}
                 </h3>
-                <span className={`${getTextColor("secondary")} text-sm`}>({skills.length})</span>
+                <span className={`text-sm ${getTextColor("secondary")}`}>({list.length})</span>
               </div>
 
               <div className="relative z-10 flex flex-wrap gap-2">
-                {skills.map((skill) => {
+                {list.map((skill) => {
                   const { Icon, colorClass } = getTechIcon(skill.name);
 
                   return (
                     <span
                       key={`${skill.name}-${skill.category}`}
-                      className="relative isolate z-10 inline-flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm a11y-tech-chip border border-border transition-colors"
+                      className="relative isolate z-10 inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium a11y-tech-chip transition-colors"
                       title={skill.name}
                     >
-                      <Icon className={`w-4 h-4 ${colorClass}`} aria-hidden />
+                      <Icon className={`size-4 ${colorClass}`} aria-hidden />
                       <span>{skill.name}</span>
                     </span>
                   );
                 })}
               </div>
-            </div>
+            </AboutCardSurface>
           );
         })}
       </div>
-    </MotionSection>
+    </AboutSection>
   );
 }

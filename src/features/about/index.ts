@@ -1,3 +1,8 @@
+export { AboutCardSurface, useAboutCardSurface } from "./AboutCardSurface";
+export { AboutPageContent } from "./AboutPageContent";
+export { AboutSection } from "./AboutSection";
+export type { SkillLevelBucket, SkillWithCategory } from "./aboutSkillsGrouped";
+export { getSkillsGroupedByLevel, SKILL_LEVEL_META } from "./aboutSkillsGrouped";
 export { BioSection } from "./BioSection";
 export { EducationSection } from "./EducationSection";
 export { LanguagesSection } from "./LanguagesSection";

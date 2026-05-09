@@ -1,49 +1,25 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import { ContactFormRefactored as ContactForm } from "@/components/forms/ContactForm";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { pageEnterTransition } from "@/lib/animations";
-import { getEnv } from "@/lib/core";
+import { ContactFormGate } from "./ContactFormGate";
+import { ContactMotionFade } from "./ContactMotionFade";
 
 interface ContactHeaderProps {
   description: string;
 }
 
 export function ContactHeader({ description }: ContactHeaderProps) {
-  const recaptchaSiteKey = getEnv("NEXT_PUBLIC_RECAPTCHA_SITE_KEY");
   const { getTextColor } = useThemeConfig();
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <div className="space-y-12">
-      <motion.p
-        className={`${getTextColor("secondary")} mb-8`}
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={pageEnterTransition(prefersReducedMotion, { delay: 0.18 })}
-      >
+      <ContactMotionFade as="p" delay={0.18} className={`mb-8 ${getTextColor("secondary")}`}>
         {description}
-      </motion.p>
+      </ContactMotionFade>
 
-      {/* Contact Form Section */}
-      <motion.div
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={pageEnterTransition(prefersReducedMotion, { delay: 0.22 })}
-      >
-        {recaptchaSiteKey && (
-          <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
-            <ContactForm />
-          </GoogleReCaptchaProvider>
-        )}
-        {!recaptchaSiteKey && (
-          <div className="glass-card p-6">
-            <p className="text-red-500">Contact form is temporarily unavailable. Please try again later.</p>
-          </div>
-        )}
-      </motion.div>
+      <ContactMotionFade delay={0.22}>
+        <ContactFormGate />
+      </ContactMotionFade>
     </div>
   );
 }
