@@ -1,3 +1,9 @@
+export { ContactFormGate } from "./ContactFormGate";
 export { ContactHeader } from "./ContactHeader";
+export { ContactLeadSection } from "./ContactLeadSection";
+export { ContactMotionFade } from "./ContactMotionFade";
+export { ContactSectionShell } from "./ContactSectionShell";
+export { ContactSocialOutreachSection } from "./ContactSocialOutreachSection";
+export { ContactSocialReachCard } from "./ContactSocialReachCard";
+export { contactData } from "./contactPageData";
 export * from "./types";
-export { contactData } from "./useContactData";
