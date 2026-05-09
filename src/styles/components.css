@@ -205,40 +205,6 @@
     background: linear-gradient(45deg, rgba(255, 95, 31, 0.2), rgba(255, 95, 31, 0.3));
   }
 
-  /**
-   * Opaque chip surfaces for WCAG contrast under glass/backdrop stacks.
-   * (Tailwind `dark:` + arbitrary colors were sampling blended pixels in axe across engines.)
-   */
-  html:not(.dark) .a11y-tech-chip {
-    background-color: #ebebeb;
-    color: #0a0a0a;
-  }
-
-  html:not(.dark) .a11y-tech-chip:hover {
-    background-color: #e0e0e0;
-    color: #0a0a0a;
-  }
-
-  html.dark .a11y-tech-chip {
-    background-color: #141414;
-    color: #fafafa;
-  }
-
-  html.dark .a11y-tech-chip:hover {
-    background-color: #262626;
-    color: #ffffff;
-  }
-
-  html:not(.dark) .a11y-tech-chip-count {
-    background-color: #e0e0e0;
-    color: #0a0a0a;
-  }
-
-  html.dark .a11y-tech-chip-count {
-    background-color: #262626;
-    color: #fafafa;
-  }
-
   /* Glitch image */
   .glitch-image {
     position: relative;
@@ -306,4 +272,39 @@
       radial-gradient(circle at 50% 0%, var(--neon-orange) 10%, var(--background-dark) 11%);
     background-size: 10px 10px;
   }
+}
+
+/**
+ * Opaque chip surfaces for WCAG contrast under glass/backdrop stacks.
+ * Kept UNLAYERED so these beat Tailwind utilities that were overriding `background-color` / `color`
+ * on filter buttons (flaky axe color-contrast in Mobile Chrome).
+ */
+html:not(.dark) .a11y-tech-chip {
+  background-color: #ebebeb;
+  color: #0a0a0a;
+}
+
+html:not(.dark) .a11y-tech-chip:hover {
+  background-color: #e0e0e0;
+  color: #0a0a0a;
+}
+
+html.dark .a11y-tech-chip {
+  background-color: #141414;
+  color: #fafafa;
+}
+
+html.dark .a11y-tech-chip:hover {
+  background-color: #262626;
+  color: #ffffff;
+}
+
+html:not(.dark) .a11y-tech-chip-count {
+  background-color: #e0e0e0;
+  color: #0a0a0a;
+}
+
+html.dark .a11y-tech-chip-count {
+  background-color: #262626;
+  color: #fafafa;
 }
