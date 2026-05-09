@@ -16,4 +16,4 @@ async function handleResumeRequest(_request: NextRequest, formData: ResumeReques
   return createSuccessResponse({ message: "Resume sent successfully" });
 }
 
-export const POST = createMiddleware("contactForm").validate(validateResumeRequestAPI).build(handleResumeRequest);
+export const POST = createMiddleware("resumeRequest").validate(validateResumeRequestAPI).build(handleResumeRequest);

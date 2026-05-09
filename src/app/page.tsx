@@ -1,5 +1,3 @@
-"use client";
-
 import { PageWrapper } from "@/components/ui";
 import { HomePage } from "@/features/home";
 

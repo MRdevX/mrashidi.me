@@ -37,6 +37,10 @@ export { MotionSection } from "./MotionSection";
 export { PageEnterMotion } from "./PageEnterMotion";
 export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";
+export {
+  PageStaggerContainer,
+  type PageStaggerRenderProps,
+} from "./PageStaggerContainer";
 export { PageWrapper } from "./PageWrapper";
 export { Pagination } from "./Pagination";
 export { ProjectModal } from "./ProjectModal";
