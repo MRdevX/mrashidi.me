@@ -42,6 +42,7 @@ export { ProjectModal } from "./ProjectModal";
 export { SectionHeader } from "./SectionHeader";
 export { Skeleton } from "./Skeleton";
 export { SocialButton } from "./SocialButton";
+export { SocialButtonsRow } from "./SocialButtonsRow";
 export { TechStackGrid } from "./TechStackGrid";
 export { ThemeToggle } from "./ThemeToggle";
 export { TypingAnimation } from "./TypingAnimation";

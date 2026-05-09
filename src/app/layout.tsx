@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@/styles/index.css";
 import { lazy, Suspense } from "react";
 
-import { HeadMeta, MainContent, Navbar } from "@/components/layout";
+import { BuyMeACoffeeWidget, HeadMeta, MainContent, Navbar } from "@/components/layout";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { inter } from "@/lib/fonts";
 import { generateRootMetadata, generateViewport } from "@/lib/metadata";
@@ -65,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={null}>
             <AnalyticsWrapper />
           </Suspense>
+          <BuyMeACoffeeWidget />
         </ThemeProvider>
       </body>
     </html>

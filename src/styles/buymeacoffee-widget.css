@@ -1,0 +1,29 @@
+/* Buy Me a Coffee widget — third-party inline surfaces (#fff). Match site dark theme via tokens.
+ * Inner iframe document is cross-origin; only shell/backdrop/tooltip can follow our palette.
+ */
+
+html.dark #bmc-wbtn + div {
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  border: 1px solid hsl(var(--border) / 0.85) !important;
+  font-family: var(--font-albert), ui-sans-serif, system-ui, sans-serif !important;
+  box-shadow:
+    0 8px 40px rgb(0 0 0 / 0.35),
+    0 0 0 1px hsl(var(--border) / 0.35) !important;
+}
+
+html.dark #bmc-iframe {
+  background-color: hsl(var(--card)) !important;
+  box-shadow:
+    -6px 0 48px rgb(0 0 0 / 0.4),
+    0 0 0 1px hsl(var(--border) / 0.45) !important;
+}
+
+html.dark body > div:has(#bmc-iframe) {
+  background-color: rgb(0 0 0 / 0.72) !important;
+}
+
+html.dark #bmc-close-btn {
+  background-color: hsl(var(--secondary)) !important;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.35) !important;
+}

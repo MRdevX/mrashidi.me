@@ -1,10 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Mail, MapPin, Send } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 import { lazy, Suspense } from "react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const ContributionGraph = lazy(() =>
   import("@/components/ui/ContributionGraph").then((module) => ({
@@ -30,7 +29,7 @@ const TechStackGrid = lazy(() =>
   }))
 );
 
-import { CyberpunkButton, MotionSection, PageWrapper, SectionHeader, SocialButton } from "@/components/ui";
+import { CyberpunkButton, MotionSection, PageWrapper, SectionHeader, SocialButtonsRow } from "@/components/ui";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { TerminalSkeleton } from "@/components/ui/skeletons/TerminalSkeleton";
 import { TypingAnimation } from "@/components/ui/TypingAnimation";
@@ -77,20 +76,7 @@ export default function Home() {
               {config.person.location}
             </p>
 
-            <div className="social-buttons-container">
-              <SocialButton href={`mailto:${config.person.email}`} icon={Mail} isExternal={false}>
-                Email
-              </SocialButton>
-              <SocialButton href={config.social.github} icon={FaGithub}>
-                GitHub
-              </SocialButton>
-              <SocialButton href={config.social.linkedin} icon={FaLinkedin}>
-                LinkedIn
-              </SocialButton>
-              <SocialButton href={config.social.telegram} icon={Send}>
-                Telegram
-              </SocialButton>
-            </div>
+            <SocialButtonsRow />
           </div>
         </motion.div>
 
