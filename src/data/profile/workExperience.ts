@@ -2,6 +2,7 @@ export interface WorkExperience {
   title: string;
   company: string;
   location: string;
+  employmentType: string;
   period: string;
   achievements: string[];
 }
@@ -10,21 +11,24 @@ const workExperience: WorkExperience[] = [
   {
     title: "Software Engineer",
     company: "MindDoc GmbH",
-    location: "Berlin, Germany (Full-Time, Hybrid)",
+    location: "Berlin, Germany",
+    employmentType: "Full-Time, Hybrid",
     period: "Nov 2026 – Present",
     achievements: [],
   },
   {
     title: "Software Engineer & Co-Founder",
     company: "Notable Nomads",
-    location: "Berlin, Germany (Freelance, Remote)",
+    location: "Berlin, Germany",
+    employmentType: "Freelance, Remote",
     period: "Nov 2024 – Present",
     achievements: [],
   },
   {
     title: "Technical Team Lead at inno2fleet",
     company: "Schneider Electric (Outsourced by Fakir Tech)",
-    location: "Berlin, Germany (Full-Time, Remote)",
+    location: "Berlin, Germany",
+    employmentType: "Full-Time, Remote",
     period: "Mar 2022 – Jan 2025",
     achievements: [
       "Defined technical specifications and delivery roadmaps in collaboration with product managers",
@@ -45,7 +49,8 @@ const workExperience: WorkExperience[] = [
   {
     title: "Senior Software Engineer at inno2fleet",
     company: "Schneider Electric (Outsourced by Fakir Tech)",
-    location: "Berlin, Germany (Full-Time, Remote)",
+    location: "Berlin, Germany",
+    employmentType: "Full-Time, Remote",
     period: "Mar 2021 – Feb 2022",
     achievements: [
       "Developed the eConsultant MVP to calculate CO₂ emissions and EV investment requirements for European fleets",
@@ -59,7 +64,8 @@ const workExperience: WorkExperience[] = [
   {
     title: "Senior Backend Engineer",
     company: "Mehrpardaz Co (EN-Route Flight Operations Platform)",
-    location: "Tehran, Iran (Full-Time, Remote)",
+    location: "Tehran, Iran",
+    employmentType: "Full-Time, Remote",
     period: "Jan 2020 – Feb 2021",
     achievements: [
       "Designed backend architecture from scratch (Express.js) for aviation operations and crew management",
@@ -74,7 +80,8 @@ const workExperience: WorkExperience[] = [
   {
     title: "Backend Engineer",
     company: "Iran Kish Credit Card Co (Mobile Banking, POS & Payment Gateway Services)",
-    location: "Tehran, Iran (Full-Time, On-Site)",
+    location: "Tehran, Iran",
+    employmentType: "Full-Time, On-Site",
     period: "Oct 2018 – Dec 2019",
     achievements: [
       "Introduced Node.js/TypeScript for new backend services within an existing Java/.NET stack",
@@ -90,7 +97,8 @@ const workExperience: WorkExperience[] = [
   {
     title: "Software Developer",
     company: "Baharan Sarv Gostar (Learning Management System)",
-    location: "Tehran, Iran (Full-Time, On-Site)",
+    location: "Tehran, Iran",
+    employmentType: "Full-Time, On-Site",
     period: "Oct 2015 – Sep 2018",
     achievements: [
       "Supported migration of a legacy LMS from ASP.NET WebForms to Java EE",
