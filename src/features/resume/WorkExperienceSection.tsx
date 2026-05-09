@@ -17,6 +17,7 @@ import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCard
 import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { cn } from "@/lib/utils";
+import { ResumeFilamentDivider } from "./ResumeFilamentDivider";
 
 /** Shared styles: meta chips + left-column body text */
 const metaChipClass =
@@ -29,9 +30,6 @@ const leadingIconClass = "size-4 shrink-0 text-orange-500/70 dark:text-orange-40
  */
 const timelineAnchorTw = "top-[3.875rem] md:top-[4rem]";
 const timelineSpineClass = `pointer-events-none absolute ${timelineAnchorTw} bottom-14 left-6 z-[1] w-px -translate-x-1/2 rounded-full bg-[linear-gradient(to_bottom,_rgb(249_115_22/0.44)_0%,_rgb(249_115_22/0.44)_calc(100%-4rem),_transparent)] dark:bg-[linear-gradient(to_bottom,_rgb(251_146_60/0.36)_0%,_rgb(251_146_60/0.36)_calc(100%-4rem),_transparent)]`;
-/** Gradient filament above achievements — shorter than full card width, fades on the right */
-const achievementsDividerClass =
-  "h-px rounded-full bg-[linear-gradient(90deg,_rgb(249_115_22/0.55)_0%,_rgb(249_115_22/0.22)_52%,_transparent_100%)] shadow-[0_0_14px_rgb(249_115_22/0.14)] dark:bg-[linear-gradient(90deg,_rgb(251_146_60/0.48)_0%,_rgb(251_146_60/0.18)_52%,_transparent_100%)] dark:shadow-[0_0_14px_rgb(251_146_60/0.12)]";
 
 export function WorkExperienceSection() {
   const { getSectionTitle, getTextColor } = useThemeConfig();
@@ -39,10 +37,13 @@ export function WorkExperienceSection() {
 
   return (
     <section className="mb-16">
-      <div className="flex items-center gap-3 mb-8">
-        <Briefcase className="size-8 shrink-0 text-orange-500" aria-hidden />
-        <h2 className={getSectionTitle()}>Work Experience</h2>
-      </div>
+      <header className="mb-8 space-y-5">
+        <div className="flex items-center gap-3">
+          <Briefcase className="size-8 shrink-0 text-orange-500" aria-hidden />
+          <h2 className={getSectionTitle()}>Work Experience</h2>
+        </div>
+        <ResumeFilamentDivider />
+      </header>
 
       <div className="relative">
         <div aria-hidden className={timelineSpineClass} />
@@ -110,16 +111,7 @@ export function WorkExperienceSection() {
                             </div>
                           </aside>
                         </div>
-                        {showAchievementsBlock ? (
-                          <div className="mt-5 flex justify-start" aria-hidden>
-                            <span
-                              className={cn(
-                                achievementsDividerClass,
-                                "block w-[min(15rem,58%)] min-w-[10rem] sm:w-[min(19rem,50%)]"
-                              )}
-                            />
-                          </div>
-                        ) : null}
+                        {showAchievementsBlock ? <ResumeFilamentDivider className="mt-5" /> : null}
                       </CyberpunkCardHeader>
 
                       {job.achievements.length > 0 && (

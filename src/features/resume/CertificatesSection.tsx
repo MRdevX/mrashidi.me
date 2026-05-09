@@ -4,16 +4,20 @@ import { motion } from "framer-motion";
 import { Award, CheckCircle, ExternalLink } from "lucide-react";
 import { certificates } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { ResumeFilamentDivider } from "./ResumeFilamentDivider";
 
 export function CertificatesSection() {
   const { getSectionTitle, getTextColor, getBackgroundColor, getBorderColor, getCardPattern } = useThemeConfig();
 
   return (
     <section className="mb-16">
-      <div className="flex items-center gap-3 mb-8">
-        <Award className="w-8 h-8 text-orange-500" aria-hidden />
-        <h2 className={getSectionTitle()}>Recent Certifications</h2>
-      </div>
+      <header className="mb-8 space-y-5">
+        <div className="flex items-center gap-3">
+          <Award className="size-8 shrink-0 text-orange-500" aria-hidden />
+          <h2 className={getSectionTitle()}>Recent Certifications</h2>
+        </div>
+        <ResumeFilamentDivider />
+      </header>
       <div className="space-y-8">
         {certificates.map((category, categoryIndex) => (
           <motion.div
@@ -24,13 +28,12 @@ export function CertificatesSection() {
             transition={{ delay: 0.1 * categoryIndex }}
           >
             <div className="relative z-10">
-              <h3
-                className={`text-2xl font-semibold mb-6 text-orange-500 group-hover:text-orange-400 transition-colors border-b ${getBorderColor(
-                  "primary"
-                )} pb-2`}
-              >
-                {category.category}
-              </h3>
+              <div className="mb-6 space-y-3">
+                <h3 className="text-2xl font-semibold text-orange-500 transition-colors group-hover:text-orange-400">
+                  {category.category}
+                </h3>
+                <ResumeFilamentDivider />
+              </div>
               <div className="space-y-2">
                 {category.certificates.map((cert, i) => (
                   <motion.div
