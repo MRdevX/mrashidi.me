@@ -3,6 +3,8 @@ import { z } from "zod";
 const EnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
+  /** Optional comma-separated browser origins for APIs using `.cors()` — each entry must include a scheme (`https://...`). */
+  CORS_ALLOWED_ORIGINS: z.string().optional(),
   NEXT_PUBLIC_GITHUB_USERNAME: z.string().optional(),
   /** GitHub REST API PAT for server routes (not `GITHUB_*` — reserved on Vercel). */
   GH_REST_API_TOKEN: z.string().optional(),
@@ -35,6 +37,7 @@ const EnvSchema = z.object({
 export const env = EnvSchema.parse({
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS,
   NEXT_PUBLIC_GITHUB_USERNAME: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
   GH_REST_API_TOKEN: process.env.GH_REST_API_TOKEN,
   SENTRY_DSN: process.env.SENTRY_DSN,

@@ -9,14 +9,22 @@ const withBundleAnalyzer =
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ["framer-motion", "lucide-react", "react-icons"],
+    optimizePackageImports: [
+      "date-fns",
+      "framer-motion",
+      "lucide-react",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-slot",
+      "react-icons",
+    ],
   },
 
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  productionBrowserSourceMaps: true,
+  // Client prod maps widen attack surface — use SOURCE_BROWSER_MAPS=true to enable temporarily or rely on Sentry upload.
+  productionBrowserSourceMaps: process.env.SOURCE_BROWSER_MAPS === "true",
   compress: true,
 
   serverExternalPackages: ["pino", "pino-pretty", "thread-stream"],
