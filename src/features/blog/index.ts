@@ -1,10 +1,12 @@
-export { BlogContainer } from "./BlogContainer";
 export { BlogError } from "./BlogError";
 export { BlogGrid } from "./BlogGrid";
-export { BlogHeader } from "./BlogHeader";
 export { BlogLoading } from "./BlogLoading";
-export { BlogPagination } from "./BlogPagination";
 export { BlogPostCard } from "./BlogPostCard";
+export { BlogPostCardFooter } from "./BlogPostCardFooter";
+export { BlogPostsGrid } from "./BlogPostsGrid";
+export { BlogPostsGridMotion } from "./BlogPostsGridMotion";
+export { BlogPostsSection } from "./BlogPostsSection";
 export { BlogPreloader } from "./BlogPreloader";
+export { blogPostsGridClassName } from "./blogGridLayout";
 export type { BlogData, BlogResponse } from "./types";
 export { useBlogData } from "./useBlogData";

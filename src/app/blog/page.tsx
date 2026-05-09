@@ -1,29 +1,28 @@
 "use client";
 
-import { PageHeader, PageSection } from "@/components/ui";
-import { BlogContainer, BlogError, BlogGrid, BlogLoading, BlogPagination, useBlogData } from "@/features/blog";
+import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
+import { BlogPostsSection, useBlogData } from "@/features/blog";
 
 export default function Blog() {
-  const { posts, totalPages, currentPage, isLoading, error, setPage } = useBlogData(6);
+  const { posts, totalPages, currentPage, isLoading, error, setPage, mutate } = useBlogData(6);
 
   return (
-    <BlogContainer>
+    <PageWrapper>
       <PageHeader iconName="BookOpen" title="Blog Posts" />
 
       <PageSection>
         <div className="content-section">
-          {isLoading ? (
-            <BlogLoading />
-          ) : error ? (
-            <BlogError onRetry={() => window.location.reload()} />
-          ) : (
-            <>
-              <BlogGrid posts={posts} />
-              <BlogPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
-            </>
-          )}
+          <BlogPostsSection
+            posts={posts}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            isLoading={isLoading}
+            error={error}
+            onRetry={() => void mutate()}
+          />
         </div>
       </PageSection>
-    </BlogContainer>
+    </PageWrapper>
   );
 }
