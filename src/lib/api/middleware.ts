@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { APIError, handleError, logError } from "@/lib/errors";
@@ -76,10 +77,28 @@ function authMiddleware(token: string | (() => string)): (handler: ApiHandler) =
   return (handler: ApiHandler): ApiHandler => {
     return async (request: NextRequest) => {
       const actualToken = typeof token === "function" ? token() : token;
-      const authHeader = request.headers.get("authorization");
-      if (!actualToken || authHeader !== `Bearer ${actualToken}`) {
+      if (!actualToken) {
         throw new APIError("Unauthorized", 401);
       }
+
+      const authHeader = request.headers.get("authorization");
+      const match = /^Bearer\s+([\s\S]+)$/i.exec(authHeader ?? "");
+      if (!match?.[1]?.trim()) {
+        throw new APIError("Unauthorized", 401);
+      }
+
+      const provided = match[1].trim();
+      const expectedBuffer = Buffer.from(actualToken, "utf8");
+      const providedBuffer = Buffer.from(provided, "utf8");
+
+      if (expectedBuffer.length !== providedBuffer.length) {
+        throw new APIError("Unauthorized", 401);
+      }
+
+      if (!timingSafeEqual(expectedBuffer, providedBuffer)) {
+        throw new APIError("Unauthorized", 401);
+      }
+
       return await handler(request);
     };
   };

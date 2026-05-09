@@ -16,7 +16,8 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  productionBrowserSourceMaps: true,
+  // Client prod maps widen attack surface — use SOURCE_BROWSER_MAPS=true to enable temporarily or rely on Sentry upload.
+  productionBrowserSourceMaps: process.env.SOURCE_BROWSER_MAPS === "true",
   compress: true,
 
   serverExternalPackages: ["pino", "pino-pretty", "thread-stream"],
