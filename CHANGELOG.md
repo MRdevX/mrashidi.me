@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.123](https://github.com/MRdevX/mrashidi.me/compare/v0.1.122...v0.1.123) (2026-05-09)
+
+
+### Features
+
+* add new project and enhance technology constants ([92b63f9](https://github.com/MRdevX/mrashidi.me/commit/92b63f9e05f6e0de534857f5991a3f8304a8d279))
+
 ### [0.1.122](https://github.com/MRdevX/mrashidi.me/compare/v0.1.121...v0.1.122) (2026-05-09)
 
 
