@@ -193,6 +193,28 @@ export const projects: Project[] = [
     status: "active",
   },
   {
+    title: "Takeout Metadata Fixer",
+    description:
+      "A cross-platform desktop app for Google Takeout archives. It reads Google's JSON sidecars next to photos and videos and writes capture dates, GPS, and related metadata into the media files via ExifTool, so imports into iCloud, a NAS, or other libraries keep correct dates and places.",
+    highlights: [
+      "Wails v3 desktop shell with a Go backend and a Vite-built UI",
+      "Resumable processing using a checkpoint file in the selected Takeout folder",
+      "Pause, resume, and stop with live progress and per-outcome counts",
+      "Optional removal of sidecar JSON after a successful run",
+      "Released macOS DMG and Windows builds via GitHub Releases",
+      "Marketing site at md-fixer.mrashidi.me (Vue 3 + Vite)",
+    ],
+    stack: ["Go", "Wails", "JavaScript", "Vite", "Vue.js", "macOS", "Windows"],
+    githubUrl: "https://github.com/MRdevX/takeout-md-fixer",
+    liveUrl: "https://md-fixer.mrashidi.me",
+    visibility: "public",
+    type: "personal",
+    openSource: true,
+    year: "2026",
+    role: "Creator & Maintainer",
+    status: "active",
+  },
+  {
     title: "Nestifined MS Framework",
     description:
       "A refined and optimized codebase template for setting up NestJS microservices. Provides a streamlined foundation for beginning fresh microservice initiatives with comprehensive tooling and best practices.",
