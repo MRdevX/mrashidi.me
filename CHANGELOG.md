@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.130](https://github.com/MRdevX/mrashidi.me/compare/v0.1.129...v0.1.130) (2026-05-10)
+
+
+### Code Refactoring
+
+* enhance email templates and configuration ([e7c3be3](https://github.com/MRdevX/mrashidi.me/commit/e7c3be3685cca3a7fdc24f52c6d5f42e351a84f1))
+
 ### [0.1.129](https://github.com/MRdevX/mrashidi.me/compare/v0.1.128...v0.1.129) (2026-05-09)
 
 
