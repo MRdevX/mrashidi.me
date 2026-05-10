@@ -1,5 +1,6 @@
 import { Link, Section } from "@react-email/components";
 import type { ReactNode } from "react";
+import { emailTheme } from "../theme";
 
 interface CallToActionButtonProps {
   href: string;
@@ -9,14 +10,16 @@ interface CallToActionButtonProps {
 export function CallToActionButton({ href, children }: CallToActionButtonProps) {
   return (
     <Section style={buttonContainerStyle}>
-      <table style={tableStyle} role="presentation" cellPadding="0" cellSpacing="0">
-        <tr>
-          <td style={tdStyle}>
-            <Link href={href} style={buttonStyle} className="dark-mode-button">
-              {children}
-            </Link>
-          </td>
-        </tr>
+      <table style={tableStyle} role="presentation" cellPadding={0} cellSpacing={0}>
+        <tbody>
+          <tr>
+            <td style={tdStyle}>
+              <Link href={href} style={buttonStyle} className="dark-mode-button">
+                {children}
+              </Link>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </Section>
   );
@@ -38,14 +41,14 @@ const tdStyle = {
 
 const buttonStyle = {
   display: "inline-block",
-  backgroundColor: "#ff6b35",
-  color: "#ffffff",
+  backgroundColor: emailTheme.primary,
+  color: emailTheme.primaryForeground,
   padding: "16px 32px",
   textDecoration: "none",
-  borderRadius: "8px",
+  borderRadius: emailTheme.radiusMd,
   fontSize: "15px",
-  fontWeight: "600",
+  fontWeight: "600" as const,
   letterSpacing: "0.5px",
   textTransform: "uppercase" as const,
-  boxShadow: "0 4px 6px -1px rgba(255, 107, 53, 0.3), 0 2px 4px -1px rgba(255, 107, 53, 0.2)",
+  boxShadow: `0 4px 6px -1px rgba(${emailTheme.primaryRgb}, 0.3), 0 2px 4px -1px rgba(${emailTheme.primaryRgb}, 0.2)`,
 };

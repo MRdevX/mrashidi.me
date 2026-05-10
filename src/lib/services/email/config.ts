@@ -7,20 +7,7 @@ export const getTemplateConfig = (): ITemplateConfig => ({
   socialLinks: {
     github: config.social.github,
     linkedin: config.social.linkedin,
+    telegram: config.social.telegram,
   },
-  footerText: "Software Engineer | Cloud & DevOps",
-  skills: [
-    {
-      name: "Backend Development",
-      technologies: ["Node.js", "TypeScript", "Python", "Go"],
-    },
-    {
-      name: "Cloud & DevOps",
-      technologies: ["AWS", "Docker", "Kubernetes", "Terraform"],
-    },
-    {
-      name: "Database Design",
-      technologies: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"],
-    },
-  ],
+  footerText: config.person.title,
 });

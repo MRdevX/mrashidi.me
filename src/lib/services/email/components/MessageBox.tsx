@@ -1,4 +1,5 @@
 import { Section, Text } from "@react-email/components";
+import { emailTheme } from "../theme";
 
 interface MessageBoxProps {
   label: string;
@@ -15,8 +16,8 @@ export function MessageBox({ label, message }: MessageBoxProps) {
       </Text>
       <Text style={messageStyle} className="dark-mode-message-text">
         {lines.map((line, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: Lines can duplicate; index ensures unique keys for <br /> positioning
-          <span key={`line-${line}-${index}`}>
+          // biome-ignore lint/suspicious/noArrayIndexKey: Lines can duplicate; index ensures stable keys for <br /> insertion
+          <span key={`line-${index}-${line.slice(0, 24)}`}>
             {line}
             {index < lines.length - 1 && <br />}
           </span>
@@ -27,16 +28,16 @@ export function MessageBox({ label, message }: MessageBoxProps) {
 }
 
 const messageBoxStyle = {
-  backgroundColor: "#f8fafc",
-  border: "1px solid #e2e8f0",
-  borderRadius: "8px",
+  backgroundColor: emailTheme.lightBg,
+  border: `1px solid ${emailTheme.lightBorder}`,
+  borderRadius: emailTheme.radiusMd,
   padding: "24px",
   marginTop: "24px",
 };
 
 const labelStyle = {
-  color: "#ff6b35",
-  fontWeight: "600",
+  color: emailTheme.primary,
+  fontWeight: "600" as const,
   margin: "0 0 12px 0",
   fontSize: "14px",
   textTransform: "uppercase" as const,
@@ -44,9 +45,9 @@ const labelStyle = {
 };
 
 const messageStyle = {
-  margin: 0,
+  margin: "0",
   fontSize: "15px",
   lineHeight: "1.6",
-  color: "#334155",
+  color: emailTheme.lightTextBody,
   whiteSpace: "pre-wrap" as const,
 };

@@ -4,34 +4,23 @@ import type { getTemplateConfig } from "./config";
 import { ContactAdminTemplate, ContactUserTemplate, ResumeAdminTemplate, ResumeUserTemplate } from "./templates";
 import type { EmailTemplateData } from "./types";
 
-type TemplateComponentType =
-  | typeof ContactAdminTemplate
-  | typeof ContactUserTemplate
-  | typeof ResumeAdminTemplate
-  | typeof ResumeUserTemplate;
+const TEMPLATES = {
+  "contact-admin": ContactAdminTemplate,
+  "contact-user": ContactUserTemplate,
+  "resume-admin": ResumeAdminTemplate,
+  "resume-user": ResumeUserTemplate,
+} as const;
+
+export type EmailTemplateType = keyof typeof TEMPLATES;
 
 export async function createEmailTemplate(
   data: EmailTemplateData,
   templateType: string,
   templateConfig: ReturnType<typeof getTemplateConfig>
 ): Promise<{ html: string; text: string }> {
-  let TemplateComponent: TemplateComponentType;
-
-  switch (templateType) {
-    case "contact-admin":
-      TemplateComponent = ContactAdminTemplate;
-      break;
-    case "contact-user":
-      TemplateComponent = ContactUserTemplate;
-      break;
-    case "resume-admin":
-      TemplateComponent = ResumeAdminTemplate;
-      break;
-    case "resume-user":
-      TemplateComponent = ResumeUserTemplate;
-      break;
-    default:
-      throw new Error(`Unknown template type: ${templateType}`);
+  const TemplateComponent = TEMPLATES[templateType as EmailTemplateType];
+  if (!TemplateComponent) {
+    throw new Error(`Unknown template type: ${templateType}`);
   }
 
   const emailElement = createElement(TemplateComponent, { data, templateConfig });

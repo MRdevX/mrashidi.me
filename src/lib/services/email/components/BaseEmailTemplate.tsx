@@ -1,50 +1,57 @@
-import { Body, Container, Head, Hr, Html, Link, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Hr, Html, Link, Preview, Section, Text } from "@react-email/components";
+import { emailAlbertSansStylesheetHref, emailDarkModeStyles, emailTheme } from "../theme";
 import type { ITemplateConfig } from "../types";
 
 interface BaseEmailTemplateProps {
   title: string;
+  preview: string;
   children: React.ReactNode;
   templateConfig: ITemplateConfig;
 }
 
-export function BaseEmailTemplate({ title, children, templateConfig }: BaseEmailTemplateProps) {
+export function BaseEmailTemplate({ title, preview, children, templateConfig }: BaseEmailTemplateProps) {
   return (
-    <Html>
+    <Html lang="en">
       <Head>
-        <meta name="color-scheme" content="light dark" />
-        <meta name="supported-color-schemes" content="light dark" />
-        <style>{darkModeStyles}</style>
+        <meta content="light dark" name="color-scheme" />
+        <meta content="light dark" name="supported-color-schemes" />
+        <link href={emailAlbertSansStylesheetHref} rel="stylesheet" />
+        <style>{emailDarkModeStyles()}</style>
       </Head>
-      <Body style={bodyStyle} className="dark-mode-body" data-ogsc="">
-        <Container style={containerStyle} className="dark-mode-container">
-          {/* Header */}
-          <Section style={headerStyle} className="dark-mode-header">
-            <Text style={brandStyle} className="dark-mode-brand">
+      <Body className="dark-mode-body" data-ogsc="" style={bodyStyle}>
+        <Preview>{preview}</Preview>
+        <Container className="dark-mode-container" style={containerStyle}>
+          <Section className="dark-mode-accent-line" style={accentLineStyle} />
+
+          <Section className="dark-mode-header" style={headerStyle}>
+            <Text className="dark-mode-brand" style={brandStyle}>
               {templateConfig.companyName}
             </Text>
-            <Text style={titleStyle} className="dark-mode-title">
+            <Text className="dark-mode-title" style={titleStyle}>
               {title}
             </Text>
           </Section>
 
-          {/* Content */}
-          <Section style={contentStyle} className="dark-mode-content">
+          <Section className="dark-mode-content" style={contentStyle}>
             {children}
           </Section>
 
-          {/* Footer */}
-          <Section style={footerStyle} className="dark-mode-footer">
-            <Hr style={hrStyle} className="dark-mode-hr" />
-            <Text style={footerTextStyle} className="dark-mode-footer-text">
-              <Link href={templateConfig.socialLinks.github} style={linkStyle} className="dark-mode-link">
+          <Section className="dark-mode-footer" style={footerStyle}>
+            <Hr className="dark-mode-hr" style={hrStyle} />
+            <Text className="dark-mode-footer-text" style={footerTextStyle}>
+              <Link className="dark-mode-link" href={templateConfig.socialLinks.github} style={linkStyle}>
                 GitHub
               </Link>
               {" • "}
-              <Link href={templateConfig.socialLinks.linkedin} style={linkStyle} className="dark-mode-link">
+              <Link className="dark-mode-link" href={templateConfig.socialLinks.linkedin} style={linkStyle}>
                 LinkedIn
               </Link>
+              {" • "}
+              <Link className="dark-mode-link" href={templateConfig.socialLinks.telegram} style={linkStyle}>
+                Telegram
+              </Link>
             </Text>
-            <Text style={footerSubTextStyle} className="dark-mode-subtext">
+            <Text className="dark-mode-subtext" style={footerSubTextStyle}>
               {templateConfig.footerText}
             </Text>
           </Section>
@@ -54,10 +61,17 @@ export function BaseEmailTemplate({ title, children, templateConfig }: BaseEmail
   );
 }
 
+const accentLineStyle = {
+  margin: "0",
+  padding: "0",
+  height: "4px",
+  backgroundColor: emailTheme.primary,
+};
+
 const bodyStyle = {
-  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-  backgroundColor: "#f8fafc",
-  color: "#334155",
+  fontFamily: emailTheme.fontStack,
+  backgroundColor: emailTheme.lightBg,
+  color: emailTheme.lightTextBody,
   margin: 0,
   padding: "20px",
   lineHeight: "1.6",
@@ -66,210 +80,69 @@ const bodyStyle = {
 const containerStyle = {
   maxWidth: "600px",
   margin: "0 auto",
-  backgroundColor: "#ffffff",
-  borderRadius: "12px",
+  backgroundColor: emailTheme.lightCard,
+  borderRadius: emailTheme.radiusLg,
   overflow: "hidden",
-  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+  boxShadow: emailTheme.shadowCard,
 };
 
 const headerStyle = {
-  backgroundColor: "#ffffff",
-  padding: "40px 32px 32px",
+  backgroundColor: emailTheme.lightCard,
+  padding: "32px 32px 28px",
   textAlign: "center" as const,
-  borderBottom: "1px solid #e2e8f0",
+  borderBottom: `1px solid ${emailTheme.lightBorder}`,
 };
 
 const brandStyle = {
   margin: "0 0 8px 0",
-  color: "#ff6b35",
+  color: emailTheme.primary,
   fontSize: "16px",
-  fontWeight: "600",
+  fontWeight: "600" as const,
   letterSpacing: "0.5px",
   textTransform: "uppercase" as const,
 };
 
 const titleStyle = {
   margin: 0,
-  color: "#1e293b",
+  color: emailTheme.lightTextTitle,
   fontSize: "28px",
-  fontWeight: "700",
+  fontWeight: "700" as const,
   lineHeight: "1.2",
 };
 
 const contentStyle = {
   padding: "32px",
-  backgroundColor: "#ffffff",
+  backgroundColor: emailTheme.lightCard,
 };
 
 const hrStyle = {
   border: "none",
-  borderTop: "1px solid #e2e8f0",
+  borderTop: `1px solid ${emailTheme.lightBorder}`,
   margin: "0 0 24px 0",
 };
 
 const footerStyle = {
-  backgroundColor: "#f8fafc",
+  backgroundColor: emailTheme.lightBg,
   padding: "32px",
   textAlign: "center" as const,
 };
 
 const footerTextStyle = {
-  color: "#64748b",
+  color: emailTheme.lightTextMuted,
   fontSize: "14px",
   margin: "0 0 12px 0",
-  fontWeight: "500",
+  fontWeight: "500" as const,
 };
 
 const footerSubTextStyle = {
-  color: "#94a3b8",
+  color: emailTheme.lightTextSubtle,
   fontSize: "12px",
   margin: "0",
   lineHeight: "1.5",
 };
 
 const linkStyle = {
-  color: "#ff6b35",
+  color: emailTheme.primary,
   textDecoration: "none",
-  fontWeight: "500",
+  fontWeight: "500" as const,
 };
-
-const darkModeStyles = `
-  /* Dark mode support for various email clients */
-  @media (prefers-color-scheme: dark) {
-    .dark-mode-body {
-      background-color: #0f172a !important;
-      color: #e2e8f0 !important;
-    }
-    
-    .dark-mode-container {
-      background-color: #1e293b !important;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
-    }
-    
-    .dark-mode-header {
-      background-color: #1e293b !important;
-      border-bottom-color: #334155 !important;
-    }
-    
-    .dark-mode-content {
-      background-color: #1e293b !important;
-    }
-    
-    .dark-mode-footer {
-      background-color: #0f172a !important;
-    }
-    
-    .dark-mode-title {
-      color: #f1f5f9 !important;
-    }
-    
-    .dark-mode-text {
-      color: #cbd5e1 !important;
-    }
-    
-    .dark-mode-subtext {
-      color: #94a3b8 !important;
-    }
-    
-    .dark-mode-hr {
-      border-top-color: #334155 !important;
-    }
-    
-    .dark-mode-brand {
-      color: #ff6b35 !important;
-    }
-    
-    .dark-mode-button {
-      background-color: #ff6b35 !important;
-      color: #ffffff !important;
-      box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.4), 0 2px 4px -1px rgba(255, 107, 53, 0.3) !important;
-    }
-    
-    .dark-mode-message-box {
-      background-color: #334155 !important;
-      border-color: #475569 !important;
-    }
-    
-    .dark-mode-label {
-      color: #ff6b35 !important;
-    }
-    
-    .dark-mode-message-text {
-      color: #e2e8f0 !important;
-    }
-    
-    .dark-mode-info-row {
-      border-bottom-color: #334155 !important;
-    }
-    
-    .dark-mode-info-label {
-      color: #94a3b8 !important;
-    }
-    
-    .dark-mode-info-value {
-      color: #f1f5f9 !important;
-    }
-    
-    .dark-mode-footer-text {
-      color: #94a3b8 !important;
-    }
-    
-    .dark-mode-link {
-      color: #ff6b35 !important;
-    }
-  }
-  
-  /* Apple Mail specific dark mode support */
-  @media (prefers-color-scheme: dark) and (-webkit-min-device-pixel-ratio: 1) {
-    .dark-mode-body {
-      background-color: #0f172a !important;
-      color: #e2e8f0 !important;
-    }
-    
-    .dark-mode-container {
-      background-color: #1e293b !important;
-    }
-    
-    .dark-mode-header {
-      background-color: #1e293b !important;
-    }
-    
-    .dark-mode-content {
-      background-color: #1e293b !important;
-    }
-    
-    .dark-mode-footer {
-      background-color: #0f172a !important;
-    }
-  }
-  
-  /* Outlook dark mode support */
-  [data-ogsc] .dark-mode-body {
-    background-color: #0f172a !important;
-    color: #e2e8f0 !important;
-  }
-  
-  [data-ogsc] .dark-mode-container {
-    background-color: #1e293b !important;
-  }
-  
-  [data-ogsc] .dark-mode-header {
-    background-color: #1e293b !important;
-  }
-  
-  [data-ogsc] .dark-mode-content {
-    background-color: #1e293b !important;
-  }
-  
-  [data-ogsc] .dark-mode-footer {
-    background-color: #0f172a !important;
-  }
-  
-  [data-ogsc] .dark-mode-text {
-    color: #cbd5e1 !important;
-  }
-  
-  [data-ogsc] .dark-mode-title {
-    color: #f1f5f9 !important;
-  }
-`;

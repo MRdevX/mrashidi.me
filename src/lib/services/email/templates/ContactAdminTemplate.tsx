@@ -8,11 +8,15 @@ interface ContactAdminTemplateProps {
 
 export function ContactAdminTemplate({ data, templateConfig }: ContactAdminTemplateProps) {
   return (
-    <BaseEmailTemplate title="New Message from Your Website" templateConfig={templateConfig}>
+    <BaseEmailTemplate
+      preview="New website message — name, email, and full details below."
+      templateConfig={templateConfig}
+      title="New Message from Your Website"
+    >
       <InfoRow label="Name" value={data.name} />
       <InfoRow label="Email" value={data.email} />
       <InfoRow label="Subject" value={data.subject || "No subject"} />
-      {data.message && <MessageBox label="Message" message={data.message} />}
+      {data.message ? <MessageBox label="Message" message={data.message} /> : null}
     </BaseEmailTemplate>
   );
 }
