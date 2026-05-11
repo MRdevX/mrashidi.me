@@ -99,7 +99,7 @@
     "fast-glob": "^3.3.3",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
-    "lint-staged": "^17.0.3",
+    "lint-staged": "^17.0.4",
     "postcss": "^8.5.14",
     "tailwindcss": "^4.3.0",
     "tsx": "^4.21.0",
