@@ -62,7 +62,8 @@ function buildCalendar(days: ContributionDay[]): CalendarData {
   }
 
   // Parse at noon local time to avoid UTC off-by-one shifts on any timezone.
-  const startPad = new Date(`${days[0].date}T12:00:00`).getDay(); // 0 = Sunday
+  // Monday-first weeks: Mon=0, Tue=1, …, Sun=6
+  const startPad = (new Date(`${days[0].date}T12:00:00`).getDay() + 6) % 7;
   const padded: (ContributionDay | null)[] = [...Array<null>(startPad).fill(null), ...days];
 
   const weeks: (ContributionDay | null)[][] = [];

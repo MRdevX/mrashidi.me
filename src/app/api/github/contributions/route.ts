@@ -63,6 +63,11 @@ async function handler(_req: NextRequest): Promise<NextResponse> {
   const fromDate = new Date(now);
   fromDate.setFullYear(fromDate.getFullYear() - 1);
   fromDate.setDate(fromDate.getDate() + 1);
+  // Snap forward to Monday so every column is a full Mon–Sun week (no leading padding)
+  const daysUntilMonday = (1 - fromDate.getDay() + 7) % 7;
+  if (daysUntilMonday > 0) {
+    fromDate.setDate(fromDate.getDate() + daysUntilMonday);
+  }
   const from = `${fromDate.toISOString().slice(0, 10)}T00:00:00Z`;
 
   const res = await fetch(API_CONFIG.GITHUB.GRAPHQL_URL, {
