@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.132](https://github.com/MRdevX/mrashidi.me/compare/v0.1.131...v0.1.132) (2026-05-16)
+
+
+### Features
+
+* adjust contribution graph to start weeks on Monday and improve date handling ([750bf33](https://github.com/MRdevX/mrashidi.me/commit/750bf33e6556fa818d7be8dadbac3e72e33b8df8))
+* implement GitHub contributions API and update contribution graph component ([b8c7378](https://github.com/MRdevX/mrashidi.me/commit/b8c7378394ef3ce50db911d2d26913a4afde99bc))
+* improve contribution levels ([927b57b](https://github.com/MRdevX/mrashidi.me/commit/927b57be977b4a5593fc53c31ce446ee0efa1c32))
+* update contribution date range and improve contribution graph responsiveness ([911437e](https://github.com/MRdevX/mrashidi.me/commit/911437eb1f1087aa856bbd462cdef513b72cc010))
+
 ### [0.1.131](https://github.com/MRdevX/mrashidi.me/compare/v0.1.130...v0.1.131) (2026-05-14)
 
 ### [0.1.130](https://github.com/MRdevX/mrashidi.me/compare/v0.1.129...v0.1.130) (2026-05-10)
