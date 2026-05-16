@@ -58,9 +58,12 @@ async function handler(_req: NextRequest): Promise<NextResponse> {
     throw new APIError("GitHub token not configured", 503);
   }
 
-  const year = new Date().getFullYear();
-  const from = `${year}-01-01T00:00:00Z`;
-  const to = `${year}-12-31T23:59:59Z`;
+  const now = new Date();
+  const to = `${now.toISOString().slice(0, 10)}T23:59:59Z`;
+  const fromDate = new Date(now);
+  fromDate.setFullYear(fromDate.getFullYear() - 1);
+  fromDate.setDate(fromDate.getDate() + 1);
+  const from = `${fromDate.toISOString().slice(0, 10)}T00:00:00Z`;
 
   const res = await fetch(API_CONFIG.GITHUB.GRAPHQL_URL, {
     method: "POST",
@@ -102,7 +105,6 @@ async function handler(_req: NextRequest): Promise<NextResponse> {
   return NextResponse.json({
     contributions,
     total: calendar.totalContributions,
-    year,
   });
 }
 

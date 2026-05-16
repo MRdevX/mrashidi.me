@@ -14,7 +14,6 @@ type ContributionDay = {
 type ApiResponse = {
   contributions: ContributionDay[];
   total: number;
-  year: number;
 };
 
 type TooltipState = {
@@ -41,9 +40,9 @@ const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
 /** Cyberpunk neon-orange fill per contribution level (0 = none, 4 = peak) */
 const LEVEL_FILL = [
   "rgba(255,255,255,0.06)", // 0 – no contributions
-  "rgba(255,95,31,0.20)", //  1 – low
-  "rgba(255,95,31,0.42)", //  2 – moderate
-  "rgba(255,95,31,0.68)", //  3 – high
+  "rgba(255,95,31,0.35)", //  1 – low  (was 0.20 — bumped so 1 commit/day is clearly visible)
+  "rgba(255,95,31,0.58)", //  2 – moderate
+  "rgba(255,95,31,0.80)", //  3 – high
   "#ff5f1f", //               4 – peak (+ neon glow filter)
 ];
 
@@ -110,14 +109,15 @@ function formatCount(count: number): string {
  * placeholder grid. No array iterations means no React key concerns.
  */
 function GraphSkeleton() {
+  const vw = 53 * STEP - GAP;
   return (
-    <svg width={53 * STEP - GAP} height={SVG_H} aria-hidden="true" className="animate-pulse">
+    <svg viewBox={`0 0 ${vw} ${SVG_H}`} width="100%" aria-hidden="true" className="animate-pulse">
       <defs>
         <pattern id="sk-grid" x="0" y="0" width={STEP} height={STEP} patternUnits="userSpaceOnUse">
           <rect width={CELL} height={CELL} rx="3" fill="rgba(255,255,255,0.05)" />
         </pattern>
       </defs>
-      <rect x="0" y={LABEL_H} width={53 * STEP - GAP} height={7 * STEP - GAP} fill="url(#sk-grid)" />
+      <rect x="0" y={LABEL_H} width={vw} height={7 * STEP - GAP} fill="url(#sk-grid)" />
     </svg>
   );
 }
@@ -164,7 +164,6 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
 
   const { weeks, monthLabels } = data ? buildCalendar(data.contributions) : { weeks: [], monthLabels: [] };
   const svgWidth = weeks.length > 0 ? weeks.length * STEP - GAP : 0;
-
   return (
     <>
       {/* Fixed tooltip — uses viewport coords, never clipped by overflow */}
@@ -190,7 +189,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
         {/* Ambient neon gradient overlay */}
         <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-br from-orange-500/4 via-transparent to-transparent" />
 
-        <div className="relative z-10 overflow-x-auto pb-1">
+        <div className="relative z-10 pb-1">
           {/* ── Loading ── */}
           {loading && <GraphSkeleton />}
 
@@ -203,16 +202,21 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
 
           {/* ── Data ── */}
           {!loading && !error && data && (
-            <div className="flex w-max flex-col gap-2">
+            <div className="flex w-full flex-col gap-2">
               <svg
-                width={svgWidth}
-                height={SVG_H}
-                aria-label={`${data.total.toLocaleString()} GitHub contributions in ${data.year}`}
+                viewBox={`0 0 ${svgWidth} ${SVG_H}`}
+                width="100%"
+                aria-label={`${data.total.toLocaleString()} GitHub contributions in the last year`}
                 role="img"
                 onMouseMove={(e) => {
-                  const { left, top } = e.currentTarget.getBoundingClientRect();
-                  const rx = e.clientX - left;
-                  const ry = e.clientY - top;
+                  const pt = e.currentTarget.createSVGPoint();
+                  pt.x = e.clientX;
+                  pt.y = e.clientY;
+                  const ctm = e.currentTarget.getScreenCTM();
+                  if (!ctm) {
+                    return;
+                  }
+                  const { x: rx, y: ry } = pt.matrixTransform(ctm.inverse());
                   const wi = Math.floor(rx / STEP);
                   const di = Math.floor((ry - LABEL_H) / STEP);
                   const inBounds = wi >= 0 && wi < weeks.length && di >= 0 && di < 7 && ry >= LABEL_H;
@@ -238,7 +242,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                 {/* Month labels */}
                 {monthLabels.map(({ weekIndex, label }) => (
                   <text
-                    key={label}
+                    key={`${label}-${weekIndex}`}
                     x={weekIndex * STEP}
                     y={LABEL_H - 4}
                     fontSize={10}
@@ -286,7 +290,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
               {/* Footer: total count + legend */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-mono text-muted-foreground" style={{ fontSize: 11 }}>
-                  {data.total.toLocaleString()} contributions in {data.year}
+                  {data.total.toLocaleString()} contributions in the last year
                 </span>
                 <div className="ml-auto flex items-center gap-1">
                   <span className="mr-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>
