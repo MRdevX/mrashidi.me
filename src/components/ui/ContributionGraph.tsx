@@ -5,10 +5,12 @@ import { cn } from "@/lib/utils";
 
 /* ─── types ──────────────────────────────────────────────────────── */
 
+type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
 type ContributionDay = {
   date: string; // "YYYY-MM-DD"
   count: number;
-  level: 0 | 1 | 2 | 3 | 4;
+  level: Level;
 };
 
 type ApiResponse = {
@@ -37,14 +39,16 @@ const SVG_H = LABEL_H + 7 * STEP - GAP; // 105px total SVG height
 
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-/** Cyberpunk neon-orange fill per contribution level (0 = none, 4 = peak) */
-const LEVEL_FILL = [
-  "rgba(255,255,255,0.06)", // 0 – no contributions
-  "rgba(255,95,31,0.35)", //  1 – low  (was 0.20 — bumped so 1 commit/day is clearly visible)
-  "rgba(255,95,31,0.58)", //  2 – moderate
-  "rgba(255,95,31,0.80)", //  3 – high
-  "#ff5f1f", //               4 – peak (+ neon glow filter)
-];
+/** Cyberpunk neon-orange fill per contribution level (0 = none, 6 = peak) */
+const LEVEL_FILL: Record<Level, string> = {
+  0: "rgba(255,255,255,0.06)", // empty
+  1: "rgba(255,95,31,0.20)", //  ~bottom 25% of active days
+  2: "rgba(255,95,31,0.36)", //  ~25–50th percentile
+  3: "rgba(255,95,31,0.52)", //  ~50–70th percentile
+  4: "rgba(255,95,31,0.68)", //  ~70–85th percentile
+  5: "rgba(255,95,31,0.84)", //  ~85–95th percentile
+  6: "#ff5f1f", //               top 5% (peak + neon glow)
+};
 
 /* ─── pure helpers ───────────────────────────────────────────────── */
 
@@ -100,6 +104,44 @@ function formatCount(count: number): string {
     return "No contributions";
   }
   return count === 1 ? "1 contribution" : `${count} contributions`;
+}
+
+/**
+ * Remaps contribution levels to 0–6 using percentile thresholds computed from
+ * the caller's own data — adapts to any commit frequency.
+ *
+ * Level 0 = empty. Levels 1–6 span p0–p25, p25–p50, p50–p70, p70–p85,
+ * p85–p95, and the top 5% (peak with glow).
+ */
+function computeDynamicLevels(days: ContributionDay[]): ContributionDay[] {
+  const nonZero = days
+    .map((d) => d.count)
+    .filter((c) => c > 0)
+    .sort((a, b) => a - b);
+
+  if (nonZero.length === 0) {
+    return days;
+  }
+
+  const pct = (p: number): number => {
+    const idx = Math.min(Math.floor(p * nonZero.length), nonZero.length - 1);
+    return nonZero[idx] ?? 1;
+  };
+
+  // Five thresholds split non-zero days into six tiers (levels 1–6).
+  const thresholds = [pct(0.25), pct(0.5), pct(0.7), pct(0.85), pct(0.95)];
+
+  return days.map((d): ContributionDay => {
+    if (d.count === 0) {
+      return { ...d, level: 0 };
+    }
+    for (let i = thresholds.length - 1; i >= 0; i--) {
+      if (d.count > (thresholds[i] ?? 0)) {
+        return { ...d, level: (i + 2) as Level };
+      }
+    }
+    return { ...d, level: 1 };
+  });
 }
 
 /* ─── skeleton ───────────────────────────────────────────────────── */
@@ -162,7 +204,8 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
     };
   }, [apiUrl]);
 
-  const { weeks, monthLabels } = data ? buildCalendar(data.contributions) : { weeks: [], monthLabels: [] };
+  const contributions = data ? computeDynamicLevels(data.contributions) : [];
+  const { weeks, monthLabels } = buildCalendar(contributions);
   const svgWidth = weeks.length > 0 ? weeks.length * STEP - GAP : 0;
   return (
     <>
@@ -229,7 +272,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                 onMouseLeave={() => setTooltip(null)}
               >
                 <defs>
-                  {/* Neon glow for peak-activity cells (level 4) */}
+                  {/* Neon glow for peak-activity cells (level 6) */}
                   <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
                     <feGaussianBlur stdDeviation="2.5" result="blur" />
                     <feMerge>
@@ -276,7 +319,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                             rx={3}
                             ry={3}
                             fill={LEVEL_FILL[day.level]}
-                            filter={day.level === 4 ? "url(#neon-glow)" : undefined}
+                            filter={day.level === 6 ? "url(#neon-glow)" : undefined}
                           >
                             <title>{`${formatCount(day.count)} on ${formatDate(day.date)}`}</title>
                           </rect>
@@ -296,7 +339,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                   <span className="mr-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>
                     Less
                   </span>
-                  {([0, 1, 2, 3, 4] as const).map((lvl) => (
+                  {([0, 1, 2, 3, 4, 5, 6] as const).map((lvl) => (
                     <svg key={lvl} width={CELL} height={CELL} aria-hidden="true">
                       <rect width={CELL} height={CELL} rx={3} ry={3} fill={LEVEL_FILL[lvl]} />
                     </svg>
