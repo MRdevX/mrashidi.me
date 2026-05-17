@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.138](https://github.com/MRdevX/mrashidi.me/compare/v0.1.137...v0.1.138) (2026-05-17)
+
+
+### Features
+
+* add Privacy Policy page and update sitemap ([f1623cc](https://github.com/MRdevX/mrashidi.me/commit/f1623cc190565150ddb12b8fdb49a12b6405f968))
+* enhance Privacy Policy page with new components and layout ([9e3a63d](https://github.com/MRdevX/mrashidi.me/commit/9e3a63d4bb260b14412d28ee612acc7bc48c819b))
+
+
+### Code Refactoring
+
+* update layout and styling of Privacy Policy page ([cec30a8](https://github.com/MRdevX/mrashidi.me/commit/cec30a879bc86de7311a1cf327d4138abdf36f41))
+
 ### [0.1.137](https://github.com/MRdevX/mrashidi.me/compare/v0.1.136...v0.1.137) (2026-05-17)
 
 
