@@ -7,6 +7,7 @@ const CONTRIBUTIONS_QUERY = `
   query Contributions($username: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $username) {
       contributionsCollection(from: $from, to: $to) {
+        restrictedContributionsCount
         contributionCalendar {
           totalContributions
           weeks {
@@ -36,6 +37,7 @@ type GraphQLResponse = {
   data?: {
     user?: {
       contributionsCollection?: {
+        restrictedContributionsCount: number;
         contributionCalendar?: {
           totalContributions: number;
           weeks: {
@@ -94,7 +96,8 @@ async function handler(_req: NextRequest): Promise<NextResponse> {
     throw new APIError(json.errors[0]?.message ?? "GraphQL error", 502);
   }
 
-  const calendar = json.data?.user?.contributionsCollection?.contributionCalendar;
+  const collection = json.data?.user?.contributionsCollection;
+  const calendar = collection?.contributionCalendar;
   if (!calendar) {
     throw new APIError("No contribution data returned", 404);
   }
@@ -107,9 +110,11 @@ async function handler(_req: NextRequest): Promise<NextResponse> {
     }))
   );
 
+  const restricted = collection?.restrictedContributionsCount ?? 0;
+
   return NextResponse.json({
     contributions,
-    total: calendar.totalContributions,
+    total: calendar.totalContributions + restricted,
   });
 }
 
