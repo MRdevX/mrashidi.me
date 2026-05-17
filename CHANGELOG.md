@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.137](https://github.com/MRdevX/mrashidi.me/compare/v0.1.136...v0.1.137) (2026-05-17)
+
+
+### Bug Fixes
+
+* update SHA256 certificate fingerprint in assetlinks.json for Android app linking ([204edeb](https://github.com/MRdevX/mrashidi.me/commit/204edeb3ac4037eca448c882f005306b096987e6))
+
 ### [0.1.136](https://github.com/MRdevX/mrashidi.me/compare/v0.1.135...v0.1.136) (2026-05-17)
 
 
