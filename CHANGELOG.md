@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.136](https://github.com/MRdevX/mrashidi.me/compare/v0.1.135...v0.1.136) (2026-05-17)
+
+
+### Features
+
+* add app icons and update manifest for improved web and mobile support ([877745b](https://github.com/MRdevX/mrashidi.me/commit/877745bb1005a13a14612f69a96fd69f52b34b64))
+
 ### [0.1.135](https://github.com/MRdevX/mrashidi.me/compare/v0.1.134...v0.1.135) (2026-05-17)
 
 
