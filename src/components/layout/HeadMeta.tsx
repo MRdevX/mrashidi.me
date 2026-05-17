@@ -5,9 +5,10 @@ export function HeadMeta() {
   return (
     <>
       {/* Favicon and App Icons */}
-      <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
+      <link rel="icon" href="/favicon.ico" sizes="any" />
+      <link rel="icon" type="image/png" sizes="192x192" href="/icons/web/icon-192.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="/icons/web/icon-512.png" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/manifest.json" />
 
       {/* Theme and App Meta */}
