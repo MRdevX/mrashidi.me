@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.135](https://github.com/MRdevX/mrashidi.me/compare/v0.1.134...v0.1.135) (2026-05-17)
+
+
+### Features
+
+* add restricted contributions count to GitHub contributions API response ([b6215a5](https://github.com/MRdevX/mrashidi.me/commit/b6215a5872d94d58821025760874afaac7135de7))
+
 ### [0.1.134](https://github.com/MRdevX/mrashidi.me/compare/v0.1.133...v0.1.134) (2026-05-16)
 
 ### [0.1.133](https://github.com/MRdevX/mrashidi.me/compare/v0.1.132...v0.1.133) (2026-05-16)
