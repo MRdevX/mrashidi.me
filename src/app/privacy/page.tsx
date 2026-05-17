@@ -1,22 +1,102 @@
+import {
+  BookOpen,
+  Clock,
+  Database,
+  ExternalLink,
+  Globe,
+  Lock,
+  Mail,
+  MapPin,
+  RefreshCw,
+  Scale,
+  Server,
+  Shield,
+  ShieldAlert,
+  ShieldCheck,
+  UserCheck,
+  Users,
+} from "lucide-react";
+import Link from "next/link";
 import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
 import { config } from "@/data";
 
 const EFFECTIVE_DATE = "May 17, 2026";
-const { name, email, website } = config.person;
+const { name, email, website, location } = config.person;
 
-interface SectionProps {
-  title: string;
-  children: React.ReactNode;
-}
+// ─── Sub-components ──────────────────────────────────────────────────────────
 
-function PolicySection({ title, children }: SectionProps) {
+function DateBadge({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <section className="mb-8">
-      <h2 className="text-primary mb-3 text-xl font-semibold">{title}</h2>
-      <div className="text-muted-foreground space-y-3 leading-relaxed">{children}</div>
-    </section>
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+      {icon}
+      <span className="font-medium text-foreground">{label}:</span> {value}
+    </span>
   );
 }
+
+function SummaryCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+  return (
+    <div className="glass-card flex flex-col gap-2 p-4">
+      <div className="flex items-center gap-2 text-orange-500">{icon}</div>
+      <p className="text-sm font-semibold text-foreground">{title}</p>
+      <p className="text-xs leading-relaxed text-muted-foreground">{desc}</p>
+    </div>
+  );
+}
+
+function PolicyCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <div className="glass-card p-6">
+      <div className="mb-4 flex items-center gap-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
+          {icon}
+        </span>
+        <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+      </div>
+      <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">{children}</div>
+    </div>
+  );
+}
+
+function Bullet({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex gap-2">
+      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden />
+      <span>{children}</span>
+    </li>
+  );
+}
+
+function ProviderCard({ name: providerName, desc, href }: { name: string; desc: string; href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col gap-1 rounded-lg border border-border bg-muted/30 p-3 transition-colors hover:border-orange-500/40 hover:bg-orange-500/5"
+    >
+      <span className="flex items-center gap-1.5 text-sm font-medium text-foreground group-hover:text-orange-500">
+        {providerName}
+        <ExternalLink className="h-3 w-3 opacity-50" aria-hidden />
+      </span>
+      <span className="text-xs text-muted-foreground">{desc}</span>
+    </a>
+  );
+}
+
+function RightCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+  return (
+    <div className="flex gap-3 rounded-lg border border-border bg-muted/20 p-3">
+      <span className="mt-0.5 shrink-0 text-orange-500">{icon}</span>
+      <div>
+        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function PrivacyPolicy() {
   return (
@@ -24,255 +104,276 @@ export default function PrivacyPolicy() {
       <PageHeader iconName="FileText" title="Privacy Policy" />
 
       <PageSection>
-        <div className="content-section">
-          <div className="prose dark:prose-invert max-w-none">
-            <p className="text-muted-foreground mb-8 text-sm">
-              <strong>Effective date:</strong> {EFFECTIVE_DATE}
-              <br />
-              <strong>Last updated:</strong> {EFFECTIVE_DATE}
-            </p>
+        <div className="mx-auto max-w-3xl space-y-8">
+          {/* Meta badges */}
+          <div className="flex flex-wrap gap-2">
+            <DateBadge icon={<Clock className="h-3 w-3" aria-hidden />} label="Effective" value={EFFECTIVE_DATE} />
+            <DateBadge icon={<RefreshCw className="h-3 w-3" aria-hidden />} label="Updated" value={EFFECTIVE_DATE} />
+            <DateBadge
+              icon={<Shield className="h-3 w-3 text-green-500" aria-hidden />}
+              label="Standard"
+              value="GDPR / EEA"
+            />
+          </div>
 
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              This Privacy Policy describes how <strong>{name}</strong> ("we", "us", or "our") collects, uses, and
-              shares information about you when you use the <strong>MR Portfolio</strong> website and Progressive Web
-              App (PWA) available at{" "}
-              <a href={website} className="text-primary hover:underline">
+          {/* Intro */}
+          <div className="glass-card border-l-4 border-l-orange-500 p-6">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              This Privacy Policy describes how <span className="font-semibold text-foreground">{name}</span> ("we",
+              "us", or "our") collects, uses, and shares information about you when you use the{" "}
+              <span className="font-semibold text-foreground">MR Portfolio</span> website and Progressive Web App (PWA)
+              available at{" "}
+              <Link href={website} className="text-orange-500 hover:underline">
                 {website}
-              </a>{" "}
-              (collectively, the "Service"). By using the Service, you agree to the practices described in this policy.
+              </Link>{" "}
+              (the "Service"). By using the Service, you agree to the practices described in this policy.
             </p>
+          </div>
 
-            <PolicySection title="1. Information We Collect">
-              <p>
-                We collect only the minimum information necessary to operate the Service. Depending on how you interact
-                with the Service, we may collect:
-              </p>
-              <ul className="ml-4 list-disc space-y-2">
-                <li>
-                  <strong>Contact form submissions:</strong> When you use the contact form, we collect your name, email
-                  address, and any message content you provide voluntarily.
-                </li>
-                <li>
-                  <strong>Usage data:</strong> Anonymous analytics about how pages are visited (page views, referrers,
-                  device type, browser type, and general geographic region). This data cannot identify you personally.
-                </li>
-                <li>
-                  <strong>Technical data:</strong> IP address, browser type, and operating system collected
-                  automatically by our hosting infrastructure (Vercel) as part of standard server logs.
-                </li>
-                <li>
-                  <strong>PWA installation data:</strong> If you install the app as a PWA on your device, the browser
-                  stores the app shell and cached assets locally on your device. We do not receive additional personal
-                  data from this process.
-                </li>
-              </ul>
-              <p>
-                We do not collect sensitive personal information such as financial data, health data, or government IDs.
-              </p>
-            </PolicySection>
+          {/* Quick summary */}
+          <div>
+            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">At a glance</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <SummaryCard
+                icon={<Database className="h-5 w-5" />}
+                title="Minimal data"
+                desc="Only what's needed to run the service"
+              />
+              <SummaryCard
+                icon={<Users className="h-5 w-5" />}
+                title="No selling"
+                desc="Your data is never sold or rented"
+              />
+              <SummaryCard
+                icon={<Globe className="h-5 w-5" />}
+                title="No ad cookies"
+                desc="Zero tracking or advertising cookies"
+              />
+              <SummaryCard
+                icon={<UserCheck className="h-5 w-5" />}
+                title="Your rights"
+                desc="Full GDPR rights, respond within 30 days"
+              />
+            </div>
+          </div>
 
-            <PolicySection title="2. How We Use Your Information">
-              <p>We use the information we collect for the following purposes:</p>
-              <ul className="ml-4 list-disc space-y-2">
-                <li>To respond to messages you send via the contact form.</li>
-                <li>To monitor and improve the performance, reliability, and security of the Service.</li>
-                <li>To understand aggregate usage patterns and improve user experience.</li>
-                <li>To diagnose and fix technical issues using error reporting tools.</li>
-                <li>To comply with applicable legal obligations.</li>
-              </ul>
-              <p>We do not use your information for automated decision-making or profiling.</p>
-            </PolicySection>
+          {/* Section 1 */}
+          <PolicyCard icon={<Database className="h-5 w-5" />} title="1. Information We Collect">
+            <p>We collect only the minimum information necessary to operate the Service:</p>
+            <ul className="mt-2 space-y-2">
+              <Bullet>
+                <strong className="text-foreground">Contact form submissions</strong> — your name, email address, and
+                message content, provided voluntarily.
+              </Bullet>
+              <Bullet>
+                <strong className="text-foreground">Usage data</strong> — anonymous, cookieless analytics (page views,
+                referrers, device type, browser, general region). Cannot identify you personally.
+              </Bullet>
+              <Bullet>
+                <strong className="text-foreground">Technical data</strong> — IP address and browser/OS metadata
+                collected automatically by hosting infrastructure as standard server logs.
+              </Bullet>
+              <Bullet>
+                <strong className="text-foreground">PWA cache</strong> — if you install the app, the browser stores
+                static assets locally on your device. We receive no additional personal data from this.
+              </Bullet>
+            </ul>
+            <p className="mt-3 rounded-lg bg-muted/30 p-3 text-xs">
+              We do <strong className="text-foreground">not</strong> collect sensitive data such as financial
+              information, health records, or government IDs.
+            </p>
+          </PolicyCard>
 
-            <PolicySection title="3. Information Sharing and Disclosure">
-              <p>
-                We do not sell, trade, or rent your personal information to third parties. We may share information with
-                the following categories of service providers solely to operate the Service:
-              </p>
-              <ul className="ml-4 list-disc space-y-2">
-                <li>
-                  <strong>Vercel Inc.</strong> — hosting and infrastructure. Your request data (including IP address)
-                  passes through Vercel servers.{" "}
-                  <a
-                    href="https://vercel.com/legal/privacy-policy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    Vercel Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <strong>Vercel Analytics / Speed Insights</strong> — privacy-friendly, cookieless web analytics
-                  provided by Vercel. No personally identifiable data is shared.{" "}
-                  <a
-                    href="https://vercel.com/docs/analytics/privacy-policy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    Analytics Privacy
-                  </a>
-                </li>
-                <li>
-                  <strong>Sentry</strong> — error monitoring and crash reporting. Error reports may contain information
-                  about your browser environment, but are anonymized as much as possible.{" "}
-                  <a
-                    href="https://sentry.io/privacy/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    Sentry Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <strong>Amazon Web Services (SES)</strong> — used to process and deliver contact form emails. Message
-                  content is transmitted securely.{" "}
-                  <a
-                    href="https://aws.amazon.com/privacy/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    AWS Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <strong>GitHub API</strong> — publicly available contribution data is fetched from the GitHub API to
-                  display on the site. No private GitHub data is accessed.{" "}
-                  <a
-                    href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    GitHub Privacy Statement
-                  </a>
-                </li>
-              </ul>
-              <p>
-                We may also disclose information if required to do so by law, court order, or in response to a valid
-                request by a public authority.
-              </p>
-            </PolicySection>
+          {/* Section 2 */}
+          <PolicyCard icon={<BookOpen className="h-5 w-5" />} title="2. How We Use Your Information">
+            <ul className="space-y-2">
+              <Bullet>To respond to messages you send via the contact form.</Bullet>
+              <Bullet>To monitor and improve performance, reliability, and security of the Service.</Bullet>
+              <Bullet>To understand aggregate usage patterns and improve user experience.</Bullet>
+              <Bullet>To diagnose and fix technical issues using error reporting tools.</Bullet>
+              <Bullet>To comply with applicable legal obligations.</Bullet>
+            </ul>
+            <p className="mt-3">We do not use your information for automated decision-making or profiling.</p>
+          </PolicyCard>
 
-            <PolicySection title="4. Cookies and Local Storage">
-              <p>
-                The Service does not use tracking cookies or advertising cookies. We may use browser local storage and
-                session storage for the following functional purposes only:
-              </p>
-              <ul className="ml-4 list-disc space-y-2">
-                <li>
-                  <strong>Theme preference:</strong> Storing your light/dark mode selection so it persists across
-                  sessions.
-                </li>
-                <li>
-                  <strong>PWA caching:</strong> The service worker caches static assets (HTML, CSS, JS, images) on your
-                  device to enable offline functionality. This data is stored locally on your device and is not
-                  transmitted to us.
-                </li>
-              </ul>
-              <p>You can clear this data at any time through your browser's developer tools or settings.</p>
-            </PolicySection>
+          {/* Section 3 */}
+          <PolicyCard icon={<Server className="h-5 w-5" />} title="3. Information Sharing and Disclosure">
+            <p>
+              We do not sell, trade, or rent your personal information. The following service providers process data
+              solely to operate the Service:
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <ProviderCard
+                name="Vercel Inc."
+                desc="Hosting & infrastructure. Request data passes through Vercel servers."
+                href="https://vercel.com/legal/privacy-policy"
+              />
+              <ProviderCard
+                name="Vercel Analytics"
+                desc="Privacy-friendly, cookieless analytics. No PII shared."
+                href="https://vercel.com/docs/analytics/privacy-policy"
+              />
+              <ProviderCard
+                name="Sentry"
+                desc="Error monitoring. Reports are anonymized where possible."
+                href="https://sentry.io/privacy/"
+              />
+              <ProviderCard
+                name="AWS SES"
+                desc="Email delivery for contact form. Content transmitted securely."
+                href="https://aws.amazon.com/privacy/"
+              />
+              <ProviderCard
+                name="GitHub API"
+                desc="Public contribution data only. No private GitHub data accessed."
+                href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+              />
+            </div>
+            <p className="mt-4">
+              We may also disclose information when required by law, court order, or a valid government request.
+            </p>
+          </PolicyCard>
 
-            <PolicySection title="5. Data Retention">
-              <p>
-                Contact form messages are retained only as long as necessary to respond to your inquiry and are not
-                stored in a database. Server logs are retained for a limited period (typically 30–90 days) as determined
-                by our infrastructure providers. Anonymous analytics data may be retained for up to 12 months in
-                aggregated form.
-              </p>
-            </PolicySection>
+          {/* Section 4 */}
+          <PolicyCard icon={<Lock className="h-5 w-5" />} title="4. Cookies and Local Storage">
+            <p>
+              The Service uses <strong className="text-foreground">no</strong> tracking or advertising cookies. Browser
+              storage is used only for:
+            </p>
+            <ul className="mt-2 space-y-2">
+              <Bullet>
+                <strong className="text-foreground">Theme preference</strong> — light/dark mode selection persisted
+                locally across sessions.
+              </Bullet>
+              <Bullet>
+                <strong className="text-foreground">PWA service worker cache</strong> — static assets (HTML, CSS, JS,
+                images) cached on your device for offline use. Not transmitted to us.
+              </Bullet>
+            </ul>
+            <p className="mt-3">You can clear this data anytime via your browser's developer tools or settings.</p>
+          </PolicyCard>
 
-            <PolicySection title="6. Your Rights (GDPR / EEA Users)">
-              <p>
-                If you are located in the European Economic Area (EEA), you have the following rights regarding your
-                personal data:
-              </p>
-              <ul className="ml-4 list-disc space-y-2">
-                <li>
-                  <strong>Right of access:</strong> You may request a copy of the personal data we hold about you.
-                </li>
-                <li>
-                  <strong>Right to rectification:</strong> You may ask us to correct inaccurate data.
-                </li>
-                <li>
-                  <strong>Right to erasure:</strong> You may ask us to delete your personal data.
-                </li>
-                <li>
-                  <strong>Right to restriction:</strong> You may ask us to restrict how we process your data.
-                </li>
-                <li>
-                  <strong>Right to data portability:</strong> You may request your data in a structured,
-                  machine-readable format.
-                </li>
-                <li>
-                  <strong>Right to object:</strong> You may object to our processing of your personal data.
-                </li>
-              </ul>
-              <p>
-                To exercise any of these rights, please contact us at{" "}
-                <a href={`mailto:${email}`} className="text-primary hover:underline">
+          {/* Section 5 */}
+          <PolicyCard icon={<Clock className="h-5 w-5" />} title="5. Data Retention">
+            <p>
+              Contact form messages are not stored in a database and are retained only long enough to reply to your
+              inquiry. Server logs are held for 30–90 days by our infrastructure providers. Aggregated, anonymous
+              analytics data may be retained for up to 12 months.
+            </p>
+          </PolicyCard>
+
+          {/* Section 6 – GDPR rights */}
+          <PolicyCard icon={<Scale className="h-5 w-5" />} title="6. Your Rights (GDPR / EEA)">
+            <p>If you are located in the European Economic Area (EEA), you have the following rights:</p>
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <RightCard
+                icon={<UserCheck className="h-4 w-4" />}
+                title="Right of access"
+                desc="Request a copy of the personal data we hold about you."
+              />
+              <RightCard
+                icon={<RefreshCw className="h-4 w-4" />}
+                title="Right to rectification"
+                desc="Ask us to correct inaccurate data."
+              />
+              <RightCard
+                icon={<ShieldAlert className="h-4 w-4" />}
+                title="Right to erasure"
+                desc="Ask us to delete your personal data."
+              />
+              <RightCard
+                icon={<Lock className="h-4 w-4" />}
+                title="Right to restriction"
+                desc="Ask us to limit how we process your data."
+              />
+              <RightCard
+                icon={<Database className="h-4 w-4" />}
+                title="Right to portability"
+                desc="Receive your data in a structured, machine-readable format."
+              />
+              <RightCard
+                icon={<Shield className="h-4 w-4" />}
+                title="Right to object"
+                desc="Object to our processing of your personal data."
+              />
+            </div>
+            <p className="mt-4">
+              To exercise any right, email us at{" "}
+              <a href={`mailto:${email}`} className="font-medium text-orange-500 hover:underline">
+                {email}
+              </a>
+              . We will respond within <strong className="text-foreground">30 days</strong>.
+            </p>
+          </PolicyCard>
+
+          {/* Section 7 */}
+          <PolicyCard icon={<Users className="h-5 w-5" />} title="7. Children's Privacy">
+            <p>
+              The Service is not directed to children under 13. We do not knowingly collect personal information from
+              children under 13. If you believe a child has provided us with personal data, please contact us and we
+              will delete it promptly.
+            </p>
+          </PolicyCard>
+
+          {/* Section 8 */}
+          <PolicyCard icon={<ShieldCheck className="h-5 w-5" />} title="8. Data Security">
+            <p>
+              We use industry-standard security measures including HTTPS encryption to protect data in transit. Our
+              hosting provider (Vercel) maintains physical and technical infrastructure safeguards. No method of
+              electronic transmission or storage is 100% secure — we cannot guarantee absolute security.
+            </p>
+          </PolicyCard>
+
+          {/* Section 9 */}
+          <PolicyCard icon={<ExternalLink className="h-5 w-5" />} title="9. Third-Party Links">
+            <p>
+              The Service may link to third-party sites (e.g. GitHub, LinkedIn, Medium). This Privacy Policy does not
+              apply to those sites. We encourage you to review their respective privacy policies.
+            </p>
+          </PolicyCard>
+
+          {/* Section 10 */}
+          <PolicyCard icon={<RefreshCw className="h-5 w-5" />} title="10. Changes to This Policy">
+            <p>
+              We may update this Privacy Policy at any time. The "Last updated" date at the top of this page will
+              reflect the latest revision. Continued use of the Service after changes constitutes acceptance of the
+              updated policy. We encourage you to review this page periodically.
+            </p>
+          </PolicyCard>
+
+          {/* Section 11 – Contact (highlighted) */}
+          <div className="glass-card border border-orange-500/30 p-6">
+            <div className="mb-4 flex items-center gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
+                <Mail className="h-5 w-5" />
+              </span>
+              <h2 className="text-lg font-semibold text-foreground">11. Contact Us</h2>
+            </div>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Questions, concerns, or data requests? Reach out directly:
+            </p>
+            <address className="not-italic space-y-2 text-sm">
+              <div className="flex items-center gap-2 text-foreground">
+                <Users className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
+                <span className="font-semibold">{name}</span>
+              </div>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <MapPin className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
+                <span>{location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
+                <a href={`mailto:${email}`} className="text-orange-500 hover:underline">
                   {email}
                 </a>
-                . We will respond within 30 days.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="7. Children's Privacy">
-              <p>
-                The Service is not directed to children under the age of 13, and we do not knowingly collect personal
-                information from children under 13. If you believe a child has provided us with personal information,
-                please contact us so we can delete it promptly.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="8. Data Security">
-              <p>
-                We use industry-standard security measures, including HTTPS encryption, to protect your information
-                during transmission. Our hosting provider (Vercel) maintains physical and technical safeguards for the
-                infrastructure. However, no method of electronic transmission or storage is 100% secure, and we cannot
-                guarantee absolute security.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="9. Third-Party Links">
-              <p>
-                The Service may contain links to third-party websites (e.g., GitHub, LinkedIn, Medium). This Privacy
-                Policy does not apply to those websites. We encourage you to review the privacy policies of any
-                third-party sites you visit.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="10. Changes to This Policy">
-              <p>
-                We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date
-                at the top of this page. We encourage you to review this page periodically. Continued use of the Service
-                after changes constitutes your acceptance of the updated policy.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="11. Contact Us">
-              <p>
-                If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of your
-                personal data, please contact:
-              </p>
-              <address className="not-italic">
-                <strong>{name}</strong>
-                <br />
-                {config.person.location}
-                <br />
-                Email:{" "}
-                <a href={`mailto:${email}`} className="text-primary hover:underline">
-                  {email}
-                </a>
-                <br />
-                Website:{" "}
-                <a href={website} className="text-primary hover:underline">
+              </div>
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
+                <Link href={website} className="text-orange-500 hover:underline">
                   {website}
-                </a>
-              </address>
-            </PolicySection>
+                </Link>
+              </div>
+            </address>
           </div>
         </div>
       </PageSection>
