@@ -4,7 +4,9 @@
     "target": {
       "namespace": "android_app",
       "package_name": "me.mrashidi.app",
-      "sha256_cert_fingerprints": ["REPLACE_WITH_YOUR_SHA256_FINGERPRINT"]
+      "sha256_cert_fingerprints": [
+        "C8:0D:A1:F2:68:61:6A:4B:49:75:19:28:06:2A:8D:6B:44:1A:31:24:B3:66:CE:1B:D5:06:CC:E0:42:D8:6A:A1"
+      ]
     }
   }
 ]
