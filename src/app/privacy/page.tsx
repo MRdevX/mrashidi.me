@@ -104,7 +104,7 @@ export default function PrivacyPolicy() {
       <PageHeader iconName="FileText" title="Privacy Policy" />
 
       <PageSection>
-        <div className="mx-auto max-w-3xl space-y-8">
+        <div className="space-y-6">
           {/* Meta badges */}
           <div className="flex flex-wrap gap-2">
             <DateBadge icon={<Clock className="h-3 w-3" aria-hidden />} label="Effective" value={EFFECTIVE_DATE} />
@@ -133,7 +133,7 @@ export default function PrivacyPolicy() {
           {/* Quick summary */}
           <div>
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">At a glance</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               <SummaryCard
                 icon={<Database className="h-5 w-5" />}
                 title="Minimal data"
@@ -202,7 +202,7 @@ export default function PrivacyPolicy() {
               We do not sell, trade, or rent your personal information. The following service providers process data
               solely to operate the Service:
             </p>
-            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
               <ProviderCard
                 name="Vercel Inc."
                 desc="Hosting & infrastructure. Request data passes through Vercel servers."
@@ -265,7 +265,7 @@ export default function PrivacyPolicy() {
           {/* Section 6 – GDPR rights */}
           <PolicyCard icon={<Scale className="h-5 w-5" />} title="6. Your Rights (GDPR / EEA)">
             <p>If you are located in the European Economic Area (EEA), you have the following rights:</p>
-            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
               <RightCard
                 icon={<UserCheck className="h-4 w-4" />}
                 title="Right of access"
