@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { config } from "@/data";
 
@@ -53,9 +54,17 @@ export function Footer() {
             <SocialLink key={link.ariaLabel} {...link} />
           ))}
         </div>
-        <span className="text-muted-foreground block text-center text-sm">
-          © {currentYear} {config.person.name}. All rights reserved.
-        </span>
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-muted-foreground block text-center text-sm">
+            © {currentYear} {config.person.name}. All rights reserved.
+          </span>
+          <Link
+            href="/privacy"
+            className="text-muted-foreground hover:text-primary text-xs underline-offset-4 hover:underline duration-150"
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );

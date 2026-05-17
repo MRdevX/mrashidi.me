@@ -171,4 +171,10 @@ export const pageMetadataConfigs = {
       "backend developer",
     ],
   },
+  privacy: {
+    page: "privacy",
+    title: "Privacy Policy",
+    description: `Privacy Policy for ${config.person.name}'s portfolio and PWA. Learn how we collect, use, and protect your data.`,
+    keywords: [config.person.name, "privacy policy", "data protection", "GDPR", "personal data", "portfolio"],
+  },
 } as const;
