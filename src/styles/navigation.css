@@ -174,8 +174,14 @@
   }
 
   .floating-action-btn.bottom-left {
-    bottom: 5rem;
+    bottom: 6rem;
     left: 1rem;
+  }
+
+  @media (display-mode: standalone) {
+    .floating-action-btn.bottom-left {
+      bottom: 7rem;
+    }
   }
 
   .floating-action-btn.top-right {
