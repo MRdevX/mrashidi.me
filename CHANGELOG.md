@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.140](https://github.com/MRdevX/mrashidi.me/compare/v0.1.139...v0.1.140) (2026-05-18)
+
+
+### Bug Fixes
+
+* adjust bottom positioning of BuyMeACoffee button for better visibility on mobile ([f954996](https://github.com/MRdevX/mrashidi.me/commit/f954996945981641040486e34884e87960164a09))
+
 ### [0.1.139](https://github.com/MRdevX/mrashidi.me/compare/v0.1.138...v0.1.139) (2026-05-18)
 
 
