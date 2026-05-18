@@ -28,7 +28,7 @@ export function BottomNavigation() {
       </nav>
 
       {/* Floating Theme Toggle */}
-      <FloatingActionButton position="bottom-right" asButton={false}>
+      <FloatingActionButton position="bottom-left" asButton={false}>
         <ThemeToggle size="sm" />
       </FloatingActionButton>
     </>
