@@ -31,7 +31,7 @@ function syncBmcMobilePosition(): void {
         });
       }
     }
-    btn.style.setProperty("bottom", "calc(10rem + env(safe-area-inset-bottom, 0px))");
+    btn.style.setProperty("bottom", "calc(6rem + env(safe-area-inset-bottom, 0px))");
     btn.style.setProperty("right", "1rem");
     return;
   }
