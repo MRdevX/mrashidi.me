@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.139](https://github.com/MRdevX/mrashidi.me/compare/v0.1.138...v0.1.139) (2026-05-18)
+
+
+### Bug Fixes
+
+* reposition Floating Action Button and adjust CSS for bottom-left alignment ([25f6ccf](https://github.com/MRdevX/mrashidi.me/commit/25f6ccfc13094ee4ec05c4ffce68640d2efc3640))
+
 ### [0.1.138](https://github.com/MRdevX/mrashidi.me/compare/v0.1.137...v0.1.138) (2026-05-17)
 
 
