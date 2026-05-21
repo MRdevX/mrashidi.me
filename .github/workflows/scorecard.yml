@@ -1,0 +1,52 @@
+# OSSF Scorecard — measures security posture and publishes results to the
+# GitHub Security tab (Code scanning alerts) and the public Scorecard API.
+# https://securityscorecards.dev
+
+name: Scorecard
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Weekly on Monday at 01:23 UTC — offset from midnight to reduce load spikes.
+    - cron: "23 1 * * 1"
+  workflow_dispatch:
+
+# No cancel-in-progress: scheduled runs must never be interrupted by a push.
+concurrency:
+  group: scorecard-${{ github.ref }}
+
+permissions: read-all
+
+jobs:
+  scorecard:
+    name: OSSF Scorecard
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      # Required to upload SARIF results to the Security tab.
+      security-events: write
+      # Required for private repos; harmless on public.
+      id-token: write
+      contents: read
+      actions: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Run Scorecard
+        uses: ossf/scorecard-action@v2.4.3
+        with:
+          results_file: scorecard-results.sarif
+          results_format: sarif
+          # Publish to https://securityscorecards.dev (public repos only).
+          publish_results: true
+
+      - name: Upload SARIF to Security tab
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: scorecard-results.sarif
+          wait-for-processing: true

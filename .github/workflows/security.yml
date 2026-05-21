@@ -25,9 +25,10 @@ on:
     - cron: "0 0 * * 1"
   workflow_dispatch:
 
+# cancel-in-progress is intentionally omitted: scheduled security scans must
+# not be interrupted by a concurrent push to main.
 concurrency:
   group: security-${{ github.ref }}
-  cancel-in-progress: true
 
 defaults:
   run:
@@ -75,18 +76,24 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: javascript
-
-      - name: Setup Node and pnpm
-        uses: ./.github/actions/setup-node
+          # build-mode: none skips autobuild — correct for JS/TS (interpreted).
+          build-mode: none
+          # security-extended adds ~60 extra CWE checks on top of the default suite.
+          queries: security-extended
 
       - name: Analyze with CodeQL
         uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:javascript
 
   dependency-review:
     name: PR dependency diff
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -95,3 +102,5 @@ jobs:
         uses: actions/dependency-review-action@v5
         with:
           fail-on-severity: moderate
+          # Post a summary comment on the PR with the dependency diff.
+          comment-summary-in-pr: always
