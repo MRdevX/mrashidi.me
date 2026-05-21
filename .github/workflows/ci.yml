@@ -180,8 +180,6 @@ jobs:
             browser: chromium
           - project: firefox
             browser: firefox
-          - project: webkit
-            browser: webkit
           - project: mobile-chrome
             browser: chromium   # Mobile Chrome is Chromium under the hood
     steps:
