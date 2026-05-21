@@ -62,7 +62,7 @@ jobs:
         run: pnpm exec tsc --noEmit
 
       - name: Unit tests (Vitest)
-        run: pnpm test:run
+        run: pnpm exec vitest run --reporter=verbose --reporter=github-actions
 
       - name: Job summary — quality
         if: success()

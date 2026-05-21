@@ -102,9 +102,11 @@ jobs:
       - name: Create GitHub Release
         if: steps.version.outputs.should_release == 'true'
         uses: actions/github-script@v9
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
         with:
           script: |
-            const version = '${{ steps.version.outputs.version }}';
+            const version = process.env.RELEASE_VERSION;
             const tag = `v${version}`;
             const prerelease = version.includes('-');
             const { owner, repo } = context.repo;
