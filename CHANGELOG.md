@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.143](https://github.com/MRdevX/mrashidi.me/compare/v0.1.142...v0.1.143) (2026-05-21)
+
+
+### Features
+
+* add GitHub Actions workflow for Dependabot auto-merge ([138235a](https://github.com/MRdevX/mrashidi.me/commit/138235a7efaa36c6ead640ed71ce129c5f7ce39c))
+
 ### [0.1.142](https://github.com/MRdevX/mrashidi.me/compare/v0.1.141...v0.1.142) (2026-05-21)
 
 ### [0.1.141](https://github.com/MRdevX/mrashidi.me/compare/v0.1.140...v0.1.141) (2026-05-20)
