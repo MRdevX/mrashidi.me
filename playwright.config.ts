@@ -24,28 +24,24 @@ export default defineConfig({
     trace: "on-first-retry",
   },
 
-  /* Firefox only when not CI */
   projects: [
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    ...(process.env.CI
-      ? []
-      : [
-          {
-            name: "firefox",
-            use: { ...devices["Desktop Firefox"] },
-          },
-        ]),
-
-    /* Test against mobile viewports. */
     {
-      name: "Mobile Chrome",
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+    },
+    /* Mobile viewports */
+    {
+      name: "mobile-chrome",
       use: { ...devices["Pixel 5"] },
     },
-
-    /* Test against branded browsers. */
   ],
 
   /* Run production server before tests. CI uses build:fast — full build runs in the CI "Build" job. */

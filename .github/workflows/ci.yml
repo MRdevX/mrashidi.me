@@ -163,13 +163,27 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  # ── 3. Playwright E2E ──────────────────────────────────────────────────────
+  # ── 3. Playwright E2E (browser matrix) ────────────────────────────────────
   e2e:
-    name: End-to-end
+    name: E2E / ${{ matrix.project }}
     needs: changes
     if: needs.changes.outputs.e2e == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      # Let all browsers finish so you see the full cross-browser picture at once.
+      fail-fast: false
+      matrix:
+        include:
+          # project: playwright project name   browser: engine to install
+          - project: chromium
+            browser: chromium
+          - project: firefox
+            browser: firefox
+          - project: webkit
+            browser: webkit
+          - project: mobile-chrome
+            browser: chromium   # Mobile Chrome is Chromium under the hood
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -181,22 +195,23 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
-          restore-keys: playwright-${{ runner.os }}-
+          # Scope cache per engine (mobile-chrome reuses the chromium cache key).
+          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
+          restore-keys: playwright-${{ runner.os }}-${{ matrix.browser }}-
 
-      - name: Install Playwright Chromium
-        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
 
-      - name: E2E tests
-        run: pnpm test:e2e
+      - name: E2E tests — ${{ matrix.project }}
+        run: pnpm test:e2e --project="${{ matrix.project }}"
 
-      - name: Job summary — end-to-end
+      - name: Job summary — ${{ matrix.project }}
         if: success()
         run: |
           {
-            echo "## E2E passed"
+            echo "## E2E passed · ${{ matrix.project }}"
             echo ""
-            echo "- Runner: Chromium (Playwright, \`pnpm test:e2e\`)"
+            echo "- Project: \`${{ matrix.project }}\` (engine: \`${{ matrix.browser }}\`)"
             echo "- Cached: \`\$HOME/.cache/ms-playwright\` when lockfile/key unchanged"
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -204,7 +219,7 @@ jobs:
         name: Upload E2E report (on failure)
         if: failure()
         with:
-          name: e2e-artifacts
+          name: e2e-artifacts-${{ matrix.project }}
           path: |
             playwright-report/
             test-results/
