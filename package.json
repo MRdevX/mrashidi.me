@@ -29,7 +29,7 @@
     "reinstall": "pnpm clean && pnpm install"
   },
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.1048.0",
+    "@aws-sdk/client-ses": "^3.1051.0",
     "@fontsource/albert-sans": "^5.2.8",
     "@fontsource/exo-2": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
@@ -45,7 +45,7 @@
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/blob": "^2.3.3",
+    "@vercel/blob": "^2.4.0",
     "@vercel/og": "^0.11.1",
     "@vercel/speed-insights": "^2.0.0",
     "cheerio": "^1.2.0",
