@@ -99,7 +99,9 @@ jobs:
         if: steps.version.outputs.should_release == 'true'
         env:
           RELEASE_BRANCH: ${{ github.event.workflow_run.head_branch }}
-        run: git push origin "$RELEASE_BRANCH" --follow-tags
+        run: |
+          git pull --rebase origin "$RELEASE_BRANCH"
+          git push origin "$RELEASE_BRANCH" --follow-tags
 
       - name: Create GitHub Release
         if: steps.version.outputs.should_release == 'true'
