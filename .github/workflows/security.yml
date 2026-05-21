@@ -104,3 +104,13 @@ jobs:
           fail-on-severity: moderate
           # Post a summary comment on the PR with the dependency diff.
           comment-summary-in-pr: always
+          # Denylist approach: only explicitly copyleft/viral licenses fail.
+          # Unknown licenses (e.g. GitHub-owned actions with missing metadata)
+          # remain a warning in the summary but never block merging.
+          deny-licenses: >-
+            GPL-2.0, GPL-3.0,
+            LGPL-2.0, LGPL-2.1, LGPL-3.0,
+            AGPL-1.0, AGPL-3.0,
+            SSPL-1.0,
+            EUPL-1.1, EUPL-1.2,
+            BUSL-1.1
