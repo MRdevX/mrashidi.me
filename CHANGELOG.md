@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.144](https://github.com/MRdevX/mrashidi.me/compare/v0.1.143...v0.1.144) (2026-05-21)
+
+
+### Features
+
+* add OSSF Scorecard workflow and update Dependabot configuration ([c9ec4e2](https://github.com/MRdevX/mrashidi.me/commit/c9ec4e207ff1cec3a5bb58c0c86b23d0bee2437a))
+* enhance CI workflow with smart triggering and job dependencies ([5bdeb5e](https://github.com/MRdevX/mrashidi.me/commit/5bdeb5e18104826403cf8c6c79cec16e6af6cbca))
+* enhance security workflow with denylist for copyleft licenses ([946feee](https://github.com/MRdevX/mrashidi.me/commit/946feeead72895ae905ab5eceaf685a575deb0bf))
+
+
+### Code Refactoring
+
+* update Playwright configuration and CI workflow ([06507f3](https://github.com/MRdevX/mrashidi.me/commit/06507f34a82add5372d53593af58533cec9ea660))
+
+
+### Continuous Integration
+
+* **deps:** bump dependabot/fetch-metadata from 2 to 3 ([d25903b](https://github.com/MRdevX/mrashidi.me/commit/d25903b2b0050b58cdfefbffab3f6eaec76615cf))
+* **deps:** bump dorny/paths-filter from 3 to 4 ([da89e77](https://github.com/MRdevX/mrashidi.me/commit/da89e77766b9fbae9e50fb78c4af91456624afd6))
+
 ### [0.1.143](https://github.com/MRdevX/mrashidi.me/compare/v0.1.142...v0.1.143) (2026-05-21)
 
 
