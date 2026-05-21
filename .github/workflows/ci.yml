@@ -1,4 +1,10 @@
 # Lint, unit tests, Playwright E2E, then Next.js build (CI skips assets + PWA; see job summary).
+#
+# Smart triggering:
+#   push:main / workflow_dispatch  → all jobs always run (safety net before auto-release).
+#   pull_request                   → "changes" detects which buckets are affected;
+#                                    only impacted jobs run. Skipped jobs count as "ok"
+#                                    so the build gate still works.
 
 name: CI
 
@@ -37,9 +43,78 @@ env:
 permissions:
   contents: read
 
+# ---------------------------------------------------------------------------
+# Job graph:
+#
+#   changes ──┬──► quality ──┐
+#             ├──► e2e    ───┼──► build
+#             └──────────────┘
+# ---------------------------------------------------------------------------
+
 jobs:
+  # ── 1. Detect which buckets are affected ──────────────────────────────────
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      # On push/dispatch: always true. On PRs: true only when relevant paths changed.
+      quality: ${{ github.event_name != 'pull_request' || steps.filter.outputs.quality == 'true' }}
+      e2e:     ${{ github.event_name != 'pull_request' || steps.filter.outputs.e2e     == 'true' }}
+      build:   ${{ github.event_name != 'pull_request' || steps.filter.outputs.build   == 'true' }}
+    steps:
+      # paths-filter uses the GitHub API for pull_request events — no checkout needed.
+      - name: Path filter (PRs only)
+        id: filter
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            quality:
+              - 'src/**'
+              - 'tests/unit/**'
+              - 'tests/setup.ts'
+              - 'tests/utils/**'
+              - 'tests/fixtures/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'tsconfig.json'
+              - 'biome.json'
+              - 'vitest.config.mts'
+              - 'sentry-shared.ts'
+              - '.github/workflows/ci.yml'
+              - '.github/actions/**'
+            e2e:
+              - 'src/**'
+              - 'tests/e2e/**'
+              - 'tests/fixtures/**'
+              - 'tests/utils/**'
+              - 'playwright.config.ts'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/ci.yml'
+              - '.github/actions/**'
+            build:
+              - 'src/**'
+              - 'public/**'
+              - 'scripts/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'next.config.mjs'
+              - 'tsconfig.json'
+              - 'postcss.config.js'
+              - 'tailwind.config.ts'
+              - 'sentry.edge.config.ts'
+              - 'sentry.server.config.ts'
+              - 'sentry-shared.ts'
+              - '.github/workflows/ci.yml'
+              - '.github/actions/**'
+
+  # ── 2. Lint · Typecheck · Unit tests ──────────────────────────────────────
   quality:
     name: Quality
+    needs: changes
+    if: needs.changes.outputs.quality == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -62,7 +137,7 @@ jobs:
         run: pnpm exec tsc --noEmit
 
       - name: Unit tests (Vitest)
-        run: pnpm test:run
+        run: pnpm exec vitest run --reporter=verbose --reporter=github-actions
 
       - name: Job summary — quality
         if: success()
@@ -88,10 +163,27 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+  # ── 3. Playwright E2E (browser matrix) ────────────────────────────────────
   e2e:
-    name: End-to-end
+    name: E2E / ${{ matrix.project }}
+    needs: changes
+    if: needs.changes.outputs.e2e == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      # Let all browsers finish so you see the full cross-browser picture at once.
+      fail-fast: false
+      matrix:
+        include:
+          # project: playwright project name   browser: engine to install
+          - project: chromium
+            browser: chromium
+          - project: firefox
+            browser: firefox
+          - project: webkit
+            browser: webkit
+          - project: mobile-chrome
+            browser: chromium   # Mobile Chrome is Chromium under the hood
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -103,22 +195,23 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
-          restore-keys: playwright-${{ runner.os }}-
+          # Scope cache per engine (mobile-chrome reuses the chromium cache key).
+          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
+          restore-keys: playwright-${{ runner.os }}-${{ matrix.browser }}-
 
-      - name: Install Playwright Chromium
-        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
 
-      - name: E2E tests
-        run: pnpm test:e2e
+      - name: E2E tests — ${{ matrix.project }}
+        run: pnpm test:e2e --project="${{ matrix.project }}"
 
-      - name: Job summary — end-to-end
+      - name: Job summary — ${{ matrix.project }}
         if: success()
         run: |
           {
-            echo "## E2E passed"
+            echo "## E2E passed · ${{ matrix.project }}"
             echo ""
-            echo "- Runner: Chromium (Playwright, \`pnpm test:e2e\`)"
+            echo "- Project: \`${{ matrix.project }}\` (engine: \`${{ matrix.browser }}\`)"
             echo "- Cached: \`\$HOME/.cache/ms-playwright\` when lockfile/key unchanged"
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -126,19 +219,25 @@ jobs:
         name: Upload E2E report (on failure)
         if: failure()
         with:
-          name: e2e-artifacts
+          name: e2e-artifacts-${{ matrix.project }}
           path: |
             playwright-report/
             test-results/
           if-no-files-found: ignore
           retention-days: 7
 
+  # ── 4. Next.js build (runs only when quality + e2e both passed or were irrelevant) ──
   build:
     name: Build
+    needs: [changes, quality, e2e]
+    # "skipped" means the job was not applicable (paths didn't change) — that's fine.
+    if: |
+      always() &&
+      needs.changes.outputs.build == 'true' &&
+      (needs.quality.result == 'success' || needs.quality.result == 'skipped') &&
+      (needs.e2e.result    == 'success' || needs.e2e.result    == 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    needs: [quality, e2e]
-    if: ${{ always() && needs.quality.result == 'success' && needs.e2e.result == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6

@@ -51,3 +51,10 @@ updates:
     labels:
       - "github-actions"
       - "automated"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
