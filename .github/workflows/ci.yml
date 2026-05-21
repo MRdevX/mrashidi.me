@@ -112,7 +112,7 @@ jobs:
 
   # ── 2. Lint · Typecheck · Unit tests ──────────────────────────────────────
   quality:
-    name: Quality
+    name: Lint · Typecheck · Unit tests
     needs: changes
     if: needs.changes.outputs.quality == 'true'
     runs-on: ubuntu-latest

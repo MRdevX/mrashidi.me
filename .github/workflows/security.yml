@@ -49,7 +49,7 @@ jobs:
       - name: Setup Node and pnpm
         uses: ./.github/actions/setup-node
 
-      - name: Audit (high or higher fails the job)
+      - name: pnpm audit --audit-level=high
         run: pnpm audit --audit-level=high
 
       - name: Job summary — audit

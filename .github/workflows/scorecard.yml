@@ -2,7 +2,9 @@
 # GitHub Security tab (Code scanning alerts) and the public Scorecard API.
 # https://securityscorecards.dev
 
-name: Scorecard
+name: OSSF Scorecard
+
+run-name: OSSF Scorecard — ${{ github.ref_name }}
 
 on:
   push:
