@@ -1,4 +1,6 @@
-name: Auto Release
+name: Release
+
+run-name: Release — ${{ github.event.workflow_run.head_branch }}
 
 # Triggered by CI on main (avoid push:main here — tag races).
 on:
