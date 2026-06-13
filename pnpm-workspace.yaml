@@ -65,6 +65,7 @@ minimumReleaseAgeExclude:
   - '@vitest/ui@4.1.7'
   - '@vitest/utils@4.1.7'
   - vitest@4.1.7
+  - lucide-react@1.18.0
 allowBuilds:
   '@sentry/cli': true
   esbuild: true
