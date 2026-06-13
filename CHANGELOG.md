@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.148](https://github.com/MRdevX/mrashidi.me/compare/v0.1.147...v0.1.148) (2026-06-13)
+
+
+### Bug Fixes
+
+* fresh deps ([89a3e37](https://github.com/MRdevX/mrashidi.me/commit/89a3e37a5aee99dc1b1a4c0dfa0425d43f8a5dc2))
+
 ### [0.1.147](https://github.com/MRdevX/mrashidi.me/compare/v0.1.146...v0.1.147) (2026-06-12)
 
 ### [0.1.146](https://github.com/MRdevX/mrashidi.me/compare/v0.1.145...v0.1.146) (2026-06-02)
