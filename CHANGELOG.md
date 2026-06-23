@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.149](https://github.com/MRdevX/mrashidi.me/compare/v0.1.148...v0.1.149) (2026-06-23)
+
+
+### Continuous Integration
+
+* **deps:** bump actions/checkout from 6 to 7 ([c6dc65e](https://github.com/MRdevX/mrashidi.me/commit/c6dc65ead9bee56459cd3ad0c396bac9428bc687))
+
 ### [0.1.148](https://github.com/MRdevX/mrashidi.me/compare/v0.1.147...v0.1.148) (2026-06-13)
 
 
