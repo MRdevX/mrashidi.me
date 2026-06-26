@@ -1,6 +1,6 @@
 name: Release
 
-run-name: Release — ${{ github.event.workflow_run.head_branch }}
+run-name: Release — main
 
 # Triggered by CI on main (avoid push:main here — tag races).
 on:
@@ -16,26 +16,45 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
 
+# Two-job split: verify exports the CI-tested SHA via job outputs so the
+# privileged release job never checks out github.event.workflow_run.* directly
+# (OSSF Scorecard Dangerous-Workflow / pwn-request hardening).
 jobs:
-  auto-release:
-    name: Release
+  verify:
+    name: Verify release preconditions
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     if: |
       github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_sha != '' &&
       github.event.workflow_run.head_branch != '' &&
       github.event.workflow_run.head_branch == 'main' &&
       github.event.workflow_run.head_repository.full_name == github.repository
-
+    outputs:
+      release_sha: ${{ github.event.workflow_run.head_sha }}
     steps:
-      - name: Checkout (release branch + tags)
+      - name: Preconditions met
+        run: echo "CI succeeded on trusted main; release SHA is ${{ github.event.workflow_run.head_sha }}"
+
+  release:
+    name: Release
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout (CI-verified commit + tags)
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ needs.verify.outputs.release_sha }}
           fetch-depth: 0
           fetch-tags: true
+
+      - name: Attach HEAD to main branch
+        run: git checkout -B main
 
       - name: Setup Node and pnpm
         uses: ./.github/actions/setup-node
@@ -50,7 +69,7 @@ jobs:
         id: version
         env:
           HUSKY: "0"
-          RELEASE_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RELEASE_BRANCH: main
         run: |
           set -euo pipefail
           skip_release() { echo "should_release=false" >> "$GITHUB_OUTPUT"; }
@@ -98,7 +117,7 @@ jobs:
       - name: Push changes and tags
         if: steps.version.outputs.should_release == 'true'
         env:
-          RELEASE_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RELEASE_BRANCH: main
         run: |
           git pull --rebase origin "$RELEASE_BRANCH"
           git push origin "$RELEASE_BRANCH" --follow-tags
