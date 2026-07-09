@@ -104,13 +104,19 @@ jobs:
           fail-on-severity: moderate
           # Post a summary comment on the PR with the dependency diff.
           comment-summary-in-pr: always
-          # Denylist approach: only explicitly copyleft/viral licenses fail.
-          # Unknown licenses (e.g. GitHub-owned actions with missing metadata)
-          # remain a warning in the summary but never block merging.
-          deny-licenses: >-
-            GPL-2.0, GPL-3.0,
-            LGPL-2.0, LGPL-2.1, LGPL-3.0,
-            AGPL-1.0, AGPL-3.0,
-            SSPL-1.0,
-            EUPL-1.1, EUPL-1.2,
-            BUSL-1.1
+          # Allowlist approach (replaces deprecated deny-licenses): only explicitly
+          # permissive / weak-copyleft licenses pass. Strong copyleft (GPL, AGPL,
+          # SSPL, EUPL, BUSL) and unknown licenses are not listed — unknowns remain
+          # a warning only and never block merging (per dependency-review-action).
+          allow-licenses: >-
+            MIT, MIT-0, Apache-2.0,
+            BSD-2-Clause, BSD-3-Clause,
+            ISC, 0BSD, CC0-1.0, Unlicense, Zlib,
+            MPL-2.0, BlueOak-1.0.0,
+            OFL-1.1, WTFPL, Python-2.0,
+            MIT OR Apache-2.0,
+            (MIT OR CC0-1.0),
+            (WTFPL OR MIT),
+            WTFPL OR ISC,
+            FSL-1.1-MIT, CC-BY-4.0,
+            LGPL-3.0-or-later
