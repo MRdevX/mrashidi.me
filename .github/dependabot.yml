@@ -34,6 +34,10 @@ updates:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-major"
+      - dependency-name: "typescript"
+        versions: ["<7"]
+      - dependency-name: "@typescript/native-preview"
+        update-types: ["version-update:semver-major"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"

@@ -134,7 +134,7 @@ jobs:
         run: pnpm exec biome check . --reporter=github
 
       - name: Typecheck
-        run: pnpm exec tsc --noEmit
+        run: pnpm typecheck
 
       - name: Unit tests (Vitest)
         run: pnpm exec vitest run --reporter=verbose --reporter=github-actions
@@ -146,7 +146,7 @@ jobs:
             echo "## Quality passed"
             echo ""
             echo "- Lint: Biome (\`pnpm check\`)"
-            echo "- Types: TypeScript (\`tsc --noEmit\`)"
+            echo "- Types: TypeScript (\`pnpm typecheck\`)"
             echo "- Unit tests: Vitest (\`pnpm test:run\`)"
             echo ""
             echo "_PR pushes also run Commitlint against the commit range above._"
