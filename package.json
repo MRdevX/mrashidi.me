@@ -30,7 +30,7 @@
     "reinstall": "pnpm clean && pnpm install"
   },
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.1082.0",
+    "@aws-sdk/client-ses": "^3.1084.0",
     "@fontsource/albert-sans": "^5.2.8",
     "@fontsource/exo-2": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
@@ -58,7 +58,7 @@
     "framer-motion": "^12.42.2",
     "html-to-text": "^10.0.0",
     "ky": "^2.0.2",
-    "lucide-react": "^1.23.0",
+    "lucide-react": "^1.24.0",
     "next": "^16.2.10",
     "next-pwa": "^5.6.0",
     "pino": "^10.3.1",
