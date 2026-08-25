@@ -27,7 +27,8 @@ const skillCategories: SkillCategory[] = [
       { name: "TypeScript", level: SkillLevel.PROFICIENT, includeInMainStack: true },
       { name: "JavaScript", level: SkillLevel.PROFICIENT, includeInMainStack: true },
       { name: "Java", level: SkillLevel.EXPERIENCED },
-      { name: "Python", level: SkillLevel.EXPERIENCED },
+      { name: "Python", level: SkillLevel.EXPERIENCED, includeInMainStack: true },
+      { name: "Dart", level: SkillLevel.FAMILIAR },
       { name: "Kotlin", level: SkillLevel.FAMILIAR },
       { name: "Go", level: SkillLevel.FAMILIAR },
       { name: "C#", level: SkillLevel.FAMILIAR },
@@ -44,6 +45,7 @@ const skillCategories: SkillCategory[] = [
       { name: "Deno", level: SkillLevel.EXPERIENCED },
       { name: "Spring Boot", level: SkillLevel.FAMILIAR },
       { name: "Django", level: SkillLevel.FAMILIAR },
+      { name: "Flutter", level: SkillLevel.FAMILIAR },
     ],
   },
   {
@@ -86,8 +88,9 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Azure", level: SkillLevel.PROFICIENT, includeInMainStack: true },
       { name: "AWS", level: SkillLevel.EXPERIENCED, includeInMainStack: true },
-      { name: "GCP", level: SkillLevel.EXPERIENCED },
+      { name: "GCP", level: SkillLevel.EXPERIENCED, includeInMainStack: true },
       { name: "Cloudflare", level: SkillLevel.EXPERIENCED },
+      { name: "Firebase", level: SkillLevel.FAMILIAR },
     ],
   },
   {
@@ -156,8 +159,10 @@ const skillCategories: SkillCategory[] = [
   {
     category: "Frontend",
     skills: [
-      { name: "React", level: SkillLevel.EXPERIENCED },
-      { name: "Next.js", level: SkillLevel.EXPERIENCED },
+      { name: "React", level: SkillLevel.FAMILIAR },
+      { name: "Next.js", level: SkillLevel.FAMILIAR },
+      { name: "Vue", level: SkillLevel.FAMILIAR },
+      { name: "Nuxt", level: SkillLevel.FAMILIAR },
       { name: "Tailwind CSS", level: SkillLevel.EXPERIENCED },
       { name: "ShadCN", level: SkillLevel.EXPERIENCED },
       { name: "HTML5", level: SkillLevel.PROFICIENT },
