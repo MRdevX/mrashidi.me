@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.157](https://github.com/MRdevX/mrashidi.me/compare/v0.1.156...v0.1.157) (2026-08-25)
+
+
+### Features
+
+* add GCP and Python to the main stack and expand familiar skills ([bd3176f](https://github.com/MRdevX/mrashidi.me/commit/bd3176f302886595bf3fb5f32e345f72e9f67b07))
+
 ### [0.1.156](https://github.com/MRdevX/mrashidi.me/compare/v0.1.155...v0.1.156) (2026-08-07)
 
 ### [0.1.155](https://github.com/MRdevX/mrashidi.me/compare/v0.1.154...v0.1.155) (2026-07-21)
