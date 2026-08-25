@@ -28,5 +28,7 @@ describe("getMainTechStack", () => {
       expect(item.iconKey.length).toBeGreaterThan(0);
       expect(item.name.length).toBeGreaterThan(0);
     }
+    expect(names).toContain("Python");
+    expect(names).toContain("GCP");
   });
 });
