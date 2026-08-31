@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.158](https://github.com/MRdevX/mrashidi.me/compare/v0.1.157...v0.1.158) (2026-08-31)
+
+
+### Features
+
+* add bayqush ([dedce07](https://github.com/MRdevX/mrashidi.me/commit/dedce0717cd2e433daa1bf7f33b441ffd33d8a6a))
+
 ### [0.1.157](https://github.com/MRdevX/mrashidi.me/compare/v0.1.156...v0.1.157) (2026-08-25)
 
 
