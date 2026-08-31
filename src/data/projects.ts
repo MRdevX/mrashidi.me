@@ -88,6 +88,28 @@ export const projects: Project[] = [
     status: "active",
   },
   {
+    title: "BayQush",
+    description:
+      "Android app that forwards incoming SMS to Telegram. Paste a BotFather token and a chat ID, then forward every message or pick senders from the inbox. Delivery keeps working with the screen off. Credentials stay on the device; the bot token is hidden after you save.",
+    highlights: [
+      "Forward every SMS or pick senders from the device inbox",
+      "WorkManager delivery so messages still go out with the screen off",
+      "Bot token and chat ID stored on the device; token is hidden after save",
+      "Signed APK on GitHub Releases; pushes to main bump the version",
+      "Jetpack Compose setup with SMS permission, background exemption, and a test send",
+    ],
+    stack: ["Kotlin", "Jetpack Compose", "Android", "WorkManager", "Telegram Bot API"],
+    githubUrl: "https://github.com/MRdevX/BayQush",
+    liveUrl: undefined,
+    visibility: "public",
+    type: "personal",
+    openSource: true,
+    license: undefined,
+    year: "2026",
+    role: "Creator & Maintainer",
+    status: "active",
+  },
+  {
     title: "NestJS Queue Worker PoC",
     description:
       "A proof-of-concept demonstrating a scalable, fault-tolerant task processing system built with NestJS, PostgreSQL, and multi-provider messaging (RabbitMQ, NATS, Redis). Showcases workflow orchestration, retry mechanisms, comprehensive testing, invoice workflow automation, and horizontal scaling for distributed task processing.",

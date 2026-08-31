@@ -73,8 +73,9 @@ export const TECHNOLOGY_CATEGORIES = {
     "Vue.js",
     "Vite",
     "Wails",
+    "Jetpack Compose",
   ],
-  languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash", "Go"],
+  languages: ["TypeScript", "JavaScript", "Python", "Java", "Rust", "Bash", "Go", "Kotlin"],
   databases: ["PostgreSQL", "MongoDB", "Redis", "Supabase", "PostgREST"],
   clouds: ["AWS", "Azure", "Docker", "Kubernetes"],
 } as const;

@@ -27,6 +27,7 @@ import {
 } from "react-icons/fa";
 import { GiCargoCrate } from "react-icons/gi";
 import {
+  SiAndroid,
   SiApachekafka,
   SiApple,
   SiCloudflare,
@@ -56,6 +57,7 @@ import {
   SiHibernate,
   SiHono,
   SiJest,
+  SiJetpackcompose,
   SiJira,
   SiJsonwebtokens,
   SiKotlin,
@@ -90,6 +92,7 @@ import {
   SiSupabase,
   SiSwagger,
   SiTailwindcss,
+  SiTelegram,
   SiTerraform,
   SiTrpc,
   SiVite,
@@ -151,6 +154,10 @@ const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?:
   python: { Icon: PythonIcon, colorClass: "text-yellow-300" },
   csharp: { Icon: TbBrandCSharp, colorClass: "text-purple-700" },
   kotlin: { Icon: SiKotlin, colorClass: "text-purple-400" },
+  android: { Icon: SiAndroid, colorClass: "text-green-500" },
+  jetpackcompose: { Icon: SiJetpackcompose, colorClass: "text-sky-400" },
+  compose: { Icon: SiJetpackcompose, colorClass: "text-sky-400" },
+  workmanager: { Icon: SiAndroid, colorClass: "text-green-500" },
   go: { Icon: SiGo, colorClass: "text-cyan-500" },
   rust: { Icon: SiRust, colorClass: "text-orange-600" },
   cplusplus: { Icon: SiCplusplus, colorClass: "text-blue-700" },
@@ -281,6 +288,8 @@ const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?:
   spotifyapi: { Icon: SiSpotify, colorClass: "text-green-500" },
   googlesheetsapi: { Icon: TbBrandGoogle, colorClass: "text-green-600" },
   chromeextensionapi: { Icon: TbApi, colorClass: "text-green-500" },
+  telegram: { Icon: SiTelegram, colorClass: "text-sky-500" },
+  telegrambotapi: { Icon: SiTelegram, colorClass: "text-sky-500" },
 
   microservices: { Icon: FaCode, colorClass: "text-blue-400" },
   domaindrivendesign: { Icon: FaDatabase, colorClass: "text-purple-500" },
@@ -399,6 +408,8 @@ const getIconKey = (techName: string): string => {
     sheets: "googlesheetsapi",
     chrome: "chromeextensionapi",
     extension: "chromeextensionapi",
+    telegram: "telegram",
+    compose: "jetpackcompose",
 
     microservice: "microservices",
     monorepo: "monorepos",
