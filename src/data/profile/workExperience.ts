@@ -13,7 +13,7 @@ const workExperience: WorkExperience[] = [
     company: "MindDoc GmbH",
     location: "Berlin, Germany",
     employmentType: "Full-Time, Hybrid",
-    period: "Nov 2026 – Present",
+    period: "Nov 2025 – Present",
     achievements: [],
   },
   {
