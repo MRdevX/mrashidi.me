@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.159](https://github.com/MRdevX/mrashidi.me/compare/v0.1.158...v0.1.159) (2026-09-15)
+
+
+### Bug Fixes
+
+* correct MindDoc start date to Nov 2025 ([cc2bf1f](https://github.com/MRdevX/mrashidi.me/commit/cc2bf1fb58be160f1b9f901655e62010881407d8))
+
 ### [0.1.158](https://github.com/MRdevX/mrashidi.me/compare/v0.1.157...v0.1.158) (2026-08-31)
 
 
