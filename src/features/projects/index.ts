@@ -1,4 +1,3 @@
-export { ProjectCard } from "./ProjectCard";
-export { ProjectFilters } from "./ProjectFilters";
-export { ProjectResults } from "./ProjectResults";
-export { ProjectSearchBox } from "./ProjectSearchBox";
+export type { Project } from "./domain/project";
+export { projects } from "./infrastructure/projectData";
+export { ProjectsPage } from "./ui/ProjectsPage";

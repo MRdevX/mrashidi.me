@@ -1,71 +1,7 @@
-"use client";
+import type { Metadata } from "next";
+import { ProjectsPage } from "@/features/projects";
+import { generatePageMetadata, pageMetadataConfigs } from "@/lib/metadata";
 
-import { motion } from "framer-motion";
-import { PageHeader, PageSection, PageStaggerContainer, PageWrapper, Pagination } from "@/components/ui";
-import { ProjectFilters, ProjectResults, ProjectSearchBox } from "@/features/projects";
-import { useProjectFilters } from "@/hooks/useProjectFilters";
+export const metadata: Metadata = generatePageMetadata(pageMetadataConfigs.projects);
 
-export default function Projects() {
-  const {
-    filters: { searchQuery, selectedStacks, showOpenSourceOnly },
-    setSearchQuery,
-    toggleStack,
-    setShowOpenSourceOnly,
-    clearAllFilters,
-    categorizedStacks,
-    stackUsageCount,
-    paginatedProjects,
-    currentPage,
-    totalPages,
-    setPage,
-    isLoadingCommitDates,
-    commitInfo,
-  } = useProjectFilters(6);
-
-  return (
-    <PageWrapper>
-      <PageStaggerContainer>
-        {({ itemVariants }) => (
-          <>
-            <motion.div variants={itemVariants}>
-              <PageHeader iconName="FolderOpen" title="Projects" />
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <PageSection>
-                <div className="content-section">
-                  <ProjectSearchBox
-                    searchQuery={searchQuery}
-                    onSearchChange={setSearchQuery}
-                    onClear={() => setSearchQuery("")}
-                  />
-
-                  <ProjectFilters
-                    categorizedStacks={categorizedStacks}
-                    stackUsageCount={stackUsageCount}
-                    selectedStacks={selectedStacks}
-                    showOpenSourceOnly={showOpenSourceOnly}
-                    onToggleStack={toggleStack}
-                    onToggleOpenSource={setShowOpenSourceOnly}
-                    onClearAll={clearAllFilters}
-                  />
-
-                  <ProjectResults
-                    filteredProjects={paginatedProjects}
-                    searchQuery={searchQuery}
-                    selectedStacks={selectedStacks}
-                    showOpenSourceOnly={showOpenSourceOnly}
-                    commitInfo={commitInfo}
-                    isLoadingCommitDates={isLoadingCommitDates}
-                  />
-
-                  <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
-                </div>
-              </PageSection>
-            </motion.div>
-          </>
-        )}
-      </PageStaggerContainer>
-    </PageWrapper>
-  );
-}
+export default ProjectsPage;

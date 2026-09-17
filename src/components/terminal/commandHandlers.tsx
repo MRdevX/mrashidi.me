@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
-import { certificates, config, personalInfo, projects, skills, workExperience } from "@/data";
+import { certificates, config, personalInfo, skills, workExperience } from "@/data";
+import { projects } from "@/features/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { AVAILABLE_COMMANDS } from "./constants";

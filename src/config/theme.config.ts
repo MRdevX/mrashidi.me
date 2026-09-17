@@ -202,32 +202,6 @@ const PATTERNS = {
   focus: "focus:outline-none focus:ring-2 focus:ring-orange-500/50",
 } as const;
 
-const PROJECT_BADGES = {
-  status: {
-    active: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30",
-    archived: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
-    "in progress": "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30 hover:bg-amber-500/30",
-    maintenance: "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30 hover:bg-blue-500/30",
-  },
-  visibility: {
-    public: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30",
-    private: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
-  },
-  type: {
-    personal: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/40",
-    client: "bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-500/30 hover:bg-orange-500/30",
-  },
-  openSource: "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30 hover:bg-amber-500/30",
-  license: {
-    "All Rights Reserved": "bg-red-500/20 text-red-700 dark:text-red-300 border-red-500/30 hover:bg-red-500/30",
-    MIT: "bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/30 hover:bg-green-500/30",
-    "Apache 2.0": "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30 hover:bg-blue-500/30",
-    "GPL-3.0": "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30 hover:bg-purple-500/30",
-    "BSD-3-Clause": "bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/30",
-    default: "bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-500/30 hover:bg-slate-500/30",
-  },
-} as const;
-
 export const THEME_CONFIG = {
   colors: COLORS,
   semantic: SEMANTIC_COLORS,
@@ -239,7 +213,6 @@ export const THEME_CONFIG = {
   animations: ANIMATIONS,
   utilities: UTILITIES,
   patterns: PATTERNS,
-  projectBadges: PROJECT_BADGES,
 } as const;
 
 export type ButtonVariant = keyof typeof COMPONENT_VARIANTS.button;
@@ -254,7 +227,6 @@ export type BorderRadiusKey = keyof typeof BORDER_RADIUS;
 export type ShadowKey = keyof typeof SHADOWS;
 export type SemanticCategory = keyof typeof SEMANTIC_COLORS;
 export type PatternKey = keyof typeof PATTERNS;
-export type ProjectBadgeType = keyof typeof PROJECT_BADGES;
 
 export const getVariant = <T extends keyof typeof COMPONENT_VARIANTS>(
   component: T,
@@ -290,26 +262,4 @@ export const getSemanticColor = (category: SemanticCategory, variant: string): s
 
 export const getPattern = (pattern: PatternKey): string => {
   return PATTERNS[pattern];
-};
-
-export const getProjectBadge = (type: ProjectBadgeType, value?: string): string => {
-  const badgeConfig = PROJECT_BADGES[type];
-
-  if (typeof badgeConfig === "string") {
-    return badgeConfig;
-  }
-
-  if (value && value in badgeConfig) {
-    return badgeConfig[value as keyof typeof badgeConfig] as string;
-  }
-
-  if (type === "license") {
-    const licenseConfig = badgeConfig as typeof PROJECT_BADGES.license;
-    if ("default" in licenseConfig) {
-      return licenseConfig.default;
-    }
-  }
-
-  const firstKey = Object.keys(badgeConfig)[0] as keyof typeof badgeConfig;
-  return badgeConfig[firstKey] as string;
 };
