@@ -4,7 +4,6 @@ import {
   getColor,
   getFont,
   getPattern,
-  getProjectBadge,
   getSemanticColor,
   getShadow,
   getSpacing,
@@ -22,7 +21,6 @@ export const useThemeConfig = () => {
     getShadow,
     getSemanticColor,
     getPattern,
-    getProjectBadge,
 
     getButtonVariant: (variant: ButtonVariant) => getVariant("button", variant),
     getInputVariant: (variant: InputVariant) => getVariant("input", variant),

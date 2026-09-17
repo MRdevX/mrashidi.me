@@ -1,28 +1,6 @@
-export type ProjectVisibility = "public" | "private";
-export type ProjectType = "personal" | "client";
+import type { Project } from "../domain/project";
 
-export interface Project {
-  title: string;
-  description: string;
-  highlights?: string[];
-  stack: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  caseStudyUrl?: string;
-  imageUrl?: string;
-  logoUrl?: string;
-  visibility: ProjectVisibility;
-  openSource?: boolean;
-  license?: string;
-  year?: string;
-  type: ProjectType;
-  clientName?: string;
-  clientLogoUrl?: string;
-  role?: string;
-  status?: "active" | "archived" | "in progress" | "maintenance";
-}
-
-export const projects: Project[] = [
+export const projects: readonly Project[] = [
   {
     title: "EV Fleet Management Platform Suite",
     description:
@@ -54,14 +32,11 @@ export const projects: Project[] = [
       "Jest",
       "Postman",
     ],
-    githubUrl: undefined,
-    liveUrl: undefined,
     visibility: "private",
     type: "client",
     openSource: false,
     year: "2021–2025",
     role: "Senior Backend Engineer",
-    status: "active",
     clientName: "Confidential (EV SaaS Provider)",
   },
   {
@@ -82,10 +57,8 @@ export const projects: Project[] = [
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "All Rights Reserved",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "BayQush",
@@ -100,14 +73,11 @@ export const projects: Project[] = [
     ],
     stack: ["Kotlin", "Jetpack Compose", "Android", "WorkManager", "Telegram Bot API"],
     githubUrl: "https://github.com/MRdevX/BayQush",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: undefined,
     year: "2026",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "NestJS Queue Worker PoC",
@@ -137,14 +107,11 @@ export const projects: Project[] = [
       "Supertest",
     ],
     githubUrl: "https://github.com/MRdevX/nestjs-queue-worker-poc",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: undefined,
     year: "2025",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Notable Nomads Backend API",
@@ -164,10 +131,8 @@ export const projects: Project[] = [
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2025",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "NestJS Drizzle Demo",
@@ -183,14 +148,11 @@ export const projects: Project[] = [
     ],
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Drizzle", "Swagger"],
     githubUrl: "https://github.com/MRdevX/nestjs-drizzle-demo",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2025",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Spotify Lyrics Translator",
@@ -205,14 +167,11 @@ export const projects: Project[] = [
     ],
     stack: ["Python", "Spotify API", "Translation APIs", "PyQt", "macOS", "Windows"],
     githubUrl: "https://github.com/MRdevX/spotify-lyrics-translator",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2025",
     role: "Fork Maintainer & Contributor",
-    status: "active",
   },
   {
     title: "Takeout Metadata Fixer",
@@ -234,7 +193,6 @@ export const projects: Project[] = [
     openSource: true,
     year: "2026",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Nestifined MS Framework",
@@ -250,14 +208,11 @@ export const projects: Project[] = [
     ],
     stack: ["NestJS", "TypeScript", "TypeORM", "Redis", "RabbitMQ", "Docker", "Kubernetes", "Swagger"],
     githubUrl: "https://github.com/MRdevX/nestifined-ms-framework",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Nestifined Auth MS",
@@ -273,14 +228,11 @@ export const projects: Project[] = [
     ],
     stack: ["NestJS", "TypeScript", "TypeORM", "Redis", "JWT", "Docker", "Kubernetes", "Swagger"],
     githubUrl: "https://github.com/MRdevX/nestifined-auth-ms",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "PostgreSQL Backup Restore Kit",
@@ -296,14 +248,11 @@ export const projects: Project[] = [
     ],
     stack: ["Bash", "PostgreSQL", "Shell Scripting", "Database Management"],
     githubUrl: "https://github.com/MRdevX/pg-backup-restore-kit",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Kubernetes Rollout Automation",
@@ -318,14 +267,11 @@ export const projects: Project[] = [
     ],
     stack: ["Kubernetes", "Bash", "Shell Scripting", "DevOps"],
     githubUrl: "https://github.com/MRdevX/k8s-rollout-automation",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "NestJS Microservice Kit",
@@ -341,14 +287,11 @@ export const projects: Project[] = [
     ],
     stack: ["NestJS", "TypeScript", "TypeORM", "PostgreSQL", "Docker", "Jest", "Swagger"],
     githubUrl: "https://github.com/MRdevX/nestjs-microservice-kit",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2021",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "License Lens",
@@ -368,10 +311,8 @@ export const projects: Project[] = [
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Rusty Repo Updater",
@@ -387,14 +328,11 @@ export const projects: Project[] = [
     ],
     stack: ["Rust", "CLI", "Git", "Cargo"],
     githubUrl: "https://github.com/MRdevX/rusty-repo-updater",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2024",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "Flight Operations Platform",
@@ -409,14 +347,11 @@ export const projects: Project[] = [
       "MongoDB schema optimized for aviation data",
     ],
     stack: ["Express", "JavaScript", "MongoDB", "RESTful APIs", "iPadOS", "React", "Weather APIs"],
-    githubUrl: undefined,
-    liveUrl: undefined,
     visibility: "private",
     type: "client",
     openSource: false,
     year: "2020-2021",
     role: "Senior Backend Engineer",
-    status: "active",
     clientName: "Mehrpardaz Co",
   },
   {
@@ -433,14 +368,11 @@ export const projects: Project[] = [
     ],
     stack: ["JavaScript", "TypeScript", "Chrome Extension API", "Google Sheets API", "OAuth", "CSS", "HTML"],
     githubUrl: "https://github.com/notablenomads/nomadboard-extension",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2025",
     role: "Creator & Maintainer",
-    status: "active",
   },
   {
     title: "DataFlow Pipeline PoC",
@@ -467,13 +399,10 @@ export const projects: Project[] = [
       "Node.js",
     ],
     githubUrl: "https://github.com/MRdevX/dataflow-pipeline-poc",
-    liveUrl: undefined,
     visibility: "public",
     type: "personal",
     openSource: true,
-    license: "MIT",
     year: "2025",
     role: "Creator & Maintainer",
-    status: "active",
   },
 ];

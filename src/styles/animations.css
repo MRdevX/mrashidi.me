@@ -482,3 +482,31 @@
     }
   }
 }
+
+@keyframes project-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes project-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-drawer[data-state="open"] {
+    animation: project-drawer-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-sheet[data-state="open"] {
+    animation: project-sheet-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}

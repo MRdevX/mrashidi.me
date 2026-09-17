@@ -43,7 +43,6 @@ export {
 } from "./PageStaggerContainer";
 export { PageWrapper } from "./PageWrapper";
 export { Pagination } from "./Pagination";
-export { ProjectModal } from "./ProjectModal";
 export { SectionHeader } from "./SectionHeader";
 export { Skeleton } from "./Skeleton";
 export { SocialButton } from "./SocialButton";
