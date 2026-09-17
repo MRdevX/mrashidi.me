@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.160](https://github.com/MRdevX/mrashidi.me/compare/v0.1.159...v0.1.160) (2026-09-17)
+
+
+### Features
+
+* **projects:** redesign projects page as a DDD module ([ae9ac79](https://github.com/MRdevX/mrashidi.me/commit/ae9ac79270f86ba69b1da6e73c7eb89fda81650b))
+
 ### [0.1.159](https://github.com/MRdevX/mrashidi.me/compare/v0.1.158...v0.1.159) (2026-09-15)
 
 
