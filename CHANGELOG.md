@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.161](https://github.com/MRdevX/mrashidi.me/compare/v0.1.160...v0.1.161) (2026-09-21)
+
+
+### Bug Fixes
+
+* cap the CV blob cache at five minutes ([200a67e](https://github.com/MRdevX/mrashidi.me/commit/200a67e27fe286f275c2e810446f4240ba863b46))
+
 ### [0.1.160](https://github.com/MRdevX/mrashidi.me/compare/v0.1.159...v0.1.160) (2026-09-17)
 
 
