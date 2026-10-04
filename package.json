@@ -54,7 +54,7 @@
     "date-fns": "^4.4.0",
     "fast-xml-parser": "^5.11.2",
     "file-type": "^22.1.1",
-    "framer-motion": "^13.5.1",
+    "framer-motion": "^14.0.0",
     "html-to-text": "^10.0.1",
     "ky": "^2.1.0",
     "lucide-react": "^1.51.0",
