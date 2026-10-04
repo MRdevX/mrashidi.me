@@ -7,8 +7,6 @@ Sentry.init({
 
   tracesSampleRate: 0.1,
 
-  enableLogs: true,
-
   debug: false,
 
   beforeSend(event) {

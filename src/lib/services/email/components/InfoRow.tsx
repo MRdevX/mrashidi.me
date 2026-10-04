@@ -1,4 +1,4 @@
-import { Column, Row, Section, Text } from "@react-email/components";
+import { Column, Row, Section, Text } from "react-email";
 import { emailTheme } from "../theme";
 
 interface InfoRowProps {

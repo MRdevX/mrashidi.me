@@ -1,4 +1,4 @@
-import { Text } from "@react-email/components";
+import { Text } from "react-email";
 import { BaseEmailTemplate, InfoRow } from "../components";
 import { emailTheme } from "../theme";
 import type { EmailTemplateData, ITemplateConfig } from "../types";

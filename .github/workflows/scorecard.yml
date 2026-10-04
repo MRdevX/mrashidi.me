@@ -7,14 +7,12 @@ name: OSSF Scorecard
 run-name: OSSF Scorecard — ${{ github.ref_name }}
 
 on:
-  push:
-    branches: [main]
   schedule:
     # Weekly on Monday at 01:23 UTC — offset from midnight to reduce load spikes.
     - cron: "23 1 * * 1"
   workflow_dispatch:
 
-# No cancel-in-progress: scheduled runs must never be interrupted by a push.
+# No cancel-in-progress: a manual run must never interrupt the scheduled one.
 concurrency:
   group: scorecard-${{ github.ref }}
 
@@ -40,7 +38,7 @@ jobs:
           persist-credentials: false
 
       - name: Run Scorecard
-        uses: ossf/scorecard-action@v2.4.3
+        uses: ossf/scorecard-action@v2.4.4
         with:
           results_file: scorecard-results.sarif
           results_format: sarif

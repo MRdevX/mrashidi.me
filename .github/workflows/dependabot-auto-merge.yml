@@ -1,10 +1,17 @@
-# Auto-approve and queue Dependabot PRs for merge once all CI checks pass.
-# Major version bumps are ignored in dependabot.yml so only patch/minor reach here.
+# Queue Dependabot PRs for auto-merge; GitHub merges once the required status
+# checks ("CI result", "Dependency audit") on the protect-main ruleset pass.
+# Requires repo setting "Allow auto-merge". No approval step: the repo does not
+# let Actions approve PRs, and the ruleset does not require reviews.
+# Major version bumps are ignored in dependabot.yml; the guard below is a backstop.
 # Branch deletion after merge is handled by the repo-level "delete_branch_on_merge" setting.
 
 name: Dependabot auto-merge
 
 on: pull_request
+
+concurrency:
+  group: dependabot-auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -12,7 +19,7 @@ permissions:
 
 jobs:
   auto-merge:
-    name: Approve + enable auto-merge
+    name: Enable auto-merge
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: github.event.pull_request.user.login == 'dependabot[bot]'
@@ -24,16 +31,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Approve the PR so branch protection "require approvals" is satisfied.
-      - name: Approve PR
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Queue for auto-merge (squash keeps history tidy for dep bumps).
-      # The merge only executes once every required status check passes.
+      # Squash keeps history tidy for dep bumps.
       - name: Enable auto-merge
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
