@@ -1,5 +1,5 @@
-import { Link, Section } from "@react-email/components";
 import type { ReactNode } from "react";
+import { Link, Section } from "react-email";
 import { emailTheme } from "../theme";
 
 interface CallToActionButtonProps {
