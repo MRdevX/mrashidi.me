@@ -1,187 +1,219 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  Briefcase,
-  Building2,
-  Calendar,
-  CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  Laptop,
-  MapPin,
-  Trophy,
-} from "lucide-react";
-import { useState } from "react";
-import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCardTitle } from "@/components/ui";
-import { workExperience } from "@/data";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ChevronDown, Laptop } from "lucide-react";
+import { useEffect, useId, useState } from "react";
+import { Badge, FilamentDivider, SectionHeader, SurfaceCard } from "@/components/ui";
+import { type WorkExperience, workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { pageEnterTransition } from "@/lib/animations";
+import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
-import { ResumeFilamentDivider } from "./ResumeFilamentDivider";
-import { ResumeHeadingBlock } from "./ResumeHeadingBlock";
-import { ResumeMetaChip, resumeDetailRowIconClass } from "./ResumeMetaChip";
+import { formatDuration, formatYearMonth, parsePeriod, toIsoMonth, type YearMonth } from "./period";
+import { accentTextClass } from "./styles";
+
+/** Achievements visible before "Show more". */
+const ACHIEVEMENT_PREVIEW_COUNT = 3;
 
 /**
- * Vertical sync for milestone dot + spine with job title glyph box:
- * feature-card padding (`p-6`) + CyberpunkCardHeader (`p-6`) + ~½ leading for `text-xl` / md:`text-2xl` (`leading-snug`).
+ * The timeline dot sits in the rail beside the card, so it shares two values with the card:
+ * the card's inner padding (+1px border) and the job title's font metrics (`1lh` box).
  */
-const timelineAnchorTw = "top-[3.875rem] md:top-[4rem]";
-const timelineSpineClass = `pointer-events-none absolute ${timelineAnchorTw} bottom-14 left-6 z-[1] w-px -translate-x-1/2 rounded-full bg-[linear-gradient(to_bottom,_rgb(249_115_22/0.44)_0%,_rgb(249_115_22/0.44)_calc(100%-4rem),_transparent)] dark:bg-[linear-gradient(to_bottom,_rgb(251_146_60/0.36)_0%,_rgb(251_146_60/0.36)_calc(100%-4rem),_transparent)]`;
+const cardPaddingClass = "p-5 sm:p-6";
+const railDotOffsetClass = "mt-[calc(1.25rem+1px)] sm:mt-[calc(1.5rem+1px)]";
+const jobTitleTextClass = "text-lg leading-snug sm:text-xl";
 
-export function WorkExperienceSection() {
+/** Current month, resolved after mount so "Present" durations never mismatch the prerendered HTML. */
+function useCurrentYearMonth(): YearMonth | null {
+  const [now, setNow] = useState<YearMonth | null>(null);
+  useEffect(() => {
+    const date = new Date();
+    setNow({ year: date.getFullYear(), month: date.getMonth() + 1 });
+  }, []);
+  return now;
+}
+
+function JobPeriod({ period, now }: { period: string; now: YearMonth | null }) {
   const { getTextColor } = useThemeConfig();
-  const [openAchievements, setOpenAchievements] = useState<Set<string>>(new Set());
+  const parsed = parsePeriod(period);
+  const className = cn("shrink-0 text-sm tabular-nums", getTextColor("secondary"));
+
+  if (!parsed) {
+    return <p className={className}>{period}</p>;
+  }
+
+  const end = parsed.end ?? now;
 
   return (
-    <section className="mb-16">
-      <ResumeHeadingBlock icon={Briefcase} title="Work Experience" />
+    <p className={className}>
+      <time dateTime={toIsoMonth(parsed.start)}>{formatYearMonth(parsed.start)}</time>
+      {" – "}
+      {parsed.end ? <time dateTime={toIsoMonth(parsed.end)}>{formatYearMonth(parsed.end)}</time> : "Present"}
+      {end ? (
+        <span className={getTextColor("muted")}>
+          <span aria-hidden> · </span>
+          <span className="sr-only">, </span>
+          {formatDuration(parsed.start, end)}
+        </span>
+      ) : null}
+    </p>
+  );
+}
 
-      <div className="relative">
-        <div aria-hidden className={timelineSpineClass} />
-        <div className="flex flex-col">
-          {workExperience.map((job, index) => {
-            const showAchievementsBlock = job.achievements.length > 0;
+function StackList({ stack }: { stack: string[] }) {
+  return (
+    <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tech stack">
+      {stack.map((tech) => {
+        const { Icon, colorClass } = getTechIcon(tech);
+        return (
+          <li
+            key={tech}
+            className="a11y-tech-chip inline-flex items-center gap-1.5 rounded-md border border-border px-2 py-1 text-xs font-medium"
+          >
+            <Icon className={cn("size-3.5 shrink-0", colorClass)} aria-hidden />
+            {tech}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
-            return (
-              <motion.div
-                key={`${job.company}-${job.title}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="relative pb-8 last:pb-0"
-              >
-                {/* Timeline node — centred on job title cap line (see timelineAnchorTw) */}
-                <div
-                  className={`absolute ${timelineAnchorTw} left-6 z-10 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-400/45 bg-orange-500 shadow-md shadow-orange-500/35 ring-[3px] ring-orange-500/12 dark:border-orange-300/35 dark:ring-orange-400/14`}
-                  aria-hidden
-                />
+function Achievements({ items }: { items: string[] }) {
+  const { getTextColor } = useThemeConfig();
+  const prefersReducedMotion = useReducedMotion();
+  const listId = useId();
+  const [expanded, setExpanded] = useState(false);
+  const hiddenCount = Math.max(0, items.length - ACHIEVEMENT_PREVIEW_COUNT);
+  const visible = expanded ? items : items.slice(0, ACHIEVEMENT_PREVIEW_COUNT);
 
-                {/* Content card */}
-                <div className="ml-12">
-                  <CyberpunkCard
-                    variant="feature"
-                    className="relative isolate z-0 overflow-hidden border-orange-500/20 transition-all duration-300 group"
-                  >
-                    <div className="relative z-10">
-                      <CyberpunkCardHeader
-                        className={cn(showAchievementsBlock ? "border-b-0 pb-3" : "border-b-0 pb-4")}
-                      >
-                        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
-                          {/* Title · company · location */}
-                          <div className="flex min-w-0 flex-1 flex-col gap-5">
-                            <CyberpunkCardTitle className="!text-xl md:!text-2xl mb-0 font-albert font-semibold leading-snug tracking-tight text-balance text-orange-500 transition-colors dark:text-orange-400 group-hover:text-orange-400 dark:group-hover:text-orange-300">
-                              {job.title}
-                            </CyberpunkCardTitle>
+  return (
+    <div className="mt-5">
+      <FilamentDivider className="mb-4" />
+      <h4 className={cn("mb-3 text-xs font-semibold uppercase tracking-wider", getTextColor("muted"))}>
+        Key achievements
+      </h4>
+      <ul id={listId} className="space-y-2.5">
+        <AnimatePresence initial={false}>
+          {visible.map((achievement, index) => (
+            <motion.li
+              key={achievement}
+              className="flex items-start gap-3"
+              initial={index >= ACHIEVEMENT_PREVIEW_COUNT ? { opacity: 0, y: prefersReducedMotion ? 0 : -4 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={pageEnterTransition(prefersReducedMotion, {
+                delay: (index - ACHIEVEMENT_PREVIEW_COUNT) * 0.03,
+                duration: 0.25,
+              })}
+            >
+              <span className="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-primary/80" aria-hidden />
+              <span className={cn("text-sm leading-relaxed sm:text-[0.9375rem]", getTextColor("primary"))}>
+                {achievement}
+              </span>
+            </motion.li>
+          ))}
+        </AnimatePresence>
+      </ul>
+      {hiddenCount > 0 ? (
+        <button
+          type="button"
+          aria-expanded={expanded}
+          aria-controls={listId}
+          onClick={() => setExpanded((open) => !open)}
+          className={cn(
+            "mt-3 inline-flex min-h-[2.75rem] cursor-pointer items-center gap-1.5 rounded-md px-1 text-sm font-medium transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+            accentTextClass
+          )}
+        >
+          {expanded ? "Show less" : `Show ${hiddenCount} more`}
+          <motion.span
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={pageEnterTransition(prefersReducedMotion, { duration: 0.2 })}
+            className="inline-flex"
+          >
+            <ChevronDown className="size-4" aria-hidden />
+          </motion.span>
+        </button>
+      ) : null}
+    </div>
+  );
+}
 
-                            <div
-                              className={`flex flex-wrap items-center gap-2 font-albert text-base font-medium leading-snug tracking-tight ${getTextColor("secondary")}`}
-                            >
-                              <Building2 className={resumeDetailRowIconClass} aria-hidden />
-                              <span>{job.company}</span>
-                            </div>
+function JobCard({ job, now }: { job: WorkExperience; now: YearMonth | null }) {
+  const { getTextColor } = useThemeConfig();
 
-                            <div
-                              className={`flex flex-wrap items-center gap-2 font-albert text-sm leading-snug tracking-tight ${getTextColor("secondary")}`}
-                            >
-                              <MapPin className={resumeDetailRowIconClass} aria-hidden />
-                              <span className="min-w-0">{job.location}</span>
-                            </div>
-                          </div>
+  return (
+    <SurfaceCard as="article" static className="!p-0 border-primary/15">
+      <div className={cn("relative z-10", cardPaddingClass)}>
+        <header>
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+            <h3
+              className={cn(
+                jobTitleTextClass,
+                "font-albert font-semibold tracking-tight text-balance",
+                getTextColor("primary")
+              )}
+            >
+              {job.title}
+            </h3>
+            <JobPeriod period={job.period} now={now} />
+          </div>
+          <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm sm:text-base">
+            <span className={cn("font-medium", accentTextClass)}>{job.company}</span>
+            <span aria-hidden className={getTextColor("muted")}>
+              ·
+            </span>
+            <span className={getTextColor("secondary")}>{job.location}</span>
+          </p>
+          <Badge icon={Laptop} className="mt-3">
+            {job.employmentType}
+          </Badge>
+        </header>
 
-                          {/* Period · employment */}
-                          <aside
-                            className={`flex w-full shrink-0 flex-col items-end gap-3 font-albert sm:ml-auto sm:w-auto sm:min-w-[11.5rem] sm:max-w-[14rem] ${getTextColor("muted")}`}
-                          >
-                            <ResumeMetaChip icon={Calendar}>
-                              <span className="tabular-nums">{job.period}</span>
-                            </ResumeMetaChip>
-                            <ResumeMetaChip icon={Laptop}>
-                              <span className="text-balance">{job.employmentType}</span>
-                            </ResumeMetaChip>
-                          </aside>
-                        </div>
-                        {showAchievementsBlock ? <ResumeFilamentDivider className="mt-5" /> : null}
-                      </CyberpunkCardHeader>
+        {job.summary ? (
+          <p className={cn("mt-4 text-sm leading-relaxed sm:text-[0.9375rem]", getTextColor("primary"))}>
+            {job.summary}
+          </p>
+        ) : null}
 
-                      {job.achievements.length > 0 && (
-                        <CyberpunkCardContent className="pt-0">
-                          <div className="pt-3">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const key = `${job.company}-${job.title}`;
-                                const newOpen = new Set(openAchievements);
-                                if (newOpen.has(key)) {
-                                  newOpen.delete(key);
-                                } else {
-                                  newOpen.add(key);
-                                }
-                                setOpenAchievements(newOpen);
-                              }}
-                              className="relative z-10 flex min-h-[2.75rem] w-full cursor-pointer items-center justify-between gap-3 rounded-md border border-orange-500/20 bg-muted/20 px-3 py-2.5 text-left transition-colors duration-200 hover:border-orange-500/35 hover:bg-muted/40 dark:hover:bg-muted/25 group/trigger"
-                            >
-                              <div className="flex min-w-0 items-center gap-2">
-                                <Trophy className="size-4 shrink-0 text-orange-500" aria-hidden />
-                                <span className="text-sm font-medium text-orange-500 dark:text-orange-400">
-                                  Key Achievements
-                                </span>
-                              </div>
-                              <motion.div
-                                animate={{
-                                  rotate: openAchievements.has(`${job.company}-${job.title}`) ? 180 : 0,
-                                }}
-                                transition={{ duration: 0.2 }}
-                                className="text-orange-500/60"
-                              >
-                                {openAchievements.has(`${job.company}-${job.title}`) ? (
-                                  <ChevronUp className="size-4" aria-hidden />
-                                ) : (
-                                  <ChevronDown className="size-4" aria-hidden />
-                                )}
-                              </motion.div>
-                            </button>
+        {job.stack && job.stack.length > 0 ? <StackList stack={job.stack} /> : null}
 
-                            {openAchievements.has(`${job.company}-${job.title}`) && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="overflow-hidden"
-                              >
-                                <ul className="mt-4 space-y-3">
-                                  {job.achievements.map((achievement, index) => (
-                                    <motion.li
-                                      key={achievement}
-                                      initial={{ opacity: 0, x: -20 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: index * 0.05 }}
-                                      className="group/achievement flex items-start gap-3"
-                                    >
-                                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-orange-500 transition-colors group-hover/achievement:text-orange-400" />
-                                      <span
-                                        className={`${getTextColor("primary")} group-hover/achievement:${getTextColor(
-                                          "primary"
-                                        )} text-sm leading-relaxed transition-colors`}
-                                      >
-                                        {achievement}
-                                      </span>
-                                    </motion.li>
-                                  ))}
-                                </ul>
-                              </motion.div>
-                            )}
-                          </div>
-                        </CyberpunkCardContent>
-                      )}
-                    </div>
-                  </CyberpunkCard>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+        {job.achievements.length > 0 ? <Achievements items={job.achievements} /> : null}
       </div>
+    </SurfaceCard>
+  );
+}
+
+export function WorkExperienceSection() {
+  const prefersReducedMotion = useReducedMotion();
+  const now = useCurrentYearMonth();
+
+  return (
+    <section>
+      <SectionHeader as="h2" iconName="Briefcase" title="Work Experience" />
+
+      <ol>
+        {workExperience.map((job, index) => (
+          <motion.li
+            key={`${job.company}-${job.title}`}
+            className="group/job relative grid grid-cols-[1rem_minmax(0,1fr)] gap-x-3 pb-6 last:pb-0 sm:grid-cols-[1.5rem_minmax(0,1fr)] sm:gap-x-5"
+            initial={{ opacity: 1, y: prefersReducedMotion ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={pageEnterTransition(prefersReducedMotion, { delay: index * 0.08, duration: 0.5 })}
+          >
+            {/* Rail: spine segment (runs through the li's pb-6 so segments join) + dot aligned to the title's first line */}
+            <div aria-hidden className="relative flex justify-center">
+              <span className="absolute top-0 -bottom-6 left-1/2 w-px -translate-x-1/2 bg-primary/35 group-first/job:top-8 group-last/job:bottom-0 group-last/job:bg-transparent group-last/job:bg-gradient-to-b group-last/job:from-primary/35 group-last/job:to-transparent" />
+              <span className={cn("relative flex h-[1lh] items-center", railDotOffsetClass, jobTitleTextClass)}>
+                <span className="size-3 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.45)] ring-4 ring-primary/15" />
+              </span>
+            </div>
+
+            <JobCard job={job} now={now} />
+          </motion.li>
+        ))}
+      </ol>
     </section>
   );
 }

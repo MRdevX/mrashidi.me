@@ -1,73 +1,93 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Award, CheckCircle, ExternalLink } from "lucide-react";
-import { certificates } from "@/data";
+import { motion, useReducedMotion } from "framer-motion";
+import { BadgeCheck, ExternalLink } from "lucide-react";
+import { SectionHeader, SurfaceCard } from "@/components/ui";
+import { type Certificate, certificates } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
-import { ResumeHeadingBlock, ResumeSubsectionHeading } from "./ResumeHeadingBlock";
+import { pageEnterTransition } from "@/lib/animations";
+import { cn } from "@/lib/utils";
+import { accentTextClass } from "./styles";
 
-export function CertificatesSection() {
-  const { getTextColor, getBackgroundColor, getBorderColor, getCardPattern } = useThemeConfig();
+const certRowClass = "flex h-full items-start gap-3 rounded-lg border p-3 transition-colors duration-200";
+
+function CertificateRow({ cert }: { cert: Certificate }) {
+  const { getTextColor, getBorderColor } = useThemeConfig();
+
+  const body = (
+    <>
+      <BadgeCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
+      <div className="min-w-0 flex-1">
+        <p className={cn("font-medium leading-snug", getTextColor("primary"))}>{cert.name}</p>
+        <p className={cn("mt-1 text-xs", getTextColor("secondary"))}>
+          {cert.provider}
+          <span aria-hidden> · </span>
+          <span className="sr-only">, </span>
+          {cert.type}
+        </p>
+      </div>
+      <div className="flex shrink-0 flex-col items-end gap-1.5 text-xs">
+        <span className={cn("tabular-nums", getTextColor("muted"))}>{cert.year}</span>
+        {cert.url ? (
+          <span className={cn("inline-flex items-center gap-1 font-medium", accentTextClass)}>
+            Verify
+            <ExternalLink className="size-3" aria-hidden />
+            <span className="sr-only">(opens in new tab)</span>
+          </span>
+        ) : null}
+      </div>
+    </>
+  );
+
+  if (!cert.url) {
+    return <div className={cn(certRowClass, getBorderColor("primary"))}>{body}</div>;
+  }
 
   return (
-    <section className="mb-16">
-      <ResumeHeadingBlock icon={Award} title="Recent Certifications" />
-      <div className="space-y-8">
+    <a
+      href={cert.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        certRowClass,
+        getBorderColor("primary"),
+        "hover:border-primary/50 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      )}
+    >
+      {body}
+    </a>
+  );
+}
+
+export function CertificatesSection() {
+  const { getTextColor } = useThemeConfig();
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <section>
+      <SectionHeader as="h2" iconName="Award" title="Certifications" />
+      <div className="space-y-6">
         {certificates.map((category, categoryIndex) => (
           <motion.div
             key={category.category}
-            className={`${getCardPattern()} relative isolate z-0`}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: prefersReducedMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * categoryIndex }}
+            transition={pageEnterTransition(prefersReducedMotion, { delay: 0.08 * categoryIndex })}
           >
-            <div className="relative z-10">
-              <ResumeSubsectionHeading title={category.category} />
-              <div className="space-y-2">
-                {category.certificates.map((cert, i) => (
-                  <motion.div
-                    key={cert.name}
-                    className={`flex items-center p-3 rounded-lg border ${getBorderColor(
-                      "primary"
-                    )} hover:border-orange-500 transition-all duration-300 relative z-10 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-orange-500/30 ${
-                      cert.url ? `cursor-pointer hover:${getBackgroundColor("muted")}` : ""
-                    }`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * i }}
-                    role={cert.url ? "button" : undefined}
-                    tabIndex={cert.url ? 0 : undefined}
-                    aria-label={cert.url ? `Open ${cert.name} in new tab` : undefined}
-                    onClick={() => cert.url && window.open(cert.url, "_blank")}
-                    onKeyDown={(e) => {
-                      if (!cert.url) {
-                        return;
-                      }
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        window.open(cert.url, "_blank");
-                      }
-                    }}
-                  >
-                    <CheckCircle className="w-5 h-5 text-orange-500 shrink-0 mr-3" aria-hidden />
-                    <div className="flex-1 min-w-0">
-                      <div
-                        className={`font-medium ${getTextColor("primary")} hover:${getTextColor(
-                          "primary"
-                        )} transition-colors flex items-center`}
-                      >
-                        {cert.name}
-                        {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" aria-hidden />}
-                      </div>
-                    </div>
-                    <div className="text-sm text-gray-800 dark:text-gray-200 text-right ml-4">
-                      <div>{cert.year}</div>
-                      <div className="text-xs text-gray-700 dark:text-gray-300">{cert.provider}</div>
-                    </div>
-                  </motion.div>
-                ))}
+            <SurfaceCard static className="border-primary/15">
+              <div className="relative z-10">
+                <h3 className={cn("mb-4 text-lg font-semibold tracking-tight", getTextColor("primary"))}>
+                  {category.category}
+                </h3>
+                <ul className="grid gap-2 md:grid-cols-2">
+                  {category.certificates.map((cert) => (
+                    <li key={cert.name}>
+                      <CertificateRow cert={cert} />
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
+            </SurfaceCard>
           </motion.div>
         ))}
       </div>

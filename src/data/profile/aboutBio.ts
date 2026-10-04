@@ -29,7 +29,7 @@ const ABOUT_BIO_SEGMENTS: readonly BioSegmentDef[] = [
   { text: "GCP, Azure and Cloudflare", style: "brand" },
   { text: ". I've worked in " },
   { text: "digital health, e-mobility, aviation and payments", style: "subtle" },
-  { text: ", and I'm now at MindDoc in Berlin, focusing on " },
+  { text: ", and I care most about " },
   { text: "clean, maintainable code", style: "prominent" },
   { text: " and systems that grow with business needs." },
 ];
