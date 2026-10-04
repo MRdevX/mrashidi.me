@@ -55,9 +55,9 @@ const config: SiteConfig = {
     name: "MR Portfolio",
     title: "Mahdi Rashidi | Software Engineer",
     description:
-      "Software engineer with 10 years of experience in backend development. I work primarily with Node.js and TypeScript, with additional experience across frameworks and languages. I focus on building reliable, maintainable systems that scale with business needs.",
+      "Backend engineer with 11 years of experience building and running production services, mostly in Node.js, NestJS, TypeScript and PostgreSQL on GCP, Azure and Cloudflare. I focus on reliable, maintainable systems that scale with business needs.",
     keywords:
-      "Software Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, AWS, Azure, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST API",
+      "Software Engineer, Web Developer, Node.js, TypeScript, Portfolio, Software Engineer, Backend Development, API Development, System Design, Cloud Architecture, Berlin, Germany, Freelance Developer, Full Stack Developer, Database Design, Microservices, DevOps, GCP, Azure, Cloudflare, Docker, Kubernetes, PostgreSQL, Redis, NestJS, REST API",
   },
   ui: {
     themeColor: "#12151c",
