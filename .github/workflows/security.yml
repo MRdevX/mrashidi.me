@@ -5,14 +5,9 @@ name: Security
 run-name: Security — ${{ github.ref_name }}
 
 on:
+  # No paths-ignore on PRs: "Dependency audit" is a required status check.
   pull_request:
     branches: [main]
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - ".versionrc.json"
-      - "AGENTS.md"
-      - "CONTRIBUTING.md"
   push:
     branches: [main]
     paths-ignore:

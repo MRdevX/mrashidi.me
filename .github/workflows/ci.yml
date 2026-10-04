@@ -1,10 +1,11 @@
-# Lint, unit tests, Playwright E2E, then Next.js build (CI skips assets + PWA; see job summary).
+# Lint, unit tests and Next.js build (CI skips assets + PWA; see job summary).
+# Playwright E2E is local-only (`pnpm test:e2e`).
 #
 # Smart triggering:
 #   push:main / workflow_dispatch  → all jobs always run (safety net before auto-release).
 #   pull_request                   → "changes" detects which buckets are affected;
-#                                    only impacted jobs run. Skipped jobs count as "ok"
-#                                    so the build gate still works.
+#                                    only impacted jobs run. "CI result" always runs and
+#                                    is the single required status check (skipped = ok).
 
 name: CI
 
@@ -13,12 +14,6 @@ run-name: CI — ${{ github.ref_name }}
 on:
   pull_request:
     branches: [main]
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - ".versionrc.json"
-      - "AGENTS.md"
-      - "CONTRIBUTING.md"
   push:
     branches: [main]
     paths-ignore:
@@ -47,8 +42,7 @@ permissions:
 # Job graph:
 #
 #   changes ──┬──► quality ──┐
-#             ├──► e2e    ───┼──► build
-#             └──────────────┘
+#             └──► build   ──┴──► CI result
 # ---------------------------------------------------------------------------
 
 jobs:
@@ -60,7 +54,6 @@ jobs:
     outputs:
       # On push/dispatch: always true. On PRs: true only when relevant paths changed.
       quality: ${{ github.event_name != 'pull_request' || steps.filter.outputs.quality == 'true' }}
-      e2e:     ${{ github.event_name != 'pull_request' || steps.filter.outputs.e2e     == 'true' }}
       build:   ${{ github.event_name != 'pull_request' || steps.filter.outputs.build   == 'true' }}
     steps:
       # paths-filter uses the GitHub API for pull_request events — no checkout needed.
@@ -82,16 +75,6 @@ jobs:
               - 'biome.json'
               - 'vitest.config.mts'
               - 'sentry-shared.ts'
-              - '.github/workflows/ci.yml'
-              - '.github/actions/**'
-            e2e:
-              - 'src/**'
-              - 'tests/e2e/**'
-              - 'tests/fixtures/**'
-              - 'tests/utils/**'
-              - 'playwright.config.ts'
-              - 'package.json'
-              - 'pnpm-lock.yaml'
               - '.github/workflows/ci.yml'
               - '.github/actions/**'
             build:
@@ -163,77 +146,11 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  # ── 3. Playwright E2E (browser matrix) ────────────────────────────────────
-  e2e:
-    name: E2E / ${{ matrix.project }}
-    needs: changes
-    if: needs.changes.outputs.e2e == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    strategy:
-      # Let all browsers finish so you see the full cross-browser picture at once.
-      fail-fast: false
-      matrix:
-        include:
-          # project: playwright project name   browser: engine to install
-          - project: chromium
-            browser: chromium
-          - project: firefox
-            browser: firefox
-          - project: mobile-chrome
-            browser: chromium   # Mobile Chrome is Chromium under the hood
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Setup Node and pnpm
-        uses: ./.github/actions/setup-node
-
-      - name: Cache Playwright browsers
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/ms-playwright
-          # Scope cache per engine (mobile-chrome reuses the chromium cache key).
-          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('pnpm-lock.yaml', 'package.json', 'playwright.config.ts') }}
-          restore-keys: playwright-${{ runner.os }}-${{ matrix.browser }}-
-
-      - name: Install Playwright browser
-        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
-
-      - name: E2E tests — ${{ matrix.project }}
-        run: pnpm test:e2e --project="${{ matrix.project }}"
-
-      - name: Job summary — ${{ matrix.project }}
-        if: success()
-        run: |
-          {
-            echo "## E2E passed · ${{ matrix.project }}"
-            echo ""
-            echo "- Project: \`${{ matrix.project }}\` (engine: \`${{ matrix.browser }}\`)"
-            echo "- Cached: \`\$HOME/.cache/ms-playwright\` when lockfile/key unchanged"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - uses: actions/upload-artifact@v7
-        name: Upload E2E report (on failure)
-        if: failure()
-        with:
-          name: e2e-artifacts-${{ matrix.project }}
-          path: |
-            playwright-report/
-            test-results/
-          if-no-files-found: ignore
-          retention-days: 7
-
-  # ── 4. Next.js build (runs only when quality + e2e both passed or were irrelevant) ──
+  # ── 3. Next.js build (parallel with quality) ──────────────────────────────
   build:
     name: Build
-    needs: [changes, quality, e2e]
-    # "skipped" means the job was not applicable (paths didn't change) — that's fine.
-    if: |
-      always() &&
-      needs.changes.outputs.build == 'true' &&
-      (needs.quality.result == 'success' || needs.quality.result == 'skipped') &&
-      (needs.e2e.result    == 'success' || needs.e2e.result    == 'skipped')
+    needs: changes
+    if: needs.changes.outputs.build == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -270,3 +187,21 @@ jobs:
               echo "- Next cache: **miss** (\`pnpm-lock.yaml\` key or first run — cold compile)."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # ── 4. Required status check: aggregates every job above ──────────────────
+  ci-result:
+    name: CI result
+    needs: [changes, quality, build]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check job results
+        env:
+          FAILED: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: |
+          echo "changes=${{ needs.changes.result }} quality=${{ needs.quality.result }} build=${{ needs.build.result }}"
+          if [ "$FAILED" = "true" ]; then
+            echo "::error::One or more CI jobs failed or were cancelled."
+            exit 1
+          fi
