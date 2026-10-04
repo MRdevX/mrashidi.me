@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.1.162](https://github.com/MRdevX/mrashidi.me/compare/v0.1.161...v0.1.162) (2026-10-04)
+
+
+### Features
+
+* **about:** group skills by category and align them with the CV ([22fcb34](https://github.com/MRdevX/mrashidi.me/commit/22fcb342f421f29aff52e44d47a6462c7a1255aa))
+
+
+### Bug Fixes
+
+* **about:** bring the bio and site description in line with the CV ([1bd6495](https://github.com/MRdevX/mrashidi.me/commit/1bd64952825a697bd6e1a3476f132d06a28736f2))
+
 ### [0.1.161](https://github.com/MRdevX/mrashidi.me/compare/v0.1.160...v0.1.161) (2026-09-21)
 
 
