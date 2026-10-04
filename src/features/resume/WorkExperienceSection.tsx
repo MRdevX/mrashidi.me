@@ -1,21 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  Briefcase,
-  Building2,
-  Calendar,
-  CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  Laptop,
-  MapPin,
-  Trophy,
-} from "lucide-react";
-import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Briefcase, Building2, Calendar, CheckCircle2, ChevronDown, Laptop, MapPin, Trophy } from "lucide-react";
+import { useId, useState } from "react";
 import { CyberpunkCard, CyberpunkCardContent, CyberpunkCardHeader, CyberpunkCardTitle } from "@/components/ui";
 import { workExperience } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { pageEnterTransition } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import { ResumeFilamentDivider } from "./ResumeFilamentDivider";
 import { ResumeHeadingBlock } from "./ResumeHeadingBlock";
@@ -23,13 +14,15 @@ import { ResumeMetaChip, resumeDetailRowIconClass } from "./ResumeMetaChip";
 
 /**
  * Vertical sync for milestone dot + spine with job title glyph box:
- * feature-card padding (`p-6`) + CyberpunkCardHeader (`p-6`) + ~½ leading for `text-xl` / md:`text-2xl` (`leading-snug`).
+ * feature-card padding (`1rem` < sm, `1.5rem` ≥ sm) + CyberpunkCardHeader (`p-6`) + ~½ leading for `text-xl` / md:`text-2xl` (`leading-snug`).
  */
-const timelineAnchorTw = "top-[3.875rem] md:top-[4rem]";
+const timelineAnchorTw = "top-[3.375rem] sm:top-[3.875rem] md:top-[4rem]";
 const timelineSpineClass = `pointer-events-none absolute ${timelineAnchorTw} bottom-14 left-6 z-[1] w-px -translate-x-1/2 rounded-full bg-[linear-gradient(to_bottom,_rgb(249_115_22/0.44)_0%,_rgb(249_115_22/0.44)_calc(100%-4rem),_transparent)] dark:bg-[linear-gradient(to_bottom,_rgb(251_146_60/0.36)_0%,_rgb(251_146_60/0.36)_calc(100%-4rem),_transparent)]`;
 
 export function WorkExperienceSection() {
   const { getTextColor } = useThemeConfig();
+  const prefersReducedMotion = useReducedMotion();
+  const idPrefix = useId();
   const [openAchievements, setOpenAchievements] = useState<Set<string>>(new Set());
 
   return (
@@ -41,13 +34,16 @@ export function WorkExperienceSection() {
         <div className="flex flex-col">
           {workExperience.map((job, index) => {
             const showAchievementsBlock = job.achievements.length > 0;
+            const jobKey = `${job.company}-${job.title}`;
+            const isOpen = openAchievements.has(jobKey);
+            const achievementsId = `${idPrefix}-achievements-${index}`;
 
             return (
               <motion.div
-                key={`${job.company}-${job.title}`}
-                initial={{ opacity: 0, y: 20 }}
+                key={jobKey}
+                initial={{ opacity: 1, y: prefersReducedMotion ? 0 : 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
+                transition={pageEnterTransition(prefersReducedMotion, { delay: index * 0.1, duration: 0.5 })}
                 className="relative pb-8 last:pb-0"
               >
                 {/* Timeline node — centred on job title cap line (see timelineAnchorTw) */}
@@ -60,7 +56,7 @@ export function WorkExperienceSection() {
                 <div className="ml-12">
                   <CyberpunkCard
                     variant="feature"
-                    className="relative isolate z-0 overflow-hidden border-orange-500/20 transition-all duration-300 group"
+                    className="feature-card--static relative isolate z-0 overflow-hidden border-orange-500/20 transition-all duration-300 group"
                   >
                     <div className="relative z-10">
                       <CyberpunkCardHeader
@@ -108,13 +104,14 @@ export function WorkExperienceSection() {
                           <div className="pt-3">
                             <button
                               type="button"
+                              aria-expanded={isOpen}
+                              aria-controls={achievementsId}
                               onClick={() => {
-                                const key = `${job.company}-${job.title}`;
                                 const newOpen = new Set(openAchievements);
-                                if (newOpen.has(key)) {
-                                  newOpen.delete(key);
+                                if (isOpen) {
+                                  newOpen.delete(jobKey);
                                 } else {
-                                  newOpen.add(key);
+                                  newOpen.add(jobKey);
                                 }
                                 setOpenAchievements(newOpen);
                               }}
@@ -127,50 +124,48 @@ export function WorkExperienceSection() {
                                 </span>
                               </div>
                               <motion.div
-                                animate={{
-                                  rotate: openAchievements.has(`${job.company}-${job.title}`) ? 180 : 0,
-                                }}
-                                transition={{ duration: 0.2 }}
+                                animate={{ rotate: isOpen ? 180 : 0 }}
+                                transition={pageEnterTransition(prefersReducedMotion, { duration: 0.2 })}
                                 className="text-orange-500/60"
                               >
-                                {openAchievements.has(`${job.company}-${job.title}`) ? (
-                                  <ChevronUp className="size-4" aria-hidden />
-                                ) : (
-                                  <ChevronDown className="size-4" aria-hidden />
-                                )}
+                                <ChevronDown className="size-4" aria-hidden />
                               </motion.div>
                             </button>
 
-                            {openAchievements.has(`${job.company}-${job.title}`) && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="overflow-hidden"
-                              >
-                                <ul className="mt-4 space-y-3">
-                                  {job.achievements.map((achievement, index) => (
-                                    <motion.li
-                                      key={achievement}
-                                      initial={{ opacity: 0, x: -20 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: index * 0.05 }}
-                                      className="group/achievement flex items-start gap-3"
-                                    >
-                                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-orange-500 transition-colors group-hover/achievement:text-orange-400" />
-                                      <span
-                                        className={`${getTextColor("primary")} group-hover/achievement:${getTextColor(
-                                          "primary"
-                                        )} text-sm leading-relaxed transition-colors`}
+                            <AnimatePresence initial={false}>
+                              {isOpen && (
+                                <motion.div
+                                  id={achievementsId}
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: "auto", opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={
+                                    prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: "easeInOut" }
+                                  }
+                                  className="overflow-hidden"
+                                >
+                                  <ul className="mt-4 space-y-3">
+                                    {job.achievements.map((achievement, index) => (
+                                      <motion.li
+                                        key={achievement}
+                                        initial={{ opacity: 1, x: prefersReducedMotion ? 0 : -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={pageEnterTransition(prefersReducedMotion, {
+                                          delay: index * 0.05,
+                                          duration: 0.3,
+                                        })}
+                                        className="group/achievement flex items-start gap-3"
                                       >
-                                        {achievement}
-                                      </span>
-                                    </motion.li>
-                                  ))}
-                                </ul>
-                              </motion.div>
-                            )}
+                                        <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-orange-500 transition-colors group-hover/achievement:text-orange-400" />
+                                        <span className={`${getTextColor("primary")} text-sm leading-relaxed`}>
+                                          {achievement}
+                                        </span>
+                                      </motion.li>
+                                    ))}
+                                  </ul>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </CyberpunkCardContent>
                       )}

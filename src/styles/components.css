@@ -170,6 +170,11 @@
     border-color: var(--neon-orange);
   }
 
+  /* Tall, text-heavy cards: keep the glow but don't lift/scale (avoids text blur and layout shift) */
+  .feature-card--static:hover {
+    transform: none;
+  }
+
   .feature-card::before {
     content: "";
     position: absolute;

@@ -1,13 +1,19 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Award, CheckCircle, ExternalLink } from "lucide-react";
 import { certificates } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { pageEnterTransition } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 import { ResumeHeadingBlock, ResumeSubsectionHeading } from "./ResumeHeadingBlock";
 
+const certRowClass =
+  "relative z-10 flex items-center rounded-lg border p-3 transition-all duration-300 hover:border-orange-500 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]";
+
 export function CertificatesSection() {
-  const { getTextColor, getBackgroundColor, getBorderColor, getCardPattern } = useThemeConfig();
+  const { getTextColor, getBorderColor, getCardPattern } = useThemeConfig();
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section className="mb-16">
@@ -16,57 +22,54 @@ export function CertificatesSection() {
         {certificates.map((category, categoryIndex) => (
           <motion.div
             key={category.category}
-            className={`${getCardPattern()} relative isolate z-0`}
-            initial={{ opacity: 0, y: 20 }}
+            className={cn(getCardPattern(), "feature-card--static relative isolate z-0")}
+            initial={{ opacity: 1, y: prefersReducedMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * categoryIndex }}
+            transition={pageEnterTransition(prefersReducedMotion, { delay: 0.1 * categoryIndex })}
           >
             <div className="relative z-10">
               <ResumeSubsectionHeading title={category.category} />
-              <div className="space-y-2">
-                {category.certificates.map((cert, i) => (
-                  <motion.div
-                    key={cert.name}
-                    className={`flex items-center p-3 rounded-lg border ${getBorderColor(
-                      "primary"
-                    )} hover:border-orange-500 transition-all duration-300 relative z-10 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-orange-500/30 ${
-                      cert.url ? `cursor-pointer hover:${getBackgroundColor("muted")}` : ""
-                    }`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * i }}
-                    role={cert.url ? "button" : undefined}
-                    tabIndex={cert.url ? 0 : undefined}
-                    aria-label={cert.url ? `Open ${cert.name} in new tab` : undefined}
-                    onClick={() => cert.url && window.open(cert.url, "_blank")}
-                    onKeyDown={(e) => {
-                      if (!cert.url) {
-                        return;
-                      }
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        window.open(cert.url, "_blank");
-                      }
-                    }}
-                  >
-                    <CheckCircle className="w-5 h-5 text-orange-500 shrink-0 mr-3" aria-hidden />
-                    <div className="flex-1 min-w-0">
-                      <div
-                        className={`font-medium ${getTextColor("primary")} hover:${getTextColor(
-                          "primary"
-                        )} transition-colors flex items-center`}
-                      >
-                        {cert.name}
-                        {cert.url && <ExternalLink className="w-4 h-4 ml-2 text-orange-500 shrink-0" aria-hidden />}
+              <ul className="not-prose space-y-2">
+                {category.certificates.map((cert) => {
+                  const body = (
+                    <>
+                      <CheckCircle className="mr-3 size-5 shrink-0 text-orange-500" aria-hidden />
+                      <div className="min-w-0 flex-1">
+                        <div className={cn("flex items-center font-medium", getTextColor("primary"))}>
+                          {cert.name}
+                          {cert.url && <ExternalLink className="ml-2 size-4 shrink-0 text-orange-500" aria-hidden />}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-sm text-gray-800 dark:text-gray-200 text-right ml-4">
-                      <div>{cert.year}</div>
-                      <div className="text-xs text-gray-700 dark:text-gray-300">{cert.provider}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                      <div className="ml-4 text-right text-sm text-gray-800 dark:text-gray-200">
+                        <div>{cert.year}</div>
+                        <div className="text-xs text-gray-700 dark:text-gray-300">{cert.provider}</div>
+                      </div>
+                    </>
+                  );
+
+                  return (
+                    <li key={cert.name}>
+                      {cert.url ? (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${cert.name} (opens in new tab)`}
+                          className={cn(
+                            certRowClass,
+                            getBorderColor("primary"),
+                            "hover:bg-gray-100 dark:hover:bg-gray-800"
+                          )}
+                        >
+                          {body}
+                        </a>
+                      ) : (
+                        <div className={cn(certRowClass, getBorderColor("primary"))}>{body}</div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </motion.div>
         ))}
