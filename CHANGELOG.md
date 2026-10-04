@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.1](https://github.com/MRdevX/mrashidi.me/compare/v0.2.0...v0.2.1) (2026-10-04)
+
+
+### Features
+
+* **resume:** rebuild experience timeline and certifications on the design system ([442c672](https://github.com/MRdevX/mrashidi.me/commit/442c6721db4daa3769483ea6bdc264ff23223681))
+
+
+### Bug Fixes
+
+* **about:** keep bio employer-agnostic ([7271e16](https://github.com/MRdevX/mrashidi.me/commit/7271e1681c49d82aea2fd66c1af5bf040145de71))
+* **resume:** connect timeline spine across job entries ([1d4c6b1](https://github.com/MRdevX/mrashidi.me/commit/1d4c6b1077aafb355112c600b10faeb3d5610693))
+* **resume:** toggle chevron, dark-mode cert rows, hover jump and a11y ([5c26be7](https://github.com/MRdevX/mrashidi.me/commit/5c26be784398f68593f9e49db22ccdb30f4aa392))
+
+
+### Code Refactoring
+
+* **ui:** shared FilamentDivider, SurfaceCard, Badge; resume uses PageHeader ([03cbfd2](https://github.com/MRdevX/mrashidi.me/commit/03cbfd29cf37b3f07f29de06d6d240483e0e94de))
+
 ## [0.2.0](https://github.com/MRdevX/mrashidi.me/compare/v0.1.162...v0.2.0) (2026-10-04)
 
 
