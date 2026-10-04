@@ -202,11 +202,11 @@ export function WorkExperienceSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={pageEnterTransition(prefersReducedMotion, { delay: index * 0.08, duration: 0.5 })}
           >
-            {/* Rail: spine segment + dot aligned to the job title's first line */}
+            {/* Rail: spine segment (runs through the li's pb-6 so segments join) + dot aligned to the title's first line */}
             <div aria-hidden className="relative flex justify-center">
-              <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-primary/35 group-first/job:top-8 group-last/job:bg-transparent group-last/job:bg-gradient-to-b group-last/job:from-primary/35 group-last/job:to-transparent" />
+              <span className="absolute top-0 -bottom-6 left-1/2 w-px -translate-x-1/2 bg-primary/35 group-first/job:top-8 group-last/job:bottom-0 group-last/job:bg-transparent group-last/job:bg-gradient-to-b group-last/job:from-primary/35 group-last/job:to-transparent" />
               <span className={cn("relative flex h-[1lh] items-center", railDotOffsetClass, jobTitleTextClass)}>
-                <span className="size-3 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.45)] ring-4 ring-background" />
+                <span className="size-3 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.45)] ring-4 ring-primary/15" />
               </span>
             </div>
 
