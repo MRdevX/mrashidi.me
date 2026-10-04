@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+## [0.2.0](https://github.com/MRdevX/mrashidi.me/compare/v0.1.162...v0.2.0) (2026-10-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Sentry's default Vercel environment is now `production`/`preview`
+instead of `vercel-production`/`vercel-preview`; update any alert rules or saved
+searches that filter on the old names.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+### Features
+
+* **deps:** upgrade @sentry/nextjs to v11 ([6a9b741](https://github.com/MRdevX/mrashidi.me/commit/6a9b74141cbe33a68dedcd56a6e1362e377d88bb))
+
+
+### Bug Fixes
+
+* **deps:** override sharp to >=0.35.4 to patch libvips/libheif advisories ([14f522f](https://github.com/MRdevX/mrashidi.me/commit/14f522fecdb5625204a5f3ba1d1a6155b1f84b01))
+
+
+### Continuous Integration
+
+* drop e2e job, add CI result gate, fix dependabot auto-merge ([bc8df8b](https://github.com/MRdevX/mrashidi.me/commit/bc8df8b61ea029b5fe903da8c3293ed2dc201dfd))
+
 ### [0.1.162](https://github.com/MRdevX/mrashidi.me/compare/v0.1.161...v0.1.162) (2026-10-04)
 
 
