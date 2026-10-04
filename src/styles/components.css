@@ -299,6 +299,54 @@ html.dark .a11y-tech-chip:hover {
   color: #ffffff;
 }
 
+/* Skill proficiency tiers (About page). Hover rules repeat the selector weight of `.a11y-tech-chip:hover`. */
+html:not(.dark) .a11y-tech-chip--core {
+  background-color: #fff7ed;
+  border-color: #ff5f1f;
+  color: #c2410c;
+}
+
+html:not(.dark) .a11y-tech-chip--core:hover {
+  background-color: #ffedd5;
+  color: #9a3412;
+  box-shadow: 0 0 20px rgba(255, 95, 31, 0.3);
+}
+
+html.dark .a11y-tech-chip--core {
+  background-color: #2a1c16;
+  border-color: rgb(255 95 31 / 0.6);
+  color: #fb923c;
+}
+
+html.dark .a11y-tech-chip--core:hover {
+  background-color: #2a1c16;
+  border-color: #ff5f1f;
+  color: #fdba74;
+  box-shadow: 0 0 20px rgba(255, 95, 31, 0.3);
+}
+
+html:not(.dark) .a11y-tech-chip--familiar {
+  background-color: #ffffff;
+  border-color: #b5b5b5;
+  color: #595959;
+}
+
+html:not(.dark) .a11y-tech-chip--familiar:hover {
+  background-color: #f5f5f5;
+  color: #0a0a0a;
+}
+
+html.dark .a11y-tech-chip--familiar {
+  background-color: #0f1115;
+  border-color: #454a55;
+  color: #9aa0ab;
+}
+
+html.dark .a11y-tech-chip--familiar:hover {
+  background-color: #141414;
+  color: #fafafa;
+}
+
 html:not(.dark) .a11y-tech-chip-count {
   background-color: #e0e0e0;
   color: #0a0a0a;
