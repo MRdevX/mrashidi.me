@@ -175,6 +175,45 @@
     transform: none;
   }
 
+  /* Filament divider: brand-orange gradient rule (see FilamentDivider) */
+  .filament-line {
+    display: block;
+    height: 1px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, hsl(var(--primary) / 0.55) 0%, hsl(var(--primary) / 0.22) 52%, transparent 100%);
+    box-shadow: 0 0 14px hsl(var(--primary) / 0.14);
+  }
+
+  .filament-line--symmetric {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.4) 37%,
+      hsl(var(--primary) / 0.72) 50%,
+      hsl(var(--primary) / 0.4) 63%,
+      transparent 100%
+    );
+    box-shadow: 0 0 18px hsl(var(--primary) / 0.22);
+  }
+
+  .dark .filament-line {
+    background: linear-gradient(90deg, hsl(var(--primary) / 0.48) 0%, hsl(var(--primary) / 0.18) 52%, transparent 100%);
+    box-shadow: 0 0 14px hsl(var(--primary) / 0.12);
+  }
+
+  .dark .filament-line--symmetric {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.34) 37%,
+      hsl(var(--primary) / 0.62) 50%,
+      hsl(var(--primary) / 0.34) 63%,
+      transparent 100%
+    );
+    box-shadow: 0 0 18px hsl(var(--primary) / 0.18);
+  }
+
   .feature-card::before {
     content: "";
     position: absolute;

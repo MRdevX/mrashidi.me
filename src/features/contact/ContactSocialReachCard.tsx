@@ -1,5 +1,4 @@
-import { SocialButtonsRow } from "@/components/ui";
-import { ResumeFilamentDivider } from "@/features/resume";
+import { FilamentDivider, SocialButtonsRow } from "@/components/ui";
 
 const OUTREACH_TITLE = "I genuinely enjoy hearing from people.";
 
@@ -11,7 +10,7 @@ export function ContactSocialReachCard() {
           <p className="text-lg font-semibold leading-snug tracking-tight text-foreground sm:text-xl">
             {OUTREACH_TITLE}
           </p>
-          <ResumeFilamentDivider align="center" symmetric />
+          <FilamentDivider align="center" symmetric />
           <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base sm:leading-7">
             <p>
               <span className="mr-1 inline-block font-semibold text-foreground">Email</span>

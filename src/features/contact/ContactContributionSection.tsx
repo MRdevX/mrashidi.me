@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { PageHeader } from "@/components/ui";
+import { FilamentDivider, PageHeader } from "@/components/ui";
 import { config } from "@/data";
-import { ResumeFilamentDivider } from "@/features/resume";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { ContactMotionFade } from "./ContactMotionFade";
 import { ContactSectionShell } from "./ContactSectionShell";
@@ -28,7 +27,7 @@ export function ContactContributionSection() {
             </ContactMotionFade>
 
             <div className="my-5">
-              <ResumeFilamentDivider align="center" symmetric />
+              <FilamentDivider align="center" symmetric />
             </div>
 
             <div

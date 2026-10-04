@@ -16,7 +16,7 @@ export function CertificatesSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="mb-16">
+    <section>
       <ResumeHeadingBlock icon={Award} title="Recent Certifications" />
       <div className="space-y-8">
         {certificates.map((category, categoryIndex) => (

@@ -7,12 +7,11 @@ export default function Resume() {
       <ResumeHeader />
 
       <PageSection>
-        <div className="content-section">
-          <div className="prose dark:prose-invert max-w-none">
-            <WorkExperienceSection />
-            <CertificatesSection />
-          </div>
-        </div>
+        <WorkExperienceSection />
+      </PageSection>
+
+      <PageSection delay={0.1}>
+        <CertificatesSection />
       </PageSection>
     </PageWrapper>
   );

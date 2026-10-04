@@ -26,7 +26,7 @@ export function WorkExperienceSection() {
   const [openAchievements, setOpenAchievements] = useState<Set<string>>(new Set());
 
   return (
-    <section className="mb-16">
+    <section>
       <ResumeHeadingBlock icon={Briefcase} title="Work Experience" />
 
       <div className="relative">

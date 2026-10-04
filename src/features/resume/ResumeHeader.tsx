@@ -1,11 +1,10 @@
 "use client";
 
-import { Download, FileText } from "lucide-react";
+import { Download } from "lucide-react";
 import { useState } from "react";
-import { CyberpunkButton } from "@/components/ui";
+import { CyberpunkButton, PageHeader } from "@/components/ui";
 import { logger } from "@/lib/core";
 import type { ResumeRequestData } from "@/lib/validation";
-import { ResumeHeadingBlock } from "./ResumeHeadingBlock";
 import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
 
 export function ResumeHeader() {
@@ -44,10 +43,9 @@ export function ResumeHeader() {
 
   return (
     <>
-      <ResumeHeadingBlock
-        variant="hero"
-        icon={FileText}
-        title="Professional Experience"
+      <PageHeader
+        iconName="FileText"
+        title="Resume"
         actions={
           <CyberpunkButton
             onClick={() => {

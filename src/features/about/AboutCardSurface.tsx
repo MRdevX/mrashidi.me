@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { SurfaceCard } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { cn } from "@/lib/utils";
 
@@ -10,5 +11,5 @@ export function useAboutCardSurface(extraClassName?: string) {
 }
 
 export function AboutCardSurface({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={useAboutCardSurface(className)}>{children}</div>;
+  return <SurfaceCard className={className}>{children}</SurfaceCard>;
 }

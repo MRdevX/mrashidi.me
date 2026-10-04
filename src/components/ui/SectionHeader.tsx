@@ -1,13 +1,25 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Activity, BookOpen, Code2, GraduationCap, Languages, MessageCircle, Terminal } from "lucide-react";
+import {
+  Activity,
+  Award,
+  BookOpen,
+  Briefcase,
+  Code2,
+  GraduationCap,
+  Languages,
+  MessageCircle,
+  Terminal,
+} from "lucide-react";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { pageEnterTransition } from "@/lib/animations";
 
 const iconMap = {
   Activity,
+  Award,
   BookOpen,
+  Briefcase,
   Code2,
   GraduationCap,
   Languages,
@@ -23,9 +35,18 @@ interface SectionHeaderProps {
   className?: string;
   delay?: number;
   size?: "sm" | "md" | "lg";
+  /** Heading level; defaults to `h1` for existing callers. */
+  as?: "h1" | "h2" | "h3";
 }
 
-export function SectionHeader({ iconName, title, className = "", delay = 0, size = "md" }: SectionHeaderProps) {
+export function SectionHeader({
+  iconName,
+  title,
+  className = "",
+  delay = 0,
+  size = "md",
+  as: HeadingTag = "h1",
+}: SectionHeaderProps) {
   const { getSectionTitle } = useThemeConfig();
   const Icon = iconMap[iconName];
   const prefersReducedMotion = useReducedMotion();
@@ -51,8 +72,8 @@ export function SectionHeader({ iconName, title, className = "", delay = 0, size
       animate={{ opacity: 1, y: 0 }}
       transition={pageEnterTransition(prefersReducedMotion, { delay })}
     >
-      <Icon className={`${sizeClasses[size]} text-orange-500`} />
-      <h1 className={`${titleSizes[size]} font-bold ${getSectionTitle()}`}>{title}</h1>
+      <Icon className={`${sizeClasses[size]} text-orange-500`} aria-hidden />
+      <HeadingTag className={`${titleSizes[size]} font-bold ${getSectionTitle()}`}>{title}</HeadingTag>
     </motion.div>
   );
 }

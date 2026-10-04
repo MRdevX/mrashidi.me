@@ -1,4 +1,5 @@
 export { BackgroundEffects } from "./BackgroundEffects";
+export { Badge } from "./Badge";
 export { Button, buttonVariants } from "./Button";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
 export { ContributionGraph } from "./ContributionGraph";
@@ -29,6 +30,7 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
+export { FilamentDivider } from "./FilamentDivider";
 export * from "./icons";
 export { Input } from "./input";
 export { LazyLoader } from "./LazyLoader";
@@ -47,6 +49,7 @@ export { SectionHeader } from "./SectionHeader";
 export { Skeleton } from "./Skeleton";
 export { SocialButton } from "./SocialButton";
 export { SocialButtonsRow } from "./SocialButtonsRow";
+export { SurfaceCard } from "./SurfaceCard";
 export { TechStackGrid } from "./TechStackGrid";
 export { ThemeToggle } from "./ThemeToggle";
 export { TypingAnimation } from "./TypingAnimation";
