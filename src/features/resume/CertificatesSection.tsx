@@ -1,76 +1,93 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Award, CheckCircle, ExternalLink } from "lucide-react";
-import { certificates } from "@/data";
+import { BadgeCheck, ExternalLink } from "lucide-react";
+import { SectionHeader, SurfaceCard } from "@/components/ui";
+import { type Certificate, certificates } from "@/data";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { pageEnterTransition } from "@/lib/animations";
 import { cn } from "@/lib/utils";
-import { ResumeHeadingBlock, ResumeSubsectionHeading } from "./ResumeHeadingBlock";
+import { accentTextClass } from "./styles";
 
-const certRowClass =
-  "relative z-10 flex items-center rounded-lg border p-3 transition-all duration-300 hover:border-orange-500 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]";
+const certRowClass = "flex h-full items-start gap-3 rounded-lg border p-3 transition-colors duration-200";
+
+function CertificateRow({ cert }: { cert: Certificate }) {
+  const { getTextColor, getBorderColor } = useThemeConfig();
+
+  const body = (
+    <>
+      <BadgeCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
+      <div className="min-w-0 flex-1">
+        <p className={cn("font-medium leading-snug", getTextColor("primary"))}>{cert.name}</p>
+        <p className={cn("mt-1 text-xs", getTextColor("secondary"))}>
+          {cert.provider}
+          <span aria-hidden> · </span>
+          <span className="sr-only">, </span>
+          {cert.type}
+        </p>
+      </div>
+      <div className="flex shrink-0 flex-col items-end gap-1.5 text-xs">
+        <span className={cn("tabular-nums", getTextColor("muted"))}>{cert.year}</span>
+        {cert.url ? (
+          <span className={cn("inline-flex items-center gap-1 font-medium", accentTextClass)}>
+            Verify
+            <ExternalLink className="size-3" aria-hidden />
+            <span className="sr-only">(opens in new tab)</span>
+          </span>
+        ) : null}
+      </div>
+    </>
+  );
+
+  if (!cert.url) {
+    return <div className={cn(certRowClass, getBorderColor("primary"))}>{body}</div>;
+  }
+
+  return (
+    <a
+      href={cert.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        certRowClass,
+        getBorderColor("primary"),
+        "hover:border-primary/50 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      )}
+    >
+      {body}
+    </a>
+  );
+}
 
 export function CertificatesSection() {
-  const { getTextColor, getBorderColor, getCardPattern } = useThemeConfig();
+  const { getTextColor } = useThemeConfig();
   const prefersReducedMotion = useReducedMotion();
 
   return (
     <section>
-      <ResumeHeadingBlock icon={Award} title="Recent Certifications" />
-      <div className="space-y-8">
+      <SectionHeader as="h2" iconName="Award" title="Certifications" />
+      <div className="space-y-6">
         {certificates.map((category, categoryIndex) => (
           <motion.div
             key={category.category}
-            className={cn(getCardPattern(), "feature-card--static relative isolate z-0")}
             initial={{ opacity: 1, y: prefersReducedMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={pageEnterTransition(prefersReducedMotion, { delay: 0.1 * categoryIndex })}
+            transition={pageEnterTransition(prefersReducedMotion, { delay: 0.08 * categoryIndex })}
           >
-            <div className="relative z-10">
-              <ResumeSubsectionHeading title={category.category} />
-              <ul className="not-prose space-y-2">
-                {category.certificates.map((cert) => {
-                  const body = (
-                    <>
-                      <CheckCircle className="mr-3 size-5 shrink-0 text-orange-500" aria-hidden />
-                      <div className="min-w-0 flex-1">
-                        <div className={cn("flex items-center font-medium", getTextColor("primary"))}>
-                          {cert.name}
-                          {cert.url && <ExternalLink className="ml-2 size-4 shrink-0 text-orange-500" aria-hidden />}
-                        </div>
-                      </div>
-                      <div className="ml-4 text-right text-sm text-gray-800 dark:text-gray-200">
-                        <div>{cert.year}</div>
-                        <div className="text-xs text-gray-700 dark:text-gray-300">{cert.provider}</div>
-                      </div>
-                    </>
-                  );
-
-                  return (
+            <SurfaceCard static className="border-primary/15">
+              <div className="relative z-10">
+                <h3 className={cn("mb-4 text-lg font-semibold tracking-tight", getTextColor("primary"))}>
+                  {category.category}
+                </h3>
+                <ul className="grid gap-2 md:grid-cols-2">
+                  {category.certificates.map((cert) => (
                     <li key={cert.name}>
-                      {cert.url ? (
-                        <a
-                          href={cert.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${cert.name} (opens in new tab)`}
-                          className={cn(
-                            certRowClass,
-                            getBorderColor("primary"),
-                            "hover:bg-gray-100 dark:hover:bg-gray-800"
-                          )}
-                        >
-                          {body}
-                        </a>
-                      ) : (
-                        <div className={cn(certRowClass, getBorderColor("primary"))}>{body}</div>
-                      )}
+                      <CertificateRow cert={cert} />
                     </li>
-                  );
-                })}
-              </ul>
-            </div>
+                  ))}
+                </ul>
+              </div>
+            </SurfaceCard>
           </motion.div>
         ))}
       </div>
