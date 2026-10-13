@@ -1,6 +1,5 @@
 import type { Variants } from "framer-motion";
 
-/** Comfortable easing for UI entrances (approx. ease-out-expo). */
 export const PAGE_TRANSITION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export function pageEnterTransition(
@@ -51,7 +50,6 @@ export const pageContainerVariants = {
   },
 };
 
-/** Stable layout when user prefers reduced motion */
 export const reducedMotionPageContainerVariants: Variants = {
   hidden: { opacity: 1 },
   show: { opacity: 1, transition: { staggerChildren: 0 } },
@@ -71,7 +69,6 @@ export const reducedMotionPageItemVariants: Variants = {
   show: { opacity: 1, y: 0 },
 };
 
-/** Blog grid: tighter stagger than full-page sections */
 export const blogGridContainerVariants: Variants = {
   hidden: { opacity: 1 },
   show: {

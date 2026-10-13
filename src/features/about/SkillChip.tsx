@@ -39,7 +39,6 @@ export function SkillChip({ name, tier, size }: SkillChipProps) {
   );
 }
 
-/** Small sample used in the proficiency key. */
 export function SkillTierSwatch({ tier }: { tier: SkillTier }) {
   return (
     <span aria-hidden className={cn(skillChipVariants({ tier }), "px-2 py-0.5 text-xs")}>

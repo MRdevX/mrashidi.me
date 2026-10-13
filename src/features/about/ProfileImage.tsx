@@ -11,7 +11,6 @@ interface ProfileImageProps {
   alt: string;
   width?: number;
   height?: number;
-  /** Layout wrapper classes (Bio uses flex/grid; no float needed). */
   className?: string;
 }
 

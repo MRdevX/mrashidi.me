@@ -10,11 +10,9 @@ export const ASK_MR_TOOLS = {
 } as const;
 
 export const ASK_MR_LIMITS = {
-  /** Max characters in one visitor message. */
   maxMessageChars: 1000,
   /** Max prior messages sent to the model (older ones are dropped server-side). */
   maxHistoryMessages: 12,
-  /** Max messages accepted in a request body before trimming. */
   maxRequestMessages: 50,
   maxOutputTokens: 600,
   maxBlogPosts: 5,

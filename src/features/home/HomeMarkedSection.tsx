@@ -11,7 +11,6 @@ type HomeMarkedSectionProps = {
   variants: Variants;
   iconName: SectionIconName;
   title: string;
-  /** Default `mb-16` matches historical homepage spacing between blocks */
   sectionClassName?: string;
   children: ReactNode;
 };

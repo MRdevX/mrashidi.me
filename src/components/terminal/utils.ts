@@ -14,7 +14,6 @@ export const normalizeCommand = (input: string): CommandType => {
   return input.trim().toLowerCase() as CommandType;
 };
 
-/** Returns the question for `ask <question>`, or `null` when the input isn't an ask with a question. */
 export const parseAskCommand = (input: string): string | null => {
   const match = input.trim().match(/^ask\s+(.+)$/is);
   return match ? match[1].trim() : null;

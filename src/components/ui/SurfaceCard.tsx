@@ -12,7 +12,6 @@ type SurfaceCardProps = {
   as?: "div" | "article" | "section";
 };
 
-/** Design-system card surface (`feature-card` pattern) for content blocks. */
 export function SurfaceCard({ children, className, static: isStatic = false, as: Tag = "div" }: SurfaceCardProps) {
   const { getCardPattern } = useThemeConfig();
 

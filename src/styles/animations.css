@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Animations & Keyframes
-   ========================================================================== */
-
 @layer utilities {
-  /* Respect user's motion preferences */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -15,7 +10,6 @@
     }
   }
 
-  /* Loading animation */
   .loading-dots {
     display: inline-flex;
     align-items: center;
@@ -50,7 +44,6 @@
     }
   }
 
-  /* Glitch effect */
   .glitch {
     position: relative;
   }
@@ -106,7 +99,6 @@
     }
   }
 
-  /* Matrix rain effect - optimized for performance */
   .matrix-bg {
     position: fixed;
     top: 0;
@@ -114,19 +106,19 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.05; /* Reduced opacity */
+    opacity: 0.05;
     background:
       linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
       repeating-linear-gradient(
         0deg,
         rgba(0, 255, 0, 0.1) 0%,
-        /* Reduced opacity */ rgba(0, 255, 0, 0.1) 1px,
+        rgba(0, 255, 0, 0.1) 1px,
         transparent 1px,
-        transparent 3px /* Increased spacing */
+        transparent 3px
       );
-    background-size: 100% 3px; /* Increased size for less frequent updates */
-    animation: matrix 30s linear infinite; /* Slower animation */
-    will-change: background-position; /* Optimize for GPU */
+    background-size: 100% 3px;
+    animation: matrix 30s linear infinite;
+    will-change: background-position;
   }
 
   @keyframes matrix {
@@ -138,7 +130,6 @@
     }
   }
 
-  /* Scanline effect - optimized for performance */
   .scanline {
     position: relative;
     overflow: hidden;
@@ -148,10 +139,10 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 1px; /* Reduced height */
-    background: rgba(255, 255, 255, 0.05); /* Reduced opacity */
-    animation: scanning 8s linear infinite; /* Slower animation */
-    will-change: transform; /* Optimize for GPU */
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    animation: scanning 8s linear infinite;
+    will-change: transform;
   }
 
   @keyframes scanning {
@@ -163,7 +154,6 @@
     }
   }
 
-  /* Terminal cursor */
   .terminal-cursor {
     display: inline-block;
     width: 8px;
@@ -184,7 +174,6 @@
     }
   }
 
-  /* Typing animation */
   .typing {
     border-right: 2px solid var(--terminal-green);
     animation:
@@ -213,7 +202,6 @@
     }
   }
 
-  /* Glow animation */
   .animate-glow {
     animation: glow 2s ease-in-out infinite alternate;
   }
@@ -233,17 +221,11 @@
     }
   }
 
-  /* Matrix rain - optimized for performance */
   .matrix-rain {
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(0, 255, 70, 0.05) 50%,
-      transparent 100%
-    ); /* Reduced opacity */
-    background-size: 100% 30px; /* Increased size for less frequent updates */
-    animation: matrix-rain 2s linear infinite; /* Slower animation */
-    will-change: background-position; /* Optimize for GPU */
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 70, 0.05) 50%, transparent 100%);
+    background-size: 100% 30px;
+    animation: matrix-rain 2s linear infinite;
+    will-change: background-position;
   }
 
   @keyframes matrix-rain {
@@ -255,7 +237,6 @@
     }
   }
 
-  /* Typewriter */
   .typewriter {
     overflow: hidden;
     white-space: pre;
@@ -271,7 +252,6 @@
     }
   }
 
-  /* Output text animation */
   .output-text {
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -287,7 +267,6 @@
     }
   }
 
-  /* Scanline animation */
   @keyframes scanline {
     0% {
       background: linear-gradient(
@@ -335,7 +314,6 @@
     }
   }
 
-  /* Neon pulse animation */
   @keyframes neonPulse {
     0%,
     100% {
@@ -352,7 +330,6 @@
     }
   }
 
-  /* Scan lines animation */
   @keyframes scanLines {
     0% {
       transform: translateY(-100%);
@@ -362,7 +339,6 @@
     }
   }
 
-  /* Glow text animation */
   @keyframes glow {
     0%,
     100% {
@@ -387,12 +363,10 @@
     }
   }
 
-  /* Animation utilities */
   .animate-stagger {
     animation-delay: calc(var(--stagger-index, 0) * 0.1s);
   }
 
-  /* Skeleton shimmer animation */
   .animate-shimmer {
     background: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted) / 0.3) 50%, hsl(var(--muted)) 100%);
     background-size: 200% 100%;
@@ -408,7 +382,6 @@
     }
   }
 
-  /* Terminal-style loading animation */
   .animate-terminal-loading {
     animation: terminal-dots 1.5s ease-in-out infinite;
   }
@@ -430,7 +403,6 @@
     }
   }
 
-  /* Gradient shift animation for hero background */
   .animate-gradient-shift {
     background:
       linear-gradient(135deg, rgba(255, 95, 31, 0.06) 0%, transparent 45%, rgba(255, 95, 31, 0.04) 100%),

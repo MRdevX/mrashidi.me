@@ -1,15 +1,9 @@
-/* ==========================================================================
-   Utility Classes
-   ========================================================================== */
-
 @layer utilities {
   /* Terminal / matrix accent — follows :root / .dark tokens in variables.css */
   .text-neon-green {
     color: var(--terminal-green);
     text-shadow: 0 0 6px var(--terminal-green-glow);
   }
-
-  /* Line clamp utilities for v4 compatibility */
 
   .line-clamp-3 {
     overflow: hidden;
@@ -18,7 +12,6 @@
     -webkit-line-clamp: 3;
   }
 
-  /* Icon utilities */
   .icon-primary {
     color: hsl(var(--primary));
   }
@@ -42,13 +35,11 @@
     height: 2rem;
   }
 
-  /* Focus utilities */
   .focus-visible-orange {
     outline: 2px solid hsl(var(--primary));
     outline-offset: 4px;
   }
 
-  /* Social media icon hover styles */
   .social-link {
     color: rgb(75 85 99);
     transition: color 0.3s;
@@ -66,7 +57,6 @@
     filter: drop-shadow(0 0 8px var(--neon-orange));
   }
 
-  /* Responsive styles */
   @media (max-width: 640px) {
     .glass-card {
       padding: 1rem;

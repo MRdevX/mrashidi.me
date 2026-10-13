@@ -11,7 +11,6 @@ import { useAskMrChat } from "./useAskMrChat";
 
 const linkClass = "text-green-600 hover:underline dark:text-green-400";
 
-/** Streams one Ask MR answer inside the home-page terminal (`ask <question>`), in terminal styling. */
 export function AskMrTerminalAnswer({ question }: { question: string }) {
   const chatId = useId();
   const { messages, status, parsedError, ask } = useAskMrChat({ persist: false, chatId: `terminal-${chatId}` });

@@ -45,7 +45,6 @@ export function buildInstructions(): string {
 - ${ASK_MR_TOOLS.suggestFollowUps}: ALWAYS call this last, after your answer, with 3 short follow-up questions (max 8 words each) the visitor might ask next, in the visitor's language. Only suggest questions the knowledge can answer.`;
 }
 
-/** Everything the assistant may state as fact. */
 export function buildKnowledgeBlock(): string {
   return `# Knowledge about ${person.name}\n\n${buildKnowledge()}`;
 }

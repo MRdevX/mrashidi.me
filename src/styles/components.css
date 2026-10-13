@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Component Styles
-   ========================================================================== */
-
 @layer utilities {
-  /* Modern link underline animation */
   .animated-underline {
     position: relative;
     text-decoration: none;
@@ -24,7 +19,6 @@
     width: 100%;
   }
 
-  /* Enhanced focus indicators for accessibility */
   .focus-visible:focus-visible {
     outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
@@ -37,7 +31,6 @@
     box-shadow: 0 0 0 2px hsl(var(--ring));
   }
 
-  /* Glass morphism effect */
   .glass-effect {
     background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
@@ -51,7 +44,6 @@
     border-color: rgba(255, 255, 255, 0.05);
   }
 
-  /* Terminal window */
   .terminal-window {
     background: rgba(248, 250, 252, 0.96);
     border: 1px solid rgba(255, 95, 31, 0.35);
@@ -80,7 +72,6 @@
     opacity: 0.75;
   }
 
-  /* Code block styling */
   .code-block {
     font-family: "JetBrains Mono", monospace;
     background: rgba(248, 250, 252, 0.9);
@@ -104,7 +95,6 @@
     opacity: 0.8;
   }
 
-  /* Terminal card */
   .terminal-card {
     background: rgba(255, 95, 31, 0.1);
     border: 1px solid var(--neon-orange);
@@ -117,7 +107,6 @@
     transform: translateY(-2px);
   }
 
-  /* Glass card */
   .glass-card {
     background-color: rgb(255 255 255 / 0.1);
     backdrop-filter: blur(16px);
@@ -143,7 +132,6 @@
     border-color: rgb(55 65 81 / 0.3);
   }
 
-  /* Feature card */
   .feature-card {
     position: relative;
     overflow: hidden;
@@ -231,7 +219,6 @@
     opacity: 1;
   }
 
-  /* Tech badge */
   .tech-badge {
     display: inline-flex;
     align-items: center;
@@ -249,7 +236,6 @@
     background: linear-gradient(45deg, rgba(255, 95, 31, 0.2), rgba(255, 95, 31, 0.3));
   }
 
-  /* Glitch image */
   .glitch-image {
     position: relative;
     animation: neonPulse 4s ease-in-out infinite;
@@ -299,7 +285,6 @@
     animation: scanLines 3s linear infinite;
   }
 
-  /* Circuit board background */
   .circuit-bg {
     background-color: var(--background-dark);
     background-image:

@@ -35,11 +35,8 @@ const EnvSchema = z.object({
 
   /** Vercel AI Gateway key for local dev; on Vercel the gateway authenticates via OIDC instead. */
   AI_GATEWAY_API_KEY: z.string().optional(),
-  /** Gateway model id for Ask MR. */
   ASK_MR_MODEL: z.string().default("anthropic/claude-haiku-5.5"),
-  /** Max Ask MR requests per day across all visitors; past it the chat politely pauses. */
   ASK_MR_DAILY_BUDGET: z.coerce.number().int().positive().default(1000),
-  /** Server-side kill switch for `/api/chat`. */
   ASK_MR_ENABLED: z.stringbool().default(true),
   /** Hides the Ask MR UI when "false" (read directly from `process.env` in client code). */
   NEXT_PUBLIC_ASK_MR_ENABLED: z.stringbool().default(true),

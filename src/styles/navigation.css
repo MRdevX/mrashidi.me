@@ -1,14 +1,8 @@
-/* ==========================================================================
-   Navigation Components & PWA Styles
-   ========================================================================== */
-
 @layer components {
-  /* Safe area support for devices with notches */
   .bottom-nav {
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* Bottom navigation glass effect */
   .bottom-nav-glass {
     background-color: rgb(255 255 255 / 0.8);
     backdrop-filter: blur(20px);
@@ -22,7 +16,6 @@
     box-shadow: 0 -4px 20px -4px rgb(0 0 0 / 0.3);
   }
 
-  /* Floating action button styles */
   .floating-action {
     background-color: rgb(255 255 255 / 0.9);
     backdrop-filter: blur(20px);
@@ -46,14 +39,11 @@
     box-shadow: 0 6px 25px -4px rgb(0 0 0 / 0.4);
   }
 
-  /* Mobile-specific optimizations */
   @media (max-width: 640px) {
-    /* Prevent horizontal scroll on mobile */
     body {
       overflow-x: hidden;
     }
 
-    /* Ensure bottom navigation is always visible */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -62,21 +52,18 @@
       z-index: 50;
     }
 
-    /* Add touch-friendly tap targets */
     .nav-item {
       min-height: 44px;
       min-width: 44px;
     }
   }
 
-  /* PWA standalone mode adjustments */
   @media (display-mode: standalone) {
     .bottom-nav {
       padding-bottom: max(env(safe-area-inset-bottom), 8px);
     }
   }
 
-  /* Reusable Bottom Navigation Component Styles */
   .bottom-nav-item {
     display: flex;
     flex-direction: column;
@@ -148,7 +135,6 @@
     color: rgb(156 163 175);
   }
 
-  /* Reusable Floating Action Button Styles */
   .floating-action-btn {
     position: fixed;
     z-index: 50;
@@ -166,7 +152,6 @@
     right: 1rem;
   }
 
-  /* PWA standalone mode adjustments for floating action button */
   @media (display-mode: standalone) {
     .floating-action-btn.bottom-right {
       bottom: 7rem;
@@ -228,7 +213,6 @@
     background-color: rgb(31 41 55 / 0.95);
   }
 
-  /* Reusable Navigation Container Styles */
   .nav-container {
     display: flex;
     align-items: center;
@@ -237,7 +221,6 @@
     touch-action: manipulation;
   }
 
-  /* Reusable Mobile Navigation Styles */
   .mobile-nav {
     position: fixed;
     bottom: 0;
@@ -254,7 +237,6 @@
     }
   }
 
-  /* Reusable Navigation Item States */
   .nav-item-state {
     transition: background-color 0.15s ease;
     touch-action: manipulation;
@@ -277,7 +259,6 @@
     background-color: rgb(75 85 99);
   }
 
-  /* Navigation Utilities */
   .nav-item {
     display: inline-flex;
     align-items: center;
@@ -288,7 +269,6 @@
     transition: all 0.2s;
   }
 
-  /* Enhanced Navigation Item with Hover Effects */
   .nav-item-hover-effect {
     position: relative;
     display: inline-block;
@@ -337,7 +317,6 @@
     font-weight: 600;
   }
 
-  /* Dark mode hover effects */
   .dark .nav-item-hover-effect:hover .nav-item-text {
     color: #ffffff;
   }
@@ -352,7 +331,6 @@
     opacity: 1;
   }
 
-  /* Active state styling */
   .nav-item-hover-effect.nav-item-active .nav-item-text {
     color: hsl(var(--primary));
   }
@@ -362,7 +340,6 @@
     opacity: 1;
   }
 
-  /* Inactive state styling */
   .nav-item-hover-effect.nav-item-inactive .nav-item-text {
     color: rgb(75 85 99);
   }
@@ -398,7 +375,6 @@
     color: hsl(var(--primary));
   }
 
-  /* Button Utilities */
   .button-base {
     display: inline-flex;
     align-items: center;
@@ -425,7 +401,6 @@
     background-color: rgb(55 65 81);
   }
 
-  /* Reusable Icon Container Styles */
   .icon-container {
     display: flex;
     align-items: center;
@@ -447,7 +422,6 @@
     height: 2rem;
   }
 
-  /* Reusable Text Container Styles */
   .text-container {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -466,7 +440,6 @@
     font-size: 1rem;
   }
 
-  /* Responsive Layout */
   @media (max-width: 640px) {
     .nav-item-mobile {
       padding: 0.5rem 0.75rem 0.5rem 1rem;

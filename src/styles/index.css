@@ -1,13 +1,7 @@
-/* ==========================================================================
-   Main Stylesheet - Imports all style modules
-   ========================================================================== */
-
-/* Core styles */
 @import "./variables.css";
 @import "./theme.css";
 @import "./base.css";
 
-/* Typography and components */
 @import "./typography.css";
 @import "./components.css";
 @import "./utilities.css";

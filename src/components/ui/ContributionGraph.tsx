@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-/* ─── types ──────────────────────────────────────────────────────── */
-
 type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 type ContributionDay = {
@@ -29,33 +27,24 @@ type CalendarData = {
   monthLabels: { weekIndex: number; label: string }[];
 };
 
-/* ─── constants ──────────────────────────────────────────────────── */
-
-const CELL = 11; // px — day cell size
-const GAP = 2; // px — gap between cells
-const STEP = CELL + GAP; // 13px per column / row
-const LABEL_H = 16; // px — month label row height
-const SVG_H = LABEL_H + 7 * STEP - GAP; // 105px total SVG height
+const CELL_PX = 11;
+const GAP_PX = 2;
+const STEP_PX = CELL_PX + GAP_PX;
+const LABEL_HEIGHT_PX = 16;
+const SVG_HEIGHT_PX = LABEL_HEIGHT_PX + 7 * STEP_PX - GAP_PX;
 
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-/** Cyberpunk neon-orange fill per contribution level (0 = none, 6 = peak) */
 const LEVEL_FILL: Record<Level, string> = {
-  0: "rgba(255,255,255,0.06)", // empty
-  1: "rgba(255,95,31,0.20)", //  ~bottom 25% of active days
-  2: "rgba(255,95,31,0.36)", //  ~25–50th percentile
-  3: "rgba(255,95,31,0.52)", //  ~50–70th percentile
-  4: "rgba(255,95,31,0.68)", //  ~70–85th percentile
-  5: "rgba(255,95,31,0.84)", //  ~85–95th percentile
-  6: "#ff5f1f", //               top 5% (peak + neon glow)
+  0: "rgba(255,255,255,0.06)",
+  1: "rgba(255,95,31,0.20)",
+  2: "rgba(255,95,31,0.36)",
+  3: "rgba(255,95,31,0.52)",
+  4: "rgba(255,95,31,0.68)",
+  5: "rgba(255,95,31,0.84)",
+  6: "#ff5f1f",
 };
 
-/* ─── pure helpers ───────────────────────────────────────────────── */
-
-/**
- * Groups a sorted flat day array into Sun-first week columns, padding the
- * first week so column 0 starts on Sunday. Also computes month label positions.
- */
 function buildCalendar(days: ContributionDay[]): CalendarData {
   if (days.length === 0) {
     return { weeks: [], monthLabels: [] };
@@ -129,7 +118,6 @@ function computeDynamicLevels(days: ContributionDay[]): ContributionDay[] {
     return nonZero[idx] ?? 1;
   };
 
-  // Five thresholds split non-zero days into six tiers (levels 1–6).
   const thresholds = [pct(0.25), pct(0.5), pct(0.7), pct(0.85), pct(0.95)];
 
   return days.map((d): ContributionDay => {
@@ -145,30 +133,21 @@ function computeDynamicLevels(days: ContributionDay[]): ContributionDay[] {
   });
 }
 
-/* ─── skeleton ───────────────────────────────────────────────────── */
-
-/**
- * SVG skeleton using a <pattern> fill — a single <rect> renders the full
- * placeholder grid. No array iterations means no React key concerns.
- */
 function GraphSkeleton() {
-  const vw = 53 * STEP - GAP;
+  const vw = 53 * STEP_PX - GAP_PX;
   return (
-    <svg viewBox={`0 0 ${vw} ${SVG_H}`} width="100%" aria-hidden="true" className="animate-pulse">
+    <svg viewBox={`0 0 ${vw} ${SVG_HEIGHT_PX}`} width="100%" aria-hidden="true" className="animate-pulse">
       <defs>
-        <pattern id="sk-grid" x="0" y="0" width={STEP} height={STEP} patternUnits="userSpaceOnUse">
-          <rect width={CELL} height={CELL} rx="3" fill="rgba(255,255,255,0.05)" />
+        <pattern id="sk-grid" x="0" y="0" width={STEP_PX} height={STEP_PX} patternUnits="userSpaceOnUse">
+          <rect width={CELL_PX} height={CELL_PX} rx="3" fill="rgba(255,255,255,0.05)" />
         </pattern>
       </defs>
-      <rect x="0" y={LABEL_H} width={vw} height={7 * STEP - GAP} fill="url(#sk-grid)" />
+      <rect x="0" y={LABEL_HEIGHT_PX} width={vw} height={7 * STEP_PX - GAP_PX} fill="url(#sk-grid)" />
     </svg>
   );
 }
 
-/* ─── main component ─────────────────────────────────────────────── */
-
 export type ContributionGraphProps = {
-  /** API endpoint for contribution data. Defaults to /api/github/contributions */
   apiUrl?: string;
   className?: string;
 };
@@ -207,7 +186,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
 
   const contributions = data ? computeDynamicLevels(data.contributions) : [];
   const { weeks, monthLabels } = buildCalendar(contributions);
-  const svgWidth = weeks.length > 0 ? weeks.length * STEP - GAP : 0;
+  const svgWidth = weeks.length > 0 ? weeks.length * STEP_PX - GAP_PX : 0;
   return (
     <>
       {/* Fixed tooltip — uses viewport coords, never clipped by overflow */}
@@ -230,25 +209,21 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
           className
         )}
       >
-        {/* Ambient neon gradient overlay */}
         <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-br from-orange-500/4 via-transparent to-transparent" />
 
         <div className="relative z-10 pb-1">
-          {/* ── Loading ── */}
           {loading && <GraphSkeleton />}
 
-          {/* ── Error ── */}
           {error && (
             <div className="flex h-26.25 items-center justify-center font-mono text-sm text-muted-foreground">
               Unable to load contribution data.
             </div>
           )}
 
-          {/* ── Data ── */}
           {!loading && !error && data && (
             <div className="flex w-full flex-col gap-2">
               <svg
-                viewBox={`0 0 ${svgWidth} ${SVG_H}`}
+                viewBox={`0 0 ${svgWidth} ${SVG_HEIGHT_PX}`}
                 width="100%"
                 aria-label={`${data.total.toLocaleString()} GitHub contributions in the last year`}
                 role="img"
@@ -261,10 +236,11 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                     return;
                   }
                   const { x: rx, y: ry } = pt.matrixTransform(ctm.inverse());
-                  const wi = Math.floor(rx / STEP);
-                  const di = Math.floor((ry - LABEL_H) / STEP);
-                  const inBounds = wi >= 0 && wi < weeks.length && di >= 0 && di < 7 && ry >= LABEL_H;
-                  const inCell = inBounds && rx - wi * STEP < CELL && ry - LABEL_H - di * STEP < CELL;
+                  const wi = Math.floor(rx / STEP_PX);
+                  const di = Math.floor((ry - LABEL_HEIGHT_PX) / STEP_PX);
+                  const inBounds = wi >= 0 && wi < weeks.length && di >= 0 && di < 7 && ry >= LABEL_HEIGHT_PX;
+                  const inCell =
+                    inBounds && rx - wi * STEP_PX < CELL_PX && ry - LABEL_HEIGHT_PX - di * STEP_PX < CELL_PX;
                   const day = inCell ? (weeks[wi]?.[di] ?? null) : null;
                   setTooltip((prev) =>
                     prev?.day.date === day?.date ? prev : day ? { day, x: e.clientX, y: e.clientY } : null
@@ -273,7 +249,6 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                 onMouseLeave={() => setTooltip(null)}
               >
                 <defs>
-                  {/* Neon glow for peak-activity cells (level 6) */}
                   <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
                     <feGaussianBlur stdDeviation="2.5" result="blur" />
                     <feMerge>
@@ -283,12 +258,11 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                   </filter>
                 </defs>
 
-                {/* Month labels */}
                 {monthLabels.map(({ weekIndex, label }) => (
                   <text
                     key={`${label}-${weekIndex}`}
-                    x={weekIndex * STEP}
-                    y={LABEL_H - 4}
+                    x={weekIndex * STEP_PX}
+                    y={LABEL_HEIGHT_PX - 4}
                     fontSize={10}
                     fontFamily="monospace"
                     className="fill-muted-foreground"
@@ -297,7 +271,6 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                   </text>
                 ))}
 
-                {/* Contribution cells — grouped by week */}
                 {weeks.map((week, wi) => {
                   const firstRealDay = week.find(Boolean);
                   // Skip any all-empty week (defensive; won't happen with real GitHub data).
@@ -306,17 +279,16 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                   }
 
                   return (
-                    // Key uses the first real day's date — stable, data-based, not an array index.
                     <g key={firstRealDay.date}>
                       {week.map((day, di) =>
                         // Null padding cells are skipped; SVG coordinate space handles the gap.
                         day ? (
                           <rect
                             key={day.date}
-                            x={wi * STEP}
-                            y={LABEL_H + di * STEP}
-                            width={CELL}
-                            height={CELL}
+                            x={wi * STEP_PX}
+                            y={LABEL_HEIGHT_PX + di * STEP_PX}
+                            width={CELL_PX}
+                            height={CELL_PX}
                             rx={3}
                             ry={3}
                             fill={LEVEL_FILL[day.level]}
@@ -331,7 +303,6 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                 })}
               </svg>
 
-              {/* Footer: total count + legend */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-mono text-muted-foreground" style={{ fontSize: 11 }}>
                   {data.total.toLocaleString()} contributions in the last year
@@ -341,8 +312,8 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
                     Less
                   </span>
                   {([0, 1, 2, 3, 4, 5, 6] as const).map((lvl) => (
-                    <svg key={lvl} width={CELL} height={CELL} aria-hidden="true">
-                      <rect width={CELL} height={CELL} rx={3} ry={3} fill={LEVEL_FILL[lvl]} />
+                    <svg key={lvl} width={CELL_PX} height={CELL_PX} aria-hidden="true">
+                      <rect width={CELL_PX} height={CELL_PX} rx={3} ry={3} fill={LEVEL_FILL[lvl]} />
                     </svg>
                   ))}
                   <span className="ml-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>

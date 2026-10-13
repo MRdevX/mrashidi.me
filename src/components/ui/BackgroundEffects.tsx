@@ -146,7 +146,6 @@ export function BackgroundEffects() {
   if (shouldDisableEffects || prefersReducedMotion) {
     return (
       <>
-        {/* Minimal gradient overlays only */}
         <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-black/8 to-transparent dark:from-slate-950/40 pointer-events-none z-0" />
         <div className="fixed bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/8 to-transparent dark:from-slate-950/40 pointer-events-none z-0" />
       </>
@@ -155,7 +154,6 @@ export function BackgroundEffects() {
 
   return (
     <>
-      {/* Matrix animation - reduced opacity for better performance */}
       <canvas
         ref={canvasRef}
         className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
@@ -169,11 +167,9 @@ export function BackgroundEffects() {
         }`}
       />
 
-      {/* Gradient overlays */}
       <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-black/12 to-transparent dark:from-slate-950/50 pointer-events-none z-0" />
       <div className="fixed bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/12 to-transparent dark:from-slate-950/50 pointer-events-none z-0" />
 
-      {/* Radial wash — orange only, subtle */}
       {!isLowPerformance && (
         <motion.div
           className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"

@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import { formatDuration, formatYearMonth, parsePeriod, toIsoMonth, type YearMonth } from "./period";
 import { accentTextClass } from "./styles";
 
-/** Achievements visible before "Show more". */
 const ACHIEVEMENT_PREVIEW_COUNT = 3;
 
 /**

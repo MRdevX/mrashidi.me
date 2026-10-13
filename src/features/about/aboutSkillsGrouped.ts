@@ -44,7 +44,6 @@ export const SKILL_GROUP_DEFINITIONS: ReadonlyArray<{ id: SkillGroupId; title: s
   { id: "tools", title: "Tools & Workflow", categories: ["Tools"] },
 ];
 
-/** The short "what I reach for first" strip shown above the groups. */
 export const PRIMARY_STACK = [
   "TypeScript",
   "Node.js",

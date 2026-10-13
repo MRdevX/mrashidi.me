@@ -13,7 +13,6 @@ type PageStaggerContainerProps = {
   children: (ctx: PageStaggerRenderProps) => ReactNode;
 };
 
-/** Outer stagger + single `usePageStaggerVariants` for home/projects style pages. */
 export function PageStaggerContainer({ children }: PageStaggerContainerProps) {
   const { containerVariants, itemVariants, prefersReducedMotion } = usePageStaggerVariants();
 

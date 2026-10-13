@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Typography System
-   ========================================================================== */
-
 @layer utilities {
-  /* Typography hierarchy */
   .cyberpunk-h1 {
     font-size: 3rem;
     line-height: 1.1;
@@ -141,7 +136,6 @@
     color: #94a3b8;
   }
 
-  /* Text Utilities */
   .text-body {
     color: hsl(var(--foreground));
     font-family: var(--font-family-albert);

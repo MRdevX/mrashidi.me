@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils/common";
 import { SocialButton } from "./SocialButton";
 
 interface SocialButtonsRowProps {
-  /** Optional label above the buttons (e.g. on the contact page). */
   heading?: string;
   className?: string;
 }

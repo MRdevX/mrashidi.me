@@ -39,14 +39,12 @@ export const BrandLogo = () => {
           MR
         </motion.span>
 
-        {/* Simplified effects for better performance */}
         {!isLowPerformance && (
           <>
             <motion.div
               className="absolute -inset-1 bg-orange-500/10 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               initial={false}
             />
-            {/* Removed the infinite animation for better performance */}
           </>
         )}
       </motion.div>

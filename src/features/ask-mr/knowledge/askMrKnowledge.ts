@@ -1,16 +1,3 @@
-/**
- * Extra facts for Ask MR that the site pages don't show.
- *
- * The assistant answers ONLY from the site data plus this file, so anything left empty here
- * becomes "I don't know — ask Mahdi directly". Empty strings and empty arrays are omitted
- * from the prompt.
- *
- * Write in third person ("Mahdi …"), keep each entry to one or two sentences, and only add
- * what you are happy for any visitor to read: this repo is open source, so the whole file is
- * public. Never add contact details beyond the site's, residence/visa status, compensation or
- * anything else that could be misused.
- */
-
 interface AskMrRoleNotes {
   /** Must match `company` in `src/data/profile/workExperience.ts` to be merged into that role. */
   company: string;
@@ -36,25 +23,18 @@ export interface AskMrKnowledge {
   hiddenRoles: string[];
   /** e.g. "Open to senior backend roles". Leave empty to deflect availability questions to contact. */
   availability: string;
-  /** e.g. "Prefers remote or hybrid work". */
   remote: string;
-  /** e.g. "Not planning to relocate". */
   relocation: string;
   /** Leave empty: residence and visa details stay private. */
   workAuthorization: string;
-  /** Roles he is most interested in. */
   preferredRoles: string[];
-  /** Areas he is most interested in. */
   interests: string[];
-  /** How he likes to work. */
   workingStyle: string[];
-  /** Light, public personal facts. */
   funFacts: string[];
   /** Projects from the CV that aren't on the projects page (no cards or deep links). */
   extraProjects: AskMrExtraProject[];
   /** Skills from the CV that aren't listed on the about page. */
   extraSkills: string[];
-  /** Anything else visitors often ask. */
   faq: AskMrFaqEntry[];
 }
 

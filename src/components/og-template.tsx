@@ -20,7 +20,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
       position: "relative",
     }}
   >
-    {/* Background accent shapes */}
     <div
       style={{
         position: "absolute",
@@ -44,7 +43,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
       }}
     />
 
-    {/* Main content */}
     <div
       style={{
         display: "flex",
@@ -55,7 +53,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
         zIndex: 1,
       }}
     >
-      {/* Title */}
       <h1
         style={{
           fontSize: "64px",
@@ -68,7 +65,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
         {title}
       </h1>
 
-      {/* Subtitle */}
       <h2
         style={{
           fontSize: "32px",
@@ -80,7 +76,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
         {subtitle}
       </h2>
 
-      {/* Description */}
       <p
         style={{
           fontSize: "24px",
@@ -93,7 +88,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
         {description}
       </p>
 
-      {/* Website URL */}
       <div
         style={{
           fontSize: "18px",
@@ -108,7 +102,6 @@ export const OgImageTemplate = ({ title, subtitle, description }: OgImageTemplat
       </div>
     </div>
 
-    {/* Border accent */}
     <div
       style={{
         position: "absolute",
