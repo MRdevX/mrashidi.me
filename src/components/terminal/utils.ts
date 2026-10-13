@@ -44,5 +44,3 @@ export const isValidCommand = (input: string): boolean => {
 export const generateCommandKey = (command: { timestamp: Date; input: string }, index: number): string => {
   return `${command.timestamp.getTime()}-${command.input}-${index}`;
 };
-
-export { truncateText } from "@/lib/utils/index";

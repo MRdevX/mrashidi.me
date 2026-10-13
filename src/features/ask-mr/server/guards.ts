@@ -46,13 +46,13 @@ const messageSchema = z.looseObject({
   parts: z.array(partSchema).max(40),
 });
 
-export const chatRequestSchema = z.object({
+const chatRequestSchema = z.object({
   messages: z.array(messageSchema).min(1).max(ASK_MR_LIMITS.maxRequestMessages),
   conversationId: z.uuid(),
   pathname: z.string().max(200).optional(),
 });
 
-export interface ChatRequest {
+interface ChatRequest {
   messages: UIMessage[];
   conversationId: string;
   pathname?: string;
@@ -139,7 +139,7 @@ export async function checkLimits(request: Request, limiters: readonly RateLimit
   return null;
 }
 
-export async function isBotRequest(): Promise<boolean> {
+async function isBotRequest(): Promise<boolean> {
   try {
     // Verified crawlers count as bots too: nothing here is worth spending model tokens on for them.
     const verification = await checkBotId();

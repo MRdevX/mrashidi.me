@@ -1,4 +1,4 @@
-export type ProjectVisibility = "public" | "private";
+type ProjectVisibility = "public" | "private";
 export type ProjectType = "personal" | "client";
 
 export interface Project {

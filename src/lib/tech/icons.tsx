@@ -500,5 +500,3 @@ export function getTechIcon(iconKey: string) {
   const normalizedKey = getIconKey(iconKey);
   return ICON_DEFINITIONS[normalizedKey] || ICON_DEFINITIONS.default;
 }
-
-export default ICON_DEFINITIONS;

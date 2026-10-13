@@ -9,12 +9,6 @@ export interface ITemplateConfig {
   footerText: string;
 }
 
-export interface IEmailTemplateOptions {
-  subject: string;
-  content: string;
-  showSocialLinks?: boolean;
-}
-
 export interface EmailTemplateData {
   name: string;
   email: string;

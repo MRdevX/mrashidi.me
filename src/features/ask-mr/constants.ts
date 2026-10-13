@@ -9,8 +9,6 @@ export const ASK_MR_TOOLS = {
   suggestFollowUps: "suggestFollowUps",
 } as const;
 
-export type AskMrToolName = keyof typeof ASK_MR_TOOLS;
-
 export const ASK_MR_LIMITS = {
   /** Max characters in one visitor message. */
   maxMessageChars: 1000,

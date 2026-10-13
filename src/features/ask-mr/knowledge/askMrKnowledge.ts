@@ -11,20 +11,20 @@
  * anything else that could be misused.
  */
 
-export interface AskMrRoleNotes {
+interface AskMrRoleNotes {
   /** Must match `company` in `src/data/profile/workExperience.ts` to be merged into that role. */
   company: string;
   highlights: string[];
 }
 
-export interface AskMrExtraProject {
+interface AskMrExtraProject {
   title: string;
   year: string;
   summary: string;
   stack: string[];
 }
 
-export interface AskMrFaqEntry {
+interface AskMrFaqEntry {
   question: string;
   answer: string;
 }

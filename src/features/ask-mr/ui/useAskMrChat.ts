@@ -82,5 +82,3 @@ export function useAskMrChat({ persist = true, chatId = "ask-mr" }: UseAskMrChat
     isBusy: status === "submitted" || status === "streaming",
   };
 }
-
-export type AskMrChat = ReturnType<typeof useAskMrChat>;

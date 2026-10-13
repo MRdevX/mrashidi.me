@@ -10,7 +10,7 @@ export interface NavigationItem {
   showInDesktop?: boolean;
 }
 
-export const navigationItems: NavigationItem[] = [
+const navigationItems: NavigationItem[] = [
   { name: "Home", href: "/", icon: Home, showInMobile: true, showInDesktop: true },
   { name: "Projects", href: "/projects", icon: FolderOpen, showInMobile: true, showInDesktop: true },
   { name: "Blog", href: "/blog", icon: BookOpen, showInMobile: true, showInDesktop: true },
@@ -21,17 +21,6 @@ export const navigationItems: NavigationItem[] = [
 
 export const mobileNavigationItems = navigationItems.filter((item) => item.showInMobile);
 export const desktopNavigationItems = navigationItems.filter((item) => item.showInDesktop);
-
-export function getNavigationItems(type: "mobile" | "desktop" | "all" = "all"): NavigationItem[] {
-  switch (type) {
-    case "mobile":
-      return mobileNavigationItems;
-    case "desktop":
-      return desktopNavigationItems;
-    default:
-      return navigationItems;
-  }
-}
 
 export const githubLink = {
   url: config.social.githubRepo,

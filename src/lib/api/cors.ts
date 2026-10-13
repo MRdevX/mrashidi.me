@@ -20,7 +20,7 @@ function mergeVaryHeader(existing: string | null, directives: string): string {
   return [...new Set(parts)].sort().join(", ");
 }
 
-export function buildCorsHeaders(origin: string | null): Record<string, string> | undefined {
+function buildCorsHeaders(origin: string | null): Record<string, string> | undefined {
   const { ALLOWED_METHODS, ALLOWED_HEADERS, MAX_AGE } = API_CONFIG.CORS;
 
   const allowedOrigin = reflectedCorsOrigin(origin);

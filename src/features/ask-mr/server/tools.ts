@@ -28,7 +28,7 @@ const projectsBySlug = new Map(projects.map((project) => [projectSlug(project), 
 
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 
-export function toProjectCard(project: Project): AskMrProjectCard {
+function toProjectCard(project: Project): AskMrProjectCard {
   return {
     slug: projectSlug(project),
     title: project.title,
@@ -121,5 +121,5 @@ export const askMrTools = {
   }),
 };
 
-export type AskMrTools = InferUITools<typeof askMrTools>;
+type AskMrTools = InferUITools<typeof askMrTools>;
 export type AskMrUIMessage = UIMessage<unknown, UIDataTypes, AskMrTools>;

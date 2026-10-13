@@ -5,7 +5,7 @@ export enum SkillLevel {
   FAMILIAR = "familiar",
 }
 
-export interface Skill {
+interface Skill {
   name: string;
   level?: SkillLevel;
   includeInMainStack?: boolean;
@@ -13,11 +13,7 @@ export interface Skill {
 
 export interface SkillCategory {
   category: string;
-  skills: Array<{
-    name: string;
-    level?: SkillLevel;
-    includeInMainStack?: boolean;
-  }>;
+  skills: Skill[];
 }
 
 // Tiers follow the CV's skills evidence (mrashidi-cv, skills-evidence.md):
@@ -180,5 +176,4 @@ const skillCategories: SkillCategory[] = [
   },
 ];
 
-export default skillCategories;
 export { skillCategories };

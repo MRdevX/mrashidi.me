@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { performanceUtils } from "@/lib/utils/performance";
+import { detectDeviceCapabilities } from "@/lib/utils/performance";
 
 interface Particle {
   x: number;
@@ -26,7 +26,7 @@ export function BackgroundEffects() {
   useEffect(() => {
     setMounted(true);
 
-    const { isLowEnd, shouldDisableEffects: disableEffects } = performanceUtils.detectDeviceCapabilities();
+    const { isLowEnd, shouldDisableEffects: disableEffects } = detectDeviceCapabilities();
     setIsLowPerformance(isLowEnd);
     setShouldDisableEffects(disableEffects);
 

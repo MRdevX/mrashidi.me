@@ -1,7 +1,7 @@
 import { logger } from "@/lib/core";
 import { githubService } from "@/lib/services/github";
 
-export interface CommitInfo {
+interface CommitInfo {
   date: Date;
   hash: string;
 }

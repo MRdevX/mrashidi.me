@@ -75,7 +75,7 @@ function createInMemoryRateLimit(limiterName: string, requests: number, window: 
   };
 }
 
-export const rateLimiters =
+const rateLimiters =
   redisAvailable && redis
     ? {
         contactForm: new Ratelimit({

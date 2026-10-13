@@ -96,5 +96,3 @@ export function getRequiredEnv<K extends keyof Env>(key: K): NonNullable<Env[K]>
 export const isDevelopment = env.NODE_ENV === "development";
 
 export const isProduction = env.NODE_ENV === "production";
-
-export const isTest = env.NODE_ENV === "test";
