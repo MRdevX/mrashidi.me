@@ -32,6 +32,17 @@ const EnvSchema = z.object({
   BLOB_STORE_URL: z.string().url().optional(),
   CV_UPLOAD_TOKEN: z.string().optional(),
   NEXT_PUBLIC_APP_VERSION: z.string().optional(),
+
+  /** Vercel AI Gateway key for local dev; on Vercel the gateway authenticates via OIDC instead. */
+  AI_GATEWAY_API_KEY: z.string().optional(),
+  /** Gateway model id for Ask MR. */
+  ASK_MR_MODEL: z.string().default("anthropic/claude-haiku-5.5"),
+  /** Max Ask MR requests per day across all visitors; past it the chat politely pauses. */
+  ASK_MR_DAILY_BUDGET: z.coerce.number().int().positive().default(1000),
+  /** Server-side kill switch for `/api/chat`. */
+  ASK_MR_ENABLED: z.stringbool().default(true),
+  /** Hides the Ask MR UI when "false" (read directly from `process.env` in client code). */
+  NEXT_PUBLIC_ASK_MR_ENABLED: z.stringbool().default(true),
 });
 
 export const env = EnvSchema.parse({
@@ -61,6 +72,11 @@ export const env = EnvSchema.parse({
   BLOB_STORE_URL: process.env.BLOB_STORE_URL,
   CV_UPLOAD_TOKEN: process.env.CV_UPLOAD_TOKEN,
   NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION,
+  AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
+  ASK_MR_MODEL: process.env.ASK_MR_MODEL,
+  ASK_MR_DAILY_BUDGET: process.env.ASK_MR_DAILY_BUDGET,
+  ASK_MR_ENABLED: process.env.ASK_MR_ENABLED,
+  NEXT_PUBLIC_ASK_MR_ENABLED: process.env.NEXT_PUBLIC_ASK_MR_ENABLED,
 });
 
 export type Env = z.infer<typeof EnvSchema>;

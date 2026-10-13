@@ -1,5 +1,6 @@
 export const AVAILABLE_COMMANDS = {
   help: "Show available commands",
+  ask: "Ask the AI assistant about me, e.g. ask what's your stack?",
   about: "Display information about me",
   experience: "Show my work experience",
   skills: "List my technical skills",

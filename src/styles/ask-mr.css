@@ -1,0 +1,107 @@
+/* Ask MR — AI chat panel, launcher and hero CTA. */
+
+@property --ai-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ai-border-spin {
+  to {
+    --ai-angle: 360deg;
+  }
+}
+
+/* Animated conic border (ported from notablenomads' "Ask Nomad AI" button): ::before is the ring, ::after the glow. */
+.ai-border {
+  position: relative;
+  isolation: isolate;
+  background: rgb(255 255 255 / 0.85);
+}
+
+.dark .ai-border {
+  background: rgb(10 12 16 / 0.85);
+}
+
+.ai-border::before,
+.ai-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(from var(--ai-angle), #ff5f1f, #fdba74, transparent 40%, #ff5f1f 70%, #4ade80, #ff5f1f);
+  animation: ai-border-spin 4s linear infinite;
+}
+
+.ai-border::before {
+  padding: 1.5px;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+.ai-border::after {
+  inset: -2px;
+  z-index: -1;
+  filter: blur(12px);
+  opacity: 0.45;
+}
+
+@keyframes ask-mr-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+@keyframes ask-mr-panel-out {
+  to {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+.ask-mr-panel[data-state="open"] {
+  animation: ask-mr-panel-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ask-mr-panel[data-state="closed"] {
+  animation: ask-mr-panel-out 160ms ease-in forwards;
+}
+
+@keyframes ask-mr-launcher-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 8px 30px -8px rgb(0 0 0 / 0.35),
+      0 0 0 0 rgb(255 95 31 / 0.55);
+  }
+  50% {
+    box-shadow:
+      0 8px 30px -8px rgb(0 0 0 / 0.35),
+      0 0 0 10px rgb(255 95 31 / 0);
+  }
+}
+
+.ask-mr-launcher--pulse {
+  animation: ask-mr-launcher-pulse 1.8s ease-out 1.5s 2;
+}
+
+/* The full-screen mobile panel would otherwise sit under the Buy Me a Coffee button (z-index 9999999). */
+@media (max-width: 639px) {
+  html[data-ask-mr-open] #bmc-wbtn {
+    /* biome-ignore lint/complexity/noImportantStyles: the widget sets inline styles */
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-border::before,
+  .ai-border::after,
+  .ask-mr-panel[data-state="open"],
+  .ask-mr-panel[data-state="closed"],
+  .ask-mr-launcher--pulse {
+    animation: none;
+  }
+}

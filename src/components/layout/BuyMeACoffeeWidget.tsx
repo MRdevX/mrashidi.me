@@ -8,7 +8,7 @@ const bmcPositionOriginals = new WeakMap<
   HTMLElement,
   {
     bottom: string;
-    right: string;
+    left: string;
   }
 >();
 
@@ -23,16 +23,16 @@ function syncBmcMobilePosition(): void {
   if (mobile) {
     if (!bmcPositionOriginals.has(btn)) {
       const bottom = btn.style.bottom;
-      const right = btn.style.right;
-      if (bottom !== "" || right !== "") {
+      const left = btn.style.left;
+      if (bottom !== "" || left !== "") {
         bmcPositionOriginals.set(btn, {
           bottom,
-          right,
+          left,
         });
       }
     }
     btn.style.setProperty("bottom", "calc(6rem + env(safe-area-inset-bottom, 0px))");
-    btn.style.setProperty("right", "1rem");
+    btn.style.setProperty("left", "1rem");
     return;
   }
 
@@ -45,10 +45,10 @@ function syncBmcMobilePosition(): void {
   } else {
     btn.style.removeProperty("bottom");
   }
-  if (orig.right) {
-    btn.style.setProperty("right", orig.right);
+  if (orig.left) {
+    btn.style.setProperty("left", orig.left);
   } else {
-    btn.style.removeProperty("right");
+    btn.style.removeProperty("left");
   }
 }
 
@@ -84,7 +84,8 @@ export function BuyMeACoffeeWidget() {
     script.setAttribute("data-description", "Support me on Buy me a coffee!");
     script.setAttribute("data-message", "If I saved you a headache, here's where headaches buy coffee.");
     script.setAttribute("data-color", "#FF813F");
-    script.setAttribute("data-position", "Right");
+    // Left (the widget only matches lowercase "left"): the bottom-right corner belongs to the Ask MR launcher.
+    script.setAttribute("data-position", "left");
     script.setAttribute("data-x_margin", "18");
     script.setAttribute("data-y_margin", "18");
 

@@ -1,4 +1,5 @@
 import { withSentryConfig } from "@sentry/nextjs/config";
+import { withBotId } from "botid/next/config";
 import withPWA from "next-pwa";
 
 const withBundleAnalyzer =
@@ -91,7 +92,7 @@ const nextConfig = {
 
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), payment=()",
+            value: "camera=(), microphone=(self), geolocation=(), payment=()",
           },
 
           {
@@ -150,7 +151,7 @@ const pwaConfig =
         ],
       });
 
-const config = withBundleAnalyzer(pwaConfig(nextConfig));
+const config = withBotId(withBundleAnalyzer(pwaConfig(nextConfig)));
 
 export default withSentryConfig(config, {
   org: "notable-nomads",

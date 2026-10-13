@@ -1,9 +1,10 @@
-import { useCallback, useState } from "react";
+import { createElement, useCallback, useState } from "react";
 import { logger } from "@/lib/core";
+import { AskCommandOutput } from "../AskCommandOutput";
 import { handleCommand } from "../commandHandlers";
 import { TERMINAL_CONSTANTS } from "../constants";
 import type { Command, CommandType } from "../types";
-import { isValidCommand, normalizeCommand } from "../utils";
+import { isValidCommand, normalizeCommand, parseAskCommand } from "../utils";
 
 export const useTerminal = () => {
   const [commands, setCommands] = useState<Command[]>([]);
@@ -61,6 +62,17 @@ export const useTerminal = () => {
   const executeCommand = useCallback(
     async (cmd: string) => {
       if (!isValidCommand(cmd)) {
+        return;
+      }
+
+      // `ask <question>` streams its own output, so it skips the simulated delay and loading text.
+      const question = parseAskCommand(cmd);
+      if (question) {
+        setCommands((prev) => [
+          ...prev,
+          { input: cmd, output: createElement(AskCommandOutput, { question }), timestamp: new Date() },
+        ]);
+        setCommandHistory((prev) => [...prev, cmd]);
         return;
       }
 
