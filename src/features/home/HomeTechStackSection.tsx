@@ -14,7 +14,7 @@ type HomeTechStackSectionProps = {
 
 export function HomeTechStackSection({ variants, techStack }: HomeTechStackSectionProps) {
   return (
-    <HomeMarkedSection variants={variants} iconName="Code2" title="My Tech Stack">
+    <HomeMarkedSection variants={variants} iconName="Code2" title="Tech Stack">
       <Suspense fallback={<TechStackGridSkeleton />}>
         <LazyTechStackGrid techStack={techStack} />
       </Suspense>

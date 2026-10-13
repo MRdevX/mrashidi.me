@@ -23,7 +23,7 @@ const personalInfo: PersonalInfo = {
   bio: getAboutBioPlainText(),
   contactCta: "Feel Free to Reach Out",
   contactDescription:
-    "I'm open to discussing new opportunities. If you think I might be a good fit for what you're building, feel free to reach out and we can chat about it.",
+    "I'm open to new opportunities. If you think I'd be a good fit for what you're building, let's talk.",
 };
 
 export default personalInfo;
