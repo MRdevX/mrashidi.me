@@ -223,6 +223,15 @@ const HelpCommandOutput = () => (
 const commandHandlers = {
   help: () => <HelpCommandOutput />,
 
+  ask: () => (
+    <div className="mt-2 space-y-1">
+      <p>
+        Usage: <span className="text-green-400">ask &lt;question&gt;</span>
+      </p>
+      <p className="text-gray-500">e.g. ask has he worked with Kubernetes?</p>
+    </div>
+  ),
+
   about: () => (
     <div className="mt-2 space-y-2">
       <p>{personalInfo.bio}</p>

@@ -1,6 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { checkRateLimit, getClientIdentifier } from "@/lib/services/rate-limit";
 
+// The service only uses Redis when both Upstash variables are set (otherwise it falls back to memory).
+vi.hoisted(() => {
+  process.env.UPSTASH_REDIS_REST_URL = "https://example.upstash.io";
+  process.env.UPSTASH_REDIS_REST_TOKEN = "test-token";
+});
+
 vi.mock("@upstash/ratelimit", () => {
   const mockLimit = vi.fn().mockResolvedValue({
     success: true,

@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 
 import { BuyMeACoffeeWidget, HeadMeta, MainContent, Navbar } from "@/components/layout";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AskMrProvider } from "@/features/ask-mr";
 import { inter } from "@/lib/fonts";
 import { generateRootMetadata, generateViewport } from "@/lib/metadata";
 
@@ -48,24 +49,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} min-h-screen relative`}>
         <ThemeProvider>
-          <Suspense fallback={null}>
-            <BackgroundEffects />
-          </Suspense>
-          <Suspense fallback={null}>
-            <BlogPreloader />
-          </Suspense>
-          <Navbar />
-          <MainContent>{children}</MainContent>
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-          <Suspense fallback={null}>
-            <BottomNavigation />
-          </Suspense>
-          <Suspense fallback={null}>
-            <AnalyticsWrapper />
-          </Suspense>
-          <BuyMeACoffeeWidget />
+          <AskMrProvider>
+            <Suspense fallback={null}>
+              <BackgroundEffects />
+            </Suspense>
+            <Suspense fallback={null}>
+              <BlogPreloader />
+            </Suspense>
+            <Navbar />
+            <MainContent>{children}</MainContent>
+            <Suspense fallback={null}>
+              <Footer />
+            </Suspense>
+            <Suspense fallback={null}>
+              <BottomNavigation />
+            </Suspense>
+            <Suspense fallback={null}>
+              <AnalyticsWrapper />
+            </Suspense>
+            <BuyMeACoffeeWidget />
+          </AskMrProvider>
         </ThemeProvider>
       </body>
     </html>

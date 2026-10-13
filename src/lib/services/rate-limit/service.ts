@@ -6,6 +6,11 @@ let redis: Redis | null = null;
 let redisAvailable = false;
 
 try {
+  // `Redis.fromEnv()` doesn't throw when the variables are missing, so check them explicitly
+  // or every limited route fails instead of falling back to in-memory limits.
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    throw new Error("UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN not set");
+  }
   redis = Redis.fromEnv();
   redisAvailable = true;
   logger.info("Redis rate limiting initialized successfully");
@@ -112,6 +117,33 @@ export const rateLimiters =
           analytics: true,
           prefix: "ratelimit:api",
         }),
+
+        askMr: new Ratelimit({
+          redis,
+          limiter: Ratelimit.slidingWindow(API_CONFIG.RATE_LIMIT.ASK_MR.requests, API_CONFIG.RATE_LIMIT.ASK_MR.window),
+          analytics: true,
+          prefix: "ratelimit:askmr",
+        }),
+
+        askMrDaily: new Ratelimit({
+          redis,
+          limiter: Ratelimit.slidingWindow(
+            API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
+            API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
+          ),
+          analytics: true,
+          prefix: "ratelimit:askmr-daily",
+        }),
+
+        askMrFeedback: new Ratelimit({
+          redis,
+          limiter: Ratelimit.slidingWindow(
+            API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
+            API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
+          ),
+          analytics: true,
+          prefix: "ratelimit:askmr-feedback",
+        }),
       }
     : {
         contactForm: createInMemoryRateLimit(
@@ -133,6 +165,21 @@ export const rateLimiters =
           "generalApi",
           API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
           API_CONFIG.RATE_LIMIT.GENERAL_API.window
+        ),
+        askMr: createInMemoryRateLimit(
+          "askMr",
+          API_CONFIG.RATE_LIMIT.ASK_MR.requests,
+          API_CONFIG.RATE_LIMIT.ASK_MR.window
+        ),
+        askMrDaily: createInMemoryRateLimit(
+          "askMrDaily",
+          API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
+          API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
+        ),
+        askMrFeedback: createInMemoryRateLimit(
+          "askMrFeedback",
+          API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
+          API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
         ),
       };
 

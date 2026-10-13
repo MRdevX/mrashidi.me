@@ -21,6 +21,7 @@ import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
 import { config } from "@/data";
 
 const EFFECTIVE_DATE = "May 17, 2026";
+const UPDATED_DATE = "October 13, 2026";
 const { name, email, website, location } = config.person;
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -108,7 +109,7 @@ export default function PrivacyPolicy() {
           {/* Meta badges */}
           <div className="flex flex-wrap gap-2">
             <DateBadge icon={<Clock className="h-3 w-3" aria-hidden />} label="Effective" value={EFFECTIVE_DATE} />
-            <DateBadge icon={<RefreshCw className="h-3 w-3" aria-hidden />} label="Updated" value={EFFECTIVE_DATE} />
+            <DateBadge icon={<RefreshCw className="h-3 w-3" aria-hidden />} label="Updated" value={UPDATED_DATE} />
             <DateBadge
               icon={<Shield className="h-3 w-3 text-green-500" aria-hidden />}
               label="Standard"
@@ -177,6 +178,17 @@ export default function PrivacyPolicy() {
                 <strong className="text-foreground">PWA cache</strong> — if you install the app, the browser stores
                 static assets locally on your device. We receive no additional personal data from this.
               </Bullet>
+              <Bullet>
+                <strong className="text-foreground">Ask MR (AI chat)</strong> — the questions you type and the
+                assistant's answers are stored anonymously so we can improve its answers. No IP address, account or
+                device identifier is attached; a random ID only groups messages from the same browser tab. Please don't
+                enter personal or sensitive information in the chat.
+              </Bullet>
+              <Bullet>
+                <strong className="text-foreground">Voice input</strong> — if you dictate a question, your browser's
+                built-in speech recognition turns it into text. Depending on your browser, the audio may be processed by
+                its vendor (for example Google in Chrome). We only receive the resulting text.
+              </Bullet>
             </ul>
             <p className="mt-3 rounded-lg bg-muted/30 p-3 text-xs">
               We do <strong className="text-foreground">not</strong> collect sensitive data such as financial
@@ -188,6 +200,7 @@ export default function PrivacyPolicy() {
           <PolicyCard icon={<BookOpen className="h-5 w-5" />} title="2. How We Use Your Information">
             <ul className="space-y-2">
               <Bullet>To respond to messages you send via the contact form.</Bullet>
+              <Bullet>To answer questions in the Ask MR chat, and to review anonymous chat logs to improve it.</Bullet>
               <Bullet>To monitor and improve performance, reliability, and security of the Service.</Bullet>
               <Bullet>To understand aggregate usage patterns and improve user experience.</Bullet>
               <Bullet>To diagnose and fix technical issues using error reporting tools.</Bullet>
@@ -224,6 +237,21 @@ export default function PrivacyPolicy() {
                 href="https://aws.amazon.com/privacy/"
               />
               <ProviderCard
+                name="Vercel AI Gateway"
+                desc="Routes Ask MR chat messages to the AI model provider."
+                href="https://vercel.com/legal/privacy-policy"
+              />
+              <ProviderCard
+                name="Anthropic"
+                desc="AI model that generates Ask MR answers from the chat messages it receives."
+                href="https://www.anthropic.com/legal/privacy"
+              />
+              <ProviderCard
+                name="Upstash"
+                desc="Rate limiting and anonymous Ask MR chat logs (no IP addresses stored in logs)."
+                href="https://upstash.com/trust/privacy.pdf"
+              />
+              <ProviderCard
                 name="GitHub API"
                 desc="Public contribution data only. No private GitHub data accessed."
                 href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
@@ -249,6 +277,10 @@ export default function PrivacyPolicy() {
                 <strong className="text-foreground">PWA service worker cache</strong> — static assets (HTML, CSS, JS,
                 images) cached on your device for offline use. Not transmitted to us.
               </Bullet>
+              <Bullet>
+                <strong className="text-foreground">Ask MR conversation</strong> — your current chat is kept in session
+                storage so it survives page navigation. It is removed when you close the tab or start a new chat.
+              </Bullet>
             </ul>
             <p className="mt-3">You can clear this data anytime via your browser's developer tools or settings.</p>
           </PolicyCard>
@@ -257,8 +289,9 @@ export default function PrivacyPolicy() {
           <PolicyCard icon={<Clock className="h-5 w-5" />} title="5. Data Retention">
             <p>
               Contact form messages are not stored in a database and are retained only long enough to reply to your
-              inquiry. Server logs are held for 30–90 days by our infrastructure providers. Aggregated, anonymous
-              analytics data may be retained for up to 12 months.
+              inquiry. Anonymous Ask MR chat logs are deleted automatically after 30 days. Server logs are held for
+              30–90 days by our infrastructure providers. Aggregated, anonymous analytics data may be retained for up to
+              12 months.
             </p>
           </PolicyCard>
 

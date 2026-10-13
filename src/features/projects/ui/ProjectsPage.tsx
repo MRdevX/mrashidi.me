@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader, PageStaggerContainer, PageWrapper } from "@/components/ui";
 import { ProjectCatalogProvider } from "../application/ProjectCatalogContext";
 import type { Project } from "../domain/project";
+import { findProjectBySlug, onOpenProjectRequest, readProjectParam } from "../infrastructure/projectDeepLink";
 import { ProjectDetailsDrawer } from "./details/ProjectDetailsDrawer";
 import { ActiveFilters } from "./filters/ActiveFilters";
 import { FilterBar } from "./filters/FilterBar";
@@ -13,6 +14,15 @@ import { ProjectStats } from "./results/ProjectStats";
 
 export function ProjectsPage() {
   const [openProject, setOpenProject] = useState<Project | null>(null);
+
+  // Deep links (`/projects?project=<slug>`) and same-page requests from Ask MR's project cards.
+  useEffect(() => {
+    const initial = findProjectBySlug(readProjectParam(window.location.search));
+    if (initial) {
+      setOpenProject(initial);
+    }
+    return onOpenProjectRequest((slug) => setOpenProject(findProjectBySlug(slug)));
+  }, []);
 
   return (
     <ProjectCatalogProvider>

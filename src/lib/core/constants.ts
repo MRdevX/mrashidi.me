@@ -38,6 +38,18 @@ export const API_CONFIG = {
       requests: 100,
       window: "1 m",
     },
+    ASK_MR: {
+      requests: 10,
+      window: "1 m",
+    },
+    ASK_MR_DAILY: {
+      requests: 60,
+      window: "1 d",
+    },
+    ASK_MR_FEEDBACK: {
+      requests: 30,
+      window: "1 m",
+    },
   },
   CORS: {
     ALLOWED_ORIGINS: ["*"],

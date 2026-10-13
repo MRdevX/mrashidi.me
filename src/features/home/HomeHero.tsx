@@ -6,6 +6,7 @@ import { MapPin } from "lucide-react";
 import { SocialButtonsRow } from "@/components/ui";
 import { TypingAnimation } from "@/components/ui/TypingAnimation";
 import { config } from "@/data";
+import { AskMrHeroCta } from "@/features/ask-mr";
 
 type HomeHeroProps = {
   variants: Variants;
@@ -39,6 +40,7 @@ export function HomeHero({ variants }: HomeHeroProps) {
         </p>
 
         <SocialButtonsRow />
+        <AskMrHeroCta />
       </div>
     </motion.div>
   );

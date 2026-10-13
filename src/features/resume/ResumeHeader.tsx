@@ -3,43 +3,11 @@
 import { Download } from "lucide-react";
 import { useState } from "react";
 import { CyberpunkButton, PageHeader } from "@/components/ui";
-import { logger } from "@/lib/core";
-import type { ResumeRequestData } from "@/lib/validation";
 import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
+import { submitResumeRequest } from "./submitResumeRequest";
 
 export function ResumeHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleResumeRequest = async (data: ResumeRequestData): Promise<boolean> => {
-    try {
-      const response = await fetch("/api/resume", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        return true;
-      } else {
-        const errorData = await response.json();
-        logger.error({
-          operation: "handleResumeRequest",
-          status: "failed",
-          errorData,
-        });
-        return false;
-      }
-    } catch (error) {
-      logger.error({
-        operation: "handleResumeRequest",
-        status: "error",
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return false;
-    }
-  };
 
   return (
     <>
@@ -60,7 +28,7 @@ export function ResumeHeader() {
         }
       />
 
-      <ResumeRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleResumeRequest} />
+      <ResumeRequestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={submitResumeRequest} />
     </>
   );
 }
