@@ -115,3 +115,6 @@ jobs:
             WTFPL OR ISC,
             FSL-1.1-MIT, CC-BY-4.0,
             LGPL-3.0-or-later
+          # Per-package exceptions where GitHub's license metadata is wrong. json-schema@0.4.0 (via the AI SDK)
+          # declares "(AFL-2.1 OR BSD-3-Clause)", but GitHub reports it as AFL AND BSD; BSD-3-Clause is allowed.
+          allow-dependencies-licenses: pkg:npm/json-schema@0.4.0
