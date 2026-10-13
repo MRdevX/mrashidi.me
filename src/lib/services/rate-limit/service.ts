@@ -1,22 +1,12 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
 import { API_CONFIG, logger } from "@/lib/core";
+import { getRedis } from "@/lib/services/redis";
 
-let redis: Redis | null = null;
-let redisAvailable = false;
-
-try {
-  // `Redis.fromEnv()` doesn't throw when the variables are missing, so check them explicitly
-  // or every limited route fails instead of falling back to in-memory limits.
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    throw new Error("UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN not set");
-  }
-  redis = Redis.fromEnv();
-  redisAvailable = true;
+const redis = getRedis();
+if (redis) {
   logger.info("Redis rate limiting initialized successfully");
-} catch (error) {
-  logger.warn({ error }, "Redis not available, using in-memory rate limiting fallback");
-  redisAvailable = false;
+} else {
+  logger.warn("Redis not available, using in-memory rate limiting fallback");
 }
 
 interface RateLimitEntry {
@@ -75,113 +65,112 @@ function createInMemoryRateLimit(limiterName: string, requests: number, window: 
   };
 }
 
-const rateLimiters =
-  redisAvailable && redis
-    ? {
-        contactForm: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(
-            API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
-            API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
-          ),
-          analytics: true,
-          prefix: "ratelimit:contact",
-        }),
-
-        resumeRequest: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(
-            API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
-            API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
-          ),
-          analytics: true,
-          prefix: "ratelimit:resume",
-        }),
-
-        cvUpload: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(
-            API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
-            API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
-          ),
-          analytics: true,
-          prefix: "ratelimit:cv",
-        }),
-
-        generalApi: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(
-            API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
-            API_CONFIG.RATE_LIMIT.GENERAL_API.window
-          ),
-          analytics: true,
-          prefix: "ratelimit:api",
-        }),
-
-        askMr: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(API_CONFIG.RATE_LIMIT.ASK_MR.requests, API_CONFIG.RATE_LIMIT.ASK_MR.window),
-          analytics: true,
-          prefix: "ratelimit:askmr",
-        }),
-
-        askMrDaily: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(
-            API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
-            API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
-          ),
-          analytics: true,
-          prefix: "ratelimit:askmr-daily",
-        }),
-
-        askMrFeedback: new Ratelimit({
-          redis,
-          limiter: Ratelimit.slidingWindow(
-            API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
-            API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
-          ),
-          analytics: true,
-          prefix: "ratelimit:askmr-feedback",
-        }),
-      }
-    : {
-        contactForm: createInMemoryRateLimit(
-          "contactForm",
+const rateLimiters = redis
+  ? {
+      contactForm: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
           API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
           API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
         ),
-        resumeRequest: createInMemoryRateLimit(
-          "resumeRequest",
+        analytics: true,
+        prefix: "ratelimit:contact",
+      }),
+
+      resumeRequest: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
           API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
           API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
         ),
-        cvUpload: createInMemoryRateLimit(
-          "cvUpload",
+        analytics: true,
+        prefix: "ratelimit:resume",
+      }),
+
+      cvUpload: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
           API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
           API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
         ),
-        generalApi: createInMemoryRateLimit(
-          "generalApi",
+        analytics: true,
+        prefix: "ratelimit:cv",
+      }),
+
+      generalApi: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
           API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
           API_CONFIG.RATE_LIMIT.GENERAL_API.window
         ),
-        askMr: createInMemoryRateLimit(
-          "askMr",
-          API_CONFIG.RATE_LIMIT.ASK_MR.requests,
-          API_CONFIG.RATE_LIMIT.ASK_MR.window
-        ),
-        askMrDaily: createInMemoryRateLimit(
-          "askMrDaily",
+        analytics: true,
+        prefix: "ratelimit:api",
+      }),
+
+      askMr: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(API_CONFIG.RATE_LIMIT.ASK_MR.requests, API_CONFIG.RATE_LIMIT.ASK_MR.window),
+        analytics: true,
+        prefix: "ratelimit:askmr",
+      }),
+
+      askMrDaily: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
           API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
           API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
         ),
-        askMrFeedback: createInMemoryRateLimit(
-          "askMrFeedback",
+        analytics: true,
+        prefix: "ratelimit:askmr-daily",
+      }),
+
+      askMrFeedback: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
           API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
           API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
         ),
-      };
+        analytics: true,
+        prefix: "ratelimit:askmr-feedback",
+      }),
+    }
+  : {
+      contactForm: createInMemoryRateLimit(
+        "contactForm",
+        API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
+        API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
+      ),
+      resumeRequest: createInMemoryRateLimit(
+        "resumeRequest",
+        API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
+        API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
+      ),
+      cvUpload: createInMemoryRateLimit(
+        "cvUpload",
+        API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
+        API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
+      ),
+      generalApi: createInMemoryRateLimit(
+        "generalApi",
+        API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
+        API_CONFIG.RATE_LIMIT.GENERAL_API.window
+      ),
+      askMr: createInMemoryRateLimit(
+        "askMr",
+        API_CONFIG.RATE_LIMIT.ASK_MR.requests,
+        API_CONFIG.RATE_LIMIT.ASK_MR.window
+      ),
+      askMrDaily: createInMemoryRateLimit(
+        "askMrDaily",
+        API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
+        API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
+      ),
+      askMrFeedback: createInMemoryRateLimit(
+        "askMrFeedback",
+        API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
+        API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
+      ),
+    };
 
 export type RateLimiterType = keyof typeof rateLimiters;
 

@@ -1,20 +1,14 @@
-import { Redis } from "@upstash/redis";
-import { getEnv, logger } from "@/lib/core";
+import type { Redis } from "@upstash/redis";
+import { logger } from "@/lib/core";
+import { getRedis } from "@/lib/services/redis";
 
-let client: Redis | null | undefined;
+let warned = false;
 
-/** Shared Upstash client for Ask MR budget counters and logs; `null` when Redis isn't configured. */
 export function getAskMrRedis(): Redis | null {
-  if (client !== undefined) {
-    return client;
-  }
-  const url = getEnv("UPSTASH_REDIS_REST_URL");
-  const token = getEnv("UPSTASH_REDIS_REST_TOKEN");
-  if (!url || !token) {
+  const redis = getRedis();
+  if (!redis && !warned) {
     logger.warn("Ask MR: Upstash Redis not configured; budget cap and chat logs are disabled");
-    client = null;
-    return client;
+    warned = true;
   }
-  client = new Redis({ url, token });
-  return client;
+  return redis;
 }
