@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.5](https://github.com/MRdevX/mrashidi.me/compare/v0.2.4...v0.2.5) (2026-10-13)
+
+
+### Build System
+
+* require one-line commit messages ([5c9de9f](https://github.com/MRdevX/mrashidi.me/commit/5c9de9f4cc4e7b64427ca0fac50c6ccdcd1d38da))
+
+
+### Documentation
+
+* adopt house rules in AGENTS.md, stack doc, PR template and contributing guide ([2b0ff2c](https://github.com/MRdevX/mrashidi.me/commit/2b0ff2ce943529e6103441d192daed6ce753ac7b))
+* **decisions:** seed the decision log with DR-0001 to DR-0004 ([74287c5](https://github.com/MRdevX/mrashidi.me/commit/74287c5cf27a67d86c2788082446eb7010c72dad))
+
+
+### Code Refactoring
+
+* drop the unused [@server](https://github.com/server) and [@types](https://github.com/types) path aliases ([6f06f29](https://github.com/MRdevX/mrashidi.me/commit/6f06f293869457341a3ad5be742e4a0b0e106334))
+* remove unused barrels, config, types and test mocks ([f6f8566](https://github.com/MRdevX/mrashidi.me/commit/f6f8566a5071e174947a54bb99995ea44556c031))
+* remove unused exports and dead helpers ([20c0f6b](https://github.com/MRdevX/mrashidi.me/commit/20c0f6b379770bcb96f2b82717a89a06533b363b))
+* share one Upstash Redis client between rate limits and Ask MR ([1e7b780](https://github.com/MRdevX/mrashidi.me/commit/1e7b780263ab9c077d3d89d94fa2215ef1bb8b50))
+* strip comments that fail the house bar ([8746d3d](https://github.com/MRdevX/mrashidi.me/commit/8746d3df267b1d47cbadfc3f5e04a95c051ffda9))
+
 ### [0.2.4](https://github.com/MRdevX/mrashidi.me/compare/v0.2.3...v0.2.4) (2026-10-13)
 
 
