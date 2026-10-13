@@ -2,6 +2,8 @@
 export default {
   extends: ["@commitlint/config-conventional"],
   rules: {
-    "body-max-line-length": [2, "always", 140],
+    "body-empty": [2, "always"],
+    "footer-empty": [2, "always"],
   },
+  ignores: [(message) => message.includes("Signed-off-by: dependabot[bot]")],
 };
