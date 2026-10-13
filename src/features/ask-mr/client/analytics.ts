@@ -1,6 +1,6 @@
 import { track } from "@vercel/analytics";
 
-export type AskMrOpenSource = "launcher" | "hero" | "shortcut" | "chip" | "terminal";
+export type AskMrOpenSource = "launcher" | "shortcut" | "terminal";
 
 type AskMrEvent =
   | { name: "ask_mr_open"; props: { source: AskMrOpenSource } }

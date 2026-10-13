@@ -122,12 +122,14 @@ test("Cmd/Ctrl+K toggles the chat", async ({ page }) => {
   await expect(panel(page)).toBeHidden();
 });
 
-test("hero chips send their question", async ({ page }) => {
+test("terminal starter question streams an answer", async ({ page }) => {
   const requests = await mockChat(page);
   await page.goto("/");
-  await page.getByRole("list", { name: "Ask Ask MR" }).getByRole("button", { name: "Is he open to work?" }).click();
-  await expect(panel(page).getByText("Is he open to work?")).toBeVisible();
-  await expect(panel(page).getByText("Mahdi led a zero-downtime GCP to Azure migration.")).toBeVisible();
+  await page
+    .getByRole("list", { name: "Starter questions" })
+    .getByRole("button", { name: /Is he open to work\?/ })
+    .click();
+  await expect(page.getByText("Mahdi led a zero-downtime GCP to Azure migration.")).toBeVisible();
   expect(requests).toHaveLength(1);
 });
 
@@ -150,10 +152,21 @@ test("shows a countdown when rate limited", async ({ page }) => {
 test("terminal `ask` streams an answer", async ({ page }) => {
   await mockChat(page, uiStream("His core stack is NestJS and PostgreSQL."));
   await page.goto("/");
-  const input = page.getByPlaceholder("Type 'help' for available commands...");
+  const input = page.getByLabel("Terminal input");
   await input.fill("ask what is his stack?");
   await input.press("Enter");
   await expect(page.getByText("His core stack is NestJS and PostgreSQL.")).toBeVisible();
+});
+
+test("terminal answers a plain question without `ask`", async ({ page }) => {
+  await mockChat(page, uiStream("His core stack is NestJS and PostgreSQL."));
+  await page.goto("/");
+  const input = page.getByLabel("Terminal input");
+  await input.fill("what is his stack?");
+  await input.press("Enter");
+  await expect(page.getByText("His core stack is NestJS and PostgreSQL.")).toBeVisible();
+  await page.getByRole("button", { name: /keep chatting in the Ask MR panel/ }).click();
+  await expect(panel(page)).toBeVisible();
 });
 
 for (const theme of ["dark", "light"] as const) {

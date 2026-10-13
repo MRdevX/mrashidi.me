@@ -15,7 +15,10 @@ export const AVAILABLE_COMMANDS = {
 export const TERMINAL_CONSTANTS = {
   HEIGHT: "600px",
   WELCOME_MESSAGE: "Welcome! Type 'help' to see available commands.",
+  AI_WELCOME_MESSAGE: "Hi, I'm MR, an AI that knows Mahdi's work. Ask me anything, or type 'help' for commands.",
   DEFAULT_PLACEHOLDER: "Type 'help' for available commands...",
+  AI_PLACEHOLDER: "ask what's his strongest stack?",
+  NOT_FOUND_MESSAGE: 'Command not found. Type "help" for available commands.',
   EXECUTING_PLACEHOLDER: "Executing command...",
   ERROR_MESSAGE: "Error executing command. Please try again.",
   LOADING_MESSAGES: {
@@ -32,6 +35,12 @@ export const TERMINAL_CONSTANTS = {
   CURSOR_BLINK_RATE: 500,
   COMMAND_DELAY: 200,
 } as const;
+
+export const TERMINAL_STARTER_QUESTIONS = [
+  "What's his strongest stack?",
+  "Tell me about a project he led",
+  "Is he open to work?",
+] as const;
 
 export const TERMINAL_STYLES = {
   CONTAINER:

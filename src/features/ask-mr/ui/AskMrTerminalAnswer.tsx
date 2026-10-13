@@ -5,6 +5,7 @@ import { useEffect, useId, useRef } from "react";
 import { projectHref } from "@/features/projects/infrastructure/projectDeepLink";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { messageText } from "../messageText";
+import { useAskMr } from "./AskMrProvider";
 import { Markdown } from "./Markdown";
 import { useAskMrChat } from "./useAskMrChat";
 
@@ -14,6 +15,7 @@ const linkClass = "text-green-600 hover:underline dark:text-green-400";
 export function AskMrTerminalAnswer({ question }: { question: string }) {
   const chatId = useId();
   const { messages, status, parsedError, ask } = useAskMrChat({ persist: false, chatId: `terminal-${chatId}` });
+  const { open } = useAskMr();
   const sent = useRef(false);
 
   // Deferred one tick and cancelled on cleanup: useChat stops in-flight requests on unmount, so a send from
@@ -120,6 +122,16 @@ export function AskMrTerminalAnswer({ question }: { question: string }) {
             return null;
         }
       })}
+      {status === "ready" && (
+        <button
+          type="button"
+          onClick={() => open({ source: "terminal" })}
+          aria-haspopup="dialog"
+          className="cursor-pointer border-none bg-transparent p-0 text-left text-gray-500 hover:text-green-600 hover:underline dark:hover:text-green-400"
+        >
+          → keep chatting in the Ask MR panel (⌘K)
+        </button>
+      )}
     </div>
   );
 }

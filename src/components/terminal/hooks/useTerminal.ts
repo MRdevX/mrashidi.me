@@ -1,10 +1,11 @@
 import { createElement, useCallback, useState } from "react";
+import { isAskMrEnabled } from "@/features/ask-mr";
 import { logger } from "@/lib/core";
 import { AskCommandOutput } from "../AskCommandOutput";
 import { handleCommand } from "../commandHandlers";
 import { TERMINAL_CONSTANTS } from "../constants";
 import type { Command, CommandType } from "../types";
-import { isValidCommand, normalizeCommand, parseAskCommand } from "../utils";
+import { isValidCommand, normalizeCommand, resolveQuestion } from "../utils";
 
 export const useTerminal = () => {
   const [commands, setCommands] = useState<Command[]>([]);
@@ -61,16 +62,21 @@ export const useTerminal = () => {
 
   const executeCommand = useCallback(
     async (cmd: string) => {
-      if (!isValidCommand(cmd)) {
-        return;
-      }
-
-      // `ask <question>` streams its own output, so it skips the simulated delay and loading text.
-      const question = parseAskCommand(cmd);
+      // `ask <question>` (or a plain question) streams its own output, so it skips the simulated delay and loading text.
+      const question = isAskMrEnabled() ? resolveQuestion(cmd) : null;
       if (question) {
         setCommands((prev) => [
           ...prev,
           { input: cmd, output: createElement(AskCommandOutput, { question }), timestamp: new Date() },
+        ]);
+        setCommandHistory((prev) => [...prev, cmd]);
+        return;
+      }
+
+      if (!isValidCommand(cmd)) {
+        setCommands((prev) => [
+          ...prev,
+          { input: cmd, output: TERMINAL_CONSTANTS.NOT_FOUND_MESSAGE, timestamp: new Date() },
         ]);
         setCommandHistory((prev) => [...prev, cmd]);
         return;

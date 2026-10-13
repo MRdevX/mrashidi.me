@@ -20,6 +20,22 @@ export const parseAskCommand = (input: string): string | null => {
   return match ? match[1].trim() : null;
 };
 
+/**
+ * Returns the question to send to Ask MR: the text after `ask`, or plain input that reads like a question
+ * (several words, or ending in `?`). Known commands and single-word typos return `null`.
+ */
+export const resolveQuestion = (input: string): string | null => {
+  const asked = parseAskCommand(input);
+  if (asked) {
+    return asked;
+  }
+  const text = input.trim();
+  if (!text || normalizeCommand(text) in AVAILABLE_COMMANDS) {
+    return null;
+  }
+  return /\s/.test(text) || text.endsWith("?") ? text : null;
+};
+
 export const isValidCommand = (input: string): boolean => {
   const normalized = normalizeCommand(input);
   return normalized in AVAILABLE_COMMANDS || parseAskCommand(input) !== null;
