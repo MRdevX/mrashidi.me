@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.6](https://github.com/MRdevX/mrashidi.me/compare/v0.2.5...v0.2.6) (2026-10-13)
+
+
+### Features
+
+* **home:** rename terminal section and trim repeated homepage prompts ([0adf85f](https://github.com/MRdevX/mrashidi.me/commit/0adf85fa65e944e7d22777c2e7f42d6bd9dca06b))
+
 ### [0.2.5](https://github.com/MRdevX/mrashidi.me/compare/v0.2.4...v0.2.5) (2026-10-13)
 
 
