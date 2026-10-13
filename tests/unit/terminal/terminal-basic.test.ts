@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatTimestamp, isValidCommand, normalizeCommand } from "@/components/terminal/utils";
+import { formatTimestamp, isValidCommand, normalizeCommand, resolveQuestion } from "@/components/terminal/utils";
 import { invalidCommands, validCommands } from "./fixtures";
 
 describe("Terminal Utils", () => {
@@ -40,6 +40,25 @@ describe("Terminal Utils", () => {
       expect(isValidCommand("HELP")).toBe(true);
       expect(isValidCommand("About")).toBe(true);
       expect(isValidCommand("  SKILLS  ")).toBe(true);
+    });
+  });
+
+  describe("resolveQuestion", () => {
+    it("returns the text after `ask`", () => {
+      expect(resolveQuestion("ask what is his stack?")).toBe("what is his stack?");
+    });
+
+    it("treats multi-word input or a trailing question mark as a question", () => {
+      expect(resolveQuestion("  has he used Kubernetes  ")).toBe("has he used Kubernetes");
+      expect(resolveQuestion("kubernetes?")).toBe("kubernetes?");
+    });
+
+    it("ignores known commands, single-word typos and empty input", () => {
+      expect(resolveQuestion("help")).toBeNull();
+      expect(resolveQuestion(" SKILLS ")).toBeNull();
+      expect(resolveQuestion("skils")).toBeNull();
+      expect(resolveQuestion("ask")).toBeNull();
+      expect(resolveQuestion("   ")).toBeNull();
     });
   });
 });

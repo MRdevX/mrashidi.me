@@ -2,10 +2,40 @@
 
 import { motion } from "framer-motion";
 import React, { type KeyboardEvent, useEffect, useRef, useState } from "react";
-import { TERMINAL_STYLES } from "./constants";
+import { isAskMrEnabled } from "@/features/ask-mr";
+import { TERMINAL_CONSTANTS, TERMINAL_STARTER_QUESTIONS, TERMINAL_STYLES } from "./constants";
 import { useCommandHistory, useTerminal, useTerminalFocus } from "./hooks";
 import { TerminalHistory } from "./TerminalHistory";
 import { TerminalInput } from "./TerminalInput";
+
+function TerminalWelcome({ aiEnabled }: { aiEnabled: boolean }) {
+  if (!aiEnabled) {
+    return <p className={TERMINAL_STYLES.WELCOME}>{TERMINAL_CONSTANTS.WELCOME_MESSAGE}</p>;
+  }
+
+  return (
+    <div className="space-y-2">
+      <p className={TERMINAL_STYLES.WELCOME}>{TERMINAL_CONSTANTS.AI_WELCOME_MESSAGE}</p>
+      <ul className="space-y-1" aria-label="Starter questions">
+        {TERMINAL_STARTER_QUESTIONS.map((question) => (
+          <li key={question}>
+            <button
+              type="button"
+              className="cursor-pointer border-none bg-transparent p-0 text-left text-green-600 transition-colors hover:underline dark:text-green-400 dark:hover:text-green-300"
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent("terminal-command-click", { detail: { command: `ask ${question}`, run: true } })
+                )
+              }
+            >
+              <span className="text-gray-500 select-none">$ </span>ask {question}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 const TerminalContainer = React.memo(() => {
   const [input, setInput] = useState("");
@@ -14,10 +44,16 @@ const TerminalContainer = React.memo(() => {
   const { commands, commandHistory, isExecuting, executeCommand } = useTerminal();
   const { navigateHistory, resetHistoryPosition } = useCommandHistory(commandHistory);
   const { terminalRef, handleTerminalClick } = useTerminalFocus(isExecuting, inputRef);
+  const aiEnabled = isAskMrEnabled();
 
   useEffect(() => {
-    const handleCommandClick = (event: CustomEvent) => {
-      const { command } = event.detail;
+    // `run: true` executes the command right away (starter questions); otherwise it only fills the prompt.
+    const handleCommandClick = (event: CustomEvent<{ command: string; run?: boolean }>) => {
+      const { command, run } = event.detail;
+      if (run) {
+        executeCommand(command);
+        return;
+      }
       setInput(command);
       inputRef.current?.focus();
     };
@@ -27,7 +63,7 @@ const TerminalContainer = React.memo(() => {
     return () => {
       window.removeEventListener("terminal-command-click", handleCommandClick as EventListener);
     };
-  }, []);
+  }, [executeCommand]);
 
   const handleInputChange = (value: string) => {
     setInput(value);
@@ -58,6 +94,7 @@ const TerminalContainer = React.memo(() => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
+      {commands.length === 0 && <TerminalWelcome aiEnabled={aiEnabled} />}
       <TerminalHistory commands={commands} />
       <TerminalInput
         inputRef={inputRef}
@@ -65,6 +102,7 @@ const TerminalContainer = React.memo(() => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         isExecuting={isExecuting}
+        placeholder={aiEnabled ? TERMINAL_CONSTANTS.AI_PLACEHOLDER : TERMINAL_CONSTANTS.DEFAULT_PLACEHOLDER}
       />
     </motion.div>
   );

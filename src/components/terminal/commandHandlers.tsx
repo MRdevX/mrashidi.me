@@ -3,7 +3,7 @@ import { certificates, config, personalInfo, skills, workExperience } from "@/da
 import { projects } from "@/features/projects";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
-import { AVAILABLE_COMMANDS } from "./constants";
+import { AVAILABLE_COMMANDS, TERMINAL_CONSTANTS } from "./constants";
 import type { CommandType } from "./types";
 
 interface BlogPost {
@@ -325,7 +325,7 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
   const handler = commandHandlers[command];
 
   if (!handler) {
-    return 'Command not found. Type "help" for available commands.';
+    return TERMINAL_CONSTANTS.NOT_FOUND_MESSAGE;
   }
 
   try {
