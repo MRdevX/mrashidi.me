@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.4](https://github.com/MRdevX/mrashidi.me/compare/v0.2.3...v0.2.4) (2026-10-13)
+
+
+### Features
+
+* **ask-mr:** make the home terminal the Ask MR entry point ([2bf7cdb](https://github.com/MRdevX/mrashidi.me/commit/2bf7cdb373ccf4bb742e58baf47a9d5ecf8b356a))
+
 ### [0.2.3](https://github.com/MRdevX/mrashidi.me/compare/v0.2.2...v0.2.3) (2026-10-13)
 
 
