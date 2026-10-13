@@ -104,6 +104,7 @@
     "includes": [
       "**",
       "!**/node_modules",
+      "!.agents",
       "!**/.pnpm-store",
       "!**/.next",
       "!**/out",

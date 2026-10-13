@@ -75,6 +75,12 @@ jobs:
               - 'biome.json'
               - 'vitest.config.mts'
               - 'sentry-shared.ts'
+              - '.agents/**'
+              - '.cursor/**'
+              - 'AGENTS.md'
+              - 'docs/agent/**'
+              - 'docs/decisions/**'
+              - 'scripts/check-agent-tooling.mjs'
               - '.github/workflows/ci.yml'
               - '.github/actions/**'
             build:
@@ -115,6 +121,9 @@ jobs:
 
       - name: Lint (Biome)
         run: pnpm exec biome check . --reporter=github
+
+      - name: Agent tooling
+        run: pnpm check:agent-tooling
 
       - name: Typecheck
         run: pnpm typecheck
