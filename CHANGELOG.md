@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.3](https://github.com/MRdevX/mrashidi.me/compare/v0.2.2...v0.2.3) (2026-10-13)
+
+
+### Features
+
+* **ask-mr:** add AI chat assistant that answers questions about Mahdi ([ceb36e7](https://github.com/MRdevX/mrashidi.me/commit/ceb36e7e82991eca78c7fbe3c5f0567db20d797d))
+* **ask-mr:** fill knowledge from CV and privacy-safe preferences ([dc7836b](https://github.com/MRdevX/mrashidi.me/commit/dc7836bb91167a58023ff472c485a10f4a176ba8))
+
+
+### Continuous Integration
+
+* **security:** allow json-schema@0.4.0 license in dependency review ([d39efc8](https://github.com/MRdevX/mrashidi.me/commit/d39efc806de031463203e489669aab66539e2a7f))
+
 ### [0.2.2](https://github.com/MRdevX/mrashidi.me/compare/v0.2.1...v0.2.2) (2026-10-13)
 
 
