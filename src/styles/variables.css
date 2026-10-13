@@ -1,13 +1,8 @@
-/* ==========================================================================
-   CSS Custom Properties & Variables
-   ========================================================================== */
-
 @import "@fontsource/jetbrains-mono" layer(base);
 @import "@fontsource/orbitron" layer(base);
 @import "@fontsource/albert-sans" layer(base);
 @import "@fontsource/exo-2" layer(base);
 
-/* Font Variables */
 :root {
   --font-cyberpunk: "Exo 2", Orbitron, sans-serif;
   --font-terminal: JetBrains Mono, monospace;
@@ -17,9 +12,7 @@
   --font-family-albert: var(--font-albert);
 }
 
-/* Color Variables */
 :root {
-  /* Light theme variables */
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 245, 245, 245;
@@ -34,7 +27,6 @@
 }
 
 .dark {
-  /* Dark theme — soft body gradient, orange accent; cyan/purple demoted for decor */
   --foreground-rgb: 248, 250, 252;
   --background-start-rgb: 17, 19, 24;
   --background-end-rgb: 12, 14, 18;
@@ -47,7 +39,6 @@
   --foreground-neon: rgba(255, 95, 31, 0.75);
 }
 
-/* Orange color utilities for v4 compatibility */
 :root {
   --color-orange-400: rgb(251 146 60);
   --color-orange-500: rgb(249 115 22);

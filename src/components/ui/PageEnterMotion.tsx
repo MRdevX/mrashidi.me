@@ -17,7 +17,6 @@ type PageEnterMotionProps = {
   as?: "div" | "p";
 };
 
-/** Shared slide/fade entrance used across routes (projects blocks, contact lead copy, etc.) */
 export function PageEnterMotion({
   children,
   className,

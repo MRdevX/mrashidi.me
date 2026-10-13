@@ -35,7 +35,6 @@ interface SectionHeaderProps {
   className?: string;
   delay?: number;
   size?: "sm" | "md" | "lg";
-  /** Heading level; defaults to `h1` for existing callers. */
   as?: "h1" | "h2" | "h3";
 }
 

@@ -57,8 +57,6 @@ const contactFormAPISchema = contactFormSchema.extend({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 export type ResumeRequestData = z.infer<typeof resumeRequestSchema>;
-export type BlogSearchData = z.infer<typeof blogSearchSchema>;
-export type ProjectFilterData = z.infer<typeof projectFilterSchema>;
 
 export const validateContactFormAPI = (data: unknown) => contactFormAPISchema.parse(data);
 export const validateResumeRequestAPI = (data: unknown) => resumeRequestSchema.parse(data);

@@ -1,5 +1,1 @@
-# Run linting and type checking before pushing
-echo "🔍 Running pre-push checks..."
-pnpm run check
-pnpm run typecheck
-echo "✅ All checks passed!"
+pnpm gate

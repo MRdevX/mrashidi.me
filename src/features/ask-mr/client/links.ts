@@ -30,7 +30,6 @@ const isAllowedHost = (host: string) =>
 
 export type SafeLink = { href: string; external: boolean } | null;
 
-/** Returns a safe href for an assistant link, or `null` to render it as plain text. */
 export function safeLink(href: string | undefined, siteOrigin: string): SafeLink {
   if (!href) {
     return null;

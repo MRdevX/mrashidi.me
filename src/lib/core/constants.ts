@@ -58,17 +58,3 @@ export const API_CONFIG = {
     MAX_AGE: 86400,
   },
 } as const;
-
-export const BLOG_AUTHORS = [
-  {
-    username: "mrdevx",
-    name: "Mahdi Rashidi",
-    mediumUrl: "https://mrdevx.medium.com",
-  },
-] as const;
-
-export const ANIMATION = {
-  FAST: 0.2,
-  NORMAL: 0.3,
-  SLOW: 0.5,
-} as const;

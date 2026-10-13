@@ -25,8 +25,3 @@ export interface IMediumRssFeed {
     };
   };
 }
-
-export interface BlogResponse {
-  posts: IBlogPost[];
-  total: number;
-}

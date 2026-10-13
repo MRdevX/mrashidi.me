@@ -9,8 +9,8 @@ import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
 
-export type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
-export type ValidationHandler<T = unknown> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
+type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
+type ValidationHandler<T = unknown> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
 
 function corsMiddleware(handler: ApiHandler): ApiHandler {
   return withCors(handler);

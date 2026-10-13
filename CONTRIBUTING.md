@@ -2,36 +2,32 @@
 
 Thanks for your interest in contributing. This project uses **Conventional Commits** and **Semantic Versioning** for clear history and automated releases.
 
+## Rules
+
+This project follows the shared house rules ([`.agents/house-rules.md`](.agents/house-rules.md)),
+plus the project facts and specifics in [`AGENTS.md`](AGENTS.md). Before feature work, check the
+[decision records](docs/decisions/README.md) for the area you touch.
+
 ## Local checks (before you push)
 
 Use **Node** and **pnpm** versions that match [`package.json`](package.json) `engines`.
 
 - Copy environment template: `cp .env.example .env.local` then fill values as needed for local features (contact, blog, etc.).
-- `pnpm check` — Biome lint and format (matches CI).
-- `pnpm test:run` — Vitest unit tests.
+- **`pnpm gate`** — Biome, agent tooling check, typecheck, and unit tests. Pre-push runs it; CI runs the same steps.
 - **`pnpm build:fast`** — Next.js production build only (quick smoke; skips PWA and does not run sitemap/OG generation).
-- **`pnpm build`** — Full production pipeline including sitemap and OG scripts; heavier and may require secrets those scripts expect (same rough path as CI `pnpm build`).
+- **`pnpm build`** — Full production pipeline including sitemap and OG scripts; heavier and may require secrets those scripts expect.
 
-## Commit message format
+## Commit messages
 
-All commit messages must follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification:
-
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-### Types
+A commit message is one [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) line, `type(scope): summary`,
+with no body and no trailers. commitlint enforces it. Context that needs more than a line goes in the PR body or a
+decision record.
 
 | Type       | Description                    | Version impact      |
 | ---------- | ------------------------------ | ------------------- |
 | `feat`     | New feature                    | **MINOR** bump      |
 | `fix`      | Bug fix                        | **PATCH** bump      |
 | `docs`     | Documentation only             | No version bump     |
-| `style`    | Formatting, whitespace         | No version bump     |
 | `refactor` | Code change, no fix/feat       | No version bump     |
 | `perf`     | Performance improvement        | No version bump     |
 | `test`     | Adding or updating tests       | No version bump     |
@@ -39,17 +35,8 @@ All commit messages must follow the [Conventional Commits](https://www.conventio
 | `ci`       | CI configuration               | No version bump     |
 | `chore`    | Other changes (e.g. tooling)   | No version bump     |
 
-Only `feat` and `fix` (and breaking changes) drive the changelog and version bumps. Use them for user- or API-visible changes.
-
-### Breaking changes
-
-- **MAJOR** version bump: use either
-  - `feat!: description` or `fix!: description`, or
-  - a footer: `BREAKING CHANGE: description`
-
-### Examples
-
-**One-line:**
+Mark a breaking change with `!` (`feat(api)!: accept JSON on the contact endpoint`) and describe the migration in the
+PR's Breaking Changes section.
 
 ```
 feat(blog): add RSS feed for posts
@@ -58,15 +45,9 @@ docs: update README quick start
 chore(deps): bump next to 16.1.6
 ```
 
-**With body and breaking change:**
+## Pull requests
 
-```
-feat(api): change contact endpoint payload
-
-Use JSON body instead of form-data. Clients must send Content-Type: application/json.
-
-BREAKING CHANGE: Contact API now expects JSON; form-data is no longer supported.
-```
+PR bodies follow [`.github/pull_request_template.md`](.github/pull_request_template.md); the `house-pr` skill writes one.
 
 ## Releases
 

@@ -21,7 +21,7 @@ const xmlParser = new XMLParser({
   trimValues: true,
 });
 
-export async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> {
+async function parseMediumFeed(xmlData: string): Promise<IMediumRssFeed> {
   try {
     const result = xmlParser.parse(xmlData) as IMediumRssFeed;
 
@@ -77,7 +77,7 @@ async function fetchMediumFeed(url: string): Promise<string> {
   }
 }
 
-export async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
+async function fetchMediumPosts(author: IBlogAuthor): Promise<IBlogPost[]> {
   try {
     const feedUrl = `${author.mediumUrl}/feed`;
 
@@ -209,13 +209,3 @@ export async function getAllPosts(page: number, limit: number) {
     throw new Error(`Failed to fetch blog posts: ${errorMessage}`);
   }
 }
-
-export const blogService = {
-  getBlogPosts: async (page: number = 1, limit: number = 10) => {
-    const result = await getAllPosts(page, limit);
-    return {
-      posts: result.posts,
-      total: result.total,
-    };
-  },
-};

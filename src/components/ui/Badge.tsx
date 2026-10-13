@@ -10,7 +10,6 @@ type BadgeProps = {
   className?: string;
 };
 
-/** Small label using the `badge` variants from theme.config. */
 export function Badge({ children, variant = "neon", icon: Icon, className }: BadgeProps) {
   return (
     <span

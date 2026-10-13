@@ -23,11 +23,8 @@ export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
       aria-current={isActive ? "page" : undefined}
       onMouseEnter={handleMouseEnter}
     >
-      {/* Link text */}
       <span className="nav-item-text">{item.name}</span>
-      {/* Top & bottom border animation */}
       <span className="nav-item-border" />
-      {/* Background fill animation */}
       <span className="nav-item-background" />
     </Link>
   );

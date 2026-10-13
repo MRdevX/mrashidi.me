@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Layout Components & Page Structure
-   ========================================================================== */
-
 @layer utilities {
-  /* Page Layout Components */
   .page-header {
     display: flex;
     align-items: center;
@@ -56,7 +51,6 @@
     height: 2rem;
   }
 
-  /* Content Layout */
   .content-section {
     background-color: rgb(255 255 255 / 0.1);
     backdrop-filter: blur(16px);
@@ -75,14 +69,12 @@
     border-color: rgb(51 65 85 / 0.35);
   }
 
-  /* Responsive Utilities */
   @media (max-width: 640px) {
     .content-section {
       padding: 1.5rem;
     }
   }
 
-  /* Hero Section Utilities */
   .hero-section {
     text-align: center;
     margin-bottom: 3rem;
@@ -155,7 +147,6 @@
     z-index: 10;
   }
 
-  /* Contact Section Utilities */
   .contact-section {
     padding: 2rem 1rem;
     position: relative;
@@ -188,7 +179,6 @@
     line-height: 1.75;
   }
 
-  /* Footer Layout */
   .footer-container {
     margin-top: 3rem;
     padding: 2rem 0;
@@ -235,7 +225,6 @@
     gap: 1.5rem;
   }
 
-  /* Responsive Hero Styles */
   @media (min-width: 640px) {
     .hero-title {
       font-size: 2.25rem;
@@ -248,7 +237,6 @@
     }
   }
 
-  /* Navigation Glass Effect */
   .navbar-glass {
     background-color: rgb(255 255 255 / 0.8);
     backdrop-filter: blur(12px);
@@ -267,7 +255,6 @@
       0 2px 4px -1px rgb(0 0 0 / 0.2);
   }
 
-  /* Responsive Layout */
   @media (max-width: 640px) {
     .footer-card {
       padding: 1rem;

@@ -9,7 +9,6 @@ import {
   reducedMotionPageItemVariants,
 } from "@/lib/animations";
 
-/** Page-level stagger presets for home/projects style layouts (respects reduced motion). */
 export function usePageStaggerVariants(): {
   containerVariants: Variants;
   itemVariants: Variants;

@@ -25,7 +25,6 @@ interface PageHeaderProps {
   className?: string;
   /** Use `"h2"` when this route already has a page `<h1>` (single h1 per page for accessibility). */
   titleHeading?: "h1" | "h2";
-  /** Optional trailing controls (e.g. a CTA button); stacks under the title on mobile. */
   actions?: ReactNode;
 }
 

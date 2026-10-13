@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Base Styles & Global Elements
-   ========================================================================== */
-
 @layer base {
-  /* Smooth scrolling only when user allows motion */
   html {
     scroll-behavior: auto;
   }
@@ -14,7 +9,6 @@
     }
   }
 
-  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -32,7 +26,6 @@
     background: #666;
   }
 
-  /* Selection color — align with primary / ring */
   ::selection {
     background: hsl(var(--primary) / 0.22);
     color: inherit;
@@ -42,18 +35,15 @@
     background: hsl(var(--primary) / 0.28);
   }
 
-  /* Improved focus styles */
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
   }
 
-  /* Dark mode improvements */
   .dark {
     color-scheme: dark;
   }
 
-  /* Responsive font sizes */
   @media (max-width: 640px) {
     h1 {
       font-size: 1.875rem;

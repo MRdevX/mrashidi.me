@@ -24,8 +24,6 @@ const EFFECTIVE_DATE = "May 17, 2026";
 const UPDATED_DATE = "October 13, 2026";
 const { name, email, website, location } = config.person;
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
 function DateBadge({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
@@ -97,8 +95,6 @@ function RightCard({ icon, title, desc }: { icon: React.ReactNode; title: string
   );
 }
 
-// ─── Page ────────────────────────────────────────────────────────────────────
-
 export default function PrivacyPolicy() {
   return (
     <PageWrapper>
@@ -106,7 +102,6 @@ export default function PrivacyPolicy() {
 
       <PageSection>
         <div className="space-y-6">
-          {/* Meta badges */}
           <div className="flex flex-wrap gap-2">
             <DateBadge icon={<Clock className="h-3 w-3" aria-hidden />} label="Effective" value={EFFECTIVE_DATE} />
             <DateBadge icon={<RefreshCw className="h-3 w-3" aria-hidden />} label="Updated" value={UPDATED_DATE} />
@@ -117,7 +112,6 @@ export default function PrivacyPolicy() {
             />
           </div>
 
-          {/* Intro */}
           <div className="glass-card border-l-4 border-l-orange-500 p-6">
             <p className="text-sm leading-relaxed text-muted-foreground">
               This Privacy Policy describes how <span className="font-semibold text-foreground">{name}</span> ("we",
@@ -131,7 +125,6 @@ export default function PrivacyPolicy() {
             </p>
           </div>
 
-          {/* Quick summary */}
           <div>
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">At a glance</h2>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -158,7 +151,6 @@ export default function PrivacyPolicy() {
             </div>
           </div>
 
-          {/* Section 1 */}
           <PolicyCard icon={<Database className="h-5 w-5" />} title="1. Information We Collect">
             <p>We collect only the minimum information necessary to operate the Service:</p>
             <ul className="mt-2 space-y-2">
@@ -196,7 +188,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 2 */}
           <PolicyCard icon={<BookOpen className="h-5 w-5" />} title="2. How We Use Your Information">
             <ul className="space-y-2">
               <Bullet>To respond to messages you send via the contact form.</Bullet>
@@ -209,7 +200,6 @@ export default function PrivacyPolicy() {
             <p className="mt-3">We do not use your information for automated decision-making or profiling.</p>
           </PolicyCard>
 
-          {/* Section 3 */}
           <PolicyCard icon={<Server className="h-5 w-5" />} title="3. Information Sharing and Disclosure">
             <p>
               We do not sell, trade, or rent your personal information. The following service providers process data
@@ -262,7 +252,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 4 */}
           <PolicyCard icon={<Lock className="h-5 w-5" />} title="4. Cookies and Local Storage">
             <p>
               The Service uses <strong className="text-foreground">no</strong> tracking or advertising cookies. Browser
@@ -285,7 +274,6 @@ export default function PrivacyPolicy() {
             <p className="mt-3">You can clear this data anytime via your browser's developer tools or settings.</p>
           </PolicyCard>
 
-          {/* Section 5 */}
           <PolicyCard icon={<Clock className="h-5 w-5" />} title="5. Data Retention">
             <p>
               Contact form messages are not stored in a database and are retained only long enough to reply to your
@@ -295,7 +283,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 6 – GDPR rights */}
           <PolicyCard icon={<Scale className="h-5 w-5" />} title="6. Your Rights (GDPR / EEA)">
             <p>If you are located in the European Economic Area (EEA), you have the following rights:</p>
             <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -339,7 +326,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 7 */}
           <PolicyCard icon={<Users className="h-5 w-5" />} title="7. Children's Privacy">
             <p>
               The Service is not directed to children under 13. We do not knowingly collect personal information from
@@ -348,7 +334,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 8 */}
           <PolicyCard icon={<ShieldCheck className="h-5 w-5" />} title="8. Data Security">
             <p>
               We use industry-standard security measures including HTTPS encryption to protect data in transit. Our
@@ -357,7 +342,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 9 */}
           <PolicyCard icon={<ExternalLink className="h-5 w-5" />} title="9. Third-Party Links">
             <p>
               The Service may link to third-party sites (e.g. GitHub, LinkedIn, Medium). This Privacy Policy does not
@@ -365,7 +349,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 10 */}
           <PolicyCard icon={<RefreshCw className="h-5 w-5" />} title="10. Changes to This Policy">
             <p>
               We may update this Privacy Policy at any time. The "Last updated" date at the top of this page will
@@ -374,7 +357,6 @@ export default function PrivacyPolicy() {
             </p>
           </PolicyCard>
 
-          {/* Section 11 – Contact (highlighted) */}
           <div className="glass-card border border-orange-500/30 p-6">
             <div className="mb-4 flex items-center gap-3">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">

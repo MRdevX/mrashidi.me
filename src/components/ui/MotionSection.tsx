@@ -10,7 +10,6 @@ interface MotionSectionProps {
   variants?: Variants;
   className?: string;
   delay?: number;
-  /** Self-contained fade-in on a `section` (about pages). Default `div` for staggered page variants. */
   as?: "div" | "section";
 }
 

@@ -13,7 +13,6 @@ interface MessageListProps {
   sendKey: number;
 }
 
-/** Scroll container that follows new content only while the visitor is already at the bottom. */
 export function MessageList({ children, contentKey, sendKey }: MessageListProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [atBottom, setAtBottom] = useState(true);

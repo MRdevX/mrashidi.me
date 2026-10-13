@@ -1,4 +1,4 @@
-import type { NextRequest, NextResponse } from "next/server";
+import type { NextResponse } from "next/server";
 
 export function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set("X-Content-Type-Options", "nosniff");
@@ -14,11 +14,4 @@ export function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
   return response;
-}
-
-export function withSecurityHeaders<T extends NextRequest>(handler: (request: T) => Promise<NextResponse>) {
-  return async (request: T): Promise<NextResponse> => {
-    const response = await handler(request);
-    return addSecurityHeaders(response);
-  };
 }

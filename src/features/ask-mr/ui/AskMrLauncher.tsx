@@ -16,7 +16,6 @@ function useIsMac(): boolean {
   return isMac;
 }
 
-/** Plays the attention pulse at most once per browser session. */
 function useOncePerSession(): boolean {
   const [pulse, setPulse] = useState(false);
   useEffect(() => {

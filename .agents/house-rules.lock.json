@@ -1,0 +1,12 @@
+{
+  "source": "github.com/MRdevX/house-rules",
+  "commit": "cb31173c34681fa469408c6d1c6810e2407bafc4",
+  "files": {
+    ".agents/house-rules.md": "2ccabc5b042c045b06a65a305efe908a46949a03160ab5d2dc0bb4f50716d0e7",
+    ".agents/skills/house-cleanup/SKILL.md": "b605fc9f92bbc2d839f549dd10dcdf55cd2fb688a4d1d237de168b01912f771d",
+    ".agents/skills/house-comments/SKILL.md": "a4190cf2fc6f0c641199ed15370cf1869d38fb0827e3955eae30b802c8af67eb",
+    ".agents/skills/house-decision/SKILL.md": "ed58f2c5694164ae5ef7ecd0993032d3f9ef02cbabc8f8b752a9479a312174eb",
+    ".agents/skills/house-pr/SKILL.md": "ee8caf6e7a792b32d52d0c430a599b75297b2058ef864a43633a8fb5d485fc27",
+    ".agents/skills/house-review/SKILL.md": "8e318811b65d39faf73fdd5d55f1e37c0333a71fb57ec972c16419891e627988"
+  }
+}

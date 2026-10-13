@@ -1,6 +1,6 @@
 import { getAboutBioPlainText } from "./aboutBio";
 
-export interface Language {
+interface Language {
   language: string;
   level: string;
   progress: number;

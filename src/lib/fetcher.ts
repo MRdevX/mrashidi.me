@@ -22,19 +22,6 @@ const api: KyInstance = ky.create({
   },
 });
 
-export async function fetcher<T = unknown>(url: string, options?: RequestInit): Promise<T> {
-  try {
-    return await api(url, options).json<T>();
-  } catch (error) {
-    logger.error({
-      operation: "fetcher",
-      url,
-      error: error instanceof Error ? error.message : String(error),
-    });
-    throw error;
-  }
-}
-
 export async function fetchJSON<T>(url: string, options: RequestInit = {}): Promise<T> {
   try {
     return await api(url, options).json<T>();
@@ -48,12 +35,3 @@ export async function fetchJSON<T>(url: string, options: RequestInit = {}): Prom
     throw new APIError("Request failed: Unknown error");
   }
 }
-
-export const fetcherGet = <T = unknown>(url: string) => fetcher<T>(url, { method: "GET" });
-
-export const fetcherPost = <T = unknown>(url: string, data?: unknown) =>
-  fetcher<T>(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: data ? JSON.stringify(data) : undefined,
-  });

@@ -1,6 +1,5 @@
 import type { Variants } from "framer-motion";
 
-/** Comfortable easing for UI entrances (approx. ease-out-expo). */
 export const PAGE_TRANSITION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export function pageEnterTransition(
@@ -14,29 +13,6 @@ export function pageEnterTransition(
   }
   return { duration, delay, ease: PAGE_TRANSITION_EASE };
 }
-
-export const cssAnimations = {
-  fadeIn: "animate-fade-in",
-  slideUp: "animate-slide-up",
-  slideDown: "animate-slide-down",
-  scaleIn: "animate-scale-in",
-  bounce: "animate-bounce",
-  pulse: "animate-pulse",
-} as const;
-
-export const animationClasses = {
-  fadeIn: "opacity-0 animate-[fadeIn_0.3s_ease-in-out_forwards]",
-  slideUp: "opacity-0 translate-y-4 animate-[slideUp_0.3s_ease-out_forwards]",
-  slideDown: "opacity-0 -translate-y-4 animate-[slideDown_0.3s_ease-out_forwards]",
-  scaleIn: "opacity-0 scale-95 animate-[scaleIn_0.2s_ease-out_forwards]",
-  stagger: (delay: number) => `opacity-0 translate-y-4 animate-[slideUp_0.3s_ease-out_${delay}s_forwards]`,
-} as const;
-
-export const staggerDelays = {
-  fast: 0.1,
-  normal: 0.2,
-  slow: 0.3,
-} as const;
 
 export const fadeInVariants = {
   /** Opacity stays 1 so nested motion + axe color-contrast does not blend fg/bg mid-animation */
@@ -58,11 +34,6 @@ export const slideInVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
-export const scaleVariants = {
-  hidden: { opacity: 1, scale: 0.95 },
-  visible: { opacity: 1, scale: 1 },
-};
-
 export const slideInRightVariants = {
   hidden: { opacity: 1, x: 20 },
   visible: { opacity: 1, x: 0 },
@@ -79,7 +50,6 @@ export const pageContainerVariants = {
   },
 };
 
-/** Stable layout when user prefers reduced motion */
 export const reducedMotionPageContainerVariants: Variants = {
   hidden: { opacity: 1 },
   show: { opacity: 1, transition: { staggerChildren: 0 } },
@@ -99,7 +69,6 @@ export const reducedMotionPageItemVariants: Variants = {
   show: { opacity: 1, y: 0 },
 };
 
-/** Blog grid: tighter stagger than full-page sections */
 export const blogGridContainerVariants: Variants = {
   hidden: { opacity: 1 },
   show: {
@@ -114,9 +83,4 @@ export const blogGridContainerVariants: Variants = {
 export const reducedMotionBlogGridContainerVariants: Variants = {
   hidden: { opacity: 1 },
   show: { opacity: 1, transition: { staggerChildren: 0 } },
-};
-
-export const sectionVariants = {
-  hidden: { opacity: 1, y: 30 },
-  visible: { opacity: 1, y: 0 },
 };

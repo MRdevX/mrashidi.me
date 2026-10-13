@@ -11,7 +11,7 @@ const TEMPLATES = {
   "resume-user": ResumeUserTemplate,
 } as const;
 
-export type EmailTemplateType = keyof typeof TEMPLATES;
+type EmailTemplateType = keyof typeof TEMPLATES;
 
 export async function createEmailTemplate(
   data: EmailTemplateData,

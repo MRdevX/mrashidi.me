@@ -1,7 +1,6 @@
 import { logger } from "@/lib/core";
 import type { ResumeRequestData } from "@/lib/validation";
 
-/** Posts a CV request; shared by the Resume page and Ask MR's CV card. */
 export async function submitResumeRequest(data: ResumeRequestData): Promise<boolean> {
   try {
     const response = await fetch("/api/resume", {

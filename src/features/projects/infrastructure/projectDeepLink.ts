@@ -12,7 +12,6 @@ export const findProjectBySlug = (slug: string | null): Project | null =>
 
 export const readProjectParam = (search: string): string | null => new URLSearchParams(search).get(PROJECT_PARAM);
 
-/** Opens a project's details drawer when the projects page is already mounted (same-route navigation). */
 export function requestOpenProject(slug: string): void {
   window.dispatchEvent(new CustomEvent<string>(OPEN_PROJECT_EVENT, { detail: slug }));
 }

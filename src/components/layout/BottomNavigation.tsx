@@ -12,7 +12,6 @@ export function BottomNavigation() {
 
   return (
     <>
-      {/* Bottom Navigation */}
       <nav className="mobile-nav bottom-nav-glass sm:hidden" aria-label="Mobile primary navigation">
         <div className="nav-container">
           {mobileNavigationItems.map((item) => (
@@ -27,7 +26,6 @@ export function BottomNavigation() {
         </div>
       </nav>
 
-      {/* Floating Theme Toggle */}
       <FloatingActionButton position="bottom-left" asButton={false}>
         <ThemeToggle size="sm" />
       </FloatingActionButton>

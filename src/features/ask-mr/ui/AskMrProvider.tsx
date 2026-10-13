@@ -10,7 +10,6 @@ const AskMrCvRequest = dynamic(() => import("./AskMrCvRequest").then((m) => m.As
 
 export interface AskMrOpenOptions {
   source: AskMrOpenSource;
-  /** Sent immediately once the panel is ready (suggestion chips). */
   prompt?: string;
 }
 

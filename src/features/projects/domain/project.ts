@@ -1,4 +1,4 @@
-export type ProjectVisibility = "public" | "private";
+type ProjectVisibility = "public" | "private";
 export type ProjectType = "personal" | "client";
 
 export interface Project {
@@ -21,7 +21,6 @@ export const yearRange = (project: Project): [number, number] => {
   return years.length > 0 ? [Math.min(...years), Math.max(...years)] : [0, 0];
 };
 
-/** URL-safe identifier derived from the title, used by `/projects?project=<slug>` deep links. */
 export const projectSlug = (project: Pick<Project, "title">): string =>
   project.title
     .toLowerCase()

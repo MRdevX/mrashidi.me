@@ -26,9 +26,7 @@ vi.mock("@upstash/ratelimit", () => {
 });
 
 vi.mock("@upstash/redis", () => ({
-  Redis: {
-    fromEnv: vi.fn(() => ({})),
-  },
+  Redis: class {},
 }));
 
 describe("Rate Limiting Service", () => {

@@ -8,7 +8,6 @@ type FilamentDividerProps = {
   className?: string;
   lineClassName?: string;
   align?: "start" | "center";
-  /** Transparent → brand orange → transparent (e.g. centered dividers). */
   symmetric?: boolean;
 };
 

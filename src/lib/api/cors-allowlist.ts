@@ -1,11 +1,6 @@
-/**
- * Builds the set of browser Origins allowed for `Access-Control-Allow-Origin` reflection.
- */
-
 import { env, isDevelopment, isProduction } from "@/lib/core";
 import { logger } from "@/lib/core/logger";
 
-/** Parses `CORS_ALLOWED_ORIGINS`; trims; drops empties; returns validated canonical origins. */
 export function parseCommaSeparatedOrigins(csv: string | undefined): string[] {
   if (!csv?.trim()) {
     return [];
@@ -30,7 +25,6 @@ export function parseCommaSeparatedOrigins(csv: string | undefined): string[] {
   return origins;
 }
 
-/** Canonical `scheme://host[:port]` for URL strings. */
 export function canonicalOrigin(input: string): string | null {
   const trimmed = input.trim();
   if (!trimmed) {

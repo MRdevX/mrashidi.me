@@ -8,7 +8,6 @@ type SectionIconName = ComponentProps<typeof SectionHeader>["iconName"];
 type AboutSectionProps = {
   delay: number;
   className?: string;
-  /** When both are set, a section header row is rendered above children */
   iconName?: SectionIconName;
   title?: string;
   headerClassName?: string;

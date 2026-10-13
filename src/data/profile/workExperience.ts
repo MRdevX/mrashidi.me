@@ -5,9 +5,7 @@ export interface WorkExperience {
   employmentType: string;
   /** "Mon YYYY – Mon YYYY" or "Mon YYYY – Present" (parsed for `<time>` and duration). */
   period: string;
-  /** Optional one- or two-sentence description of the role. */
   summary?: string;
-  /** Optional tech used in the role, rendered as chips. */
   stack?: string[];
   achievements: string[];
 }

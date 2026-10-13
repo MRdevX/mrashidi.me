@@ -28,4 +28,3 @@ class ServiceFactory {
 export const serviceFactory = new ServiceFactory();
 
 export const getEmailService = () => serviceFactory.getEmailService();
-export const getGitHubService = () => serviceFactory.getGitHubService();

@@ -23,8 +23,6 @@
       "@components/*": ["./src/components/*"],
       "@features/*": ["./src/features/*"],
       "@lib/*": ["./src/lib/*"],
-      "@server/*": ["./src/services/*"],
-      "@types/*": ["./src/types/*"],
       "@/*": ["./src/*"]
     }
   },

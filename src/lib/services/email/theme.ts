@@ -3,7 +3,6 @@
  * Primary matches `--primary` / `tailwind.config.ts` (#ff5f1f).
  */
 export const emailTheme = {
-  /** hsl(16, 100%, 56%) */
   primary: "#ff5f1f",
   primaryRgb: "255, 95, 31" as const,
   primaryForeground: "#000000",
@@ -35,7 +34,6 @@ export const emailTheme = {
   shadowCardDark: "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
 } as const;
 
-/** Single stylesheet for Albert Sans weights used in templates (avoids repeating `<Font>` / universal `*` rules). */
 export const emailAlbertSansStylesheetHref =
   "https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&display=swap";
 
@@ -130,7 +128,6 @@ function darkRules(): string {
 `;
 }
 
-/** Single `@media (prefers-color-scheme: dark)` block + Outlook `[data-ogsc]` mirror. */
 export function emailDarkModeStyles(): string {
   return `
   @media (prefers-color-scheme: dark) {
