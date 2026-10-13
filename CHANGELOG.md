@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.2](https://github.com/MRdevX/mrashidi.me/compare/v0.2.1...v0.2.2) (2026-10-13)
+
+
+### Bug Fixes
+
+* **deps:** restore postcss override specifier in lockfile ([41baab2](https://github.com/MRdevX/mrashidi.me/commit/41baab238e91e77bb19e3c6f35ed15c40f8abde5))
+
+
+### Continuous Integration
+
+* **deps:** bump ossf/scorecard-action ([#164](https://github.com/MRdevX/mrashidi.me/issues/164)) ([8f1e138](https://github.com/MRdevX/mrashidi.me/commit/8f1e138d9841b9b566cc68282f66b3b44fd31e67))
+
 ### [0.2.1](https://github.com/MRdevX/mrashidi.me/compare/v0.2.0...v0.2.1) (2026-10-04)
 
 
