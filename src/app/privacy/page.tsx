@@ -21,6 +21,7 @@ import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
 import { config } from "@/data";
 
 const EFFECTIVE_DATE = "May 17, 2026";
+const UPDATED_DATE = "October 13, 2026";
 const { name, email, website, location } = config.person;
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -108,7 +109,7 @@ export default function PrivacyPolicy() {
           {/* Meta badges */}
           <div className="flex flex-wrap gap-2">
             <DateBadge icon={<Clock className="h-3 w-3" aria-hidden />} label="Effective" value={EFFECTIVE_DATE} />
-            <DateBadge icon={<RefreshCw className="h-3 w-3" aria-hidden />} label="Updated" value={EFFECTIVE_DATE} />
+            <DateBadge icon={<RefreshCw className="h-3 w-3" aria-hidden />} label="Updated" value={UPDATED_DATE} />
             <DateBadge
               icon={<Shield className="h-3 w-3 text-green-500" aria-hidden />}
               label="Standard"

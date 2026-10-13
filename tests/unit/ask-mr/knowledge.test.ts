@@ -28,10 +28,30 @@ describe("buildKnowledge", () => {
     expect(knowledge).toContain(`# Projects (${projects.length})`);
   });
 
-  it("includes every role", () => {
+  it("includes every role except hidden ones", () => {
     for (const role of workExperience) {
-      expect(knowledge).toContain(`## ${role.title} — ${role.company}`);
+      const line = `## ${role.title} — ${role.company}`;
+      if (askMrKnowledge.hiddenRoles.includes(role.company)) {
+        expect(knowledge).not.toContain(line);
+      } else {
+        expect(knowledge).toContain(line);
+      }
     }
+  });
+
+  it("includes CV-only projects and skills", () => {
+    for (const project of askMrKnowledge.extraProjects) {
+      expect(knowledge).toContain(`## ${project.title} (${project.year})`);
+    }
+    expect(knowledge).toContain("Also on his CV (no level given):");
+  });
+
+  it("keeps private details out of the public knowledge file", () => {
+    const serialized = JSON.stringify(askMrKnowledge);
+    expect(serialized).not.toMatch(/\+\d[\d\s]{7,}/); // phone numbers
+    expect(serialized).not.toMatch(/@gmail\.com/i);
+    expect(serialized).not.toMatch(/blue card|visa|residence permit|salary|€|\$\d/i);
+    expect(askMrKnowledge.workAuthorization).toBe("");
   });
 
   it("includes contact links and languages but not placeholder fields", () => {
@@ -44,7 +64,7 @@ describe("buildKnowledge", () => {
   it("omits empty FAQ fields", () => {
     const empty = buildKnowledge({
       ...defaultKnowledgeSources,
-      extra: { ...askMrKnowledge, availability: "", funFacts: [], faq: [], roleNotes: [] },
+      extra: { ...askMrKnowledge, availability: "", remote: "", relocation: "", funFacts: [], faq: [], roleNotes: [] },
     });
     expect(empty).not.toContain("Availability:");
     expect(empty).not.toContain("Fun facts:");
@@ -60,6 +80,7 @@ describe("buildKnowledge", () => {
         funFacts: ["Plays chess"],
         faq: [{ question: "Freelance?", answer: "Yes, via Notable Nomads." }],
         roleNotes: [{ company, highlights: ["Built the booking service"] }],
+        hiddenRoles: [],
       },
     });
     expect(text).toContain("# Additional facts from Mahdi");

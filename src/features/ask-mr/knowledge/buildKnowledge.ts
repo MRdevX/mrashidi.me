@@ -69,31 +69,36 @@ function profileSection({ config, personalInfo }: KnowledgeSources): string {
 }
 
 function experienceSection({ workExperience, extra }: KnowledgeSources): string {
-  const roles = workExperience.map((role) => {
-    const notes = extra.roleNotes.find((n) => n.company === role.company)?.highlights ?? [];
-    const achievements = [...role.achievements, ...notes];
-    return joinBlocks(
-      [
-        `## ${role.title} — ${role.company}`,
-        `${role.period} · ${role.location} · ${role.employmentType}`,
-        filled(role.summary) ? role.summary : "",
-        role.stack?.length ? `Stack: ${role.stack.join(", ")}` : "",
-        achievements.length ? bullets(achievements) : "No details published for this role yet.",
-      ],
-      "\n"
-    );
-  });
+  const roles = workExperience
+    .filter((role) => !extra.hiddenRoles.includes(role.company))
+    .map((role) => {
+      const notes = extra.roleNotes.find((n) => n.company === role.company)?.highlights ?? [];
+      const achievements = [...role.achievements, ...notes];
+      return joinBlocks(
+        [
+          `## ${role.title} — ${role.company}`,
+          `${role.period} · ${role.location} · ${role.employmentType}`,
+          filled(role.summary) ? role.summary : "",
+          role.stack?.length ? `Stack: ${role.stack.join(", ")}` : "",
+          achievements.length ? bullets(achievements) : "No details published for this role yet.",
+        ],
+        "\n"
+      );
+    });
   return section("Work experience (newest first)", joinBlocks(roles));
 }
 
-function skillsSection({ skills }: KnowledgeSources): string {
+function skillsSection({ skills, extra }: KnowledgeSources): string {
   const legend =
     "Levels: proficient = used in production or central to a role; experienced = shipped in a live project or older role; familiar = light use. No level means listed without a rating.";
   const lines = skills.map(
     ({ category, skills: items }) =>
       `- ${category}: ${items.map((s) => (s.level ? `${s.name} (${s.level})` : s.name)).join(", ")}`
   );
-  return section("Skills", joinBlocks([legend, lines.join("\n")], "\n"));
+  const fromCv = extra.extraSkills.some(filled)
+    ? `Also on his CV (no level given):\n${bullets(extra.extraSkills)}`
+    : "";
+  return section("Skills", joinBlocks([legend, lines.join("\n"), fromCv], "\n"));
 }
 
 function projectLine(project: Project): string {
@@ -123,6 +128,13 @@ function projectLine(project: Project): string {
 
 function projectsSection({ projects }: KnowledgeSources): string {
   return section(`Projects (${projects.length})`, joinBlocks(projects.map(projectLine)));
+}
+
+function extraProjectsSection({ extra }: KnowledgeSources): string {
+  const blocks = extra.extraProjects.map((p) =>
+    joinBlocks([`## ${p.title} (${p.year})`, p.summary, `Stack: ${p.stack.join(", ")}`], "\n")
+  );
+  return section("More projects from his CV (not on the projects page, so no project card)", joinBlocks(blocks));
 }
 
 function certificatesSection({ certificates }: KnowledgeSources): string {
@@ -182,6 +194,7 @@ export function buildKnowledge(sources: KnowledgeSources = defaultKnowledgeSourc
     experienceSection(sources),
     skillsSection(sources),
     projectsSection(sources),
+    extraProjectsSection(sources),
     certificatesSection(sources),
     educationSection(sources),
     extraSection(sources),
