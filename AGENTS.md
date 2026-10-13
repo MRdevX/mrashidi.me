@@ -98,7 +98,7 @@ These add to the house rules; none of them loosen one.
 
 - Next.js 16 changed APIs and conventions: read `node_modules/next/dist/docs/` before writing Next code.
 - `src/app/` stays thin: a route file composes a feature from `src/features/<feature>/`.
-- JSON API routes wrap their handler in `createMiddleware` from `@lib/api`. The Ask MR routes (`api/chat/**`) run the guards in `src/features/ask-mr/server/` instead; `api/og` only renders an image.
+- JSON API routes wrap their handler in `createMiddleware` from `@/lib/api/middleware`. The Ask MR routes (`api/chat/**`) run the guards in `src/features/ask-mr/server/` instead; `api/og` only renders an image.
 - Ask MR answers only from site data plus `src/features/ask-mr/knowledge/askMrKnowledge.ts`, which is public. Never add contact details beyond the site's, residence or visa status, compensation, or anything that could be misused; `tests/unit/ask-mr/knowledge.test.ts` guards this.
 - `TODO` needs a GitHub issue: `TODO(#123)`.
 - Commit scopes: the feature or area, e.g. `ask-mr`, `blog`, `resume`, `projects`, `contact`, `ui`, `api`, `deps`, `ci`, `agents`, `docs`.

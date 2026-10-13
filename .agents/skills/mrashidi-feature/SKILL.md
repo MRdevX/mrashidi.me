@@ -29,7 +29,7 @@ disable-model-invocation: false
 
 ## API route
 
-1. `src/app/api/<name>/route.ts`, wrapped in `createMiddleware` from `@lib/api`.
+1. `src/app/api/<name>/route.ts`, wrapped in `createMiddleware` from `@/lib/api/middleware`.
 2. Validate the body or query with a Zod schema once, at the route. Map errors with `@lib/errors`.
 3. Outside calls go through a service in `src/lib/services/` or the feature's `infrastructure/`.
 4. List the route under Affected Endpoints in the PR.
