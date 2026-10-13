@@ -6,7 +6,6 @@ import { MapPin } from "lucide-react";
 import { SocialButtonsRow } from "@/components/ui";
 import { TypingAnimation } from "@/components/ui/TypingAnimation";
 import { config } from "@/data";
-import { isAskMrEnabled } from "@/features/ask-mr";
 
 type HomeHeroProps = {
   variants: Variants;
@@ -24,7 +23,7 @@ export function HomeHero({ variants }: HomeHeroProps) {
             strings={[
               config.person.title,
               "Cloud Practitioner",
-              "Node.js & TypeScript Specialist",
+              "Backend & Systems Engineer",
               "Open Source Contributor",
             ]}
             typeSpeed={80}
@@ -40,14 +39,6 @@ export function HomeHero({ variants }: HomeHeroProps) {
         </p>
 
         <SocialButtonsRow />
-        {isAskMrEnabled() && (
-          <a
-            href="#ask"
-            className="mt-5 inline-block font-terminal text-sm text-gray-600 transition-colors hover:text-orange-500 dark:text-gray-400"
-          >
-            › or ask the terminal anything ↓
-          </a>
-        )}
       </div>
     </motion.div>
   );

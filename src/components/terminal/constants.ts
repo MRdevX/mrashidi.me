@@ -17,7 +17,7 @@ export const TERMINAL_CONSTANTS = {
   WELCOME_MESSAGE: "Welcome! Type 'help' to see available commands.",
   AI_WELCOME_MESSAGE: "Hi, I'm MR, an AI that knows Mahdi's work. Ask me anything, or type 'help' for commands.",
   DEFAULT_PLACEHOLDER: "Type 'help' for available commands...",
-  AI_PLACEHOLDER: "ask what's his strongest stack?",
+  AI_PLACEHOLDER: "Type a question or 'help'…",
   NOT_FOUND_MESSAGE: 'Command not found. Type "help" for available commands.',
   EXECUTING_PLACEHOLDER: "Executing command...",
   ERROR_MESSAGE: "Error executing command. Please try again.",
