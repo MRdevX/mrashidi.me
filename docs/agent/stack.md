@@ -8,7 +8,7 @@ when you bump a major or minor, update the row in the same PR.
 | ------- | ------- | ------------- | ----------------- |
 | Next.js | 16.4 | [nextjs.org/docs](https://nextjs.org/docs) · local `node_modules/next/dist/docs/` | App Router. Route files in `src/app/` stay thin and compose a feature from `src/features/` ([DR-0002](../decisions/0002-feature-slices.md)). Server components by default; `"use client"` only for hooks, browser APIs, or handlers. |
 | React | 19.3 | [react.dev](https://react.dev/reference/react) | Function components only. Derive during render; effects only to sync with something outside React. |
-| TypeScript | 7.0 (`@typescript/native-preview` for `pnpm typecheck`) | [typescriptlang.org/docs](https://www.typescriptlang.org/docs/) | Strict. Import through the path aliases in `AGENTS.md`. |
+| TypeScript | 7.0 | [typescriptlang.org/docs](https://www.typescriptlang.org/docs/) | Strict. Import through the path aliases in `AGENTS.md`. |
 | Tailwind CSS | 4.3 | [tailwindcss.com/docs](https://tailwindcss.com/docs) | Theme tokens in `src/styles/variables.css` and `theme.css`. Variants with CVA, class merging with `cn` from `@lib/utils`. |
 | shadcn/ui | new-york, RSC | [ui.shadcn.com/docs](https://ui.shadcn.com/docs) | Primitives in `src/components/ui/`; config in `components.json`. |
 | Biome | 2.5 | [biomejs.dev](https://biomejs.dev/reference/configuration/) | The only linter and formatter ([DR-0003](../decisions/0003-biome-only.md)). `pnpm check` / `pnpm check:fix`. |
