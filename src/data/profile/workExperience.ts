@@ -28,7 +28,7 @@ const workExperience: WorkExperience[] = [
     achievements: [],
   },
   {
-    title: "Technical Team Lead at inno2fleet",
+    title: "Senior Software Engineer & Technical Lead at inno2fleet",
     company: "Schneider Electric (Outsourced by Fakir Tech)",
     location: "Berlin, Germany",
     employmentType: "Full-Time, Remote",
@@ -50,7 +50,7 @@ const workExperience: WorkExperience[] = [
     ],
   },
   {
-    title: "Senior Backend Engineer at inno2fleet",
+    title: "Senior Software Engineer at inno2fleet",
     company: "Schneider Electric (Outsourced by Fakir Tech)",
     location: "Berlin, Germany",
     employmentType: "Full-Time, Remote",
