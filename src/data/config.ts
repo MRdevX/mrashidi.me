@@ -46,7 +46,7 @@ const config: SiteConfig = {
   },
   social: {
     github: "https://github.com/mrdevx",
-    linkedin: "https://linkedin.com/in/systemdee",
+    linkedin: "https://www.linkedin.com/in/mrdevx",
     telegram: "https://t.me/systemdee",
     githubRepo: "https://github.com/MRdevX/mrashidi.me",
   },
