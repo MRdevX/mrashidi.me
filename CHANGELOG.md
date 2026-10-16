@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.7](https://github.com/MRdevX/mrashidi.me/compare/v0.2.6...v0.2.7) (2026-10-16)
+
+
+### Bug Fixes
+
+* **contact:** point LinkedIn links to the mrdevx handle ([7bcf088](https://github.com/MRdevX/mrashidi.me/commit/7bcf088c59f1aeb01a1d25986e3990829e6cc234))
+* **resume:** align inno2fleet dates and title with LinkedIn ([7e4d9d2](https://github.com/MRdevX/mrashidi.me/commit/7e4d9d26ef0b18b30ca1b353c682c0a178caa05d))
+* **resume:** match inno2fleet titles to the CV ([b96eed7](https://github.com/MRdevX/mrashidi.me/commit/b96eed797c58face3877c64e29f5d5642ef95e68))
+
 ### [0.2.6](https://github.com/MRdevX/mrashidi.me/compare/v0.2.5...v0.2.6) (2026-10-13)
 
 
