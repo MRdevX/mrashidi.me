@@ -32,7 +32,7 @@ const workExperience: WorkExperience[] = [
     company: "Schneider Electric (Outsourced by Fakir Tech)",
     location: "Berlin, Germany",
     employmentType: "Full-Time, Remote",
-    period: "Mar 2022 – Jan 2025",
+    period: "Mar 2022 – Feb 2025",
     achievements: [
       "Defined technical specifications and delivery roadmaps in collaboration with product managers",
       "Led cloud migration from GCP to Azure with zero downtime across 3 core products, ensuring GDPR compliance",
@@ -50,7 +50,7 @@ const workExperience: WorkExperience[] = [
     ],
   },
   {
-    title: "Senior Software Engineer at inno2fleet",
+    title: "Senior Backend Engineer at inno2fleet",
     company: "Schneider Electric (Outsourced by Fakir Tech)",
     location: "Berlin, Germany",
     employmentType: "Full-Time, Remote",
