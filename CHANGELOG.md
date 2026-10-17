@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.8](https://github.com/MRdevX/mrashidi.me/compare/v0.2.7...v0.2.8) (2026-10-17)
+
+
+### Code Refactoring
+
+* **about:** import mouse tracking from the slice ([7caecd4](https://github.com/MRdevX/mrashidi.me/commit/7caecd4d6e1695f8bece07ed07f0d138404e5293))
+* **about:** move mouse tracking into the slice ([65869ed](https://github.com/MRdevX/mrashidi.me/commit/65869ed5f5c6f55fb5ef37617901caf4200ab4f9))
+* **blog:** move the blog card skeleton into the slice ([8a2ade0](https://github.com/MRdevX/mrashidi.me/commit/8a2ade0b3da0e3fae408940ecf445d76d26e10f5))
+* **contact:** import shared form fields from components ([94cfe8b](https://github.com/MRdevX/mrashidi.me/commit/94cfe8bf6fca9bd204ffe7e48fab5e7e2e90eb96))
+* **contact:** move the contact form into the slice ([b79aa42](https://github.com/MRdevX/mrashidi.me/commit/b79aa4219d08c52124e71d1684c8f65913342943))
+* **home:** move home-only components into the slice ([0afaab2](https://github.com/MRdevX/mrashidi.me/commit/0afaab28a34d0c01ad703c7a008d74722c690200))
+* import slices through their public entry ([49e0f98](https://github.com/MRdevX/mrashidi.me/commit/49e0f98ca8ca64b3fd10ed086767e51c12a1822b))
+* **projects:** move the github client into the slice ([8dfbbb6](https://github.com/MRdevX/mrashidi.me/commit/8dfbbb633ce4bd21f4ffbaaa05518539d6dc2b48))
+* remove dead code ([669fbc7](https://github.com/MRdevX/mrashidi.me/commit/669fbc749a191bd47358311bde8e3e57923d6b2f))
+* **ui:** colocate single-consumer hooks ([731baa9](https://github.com/MRdevX/mrashidi.me/commit/731baa9747537c22330fb08bf072d342ec7020ba))
+
+
+### Documentation
+
+* **agents:** match the Next.js agent rules heading ([ab53195](https://github.com/MRdevX/mrashidi.me/commit/ab53195f3b99a6329a1cc707436eb50e0721429d))
+
 ### [0.2.7](https://github.com/MRdevX/mrashidi.me/compare/v0.2.6...v0.2.7) (2026-10-16)
 
 
