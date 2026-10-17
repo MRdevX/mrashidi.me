@@ -1,5 +1,5 @@
+import { githubService } from "@/features/projects/infrastructure/github";
 import { logger } from "@/lib/core";
-import { githubService } from "@/lib/services/github";
 
 interface CommitInfo {
   date: Date;
