@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
+import type { StackFacet } from "@/features/projects/domain/stack";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
-import type { StackFacet } from "../../domain/stack";
 import { TechChip } from "../shared/TechChip";
 
 type StackFacetListProps = {

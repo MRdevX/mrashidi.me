@@ -1,5 +1,5 @@
-import type { ProjectTypeFilter } from "../../domain/filters";
-import type { ProjectSort } from "../../domain/sort";
+import type { ProjectTypeFilter } from "@/features/projects/domain/filters";
+import type { ProjectSort } from "@/features/projects/domain/sort";
 
 export const TYPE_LABELS: Record<ProjectTypeFilter, string> = {
   all: "All",

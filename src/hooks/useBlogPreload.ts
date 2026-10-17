@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import type { BlogData, BlogResponse } from "@/features/blog/types";
+import type { BlogData, BlogResponse } from "@/features/blog";
 import { logger } from "@/lib/core";
 
 export function useBlogPreload() {

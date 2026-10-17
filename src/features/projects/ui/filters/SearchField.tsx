@@ -2,8 +2,8 @@
 
 import { Search, X } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
 import { styles } from "../shared/styles";
 
 const isEditable = (target: EventTarget | null) =>

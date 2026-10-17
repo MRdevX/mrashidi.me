@@ -3,10 +3,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
-import { PROJECTS_PATH, projectHref, requestOpenProject } from "@/features/projects/infrastructure/projectDeepLink";
+import { trackAskMr } from "@/features/ask-mr/client/analytics";
+import type { AskMrProjectCard } from "@/features/ask-mr/server/tools";
+import { PROJECTS_PATH, projectHref, requestOpenProject } from "@/features/projects";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
-import { trackAskMr } from "../../client/analytics";
-import type { AskMrProjectCard } from "../../server/tools";
 import { CardShell } from "./CardShell";
 
 interface ProjectCardsProps {

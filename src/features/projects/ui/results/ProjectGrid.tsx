@@ -1,7 +1,7 @@
 import { SearchX } from "lucide-react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
+import type { Project } from "@/features/projects/domain/project";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
-import type { Project } from "../../domain/project";
 import { styles } from "../shared/styles";
 import { ProjectCard } from "./ProjectCard";
 

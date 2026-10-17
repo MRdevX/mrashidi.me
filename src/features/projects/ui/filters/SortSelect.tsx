@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
+import { PROJECT_SORTS, type ProjectSort } from "@/features/projects/domain/sort";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
-import { PROJECT_SORTS, type ProjectSort } from "../../domain/sort";
 import { SORT_LABELS } from "../shared/labels";
 import { styles } from "../shared/styles";
 

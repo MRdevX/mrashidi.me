@@ -3,8 +3,8 @@
 import { Mail, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { FaLinkedin, FaTelegram } from "react-icons/fa";
+import { trackAskMr } from "@/features/ask-mr/client/analytics";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
-import { trackAskMr } from "../../client/analytics";
 import { CardShell, cardButtonClass } from "./CardShell";
 
 interface ContactCardProps {

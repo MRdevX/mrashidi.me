@@ -1,6 +1,6 @@
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
+import { PROJECT_TYPE_FILTERS } from "@/features/projects/domain/filters";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
-import { PROJECT_TYPE_FILTERS } from "../../domain/filters";
 import { TYPE_LABELS } from "../shared/labels";
 import { styles } from "../shared/styles";
 

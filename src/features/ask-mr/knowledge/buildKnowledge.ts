@@ -12,8 +12,7 @@ import {
   workExperience as siteWorkExperience,
   type WorkExperience,
 } from "@/data";
-import { type Project, projectSlug } from "@/features/projects/domain/project";
-import { projects as siteProjects } from "@/features/projects/infrastructure/projectData";
+import { type Project, projectSlug, projects as siteProjects } from "@/features/projects";
 import { type AskMrKnowledge, askMrKnowledge } from "./askMrKnowledge";
 
 export interface KnowledgeSources {

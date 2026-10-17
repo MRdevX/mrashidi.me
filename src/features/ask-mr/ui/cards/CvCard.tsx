@@ -2,7 +2,7 @@
 
 import { FileText } from "lucide-react";
 import Link from "next/link";
-import { trackAskMr } from "../../client/analytics";
+import { trackAskMr } from "@/features/ask-mr/client/analytics";
 import { useAskMr } from "../AskMrProvider";
 import { CardShell, cardButtonClass } from "./CardShell";
 

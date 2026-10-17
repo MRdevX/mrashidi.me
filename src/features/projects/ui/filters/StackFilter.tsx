@@ -2,8 +2,8 @@
 
 import { ChevronDown } from "lucide-react";
 import { useId, useState } from "react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
 import { styles } from "../shared/styles";
 import { StackFacetList } from "./StackFacetList";
 import { StackGroups } from "./StackGroups";

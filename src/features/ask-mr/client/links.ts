@@ -1,5 +1,5 @@
 import { certificates, config, education } from "@/data";
-import { projects } from "@/features/projects/infrastructure/projectData";
+import { projects } from "@/features/projects";
 
 const hostOf = (url: string | undefined): string | null => {
   if (!url) {

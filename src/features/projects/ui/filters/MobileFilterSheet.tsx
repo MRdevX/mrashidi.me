@@ -1,8 +1,8 @@
 "use client";
 
 import { SlidersHorizontal } from "lucide-react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
 import { pluralizeProjects } from "../shared/labels";
 import { Sheet, SheetClose, SheetCloseIcon, SheetTitle } from "../shared/Sheet";
 import { styles } from "../shared/styles";
