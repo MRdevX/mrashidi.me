@@ -3,7 +3,7 @@
 import { BottomNavigationItem, FloatingActionButton } from "@/components/layout";
 import { ThemeToggle } from "@/components/ui";
 import { mobileNavigationItems } from "@/data/navigation";
-import { useBottomNavigation } from "@/hooks";
+import { useBottomNavigation } from "./useBottomNavigation";
 
 export function BottomNavigation() {
   const { isActive } = useBottomNavigation({

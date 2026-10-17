@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui";
 import { desktopNavigationItems } from "@/data/navigation";
-import { useScrollPosition } from "@/hooks";
 import { BrandLogo } from "./BrandLogo";
 import { NavigationItem } from "./NavigationItem";
+import { useScrollPosition } from "./useScrollPosition";
 import { VersionBadge } from "./VersionBadge";
 
 export default function Navbar() {
