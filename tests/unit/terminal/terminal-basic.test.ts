@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatTimestamp, isValidCommand, normalizeCommand, resolveQuestion } from "@/components/terminal/utils";
+import { formatTimestamp, isValidCommand, normalizeCommand, resolveQuestion } from "@/features/home/terminal/utils";
 import { invalidCommands, validCommands } from "./fixtures";
 
 describe("Terminal Utils", () => {

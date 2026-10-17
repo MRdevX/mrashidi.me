@@ -25,7 +25,7 @@ source, so everything the model sees is public.
 | Guards (BotID, limits, kill switch) | `server/guards.ts`, `server/redis.ts` |
 | Model call | `server/modelCall.ts`, model id from `ASK_MR_MODEL` |
 | Routes | `src/app/api/chat/route.ts`, `src/app/api/chat/feedback/route.ts` |
-| UI | `ui/`, `client/`; terminal `ask` command in `src/components/terminal/` |
+| UI | `ui/`, `client/`; terminal `ask` command in `src/features/home/terminal/` |
 
 All paths under `src/features/ask-mr/` unless absolute.
 

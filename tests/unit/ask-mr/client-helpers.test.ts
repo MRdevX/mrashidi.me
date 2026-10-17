@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { parseAskCommand } from "@/components/terminal/utils";
 import { parseAskMrError } from "@/features/ask-mr/client/errors";
 import { safeLink } from "@/features/ask-mr/client/links";
 import { starterQuestions } from "@/features/ask-mr/client/suggestions";
+import { parseAskCommand } from "@/features/home/terminal/utils";
 
 const ORIGIN = "https://mrashidi.me";
 

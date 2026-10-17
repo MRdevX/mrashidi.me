@@ -3,7 +3,7 @@
 import type { Variants } from "framer-motion";
 import { Suspense } from "react";
 import { MotionSection } from "@/components/ui";
-import { ContributionGraphSkeleton } from "@/components/ui/skeletons/ContributionGraphSkeleton";
+import { ContributionGraphSkeleton } from "./ContributionGraphSkeleton";
 import { HomeMarkedSection } from "./HomeMarkedSection";
 import { LazyContributionGraph } from "./homeLazyComponents";
 

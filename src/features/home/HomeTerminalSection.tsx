@@ -2,9 +2,9 @@
 
 import type { Variants } from "framer-motion";
 import { Suspense } from "react";
-import { TerminalSkeleton } from "@/components/ui/skeletons/TerminalSkeleton";
 import { HomeMarkedSection } from "./HomeMarkedSection";
 import { LazyLoaderComponent, LazyTerminal } from "./homeLazyComponents";
+import { TerminalSkeleton } from "./TerminalSkeleton";
 
 type HomeTerminalSectionProps = {
   variants: Variants;
