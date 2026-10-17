@@ -1,4 +1,4 @@
-import { Skeleton } from "../Skeleton";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 const PLACEHOLDER_KEYS = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
 

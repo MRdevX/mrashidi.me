@@ -2,7 +2,6 @@ export { BackgroundEffects } from "./BackgroundEffects";
 export { Badge } from "./Badge";
 export { Button, buttonVariants } from "./Button";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
-export { ContributionGraph } from "./ContributionGraph";
 export { CyberpunkButton } from "./CyberpunkButton";
 export {
   CyberpunkCard,
@@ -36,7 +35,6 @@ export { Input } from "./input";
 export { LazyLoader } from "./LazyLoader";
 export { LoadingAnimation } from "./LoadingAnimation";
 export { MotionSection } from "./MotionSection";
-export { PageEnterMotion } from "./PageEnterMotion";
 export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";
 export {
@@ -50,7 +48,6 @@ export { Skeleton } from "./Skeleton";
 export { SocialButton } from "./SocialButton";
 export { SocialButtonsRow } from "./SocialButtonsRow";
 export { SurfaceCard } from "./SurfaceCard";
-export { TechStackGrid } from "./TechStackGrid";
 export { ThemeToggle } from "./ThemeToggle";
 export { TypingAnimation } from "./TypingAnimation";
 export { Textarea } from "./textarea";

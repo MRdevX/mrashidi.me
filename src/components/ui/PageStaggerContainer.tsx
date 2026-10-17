@@ -2,7 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
-import { usePageStaggerVariants } from "@/hooks/usePageStaggerVariants";
+import { usePageStaggerVariants } from "./usePageStaggerVariants";
 
 export type PageStaggerRenderProps = {
   itemVariants: Variants;

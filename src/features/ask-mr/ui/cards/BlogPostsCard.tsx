@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { trackAskMr } from "@/features/ask-mr/client/analytics";
+import type { AskMrBlogPost } from "@/features/ask-mr/server/tools";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
-import { trackAskMr } from "../../client/analytics";
-import type { AskMrBlogPost } from "../../server/tools";
 import { CardShell } from "./CardShell";
 
 const dateFormat = new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" });

@@ -1,4 +1,4 @@
-import { Skeleton } from "../Skeleton";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export function ContributionGraphSkeleton() {
   return (

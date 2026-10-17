@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
+import { hasActiveFilters } from "@/features/projects/domain/filters";
 import { cn } from "@/lib/utils";
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
-import { hasActiveFilters } from "../../domain/filters";
 import { pluralizeProjects, TYPE_LABELS } from "../shared/labels";
 import { styles } from "../shared/styles";
 

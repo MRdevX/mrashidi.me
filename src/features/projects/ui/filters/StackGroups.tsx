@@ -1,4 +1,4 @@
-import { useProjectCatalog } from "../../application/ProjectCatalogContext";
+import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
 import { styles } from "../shared/styles";
 import { StackFacetList } from "./StackFacetList";
 

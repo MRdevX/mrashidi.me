@@ -10,7 +10,7 @@ vi.mock("framer-motion", () => ({
   useReducedMotion: () => false,
 }));
 
-vi.mock("@/lib/services/github", () => ({
+vi.mock("@/features/projects/infrastructure/github", () => ({
   githubService: { getLatestCommitInfo: vi.fn().mockResolvedValue(null) },
 }));
 

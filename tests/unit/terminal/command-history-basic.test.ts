@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { useCommandHistory } from "@/components/terminal/hooks/useCommandHistory";
+import { useCommandHistory } from "@/features/home/terminal/hooks/useCommandHistory";
 
 describe("useCommandHistory - Basic Functionality", () => {
   it("should initialize with empty history position", () => {

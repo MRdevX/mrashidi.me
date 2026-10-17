@@ -1,4 +1,4 @@
-import { BlogCardSkeleton } from "@/components/ui/skeletons/BlogCardSkeleton";
+import { BlogCardSkeleton } from "./BlogCardSkeleton";
 import { BlogPostsGrid } from "./BlogPostsGrid";
 
 const SKELETON_PLACEHOLDER_KEYS = ["a", "b", "c", "d", "e", "f"] as const;

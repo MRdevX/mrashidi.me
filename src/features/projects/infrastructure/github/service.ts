@@ -32,25 +32,6 @@ export class GitHubService {
       return null;
     }
   }
-
-  async getLatestCommitDate(githubUrl: string): Promise<Date | null> {
-    const commitInfo = await this.getLatestCommitInfo(githubUrl);
-    return commitInfo?.date || null;
-  }
-
-  async testGitHubAPI(githubUrl: string): Promise<boolean> {
-    try {
-      const commitInfo = await this.getLatestCommitInfo(githubUrl);
-      return commitInfo !== null;
-    } catch (error) {
-      logger.error({
-        operation: "testGitHubAPI",
-        githubUrl,
-        error: error instanceof Error ? error.message : String(error),
-      });
-      return false;
-    }
-  }
 }
 
 export const githubService = new GitHubService();

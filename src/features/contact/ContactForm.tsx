@@ -7,12 +7,12 @@ import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
+import { StatusMessage } from "@/components/forms/StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { logger } from "@/lib/core";
 import { type ContactFormData, contactFormSchema } from "@/lib/validation";
-import { FormInputWithValidation } from "./FormInputWithValidation";
-import { StatusMessage } from "./StatusMessage";
 
 export function ContactFormRefactored() {
   const { getCardPattern } = useThemeConfig();

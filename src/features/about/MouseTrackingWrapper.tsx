@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useMouseTracking } from "@/hooks/useMouseTracking";
+import { useMouseTracking } from "./useMouseTracking";
 
 interface MouseTrackingWrapperProps {
   children: ReactNode;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useId, useRef } from "react";
-import { projectHref } from "@/features/projects/infrastructure/projectDeepLink";
+import { projectHref } from "@/features/projects";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { messageText } from "../messageText";
 import { useAskMr } from "./AskMrProvider";

@@ -2,8 +2,7 @@ import { describe, expect, it } from "vitest";
 import { workExperience } from "@/data";
 import { askMrKnowledge } from "@/features/ask-mr/knowledge/askMrKnowledge";
 import { buildKnowledge, defaultKnowledgeSources } from "@/features/ask-mr/knowledge/buildKnowledge";
-import { projectSlug } from "@/features/projects/domain/project";
-import { projects } from "@/features/projects/infrastructure/projectData";
+import { projectSlug, projects } from "@/features/projects";
 
 describe("projectSlug", () => {
   it("creates url-safe slugs", () => {

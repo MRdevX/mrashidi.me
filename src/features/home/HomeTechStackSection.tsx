@@ -2,10 +2,10 @@
 
 import type { Variants } from "framer-motion";
 import { Suspense } from "react";
-import { TechStackGridSkeleton } from "@/components/ui/skeletons/TechStackGridSkeleton";
 import type { TechStackItem } from "@/lib/tech";
 import { HomeMarkedSection } from "./HomeMarkedSection";
 import { LazyTechStackGrid } from "./homeLazyComponents";
+import { TechStackGridSkeleton } from "./TechStackGridSkeleton";
 
 type HomeTechStackSectionProps = {
   variants: Variants;
