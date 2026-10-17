@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentProps } from "react";
-import { PageEnterMotion } from "@/components/ui/PageEnterMotion";
+import { PageEnterMotion } from "./PageEnterMotion";
 
 type ContactMotionFadeProps = Omit<ComponentProps<typeof PageEnterMotion>, "startOpaque">;
 
