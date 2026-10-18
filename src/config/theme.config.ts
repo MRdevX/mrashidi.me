@@ -46,7 +46,7 @@ const COLORS = {
   },
 } as const;
 
-export const SEMANTIC_COLORS = {
+const SEMANTIC_COLORS = {
   text: {
     primary: "text-gray-800 dark:text-gray-200",
     secondary: "text-gray-600 dark:text-gray-400",
@@ -115,12 +115,12 @@ const COMPONENT_VARIANTS = {
   },
 } as const;
 
-export const PATTERNS = {
+const PATTERNS = {
   sectionTitle: "text-3xl font-semibold text-orange-500 font-albert tracking-tight",
   card: "feature-card group",
 } as const;
 
-export const THEME_CONFIG = {
+const THEME_CONFIG = {
   colors: COLORS,
   variants: COMPONENT_VARIANTS,
 } as const;
@@ -141,7 +141,7 @@ export const getVariant = <T extends keyof typeof COMPONENT_VARIANTS>(
   return COMPONENT_VARIANTS[component][variant as keyof (typeof COMPONENT_VARIANTS)[T]] as string;
 };
 
-export const getColor = (color: ColorKey): string => {
+const getColor = (color: ColorKey): string => {
   return COLORS[color].DEFAULT;
 };
 
