@@ -160,7 +160,12 @@ const MongooseIcon = createSvgIcon("/icons/mongoose.svg", "Mongoose");
 const TypeORMIcon = createSvgIcon("/icons/typeorm.svg", "TypeORM");
 const GraphileWorkerIcon = createSvgIcon("https://worker.graphile.org/img/logo.optimized.svg", "Graphile Worker");
 
-const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?: string }>; colorClass: string }> = {
+export interface IconDefinition {
+  Icon: IconType | React.FC<{ className?: string }>;
+  colorClass: string;
+}
+
+export const ICON_DEFINITIONS: Record<string, IconDefinition> = {
   react: { Icon: SiReact, colorClass: "text-cyan-400" },
   nextjs: { Icon: SiNextdotjs, colorClass: "text-black dark:text-white" },
   vue: { Icon: SiVuedotjs, colorClass: "text-green-500" },
@@ -353,150 +358,3 @@ const ICON_DEFINITIONS: Record<string, { Icon: IconType | React.FC<{ className?:
 
   default: { Icon: FaTools, colorClass: "text-gray-400" },
 };
-
-const getIconKey = (techName: string): string => {
-  const normalized = techName.toLowerCase().trim();
-
-  if (ICON_DEFINITIONS[normalized]) {
-    return normalized;
-  }
-
-  const noSpaces = normalized.replace(/\s+/g, "");
-  if (ICON_DEFINITIONS[noSpaces]) {
-    return noSpaces;
-  }
-
-  const noDots = normalized.replace(/[.\s/]+/g, "");
-  if (ICON_DEFINITIONS[noDots]) {
-    return noDots;
-  }
-
-  const keywords = normalized.split(/[\s.-/]+/);
-  for (const keyword of keywords) {
-    if (keyword && ICON_DEFINITIONS[keyword]) {
-      return keyword;
-    }
-  }
-
-  const abbreviations: Record<string, string> = {
-    ts: "typescript",
-    js: "javascript",
-    py: "python",
-    cpp: "cplusplus",
-    "c++": "cplusplus",
-    "c#": "csharp",
-    golang: "go",
-
-    next: "nextjs",
-    node: "nodejs",
-    nest: "nestjs",
-    vue: "vuejs",
-    nuxt: "nuxt",
-    spring: "springboot",
-    tailwind: "tailwindcss",
-    framer: "framermotion",
-    asp: "aspnet",
-    dotnet: "aspnet",
-
-    postgres: "postgresql",
-    mongo: "mongodb",
-    sqlserver: "mssql",
-
-    amazon: "aws",
-    microsoft: "azure",
-    googlecloud: "gcp",
-    google: "gcp",
-    k8s: "kubernetes",
-
-    lambda: "awslambda",
-    serverless: "awslambda",
-    fargate: "awsfargate",
-    ecs: "awsecs",
-    s3: "awss3",
-    amplify: "awsamplify",
-    sqs: "awssqs",
-    sns: "awssns",
-    apigateway: "amazonapigateway",
-    cloudwatch: "amazoncloudwatch",
-
-    monitor: "azuremonitor",
-    keyvault: "azure",
-    blobstorage: "azure",
-    servicebus: "azure",
-
-    github: "githubactions",
-    vsc: "vscode",
-
-    test: "jest",
-    testing: "jest",
-    unit: "unittesting",
-    integration: "integrationtesting",
-    e2e: "endtoendtesting",
-
-    html: "html5",
-    css: "css3",
-
-    rest: "restfulapis",
-    restful: "restfulapis",
-    api: "restfulapis",
-    websockets: "websocket",
-
-    oauth2: "oauth",
-    ssl: "ssltls",
-    tls: "ssltls",
-    security: "apisecurity",
-    trust: "zerotrust",
-    zero: "zerotrust",
-
-    spotify: "spotifyapi",
-    weather: "weatherapis",
-    translation: "translationapis",
-    sheets: "googlesheetsapi",
-    chrome: "chromeextensionapi",
-    extension: "chromeextensionapi",
-    telegram: "telegram",
-    compose: "jetpackcompose",
-
-    microservice: "microservices",
-    monorepo: "monorepos",
-    domain: "domaindrivendesign",
-    design: "domaindrivendesign",
-    event: "eventdrivenarchitecture",
-    architecture: "eventdrivenarchitecture",
-    versioning: "apiversioning",
-    database: "databasemanagement",
-    db: "databasemanagement",
-
-    shell: "shellscripting",
-    terminal: "cli",
-    ipad: "ipados",
-    mobile: "ipados",
-    mac: "macos",
-    distros: "linuxdistros",
-    qt: "pyqt",
-    license: "licenseanalysis",
-    tokens: "apitokens",
-    llm: "llmapis",
-    cursor: "cursorai",
-    inquirer: "inquirerjs",
-    graphile: "graphileworker",
-    worker: "graphileworker",
-  };
-
-  if (abbreviations[normalized]) {
-    return abbreviations[normalized];
-  }
-
-  for (const keyword of keywords) {
-    if (keyword && abbreviations[keyword]) {
-      return abbreviations[keyword];
-    }
-  }
-
-  return noDots;
-};
-
-export function getTechIcon(iconKey: string) {
-  const normalizedKey = getIconKey(iconKey);
-  return ICON_DEFINITIONS[normalizedKey] || ICON_DEFINITIONS.default;
-}
