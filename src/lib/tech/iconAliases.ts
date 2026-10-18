@@ -58,8 +58,6 @@ export const ICON_ALIASES: Record<string, string> = {
   ssl: "ssltls",
   tls: "ssltls",
   security: "apisecurity",
-  trust: "zerotrust",
-  zero: "zerotrust",
 
   spotify: "spotifyapi",
   weather: "weatherapis",
@@ -70,10 +68,8 @@ export const ICON_ALIASES: Record<string, string> = {
 
   microservice: "microservices",
   monorepo: "monorepos",
-  domain: "domaindrivendesign",
-  design: "domaindrivendesign",
-  event: "eventdrivenarchitecture",
-  architecture: "eventdrivenarchitecture",
+  "domain-driven": "domaindrivendesign",
+  "event-driven": "eventdrivenarchitecture",
   versioning: "apiversioning",
   database: "databasemanagement",
   db: "databasemanagement",
@@ -81,7 +77,6 @@ export const ICON_ALIASES: Record<string, string> = {
   shell: "shellscripting",
   terminal: "cli",
   ipad: "ipados",
-  mobile: "ipados",
   mac: "macos",
   distros: "linuxdistros",
   qt: "pyqt",
@@ -91,5 +86,4 @@ export const ICON_ALIASES: Record<string, string> = {
   cursor: "cursorai",
   inquirer: "inquirerjs",
   graphile: "graphileworker",
-  worker: "graphileworker",
 };

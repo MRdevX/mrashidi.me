@@ -223,4 +223,15 @@ describe("getTechIcon", () => {
   it("falls back to the tools icon for unknown names", () => {
     expect(describeIcon("not a real technology")).toBe(describeIcon("default"));
   });
+
+  it.each([
+    "System Design",
+    "Software Architecture",
+    "Event Sourcing",
+    "Mobile Development",
+    "Service Worker",
+    "Zero Downtime",
+  ])("does not borrow a specific icon for the generic word in %s", (techName) => {
+    expect(describeIcon(techName)).toBe(describeIcon("default"));
+  });
 });
