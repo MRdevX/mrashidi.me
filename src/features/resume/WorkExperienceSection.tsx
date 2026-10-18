@@ -3,12 +3,13 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Laptop } from "lucide-react";
 import { useEffect, useId, useState } from "react";
-import { Badge, FilamentDivider, SectionHeader, SurfaceCard } from "@/components/ui";
+import { FilamentDivider, SectionHeader, SurfaceCard } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
 import { type WorkExperience, workExperience } from "@/data";
 import { pageEnterTransition } from "@/lib/animations";
 import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
+import { Badge } from "./Badge";
 import { formatDuration, formatYearMonth, parsePeriod, toIsoMonth, type YearMonth } from "./period";
 import { accentTextClass } from "./styles";
 

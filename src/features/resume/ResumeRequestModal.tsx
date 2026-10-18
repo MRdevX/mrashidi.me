@@ -6,24 +6,24 @@ import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
 import { StatusMessage } from "@/components/forms/StatusMessage";
+import { CyberpunkButton } from "@/components/ui";
+import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
 import {
-  CyberpunkButton,
   CyberpunkDialog,
   CyberpunkDialogContent,
   CyberpunkDialogFooter,
   CyberpunkDialogHeader,
   CyberpunkDialogTitle,
-  DialogDescription,
-} from "@/components/ui";
-import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
+} from "./CyberpunkDialog";
+import { DialogDescription } from "./dialog";
 
-interface ResumeRequestModalRefactoredProps {
+interface ResumeRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: ResumeRequestData) => Promise<boolean>;
 }
 
-export function ResumeRequestModalRefactored({ isOpen, onClose, onSubmit }: ResumeRequestModalRefactoredProps) {
+export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
