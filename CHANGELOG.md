@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.10](https://github.com/MRdevX/mrashidi.me/compare/v0.2.9...v0.2.10) (2026-10-18)
+
+
+### Bug Fixes
+
+* **api:** stop labelling JSON and property-access errors as auth failures ([22658c3](https://github.com/MRdevX/mrashidi.me/commit/22658c36a9e49a1e4e0738aaf863c2674533395c))
+* **home:** give terminal project badges their colours again ([2554ba1](https://github.com/MRdevX/mrashidi.me/commit/2554ba1d6095e5ca4bb5cc7633bc40e2ed919be2))
+
+
+### Documentation
+
+* describe the slice layout after the cleanup ([4992275](https://github.com/MRdevX/mrashidi.me/commit/49922755c5610e3e0b6b048acf669635f24410c1))
+
+
+### Code Refactoring
+
+* **api:** simplify the rate-limit and auth middleware ([d5d6de0](https://github.com/MRdevX/mrashidi.me/commit/d5d6de008c67438bd8974bde2485624fd2448390))
+* **blog:** move the Medium feed service, fetcher and pagination into the blog slice ([8f1bd6a](https://github.com/MRdevX/mrashidi.me/commit/8f1bd6a267ddb7c80485d7e4a0f2e00ee5c75fec))
+* **contact:** pull the form submission out of the contact form component ([3f75166](https://github.com/MRdevX/mrashidi.me/commit/3f751669da3deb916235412dc13695436db53dc7))
+* fix misleading names and barrel self-imports ([16e7dc8](https://github.com/MRdevX/mrashidi.me/commit/16e7dc8e9de318e1a364307fcf195f65f53c3006))
+* **home:** split terminal commands and contribution graph, move home-only code in ([7ad807f](https://github.com/MRdevX/mrashidi.me/commit/7ad807f16fc7cf151bf6e2cb1dce3f68cd4a751e))
+* **privacy:** move the privacy policy page into its own feature slice ([f5e1d55](https://github.com/MRdevX/mrashidi.me/commit/f5e1d55636ce13184940576a8ab25333803cfc23))
+* **projects:** move GitHub API clients out of the route handlers into their slices ([730cb20](https://github.com/MRdevX/mrashidi.me/commit/730cb20572f5f3ae8298f4c37e823b0c8f2986ba))
+* remove dead code and unused barrel exports ([af43db7](https://github.com/MRdevX/mrashidi.me/commit/af43db73239e22ed1a84afe5818a6618e30b58ba))
+* remove exports left unused by the slice moves ([0146ed0](https://github.com/MRdevX/mrashidi.me/commit/0146ed077830ea4497f383d94cf67f2403bf3c25))
+* **resume:** move the request dialog and badge into the resume slice ([f748d8d](https://github.com/MRdevX/mrashidi.me/commit/f748d8d586a36fa405ec52eab33a8dd0f5303540))
+* strip comments that fail the house bar ([851416f](https://github.com/MRdevX/mrashidi.me/commit/851416fe6f4686dbdff0d183bedea92847accbcc))
+* **ui:** rename useThemeConfig to getThemeConfig since it calls no hooks ([c3e7f28](https://github.com/MRdevX/mrashidi.me/commit/c3e7f288aa42916a1799c12bcbbf5f9fc218058c))
+
+
+### Tests
+
+* **ui:** import getMainTechStack from the home slice ([f3bc639](https://github.com/MRdevX/mrashidi.me/commit/f3bc639400e18a7f8c5e02658e15fed8024961c1))
+
 ### [0.2.9](https://github.com/MRdevX/mrashidi.me/compare/v0.2.8...v0.2.9) (2026-10-18)
 
 
