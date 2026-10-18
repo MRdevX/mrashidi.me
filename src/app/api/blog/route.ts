@@ -3,26 +3,11 @@ import { NextResponse } from "next/server";
 import { getAllPosts } from "@/features/blog/server";
 import { corsPreflight, createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
-import { logger } from "@/lib/core";
 
 export const runtime = "nodejs";
 
 async function handleBlogPosts(_request: NextRequest, pagination: { page: number; limit: number }) {
-  logger.info({
-    operation: "handleBlogPosts",
-    message: "Handling blog posts request",
-    pagination,
-  });
-
   const result = await getAllPosts(pagination.page, pagination.limit);
-
-  logger.info({
-    operation: "handleBlogPosts",
-    message: "Successfully processed blog posts request",
-    postCount: result.posts.length,
-    total: result.total,
-    pagination,
-  });
 
   return createSuccessResponse(result.posts, {
     fromCache: result.fromCache,

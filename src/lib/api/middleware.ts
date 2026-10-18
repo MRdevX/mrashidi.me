@@ -12,10 +12,6 @@ import type { ApiHandler } from "./types";
 type PaginationHandler = (request: NextRequest, pagination: PaginationParams) => Promise<NextResponse>;
 type ValidationHandler<T = unknown> = (request: NextRequest, validatedData: T) => Promise<NextResponse>;
 
-function corsMiddleware(handler: ApiHandler): ApiHandler {
-  return withCors(handler);
-}
-
 function cacheMiddleware(ttl: number, staleWhileRevalidate?: number): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
     return async (request: NextRequest) => {
@@ -40,62 +36,52 @@ function rateLimitMiddleware(rateLimiterType: RateLimiterType): (handler: ApiHan
     return async (request: NextRequest) => {
       const identifier = getClientIdentifier(request);
       const rateLimitResult = await checkRateLimit(rateLimiterType, identifier);
+      const rateLimitHeaders = {
+        "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+        "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+        "X-RateLimit-Reset": rateLimitResult.reset.toISOString(),
+      };
 
       if (!rateLimitResult.success) {
+        const retryAfter = Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000);
         return addSecurityHeaders(
           NextResponse.json(
             {
               error: "Rate limit exceeded",
               message: "Too many requests. Please try again later.",
-              retryAfter: Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000),
+              retryAfter,
             },
             {
               status: 429,
-              headers: {
-                "Retry-After": Math.ceil((rateLimitResult.reset.getTime() - Date.now()) / 1000).toString(),
-                "X-RateLimit-Limit": rateLimitResult.limit.toString(),
-                "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
-                "X-RateLimit-Reset": rateLimitResult.reset.toISOString(),
-              },
+              headers: { "Retry-After": retryAfter.toString(), ...rateLimitHeaders },
             }
           )
         );
       }
 
       const response = await handler(request);
-
-      response.headers.set("X-RateLimit-Limit", rateLimitResult.limit.toString());
-      response.headers.set("X-RateLimit-Remaining", rateLimitResult.remaining.toString());
-      response.headers.set("X-RateLimit-Reset", rateLimitResult.reset.toISOString());
-
+      for (const [name, value] of Object.entries(rateLimitHeaders)) {
+        response.headers.set(name, value);
+      }
       return response;
     };
   };
 }
 
+function tokensMatch(expected: string, provided: string): boolean {
+  const expectedBuffer = Buffer.from(expected, "utf8");
+  const providedBuffer = Buffer.from(provided, "utf8");
+  return expectedBuffer.length === providedBuffer.length && timingSafeEqual(expectedBuffer, providedBuffer);
+}
+
 function authMiddleware(token: string | (() => string)): (handler: ApiHandler) => ApiHandler {
   return (handler: ApiHandler): ApiHandler => {
     return async (request: NextRequest) => {
-      const actualToken = typeof token === "function" ? token() : token;
-      if (!actualToken) {
-        throw new APIError("Unauthorized", 401);
-      }
+      const expected = typeof token === "function" ? token() : token;
+      const match = /^Bearer\s+([\s\S]+)$/i.exec(request.headers.get("authorization") ?? "");
+      const provided = match?.[1]?.trim();
 
-      const authHeader = request.headers.get("authorization");
-      const match = /^Bearer\s+([\s\S]+)$/i.exec(authHeader ?? "");
-      if (!match?.[1]?.trim()) {
-        throw new APIError("Unauthorized", 401);
-      }
-
-      const provided = match[1].trim();
-      const expectedBuffer = Buffer.from(actualToken, "utf8");
-      const providedBuffer = Buffer.from(provided, "utf8");
-
-      if (expectedBuffer.length !== providedBuffer.length) {
-        throw new APIError("Unauthorized", 401);
-      }
-
-      if (!timingSafeEqual(expectedBuffer, providedBuffer)) {
+      if (!expected || !provided || !tokensMatch(expected, provided)) {
         throw new APIError("Unauthorized", 401);
       }
 
@@ -184,6 +170,8 @@ class MiddlewareChain {
       wrappedHandler = handler as ApiHandler;
     }
 
+    // Wrapped inside out, so the last wrapper runs first: rate limiting runs before auth so failed
+    // token guesses are throttled, and error handling is outermost so it catches every layer.
     if (this.authToken) {
       wrappedHandler = authMiddleware(this.authToken)(wrappedHandler);
     }
@@ -199,7 +187,7 @@ class MiddlewareChain {
     }
 
     if (this.hasCors) {
-      wrappedHandler = corsMiddleware(wrappedHandler);
+      wrappedHandler = withCors(wrappedHandler);
     }
 
     wrappedHandler = errorHandlingMiddleware(wrappedHandler);
