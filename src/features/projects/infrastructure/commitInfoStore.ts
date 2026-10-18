@@ -1,10 +1,6 @@
-import { getLatestCommitInfo } from "@/features/projects/infrastructure/github";
 import { logger } from "@/lib/core";
-
-interface CommitInfo {
-  date: Date;
-  hash: string;
-}
+import type { CommitInfo } from "../domain/commit";
+import { getLatestCommitInfo } from "./github";
 
 export type CommitInfoMap = ReadonlyMap<string, CommitInfo>;
 

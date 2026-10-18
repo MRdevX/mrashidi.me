@@ -1,14 +1,10 @@
 import { logger } from "@/lib/core";
 import { fetchJSON } from "@/lib/fetcher";
+import type { CommitInfo } from "../../domain/commit";
 
-interface LatestCommitInfo {
-  date: Date;
-  hash: string;
-}
-
-export async function getLatestCommitInfo(githubUrl: string): Promise<LatestCommitInfo | null> {
+export async function getLatestCommitInfo(githubUrl: string): Promise<CommitInfo | null> {
   try {
-    const commitInfo = await fetchJSON<LatestCommitInfo>(
+    const commitInfo = await fetchJSON<CommitInfo>(
       `/api/github?action=commit-info&url=${encodeURIComponent(githubUrl)}`
     );
 
