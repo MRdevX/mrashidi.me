@@ -14,8 +14,11 @@ const SAFE_ERROR_MESSAGES = {
 const ERROR_PATTERNS: Array<{ pattern: RegExp; message: string }> = [
   { pattern: /validation|invalid.*input|malformed/i, message: SAFE_ERROR_MESSAGES.VALIDATION },
   { pattern: /network|fetch|timeout|connection|econnrefused|enotfound/i, message: SAFE_ERROR_MESSAGES.NETWORK },
-  { pattern: /auth|login|credential|token|unauthorized|jwt/i, message: SAFE_ERROR_MESSAGES.AUTHENTICATION },
-  { pattern: /permission|access|forbidden|denied/i, message: SAFE_ERROR_MESSAGES.AUTHORIZATION },
+  {
+    pattern: /unauthori[sz]ed|authentication|invalid credentials|\bjwt\b/i,
+    message: SAFE_ERROR_MESSAGES.AUTHENTICATION,
+  },
+  { pattern: /forbidden|permission denied|access denied/i, message: SAFE_ERROR_MESSAGES.AUTHORIZATION },
   { pattern: /rate limit|too many|throttle|429/i, message: SAFE_ERROR_MESSAGES.RATE_LIMIT },
   { pattern: /api|endpoint|request failed|http error/i, message: SAFE_ERROR_MESSAGES.API },
 ];

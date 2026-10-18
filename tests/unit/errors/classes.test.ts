@@ -29,6 +29,21 @@ describe("Error Classes", () => {
       expect(error.errorType).toBe("VALIDATION");
     });
 
+    it("does not report JSON parse errors as authentication failures", () => {
+      const error = new AppError("Unexpected token < in JSON at position 0");
+      expect(error.message).toBe("An unexpected error occurred");
+    });
+
+    it("does not report property access errors as access denied", () => {
+      const error = new AppError("Cannot access 'config' before initialization");
+      expect(error.message).toBe("An unexpected error occurred");
+    });
+
+    it("still maps real auth failures to a safe message", () => {
+      expect(new AppError("Request unauthorized").message).toBe("Authentication failed");
+      expect(new AppError("403 Forbidden").message).toBe("Access denied");
+    });
+
     it("should have stack trace", () => {
       const error = new AppError("Test error");
       expect(error.stack).toBeDefined();
