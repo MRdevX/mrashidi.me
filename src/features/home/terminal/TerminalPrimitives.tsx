@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { getThemeConfig } from "@/config/theme.config";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 
 export const TerminalSection = ({ title, children }: { title: string; children: ReactNode }) => (
@@ -32,22 +31,20 @@ export const TerminalListItem = ({
   className?: string;
 }) => <li className={className}>• {children}</li>;
 
+const BADGE_VARIANTS = {
+  public: "bg-[#10b981] text-white",
+  private: "bg-gray-700 text-gray-300",
+  personal: "bg-[#3b82f6] text-white",
+  professional: "bg-[#ff5f1f] text-white",
+  default: "bg-gray-700 text-gray-300",
+} as const;
+
 export const TerminalBadge = ({
   children,
   variant = "default",
 }: {
   children: ReactNode;
-  variant?: "public" | "private" | "personal" | "professional" | "default";
+  variant?: keyof typeof BADGE_VARIANTS;
 }) => {
-  const { colors } = getThemeConfig();
-
-  const variants = {
-    public: `bg-[${colors.success.DEFAULT}] text-white`,
-    private: "bg-gray-700 text-gray-300",
-    personal: `bg-[${colors.info.DEFAULT}] text-white`,
-    professional: `bg-[${colors.primary.DEFAULT}] text-white`,
-    default: "bg-gray-700 text-gray-300",
-  };
-
-  return <span className={`px-2 py-0.5 rounded font-semibold text-xs ${variants[variant]}`}>{children}</span>;
+  return <span className={`px-2 py-0.5 rounded font-semibold text-xs ${BADGE_VARIANTS[variant]}`}>{children}</span>;
 };
