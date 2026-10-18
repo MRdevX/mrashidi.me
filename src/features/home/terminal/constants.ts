@@ -12,6 +12,8 @@ export const AVAILABLE_COMMANDS = {
   clear: "Clear the terminal",
 } as const;
 
+export const TERMINAL_COMMAND_CLICK_EVENT = "terminal-command-click";
+
 export const TERMINAL_CONSTANTS = {
   HEIGHT: "600px",
   WELCOME_MESSAGE: "Welcome! Type 'help' to see available commands.",

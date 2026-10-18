@@ -1,5 +1,5 @@
 import { type ReactNode, Suspense } from "react";
-import { LoadingAnimation } from "./LoadingAnimation";
+import { LoadingAnimation } from "@/components/ui/LoadingAnimation";
 
 interface LazyLoaderProps {
   children: ReactNode;

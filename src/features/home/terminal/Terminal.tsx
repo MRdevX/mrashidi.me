@@ -3,7 +3,12 @@
 import { motion } from "framer-motion";
 import React, { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { isAskMrEnabled } from "@/features/ask-mr";
-import { TERMINAL_CONSTANTS, TERMINAL_STARTER_QUESTIONS, TERMINAL_STYLES } from "./constants";
+import {
+  TERMINAL_COMMAND_CLICK_EVENT,
+  TERMINAL_CONSTANTS,
+  TERMINAL_STARTER_QUESTIONS,
+  TERMINAL_STYLES,
+} from "./constants";
 import { useCommandHistory, useTerminal, useTerminalFocus } from "./hooks";
 import { TerminalHistory } from "./TerminalHistory";
 import { TerminalInput } from "./TerminalInput";
@@ -24,7 +29,7 @@ function TerminalWelcome({ aiEnabled }: { aiEnabled: boolean }) {
               className="cursor-pointer border-none bg-transparent p-0 text-left text-green-600 transition-colors hover:underline dark:text-green-400 dark:hover:text-green-300"
               onClick={() =>
                 window.dispatchEvent(
-                  new CustomEvent("terminal-command-click", { detail: { command: `ask ${question}`, run: true } })
+                  new CustomEvent(TERMINAL_COMMAND_CLICK_EVENT, { detail: { command: `ask ${question}`, run: true } })
                 )
               }
             >
@@ -58,10 +63,10 @@ const TerminalContainer = React.memo(() => {
       inputRef.current?.focus();
     };
 
-    window.addEventListener("terminal-command-click", handleCommandClick as EventListener);
+    window.addEventListener(TERMINAL_COMMAND_CLICK_EVENT, handleCommandClick as EventListener);
 
     return () => {
-      window.removeEventListener("terminal-command-click", handleCommandClick as EventListener);
+      window.removeEventListener(TERMINAL_COMMAND_CLICK_EVENT, handleCommandClick as EventListener);
     };
   }, [executeCommand]);
 

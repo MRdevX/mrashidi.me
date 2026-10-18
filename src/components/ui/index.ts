@@ -21,7 +21,6 @@ export {
   DialogTrigger,
 } from "./dialog";
 export { FilamentDivider } from "./FilamentDivider";
-export { LazyLoader } from "./LazyLoader";
 export { MotionSection } from "./MotionSection";
 export { PageHeader } from "./PageHeader";
 export { PageSection } from "./PageSection";

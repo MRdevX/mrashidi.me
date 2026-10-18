@@ -1,20 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
-
-type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-
-type ContributionDay = {
-  date: string; // "YYYY-MM-DD"
-  count: number;
-  level: Level;
-};
-
-type ApiResponse = {
-  contributions: ContributionDay[];
-  total: number;
-};
+import {
+  buildCalendar,
+  type CalendarData,
+  type ContributionDay,
+  computeDynamicLevels,
+  formatContributionCount,
+  formatContributionDate,
+  type Level,
+} from "./contributionCalendar";
+import { useContributions } from "./useContributions";
 
 type TooltipState = {
   day: ContributionDay;
@@ -22,18 +19,13 @@ type TooltipState = {
   y: number;
 } | null;
 
-type CalendarData = {
-  weeks: (ContributionDay | null)[][];
-  monthLabels: { weekIndex: number; label: string }[];
-};
-
 const CELL_PX = 11;
 const GAP_PX = 2;
 const STEP_PX = CELL_PX + GAP_PX;
 const LABEL_HEIGHT_PX = 16;
-const SVG_HEIGHT_PX = LABEL_HEIGHT_PX + 7 * STEP_PX - GAP_PX;
-
-const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DAYS_PER_WEEK = 7;
+const WEEKS_PER_YEAR = 53;
+const SVG_HEIGHT_PX = LABEL_HEIGHT_PX + DAYS_PER_WEEK * STEP_PX - GAP_PX;
 
 const LEVEL_FILL: Record<Level, string> = {
   0: "rgba(255,255,255,0.06)",
@@ -45,89 +37,29 @@ const LEVEL_FILL: Record<Level, string> = {
   6: "#ff5f1f",
 };
 
-function buildCalendar(days: ContributionDay[]): CalendarData {
-  if (days.length === 0) {
-    return { weeks: [], monthLabels: [] };
+function findDayUnderPointer(
+  svg: SVGSVGElement,
+  clientX: number,
+  clientY: number,
+  weeks: CalendarData["weeks"]
+): ContributionDay | null {
+  const ctm = svg.getScreenCTM();
+  if (!ctm) {
+    return null;
   }
-
-  // Parse at noon local time to avoid UTC off-by-one shifts on any timezone.
-  // Monday-first weeks: Mon=0, Tue=1, …, Sun=6
-  const startPad = (new Date(`${days[0].date}T12:00:00`).getDay() + 6) % 7;
-  const padded: (ContributionDay | null)[] = [...Array<null>(startPad).fill(null), ...days];
-
-  const weeks: (ContributionDay | null)[][] = [];
-  for (let i = 0; i < padded.length; i += 7) {
-    const week = padded.slice(i, i + 7);
-    while (week.length < 7) {
-      week.push(null);
-    }
-    weeks.push(week);
-  }
-
-  const monthLabels: { weekIndex: number; label: string }[] = [];
-  let lastMonth = -1;
-  for (let wi = 0; wi < weeks.length; wi++) {
-    const first = weeks[wi].find(Boolean);
-    if (!first) {
-      continue;
-    }
-    const month = new Date(`${first.date}T12:00:00`).getMonth();
-    if (month !== lastMonth) {
-      monthLabels.push({ weekIndex: wi, label: MONTH_NAMES[month] ?? "" });
-      lastMonth = month;
-    }
-  }
-
-  return { weeks, monthLabels };
-}
-
-function formatDate(s: string): string {
-  return new Date(`${s}T12:00:00`).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-function formatCount(count: number): string {
-  if (count === 0) {
-    return "No contributions";
-  }
-  return count === 1 ? "1 contribution" : `${count} contributions`;
-}
-
-function computeDynamicLevels(days: ContributionDay[]): ContributionDay[] {
-  const nonZero = days
-    .map((d) => d.count)
-    .filter((c) => c > 0)
-    .sort((a, b) => a - b);
-
-  if (nonZero.length === 0) {
-    return days;
-  }
-
-  const pct = (p: number): number => {
-    const idx = Math.min(Math.floor(p * nonZero.length), nonZero.length - 1);
-    return nonZero[idx] ?? 1;
-  };
-
-  const thresholds = [pct(0.25), pct(0.5), pct(0.7), pct(0.85), pct(0.95)];
-
-  return days.map((d): ContributionDay => {
-    if (d.count === 0) {
-      return { ...d, level: 0 };
-    }
-    for (let i = thresholds.length - 1; i >= 0; i--) {
-      if (d.count > (thresholds[i] ?? 0)) {
-        return { ...d, level: (i + 2) as Level };
-      }
-    }
-    return { ...d, level: 1 };
-  });
+  const point = svg.createSVGPoint();
+  point.x = clientX;
+  point.y = clientY;
+  const { x: rx, y: ry } = point.matrixTransform(ctm.inverse());
+  const wi = Math.floor(rx / STEP_PX);
+  const di = Math.floor((ry - LABEL_HEIGHT_PX) / STEP_PX);
+  const inBounds = wi >= 0 && wi < weeks.length && di >= 0 && di < DAYS_PER_WEEK && ry >= LABEL_HEIGHT_PX;
+  const inCell = inBounds && rx - wi * STEP_PX < CELL_PX && ry - LABEL_HEIGHT_PX - di * STEP_PX < CELL_PX;
+  return inCell ? (weeks[wi]?.[di] ?? null) : null;
 }
 
 function GraphSkeleton() {
-  const vw = 53 * STEP_PX - GAP_PX;
+  const vw = WEEKS_PER_YEAR * STEP_PX - GAP_PX;
   return (
     <svg viewBox={`0 0 ${vw} ${SVG_HEIGHT_PX}`} width="100%" aria-hidden="true" className="animate-pulse">
       <defs>
@@ -144,39 +76,9 @@ export type ContributionGraphProps = {
   className?: string;
 };
 
-const CONTRIBUTIONS_URL = "/api/github/contributions";
-
 export function ContributionGraph({ className }: ContributionGraphProps) {
-  const [data, setData] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { data, loading, error } = useContributions();
   const [tooltip, setTooltip] = useState<TooltipState>(null);
-
-  useEffect(() => {
-    let alive = true;
-    fetch(CONTRIBUTIONS_URL)
-      .then((r) => {
-        if (!r.ok) {
-          throw new Error(`HTTP ${r.status}`);
-        }
-        return r.json() as Promise<ApiResponse>;
-      })
-      .then((d) => {
-        if (alive) {
-          setData(d);
-          setLoading(false);
-        }
-      })
-      .catch(() => {
-        if (alive) {
-          setError(true);
-          setLoading(false);
-        }
-      });
-    return () => {
-      alive = false;
-    };
-  }, []);
 
   const contributions = data ? computeDynamicLevels(data.contributions) : [];
   const { weeks, monthLabels } = buildCalendar(contributions);
@@ -192,8 +94,8 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
             top: tooltip.y < 70 ? tooltip.y + 18 : tooltip.y - 52,
           }}
         >
-          <p className="font-mono font-medium text-foreground">{formatCount(tooltip.day.count)}</p>
-          <p className="text-muted-foreground">{formatDate(tooltip.day.date)}</p>
+          <p className="font-mono font-medium text-foreground">{formatContributionCount(tooltip.day.count)}</p>
+          <p className="text-muted-foreground">{formatContributionDate(tooltip.day.date)}</p>
         </div>
       )}
 
@@ -222,20 +124,7 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
                 aria-label={`${data.total.toLocaleString()} GitHub contributions in the last year`}
                 role="img"
                 onMouseMove={(e) => {
-                  const pt = e.currentTarget.createSVGPoint();
-                  pt.x = e.clientX;
-                  pt.y = e.clientY;
-                  const ctm = e.currentTarget.getScreenCTM();
-                  if (!ctm) {
-                    return;
-                  }
-                  const { x: rx, y: ry } = pt.matrixTransform(ctm.inverse());
-                  const wi = Math.floor(rx / STEP_PX);
-                  const di = Math.floor((ry - LABEL_HEIGHT_PX) / STEP_PX);
-                  const inBounds = wi >= 0 && wi < weeks.length && di >= 0 && di < 7 && ry >= LABEL_HEIGHT_PX;
-                  const inCell =
-                    inBounds && rx - wi * STEP_PX < CELL_PX && ry - LABEL_HEIGHT_PX - di * STEP_PX < CELL_PX;
-                  const day = inCell ? (weeks[wi]?.[di] ?? null) : null;
+                  const day = findDayUnderPointer(e.currentTarget, e.clientX, e.clientY, weeks);
                   setTooltip((prev) =>
                     prev?.day.date === day?.date ? prev : day ? { day, x: e.clientX, y: e.clientY } : null
                   );
@@ -286,7 +175,7 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
                             fill={LEVEL_FILL[day.level]}
                             filter={day.level === 6 ? "url(#neon-glow)" : undefined}
                           >
-                            <title>{`${formatCount(day.count)} on ${formatDate(day.date)}`}</title>
+                            <title>{`${formatContributionCount(day.count)} on ${formatContributionDate(day.date)}`}</title>
                           </rect>
                         ) : null
                       )}
