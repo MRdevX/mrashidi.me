@@ -1,23 +1,11 @@
 import type { ReactElement } from "react";
 import { getThemeConfig } from "@/config/theme.config";
 import { certificates, config, personalInfo, skills, workExperience } from "@/data";
+import { type BlogPost, fetchBlogPage } from "@/features/blog";
 import { projects } from "@/features/projects";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { AVAILABLE_COMMANDS, TERMINAL_CONSTANTS } from "./constants";
 import type { CommandType } from "./types";
-
-interface BlogPost {
-  title: string;
-  content: string;
-  url: string;
-  publishedAt: string;
-  imageUrl?: string;
-  author: {
-    username: string;
-    name: string;
-    mediumUrl: string;
-  };
-}
 
 const TerminalSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="mt-2 space-y-2">
@@ -255,14 +243,7 @@ const commandHandlers = {
 
   blog: async () => {
     try {
-      const response = await fetch("/api/blog?page=1&limit=5");
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.message || "Failed to fetch blog posts");
-      }
-
-      const posts = data.data || [];
+      const { posts } = await fetchBlogPage(1, 5);
 
       return (
         <div className="mt-2">

@@ -1,9 +1,9 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { getAllPosts } from "@/features/blog/server";
 import { corsPreflight, createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { logger } from "@/lib/core";
-import { getAllPosts } from "@/lib/services/blog";
 
 export const runtime = "nodejs";
 

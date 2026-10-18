@@ -30,7 +30,6 @@ export {
   type PageStaggerRenderProps,
 } from "./PageStaggerContainer";
 export { PageWrapper } from "./PageWrapper";
-export { Pagination } from "./Pagination";
 export { SectionHeader } from "./SectionHeader";
 export { SocialButtonsRow } from "./SocialButtonsRow";
 export { SurfaceCard } from "./SurfaceCard";

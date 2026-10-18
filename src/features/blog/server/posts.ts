@@ -1,8 +1,8 @@
 import { XMLParser } from "fast-xml-parser";
 import ky from "ky";
 import { API_CONFIG, logger } from "@/lib/core";
-import { cleanHtmlContent, extractImageUrl } from "@/lib/utils/string";
-import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "@/types/blog";
+import { cleanHtmlContent, extractImageUrl } from "./html";
+import type { IBlogAuthor, IBlogPost, IMediumRssFeed } from "./types";
 
 const authors: IBlogAuthor[] = [
   {

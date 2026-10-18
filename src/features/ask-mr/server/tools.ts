@@ -1,9 +1,9 @@
 import { type InferUITools, tool, type UIDataTypes, type UIMessage } from "ai";
 import { z } from "zod";
 import { config } from "@/data";
+import { getAllPosts } from "@/features/blog/server";
 import { type Project, projectSlug, projects } from "@/features/projects";
 import { logger } from "@/lib/core";
-import { getAllPosts } from "@/lib/services/blog";
 import { ASK_MR_LIMITS } from "../constants";
 
 export interface AskMrProjectCard {

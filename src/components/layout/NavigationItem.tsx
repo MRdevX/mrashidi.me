@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { NavigationItem as NavigationItemType } from "@/data/navigation";
-import { useBlogPreload } from "@/hooks";
+import { preloadFirstBlogPage } from "@/features/blog";
 
 interface NavigationItemProps {
   item: NavigationItemType;
@@ -8,11 +8,9 @@ interface NavigationItemProps {
 }
 
 export const NavigationItem = ({ item, isActive }: NavigationItemProps) => {
-  const { preloadFirstPage } = useBlogPreload();
-
   const handleMouseEnter = () => {
     if (item.href === "/blog") {
-      preloadFirstPage();
+      preloadFirstBlogPage();
     }
   };
 
