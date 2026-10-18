@@ -1,20 +1,8 @@
-import { EmailService } from "./email";
+import { EmailService } from "./email/service";
 
-class ServiceFactory {
-  private emailService: EmailService | null = null;
+let emailService: EmailService | null = null;
 
-  getEmailService(): EmailService {
-    if (!this.emailService) {
-      this.emailService = new EmailService();
-    }
-    return this.emailService;
-  }
-
-  reset(): void {
-    this.emailService = null;
-  }
+export function getEmailService(): EmailService {
+  emailService ??= new EmailService();
+  return emailService;
 }
-
-export const serviceFactory = new ServiceFactory();
-
-export const getEmailService = () => serviceFactory.getEmailService();

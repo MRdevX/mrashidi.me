@@ -46,80 +46,18 @@ const COLORS = {
   },
 } as const;
 
-const SEMANTIC_COLORS = {
+export const SEMANTIC_COLORS = {
   text: {
     primary: "text-gray-800 dark:text-gray-200",
     secondary: "text-gray-600 dark:text-gray-400",
     muted: "text-gray-500 dark:text-gray-500",
-    inverse: "text-white dark:text-black",
   },
   background: {
-    primary: "bg-white dark:bg-[hsl(222_14%_7%)]",
-    secondary: "bg-gray-50 dark:bg-gray-800",
     muted: "bg-gray-100 dark:bg-gray-800",
-    glass: "bg-white/50 dark:bg-gray-900/50",
-    glassLight: "bg-white/30 dark:bg-gray-800/30",
   },
   border: {
     primary: "border-gray-200 dark:border-white/10",
-    secondary: "border-gray-300 dark:border-gray-600",
-    muted: "border-gray-100 dark:border-gray-800",
   },
-  interactive: {
-    hover: "hover:bg-gray-100 dark:hover:bg-gray-800",
-    focus: "focus:ring-2 focus:ring-orange-500/50",
-    active: "active:bg-gray-200 dark:active:bg-gray-700",
-  },
-} as const;
-
-const TYPOGRAPHY = {
-  fonts: {
-    cyberpunk: "Orbitron, sans-serif",
-    terminal: "JetBrains Mono, monospace",
-    body: "Albert Sans, sans-serif",
-  },
-  sizes: {
-    xs: "0.75rem",
-    sm: "0.875rem",
-    base: "1rem",
-    lg: "1.125rem",
-    xl: "1.25rem",
-    "2xl": "1.5rem",
-    "3xl": "1.875rem",
-    "4xl": "2.25rem",
-    "5xl": "3rem",
-  },
-  weights: {
-    normal: "font-normal",
-    medium: "font-medium",
-    semibold: "font-semibold",
-    bold: "font-bold",
-  },
-} as const;
-
-const SPACING = {
-  xs: "0.25rem",
-  sm: "0.5rem",
-  md: "1rem",
-  lg: "1.5rem",
-  xl: "2rem",
-  "2xl": "3rem",
-} as const;
-
-const BORDER_RADIUS = {
-  sm: "0.25rem",
-  md: "0.375rem",
-  lg: "0.5rem",
-  xl: "0.75rem",
-  "2xl": "1rem",
-} as const;
-
-const SHADOWS = {
-  sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-  md: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-  lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-  neon: "0 0 20px rgba(255, 95, 31, 0.3)",
-  neonStrong: "0 0 40px rgba(255, 95, 31, 0.4)",
 } as const;
 
 const COMPONENT_VARIANTS = {
@@ -177,56 +115,24 @@ const COMPONENT_VARIANTS = {
   },
 } as const;
 
-const ANIMATIONS = {
-  glow: "animate-glow",
-} as const;
-
-const UTILITIES = {
-  text: {
-    neon: "text-neon-orange",
-    cyberpunk: "font-cyberpunk",
-    terminal: "font-terminal",
-  },
-  effects: {
-    glass: "glass-effect",
-    neon: "text-neon-orange text-shadow-neon",
-    glow: "animate-glow",
-  },
-} as const;
-
-const PATTERNS = {
-  sectionHeader: "flex items-center gap-3 mb-6",
+export const PATTERNS = {
   sectionTitle: "text-3xl font-semibold text-orange-500 font-albert tracking-tight",
   card: "feature-card group",
-  interactive: "transition-all duration-300 hover:scale-105",
-  focus: "focus:outline-none focus:ring-2 focus:ring-orange-500/50",
 } as const;
 
 export const THEME_CONFIG = {
   colors: COLORS,
-  semantic: SEMANTIC_COLORS,
-  typography: TYPOGRAPHY,
-  spacing: SPACING,
-  borderRadius: BORDER_RADIUS,
-  shadows: SHADOWS,
   variants: COMPONENT_VARIANTS,
-  animations: ANIMATIONS,
-  utilities: UTILITIES,
-  patterns: PATTERNS,
 } as const;
 
 export type ButtonVariant = keyof typeof COMPONENT_VARIANTS.button;
 export type InputVariant = keyof typeof COMPONENT_VARIANTS.input;
 export type TextareaVariant = keyof typeof COMPONENT_VARIANTS.textarea;
 export type BadgeVariant = keyof typeof COMPONENT_VARIANTS.badge;
-export type CardVariant = keyof typeof COMPONENT_VARIANTS.card;
-export type ColorKey = keyof typeof COLORS;
-export type FontKey = keyof typeof TYPOGRAPHY.fonts;
-export type SpacingKey = keyof typeof SPACING;
-export type BorderRadiusKey = keyof typeof BORDER_RADIUS;
-export type ShadowKey = keyof typeof SHADOWS;
-export type SemanticCategory = keyof typeof SEMANTIC_COLORS;
-export type PatternKey = keyof typeof PATTERNS;
+type ColorKey = keyof typeof COLORS;
+export type TextColor = keyof typeof SEMANTIC_COLORS.text;
+export type BackgroundColor = keyof typeof SEMANTIC_COLORS.background;
+export type BorderColor = keyof typeof SEMANTIC_COLORS.border;
 
 export const getVariant = <T extends keyof typeof COMPONENT_VARIANTS>(
   component: T,
@@ -237,29 +143,4 @@ export const getVariant = <T extends keyof typeof COMPONENT_VARIANTS>(
 
 export const getColor = (color: ColorKey): string => {
   return COLORS[color].DEFAULT;
-};
-
-export const getFont = (font: FontKey): string => {
-  return TYPOGRAPHY.fonts[font];
-};
-
-export const getSpacing = (size: SpacingKey): string => {
-  return SPACING[size];
-};
-
-export const getBorderRadius = (size: BorderRadiusKey): string => {
-  return BORDER_RADIUS[size];
-};
-
-export const getShadow = (shadow: ShadowKey): string => {
-  return SHADOWS[shadow];
-};
-
-export const getSemanticColor = (category: SemanticCategory, variant: string): string => {
-  const categoryColors = SEMANTIC_COLORS[category];
-  return categoryColors[variant as keyof typeof categoryColors] as string;
-};
-
-export const getPattern = (pattern: PatternKey): string => {
-  return PATTERNS[pattern];
 };

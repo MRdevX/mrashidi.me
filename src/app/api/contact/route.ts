@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
-import { getEmailService } from "@/lib/services";
+import { getEmailService } from "@/lib/services/factory";
 import { verifyRecaptcha } from "@/lib/services/recaptcha";
 import { type ContactFormData, validateContactFormAPI } from "@/lib/validation";
 

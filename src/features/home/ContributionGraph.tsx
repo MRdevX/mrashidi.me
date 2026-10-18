@@ -148,11 +148,12 @@ function GraphSkeleton() {
 }
 
 export type ContributionGraphProps = {
-  apiUrl?: string;
   className?: string;
 };
 
-export function ContributionGraph({ apiUrl = "/api/github/contributions", className }: ContributionGraphProps) {
+const CONTRIBUTIONS_URL = "/api/github/contributions";
+
+export function ContributionGraph({ className }: ContributionGraphProps) {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -160,7 +161,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
 
   useEffect(() => {
     let alive = true;
-    fetch(apiUrl)
+    fetch(CONTRIBUTIONS_URL)
       .then((r) => {
         if (!r.ok) {
           throw new Error(`HTTP ${r.status}`);
@@ -182,7 +183,7 @@ export function ContributionGraph({ apiUrl = "/api/github/contributions", classN
     return () => {
       alive = false;
     };
-  }, [apiUrl]);
+  }, []);
 
   const contributions = data ? computeDynamicLevels(data.contributions) : [];
   const { weeks, monthLabels } = buildCalendar(contributions);

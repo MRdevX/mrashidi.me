@@ -1,42 +1,27 @@
-import type { ButtonVariant, CardVariant, InputVariant, TextareaVariant } from "@/config/theme.config";
-import {
-  getBorderRadius,
-  getColor,
-  getFont,
-  getPattern,
-  getSemanticColor,
-  getShadow,
-  getSpacing,
-  getVariant,
-  THEME_CONFIG,
+import type {
+  BackgroundColor,
+  BorderColor,
+  ButtonVariant,
+  InputVariant,
+  TextareaVariant,
+  TextColor,
 } from "@/config/theme.config";
+import { getColor, getVariant, PATTERNS, SEMANTIC_COLORS, THEME_CONFIG } from "@/config/theme.config";
 
 export const useThemeConfig = () => {
   return {
-    getVariant,
     getColor,
-    getFont,
-    getSpacing,
-    getBorderRadius,
-    getShadow,
-    getSemanticColor,
-    getPattern,
 
     getButtonVariant: (variant: ButtonVariant) => getVariant("button", variant),
     getInputVariant: (variant: InputVariant) => getVariant("input", variant),
     getTextareaVariant: (variant: TextareaVariant) => getVariant("textarea", variant),
-    getCardVariant: (variant: CardVariant) => getVariant("card", variant),
 
-    getTextColor: (variant: string) => getSemanticColor("text", variant),
-    getBackgroundColor: (variant: string) => getSemanticColor("background", variant),
-    getBorderColor: (variant: string) => getSemanticColor("border", variant),
-    getInteractiveColor: (variant: string) => getSemanticColor("interactive", variant),
+    getTextColor: (variant: TextColor) => SEMANTIC_COLORS.text[variant],
+    getBackgroundColor: (variant: BackgroundColor) => SEMANTIC_COLORS.background[variant],
+    getBorderColor: (variant: BorderColor) => SEMANTIC_COLORS.border[variant],
 
-    getSectionHeader: () => getPattern("sectionHeader"),
-    getSectionTitle: () => getPattern("sectionTitle"),
-    getCardPattern: () => getPattern("card"),
-    getInteractivePattern: () => getPattern("interactive"),
-    getFocusPattern: () => getPattern("focus"),
+    getSectionTitle: () => PATTERNS.sectionTitle,
+    getCardPattern: () => PATTERNS.card,
 
     colors: THEME_CONFIG.colors,
     variants: THEME_CONFIG.variants,

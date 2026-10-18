@@ -8,10 +8,10 @@ export function handleError(error: unknown): AppError {
   }
 
   if (error instanceof Error) {
-    return new AppError(error.message, 500, true, "DEFAULT");
+    return new AppError(error.message, 500, "DEFAULT");
   }
 
-  return new AppError("An unexpected error occurred", 500, true, "DEFAULT");
+  return new AppError("An unexpected error occurred", 500, "DEFAULT");
 }
 
 export function logError(error: AppError, context?: string): void {
@@ -20,7 +20,6 @@ export function logError(error: AppError, context?: string): void {
     originalMessage: string;
     statusCode: number;
     errorType: string;
-    isOperational: boolean;
     context: string;
     timestamp: string;
     stack?: string;
@@ -29,7 +28,6 @@ export function logError(error: AppError, context?: string): void {
     originalMessage: error.originalMessage,
     statusCode: error.statusCode,
     errorType: error.errorType,
-    isOperational: error.isOperational,
     context: context || "App",
     timestamp: new Date().toISOString(),
   };
@@ -41,39 +39,10 @@ export function logError(error: AppError, context?: string): void {
   logger.error(logData, `[${logData.context}] Error`);
 }
 
-export function isOperationalError(error: AppError): boolean {
-  return error.isOperational;
-}
-
-export function getSafeErrorMessage(error: AppError): string {
-  return error.message;
-}
-
-export function getDetailedErrorMessage(error: AppError): string {
-  if (isDevelopment) {
-    return error.originalMessage;
-  }
-  return error.message;
-}
-
-export function asyncHandler<T extends readonly unknown[], R>(
-  fn: (...args: T) => Promise<R>
-): (...args: T) => Promise<R> {
-  return async (...args: T): Promise<R> => {
-    try {
-      return await fn(...args);
-    } catch (error) {
-      const appError = handleError(error);
-      logError(appError);
-      throw appError;
-    }
-  };
-}
-
 export function createSafeErrorResponse(error: AppError): SafeErrorResponse {
   return {
     error: {
-      message: getSafeErrorMessage(error),
+      message: error.message,
       statusCode: error.statusCode,
       type: error.errorType,
     },

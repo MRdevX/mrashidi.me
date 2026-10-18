@@ -11,7 +11,7 @@ vi.mock("framer-motion", () => ({
 }));
 
 vi.mock("@/features/projects/infrastructure/github", () => ({
-  githubService: { getLatestCommitInfo: vi.fn().mockResolvedValue(null) },
+  getLatestCommitInfo: vi.fn().mockResolvedValue(null),
 }));
 
 const status = () => screen.getByRole("status");

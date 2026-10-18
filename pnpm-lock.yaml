@@ -169,6 +169,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^21.2.3
         version: 21.2.3
+      '@commitlint/types':
+        specifier: ^21.2.3
+        version: 21.2.3
       '@next/bundle-analyzer':
         specifier: ^16.4.0
         version: 16.4.0
