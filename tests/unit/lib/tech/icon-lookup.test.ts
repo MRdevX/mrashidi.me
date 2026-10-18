@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { skills, workExperience } from "@/data";
+import { getMainTechStack } from "@/features/home/techStack";
 import { projects } from "@/features/projects/infrastructure/projectData";
-import { getMainTechStack, getTechIcon } from "@/lib/tech";
+import { getTechIcon } from "@/lib/tech";
 
 function describeIcon(techName: string): string {
   const { Icon, colorClass } = getTechIcon(techName);
