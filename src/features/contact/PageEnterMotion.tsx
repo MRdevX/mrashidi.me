@@ -9,10 +9,6 @@ type PageEnterMotionProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  /**
-   * When true (default), motion starts fully opaque — only subtle vertical slide.
-   * When false, fades from transparent (projects search row, contact lead-in).
-   */
   startOpaque?: boolean;
   as?: "div" | "p";
 };

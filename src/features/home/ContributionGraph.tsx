@@ -96,13 +96,6 @@ function formatCount(count: number): string {
   return count === 1 ? "1 contribution" : `${count} contributions`;
 }
 
-/**
- * Remaps contribution levels to 0–6 using percentile thresholds computed from
- * the caller's own data — adapts to any commit frequency.
- *
- * Level 0 = empty. Levels 1–6 span p0–p25, p25–p50, p50–p70, p70–p85,
- * p85–p95, and the top 5% (peak with glow).
- */
 function computeDynamicLevels(days: ContributionDay[]): ContributionDay[] {
   const nonZero = days
     .map((d) => d.count)
@@ -274,7 +267,6 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
 
                 {weeks.map((week, wi) => {
                   const firstRealDay = week.find(Boolean);
-                  // Skip any all-empty week (defensive; won't happen with real GitHub data).
                   if (!firstRealDay) {
                     return null;
                   }
@@ -282,7 +274,6 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
                   return (
                     <g key={firstRealDay.date}>
                       {week.map((day, di) =>
-                        // Null padding cells are skipped; SVG coordinate space handles the gap.
                         day ? (
                           <rect
                             key={day.date}
