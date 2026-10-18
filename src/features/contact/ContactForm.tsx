@@ -13,14 +13,12 @@ import { CyberpunkButton } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
 import { logger } from "@/lib/core";
 import { type ContactFormData, contactFormSchema } from "@/lib/validation";
+import { type SubmitStatus, submitContactForm } from "./submitContactForm";
 
 export function ContactForm() {
   const { getCardPattern } = getThemeConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{
-    type: "success" | "error" | null;
-    message: string;
-  }>({
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({
     type: null,
     message: "",
   });
@@ -48,31 +46,11 @@ export function ContactForm() {
       }
 
       const recaptchaToken = await executeRecaptcha("submit");
-
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...data,
-          recaptchaToken,
-        }),
-      });
-
-      if (response.ok) {
+      const status = await submitContactForm(data, recaptchaToken);
+      if (status.type === "success") {
         form.reset();
-        setSubmitStatus({
-          type: "success",
-          message: "Message sent successfully! I'll get back to you soon.",
-        });
-      } else {
-        const errorData = await response.json();
-        setSubmitStatus({
-          type: "error",
-          message: errorData.message || "Failed to send message. Please try again.",
-        });
       }
+      setSubmitStatus(status);
     } catch (error) {
       logger.error({ error }, "Contact form submission error");
       setSubmitStatus({
