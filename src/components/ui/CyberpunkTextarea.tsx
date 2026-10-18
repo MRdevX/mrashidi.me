@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { TextareaVariant } from "@/config/theme.config";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 import { Textarea } from "./textarea";
 
@@ -11,7 +11,7 @@ interface CyberpunkTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAr
 
 export const CyberpunkTextarea = React.forwardRef<HTMLTextAreaElement, CyberpunkTextareaProps>(
   ({ className, error, variant = "default", ...props }, ref) => {
-    const { getTextareaVariant } = useThemeConfig();
+    const { getTextareaVariant } = getThemeConfig();
 
     return (
       <Textarea

@@ -1,10 +1,6 @@
-import { githubService } from "@/features/projects/infrastructure/github";
 import { logger } from "@/lib/core";
-
-interface CommitInfo {
-  date: Date;
-  hash: string;
-}
+import type { CommitInfo } from "../domain/commit";
+import { getLatestCommitInfo } from "./github";
 
 export type CommitInfoMap = ReadonlyMap<string, CommitInfo>;
 
@@ -55,7 +51,7 @@ export const loadCommitInfo = async (repoUrls: readonly string[]): Promise<Commi
     return commits;
   }
 
-  const fetched = await Promise.all(missing.map((url) => githubService.getLatestCommitInfo(url)));
+  const fetched = await Promise.all(missing.map((url) => getLatestCommitInfo(url)));
   fetched.forEach((info, index) => {
     if (info) {
       commits.set(missing[index], info);

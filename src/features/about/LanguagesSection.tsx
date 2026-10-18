@@ -1,14 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { getThemeConfig } from "@/config/theme.config";
 import { personalInfo } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { slideInVariants } from "@/lib/animations";
 import { useAboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
 
 export function LanguagesSection() {
-  const { getTextColor, getBackgroundColor } = useThemeConfig();
+  const { getTextColor, getBackgroundColor } = getThemeConfig();
   const cardSurface = useAboutCardSurface();
 
   return (

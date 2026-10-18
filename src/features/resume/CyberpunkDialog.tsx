@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, type DialogFooter, type DialogHeader, DialogTitle } from "./dialog";
 
@@ -9,7 +9,7 @@ export const CyberpunkDialogContent = React.forwardRef<
   React.ElementRef<typeof DialogContent>,
   React.ComponentPropsWithoutRef<typeof DialogContent>
 >(({ className, children, ...props }, ref) => {
-  const { variants } = useThemeConfig();
+  const { variants } = getThemeConfig();
 
   return (
     <DialogContent ref={ref} className={cn(variants.dialog.content, className)} {...props}>
@@ -26,7 +26,7 @@ export const CyberpunkDialogHeader = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<typeof DialogHeader>
 >(({ className, ...props }, ref) => {
-  const { variants } = useThemeConfig();
+  const { variants } = getThemeConfig();
 
   return <div ref={ref} className={cn(variants.dialog.header, className)} {...props} />;
 });
@@ -36,7 +36,7 @@ export const CyberpunkDialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogTitle>,
   React.ComponentPropsWithoutRef<typeof DialogTitle>
 >(({ className, ...props }, ref) => {
-  const { variants } = useThemeConfig();
+  const { variants } = getThemeConfig();
 
   return <DialogTitle ref={ref} className={cn(variants.dialog.title, className)} {...props} />;
 });
@@ -46,7 +46,7 @@ export const CyberpunkDialogFooter = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<typeof DialogFooter>
 >(({ className, ...props }, ref) => {
-  const { variants } = useThemeConfig();
+  const { variants } = getThemeConfig();
 
   return <div ref={ref} className={cn(variants.dialog.footer, className)} {...props} />;
 });

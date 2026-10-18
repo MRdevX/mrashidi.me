@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { TypingAnimation } from "@/components/ui/TypingAnimation";
+import { TypingAnimation } from "@/features/home/TypingAnimation";
 
 function mockMatchMedia(matchesReducedMotion: boolean) {
   return vi.spyOn(window, "matchMedia").mockImplementation((query: string) => ({

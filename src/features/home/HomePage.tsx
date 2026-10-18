@@ -1,12 +1,12 @@
 "use client";
 
 import { PageStaggerContainer } from "@/components/ui";
-import { getMainTechStack } from "@/lib/tech";
 import { HomeContactSection } from "./HomeContactSection";
 import { HomeContributionSection } from "./HomeContributionSection";
 import { HomeHero } from "./HomeHero";
 import { HomeTechStackSection } from "./HomeTechStackSection";
 import { HomeTerminalSection } from "./HomeTerminalSection";
+import { getMainTechStack } from "./techStack";
 
 export function HomePage() {
   const techStack = getMainTechStack();

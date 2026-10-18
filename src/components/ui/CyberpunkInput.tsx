@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { InputVariant } from "@/config/theme.config";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 import { Input } from "./input";
 
@@ -12,7 +12,7 @@ interface CyberpunkInputProps extends React.InputHTMLAttributes<HTMLInputElement
 
 export const CyberpunkInput = React.forwardRef<HTMLInputElement, CyberpunkInputProps>(
   ({ className, icon, error, variant = "default", ...props }, ref) => {
-    const { getInputVariant, getTextColor } = useThemeConfig();
+    const { getInputVariant, getTextColor } = getThemeConfig();
 
     return (
       <div className="relative">

@@ -1,3 +1,8 @@
+export interface CommitInfo {
+  date: Date;
+  hash: string;
+}
+
 export const createCommitUrl = (repoUrl: string, commitHash: string): string => {
   let normalizedUrl = repoUrl;
   while (normalizedUrl.endsWith("/")) {

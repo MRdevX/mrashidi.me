@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { PAGE_TRANSITION_EASE, pageItemVariants, reducedMotionPageItemVariants } from "@/lib/animations";
 import { BlogPostCardFooter } from "./BlogPostCardFooter";
@@ -15,7 +15,7 @@ interface BlogPostCardProps {
 }
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
-  const { getTextColor, getCardPattern } = useThemeConfig();
+  const { getTextColor, getCardPattern } = getThemeConfig();
   const [imageError, setImageError] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const cardVariants = prefersReducedMotion ? reducedMotionPageItemVariants : pageItemVariants;

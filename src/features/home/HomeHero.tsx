@@ -4,8 +4,8 @@ import type { Variants } from "framer-motion";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { SocialButtonsRow } from "@/components/ui";
-import { TypingAnimation } from "@/components/ui/TypingAnimation";
 import { config } from "@/data";
+import { TypingAnimation } from "./TypingAnimation";
 
 type HomeHeroProps = {
   variants: Variants;

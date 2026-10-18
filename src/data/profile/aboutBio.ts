@@ -8,10 +8,6 @@ export interface AboutBioPiece {
 
 type BioSegmentDef = Pick<AboutBioPiece, "text"> & { readonly style?: AboutBioStyle };
 
-/**
- * Plain rows: concatenate `text` for terminal/metadata; Bio maps rows to `<span>`s with stable ids.
- * Styles: `prominent` — main emphasis; `subtle` — lighter italic; `brand` — accent highlight (e.g. keywords).
- */
 const ABOUT_BIO_SEGMENTS: readonly BioSegmentDef[] = [
   { text: "I'm a backend engineer with " },
   { text: "11 years", style: "brand" },

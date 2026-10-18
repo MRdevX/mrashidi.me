@@ -1,9 +1,9 @@
 "use client";
 
-import { Pagination } from "@/components/ui";
 import { BlogError } from "./BlogError";
 import { BlogGrid } from "./BlogGrid";
 import { BlogLoading } from "./BlogLoading";
+import { Pagination } from "./Pagination";
 import type { BlogPost } from "./types";
 
 type BlogPostsSectionProps = {

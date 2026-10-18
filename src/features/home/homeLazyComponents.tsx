@@ -15,7 +15,7 @@ export const LazyTerminal = lazy(() =>
 );
 
 export const LazyLoaderComponent = lazy(() =>
-  import("@/components/ui").then((m) => ({
+  import("./LazyLoader").then((m) => ({
     default: m.LazyLoader,
   }))
 );

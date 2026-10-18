@@ -29,12 +29,12 @@ Feature-based organization with domain modules, full TypeScript, and server-side
 
 ```
 src/
-├── app/                    # Next.js App Router
-├── components/            # Shared UI components
-├── features/              # Domain modules
-├── lib/services/          # Email service with React Email
-├── data/                  # Static data
-└── hooks/                 # Custom React hooks
+├── app/                    # Next.js App Router (thin route files)
+├── features/              # Feature slices: about, ask-mr, blog, contact, home, privacy, projects, resume
+├── components/            # UI shared by two or more features
+├── lib/                   # Shared logic: API middleware, errors, email, rate limiting
+├── config/                # Theme tokens
+└── data/                  # Static profile data
 ```
 
 ## 🔧 Quick Start

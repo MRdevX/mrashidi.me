@@ -1,7 +1,7 @@
 "use client";
 
+import { getThemeConfig } from "@/config/theme.config";
 import { ABOUT_BIO_PIECES, type AboutBioStyle } from "@/data/profile/aboutBio";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { cn } from "@/lib/utils";
 import { AboutSection } from "./AboutSection";
 import { ProfileImage } from "./ProfileImage";
@@ -13,7 +13,7 @@ const bioStyleClasses: Record<AboutBioStyle, string> = {
 };
 
 export function BioSection() {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <AboutSection delay={0.2}>

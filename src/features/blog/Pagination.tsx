@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CyberpunkButton } from "@/components/ui";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 
 interface PaginationProps {
   currentPage: number;
@@ -10,7 +10,7 @@ interface PaginationProps {
 }
 
 export function Pagination({ currentPage, totalPages, onPageChange, className = "mt-12" }: PaginationProps) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   if (totalPages <= 1) {
     return null;

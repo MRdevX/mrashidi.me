@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { detectDeviceCapabilities } from "@/lib/utils/performance";
 
 export const BrandLogo = () => {
-  const { getSectionTitle, getColor } = useThemeConfig();
+  const { getSectionTitle, getColor } = getThemeConfig();
   const [isLowPerformance, setIsLowPerformance] = useState(false);
 
   useEffect(() => {

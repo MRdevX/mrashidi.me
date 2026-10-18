@@ -20,11 +20,8 @@ interface EvalCase {
   name: string;
   question: string;
   pathname?: string;
-  /** Every pattern must match the answer text. */
   mustMatch?: RegExp[];
-  /** No pattern may match the answer text. */
   mustNotMatch?: RegExp[];
-  /** These tools must be called. */
   tools?: string[];
 }
 

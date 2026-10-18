@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { FilamentDivider, PageHeader } from "@/components/ui";
+import { getThemeConfig } from "@/config/theme.config";
 import { config } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { ContactMotionFade } from "./ContactMotionFade";
 import { ContactSectionShell } from "./ContactSectionShell";
 
 const SITE_REPO = config.social.githubRepo;
 
 export function ContactContributionSection() {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatDate, formatRelativeTime } from "@/lib/utils/date";
+import { formatDate, formatRelativeTime } from "@/features/projects/ui/shared/dates";
 
 describe("Date Utilities", () => {
   describe("formatDate", () => {

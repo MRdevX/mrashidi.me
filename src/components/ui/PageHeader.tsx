@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { BookOpen, FileText, FolderOpen, GitFork, MessageCircle, Share2, User } from "lucide-react";
 import type { ReactNode } from "react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { fadeInVariants, reducedMotionFadeVariants } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +29,7 @@ interface PageHeaderProps {
 }
 
 export function PageHeader({ iconName, title, className = "", titleHeading = "h1", actions }: PageHeaderProps) {
-  const { getSectionTitle } = useThemeConfig();
+  const { getSectionTitle } = getThemeConfig();
   const Icon = iconMap[iconName];
   const prefersReducedMotion = useReducedMotion();
   const variants = prefersReducedMotion ? reducedMotionFadeVariants : fadeInVariants;

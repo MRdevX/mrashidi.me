@@ -1,6 +1,5 @@
 import { skills } from "@/data";
-import { getTechIcon } from "./icons";
-import type { TechStackItem } from "./types";
+import { getTechIcon, type TechStackItem } from "@/lib/tech";
 
 export function normalizeIconKey(skillName: string): string {
   return skillName
@@ -22,9 +21,6 @@ export function getMainTechStack(): TechStackItem[] {
 
         if (iconKey.includes("azure")) {
           iconKey = "azure";
-        }
-        if (iconKey === "aws") {
-          iconKey = "aws";
         }
 
         if (getTechIcon(iconKey)) {

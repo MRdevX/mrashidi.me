@@ -1,14 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AppError, ValidationError } from "@/lib/errors";
-import {
-  asyncHandler,
-  createSafeErrorResponse,
-  getDetailedErrorMessage,
-  getSafeErrorMessage,
-  handleError,
-  isOperationalError,
-  logError,
-} from "@/lib/errors/utils";
+import { AppError } from "@/lib/errors";
+import { createSafeErrorResponse, handleError, logError } from "@/lib/errors/utils";
 
 vi.mock("@/lib/core", () => ({
   logger: {
@@ -62,61 +54,6 @@ describe("Error Utilities", () => {
     it("should log error without context", async () => {
       const error = new AppError("Test error", 500);
       logError(error);
-      const { logger } = await import("@/lib/core");
-      expect(logger.error).toHaveBeenCalled();
-    });
-  });
-
-  describe("isOperationalError", () => {
-    it("should return true for operational errors", () => {
-      const error = new AppError("Test error", 500, true);
-      expect(isOperationalError(error)).toBe(true);
-    });
-
-    it("should return false for non-operational errors", () => {
-      const error = new AppError("Test error", 500, false);
-      expect(isOperationalError(error)).toBe(false);
-    });
-  });
-
-  describe("getSafeErrorMessage", () => {
-    it("should return safe error message", () => {
-      const error = new AppError("Test error", 500);
-      const result = getSafeErrorMessage(error);
-      expect(result).toBe(error.message);
-    });
-  });
-
-  describe("getDetailedErrorMessage", () => {
-    it("should return safe message in production", () => {
-      const error = new AppError("Original error", 500);
-      const result = getDetailedErrorMessage(error);
-      expect(result).toBe(error.message);
-    });
-  });
-
-  describe("asyncHandler", () => {
-    it("should execute async function successfully", async () => {
-      const fn = vi.fn().mockResolvedValue("success");
-      const wrapped = asyncHandler(fn);
-      const result = await wrapped("arg1", "arg2");
-      expect(result).toBe("success");
-      expect(fn).toHaveBeenCalledWith("arg1", "arg2");
-    });
-
-    it("should handle errors and convert to AppError", async () => {
-      const fn = vi.fn().mockRejectedValue(new Error("Test error"));
-      const wrapped = asyncHandler(fn);
-      await expect(wrapped()).rejects.toThrow(AppError);
-      const { logger } = await import("@/lib/core");
-      expect(logger.error).toHaveBeenCalled();
-    });
-
-    it("should preserve AppError instances", async () => {
-      const appError = new ValidationError("Validation failed");
-      const fn = vi.fn().mockRejectedValue(appError);
-      const wrapped = asyncHandler(fn);
-      await expect(wrapped()).rejects.toThrow(ValidationError);
       const { logger } = await import("@/lib/core");
       expect(logger.error).toHaveBeenCalled();
     });

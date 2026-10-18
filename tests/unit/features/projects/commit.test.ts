@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createCommitUrl } from "@/lib/utils/github";
+import { createCommitUrl } from "@/features/projects/domain/commit";
 
 describe("GitHub Utilities", () => {
   describe("createCommitUrl", () => {

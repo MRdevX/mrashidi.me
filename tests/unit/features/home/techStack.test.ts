@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getMainTechStack, normalizeIconKey } from "@/lib/tech/skills";
+import { getMainTechStack, normalizeIconKey } from "@/features/home/techStack";
 
 describe("normalizeIconKey", () => {
   it("lowercases and removes dots and spaces", () => {

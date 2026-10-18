@@ -88,7 +88,7 @@ the rules into your global agent config.
 | Issue reference | `- Fixes #123`, one line per issue, in the `References` section |
 | Extra PR sections | `References`, last |
 | Endpoint sources | `src/app/api/**/route.ts` |
-| Slice layout | `src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Shared UI in `src/components/`, shared logic in `src/lib/` |
+| Slice layout | `src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`, `@/features/home/server`, `@/features/projects/server`) that client code never imports. Shared UI in `src/components/`, shared logic in `src/lib/` |
 | Decision records | `docs/decisions/`, files `NNNN-short-slug.md` |
 | Stack doc | [`docs/agent/stack.md`](docs/agent/stack.md) |
 

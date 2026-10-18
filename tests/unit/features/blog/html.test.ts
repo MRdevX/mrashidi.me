@@ -1,11 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  calculateReadingTime,
-  cleanHtmlContent,
-  extractImageUrl,
-  isValidEmail,
-  truncateText,
-} from "@/lib/utils/string";
+import { cleanHtmlContent, extractImageUrl } from "@/features/blog/server/html";
 
 describe("String Utilities", () => {
   describe("cleanHtmlContent", () => {
@@ -71,77 +65,6 @@ describe("String Utilities", () => {
     it("should return undefined for empty or invalid HTML", () => {
       expect(extractImageUrl("")).toBeUndefined();
       expect(extractImageUrl("invalid html")).toBeUndefined();
-    });
-  });
-
-  describe("truncateText", () => {
-    it("should truncate text longer than maxLength", () => {
-      const text = "This is a very long text that needs to be truncated";
-      const result = truncateText(text, 20);
-      expect(result).toBe("This is a very lo...");
-      expect(result.length).toBe(20);
-    });
-
-    it("should not truncate text shorter than maxLength", () => {
-      const text = "Short text";
-      const result = truncateText(text, 20);
-      expect(result).toBe("Short text");
-    });
-
-    it("should handle text exactly at maxLength", () => {
-      const text = "Exactly twenty chars";
-      const result = truncateText(text, 20);
-      expect(result).toBe("Exactly twenty chars");
-    });
-
-    it("should handle very short maxLength", () => {
-      const text = "Hello";
-      const result = truncateText(text, 3);
-      expect(result).toBe("...");
-    });
-  });
-
-  describe("isValidEmail", () => {
-    it("should validate correct email addresses", () => {
-      expect(isValidEmail("test@example.com")).toBe(true);
-      expect(isValidEmail("user.name@domain.co.uk")).toBe(true);
-      expect(isValidEmail("user+tag@example.com")).toBe(true);
-    });
-
-    it("should reject invalid email addresses", () => {
-      expect(isValidEmail("invalid")).toBe(false);
-      expect(isValidEmail("@example.com")).toBe(false);
-      expect(isValidEmail("user@")).toBe(false);
-      expect(isValidEmail("user@domain")).toBe(false);
-    });
-
-    it("should handle empty strings", () => {
-      expect(isValidEmail("")).toBe(false);
-    });
-  });
-
-  describe("calculateReadingTime", () => {
-    it("should calculate reading time for text", () => {
-      const text = "word ".repeat(200);
-      const result = calculateReadingTime(text);
-      expect(result).toBe(1);
-    });
-
-    it("should round up to next minute", () => {
-      const text = "word ".repeat(201);
-      const result = calculateReadingTime(text);
-      expect(result).toBe(2);
-    });
-
-    it("should return 0 minutes for empty text", () => {
-      expect(calculateReadingTime("")).toBe(0);
-      expect(calculateReadingTime("   ")).toBe(0);
-    });
-
-    it("should handle text with multiple spaces", () => {
-      const text = "word1    word2    word3";
-      const result = calculateReadingTime(text);
-      expect(result).toBe(1);
     });
   });
 });

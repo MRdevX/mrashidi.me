@@ -17,7 +17,7 @@ when you bump a major or minor, update the row in the same PR.
 | Zod | 4.6 | [zod.dev](https://zod.dev) | Zod 4 API. Validates untrusted input once at the route boundary; schemas in `src/lib/validation/`. |
 | React Hook Form | 7.90 | [react-hook-form.com](https://react-hook-form.com/docs) | Contact and resume request forms, with the Zod resolver. |
 | Framer Motion | 14.1 | [motion.dev/docs/react](https://motion.dev/docs/react) | Shared variants in `src/lib/animations.ts`. Respect reduced motion. |
-| ky | 2.2 | [github.com/sindresorhus/ky](https://github.com/sindresorhus/ky) | Outbound HTTP from services in `src/lib/services/`. |
+| ky | 2.2 | [github.com/sindresorhus/ky](https://github.com/sindresorhus/ky) | Outbound HTTP: `src/lib/fetcher.ts` on the client, the Medium feed in `src/features/blog/server/`. |
 | pino | 10.4 | [getpino.io](https://getpino.io) | Through `logger` in `@lib/core`, never `console` in app code. |
 | Sentry (`@sentry/nextjs`) | 11.6 | [docs.sentry.io/platforms/javascript/guides/nextjs](https://docs.sentry.io/platforms/javascript/guides/nextjs/) | Shared options in `sentry-shared.ts`; hooks in `src/instrumentation*.ts`. |
 | Vercel Blob / Analytics / Speed Insights | 2.8 / 2.0 | [vercel.com/docs](https://vercel.com/docs) | Blob holds the CV PDF behind `api/cv/**`. |

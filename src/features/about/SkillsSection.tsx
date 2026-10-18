@@ -15,7 +15,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 import { AboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
@@ -56,7 +56,7 @@ const filterOffClass =
   "border-gray-300 bg-white text-gray-800 hover:border-gray-400 dark:border-white/15 dark:bg-[#0b0d11] dark:text-gray-200 dark:hover:border-white/30";
 
 function CardHeading({ Icon, title, meta }: { Icon: LucideIcon; title: string; meta: string }) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <div className="flex items-center justify-between gap-3">
@@ -70,7 +70,7 @@ function CardHeading({ Icon, title, meta }: { Icon: LucideIcon; title: string; m
 }
 
 export function SkillsSection() {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
   const [filter, setFilter] = useState<SkillFilter>("all");
 
   const visibleGroups = SKILL_GROUPS.map((group) => ({

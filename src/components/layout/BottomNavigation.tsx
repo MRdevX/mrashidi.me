@@ -1,8 +1,9 @@
 "use client";
 
-import { BottomNavigationItem, FloatingActionButton } from "@/components/layout";
 import { ThemeToggle } from "@/components/ui";
 import { mobileNavigationItems } from "@/data/navigation";
+import { BottomNavigationItem } from "./BottomNavigationItem";
+import { FloatingActionButton } from "./FloatingActionButton";
 import { useBottomNavigation } from "./useBottomNavigation";
 
 export function BottomNavigation() {

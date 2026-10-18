@@ -2,8 +2,8 @@
 
 import { Mail, Send } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { getThemeConfig } from "@/config/theme.config";
 import { config } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { cn } from "@/lib/utils/common";
 import { SocialButton } from "./SocialButton";
 
@@ -13,7 +13,7 @@ interface SocialButtonsRowProps {
 }
 
 export function SocialButtonsRow({ heading, className }: SocialButtonsRowProps) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <div className={cn("space-y-4", className)}>

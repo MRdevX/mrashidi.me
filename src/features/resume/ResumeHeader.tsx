@@ -3,7 +3,7 @@
 import { Download } from "lucide-react";
 import { useState } from "react";
 import { CyberpunkButton, PageHeader } from "@/components/ui";
-import { ResumeRequestModalRefactored as ResumeRequestModal } from "./ResumeRequestModal";
+import { ResumeRequestModal } from "./ResumeRequestModal";
 import { submitResumeRequest } from "./submitResumeRequest";
 
 export function ResumeHeader() {

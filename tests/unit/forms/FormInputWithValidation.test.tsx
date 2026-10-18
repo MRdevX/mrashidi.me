@@ -1,10 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import userEvent from "@testing-library/user-event";
+import { render, screen } from "@tests/utils/test-utils";
 import { useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
-import { render, screen } from "../../utils/test-utils";
 
 const schema = z.object({
   email: z.string().email("Invalid email"),

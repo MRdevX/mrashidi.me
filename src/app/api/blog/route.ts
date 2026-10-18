@@ -1,28 +1,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { corsPrelight, createMiddleware } from "@/lib/api/middleware";
+import { getAllPosts } from "@/features/blog/server";
+import { corsPreflight, createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
-import { logger } from "@/lib/core";
-import { getAllPosts } from "@/lib/services/blog";
 
 export const runtime = "nodejs";
 
 async function handleBlogPosts(_request: NextRequest, pagination: { page: number; limit: number }) {
-  logger.info({
-    operation: "handleBlogPosts",
-    message: "Handling blog posts request",
-    pagination,
-  });
-
   const result = await getAllPosts(pagination.page, pagination.limit);
-
-  logger.info({
-    operation: "handleBlogPosts",
-    message: "Successfully processed blog posts request",
-    postCount: result.posts.length,
-    total: result.total,
-    pagination,
-  });
 
   return createSuccessResponse(result.posts, {
     fromCache: result.fromCache,
@@ -35,6 +20,6 @@ async function handleBlogPosts(_request: NextRequest, pagination: { page: number
 export const GET = createMiddleware("generalApi").cache(300, 600).cors().pagination().build(handleBlogPosts);
 
 export const OPTIONS = async (request: NextRequest) => {
-  const preflightResponse = corsPrelight(request);
+  const preflightResponse = corsPreflight(request);
   return preflightResponse || new NextResponse(null, { status: 200 });
 };

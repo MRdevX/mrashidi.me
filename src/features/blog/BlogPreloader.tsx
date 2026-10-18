@@ -1,18 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { useBlogPreload } from "@/hooks";
+import { preloadFirstBlogPage } from "./fetchBlogPage";
 
 export function BlogPreloader() {
-  const { preloadFirstPage } = useBlogPreload();
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      preloadFirstPage();
+      preloadFirstBlogPage();
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [preloadFirstPage]);
+  }, []);
 
   return null;
 }

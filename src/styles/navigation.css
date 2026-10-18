@@ -311,7 +311,6 @@
     transform-origin: top;
   }
 
-  /* Hover effects - higher specificity to override other classes */
   .nav-item-hover-effect:hover .nav-item-text {
     color: #000000;
     font-weight: 600;

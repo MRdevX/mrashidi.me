@@ -3,11 +3,12 @@
 import { ChevronLeft, ChevronRight, ExternalLink, GitCommit, Lock } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
+import { createCommitUrl } from "@/features/projects/domain/commit";
 import type { Project } from "@/features/projects/domain/project";
+import { formatDate, formatRelativeTime } from "@/features/projects/ui/shared/dates";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
-import { createCommitUrl, formatDate, formatRelativeTime } from "@/lib/utils/index";
 import { ProjectMonogram } from "../shared/ProjectMonogram";
 import { Sheet, SheetCloseIcon, SheetTitle } from "../shared/Sheet";
 import { styles } from "../shared/styles";
