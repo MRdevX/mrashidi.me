@@ -1,7 +1,7 @@
+import { fireEvent, render, screen, within } from "@tests/utils/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ProjectsPage } from "@/features/projects";
 import { projects } from "@/features/projects/infrastructure/projectData";
-import { fireEvent, render, screen, within } from "../../../utils/test-utils";
 
 vi.mock("framer-motion", () => ({
   motion: {

@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { CyberpunkButton } from "@/components/ui";
 import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { CyberpunkButton } from "./CyberpunkButton";
 
 interface PaginationProps {
   currentPage: number;

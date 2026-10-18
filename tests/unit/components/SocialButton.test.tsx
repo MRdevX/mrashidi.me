@@ -1,7 +1,7 @@
+import { render, screen } from "@tests/utils/test-utils";
 import { Heart } from "lucide-react";
 import { describe, expect, it, vi } from "vitest";
 import { SocialButton } from "@/components/ui/SocialButton";
-import { render, screen } from "../../utils/test-utils";
 
 vi.mock("framer-motion", () => ({
   motion: {

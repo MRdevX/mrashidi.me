@@ -6,8 +6,7 @@ import { useProjectCatalog } from "@/features/projects/application/ProjectCatalo
 import type { Project } from "@/features/projects/domain/project";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { getTechIcon } from "@/lib/tech";
-import { cn } from "@/lib/utils";
-import { createCommitUrl, formatDate, formatRelativeTime } from "@/lib/utils/index";
+import { cn, createCommitUrl, formatDate, formatRelativeTime } from "@/lib/utils";
 import { ProjectMonogram } from "../shared/ProjectMonogram";
 import { Sheet, SheetCloseIcon, SheetTitle } from "../shared/Sheet";
 import { styles } from "../shared/styles";

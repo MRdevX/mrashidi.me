@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useSWR, { preload } from "swr";
 import type { BlogData, BlogResponse } from "./types";
 
-const preloadBlogData = async (page: number, postsPerPage: number): Promise<BlogData> => {
+const fetchBlogData = async (page: number, postsPerPage: number): Promise<BlogData> => {
   const response = await fetch(`/api/blog?page=${page}&limit=${postsPerPage}`);
   const data: BlogResponse = await response.json();
 
@@ -19,7 +19,7 @@ const preloadBlogData = async (page: number, postsPerPage: number): Promise<Blog
 };
 
 if (typeof window !== "undefined") {
-  preload(["blogPosts", 1, 6], () => preloadBlogData(1, 6));
+  preload(["blogPosts", 1, 6], () => fetchBlogData(1, 6));
 }
 
 export function useBlogData(postsPerPage: number = 6) {
@@ -27,7 +27,7 @@ export function useBlogData(postsPerPage: number = 6) {
 
   const { data, error, isLoading, mutate } = useSWR(
     ["blogPosts", page, postsPerPage],
-    ([, p, pp]) => preloadBlogData(p, pp),
+    ([, p, pp]) => fetchBlogData(p, pp),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: true,
@@ -41,7 +41,7 @@ export function useBlogData(postsPerPage: number = 6) {
     if (data?.total) {
       const totalPages = Math.ceil(data.total / postsPerPage);
       if (page < totalPages) {
-        preload(["blogPosts", page + 1, postsPerPage], () => preloadBlogData(page + 1, postsPerPage));
+        preload(["blogPosts", page + 1, postsPerPage], () => fetchBlogData(page + 1, postsPerPage));
       }
     }
   }, [page, postsPerPage, data?.total]);

@@ -37,7 +37,7 @@ function buildCorsHeaders(origin: string | null): Record<string, string> | undef
   };
 }
 
-export function handleCorsPrelight(request: NextRequest): NextResponse {
+export function handleCorsPreflight(request: NextRequest): NextResponse {
   const origin = request.headers.get("origin");
   const corsHeaders = buildCorsHeaders(origin);
 
@@ -75,6 +75,6 @@ export function withCors(handler: (request: NextRequest) => Promise<NextResponse
   };
 }
 
-export function isCorsPrelight(request: NextRequest): boolean {
+export function isCorsPreflight(request: NextRequest): boolean {
   return request.method === "OPTIONS" && request.headers.get("origin") !== null;
 }

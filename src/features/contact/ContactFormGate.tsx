@@ -2,7 +2,7 @@
 
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { getEnv } from "@/lib/core";
-import { ContactFormRefactored as ContactForm } from "./ContactForm";
+import { ContactForm } from "./ContactForm";
 
 export function ContactFormGate() {
   const recaptchaSiteKey = getEnv("NEXT_PUBLIC_RECAPTCHA_SITE_KEY");

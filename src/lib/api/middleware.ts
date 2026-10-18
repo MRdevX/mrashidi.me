@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { APIError, handleError, logError } from "@/lib/errors";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/lib/services/rate-limit";
 import { extractPaginationParams, type PaginationParams } from "@/lib/utils/pagination";
-import { handleCorsPrelight, isCorsPrelight, withCors } from "./cors";
+import { handleCorsPreflight, isCorsPreflight, withCors } from "./cors";
 import { createErrorResponse } from "./response";
 import { addSecurityHeaders } from "./securityHeaders";
 import type { ApiHandler } from "./types";
@@ -212,9 +212,9 @@ export function createMiddleware(rateLimiterType?: RateLimiterType): MiddlewareC
   return new MiddlewareChain(rateLimiterType);
 }
 
-export function corsPrelight(request: NextRequest): NextResponse | null {
-  if (isCorsPrelight(request)) {
-    return handleCorsPrelight(request);
+export function corsPreflight(request: NextRequest): NextResponse | null {
+  if (isCorsPreflight(request)) {
+    return handleCorsPreflight(request);
   }
   return null;
 }

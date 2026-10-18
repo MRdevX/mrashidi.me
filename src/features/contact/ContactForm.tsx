@@ -14,7 +14,7 @@ import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { logger } from "@/lib/core";
 import { type ContactFormData, contactFormSchema } from "@/lib/validation";
 
-export function ContactFormRefactored() {
+export function ContactForm() {
   const { getCardPattern } = useThemeConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
