@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { ButtonVariant } from "@/config/theme.config";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "./Button";
 
@@ -29,7 +29,7 @@ export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButt
     },
     ref
   ) => {
-    const { getButtonVariant } = useThemeConfig();
+    const { getButtonVariant } = getThemeConfig();
 
     const buttonClasses = cn(
       "transition-all duration-300 focus-ring",

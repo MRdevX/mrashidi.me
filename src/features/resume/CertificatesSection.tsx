@@ -3,8 +3,8 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { BadgeCheck, ExternalLink } from "lucide-react";
 import { SectionHeader, SurfaceCard } from "@/components/ui";
+import { getThemeConfig } from "@/config/theme.config";
 import { type Certificate, certificates } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { pageEnterTransition } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import { accentTextClass } from "./styles";
@@ -12,7 +12,7 @@ import { accentTextClass } from "./styles";
 const certRowClass = "flex h-full items-start gap-3 rounded-lg border p-3 transition-colors duration-200";
 
 function CertificateRow({ cert }: { cert: Certificate }) {
-  const { getTextColor, getBorderColor } = useThemeConfig();
+  const { getTextColor, getBorderColor } = getThemeConfig();
 
   const body = (
     <>
@@ -60,7 +60,7 @@ function CertificateRow({ cert }: { cert: Certificate }) {
 }
 
 export function CertificatesSection() {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
   const prefersReducedMotion = useReducedMotion();
 
   return (

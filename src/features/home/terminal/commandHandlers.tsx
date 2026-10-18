@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
+import { getThemeConfig } from "@/config/theme.config";
 import { certificates, config, personalInfo, skills, workExperience } from "@/data";
 import { projects } from "@/features/projects";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { AVAILABLE_COMMANDS, TERMINAL_CONSTANTS } from "./constants";
 import type { CommandType } from "./types";
@@ -56,7 +56,7 @@ const TerminalBadge = ({
   children: React.ReactNode;
   variant?: "public" | "private" | "personal" | "professional" | "default";
 }) => {
-  const { colors } = useThemeConfig();
+  const { colors } = getThemeConfig();
 
   const variants = {
     public: `bg-[${colors.success.DEFAULT}] text-white`,

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 
 interface LoadingAnimationProps {
   size?: "small" | "medium" | "large";
@@ -16,7 +16,7 @@ const LoadingAnimation = ({
   text = "Loading...",
   fullScreen = false,
 }: LoadingAnimationProps) => {
-  const { colors, getTextColor } = useThemeConfig();
+  const { colors, getTextColor } = getThemeConfig();
 
   const sizeValues = {
     small: {

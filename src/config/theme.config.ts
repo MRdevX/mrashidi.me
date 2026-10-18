@@ -144,3 +144,23 @@ export const getVariant = <T extends keyof typeof COMPONENT_VARIANTS>(
 export const getColor = (color: ColorKey): string => {
   return COLORS[color].DEFAULT;
 };
+
+export const getThemeConfig = () => {
+  return {
+    getColor,
+
+    getButtonVariant: (variant: ButtonVariant) => getVariant("button", variant),
+    getInputVariant: (variant: InputVariant) => getVariant("input", variant),
+    getTextareaVariant: (variant: TextareaVariant) => getVariant("textarea", variant),
+
+    getTextColor: (variant: TextColor) => SEMANTIC_COLORS.text[variant],
+    getBackgroundColor: (variant: BackgroundColor) => SEMANTIC_COLORS.background[variant],
+    getBorderColor: (variant: BorderColor) => SEMANTIC_COLORS.border[variant],
+
+    getSectionTitle: () => PATTERNS.sectionTitle,
+    getCardPattern: () => PATTERNS.card,
+
+    colors: THEME_CONFIG.colors,
+    variants: THEME_CONFIG.variants,
+  };
+};

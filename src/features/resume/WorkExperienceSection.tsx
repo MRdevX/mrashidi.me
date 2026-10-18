@@ -4,8 +4,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Laptop } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { Badge, FilamentDivider, SectionHeader, SurfaceCard } from "@/components/ui";
+import { getThemeConfig } from "@/config/theme.config";
 import { type WorkExperience, workExperience } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { pageEnterTransition } from "@/lib/animations";
 import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
@@ -33,7 +33,7 @@ function useCurrentYearMonth(): YearMonth | null {
 }
 
 function JobPeriod({ period, now }: { period: string; now: YearMonth | null }) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
   const parsed = parsePeriod(period);
   const className = cn("shrink-0 text-sm tabular-nums", getTextColor("secondary"));
 
@@ -79,7 +79,7 @@ function StackList({ stack }: { stack: string[] }) {
 }
 
 function Achievements({ items }: { items: string[] }) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
   const prefersReducedMotion = useReducedMotion();
   const listId = useId();
   const [expanded, setExpanded] = useState(false);
@@ -140,7 +140,7 @@ function Achievements({ items }: { items: string[] }) {
 }
 
 function JobCard({ job, now }: { job: WorkExperience; now: YearMonth | null }) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <SurfaceCard as="article" static className="!p-0 border-primary/15">

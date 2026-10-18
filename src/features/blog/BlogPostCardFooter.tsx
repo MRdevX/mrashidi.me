@@ -1,14 +1,14 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 
 type BlogPostCardFooterProps = {
   publishedAt: string;
 };
 
 export function BlogPostCardFooter({ publishedAt }: BlogPostCardFooterProps) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-3 dark:border-gray-700">

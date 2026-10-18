@@ -1,6 +1,6 @@
 "use client";
 
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { ContactFormGate } from "./ContactFormGate";
 import { ContactMotionFade } from "./ContactMotionFade";
 
@@ -9,7 +9,7 @@ interface ContactHeaderProps {
 }
 
 export function ContactHeader({ description }: ContactHeaderProps) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <div className="space-y-12">

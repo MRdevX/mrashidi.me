@@ -10,12 +10,12 @@ import { useForm } from "react-hook-form";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
 import { StatusMessage } from "@/components/forms/StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { logger } from "@/lib/core";
 import { type ContactFormData, contactFormSchema } from "@/lib/validation";
 
 export function ContactForm() {
-  const { getCardPattern } = useThemeConfig();
+  const { getCardPattern } = getThemeConfig();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { slideInRightVariants } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +15,7 @@ interface ProfileImageProps {
 }
 
 export function ProfileImage({ src, alt, width = 256, height = 256, className }: ProfileImageProps) {
-  const { getBackgroundColor } = useThemeConfig();
+  const { getBackgroundColor } = getThemeConfig();
 
   return (
     <motion.div

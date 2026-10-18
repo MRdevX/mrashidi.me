@@ -12,7 +12,7 @@ import {
   MessageCircle,
   Terminal,
 } from "lucide-react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { pageEnterTransition } from "@/lib/animations";
 
 const iconMap = {
@@ -46,7 +46,7 @@ export function SectionHeader({
   size = "md",
   as: HeadingTag = "h1",
 }: SectionHeaderProps) {
-  const { getSectionTitle } = useThemeConfig();
+  const { getSectionTitle } = getThemeConfig();
   const Icon = iconMap[iconName];
   const prefersReducedMotion = useReducedMotion();
 

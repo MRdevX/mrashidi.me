@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
 import type { FieldError, Path, UseFormReturn } from "react-hook-form";
 import { CyberpunkInput, CyberpunkTextarea } from "@/components/ui";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 
 interface FormInputWithValidationProps<T extends Record<string, unknown>> {
@@ -31,7 +31,7 @@ export function FormInputWithValidation<T extends Record<string, unknown>>({
   className = "",
   icon,
 }: FormInputWithValidationProps<T>) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   const {
     register,

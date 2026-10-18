@@ -1,14 +1,14 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
+import { getThemeConfig } from "@/config/theme.config";
 import type { Education } from "@/data";
 import { education } from "@/data";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
 import { AboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
 
 function InstitutionBlock({ edu }: { edu: Education }) {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
   const secondaryRow = `${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors`;
 
   return edu.url ? (
@@ -29,7 +29,7 @@ function InstitutionBlock({ edu }: { edu: Education }) {
 }
 
 export function EducationSection() {
-  const { getTextColor } = useThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   return (
     <AboutSection delay={1.2} iconName="GraduationCap" title="Education">

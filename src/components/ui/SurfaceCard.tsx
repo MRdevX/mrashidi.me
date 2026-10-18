@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useThemeConfig } from "@/hooks/useThemeConfig";
+import { getThemeConfig } from "@/config/theme.config";
 import { cn } from "@/lib/utils";
 
 type SurfaceCardProps = {
@@ -13,7 +13,7 @@ type SurfaceCardProps = {
 };
 
 export function SurfaceCard({ children, className, static: isStatic = false, as: Tag = "div" }: SurfaceCardProps) {
-  const { getCardPattern } = useThemeConfig();
+  const { getCardPattern } = getThemeConfig();
 
   return (
     <Tag className={cn(getCardPattern(), "relative isolate z-0", isStatic && "feature-card--static", className)}>
