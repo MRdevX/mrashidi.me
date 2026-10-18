@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.9](https://github.com/MRdevX/mrashidi.me/compare/v0.2.8...v0.2.9) (2026-10-18)
+
+
+### Bug Fixes
+
+* **ui:** stop generic words matching specific tech icons ([0303aac](https://github.com/MRdevX/mrashidi.me/commit/0303aacdab8b5d1236d4938f5bddd1b9965a8a43))
+
+
+### Tests
+
+* **ui:** pin tech icon lookups for skills, projects and work stacks ([e49270c](https://github.com/MRdevX/mrashidi.me/commit/e49270cdadf49eea4436e38df11481e5c7674cbb))
+
+
+### Code Refactoring
+
+* **ui:** drop tech icon aliases shadowed by definitions ([445e5d5](https://github.com/MRdevX/mrashidi.me/commit/445e5d555f74b29869c2c8b61345555282a68944))
+* **ui:** split tech icon definitions, aliases and lookup ([f3b7ce9](https://github.com/MRdevX/mrashidi.me/commit/f3b7ce90866d6cd0d500966d33bb2df787235216))
+
 ### [0.2.8](https://github.com/MRdevX/mrashidi.me/compare/v0.2.7...v0.2.8) (2026-10-17)
 
 
