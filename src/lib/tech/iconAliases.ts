@@ -10,8 +10,6 @@ export const ICON_ALIASES: Record<string, string> = {
   next: "nextjs",
   node: "nodejs",
   nest: "nestjs",
-  vue: "vuejs",
-  nuxt: "nuxt",
   spring: "springboot",
   tailwind: "tailwindcss",
   framer: "framermotion",
@@ -29,14 +27,12 @@ export const ICON_ALIASES: Record<string, string> = {
   k8s: "kubernetes",
 
   lambda: "awslambda",
-  serverless: "awslambda",
   fargate: "awsfargate",
   ecs: "awsecs",
   s3: "awss3",
   amplify: "awsamplify",
   sqs: "awssqs",
   sns: "awssns",
-  apigateway: "amazonapigateway",
   cloudwatch: "amazoncloudwatch",
 
   monitor: "azuremonitor",
@@ -56,12 +52,9 @@ export const ICON_ALIASES: Record<string, string> = {
   html: "html5",
   css: "css3",
 
-  rest: "restfulapis",
   restful: "restfulapis",
   api: "restfulapis",
-  websockets: "websocket",
 
-  oauth2: "oauth",
   ssl: "ssltls",
   tls: "ssltls",
   security: "apisecurity",
@@ -74,8 +67,6 @@ export const ICON_ALIASES: Record<string, string> = {
   sheets: "googlesheetsapi",
   chrome: "chromeextensionapi",
   extension: "chromeextensionapi",
-  telegram: "telegram",
-  compose: "jetpackcompose",
 
   microservice: "microservices",
   monorepo: "monorepos",
