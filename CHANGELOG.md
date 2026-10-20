@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.11](https://github.com/MRdevX/mrashidi.me/compare/v0.2.10...v0.2.11) (2026-10-20)
+
+
+### Features
+
+* **projects:** add german letter ([0a927e2](https://github.com/MRdevX/mrashidi.me/commit/0a927e2459926f1cb2f481a98659e04f43166202))
+* **tech:** typst and webassembly icons ([4b8ccb9](https://github.com/MRdevX/mrashidi.me/commit/4b8ccb9e4e46310d4e4803e1507ad626f9cf4aa6))
+
 ### [0.2.10](https://github.com/MRdevX/mrashidi.me/compare/v0.2.9...v0.2.10) (2026-10-18)
 
 
