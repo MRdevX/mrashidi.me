@@ -104,9 +104,11 @@ import {
   SiTerraform,
   SiTrivy,
   SiTrpc,
+  SiTypst,
   SiVite,
   SiVitest,
   SiVuedotjs,
+  SiWebassembly,
   SiZod,
 } from "react-icons/si";
 import {
@@ -272,6 +274,8 @@ export const ICON_DEFINITIONS: Record<string, IconDefinition> = {
   jest: { Icon: SiJest, colorClass: "text-red-500" },
   vitest: { Icon: SiVitest, colorClass: "text-green-500" },
   vite: { Icon: SiVite, colorClass: "text-purple-500" },
+  typst: { Icon: SiTypst, colorClass: "text-cyan-500" },
+  webassembly: { Icon: SiWebassembly, colorClass: "text-purple-600" },
   supertest: { Icon: SiJest, colorClass: "text-red-500" },
   unittesting: { Icon: SiJest, colorClass: "text-green-500" },
   integrationtesting: { Icon: SiJest, colorClass: "text-blue-500" },
