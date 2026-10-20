@@ -80,6 +80,26 @@ export const projects: readonly Project[] = [
     role: "Creator & Maintainer",
   },
   {
+    title: "German Letter",
+    description:
+      "Web app that writes German business letters to DIN 5008: fill in the form, watch the letter typeset as you type, download a PDF with the address placed for a window envelope. Typst runs in the browser as WebAssembly, so nothing anyone types reaches a server.",
+    highlights: [
+      "Live preview of the real PDF while you type",
+      "DIN 5008 Form B layout that fits a DL or C6/5 window envelope",
+      "German or English letters, with references, attachments and an optional signature image",
+      "Typst compiled to WebAssembly with typst.ts, running in a Web Worker",
+      "Content-Security-Policy allows only its own origin, so the privacy claim is checkable in DevTools",
+      "Static assets on a Cloudflare Worker, deployed from main",
+    ],
+    stack: ["TypeScript", "React", "Vite", "Typst", "WebAssembly", "Cloudflare Workers"],
+    liveUrl: "https://letter.notablenomads.com",
+    visibility: "public",
+    type: "personal",
+    openSource: false,
+    year: "2026",
+    role: "Creator & Maintainer",
+  },
+  {
     title: "NestJS Queue Worker PoC",
     description:
       "A proof-of-concept demonstrating a scalable, fault-tolerant task processing system built with NestJS, PostgreSQL, and multi-provider messaging (RabbitMQ, NATS, Redis). Showcases workflow orchestration, retry mechanisms, comprehensive testing, invoice workflow automation, and horizontal scaling for distributed task processing.",
