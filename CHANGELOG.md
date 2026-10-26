@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.13](https://github.com/MRdevX/mrashidi.me/compare/v0.2.12...v0.2.13) (2026-10-26)
+
+
+### Features
+
+* **api:** bind the production D1 database ([b9e66a5](https://github.com/MRdevX/mrashidi.me/commit/b9e66a571fd44590e187be92b099c8d19fd33f68))
+* **infra:** import the mrashidi.me DNS records into Terraform ([7eee358](https://github.com/MRdevX/mrashidi.me/commit/7eee3580a9c50ebcb8486c15761d392c834b1f69))
+* **infra:** manage DNS, D1, the API domain, Vercel and GitHub secrets with Terraform ([0fcc2d7](https://github.com/MRdevX/mrashidi.me/commit/0fcc2d743937945a38254dda4f9905442b203c00))
+* **infra:** read secrets from the shared Notable Nomads vault through the 1Password app ([86c0ff9](https://github.com/MRdevX/mrashidi.me/commit/86c0ff9ecea064d3aba2f05a1843cbd3a162e4c4))
+
+
+### Bug Fixes
+
+* **infra:** keep the apex-to-www redirect and pin D1 read replication ([4269ed2](https://github.com/MRdevX/mrashidi.me/commit/4269ed2067988f1c6640afcff4459a0dbd236389))
+
+
+### Continuous Integration
+
+* gate deploys on a deploy-gate environment instead of Vercel's Production ([27cb703](https://github.com/MRdevX/mrashidi.me/commit/27cb70361a5157e90fe5bbe9fd292b7a029febfe))
+* plan and apply Terraform and deploy the API behind the production environment ([4b0f2e5](https://github.com/MRdevX/mrashidi.me/commit/4b0f2e535ae427e649b3f783d1f93617d786915f))
+
+
+### Documentation
+
+* document the infrastructure, its approval gate and the deploy skill ([bb45d7a](https://github.com/MRdevX/mrashidi.me/commit/bb45d7a7e60348f1395f41fb6294c859b36e2a95))
+* **infra:** the terraform token needs Workers Scripts edit for custom domains ([b7bbfb6](https://github.com/MRdevX/mrashidi.me/commit/b7bbfb637e5696998da75a59147d6f5f29c335ee))
+
 ### [0.2.12](https://github.com/MRdevX/mrashidi.me/compare/v0.2.11...v0.2.12) (2026-10-26)
 
 
