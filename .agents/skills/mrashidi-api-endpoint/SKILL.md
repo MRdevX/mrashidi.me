@@ -20,7 +20,7 @@ disable-model-invocation: false
 2. **Domain:** the port and the rules derived from content in `domain/` (plain TypeScript, no Hono or Drizzle imports). The web renders the resulting read model; it does not re-derive it.
 3. **Infrastructure:** the Drizzle implementation in `infrastructure/`. Parse every row with the schema before returning it.
 4. **Application:** one query or command per function in `application/`; throw a named error for "not found".
-5. **HTTP:** the route in `http/`, with per-route middleware (`cacheControl`, `bearerAuth`), never router-wide `use()`, because routers share the `/v1` mount. Map new errors in `src/app.ts` `onError`.
+5. **HTTP:** the route in `http/`, with per-route middleware (`cacheControl`), never router-wide `use()`, because routers share the `/v1` mount. `src/app.ts` requires the content token on all of `/v1/*` ([DR-0010](../../../docs/decisions/0010-private-content-api-over-workers-dev.md)); tests call `authedApi` from `test/api.ts`. Map new errors in `src/app.ts` `onError`.
 6. Export the module's public surface from its `index.ts`; `src/app.ts` is the only composition root. A module reads another only through that module's `index.ts`.
 7. Change responses additively: add fields or routes. Remove one only after the web build that stopped reading it is live, since the Worker and the site deploy separately.
 

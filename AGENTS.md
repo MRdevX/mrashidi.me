@@ -7,7 +7,7 @@ monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.m
 | Path | Package | What |
 | ---- | ------- | ---- |
 | `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
-| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`), read-only `/v1/*` routes |
+| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`, `workers.dev` for Vercel), read-only `/v1/*` routes behind `CONTENT_API_TOKEN` |
 | `infra/` | — | Terraform: zone DNS, D1, `api.mrashidi.me`, Vercel project, GitHub secrets ([docs/infrastructure.md](docs/infrastructure.md)) |
 | `packages/types/` | `@mrashidi/types` | Zod content contract (profile, about, resume, projects, Ask MR knowledge) and the fake fixture dataset (`@mrashidi/types/fixtures`) |
 
