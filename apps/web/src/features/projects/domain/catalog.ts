@@ -1,35 +1,15 @@
+import type { CatalogOverview } from "@mrashidi/types";
 import { createProjectMatcher, type ProjectFilters, type ProjectTypeFilter } from "./filters";
 import type { Project } from "./project";
 import { type CommitDates, sortProjects } from "./sort";
-import { countStackUsage, groupStacks, type StackFacet, type StackGroup, topStacks } from "./stack";
-
-const TOP_STACK_LIMIT = 10;
-
-export interface CatalogOverview {
-  projectCount: number;
-  openSourceCount: number;
-  stackCount: number;
-  topStacks: string[];
-  stackGroups: StackGroup[];
-}
+import { countStackUsage, type StackFacet, type StackFacetGroup } from "./stack";
 
 export interface CatalogQueryResult {
   results: Project[];
   typeCounts: Record<ProjectTypeFilter, number>;
   topFacets: StackFacet[];
-  groupFacets: StackGroup<StackFacet>[];
+  groupFacets: StackFacetGroup[];
 }
-
-export const describeCatalog = (projects: readonly Project[]): CatalogOverview => {
-  const usage = countStackUsage(projects);
-  return {
-    projectCount: projects.length,
-    openSourceCount: projects.filter((project) => project.openSource).length,
-    stackCount: usage.size,
-    topStacks: topStacks(usage, TOP_STACK_LIMIT),
-    stackGroups: groupStacks(usage),
-  };
-};
 
 export const queryCatalog = (
   projects: readonly Project[],
