@@ -7,6 +7,10 @@ resource "cloudflare_d1_database" "content" {
   name                  = "mrashidi-db"
   primary_location_hint = "weur"
 
+  read_replication = {
+    mode = "disabled"
+  }
+
   lifecycle {
     prevent_destroy = true
   }
@@ -42,8 +46,10 @@ resource "vercel_project" "web" {
 }
 
 resource "vercel_project_domain" "apex" {
-  project_id = vercel_project.web.id
-  domain     = "mrashidi.me"
+  project_id           = vercel_project.web.id
+  domain               = "mrashidi.me"
+  redirect             = vercel_project_domain.www.domain
+  redirect_status_code = 308
 }
 
 resource "vercel_project_domain" "www" {
