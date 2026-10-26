@@ -58,7 +58,9 @@ on this repo with Secrets, Variables, Environments and Administration write, sto
    `d1_database_id` output into `apps/api/wrangler.toml`.
 6. From `apps/api`: `pnpm db:migrate:remote`, `pnpm exec wrangler deploy`, `wrangler secret put CONTENT_API_TOKEN`.
 7. `pnpm infra:apply:production` attaches `api.mrashidi.me`.
-8. `pnpm --filter @mrashidi/api db:seed --source ../mrashidi-data --remote` loads the real content.
+8. `pnpm --filter @mrashidi/api db:seed --source ../mrashidi-data --remote` loads the real content. With
+   `REVALIDATE_URL=https://www.mrashidi.me/api/revalidate` and `REVALIDATE_SECRET` set, it also refreshes the
+   site's content cache; otherwise pages pick up changes within an hour.
 
 After that, merges to `main` apply Terraform and deploy the API through `infra.yml` and `deploy-api.yml`.
 

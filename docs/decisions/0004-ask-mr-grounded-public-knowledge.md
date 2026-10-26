@@ -2,10 +2,10 @@
 id: 0004
 title: Ground Ask MR only in public site data and a public knowledge file
 issues: []
-status: accepted
+status: superseded
 date: 2026-10-13
 supersedes: []
-superseded_by: []
+superseded_by: [DR-0007]
 related: []
 areas: [ask-mr, api]
 ---

@@ -2,7 +2,7 @@
 id: 0007
 title: Load Ask MR knowledge from the content API and guard it at seed time
 issues: []
-status: proposed
+status: accepted
 date: 2026-10-26
 supersedes: [DR-0004]
 superseded_by: []
@@ -48,8 +48,8 @@ read, and the guard has to run where the data enters the system.
 
 ## Implementation
 
-- [ ] `apps/api/scripts/seed.ts` privacy guard, `apps/api/src/modules/content/http/`
-- [ ] `apps/web/src/features/ask-mr/knowledge/buildKnowledge.ts`
+- [x] Privacy guard in `AskMrKnowledgeSchema` (`packages/types/src/knowledge.ts`), enforced by the seed; `apps/api/src/modules/content/http/`
+- [x] `apps/web/src/features/ask-mr/knowledge/buildKnowledge.ts`, `apps/web/src/lib/content/server.ts`
 
 ## Revisit when
 
