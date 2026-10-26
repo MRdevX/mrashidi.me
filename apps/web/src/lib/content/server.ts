@@ -5,15 +5,16 @@ import {
   CertificateCategorySchema,
   type Content,
   EducationSchema,
+  ExperienceEntrySchema,
   ProfileSchema,
   ProjectSchema,
   SkillCategorySchema,
-  WorkExperienceSchema,
 } from "@mrashidi/types";
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { cache } from "react";
 import { z } from "zod";
 import { getEnv } from "@/lib/core";
+import { fixtureSiteContent } from "./fixtures";
 import type { SiteContent } from "./types";
 
 export const CONTENT_TAG = "content";
@@ -44,13 +45,12 @@ async function fetchJson<T>(base: string, path: string, schema: z.ZodType<T>, to
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const base = contentApiUrl();
   if (!base) {
-    const { knowledge: _knowledge, ...publicContent } = fixtureContent;
-    return publicContent;
+    return fixtureSiteContent;
   }
   const [profile, about, experience, education, certificates, skills, projects] = await Promise.all([
     fetchJson(base, "/v1/profile", ProfileSchema),
     fetchJson(base, "/v1/about", AboutSchema),
-    fetchJson(base, "/v1/experience", z.array(WorkExperienceSchema)),
+    fetchJson(base, "/v1/experience", z.array(ExperienceEntrySchema)),
     fetchJson(base, "/v1/education", z.array(EducationSchema)),
     fetchJson(base, "/v1/certificates", z.array(CertificateCategorySchema)),
     fetchJson(base, "/v1/skills", z.array(SkillCategorySchema)),
