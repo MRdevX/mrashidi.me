@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@tests/utils/test-utils";
 import { createRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AskMrUIMessage } from "@/features/ask-mr/server/tools";
@@ -119,7 +119,7 @@ describe("Composer", () => {
     const onSend = vi.fn();
     const onStop = vi.fn();
     render(<Composer inputRef={createRef()} isBusy={false} onSend={onSend} onStop={onStop} {...props} />);
-    return { onSend, onStop, input: screen.getByLabelText("Ask a question about Mahdi") };
+    return { onSend, onStop, input: screen.getByLabelText("Ask a question about Jane") };
   };
 
   it("sends on Enter and clears the draft", () => {
@@ -180,7 +180,7 @@ describe("ErrorBanner", () => {
 
   it("offers contact instead of retry when the daily budget is used up", () => {
     render(<ErrorBanner error={{ code: "budget_exhausted", message: "Resting" }} onRetry={noop} onNavigate={noop} />);
-    expect(screen.getByRole("link", { name: "Contact Mahdi" })).toHaveAttribute("href", "/contact");
+    expect(screen.getByRole("link", { name: "Contact Jane" })).toHaveAttribute("href", "/contact");
     expect(screen.queryByRole("button", { name: "Retry" })).not.toBeInTheDocument();
   });
 });

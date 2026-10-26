@@ -34,7 +34,7 @@ export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplat
       <EmailSignature>
         Looking forward to connecting!
         <br />
-        <strong>Mahdi</strong>
+        <strong>{templateConfig.companyName.split(" ")[0]}</strong>
       </EmailSignature>
     </BaseEmailTemplate>
   );

@@ -43,7 +43,7 @@ function streamingModel(chunks: unknown[]) {
 const body = {
   conversationId: "6f1c1f9e-8f39-4d61-9a6e-3b8f0f6c2d11",
   pathname: "/",
-  messages: [{ id: "u1", role: "user", parts: [{ type: "text", text: "What does Mahdi do?" }] }],
+  messages: [{ id: "u1", role: "user", parts: [{ type: "text", text: "What does Jane do?" }] }],
 };
 
 const post = () =>
@@ -65,7 +65,7 @@ describe("POST /api/chat", () => {
   it("streams text and tool output as a UI message stream", async () => {
     mocks.model = streamingModel([
       { type: "text-start", id: "t1" },
-      { type: "text-delta", id: "t1", delta: "Mahdi is a backend engineer." },
+      { type: "text-delta", id: "t1", delta: "Jane is a backend engineer." },
       { type: "text-end", id: "t1" },
       {
         type: "tool-call",
@@ -80,7 +80,7 @@ describe("POST /api/chat", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toContain("text/event-stream");
     const text = await response.text();
-    expect(text).toContain("Mahdi is a backend engineer.");
+    expect(text).toContain("Jane is a backend engineer.");
     expect(text).toContain("suggestFollowUps");
     expect(text).toContain("What stack does he use?");
   });

@@ -1,9 +1,12 @@
 "use client";
 
+import { firstName } from "@mrashidi/types";
 import { motion } from "framer-motion";
 import React, { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { isAskMrEnabled } from "@/features/ask-mr";
+import { useContent } from "@/lib/content";
 import {
+  aiWelcomeMessage,
   TERMINAL_COMMAND_CLICK_EVENT,
   TERMINAL_CONSTANTS,
   TERMINAL_STARTER_QUESTIONS,
@@ -14,13 +17,15 @@ import { TerminalHistory } from "./TerminalHistory";
 import { TerminalInput } from "./TerminalInput";
 
 function TerminalWelcome({ aiEnabled }: { aiEnabled: boolean }) {
+  const name = firstName(useContent().profile);
+
   if (!aiEnabled) {
     return <p className={TERMINAL_STYLES.WELCOME}>{TERMINAL_CONSTANTS.WELCOME_MESSAGE}</p>;
   }
 
   return (
     <div className="space-y-2">
-      <p className={TERMINAL_STYLES.WELCOME}>{TERMINAL_CONSTANTS.AI_WELCOME_MESSAGE}</p>
+      <p className={TERMINAL_STYLES.WELCOME}>{aiWelcomeMessage(name)}</p>
       <ul className="space-y-1" aria-label="Starter questions">
         {TERMINAL_STARTER_QUESTIONS.map((question) => (
           <li key={question}>

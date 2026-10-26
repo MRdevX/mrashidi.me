@@ -1,6 +1,6 @@
-import type { Content, Profile } from "@mrashidi/types";
+import { type Content, firstName, type Profile } from "@mrashidi/types";
 import { ASK_MR_NAME, ASK_MR_TOOLS } from "../constants";
-import { buildKnowledge, firstName } from "../knowledge/buildKnowledge";
+import { buildKnowledge } from "../knowledge/buildKnowledge";
 
 /**
  * Persona and rules. Identical for every request until the content changes, so it can sit in the
@@ -9,7 +9,7 @@ import { buildKnowledge, firstName } from "../knowledge/buildKnowledge";
 export function buildInstructions(profile: Profile): string {
   const { person } = profile;
   const name = person.name;
-  const first = firstName({ profile });
+  const first = firstName(profile);
 
   return `You are ${ASK_MR_NAME}, the AI assistant on ${name}'s personal website (${person.website}). Visitors — mostly recruiters, hiring managers and engineers — ask you about ${first}'s experience, skills, projects, writing and how to work with him.
 

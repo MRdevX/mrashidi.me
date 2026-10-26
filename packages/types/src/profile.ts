@@ -24,3 +24,5 @@ export const ProfileSchema = z.object({
 });
 
 export type Profile = z.infer<typeof ProfileSchema>;
+
+export const firstName = (profile: Profile): string => profile.person.name.split(" ")[0];

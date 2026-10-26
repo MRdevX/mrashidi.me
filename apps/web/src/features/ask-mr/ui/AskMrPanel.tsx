@@ -3,6 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { SquarePen, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { ASK_MR_NAME } from "../constants";
 import { messageText } from "../messageText";
@@ -22,6 +23,7 @@ const headerButton =
 export function AskMrPanel() {
   const { isOpen, close, pendingPrompt, consumePrompt } = useAskMr();
   const chat = useAskMrChat();
+  const { profile } = useContent();
   const { messages, status, isBusy, parsedError, ask, reset, regenerate, stop, conversationId } = chat;
 
   const isDesktop = useMediaQuery("(min-width: 640px)", true);
@@ -138,8 +140,8 @@ export function AskMrPanel() {
             </Dialog.Close>
           </header>
           <Dialog.Description id="ask-mr-description" className="sr-only">
-            An AI assistant that answers questions about Mahdi Rashidi from his published portfolio. Answers can be
-            inaccurate.
+            An AI assistant that answers questions about {profile.person.name} from his published portfolio. Answers can
+            be inaccurate.
           </Dialog.Description>
 
           <MessageList contentKey={contentKey} sendKey={sendKey}>

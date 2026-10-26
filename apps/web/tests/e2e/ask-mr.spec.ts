@@ -29,7 +29,7 @@ const PROJECT = {
   year: "2021–2025",
 };
 
-async function mockChat(page: Page, body = uiStream("Mahdi led a zero-downtime GCP to Azure migration.")) {
+async function mockChat(page: Page, body = uiStream("Jane led a zero-downtime database migration.")) {
   const requests: unknown[] = [];
   await page.route("**/api/chat", async (route) => {
     requests.push(route.request().postDataJSON());
@@ -55,7 +55,7 @@ test.beforeEach(async ({ page }) => {
 test("answers a starter question with streamed text, a project card and follow-ups", async ({ page }) => {
   const requests = await mockChat(
     page,
-    uiStream("Mahdi led a zero-downtime GCP to Azure migration.", [
+    uiStream("Jane led a zero-downtime database migration.", [
       { name: "showProjects", input: { slugs: [PROJECT.slug] }, output: { projects: [PROJECT] } },
       {
         name: "suggestFollowUps",
@@ -68,9 +68,9 @@ test("answers a starter question with streamed text, a project card and follow-u
   await launcher(page).click();
   await expect(panel(page)).toBeVisible();
 
-  await panel(page).getByRole("button", { name: "What does Mahdi work on these days?" }).click();
+  await panel(page).getByRole("button", { name: "What does Jane work on these days?" }).click();
 
-  await expect(panel(page).getByText("Mahdi led a zero-downtime GCP to Azure migration.")).toBeVisible();
+  await expect(panel(page).getByText("Jane led a zero-downtime database migration.")).toBeVisible();
   await expect(panel(page).getByText(PROJECT.title)).toBeVisible();
   await expect(panel(page).getByRole("button", { name: "Which tools did he use?" })).toBeVisible();
   expect(requests).toHaveLength(1);
@@ -86,7 +86,7 @@ test("project cards open the project drawer and minimize the chat", async ({ pag
   );
   await page.goto("/");
   await launcher(page).click();
-  await panel(page).getByLabel("Ask a question about Mahdi").fill("Biggest project?");
+  await panel(page).getByLabel("Ask a question about Jane").fill("Biggest project?");
   await page.keyboard.press("Enter");
 
   await panel(page)
@@ -102,7 +102,7 @@ test("keeps the conversation across navigation", async ({ page }) => {
   await mockChat(page);
   await page.goto("/");
   await launcher(page).click();
-  await panel(page).getByLabel("Ask a question about Mahdi").fill("Cloud experience?");
+  await panel(page).getByLabel("Ask a question about Jane").fill("Cloud experience?");
   await page.keyboard.press("Enter");
   await expect(panel(page).getByText("Cloud experience?")).toBeVisible();
   await page.keyboard.press("Escape");
@@ -129,7 +129,7 @@ test("terminal starter question streams an answer", async ({ page }) => {
     .getByRole("list", { name: "Starter questions" })
     .getByRole("button", { name: /Is he open to work\?/ })
     .click();
-  await expect(page.getByText("Mahdi led a zero-downtime GCP to Azure migration.")).toBeVisible();
+  await expect(page.getByText("Jane led a zero-downtime database migration.")).toBeVisible();
   expect(requests).toHaveLength(1);
 });
 
@@ -143,7 +143,7 @@ test("shows a countdown when rate limited", async ({ page }) => {
   );
   await page.goto("/");
   await launcher(page).click();
-  await panel(page).getByLabel("Ask a question about Mahdi").fill("Hello?");
+  await panel(page).getByLabel("Ask a question about Jane").fill("Hello?");
   await page.keyboard.press("Enter");
   await expect(panel(page).getByRole("alert")).toContainText("You're sending messages quickly.");
   await expect(panel(page).getByRole("alert")).toContainText(/Try again in \d+s/);
@@ -180,9 +180,9 @@ for (const theme of ["dark", "light"] as const) {
       })
       .toBe(theme === "dark");
     await launcher(page).click();
-    await panel(page).getByLabel("Ask a question about Mahdi").fill("Cloud experience?");
+    await panel(page).getByLabel("Ask a question about Jane").fill("Cloud experience?");
     await page.keyboard.press("Enter");
-    await expect(panel(page).getByText("Mahdi led a zero-downtime GCP to Azure migration.")).toBeVisible();
+    await expect(panel(page).getByText("Jane led a zero-downtime database migration.")).toBeVisible();
 
     const results = await new AxeBuilder({ page })
       .include("[data-ask-mr]")

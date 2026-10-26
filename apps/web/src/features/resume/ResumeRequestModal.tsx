@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
 import { StatusMessage } from "@/components/forms/StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
+import { useContent } from "@/lib/content";
 import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
 import {
   CyberpunkDialog,
@@ -24,6 +25,7 @@ interface ResumeRequestModalProps {
 }
 
 export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestModalProps) {
+  const { profile } = useContent();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
@@ -50,7 +52,7 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
     try {
       const downloadLink = document.createElement("a");
       downloadLink.href = "/api/cv/download";
-      downloadLink.download = "Mahdi_Rashidi_CV.pdf";
+      downloadLink.download = `${profile.person.name.replaceAll(" ", "_")}_CV.pdf`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

@@ -18,7 +18,7 @@ export interface AskMrExchangeLog {
 }
 
 /**
- * Stores one question/answer pair so Mahdi can spot knowledge gaps. Anonymous by design:
+ * Stores one question/answer pair so the site owner can spot knowledge gaps. Anonymous by design:
  * no IP, user agent or other identifiers — only a random per-tab conversation id. Kept 30 days.
  */
 export async function logExchange(conversationId: string, entry: AskMrExchangeLog): Promise<void> {

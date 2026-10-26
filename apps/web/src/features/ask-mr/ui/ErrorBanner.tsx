@@ -1,8 +1,10 @@
 "use client";
 
+import { firstName } from "@mrashidi/types";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useContent } from "@/lib/content";
 import type { AskMrClientError } from "../client/errors";
 
 interface ErrorBannerProps {
@@ -26,6 +28,7 @@ function useCountdown(seconds: number | undefined): number {
 
 export function ErrorBanner({ error, onRetry, onNavigate }: ErrorBannerProps) {
   const remaining = useCountdown(error.code === "rate_limited" ? error.retryAfter : undefined);
+  const name = firstName(useContent().profile);
   const offline = error.code === "budget_exhausted" || error.code === "disabled";
   const canRetry = !offline && error.code !== "bot" && remaining === 0;
 
@@ -40,7 +43,7 @@ export function ErrorBanner({ error, onRetry, onNavigate }: ErrorBannerProps) {
         {remaining > 0 ? <p className="mt-1 font-terminal text-xs">Try again in {remaining}s</p> : null}
         {offline ? (
           <Link href="/contact" onClick={onNavigate} className="mt-1 inline-block font-medium underline">
-            Contact Mahdi
+            Contact {name}
           </Link>
         ) : null}
       </div>

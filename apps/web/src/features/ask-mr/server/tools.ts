@@ -1,10 +1,9 @@
-import { type Content, type Project, projectSlug } from "@mrashidi/types";
+import { type Content, firstName, type Project, projectSlug } from "@mrashidi/types";
 import { type InferUITools, tool, type UIDataTypes, type UIMessage } from "ai";
 import { z } from "zod";
 import { getAllPosts } from "@/features/blog/server";
 import { logger } from "@/lib/core";
 import { ASK_MR_LIMITS } from "../constants";
-import { firstName } from "../knowledge/buildKnowledge";
 
 export interface AskMrProjectCard {
   slug: string;
@@ -59,7 +58,7 @@ async function latestPosts(limit: number): Promise<AskMrBlogPost[]> {
 /** Read-only tools: none of them changes server state; actions (sending a CV request) stay with the visitor. */
 export function createAskMrTools(content: Pick<Content, "profile" | "projects">) {
   const { profile, projects } = content;
-  const first = firstName(content);
+  const first = firstName(profile);
   const projectsBySlug = new Map(projects.map((project) => [projectSlug(project), project]));
 
   return {
