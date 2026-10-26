@@ -13,8 +13,8 @@
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "check:agent-tooling": "node scripts/check-agent-tooling.mjs",
-    "gate": "pnpm check && pnpm check:agent-tooling && pnpm check-migrations && turbo run typecheck test",
-    "gate:affected": "pnpm check && pnpm check:agent-tooling && pnpm check-migrations && turbo run typecheck test --filter=...[origin/main]",
+    "gate": "pnpm check && pnpm check:agent-tooling && pnpm check-migrations && pnpm check:personal-data && turbo run typecheck test",
+    "gate:affected": "pnpm check && pnpm check:agent-tooling && pnpm check-migrations && pnpm check:personal-data && turbo run typecheck test --filter=...[origin/main]",
     "house-rules:sync": "node scripts/house-rules.mjs sync",
     "house-rules:install": "node scripts/house-rules.mjs install",
     "prepare": "husky",
@@ -33,7 +33,8 @@
     "infra:apply:production": "terraform -chdir=infra/live/production apply",
     "infra:plan:github": "terraform -chdir=infra/live/github plan",
     "infra:apply:github": "terraform -chdir=infra/live/github apply",
-    "infra:import-dns": "node infra/scripts/fetch-zone-import.mjs"
+    "infra:import-dns": "node infra/scripts/fetch-zone-import.mjs",
+    "check:personal-data": "node scripts/check-no-personal-data.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.3",

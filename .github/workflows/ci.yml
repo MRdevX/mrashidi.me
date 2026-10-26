@@ -77,7 +77,7 @@ jobs:
               - 'AGENTS.md'
               - 'docs/agent/**'
               - 'docs/decisions/**'
-              - 'scripts/check-agent-tooling.mjs'
+              - 'scripts/**'
               - '.github/workflows/ci.yml'
               - '.github/actions/**'
             build:
@@ -119,6 +119,9 @@ jobs:
 
       - name: D1 migration journal
         run: pnpm check-migrations
+
+      - name: No personal data
+        run: pnpm check:personal-data
 
       - name: Typecheck and unit tests (Turbo)
         run: pnpm exec turbo run typecheck test --continue
