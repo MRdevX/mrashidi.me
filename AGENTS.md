@@ -8,9 +8,10 @@ monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.m
 | ---- | ------- | ---- |
 | `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
 | `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`), read-only `/v1/*` routes |
+| `infra/` | — | Terraform: zone DNS, D1, `api.mrashidi.me`, Vercel project, GitHub secrets ([docs/infrastructure.md](docs/infrastructure.md)) |
 | `packages/types/` | `@mrashidi/types` | Zod content contract (profile, about, resume, projects, Ask MR knowledge) and the fake fixture dataset (`@mrashidi/types/fixtures`) |
 
-Terraform (`infra/`) lands in a later phase; personal data moves to D1
+Personal data moves to D1
 ([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
 
 ## Stack
@@ -49,6 +50,7 @@ Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <scrip
 - **Build:** `pnpm build:fast` (web, no PWA, no sitemap/OG generation); `pnpm build` (turbo, full)
 - **Ask MR eval:** `pnpm eval:ask-mr`
 - **Dev:** `pnpm dev` (turbo, every app's `dev`); `pnpm dev:web`, `pnpm dev:api` (Wrangler on `:8787`)
+- **Infra:** `pnpm infra:plan:<root>` / `pnpm infra:apply:<root>` (`bootstrap`, `global`, `production`, `github`), wrapped in `op run --env-file infra/.env.op --`
 - **API data:** `pnpm --filter @mrashidi/api db:migrate:local`, then `db:seed` (fixtures; `--source <dir>` for real data); `pnpm check-migrations`
 
 ## Skills
@@ -76,6 +78,7 @@ Project skills (each runs after or around its `house-*` counterpart):
 | `mrashidi-review` | `house-review` plus the site gates |
 | `mrashidi-api-endpoint` | Adding or changing a route on the Hono API |
 | `mrashidi-d1-migration` | Changing the D1 schema; seeding content |
+| `mrashidi-deploy` | Terraform, API deploys, production seeding, rollback |
 
 Third-party skills (`code-review`, `codebase-design`, `diagnosing-bugs`, `tdd`, `grilling`,
 `research`, `writing-for-agents`, `resolving-merge-conflicts`, `design-taste-frontend`,
