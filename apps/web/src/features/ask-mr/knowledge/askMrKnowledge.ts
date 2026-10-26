@@ -1,42 +1,6 @@
-interface AskMrRoleNotes {
-  /** Must match `company` in `src/data/profile/workExperience.ts` to be merged into that role. */
-  company: string;
-  highlights: string[];
-}
+import type { AskMrKnowledge } from "@mrashidi/types";
 
-interface AskMrExtraProject {
-  title: string;
-  year: string;
-  summary: string;
-  stack: string[];
-}
-
-interface AskMrFaqEntry {
-  question: string;
-  answer: string;
-}
-
-export interface AskMrKnowledge {
-  /** Achievements for roles whose `achievements` are still empty on the site. */
-  roleNotes: AskMrRoleNotes[];
-  /** Companies from `workExperience` to leave out of the work history (FAQ can still explain them). */
-  hiddenRoles: string[];
-  /** e.g. "Open to senior backend roles". Leave empty to deflect availability questions to contact. */
-  availability: string;
-  remote: string;
-  relocation: string;
-  /** Leave empty: residence and visa details stay private. */
-  workAuthorization: string;
-  preferredRoles: string[];
-  interests: string[];
-  workingStyle: string[];
-  funFacts: string[];
-  /** Projects from the CV that aren't on the projects page (no cards or deep links). */
-  extraProjects: AskMrExtraProject[];
-  /** Skills from the CV that aren't listed on the about page. */
-  extraSkills: string[];
-  faq: AskMrFaqEntry[];
-}
+export type { AskMrKnowledge };
 
 export const askMrKnowledge: AskMrKnowledge = {
   // Details of the current MindDoc role are intentionally not published.

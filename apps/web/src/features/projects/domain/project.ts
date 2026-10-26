@@ -1,20 +1,6 @@
-type ProjectVisibility = "public" | "private";
-export type ProjectType = "personal" | "client";
+import type { Project } from "@mrashidi/types";
 
-export interface Project {
-  title: string;
-  description: string;
-  highlights?: string[];
-  stack: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  visibility: ProjectVisibility;
-  openSource?: boolean;
-  year?: string;
-  type: ProjectType;
-  clientName?: string;
-  role?: string;
-}
+export type { Project, ProjectType } from "@mrashidi/types";
 
 export const yearRange = (project: Project): [number, number] => {
   const years = project.year?.match(/\d{4}/g)?.map(Number) ?? [];

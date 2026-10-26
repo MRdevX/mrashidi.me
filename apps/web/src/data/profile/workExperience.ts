@@ -1,14 +1,6 @@
-export interface WorkExperience {
-  title: string;
-  company: string;
-  location: string;
-  employmentType: string;
-  /** "Mon YYYY – Mon YYYY" or "Mon YYYY – Present" (parsed for `<time>` and duration). */
-  period: string;
-  summary?: string;
-  stack?: string[];
-  achievements: string[];
-}
+import type { WorkExperience } from "@mrashidi/types";
+
+export type { WorkExperience };
 
 const workExperience: WorkExperience[] = [
   {

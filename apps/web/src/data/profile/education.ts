@@ -1,11 +1,6 @@
-export interface Education {
-  degree: string;
-  institution: string;
-  period: string;
-  location: string;
-  details?: string[];
-  url?: string;
-}
+import type { Education } from "@mrashidi/types";
+
+export type { Education };
 
 const education: Education[] = [
   {

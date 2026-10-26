@@ -1,5 +1,5 @@
+import type { SkillLevel } from "@mrashidi/types";
 import { skills } from "@/data";
-import { SkillLevel } from "@/data/profile/skills";
 
 export type SkillTier = "core" | "experienced" | "familiar";
 
@@ -12,10 +12,10 @@ export const SKILL_TIER_META: Record<SkillTier, { label: string; description: st
 };
 
 const TIER_BY_LEVEL: Record<SkillLevel, SkillTier> = {
-  [SkillLevel.EXPERT]: "core",
-  [SkillLevel.PROFICIENT]: "core",
-  [SkillLevel.EXPERIENCED]: "experienced",
-  [SkillLevel.FAMILIAR]: "familiar",
+  expert: "core",
+  proficient: "core",
+  experienced: "experienced",
+  familiar: "familiar",
 };
 
 export type SkillGroupId =

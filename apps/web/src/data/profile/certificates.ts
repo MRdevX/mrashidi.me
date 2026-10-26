@@ -1,15 +1,6 @@
-export interface Certificate {
-  name: string;
-  year: string;
-  provider: string;
-  type: string;
-  url?: string;
-}
+import type { Certificate, CertificateCategory } from "@mrashidi/types";
 
-export interface CertificateCategory {
-  category: string;
-  certificates: Certificate[];
-}
+export type { Certificate, CertificateCategory };
 
 const certificates: CertificateCategory[] = [
   {

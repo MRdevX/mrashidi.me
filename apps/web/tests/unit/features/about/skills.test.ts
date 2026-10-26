@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { skills } from "@/data";
-import { SkillLevel } from "@/data/profile/skills";
 import {
   getPrimaryStack,
   getSkillGroups,
@@ -43,9 +42,9 @@ describe("getSkillGroups", () => {
 
 describe("tiers and filters", () => {
   it("folds expert and proficient into core", () => {
-    expect(getSkillTier(SkillLevel.EXPERT)).toBe("core");
-    expect(getSkillTier(SkillLevel.PROFICIENT)).toBe("core");
-    expect(getSkillTier(SkillLevel.EXPERIENCED)).toBe("experienced");
+    expect(getSkillTier("expert")).toBe("core");
+    expect(getSkillTier("proficient")).toBe("core");
+    expect(getSkillTier("experienced")).toBe("experienced");
     expect(getSkillTier(undefined)).toBe("familiar");
   });
 
