@@ -2,10 +2,10 @@
 id: 0007
 title: Load Ask MR knowledge from the content API and guard it at seed time
 issues: []
-status: accepted
+status: superseded
 date: 2026-10-26
 supersedes: [DR-0004]
-superseded_by: []
+superseded_by: [DR-0009]
 related: [DR-0006]
 areas: [ask-mr, api]
 ---
