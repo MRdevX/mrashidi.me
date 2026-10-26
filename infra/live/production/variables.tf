@@ -11,7 +11,7 @@ variable "vercel_api_token" {
 }
 
 variable "content_api_token" {
-  description = "Bearer token for GET /v1/knowledge; the same value is the Worker secret CONTENT_API_TOKEN."
+  description = "Bearer token for every /v1 route; the same value is the Worker secret CONTENT_API_TOKEN."
   type        = string
   sensitive   = true
 }
@@ -32,6 +32,11 @@ variable "zone_id" {
   description = "Zone ID of mrashidi.me."
   type        = string
   default     = "e4e27fbd7bfea8bd87ea5094e8373279"
+}
+
+variable "workers_subdomain" {
+  description = "The account's workers.dev subdomain (Workers & Pages, Your subdomain), without .workers.dev. Vercel reaches the API there because free-plan Bot Fight Mode on the zone cannot exempt it."
+  type        = string
 }
 
 variable "vercel_team_id" {
