@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.19](https://github.com/MRdevX/mrashidi.me/compare/v0.2.18...v0.2.19) (2026-10-26)
+
+
+### Features
+
+* **api:** require the content token on every /v1 route ([6f497d7](https://github.com/MRdevX/mrashidi.me/commit/6f497d7348f0f6e3cf0d2eefaffd822fea49568a))
+* **api:** serve the content API to Vercel over workers.dev ([f5eb498](https://github.com/MRdevX/mrashidi.me/commit/f5eb498714717ac6d2cf82657a2cb991eb4cc6ed))
+
+
+### Code Refactoring
+
+* **api:** drop CORS now that every /v1 route needs the token ([92a8cba](https://github.com/MRdevX/mrashidi.me/commit/92a8cba504bdf408025ea6ce3c760230fd9e95b2))
+
+
+### Documentation
+
+* **api:** record why Vercel reaches the API over workers.dev with a token ([b32b524](https://github.com/MRdevX/mrashidi.me/commit/b32b524d35526953ea4f28d79f88605043103b6d))
+
 ### [0.2.18](https://github.com/MRdevX/mrashidi.me/compare/v0.2.17...v0.2.18) (2026-10-26)
 
 
