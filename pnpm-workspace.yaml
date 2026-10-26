@@ -30,6 +30,8 @@ hoistPattern:
   - "*biome*"
   - "*eslint*"
   - "*prettier*"
+  # drizzle-kit imports drizzle-orm at runtime without declaring it as a dependency.
+  - "drizzle-orm"
 
 # Only build dependencies that need native compilation
 onlyBuiltDependencies:
@@ -39,6 +41,7 @@ onlyBuiltDependencies:
   - canvas
   - esbuild
   - sharp
+  - workerd
 
 # Flexible peer dependency handling for development
 strictPeerDependencies: false
@@ -47,6 +50,7 @@ allowBuilds:
   '@sentry/cli': true
   esbuild: true
   sharp: true
+  workerd: true
 
 auditConfig:
   ignoreGhsas:
@@ -54,3 +58,8 @@ auditConfig:
     # release exists. Only reached via build-time globbing (next-pwa, fast-glob)
     # with repo-controlled patterns. Remove once braces ships a fix.
     - GHSA-vfj7-8cjw-p6xm
+
+minimumReleaseAgeExclude:
+  - '@cloudflare/workers-types@5.20261026.1'
+  - miniflare@5.20261023.0-beta
+  - wrangler@4.153.0

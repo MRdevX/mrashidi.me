@@ -117,6 +117,9 @@ jobs:
       - name: Agent tooling
         run: pnpm check:agent-tooling
 
+      - name: D1 migration journal
+        run: pnpm check-migrations
+
       - name: Typecheck and unit tests (Turbo)
         run: pnpm exec turbo run typecheck test --continue
 

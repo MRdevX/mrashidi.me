@@ -1,0 +1,40 @@
+{
+  "name": "@mrashidi/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#app": "./src/app.ts",
+    "#bindings": "./src/bindings.ts",
+    "#db/*": "./src/db/*",
+    "#modules/*": "./src/modules/*",
+    "#shared/*": "./src/shared/*"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply mrashidi-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply mrashidi-db --remote",
+    "db:seed": "tsx scripts/seed.ts",
+    "cf:deploy": "pnpm db:migrate:remote && wrangler deploy",
+    "clean": "rm -rf .wrangler .turbo"
+  },
+  "dependencies": {
+    "@mrashidi/types": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "hono": "^4.13.14",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.23.0",
+    "@cloudflare/workers-types": "^5.20261026.1",
+    "@types/node": "^26.6.5",
+    "drizzle-kit": "^0.31.11",
+    "tsx": "^4.23.15",
+    "typescript": "catalog:",
+    "vitest": "^4.1.10",
+    "wrangler": "^4.153.0"
+  }
+}
