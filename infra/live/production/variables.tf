@@ -37,6 +37,7 @@ variable "zone_id" {
 variable "workers_subdomain" {
   description = "The account's workers.dev subdomain (Workers & Pages, Your subdomain), without .workers.dev. Vercel reaches the API there because free-plan Bot Fight Mode on the zone cannot exempt it."
   type        = string
+  default     = "safeman612"
 }
 
 variable "vercel_team_id" {

@@ -70,11 +70,11 @@ Bot Fight Mode is on for the zone and stays on. On the Free plan it applies to e
 `api.mrashidi.me` included, and cannot be skipped by rule, so it challenges non-browser requests from
 datacenter IPs ([DR-0010](decisions/0010-private-content-api-over-workers-dev.md)). Consequences:
 
-- The Vercel server calls the API on `mrashidi-api.<workers_subdomain>.workers.dev`, which is outside the
+- The Vercel server calls the API on `mrashidi-api.safeman612.workers.dev`, which is outside the
   zone. Every `/v1` route there needs `Authorization: Bearer $CONTENT_API_TOKEN`; `/health` is open.
 - `deploy-api.yml` does not curl the API: GitHub runners get 403 on `api.mrashidi.me`. It checks with
   `wrangler deployments status` that the version it deployed serves 100% of traffic.
-- Smoke-test against the workers.dev host: `curl https://mrashidi-api.<workers_subdomain>.workers.dev/health`.
+- Smoke-test against the workers.dev host: `curl https://mrashidi-api.safeman612.workers.dev/health`.
 
 ## Rollback
 
