@@ -1,0 +1,51 @@
+[
+  {
+    "title": "Senior Backend Engineer",
+    "company": "Acme Corp",
+    "location": "Exampleville",
+    "employmentType": "Full-Time, Remote",
+    "period": "Jan 2023 – Present",
+    "summary": "Owns the orders and billing services.",
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "achievements": [
+      "Cut p95 checkout latency by 40% by moving pricing to a cached read model."
+    ],
+    "start": "2023-01",
+    "end": null,
+    "durationMonths": 46
+  },
+  {
+    "title": "Backend Engineer",
+    "company": "Globex",
+    "location": "Sampletown",
+    "employmentType": "Full-Time, Hybrid",
+    "period": "Mar 2019 – Dec 2022",
+    "stack": [
+      "Python",
+      "Redis",
+      "Kubernetes"
+    ],
+    "achievements": [
+      "Built the event ingestion pipeline handling 2M events a day."
+    ],
+    "start": "2019-03",
+    "end": "2022-12",
+    "durationMonths": 46
+  },
+  {
+    "title": "Junior Developer",
+    "company": "Initech",
+    "location": "Sampletown",
+    "employmentType": "Full-Time",
+    "period": "Jun 2017 – Feb 2019",
+    "achievements": [],
+    "start": "2017-06",
+    "end": "2019-02",
+    "durationMonths": 21
+  }
+]
