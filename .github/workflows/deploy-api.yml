@@ -1,0 +1,60 @@
+# Deploys @mrashidi/api to Cloudflare Workers after the production environment's approval:
+# Worker tests, remote D1 migrations, wrangler deploy, the CONTENT_API_TOKEN secret, then a smoke check.
+
+name: Deploy API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/api/**"
+      - "packages/types/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/deploy-api.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-api
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node
+
+      - name: Worker tests
+        run: pnpm --filter @mrashidi/api test
+
+      - name: Migrate D1
+        run: pnpm --filter @mrashidi/api db:migrate:remote
+
+      - name: Deploy Worker
+        working-directory: apps/api
+        run: pnpm exec wrangler deploy
+
+      - name: Set CONTENT_API_TOKEN
+        working-directory: apps/api
+        env:
+          CONTENT_API_TOKEN: ${{ secrets.CONTENT_API_TOKEN }}
+        run: printf '%s' "$CONTENT_API_TOKEN" | pnpm exec wrangler secret put CONTENT_API_TOKEN
+
+      - name: Smoke check
+        run: curl -fsS --retry 5 --retry-delay 5 --retry-all-errors https://api.mrashidi.me/health

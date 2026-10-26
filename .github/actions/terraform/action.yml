@@ -1,0 +1,24 @@
+name: Terraform setup
+description: Terraform pinned by infra/.terraform-version, then `init` for one root under infra/live. The R2 backend reads AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY from the job env.
+
+inputs:
+  root:
+    description: Root under infra/live (global, production)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Read Terraform version
+      id: tfver
+      shell: bash
+      run: echo "version=$(tr -d '[:space:]' < infra/.terraform-version)" >> "$GITHUB_OUTPUT"
+
+    - uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_version: ${{ steps.tfver.outputs.version }}
+        terraform_wrapper: false
+
+    - name: Init
+      shell: bash
+      run: terraform -chdir=infra/live/${{ inputs.root }} init -lockfile=readonly
