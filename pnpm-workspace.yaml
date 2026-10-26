@@ -13,6 +13,7 @@ overrides:
   postcss: ">=8.5.10"
   # @vercel/og 0.11 auto-installs sharp 0.34 (libvips/libheif CVEs); 1.0.x ships without hb.wasm.
   sharp: ">=0.35.4"
+  zod: ">=4.6.6"
 
 # Optimize dependency resolution for faster installs
 resolutionMode: "lowest-direct"
@@ -30,6 +31,8 @@ hoistPattern:
   - "*biome*"
   - "*eslint*"
   - "*prettier*"
+  # Libraries such as react-icons import React types they do not declare; they must resolve @types/react.
+  - "@types/*"
   # drizzle-kit imports drizzle-orm at runtime without declaring it as a dependency.
   - "drizzle-orm"
 
