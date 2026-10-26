@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.12](https://github.com/MRdevX/mrashidi.me/compare/v0.2.11...v0.2.12) (2026-10-26)
+
+
+### Features
+
+* **api:** serve site content from a Hono Worker backed by D1 ([95ca27d](https://github.com/MRdevX/mrashidi.me/commit/95ca27d2b1103aa6d9e41e8460e66660ad191dcc))
+* **types:** add the content contract and a fixture dataset ([8b03a9b](https://github.com/MRdevX/mrashidi.me/commit/8b03a9bbbe842e2faa0c25e48ec8cc2a03cc71a3))
+
+
+### Bug Fixes
+
+* **ci:** generate Next types before tsc and hoist [@types](https://github.com/types) for workspace packages ([dc83fe4](https://github.com/MRdevX/mrashidi.me/commit/dc83fe436587182f58e2651cf1dd2b46fb6703a3))
+
+
+### Build System
+
+* move the site into apps/web as a Turborepo workspace ([546feb5](https://github.com/MRdevX/mrashidi.me/commit/546feb5fa7ca218d3c056cea8ad869d2a2e2bbcf))
+
+
+### Code Refactoring
+
+* **types:** move project slugs and the Ask MR privacy rule into @mrashidi/types ([90c1095](https://github.com/MRdevX/mrashidi.me/commit/90c1095290e1708bae434c4c5af2669828372bd5))
+* **web:** type site content with @mrashidi/types ([6809a19](https://github.com/MRdevX/mrashidi.me/commit/6809a19993c57ff275682cf751c84cb5551f92f4))
+
+
+### Documentation
+
+* **decisions:** record monorepo split and moving personal data to D1 ([85c29ab](https://github.com/MRdevX/mrashidi.me/commit/85c29ab0ea0eed1fb40cf57df5b75b0b1a946baa))
+* document the content API and its skills ([2125be2](https://github.com/MRdevX/mrashidi.me/commit/2125be2906bacab7d8e92931a0566d8258eaa421))
+* list @mrashidi/types in the agent guide ([545e6ae](https://github.com/MRdevX/mrashidi.me/commit/545e6ae18f544a81ea8a4580299c555cf2912ae7))
+* point agent docs and skills at apps/web ([a2828df](https://github.com/MRdevX/mrashidi.me/commit/a2828dfde35e809477183da87e601efeda6c0551))
+
 ### [0.2.11](https://github.com/MRdevX/mrashidi.me/compare/v0.2.10...v0.2.11) (2026-10-20)
 
 
