@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.17](https://github.com/MRdevX/mrashidi.me/compare/v0.2.16...v0.2.17) (2026-10-26)
+
+
+### Features
+
+* **api:** build the Ask MR knowledge context in the Worker ([78b6cf2](https://github.com/MRdevX/mrashidi.me/commit/78b6cf287402a70457758413be6940c909c873ae))
+* **api:** serve a skills overview with tiers, display groups and featured skills ([8e81970](https://github.com/MRdevX/mrashidi.me/commit/8e81970bc68a9ec895ddf09cb5e0c67e0b9ad1ba))
+* **api:** serve experience with structured periods and durations ([55cc714](https://github.com/MRdevX/mrashidi.me/commit/55cc714fd4cb8d5aecf9d183ec62ad1a77e8627e))
+* **api:** serve project slugs, year ranges and a catalog overview ([4d4648e](https://github.com/MRdevX/mrashidi.me/commit/4d4648e26e7d801bc93aea44401b63b2815f216b))
+
+
+### Code Refactoring
+
+* **about:** render skill groups and the primary stack from the API overview ([862a0bf](https://github.com/MRdevX/mrashidi.me/commit/862a0bfba43acfe3a7820df9f67a2387cdebae34))
+* **api:** split the content module into profile, resume, projects and ask-mr slices ([da99988](https://github.com/MRdevX/mrashidi.me/commit/da999880945abbaae87ebddcca808afdfccf14ad))
+* **ask-mr:** read the knowledge context from the API instead of building it ([3f1237c](https://github.com/MRdevX/mrashidi.me/commit/3f1237c7cf3806a74863b13c5941a901bf0d34ee))
+* **projects:** read slugs, years and the catalog overview from the API ([a5dd4cc](https://github.com/MRdevX/mrashidi.me/commit/a5dd4cc2aae919e54a0a0a88810f29bcdf973c79))
+* **resume:** render experience periods from the API read model ([4adec86](https://github.com/MRdevX/mrashidi.me/commit/4adec860478af8d05c2ee3300a19aedd634c6102))
+
+
+### Documentation
+
+* **agents:** point the API and Ask MR skills at the read-model slices ([6c06d9a](https://github.com/MRdevX/mrashidi.me/commit/6c06d9a4894832d0d00a23442d59e358feeb5178))
+* **api:** record that the API derives content read models ([dfe9796](https://github.com/MRdevX/mrashidi.me/commit/dfe979699fe80c60400db076c2e4c67f1e2efd39))
+
 ### [0.2.16](https://github.com/MRdevX/mrashidi.me/compare/v0.2.15...v0.2.16) (2026-10-26)
 
 
