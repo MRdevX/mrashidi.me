@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { getSiteContent } from "@/lib/content/server";
 import {
   generateBreadcrumbSchema,
   generateOrganizationSchema,
@@ -12,15 +13,16 @@ interface StructuredDataProps {
   title?: string;
 }
 
-export default function StructuredData({ type, path, title }: StructuredDataProps) {
+export default async function StructuredData({ type, path, title }: StructuredDataProps) {
+  const { profile } = await getSiteContent();
   const getSchema = () => {
     switch (type) {
       case "person":
-        return generatePersonSchema();
+        return generatePersonSchema(profile);
       case "website":
-        return generateWebsiteSchema();
+        return generateWebsiteSchema(profile);
       case "organization":
-        return generateOrganizationSchema();
+        return generateOrganizationSchema(profile);
       case "breadcrumb":
         return path && title ? generateBreadcrumbSchema(path, title) : null;
       default:

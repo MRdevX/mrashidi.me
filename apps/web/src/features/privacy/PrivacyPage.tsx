@@ -18,14 +18,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { PageHeader, PageSection, PageWrapper } from "@/components/ui";
-import { config } from "@/data";
+import { getSiteContent } from "@/lib/content/server";
 import { Bullet, DateBadge, PolicyCard, ProviderCard, RightCard, SummaryCard } from "./PrivacyCards";
 
 const EFFECTIVE_DATE = "May 17, 2026";
 const UPDATED_DATE = "October 13, 2026";
-const { name, email, website, location } = config.person;
+export async function PrivacyPage() {
+  const { name, email, website, location } = (await getSiteContent()).profile.person;
 
-export function PrivacyPage() {
   return (
     <PageWrapper>
       <PageHeader iconName="FileText" title="Privacy Policy" />

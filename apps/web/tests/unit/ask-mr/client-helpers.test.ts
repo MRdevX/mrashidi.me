@@ -1,27 +1,30 @@
+import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { parseAskMrError } from "@/features/ask-mr/client/errors";
-import { safeLink } from "@/features/ask-mr/client/links";
+import { createSafeLink } from "@/features/ask-mr/client/links";
 import { starterQuestions } from "@/features/ask-mr/client/suggestions";
 import { parseAskCommand } from "@/features/home/terminal/utils";
 
 const ORIGIN = "https://mrashidi.me";
+const safeLink = createSafeLink(fixtureContent);
+const { person, social } = fixtureContent.profile;
 
 describe("safeLink", () => {
   it("keeps internal paths as client-side links", () => {
     expect(safeLink("/projects", ORIGIN)).toEqual({ href: "/projects", external: false });
-    expect(safeLink("https://mrashidi.me/resume#cv", ORIGIN)).toEqual({ href: "/resume#cv", external: false });
+    expect(safeLink(`${person.website}/resume#cv`, ORIGIN)).toEqual({ href: "/resume#cv", external: false });
   });
 
   it("allows hosts that appear in the site data", () => {
-    expect(safeLink("https://github.com/mrdevx/some-repo", ORIGIN)).toEqual({
-      href: "https://github.com/mrdevx/some-repo",
+    expect(safeLink(`${social.github}/some-repo`, ORIGIN)).toEqual({
+      href: `${social.github}/some-repo`,
       external: true,
     });
-    expect(safeLink("https://mrdevx.medium.com/post", ORIGIN)?.external).toBe(true);
+    expect(safeLink("https://someone.medium.com/post", ORIGIN)?.external).toBe(true);
   });
 
-  it("only allows mailto for Mahdi's address", () => {
-    expect(safeLink("mailto:contact@mrashidi.me", ORIGIN)).not.toBeNull();
+  it("only allows mailto for the owner's address", () => {
+    expect(safeLink(`mailto:${person.email}`, ORIGIN)).not.toBeNull();
     expect(safeLink("mailto:someone@else.com", ORIGIN)).toBeNull();
   });
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useState } from "react";
+import { useContent } from "@/lib/content";
 import { type CatalogQueryResult, describeCatalog, queryCatalog } from "../domain/catalog";
 import {
   countActiveFilters,
@@ -13,11 +14,8 @@ import type { Project } from "../domain/project";
 import type { ProjectSort } from "../domain/sort";
 import { type CommitInfoMap, loadCommitInfo } from "../infrastructure/commitInfoStore";
 import { parseFilters, serializeFilters } from "../infrastructure/filtersQueryString";
-import { projects } from "../infrastructure/projectData";
 
 const PAGE_SIZE = 9;
-const OVERVIEW = describeCatalog(projects);
-const REPO_URLS = projects.flatMap((project) => (project.githubUrl ? [project.githubUrl] : []));
 
 interface CatalogState {
   filters: ProjectFilters;
@@ -56,7 +54,7 @@ const reducer = (state: CatalogState, action: CatalogAction): CatalogState => {
 };
 
 interface ProjectCatalog extends CatalogQueryResult {
-  overview: typeof OVERVIEW;
+  overview: ReturnType<typeof describeCatalog>;
   filters: ProjectFilters;
   pageSize: number;
   visibleProjects: Project[];
@@ -75,13 +73,15 @@ interface ProjectCatalog extends CatalogQueryResult {
 const ProjectCatalogContext = createContext<ProjectCatalog | null>(null);
 
 export function ProjectCatalogProvider({ children }: { children: ReactNode }) {
+  const { projects } = useContent();
+  const overview = useMemo(() => describeCatalog(projects), [projects]);
   const [state, dispatch] = useReducer(reducer, { filters: DEFAULT_FILTERS, visibleCount: PAGE_SIZE, hydrated: false });
   const [commitInfo, setCommitInfo] = useState<CommitInfoMap>(new Map());
 
   useEffect(() => {
     dispatch({ type: "hydrate", filters: parseFilters(window.location.search) });
-    loadCommitInfo(REPO_URLS).then(setCommitInfo);
-  }, []);
+    loadCommitInfo(projects.flatMap((project) => (project.githubUrl ? [project.githubUrl] : []))).then(setCommitInfo);
+  }, [projects]);
 
   useEffect(() => {
     const search = serializeFilters(state.filters);
@@ -103,13 +103,16 @@ export function ProjectCatalogProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const query = useMemo(() => queryCatalog(projects, OVERVIEW, state.filters, commitInfo), [state.filters, commitInfo]);
+  const query = useMemo(
+    () => queryCatalog(projects, overview, state.filters, commitInfo),
+    [projects, overview, state.filters, commitInfo]
+  );
 
   const catalog = useMemo<ProjectCatalog>(
     () => ({
       ...query,
       ...actions,
-      overview: OVERVIEW,
+      overview,
       filters: state.filters,
       pageSize: PAGE_SIZE,
       visibleProjects: query.results.slice(0, state.visibleCount),
@@ -117,7 +120,7 @@ export function ProjectCatalogProvider({ children }: { children: ReactNode }) {
       activeFilterCount: countActiveFilters(state.filters),
       commitInfo,
     }),
-    [query, actions, state.filters, state.visibleCount, commitInfo]
+    [query, actions, overview, state.filters, state.visibleCount, commitInfo]
   );
 
   return <ProjectCatalogContext.Provider value={catalog}>{children}</ProjectCatalogContext.Provider>;

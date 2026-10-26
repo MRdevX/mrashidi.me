@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { generatePageMetadata, pageMetadataConfigs } from "@/lib/metadata";
+import { getSiteContent } from "@/lib/content/server";
+import { generatePageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = generatePageMetadata(pageMetadataConfigs.blog);
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata((await getSiteContent()).profile, "blog");
+}
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return children;

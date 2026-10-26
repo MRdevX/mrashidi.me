@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { getThemeConfig } from "@/config/theme.config";
+import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { AboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
@@ -44,10 +45,6 @@ const GROUP_ICONS: Record<SkillGroupId, LucideIcon> = {
   tools: Wrench,
 };
 
-const SKILL_GROUPS = getSkillGroups();
-const PRIMARY_STACK_SKILLS = getPrimaryStack();
-const ALL_SKILLS = SKILL_GROUPS.flatMap((group) => group.skills);
-
 const filterButtonClass =
   "inline-flex h-11 shrink-0 items-center gap-2 rounded-lg border px-4 font-terminal text-xs uppercase tracking-[0.06em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500";
 const filterOnClass =
@@ -71,12 +68,18 @@ function CardHeading({ Icon, title, meta }: { Icon: LucideIcon; title: string; m
 
 export function SkillsSection() {
   const { getTextColor } = getThemeConfig();
+  const { skills } = useContent();
+  const skillGroups = getSkillGroups(skills);
+  const primaryStackSkills = getPrimaryStack(skills);
+  const allSkills = skillGroups.flatMap((group) => group.skills);
   const [filter, setFilter] = useState<SkillFilter>("all");
 
-  const visibleGroups = SKILL_GROUPS.map((group) => ({
-    ...group,
-    visibleSkills: group.skills.filter((skill) => matchesSkillFilter(skill.tier, filter)),
-  })).filter((group) => group.visibleSkills.length > 0);
+  const visibleGroups = skillGroups
+    .map((group) => ({
+      ...group,
+      visibleSkills: group.skills.filter((skill) => matchesSkillFilter(skill.tier, filter)),
+    }))
+    .filter((group) => group.visibleSkills.length > 0);
 
   return (
     <AboutSection delay={0.4} iconName="Code2" title="Skills & Technologies" className="not-prose">
@@ -99,7 +102,7 @@ export function SkillsSection() {
             <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
               {SKILL_FILTERS.map(({ id, label }) => {
                 const selected = filter === id;
-                const count = ALL_SKILLS.filter((skill) => matchesSkillFilter(skill.tier, id)).length;
+                const count = allSkills.filter((skill) => matchesSkillFilter(skill.tier, id)).length;
 
                 return (
                   <button
@@ -122,7 +125,7 @@ export function SkillsSection() {
           <div className="relative z-10 flex flex-col gap-4">
             <CardHeading Icon={Zap} title="Primary stack" meta="What I reach for first" />
             <ul className="flex flex-wrap gap-2">
-              {PRIMARY_STACK_SKILLS.map((skill) => (
+              {primaryStackSkills.map((skill) => (
                 <SkillChip key={skill.name} name={skill.name} tier={skill.tier} size="lg" />
               ))}
             </ul>

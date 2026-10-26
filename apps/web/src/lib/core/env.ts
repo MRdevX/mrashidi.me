@@ -31,6 +31,11 @@ const EnvSchema = z.object({
 
   BLOB_STORE_URL: z.string().url().optional(),
   CV_UPLOAD_TOKEN: z.string().optional(),
+  /** Content API (apps/api). Unset outside Vercel production means the fixture dataset is served. */
+  CONTENT_API_URL: z.string().url().optional(),
+  CONTENT_API_TOKEN: z.string().optional(),
+  REVALIDATE_SECRET: z.string().optional(),
+  VERCEL_ENV: z.enum(["production", "preview", "development"]).optional(),
   NEXT_PUBLIC_APP_VERSION: z.string().optional(),
 
   /** Vercel AI Gateway key for local dev; on Vercel the gateway authenticates via OIDC instead. */
@@ -68,6 +73,10 @@ export const env = EnvSchema.parse({
   UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
   BLOB_STORE_URL: process.env.BLOB_STORE_URL,
   CV_UPLOAD_TOKEN: process.env.CV_UPLOAD_TOKEN,
+  CONTENT_API_URL: process.env.CONTENT_API_URL,
+  CONTENT_API_TOKEN: process.env.CONTENT_API_TOKEN,
+  REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
+  VERCEL_ENV: process.env.VERCEL_ENV,
   NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION,
   AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
   ASK_MR_MODEL: process.env.ASK_MR_MODEL,

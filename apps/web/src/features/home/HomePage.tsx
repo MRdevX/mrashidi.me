@@ -1,6 +1,7 @@
 "use client";
 
 import { PageStaggerContainer } from "@/components/ui";
+import { useContent } from "@/lib/content";
 import { HomeContactSection } from "./HomeContactSection";
 import { HomeContributionSection } from "./HomeContributionSection";
 import { HomeHero } from "./HomeHero";
@@ -9,7 +10,8 @@ import { HomeTerminalSection } from "./HomeTerminalSection";
 import { getMainTechStack } from "./techStack";
 
 export function HomePage() {
-  const techStack = getMainTechStack();
+  const { skills } = useContent();
+  const techStack = getMainTechStack(skills);
 
   return (
     <PageStaggerContainer>

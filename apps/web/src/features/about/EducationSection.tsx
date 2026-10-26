@@ -1,9 +1,9 @@
 "use client";
 
+import type { Education } from "@mrashidi/types";
 import { ExternalLink } from "lucide-react";
 import { getThemeConfig } from "@/config/theme.config";
-import type { Education } from "@/data";
-import { education } from "@/data";
+import { useContent } from "@/lib/content";
 import { AboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
 
@@ -30,6 +30,7 @@ function InstitutionBlock({ edu }: { edu: Education }) {
 
 export function EducationSection() {
   const { getTextColor } = getThemeConfig();
+  const { education } = useContent();
 
   return (
     <AboutSection delay={1.2} iconName="GraduationCap" title="Education">

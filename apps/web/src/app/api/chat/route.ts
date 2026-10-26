@@ -2,12 +2,13 @@ import { convertToModelMessages, createUIMessageStreamResponse, streamText, toUI
 import {
   askMrCallOptions,
   askMrErrorResponse,
-  askMrTools,
+  createAskMrTools,
   guardChatRequest,
   logExchange,
   messageText,
   recordDailyTokens,
 } from "@/features/ask-mr/server";
+import { getAskMrContent } from "@/lib/content/server";
 import { handleError, logError } from "@/lib/errors";
 
 export const runtime = "nodejs";
@@ -23,11 +24,13 @@ export async function POST(request: Request): Promise<Response> {
   const question = messageText(messages.at(-1) ?? { parts: [] });
 
   try {
+    const content = await getAskMrContent();
+    const tools = createAskMrTools(content);
     const modelMessages = await convertToModelMessages(messages, {
-      tools: askMrTools,
+      tools,
       ignoreIncompleteToolCalls: true,
     });
-    const options = askMrCallOptions(modelMessages, pathname);
+    const options = askMrCallOptions(content, modelMessages, pathname);
     const result = streamText({
       ...options,
       abortSignal: request.signal,
@@ -53,7 +56,7 @@ export async function POST(request: Request): Promise<Response> {
     return createUIMessageStreamResponse({
       stream: toUIMessageStream({
         stream: result.stream,
-        tools: askMrTools,
+        tools,
         sendReasoning: false,
         // Never forward provider/model error details to the browser.
         onError: () => "Ask MR hit a snag. Please try again.",

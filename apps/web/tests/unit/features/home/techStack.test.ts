@@ -1,3 +1,4 @@
+import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { getMainTechStack, normalizeIconKey } from "@/features/home/techStack";
 
@@ -20,7 +21,7 @@ describe("normalizeIconKey", () => {
 
 describe("getMainTechStack", () => {
   it("returns deduplicated items with name and resolvable iconKey", () => {
-    const stack = getMainTechStack();
+    const stack = getMainTechStack(fixtureContent.skills);
     expect(stack.length).toBeGreaterThan(0);
     const names = stack.map((s) => s.name);
     expect(new Set(names).size).toBe(names.length);

@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { FilamentDivider, PageHeader } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
-import { config } from "@/data";
+import { useContent } from "@/lib/content";
 import { ContactMotionFade } from "./ContactMotionFade";
 import { ContactSectionShell } from "./ContactSectionShell";
 
-const SITE_REPO = config.social.githubRepo;
-
 export function ContactContributionSection() {
   const { getTextColor } = getThemeConfig();
+  const { profile } = useContent();
 
   return (
     <>
@@ -36,7 +35,7 @@ export function ContactContributionSection() {
               <ContactMotionFade as="p" delay={0.1}>
                 I ship things publicly by default instead of tucking repos away quietly. This portfolio is no different:{" "}
                 <Link
-                  href={SITE_REPO}
+                  href={profile.social.githubRepo}
                   className="font-semibold text-foreground underline decoration-primary/55 underline-offset-4 transition-colors hover:decoration-primary"
                   prefetch={false}
                   rel="noopener noreferrer"

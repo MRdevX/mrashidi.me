@@ -1,4 +1,5 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { getSiteContent } from "@/lib/content/server";
 import { getEnv, getRequiredEnv, logger } from "@/lib/core";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
 import { getTemplateConfig } from "./config";
@@ -8,7 +9,6 @@ export class EmailService {
   private readonly sesClient: SESClient;
   private readonly fromEmail: string;
   private readonly toEmail: string;
-  private readonly templateConfig: ReturnType<typeof getTemplateConfig>;
 
   constructor() {
     const region = getEnv("AWS_REGION") || "eu-central-1";
@@ -25,25 +25,27 @@ export class EmailService {
 
     this.fromEmail = getEnv("EMAIL_FROM_ADDRESS") || "no-reply@mrashidi.me";
     this.toEmail = getEnv("EMAIL_TO_ADDRESS") || "contact@mrashidi.me";
-    this.templateConfig = getTemplateConfig();
   }
 
   async sendContactFormEmail(data: ContactFormData): Promise<boolean> {
     try {
       logger.info({ operation: "sendContactFormEmail", status: "started" });
+      const templateConfig = await this.templateConfig();
 
       const adminSuccess = await this.sendEmail(
         this.toEmail,
         `Contact Form Submission from ${data.name}`,
         data,
-        "contact-admin"
+        "contact-admin",
+        templateConfig
       );
 
       const userSuccess = await this.sendEmail(
         data.email,
-        `Thanks for reaching out, ${data.name}! | ${this.templateConfig.companyName}`,
+        `Thanks for reaching out, ${data.name}! | ${templateConfig.companyName}`,
         data,
-        "contact-user"
+        "contact-user",
+        templateConfig
       );
 
       logger.info({
@@ -67,14 +69,22 @@ export class EmailService {
   async sendResumeRequestEmail(data: ResumeRequestData): Promise<boolean> {
     try {
       logger.info({ operation: "sendResumeRequestEmail", status: "started" });
+      const templateConfig = await this.templateConfig();
 
-      const adminSuccess = await this.sendEmail(this.toEmail, `Resume Request from ${data.name}`, data, "resume-admin");
+      const adminSuccess = await this.sendEmail(
+        this.toEmail,
+        `Resume Request from ${data.name}`,
+        data,
+        "resume-admin",
+        templateConfig
+      );
 
       const userSuccess = await this.sendEmail(
         data.email,
-        `Thanks for downloading my CV! Let's connect - ${this.templateConfig.companyName}`,
+        `Thanks for downloading my CV! Let's connect - ${templateConfig.companyName}`,
         data,
-        "resume-user"
+        "resume-user",
+        templateConfig
       );
 
       logger.info({
@@ -95,14 +105,19 @@ export class EmailService {
     }
   }
 
+  private async templateConfig() {
+    return getTemplateConfig((await getSiteContent()).profile);
+  }
+
   private async sendEmail(
     to: string,
     subject: string,
     data: ContactFormData | ResumeRequestData,
-    templateType: string
+    templateType: string,
+    templateConfig: ReturnType<typeof getTemplateConfig>
   ): Promise<boolean> {
     try {
-      const { html, text } = await createEmailTemplate(data, templateType, this.templateConfig);
+      const { html, text } = await createEmailTemplate(data, templateType, templateConfig);
 
       const command = new SendEmailCommand({
         Source: this.fromEmail,

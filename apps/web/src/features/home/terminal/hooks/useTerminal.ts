@@ -1,5 +1,6 @@
 import { createElement, useCallback, useState } from "react";
 import { isAskMrEnabled } from "@/features/ask-mr";
+import { useContent } from "@/lib/content";
 import { logger } from "@/lib/core";
 import { AskCommandOutput } from "../AskCommandOutput";
 import { handleCommand } from "../commandHandlers";
@@ -8,6 +9,7 @@ import type { Command, CommandType } from "../types";
 import { isValidCommand, normalizeCommand, resolveQuestion } from "../utils";
 
 export const useTerminal = () => {
+  const content = useContent();
   const [commands, setCommands] = useState<Command[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -100,7 +102,7 @@ export const useTerminal = () => {
         const executionDelay = getExecutionDelay(command);
         await new Promise((resolve) => setTimeout(resolve, executionDelay));
 
-        const output = await handleCommand(command);
+        const output = await handleCommand(command, content);
 
         setCommands((prev) => {
           const newCommands = [...prev];
@@ -134,7 +136,7 @@ export const useTerminal = () => {
         setIsExecuting(false);
       }
     },
-    [commands.length, getExecutionDelay, getLoadingMessage]
+    [commands.length, content, getExecutionDelay, getLoadingMessage]
   );
 
   const clearTerminal = useCallback(() => {

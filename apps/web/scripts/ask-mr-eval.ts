@@ -7,8 +7,11 @@
  *
  * Needs AI_GATEWAY_API_KEY (read from .env.local if present). Costs a few cents per full run.
  */
+
+import type { Content } from "@mrashidi/types";
 import { generateText } from "ai";
 import { askMrCallOptions } from "@/features/ask-mr/server/modelCall";
+import { getAskMrContent } from "@/lib/content/server";
 
 try {
   process.loadEnvFile(".env.local");
@@ -97,9 +100,11 @@ interface Result {
   ms: number;
 }
 
-async function runCase(test: EvalCase): Promise<Result> {
+async function runCase(content: Content, test: EvalCase): Promise<Result> {
   const started = Date.now();
-  const result = await generateText(askMrCallOptions([{ role: "user", content: test.question }], test.pathname ?? "/"));
+  const result = await generateText(
+    askMrCallOptions(content, [{ role: "user", content: test.question }], test.pathname ?? "/")
+  );
   const answer = result.steps
     .map((step) => step.text)
     .join("")
@@ -122,10 +127,11 @@ async function main() {
   const filter = process.argv[2]?.toLowerCase();
   const cases = filter ? CASES.filter((c) => c.name.includes(filter)) : CASES;
 
+  const content = await getAskMrContent();
   const results: Result[] = [];
   for (const test of cases) {
     try {
-      const result = await runCase(test);
+      const result = await runCase(content, test);
       results.push(result);
       console.log(`${result.ok ? "PASS" : "FAIL"}  ${test.name.padEnd(24)} ${String(result.ms).padStart(5)}ms`);
       if (!result.ok) {

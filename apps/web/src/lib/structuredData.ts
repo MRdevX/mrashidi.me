@@ -1,4 +1,5 @@
-import { config } from "@/data";
+import type { Profile } from "@mrashidi/types";
+import { SITE_URL } from "@/data";
 
 export interface PersonSchema {
   "@context": "https://schema.org";
@@ -62,20 +63,21 @@ export interface OrganizationSchema {
   };
 }
 
-export function generatePersonSchema(): PersonSchema {
+export function generatePersonSchema(profile: Profile): PersonSchema {
+  const [locality, country = ""] = profile.person.location.split(",").map((part) => part.trim());
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: config.person.name,
-    jobTitle: config.person.title,
-    url: config.person.website,
-    email: config.person.email,
+    name: profile.person.name,
+    jobTitle: profile.person.title,
+    url: profile.person.website,
+    email: profile.person.email,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Berlin",
-      addressCountry: "DE",
+      addressLocality: locality,
+      addressCountry: country,
     },
-    sameAs: [config.social.github, config.social.linkedin, config.social.telegram],
+    sameAs: [profile.social.github, profile.social.linkedin, profile.social.telegram],
     worksFor: {
       "@type": "Organization",
       name: "Freelance",
@@ -97,50 +99,50 @@ export function generatePersonSchema(): PersonSchema {
   };
 }
 
-export function generateWebsiteSchema(): WebsiteSchema {
+export function generateWebsiteSchema(profile: Profile): WebsiteSchema {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: config.site.name,
-    url: config.site.url,
-    description: config.site.description,
+    name: profile.site.name,
+    url: SITE_URL,
+    description: profile.site.description,
     author: {
       "@type": "Person",
-      name: config.person.name,
+      name: profile.person.name,
     },
     publisher: {
       "@type": "Organization",
-      name: config.person.name,
+      name: profile.person.name,
       logo: {
         "@type": "ImageObject",
-        url: `${config.site.url}/profile.jpeg`,
+        url: `${SITE_URL}/profile.jpeg`,
       },
     },
   };
 }
 
-export function generateOrganizationSchema(): OrganizationSchema {
+export function generateOrganizationSchema(profile: Profile): OrganizationSchema {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: `${config.person.name} - ${config.person.title}`,
-    url: config.site.url,
-    logo: `${config.site.url}/profile.jpeg`,
-    description: config.site.description,
+    name: `${profile.person.name} - ${profile.person.title}`,
+    url: SITE_URL,
+    logo: `${SITE_URL}/profile.jpeg`,
+    description: profile.site.description,
     founder: {
       "@type": "Person",
-      name: config.person.name,
+      name: profile.person.name,
     },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer service",
-      email: config.person.email,
+      email: profile.person.email,
     },
   };
 }
 
 export function generateBreadcrumbSchema(path: string, _title: string) {
-  const baseUrl = config.site.url;
+  const baseUrl = SITE_URL;
   const pathSegments = path.split("/").filter(Boolean);
 
   const breadcrumbItems = [

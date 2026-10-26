@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { ProjectsPage } from "@/features/projects";
-import { generatePageMetadata, pageMetadataConfigs } from "@/lib/metadata";
+import { getSiteContent } from "@/lib/content/server";
+import { generatePageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = generatePageMetadata(pageMetadataConfigs.projects);
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata((await getSiteContent()).profile, "projects");
+}
 
 export default ProjectsPage;

@@ -1,12 +1,13 @@
 "use client";
 
+import type { WorkExperience } from "@mrashidi/types";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Laptop } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { FilamentDivider, SectionHeader, SurfaceCard } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
-import { type WorkExperience, workExperience } from "@/data";
 import { pageEnterTransition } from "@/lib/animations";
+import { useContent } from "@/lib/content";
 import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
 import { Badge } from "./Badge";
@@ -187,6 +188,7 @@ function JobCard({ job, now }: { job: WorkExperience; now: YearMonth | null }) {
 
 export function WorkExperienceSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { experience: workExperience } = useContent();
   const now = useCurrentYearMonth();
 
   return (

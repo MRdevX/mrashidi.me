@@ -3,7 +3,7 @@
 import { Mail, Send } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { getThemeConfig } from "@/config/theme.config";
-import { config } from "@/data";
+import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils/common";
 import { SocialButton } from "./SocialButton";
 
@@ -13,6 +13,7 @@ interface SocialButtonsRowProps {
 }
 
 export function SocialButtonsRow({ heading, className }: SocialButtonsRowProps) {
+  const { profile } = useContent();
   const { getTextColor } = getThemeConfig();
 
   return (
@@ -23,16 +24,16 @@ export function SocialButtonsRow({ heading, className }: SocialButtonsRowProps) 
         </p>
       ) : null}
       <div className="social-buttons-container">
-        <SocialButton href={`mailto:${config.person.email}`} icon={Mail} isExternal={false}>
+        <SocialButton href={`mailto:${profile.person.email}`} icon={Mail} isExternal={false}>
           Email
         </SocialButton>
-        <SocialButton href={config.social.github} icon={FaGithub}>
+        <SocialButton href={profile.social.github} icon={FaGithub}>
           GitHub
         </SocialButton>
-        <SocialButton href={config.social.linkedin} icon={FaLinkedin}>
+        <SocialButton href={profile.social.linkedin} icon={FaLinkedin}>
           LinkedIn
         </SocialButton>
-        <SocialButton href={config.social.telegram} icon={Send}>
+        <SocialButton href={profile.social.telegram} icon={Send}>
           Telegram
         </SocialButton>
       </div>

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { generatePageMetadata, pageMetadataConfigs } from "@/lib/metadata";
+import { getSiteContent } from "@/lib/content/server";
+import { generatePageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = generatePageMetadata(pageMetadataConfigs.contact);
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata((await getSiteContent()).profile, "contact");
+}
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {
   return children;

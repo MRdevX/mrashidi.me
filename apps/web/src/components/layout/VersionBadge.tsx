@@ -5,12 +5,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import { GitBranch } from "lucide-react";
 import { useEffect, useState } from "react";
 import { githubLink } from "@/data";
+import { useContent } from "@/lib/content";
 
 interface VersionBadgeProps {
   variant?: "desktop" | "mobile";
 }
 
 export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
+  const { profile } = useContent();
   const [version, setVersion] = useState<string>("");
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = variant === "mobile";
@@ -101,7 +103,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
     return (
       <Disclosure.Button
         as="a"
-        href={githubLink.url}
+        href={profile.social.githubRepo}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${githubLink.ariaLabel} - Version ${version} (opens in new tab)`}
@@ -114,7 +116,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
 
   return (
     <motion.a
-      href={githubLink.url}
+      href={profile.social.githubRepo}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${githubLink.ariaLabel} - Version ${version} (opens in new tab)`}

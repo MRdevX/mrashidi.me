@@ -5,6 +5,8 @@ import { lazy, Suspense } from "react";
 import { BuyMeACoffeeWidget, HeadMeta, MainContent, Navbar } from "@/components/layout";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AskMrProvider } from "@/features/ask-mr";
+import { ContentProvider } from "@/lib/content";
+import { getSiteContent } from "@/lib/content/server";
 import { inter } from "@/lib/fonts";
 import { generateRootMetadata, generateViewport } from "@/lib/metadata";
 
@@ -39,9 +41,13 @@ const BlogPreloader = lazy(() =>
 );
 
 export const viewport: Viewport = generateViewport();
-export const metadata: Metadata = generateRootMetadata();
+export async function generateMetadata(): Promise<Metadata> {
+  return generateRootMetadata((await getSiteContent()).profile);
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const content = await getSiteContent();
+
   return (
     <html lang="en" className={inter.variable}>
       <head>
@@ -49,26 +55,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${inter.className} min-h-screen relative`}>
         <ThemeProvider>
-          <AskMrProvider>
-            <Suspense fallback={null}>
-              <BackgroundEffects />
-            </Suspense>
-            <Suspense fallback={null}>
-              <BlogPreloader />
-            </Suspense>
-            <Navbar />
-            <MainContent>{children}</MainContent>
-            <Suspense fallback={null}>
-              <Footer />
-            </Suspense>
-            <Suspense fallback={null}>
-              <BottomNavigation />
-            </Suspense>
-            <Suspense fallback={null}>
-              <AnalyticsWrapper />
-            </Suspense>
-            <BuyMeACoffeeWidget />
-          </AskMrProvider>
+          <ContentProvider content={content}>
+            <AskMrProvider>
+              <Suspense fallback={null}>
+                <BackgroundEffects />
+              </Suspense>
+              <Suspense fallback={null}>
+                <BlogPreloader />
+              </Suspense>
+              <Navbar />
+              <MainContent>{children}</MainContent>
+              <Suspense fallback={null}>
+                <Footer />
+              </Suspense>
+              <Suspense fallback={null}>
+                <BottomNavigation />
+              </Suspense>
+              <Suspense fallback={null}>
+                <AnalyticsWrapper />
+              </Suspense>
+              <BuyMeACoffeeWidget />
+            </AskMrProvider>
+          </ContentProvider>
         </ThemeProvider>
       </body>
     </html>

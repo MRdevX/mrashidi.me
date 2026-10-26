@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
-import { personalInfo } from "@/data";
 import { type BlogPost, fetchBlogPage } from "@/features/blog";
+import type { SiteContent } from "@/lib/content";
 import {
   HelpCommandOutput,
   renderAchievements,
@@ -42,7 +42,7 @@ const renderRecentPosts = (posts: BlogPost[]) =>
     <p className="text-gray-500">No recent articles found. Please visit the blog page directly.</p>
   );
 
-const commandHandlers = {
+const commandHandlers: Record<CommandType, (content: SiteContent) => ReactElement | string | Promise<ReactElement>> = {
   help: () => <HelpCommandOutput />,
 
   ask: () => (
@@ -54,30 +54,30 @@ const commandHandlers = {
     </div>
   ),
 
-  about: () => (
+  about: ({ about }) => (
     <div className="mt-2 space-y-2">
-      <p>{personalInfo.bio}</p>
+      <p>{about.bio.map((segment) => segment.text).join("")}</p>
     </div>
   ),
 
-  experience: () => <div className="mt-2 space-y-4">{renderWorkExperience()}</div>,
+  experience: (content) => <div className="mt-2 space-y-4">{renderWorkExperience(content)}</div>,
 
-  skills: () => (
+  skills: ({ skills }) => (
     <div className="font-mono text-sm text-gray-200 mt-2">
-      <SkillsByLevel />
+      <SkillsByLevel skills={skills} />
     </div>
   ),
 
-  projects: () => <div className="mt-2 space-y-4">{renderProjects(PROJECTS_PREVIEW_COUNT)}</div>,
+  projects: (content) => <div className="mt-2 space-y-4">{renderProjects(content, PROJECTS_PREVIEW_COUNT)}</div>,
 
-  achievements: () => (
+  achievements: (content) => (
     <div className="mt-2 space-y-4">
-      <TerminalSection title="Recent Certifications:">{renderCertificates()}</TerminalSection>
-      <TerminalSection title="Key Achievements:">{renderAchievements()}</TerminalSection>
+      <TerminalSection title="Recent Certifications:">{renderCertificates(content)}</TerminalSection>
+      <TerminalSection title="Key Achievements:">{renderAchievements(content)}</TerminalSection>
     </div>
   ),
 
-  contact: () => <div className="mt-2 space-y-2">{renderContactInfo()}</div>,
+  contact: (content) => <div className="mt-2 space-y-2">{renderContactInfo(content)}</div>,
 
   blog: async () => {
     try {
@@ -95,15 +95,15 @@ const commandHandlers = {
     }
   },
 
-  "view-source": () => (
+  "view-source": ({ profile }) => (
     <div className="mt-2 space-y-2">
       <p>This website is open source! 🎉</p>
       <p className="text-orange-500 font-bold">Repository:</p>
-      <TerminalLink href="https://github.com/MRdevX/mrashidi.me">github.com/MRdevX/mrashidi.me</TerminalLink>
+      <TerminalLink href={profile.social.githubRepo}>{profile.social.githubRepo.replace("https://", "")}</TerminalLink>
       <p className="text-gray-500 text-sm mt-2">Built with Next.js, TypeScript, and Tailwind CSS</p>
       <p className="text-gray-500 text-sm">Features: Interactive terminal, GitHub integration, blog posts</p>
       <p className="text-gray-500 text-xs mt-2">Feel free to explore, contribute, or use as inspiration!</p>
-      <p className="text-gray-500 text-xs">— Mahdi Rashidi</p>
+      <p className="text-gray-500 text-xs">— {profile.person.name}</p>
     </div>
   ),
 
@@ -112,7 +112,7 @@ const commandHandlers = {
   },
 };
 
-export const handleCommand = async (command: CommandType): Promise<string | ReactElement> => {
+export const handleCommand = async (command: CommandType, content: SiteContent): Promise<string | ReactElement> => {
   const handler = commandHandlers[command];
 
   if (!handler) {
@@ -120,7 +120,7 @@ export const handleCommand = async (command: CommandType): Promise<string | Reac
   }
 
   try {
-    return await handler();
+    return await handler(content);
   } catch (_error) {
     return `Error executing command "${command}". Please try again.`;
   }
