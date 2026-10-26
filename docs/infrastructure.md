@@ -13,7 +13,7 @@ behind the `production` environment's approval ([DR-0008](decisions/0008-apply-o
 | Zone `mrashidi.me` | `e4e27fbd7bfea8bd87ea5094e8373279`, Free plan |
 | Vercel project | `mrashidi-me` `prj_VBXHt24ZaW39eQpBtAunf3ukcjei`, team `notablenomads` `team_bCKuRe2AM8cqq2m3iFfobtkX` |
 | Terraform state | R2 bucket `mrashidi-tf-state`, one key per root |
-| Secrets | 1Password vault `mrashidi.me`: one Password item per GitHub Actions secret, titled like the secret, value in the password field |
+| Secrets | 1Password vault `Notable Nomads` (shared by the projects): one Password item per GitHub Actions secret, titled `mrashidi.me <SECRET>`, value in the password field |
 
 ## Ownership
 
@@ -32,22 +32,24 @@ Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner cre
 
 | 1Password item / GitHub secret | What it is |
 | ------------------------------ | ---------- |
-| `CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi deploy": Account · Workers Scripts edit, D1 edit; used by `deploy-api.yml` |
-| `TF_CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi terraform": Account · D1 edit, Workers Scripts read; Zone `mrashidi.me` · DNS edit, Workers Routes edit, Zone read |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi deploy": Account · Workers Scripts edit, D1 edit, Account Settings read; Zone `mrashidi.me` · Workers Routes edit; used by `deploy-api.yml` |
+| `TF_CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi terraform": Account · D1 edit, Workers R2 Storage edit, Workers Scripts read; Zone `mrashidi.me` · DNS edit, Workers Routes edit, Zone read. Also used by `bootstrap` |
 | `TF_R2_ACCESS_KEY_ID`, `TF_R2_SECRET_ACCESS_KEY` | R2 S3 key pair, Object Read & Write on `mrashidi-tf-state` only |
 | `TF_VERCEL_API_TOKEN` | Vercel token scoped to the notablenomads team |
+| `GITHUB_TERRAFORM_PAT` | Fine-grained PAT on this repo: Administration, Environments, Secrets, Variables write; read by `live/github` only, not copied to GitHub |
 | `CONTENT_API_TOKEN` | Random 32+ bytes; bearer for `GET /v1/knowledge`, set on the Worker and on Vercel |
 | `REVALIDATE_SECRET` | Random 32+ bytes; the seed script sends it to the web app's revalidate route (Phase 5) |
 
 Locally, Terraform reads the same values with `op run --env-file infra/.env.op -- <command>`, so values
-never land in shell history or files. `live/github` also needs `OP_SERVICE_ACCOUNT_TOKEN` (service
-account limited to the vault) and `TF_VAR_github_token` (fine-grained PAT: Secrets, Variables,
-Environments, Administration write on this repo).
+never land in shell history or files. `live/github` reads the vault through the 1Password desktop app
+(`OP_ACCOUNT=my.1password.com`, approve the prompt) and needs `TF_VAR_github_token`, a fine-grained PAT
+on this repo with Secrets, Variables, Environments and Administration write, stored as
+`mrashidi.me GITHUB_TERRAFORM_PAT`. No service account: nothing in CI reads 1Password.
 
 ## First run
 
-1. Create the vault items, tokens and service account above.
-2. `pnpm infra:apply:bootstrap` with a token that has R2 write, then create the R2 S3 key pair.
+1. Create the vault items and tokens above.
+2. `pnpm infra:apply:bootstrap` (R2 write comes from the terraform token), then create the R2 S3 key pair.
 3. `terraform -chdir=infra/live/github init`, then `pnpm infra:apply:github`.
 4. `pnpm infra:import-dns`, review the diff, `terraform -chdir=infra/live/global init`,
    `pnpm infra:plan:global` must show only imports, then apply.

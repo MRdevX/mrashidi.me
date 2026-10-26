@@ -25,7 +25,8 @@ Binding rules: [DR-0005](../../../docs/decisions/0005-turborepo-web-on-vercel-ap
 
 Wrap every command in `op run --env-file infra/.env.op --`; never paste a token into a shell or
 file. `init` once per root. Show the plan to the owner before any `apply`. An import is applied only
-when its plan has no changes besides the imports. `live/github` runs only locally.
+when its plan has no changes besides the imports. `live/github` runs only locally, with
+`OP_ACCOUNT=my.1password.com` so the 1Password provider signs in through the desktop app.
 
 ## Content
 

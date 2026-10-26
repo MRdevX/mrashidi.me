@@ -17,13 +17,19 @@ variable "github_repository" {
 }
 
 variable "onepassword_vault" {
-  description = "1Password vault holding one item per GitHub Actions secret, titled like the secret."
+  description = "1Password vault shared by the Notable Nomads projects."
+  type        = string
+  default     = "Notable Nomads"
+}
+
+variable "item_title_prefix" {
+  description = "Prefix that scopes this project's items in the shared vault: the item for secret X is titled \"<prefix> X\"."
   type        = string
   default     = "mrashidi.me"
 }
 
 variable "secret_names" {
-  description = "GitHub Actions secrets this root writes, each read from the vault item with the same title."
+  description = "GitHub Actions secrets this root writes, each read from the vault item titled \"<item_title_prefix> <name>\"."
   type        = set(string)
   default = [
     "CLOUDFLARE_API_TOKEN",

@@ -2,7 +2,7 @@ data "onepassword_item" "secrets" {
   for_each = var.secret_names
 
   vault = var.onepassword_vault
-  title = each.value
+  title = "${var.item_title_prefix} ${each.value}"
 }
 
 locals {

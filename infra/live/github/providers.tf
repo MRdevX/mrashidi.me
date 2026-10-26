@@ -3,5 +3,5 @@ provider "github" {
   owner = var.github_owner
 }
 
-# Reads OP_SERVICE_ACCOUNT_TOKEN from the environment.
+# Desktop-app sign-in: set OP_ACCOUNT=my.1password.com and approve the prompt in 1Password.
 provider "onepassword" {}
