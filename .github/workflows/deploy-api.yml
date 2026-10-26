@@ -1,5 +1,7 @@
 # Deploys @mrashidi/api to Cloudflare Workers after the deploy-gate environment's approval:
-# Worker tests, remote D1 migrations, wrangler deploy, the CONTENT_API_TOKEN secret, then a smoke check.
+# Worker tests, remote D1 migrations, the CONTENT_API_TOKEN secret, wrangler deploy, then a check that the
+# version this run deployed serves 100% of traffic. Not an HTTP probe: Bot Fight Mode on the zone challenges
+# requests from runner IPs (docs/infrastructure.md).
 
 name: Deploy API
 
@@ -46,15 +48,35 @@ jobs:
       - name: Migrate D1
         run: pnpm --filter @mrashidi/api db:migrate:remote
 
-      - name: Deploy Worker
-        working-directory: apps/api
-        run: pnpm exec wrangler deploy
-
       - name: Set CONTENT_API_TOKEN
         working-directory: apps/api
         env:
           CONTENT_API_TOKEN: ${{ secrets.CONTENT_API_TOKEN }}
         run: printf '%s' "$CONTENT_API_TOKEN" | pnpm exec wrangler secret put CONTENT_API_TOKEN
 
-      - name: Smoke check
-        run: curl -fsS --retry 5 --retry-delay 5 --retry-all-errors https://api.mrashidi.me/health
+      - name: Deploy Worker
+        id: deploy
+        working-directory: apps/api
+        run: |
+          set -o pipefail
+          pnpm exec wrangler deploy | tee deploy.log
+          version=$(grep -oE 'Current Version ID: [0-9a-f-]{36}' deploy.log | awk '{print $4}')
+          test -n "$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check the new version is live
+        working-directory: apps/api
+        env:
+          VERSION: ${{ steps.deploy.outputs.version }}
+        run: |
+          # The binary, not `pnpm exec`: pnpm prints a "Scope: …" line on stdout that breaks the JSON.
+          ./node_modules/.bin/wrangler deployments status --json > status.json
+          node -e '
+            const { versions } = JSON.parse(require("fs").readFileSync("status.json", "utf8"));
+            const live = versions.find((v) => v.version_id === process.env.VERSION);
+            if (!live || live.percentage !== 100) {
+              console.error(`Version ${process.env.VERSION} is not serving 100%:`, JSON.stringify(versions));
+              process.exit(1);
+            }
+            console.log(`Version ${process.env.VERSION} serves 100% of traffic`);
+          '
