@@ -9,26 +9,37 @@
     ]
   },
   {
-    "category": "Backend Development",
+    "category": "Frameworks",
     "skills": [
       { "name": "Node.js", "level": "proficient", "includeInMainStack": true },
-      { "name": "NestJS", "level": "experienced" },
+      { "name": "NestJS", "level": "proficient", "includeInMainStack": true },
       { "name": "Hono", "level": "experienced" }
     ]
   },
   {
-    "category": "Databases",
+    "category": "Databases & ORMs",
     "skills": [
       { "name": "PostgreSQL", "level": "proficient", "includeInMainStack": true },
       { "name": "Redis", "level": "experienced" }
     ]
   },
+  { "category": "Messaging", "skills": [{ "name": "RabbitMQ", "level": "experienced" }] },
   {
-    "category": "DevOps & Cloud",
+    "category": "Cloud",
+    "skills": [
+      { "name": "GCP", "level": "experienced", "includeInMainStack": true },
+      { "name": "Azure", "level": "familiar" },
+      { "name": "Cloudflare", "level": "experienced" }
+    ]
+  },
+  {
+    "category": "DevOps & Infrastructure",
     "skills": [
       { "name": "Docker", "level": "proficient", "includeInMainStack": true },
       { "name": "Kubernetes", "level": "experienced" },
-      { "name": "Cloudflare", "level": "experienced" }
+      { "name": "Terraform", "level": "experienced" }
     ]
-  }
+  },
+  { "category": "Testing", "skills": [{ "name": "Vitest", "level": "experienced" }] },
+  { "category": "Tools", "skills": [{ "name": "Git" }] }
 ]
