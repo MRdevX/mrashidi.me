@@ -1,11 +1,6 @@
 packages:
-  # Include the root package
-  - "."
-  # Exclude build outputs and dependencies
-  - "!**/.next/**"
-  - "!**/node_modules/**"
-  - "!**/.pnpm-store/**"
-
+  - "apps/*"
+  - "packages/*"
 overrides:
   serialize-javascript: ">=7.0.3"
   fast-uri: ">=3.1.2"

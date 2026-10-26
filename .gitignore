@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -17,18 +17,21 @@
 .pnpm-state.json
 
 # testing
-/coverage
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
+coverage
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# turbo
+.turbo
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -60,4 +63,4 @@ workbox-*.js.map
 .env.sentry-build-plugin
 
 # CV files - served via Vercel Blob
-public/cv/
+apps/web/public/cv/

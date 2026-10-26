@@ -1,0 +1,38 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["tsconfig.base.json", "pnpm-lock.yaml"],
+  "globalEnv": ["NODE_ENV", "SKIP_PWA", "ANALYZE", "SENTRY_AUTH_TOKEN", "SENTRY_ORG", "SENTRY_PROJECT"],
+  "globalPassThroughEnv": ["GITHUB_ACTIONS", "GITHUB_STEP_SUMMARY", "GITHUB_TOKEN", "VERCEL", "VERCEL_ENV"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": ["NEXT_PUBLIC_*"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "!**/*.md", "!tests/**", "!vitest.config.*", "!playwright.config.*"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "build:fast": {
+      "dependsOn": ["^build"],
+      "env": ["NEXT_PUBLIC_*"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "!**/*.md", "!tests/**", "!vitest.config.*", "!playwright.config.*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md"],
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

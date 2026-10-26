@@ -1,4 +1,8 @@
 {
+  "bumpFiles": [
+    { "filename": "package.json", "type": "json" },
+    { "filename": "apps/web/package.json", "type": "json" }
+  ],
   "header": "# Changelog\n\nAll notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.\n",
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
   "types": [

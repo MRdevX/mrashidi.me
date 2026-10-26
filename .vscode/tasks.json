@@ -43,7 +43,7 @@
     {
       "label": "test:unit",
       "type": "shell",
-      "command": "pnpm test",
+      "command": "pnpm --filter @mrashidi/web test:watch",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -55,7 +55,7 @@
     {
       "label": "test:unit:run",
       "type": "shell",
-      "command": "pnpm test:run",
+      "command": "pnpm test",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -66,7 +66,7 @@
     {
       "label": "test:unit:coverage",
       "type": "shell",
-      "command": "pnpm test:coverage",
+      "command": "pnpm --filter @mrashidi/web test:coverage",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -88,7 +88,7 @@
     {
       "label": "test:e2e:ui",
       "type": "shell",
-      "command": "pnpm test:e2e:ui",
+      "command": "pnpm --filter @mrashidi/web test:e2e:ui",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -119,7 +119,7 @@
     {
       "label": "generate-sitemap",
       "type": "shell",
-      "command": "pnpm generate-sitemap",
+      "command": "pnpm --filter @mrashidi/web generate-sitemap",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -129,7 +129,7 @@
     {
       "label": "generate-og-images",
       "type": "shell",
-      "command": "pnpm generate-og-images",
+      "command": "pnpm --filter @mrashidi/web generate-og-images",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

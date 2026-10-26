@@ -64,17 +64,14 @@ jobs:
         with:
           filters: |
             quality:
-              - 'src/**'
-              - 'tests/unit/**'
-              - 'tests/setup.ts'
-              - 'tests/utils/**'
-              - 'tests/fixtures/**'
+              - 'apps/**'
+              - 'packages/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
-              - 'tsconfig.json'
+              - 'pnpm-workspace.yaml'
+              - 'turbo.json'
+              - 'tsconfig.base.json'
               - 'biome.json'
-              - 'vitest.config.mts'
-              - 'sentry-shared.ts'
               - '.agents/**'
               - '.cursor/**'
               - 'AGENTS.md'
@@ -84,18 +81,13 @@ jobs:
               - '.github/workflows/ci.yml'
               - '.github/actions/**'
             build:
-              - 'src/**'
-              - 'public/**'
-              - 'scripts/**'
+              - 'apps/**'
+              - 'packages/**'
               - 'package.json'
               - 'pnpm-lock.yaml'
-              - 'next.config.mjs'
-              - 'tsconfig.json'
-              - 'postcss.config.js'
-              - 'tailwind.config.ts'
-              - 'sentry.edge.config.ts'
-              - 'sentry.server.config.ts'
-              - 'sentry-shared.ts'
+              - 'pnpm-workspace.yaml'
+              - 'turbo.json'
+              - 'tsconfig.base.json'
               - '.github/workflows/ci.yml'
               - '.github/actions/**'
 
@@ -125,11 +117,8 @@ jobs:
       - name: Agent tooling
         run: pnpm check:agent-tooling
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Unit tests (Vitest)
-        run: pnpm exec vitest run --reporter=verbose --reporter=github-actions
+      - name: Typecheck and unit tests (Turbo)
+        run: pnpm exec turbo run typecheck test --continue
 
       - name: Job summary — quality
         if: success()
@@ -138,8 +127,7 @@ jobs:
             echo "## Quality passed"
             echo ""
             echo "- Lint: Biome (\`pnpm check\`)"
-            echo "- Types: TypeScript (\`pnpm typecheck\`)"
-            echo "- Unit tests: Vitest (\`pnpm test:run\`)"
+            echo "- Types and unit tests: \`turbo run typecheck test\`"
             echo ""
             echo "_PR pushes also run Commitlint against the commit range above._"
           } >> "$GITHUB_STEP_SUMMARY"
@@ -150,8 +138,8 @@ jobs:
         with:
           name: unit-test-results
           path: |
-            test-results/
-            coverage/
+            apps/*/test-results/
+            apps/*/coverage/
           if-no-files-found: ignore
           retention-days: 7
 
@@ -173,13 +161,13 @@ jobs:
         uses: actions/cache@v6
         id: next-cache
         with:
-          path: .next/cache
+          path: apps/web/.next/cache
           key: ${{ runner.os }}-next-cache-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-next-cache-
 
       - name: Next.js build (CI profile)
-        run: pnpm build:ci
+        run: pnpm --filter @mrashidi/web build:ci
 
       - name: Job summary — build
         if: success()
@@ -187,11 +175,11 @@ jobs:
           {
             echo "## Build passed"
             echo ""
-            echo "- Command: \`pnpm build:ci\` (= \`build:fast\`: no asset pregeneration, **PWA off**)."
+            echo "- Command: \`pnpm --filter @mrashidi/web build:ci\` (= \`build:fast\`: no asset pregeneration, **PWA off**)."
             echo "- Production deploy should use \`pnpm build\` (assets + **PWA**)."
             CACHE_HIT="${{ steps.next-cache.outputs.cache-hit }}"
             if [ "$CACHE_HIT" = 'true' ]; then
-              echo "- Next cache: **hit** (restored \`.next/cache\`)."
+              echo "- Next cache: **hit** (restored \`apps/web/.next/cache\`)."
             else
               echo "- Next cache: **miss** (\`pnpm-lock.yaml\` key or first run — cold compile)."
             fi
