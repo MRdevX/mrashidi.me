@@ -8,6 +8,7 @@ import { createProfileContext, profileRoutes } from "#modules/profile/index.ts";
 import { createProjectContext, projectRoutes } from "#modules/projects/index.ts";
 import { createResumeContext, resumeRoutes } from "#modules/resume/index.ts";
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
+import { requireContentToken } from "#shared/http/require-content-token.ts";
 
 const VERCEL_PREVIEW = /^https:\/\/mrashidi-[a-z0-9-]+-notablenomads\.vercel\.app$/;
 
@@ -25,6 +26,7 @@ app.use(
     allowMethods: ["GET"],
   })
 );
+app.use("/v1/*", requireContentToken);
 
 app.get("/health", (c) => c.json({ status: "ok" }));
 app.route("/v1", profileRoutes(createProfileContext));

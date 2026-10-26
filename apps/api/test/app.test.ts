@@ -9,7 +9,15 @@ describe("app", () => {
     expect(denied.headers.get("Access-Control-Allow-Origin")).toBeNull();
   });
 
-  it("reports health", async () => {
+  it.each(["/v1/profile", "/v1/projects", "/v1/knowledge", "/v1/knowledge/context"])(
+    "%s requires the content API token",
+    async (path) => {
+      expect((await api(path)).status).toBe(401);
+      expect((await api(path, { headers: { Authorization: "Bearer wrong" } })).status).toBe(401);
+    }
+  );
+
+  it("reports health without a token", async () => {
     expect(await (await api("/health")).json()).toEqual({ status: "ok" });
   });
 });
