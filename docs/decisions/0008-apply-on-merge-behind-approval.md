@@ -14,7 +14,7 @@ areas: [infra, ci, api]
 
 > Terraform plans on every PR that touches `infra/` and comments the plan. A push to `main` applies
 > `live/global` and `live/production` and deploys `apps/api`, each in a job bound to the GitHub
-> `production` environment, which waits for the owner's approval. `live/github` is applied only from a
+> `deploy-gate` environment, which waits for the owner's approval. `live/github` is applied only from a
 > workstation. There is no staging: Vercel previews and local `wrangler dev` cover it.
 
 ## Context
@@ -30,8 +30,9 @@ read-only API; a staging Worker and D1 would double the infra for no reviewer.
   without saving it (`-out` would embed secrets). Push to `main` applies both roots one at a time.
 - `deploy-api.yml`: push to `main` touching `apps/api`, `packages/types` or the lockfile runs the
   Worker tests, remote D1 migrations, `wrangler deploy`, the `CONTENT_API_TOKEN` secret and a smoke check.
-- Both jobs use the `production` environment (required reviewer: the owner, protected branches only),
-  managed by `live/github`.
+- Both jobs use the `deploy-gate` environment (required reviewer: the owner, protected branches only),
+  managed by `live/github`. It is not named `production`: GitHub environment names are
+  case-insensitive and Vercel's integration already owns `Production` for its deployment records.
 - `live/github` writes the secrets these workflows use, so CI never holds the 1Password service
   account or an admin PAT.
 
@@ -53,7 +54,7 @@ read-only API; a staging Worker and D1 would double the infra for no reviewer.
 ## Implementation
 
 - [x] `.github/workflows/infra.yml`, `.github/workflows/deploy-api.yml`, `.github/actions/terraform/`
-- [x] `infra/live/github/main.tf` (`github_repository_environment.production`)
+- [x] `infra/live/github/main.tf` (`github_repository_environment.deploy_gate`)
 
 ## Revisit when
 

@@ -3,7 +3,7 @@
 The site runs on two platforms ([DR-0005](decisions/0005-turborepo-web-on-vercel-api-on-workers.md)):
 `apps/web` on Vercel, `apps/api` on Cloudflare Workers with D1. Terraform under [`infra/`](../infra/README.md)
 owns the standing resources; Wrangler deploys Worker code. Changes plan on PRs and apply on merge
-behind the `production` environment's approval ([DR-0008](decisions/0008-apply-on-merge-behind-approval.md)).
+behind the `deploy-gate` environment's approval ([DR-0008](decisions/0008-apply-on-merge-behind-approval.md)).
 
 ## Accounts
 
@@ -21,7 +21,7 @@ behind the `production` environment's approval ([DR-0008](decisions/0008-apply-o
 | ----- | ---- |
 | Terraform `live/global` | Every DNS record in the zone except custom-domain records |
 | Terraform `live/production` | D1 `mrashidi-db`, Worker custom domain `api.mrashidi.me`, Vercel project settings and domains, the env vars `CONTENT_API_URL`, `CONTENT_API_TOKEN`, `REVALIDATE_SECRET` |
-| Terraform `live/github` | GitHub Actions secrets and variables, the `production` environment |
+| Terraform `live/github` | GitHub Actions secrets and variables, the `deploy-gate` environment |
 | Wrangler | Worker code and bindings (`apps/api/wrangler.toml`), Worker secret `CONTENT_API_TOKEN`, D1 migrations |
 | By hand | API tokens, R2 S3 keys, 1Password items; R2 bucket `mrashidi-me-bucket` and its `s3.mrashidi.me` domain (outside Terraform) |
 | Vercel dashboard | Every other web env var (AI Gateway, Upstash, SES, Sentry, reCAPTCHA, Blob) |

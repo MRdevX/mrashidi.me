@@ -8,7 +8,7 @@ Terraform for mrashidi.me. Accounts, ownership, tokens, first-run order and roll
 | `bootstrap/` | local, gitignored | R2 bucket `mrashidi-tf-state` |
 | `live/global/` | `global/terraform.tfstate` | Zone DNS records (imported by `scripts/fetch-zone-import.mjs`) |
 | `live/production/` | `production/terraform.tfstate` | D1, `api.mrashidi.me`, Vercel project, domains and API env vars |
-| `live/github/` | `github/terraform.tfstate` | GitHub Actions secrets, variables, `production` environment |
+| `live/github/` | `github/terraform.tfstate` | GitHub Actions secrets, variables, `deploy-gate` environment |
 
 Terraform version: [`.terraform-version`](.terraform-version). Not a pnpm workspace; use
 `pnpm infra:plan:<root>` / `pnpm infra:apply:<root>` or `terraform -chdir=…`. Run `init` once per root.

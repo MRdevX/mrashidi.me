@@ -16,7 +16,7 @@ Binding rules: [DR-0005](../../../docs/decisions/0005-turborepo-web-on-vercel-ap
 ## Normal path
 
 - Infra: change `infra/`, open a PR, read the plan comment from `infra.yml`; merging applies after
-  the `production` approval.
+  the `deploy-gate` approval.
 - API: merge changes under `apps/api` or `packages/types`; `deploy-api.yml` tests, migrates,
   deploys and smoke-checks after approval.
 - Web: Vercel deploys `main` on its own.

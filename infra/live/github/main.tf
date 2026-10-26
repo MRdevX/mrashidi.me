@@ -59,9 +59,9 @@ data "github_user" "owner" {
   username = var.github_owner
 }
 
-resource "github_repository_environment" "production" {
+resource "github_repository_environment" "deploy_gate" {
   repository  = var.github_repository
-  environment = "production"
+  environment = "deploy-gate"
 
   reviewers {
     users = [data.github_user.owner.id]

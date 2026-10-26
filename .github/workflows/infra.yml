@@ -1,6 +1,6 @@
 # Terraform for the Cloudflare zone, D1, the API custom domain and the Vercel project (infra/).
 # PRs plan global and production and comment the plan; a push to main applies both behind the
-# production environment's approval (DR-0008). live/github is applied only from a workstation:
+# deploy-gate environment's approval (DR-0008). live/github is applied only from a workstation:
 # it writes the secrets this workflow runs with.
 
 name: Infra
@@ -112,7 +112,7 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment: production
+    environment: deploy-gate
     strategy:
       max-parallel: 1
       matrix:

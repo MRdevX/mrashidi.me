@@ -1,4 +1,4 @@
-# Deploys @mrashidi/api to Cloudflare Workers after the production environment's approval:
+# Deploys @mrashidi/api to Cloudflare Workers after the deploy-gate environment's approval:
 # Worker tests, remote D1 migrations, wrangler deploy, the CONTENT_API_TOKEN secret, then a smoke check.
 
 name: Deploy API
@@ -29,7 +29,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment: production
+    environment: deploy-gate
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}

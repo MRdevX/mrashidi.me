@@ -5,7 +5,7 @@ variable "github_token" {
 }
 
 variable "github_owner" {
-  description = "Owner of the repository and required reviewer of the production environment."
+  description = "Owner of the repository and required reviewer of the deploy-gate environment."
   type        = string
   default     = "MRdevX"
 }
