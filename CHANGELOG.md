@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.14](https://github.com/MRdevX/mrashidi.me/compare/v0.2.13...v0.2.14) (2026-10-26)
+
+
+### Features
+
+* **api:** refresh the site content cache after a remote seed ([6b5b102](https://github.com/MRdevX/mrashidi.me/commit/6b5b102282511395b815fbd64a8c1f9357cfc0cd))
+* **web:** read site content from the content API ([4ac41df](https://github.com/MRdevX/mrashidi.me/commit/4ac41df269cb0a80768074ba4a85a2c491ee2ed5))
+
+
+### Tests
+
+* **types:** grow the fixture dataset to cover paging, filters and skill groups ([dc187dc](https://github.com/MRdevX/mrashidi.me/commit/dc187dce632ca9e802b807f6aab5a70ebcc8a564))
+
+
+### Documentation
+
+* accept DR-0007 and document the content library ([d09ddb3](https://github.com/MRdevX/mrashidi.me/commit/d09ddb3083220958ff585d3cee3f6b616feec0a0))
+
 ### [0.2.13](https://github.com/MRdevX/mrashidi.me/compare/v0.2.12...v0.2.13) (2026-10-26)
 
 
