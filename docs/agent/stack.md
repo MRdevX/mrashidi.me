@@ -7,6 +7,10 @@ when you bump a major or minor, update the row in the same PR.
 | Library | Version | Official docs | House conventions |
 | ------- | ------- | ------------- | ----------------- |
 | Turborepo | 2.11 | [turborepo.com/docs](https://turborepo.com/docs) | Tasks in root `turbo.json`. A package-level task override replaces the root one, so it re-declares `dependsOn: ["^build"]`. Workspaces are `apps/*` and `packages/*` ([DR-0005](../decisions/0005-turborepo-web-on-vercel-api-on-workers.md)). |
+| Hono | 4.13 | [hono.dev/docs](https://hono.dev/docs/) | `apps/api` only. One composition root (`src/app.ts`); per-route middleware, not router-wide `use()`. |
+| Drizzle ORM / Kit | 0.45 / 0.31 | [orm.drizzle.team/docs](https://orm.drizzle.team/docs/get-started/d1-new) | D1 (SQLite) with `casing: "snake_case"`. Kit only generates migrations; Wrangler applies them. `drizzle-orm` is hoisted in `pnpm-workspace.yaml` because Kit imports it undeclared. |
+| Wrangler | 4.153 | [developers.cloudflare.com/workers/wrangler](https://developers.cloudflare.com/workers/wrangler/) | `apps/api/wrangler.toml`. `compatibility_date` must not be newer than the workerd in `@cloudflare/vitest-pool-workers`, or Worker tests fail to start. |
+| Workers Vitest pool | 0.23 | [developers.cloudflare.com/workers/testing/vitest-integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) | Needs Vitest 4, so `apps/api` pins `vitest@^4` instead of the catalog's Vitest 5. |
 | Next.js | 16.4 | [nextjs.org/docs](https://nextjs.org/docs) · local `apps/web/node_modules/next/dist/docs/` | App Router. Route files in `apps/web/src/app/` stay thin and compose a feature from `apps/web/src/features/` ([DR-0002](../decisions/0002-feature-slices.md)). Server components by default; `"use client"` only for hooks, browser APIs, or handlers. |
 | React | 19.3 | [react.dev](https://react.dev/reference/react) | Function components only. Derive during render; effects only to sync with something outside React. |
 | TypeScript | 7.0 | [typescriptlang.org/docs](https://www.typescriptlang.org/docs/) | Strict. Import through the path aliases in `AGENTS.md`. |

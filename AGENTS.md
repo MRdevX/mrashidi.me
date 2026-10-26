@@ -7,9 +7,10 @@ monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.m
 | Path | Package | What |
 | ---- | ------- | ---- |
 | `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
+| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`), read-only `/v1/*` routes |
 | `packages/types/` | `@mrashidi/types` | Zod content contract (profile, about, resume, projects, Ask MR knowledge) and the fake fixture dataset (`@mrashidi/types/fixtures`) |
 
-The Hono API on Cloudflare Workers (`apps/api/`) and Terraform (`infra/`) land in later phases; personal data moves to D1
+Terraform (`infra/`) lands in a later phase; personal data moves to D1
 ([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
 
 ## Stack
@@ -19,6 +20,7 @@ The Hono API on Cloudflare Workers (`apps/api/`) and Terraform (`infra/`) land i
 - **Styling:** Tailwind v4, shadcn/ui (new-york, RSC), CVA, clsx/tailwind-merge
 - **Lint & format:** Biome only (no ESLint or Prettier)
 - **Monorepo:** pnpm workspaces, Turborepo (`turbo.json`), shared `tsconfig.base.json`
+- **API:** Hono on Cloudflare Workers, D1 with Drizzle, Wrangler; Worker tests with `@cloudflare/vitest-pool-workers`
 - **Tests:** Vitest (unit, `apps/web/tests/unit/`), Playwright (E2E, `apps/web/tests/e2e/`)
 - **Other:** Vercel AI SDK (Ask MR), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (next-pwa)
 
@@ -46,7 +48,8 @@ Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <scrip
 - **E2E:** `pnpm test:e2e`; UI/debug modes via `pnpm --filter @mrashidi/web test:e2e:ui|test:e2e:debug`
 - **Build:** `pnpm build:fast` (web, no PWA, no sitemap/OG generation); `pnpm build` (turbo, full)
 - **Ask MR eval:** `pnpm eval:ask-mr`
-- **Dev:** `pnpm dev` (turbo, every app's `dev`)
+- **Dev:** `pnpm dev` (turbo, every app's `dev`); `pnpm dev:web`, `pnpm dev:api` (Wrangler on `:8787`)
+- **API data:** `pnpm --filter @mrashidi/api db:migrate:local`, then `db:seed` (fixtures; `--source <dir>` for real data); `pnpm check-migrations`
 
 ## Skills
 
@@ -71,6 +74,8 @@ Project skills (each runs after or around its `house-*` counterpart):
 | `mrashidi-ask-mr` | Changing Ask MR knowledge, prompt, tools, guards, or UI |
 | `mrashidi-cleanup` | Site checks after `house-cleanup` |
 | `mrashidi-review` | `house-review` plus the site gates |
+| `mrashidi-api-endpoint` | Adding or changing a route on the Hono API |
+| `mrashidi-d1-migration` | Changing the D1 schema; seeding content |
 
 Third-party skills (`code-review`, `codebase-design`, `diagnosing-bugs`, `tdd`, `grilling`,
 `research`, `writing-for-agents`, `resolving-merge-conflicts`, `design-taste-frontend`,
@@ -100,8 +105,8 @@ the rules into your global agent config.
 | Gate | `pnpm gate` (pre-push runs it) |
 | Issue reference | `- Fixes #123`, one line per issue, in the `References` section |
 | Extra PR sections | `References`, last |
-| Endpoint sources | `apps/web/src/app/api/**/route.ts` |
-| Slice layout | Web: `apps/web/src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `apps/web/src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`, `@/features/home/server`, `@/features/projects/server`) that client code never imports. Shared UI in `apps/web/src/components/`, shared logic in `apps/web/src/lib/`; code with consumers in two apps goes to `packages/<name>/` |
+| Endpoint sources | `apps/web/src/app/api/**/route.ts`, `apps/api/src/modules/*/http/*.ts` |
+| Slice layout | API: `apps/api/src/modules/<module>/{domain,application,infrastructure,http}/`, composed in `apps/api/src/app.ts`. Web: `apps/web/src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `apps/web/src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`, `@/features/home/server`, `@/features/projects/server`) that client code never imports. Shared UI in `apps/web/src/components/`, shared logic in `apps/web/src/lib/`; code with consumers in two apps goes to `packages/<name>/` |
 | Decision records | `docs/decisions/`, files `NNNN-short-slug.md` |
 | Stack doc | [`docs/agent/stack.md`](docs/agent/stack.md) |
 
