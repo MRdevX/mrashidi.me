@@ -1,6 +1,11 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+catalog:
+  typescript: 7.0.2
+  vitest: ^5.0.5
+  zod: ^4.6.7
 overrides:
   serialize-javascript: ">=7.0.3"
   fast-uri: ">=3.1.2"

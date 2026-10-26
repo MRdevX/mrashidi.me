@@ -1,0 +1,19 @@
+{
+  "bio": [
+    { "text": "I'm a backend engineer with " },
+    { "text": "8 years", "style": "brand" },
+    { "text": " of experience building " },
+    { "text": "APIs and data pipelines", "style": "prominent" },
+    { "text": ", mostly in " },
+    { "text": "TypeScript and PostgreSQL", "style": "brand" },
+    { "text": ", with some " },
+    { "text": "Python", "style": "subtle" },
+    { "text": "." }
+  ],
+  "languages": [
+    { "language": "English", "level": "Native", "progress": 100 },
+    { "language": "Spanish", "level": "Intermediate (B1)", "progress": 60 }
+  ],
+  "contactCta": "Say hello",
+  "contactDescription": "Fixture contact copy. Write if you'd like to work together."
+}

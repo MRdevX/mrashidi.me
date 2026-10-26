@@ -1,0 +1,34 @@
+[
+  {
+    "category": "Programming Languages",
+    "skills": [
+      { "name": "TypeScript", "level": "proficient", "includeInMainStack": true },
+      { "name": "JavaScript", "level": "proficient", "includeInMainStack": true },
+      { "name": "Python", "level": "proficient", "includeInMainStack": true },
+      { "name": "Go", "level": "familiar" }
+    ]
+  },
+  {
+    "category": "Backend Development",
+    "skills": [
+      { "name": "Node.js", "level": "proficient", "includeInMainStack": true },
+      { "name": "NestJS", "level": "experienced" },
+      { "name": "Hono", "level": "experienced" }
+    ]
+  },
+  {
+    "category": "Databases",
+    "skills": [
+      { "name": "PostgreSQL", "level": "proficient", "includeInMainStack": true },
+      { "name": "Redis", "level": "experienced" }
+    ]
+  },
+  {
+    "category": "DevOps & Cloud",
+    "skills": [
+      { "name": "Docker", "level": "proficient", "includeInMainStack": true },
+      { "name": "Kubernetes", "level": "experienced" },
+      { "name": "Cloudflare", "level": "experienced" }
+    ]
+  }
+]

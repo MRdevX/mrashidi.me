@@ -1,0 +1,17 @@
+{
+  "roleNotes": [{ "company": "Initech", "highlights": ["Maintained the reporting module."] }],
+  "hiddenRoles": [],
+  "availability": "",
+  "remote": "Prefers remote work.",
+  "relocation": "",
+  "workAuthorization": "",
+  "preferredRoles": ["Senior Backend Engineer"],
+  "interests": ["Edge computing"],
+  "workingStyle": [],
+  "funFacts": [],
+  "extraProjects": [
+    { "title": "Side Project", "year": "2025", "summary": "Fixture extra project.", "stack": ["Hono"] }
+  ],
+  "extraSkills": ["OpenAPI"],
+  "faq": [{ "question": "Does Jane mentor?", "answer": "Yes, fixture answer." }]
+}

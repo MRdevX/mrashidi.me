@@ -1,0 +1,78 @@
+[
+  {
+    "title": "Order Service",
+    "description": "Fixture project: an order API with idempotent checkout.",
+    "highlights": ["Idempotency keys on every write"],
+    "stack": ["TypeScript", "Node.js", "PostgreSQL"],
+    "githubUrl": "https://github.com/janedoe/order-service",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2024",
+    "type": "personal"
+  },
+  {
+    "title": "Event Pipeline",
+    "description": "Fixture project: streaming ingestion into a warehouse.",
+    "stack": ["Python", "Redis", "Kubernetes"],
+    "visibility": "private",
+    "year": "2021–2022",
+    "type": "client",
+    "clientName": "Globex",
+    "role": "Backend Engineer"
+  },
+  {
+    "title": "Edge Notes",
+    "description": "Fixture project: a notes API on Workers.",
+    "stack": ["Hono", "Cloudflare", "TypeScript"],
+    "liveUrl": "https://notes.example.com",
+    "visibility": "public",
+    "year": "2025",
+    "type": "personal"
+  },
+  {
+    "title": "Billing Dashboard",
+    "description": "Fixture project: internal billing dashboard.",
+    "stack": ["TypeScript", "NestJS", "PostgreSQL"],
+    "visibility": "private",
+    "year": "2023",
+    "type": "client",
+    "clientName": "Acme Corp"
+  },
+  {
+    "title": "CLI Toolkit",
+    "description": "Fixture project: developer CLI utilities.",
+    "stack": ["Go"],
+    "githubUrl": "https://github.com/janedoe/cli-toolkit",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2020",
+    "type": "personal"
+  },
+  {
+    "title": "Image Resizer",
+    "description": "Fixture project: on-demand image resizing.",
+    "stack": ["Node.js", "Docker"],
+    "visibility": "public",
+    "year": "2019",
+    "type": "personal"
+  },
+  {
+    "title": "Survey App",
+    "description": "Fixture project: survey builder for a client.",
+    "stack": ["JavaScript", "PostgreSQL"],
+    "visibility": "private",
+    "year": "2018",
+    "type": "client",
+    "clientName": "Initech"
+  },
+  {
+    "title": "Rate Limiter",
+    "description": "Fixture project: sliding-window limiter library.",
+    "stack": ["TypeScript", "Redis"],
+    "githubUrl": "https://github.com/janedoe/rate-limiter",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2022",
+    "type": "personal"
+  }
+]
