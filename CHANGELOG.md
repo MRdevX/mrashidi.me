@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.15](https://github.com/MRdevX/mrashidi.me/compare/v0.2.14...v0.2.15) (2026-10-26)
+
+
+### Code Refactoring
+
+* **web:** delete the personal data files ([9a281f2](https://github.com/MRdevX/mrashidi.me/commit/9a281f26ced6f47e028430db7f19889b299a6747))
+* **web:** take the owner's name from the profile instead of hard-coding it ([1b00982](https://github.com/MRdevX/mrashidi.me/commit/1b00982b4d2ba1c592d23eae798597e9f9701523))
+
+
+### Tests
+
+* **ask-mr:** load fact eval cases from the private data repo ([4fe3533](https://github.com/MRdevX/mrashidi.me/commit/4fe353367b419e93c4d1e63d90c5011749606089))
+
+
+### Continuous Integration
+
+* fail the gate when personal data reappears in the repo ([ea59f1f](https://github.com/MRdevX/mrashidi.me/commit/ea59f1f7f198274dc51f8bf5321c647ef86be7c2))
+
+
+### Documentation
+
+* point Ask MR docs at the content API and the data repo ([0a1ebb2](https://github.com/MRdevX/mrashidi.me/commit/0a1ebb2c6e236d6605e0aafbf653cfaf1b89d583))
+
 ### [0.2.14](https://github.com/MRdevX/mrashidi.me/compare/v0.2.13...v0.2.14) (2026-10-26)
 
 
