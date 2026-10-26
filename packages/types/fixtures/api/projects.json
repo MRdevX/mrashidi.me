@@ -1,0 +1,224 @@
+[
+  {
+    "title": "Order Service",
+    "description": "Fixture project: an order API with idempotent checkout.",
+    "highlights": [
+      "Idempotency keys on every write"
+    ],
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL"
+    ],
+    "githubUrl": "https://github.com/janedoe/order-service",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2024",
+    "type": "personal",
+    "slug": "order-service",
+    "startYear": 2024,
+    "endYear": 2024
+  },
+  {
+    "title": "Event Pipeline",
+    "description": "Fixture project: streaming ingestion into a warehouse.",
+    "highlights": [
+      "Fixture highlight for Event Pipeline"
+    ],
+    "stack": [
+      "Python",
+      "Redis",
+      "Kubernetes"
+    ],
+    "visibility": "private",
+    "year": "2021–2022",
+    "type": "client",
+    "clientName": "Globex",
+    "role": "Backend Engineer",
+    "slug": "event-pipeline",
+    "startYear": 2021,
+    "endYear": 2022
+  },
+  {
+    "title": "Edge Notes",
+    "description": "Fixture project: a notes API on Workers.",
+    "highlights": [
+      "Fixture highlight for Edge Notes"
+    ],
+    "stack": [
+      "Hono",
+      "Cloudflare",
+      "TypeScript"
+    ],
+    "liveUrl": "https://notes.example.com",
+    "visibility": "public",
+    "year": "2025",
+    "type": "personal",
+    "slug": "edge-notes",
+    "startYear": 2025,
+    "endYear": 2025
+  },
+  {
+    "title": "Billing Dashboard",
+    "description": "Fixture project: internal billing dashboard.",
+    "highlights": [
+      "Fixture highlight for Billing Dashboard"
+    ],
+    "stack": [
+      "TypeScript",
+      "NestJS",
+      "PostgreSQL"
+    ],
+    "visibility": "private",
+    "year": "2023",
+    "type": "client",
+    "clientName": "Acme Corp",
+    "slug": "billing-dashboard",
+    "startYear": 2023,
+    "endYear": 2023
+  },
+  {
+    "title": "CLI Toolkit",
+    "description": "Fixture project: developer CLI utilities.",
+    "highlights": [
+      "Fixture highlight for CLI Toolkit"
+    ],
+    "stack": [
+      "Go"
+    ],
+    "githubUrl": "https://github.com/janedoe/cli-toolkit",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2020",
+    "type": "personal",
+    "slug": "cli-toolkit",
+    "startYear": 2020,
+    "endYear": 2020
+  },
+  {
+    "title": "Image Resizer",
+    "description": "Fixture project: on-demand image resizing.",
+    "highlights": [
+      "Fixture highlight for Image Resizer"
+    ],
+    "stack": [
+      "Node.js",
+      "Docker"
+    ],
+    "visibility": "public",
+    "year": "2019",
+    "type": "personal",
+    "slug": "image-resizer",
+    "startYear": 2019,
+    "endYear": 2019
+  },
+  {
+    "title": "Survey App",
+    "description": "Fixture project: survey builder for a client.",
+    "highlights": [
+      "Fixture highlight for Survey App"
+    ],
+    "stack": [
+      "JavaScript",
+      "PostgreSQL"
+    ],
+    "visibility": "private",
+    "year": "2018",
+    "type": "client",
+    "clientName": "Initech",
+    "slug": "survey-app",
+    "startYear": 2018,
+    "endYear": 2018
+  },
+  {
+    "title": "Rate Limiter",
+    "description": "Fixture project: sliding-window limiter library.",
+    "highlights": [
+      "Fixture highlight for Rate Limiter"
+    ],
+    "stack": [
+      "TypeScript",
+      "Redis"
+    ],
+    "githubUrl": "https://github.com/janedoe/rate-limiter",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2022",
+    "type": "personal",
+    "slug": "rate-limiter",
+    "startYear": 2022,
+    "endYear": 2022
+  },
+  {
+    "title": "Queue Worker",
+    "description": "Fixture project: background jobs with retries.",
+    "highlights": [
+      "Dead-letter queue for failed jobs"
+    ],
+    "stack": [
+      "NestJS",
+      "Redis",
+      "TypeScript"
+    ],
+    "githubUrl": "https://github.com/janedoe/queue-worker",
+    "visibility": "public",
+    "openSource": true,
+    "year": "2023",
+    "type": "personal",
+    "slug": "queue-worker",
+    "startYear": 2023,
+    "endYear": 2023
+  },
+  {
+    "title": "Log Shipper",
+    "description": "Fixture project: ships logs from edge nodes.",
+    "highlights": [
+      "Batches and compresses log lines"
+    ],
+    "stack": [
+      "Rust"
+    ],
+    "visibility": "public",
+    "year": "2024",
+    "type": "personal",
+    "slug": "log-shipper",
+    "startYear": 2024,
+    "endYear": 2024
+  },
+  {
+    "title": "Booking API",
+    "description": "Fixture project: appointment booking for a clinic.",
+    "highlights": [
+      "Double-booking guard in the database"
+    ],
+    "stack": [
+      "Node.js",
+      "PostgreSQL"
+    ],
+    "visibility": "private",
+    "year": "2021",
+    "type": "client",
+    "clientName": "Globex",
+    "slug": "booking-api",
+    "startYear": 2021,
+    "endYear": 2021
+  },
+  {
+    "title": "Status Page",
+    "description": "Fixture project: public status page with uptime history.",
+    "highlights": [
+      "Static rendering with hourly refresh"
+    ],
+    "stack": [
+      "TypeScript",
+      "Cloudflare"
+    ],
+    "liveUrl": "https://status.example.com",
+    "visibility": "public",
+    "year": "2025",
+    "type": "personal",
+    "slug": "status-page",
+    "startYear": 2025,
+    "endYear": 2025
+  }
+]
