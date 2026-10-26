@@ -1,0 +1,3 @@
+# Normally all inputs come from TF_VAR_* (op run locally, GitHub secrets in CI).
+# First apply only, before the Worker has ever been deployed:
+# api_worker_deployed = false

@@ -1,0 +1,17 @@
+**/.terraform/
+**/.terraform.tfstate.lock.info
+
+# bootstrap keeps local state; every other root stores state in R2.
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+!dns_records.auto.tfvars.json
+
+*.tfplan
+plan.out
+
