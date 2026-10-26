@@ -29,4 +29,13 @@ describe("resume", () => {
     expect(body).toMatchObject(fixtureContent.experience);
     await expect(`${JSON.stringify(body, null, 2)}\n`).toMatchFileSnapshot(`${FIXTURES}/experience.json`);
   });
+
+  it("serves the skills overview, matching the read-model fixture", async () => {
+    const res = await api("/v1/skills/overview");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Cache-Control")).toContain("s-maxage");
+    await expect(`${JSON.stringify(await res.json(), null, 2)}\n`).toMatchFileSnapshot(
+      `${FIXTURES}/skills-overview.json`
+    );
+  });
 });

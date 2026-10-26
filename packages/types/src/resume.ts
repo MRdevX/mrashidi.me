@@ -56,6 +56,32 @@ export const SkillCategorySchema = z.object({
   skills: z.array(SkillSchema),
 });
 
+export const SkillTierSchema = z.enum(["core", "experienced", "familiar"]);
+
+export const SkillGroupIdSchema = z.enum([
+  "backend",
+  "data",
+  "cloud",
+  "architecture",
+  "languages",
+  "observability",
+  "quality",
+  "ai",
+  "frontend",
+  "tools",
+]);
+
+export const TieredSkillSchema = z.object({
+  name: z.string().min(1),
+  tier: SkillTierSchema,
+  category: z.string().min(1),
+});
+
+export const SkillsOverviewSchema = z.object({
+  groups: z.array(z.object({ id: SkillGroupIdSchema, title: z.string().min(1), skills: z.array(TieredSkillSchema) })),
+  featured: z.array(TieredSkillSchema),
+});
+
 export type WorkExperience = z.infer<typeof WorkExperienceSchema>;
 export type ExperienceEntry = z.infer<typeof ExperienceEntrySchema>;
 export type Education = z.infer<typeof EducationSchema>;
@@ -64,3 +90,7 @@ export type CertificateCategory = z.infer<typeof CertificateCategorySchema>;
 export type SkillLevel = z.infer<typeof SkillLevelSchema>;
 export type Skill = z.infer<typeof SkillSchema>;
 export type SkillCategory = z.infer<typeof SkillCategorySchema>;
+export type SkillTier = z.infer<typeof SkillTierSchema>;
+export type SkillGroupId = z.infer<typeof SkillGroupIdSchema>;
+export type TieredSkill = z.infer<typeof TieredSkillSchema>;
+export type SkillsOverview = z.infer<typeof SkillsOverviewSchema>;
