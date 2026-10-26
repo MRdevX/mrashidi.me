@@ -10,16 +10,15 @@ disable-model-invocation: false
 
 # Ask MR
 
-Ask MR answers only from public site data plus
-`apps/web/src/features/ask-mr/knowledge/askMrKnowledge.ts`
-([DR-0004](../../../docs/decisions/0004-ask-mr-grounded-public-knowledge.md)). The repo is open
-source, so everything the model sees is public.
+Ask MR answers only from the content API: the site content plus the `knowledge` section
+([DR-0007](../../../docs/decisions/0007-ask-mr-knowledge-from-d1.md)). Treat everything the model
+sees as public: a crafted prompt can extract it.
 
 ## Map
 
 | Part | Where |
 | ---- | ----- |
-| Extra facts | `knowledge/askMrKnowledge.ts` |
+| Extra facts | `knowledge.json` in the private `mrashidi-data` repo, served by `GET /v1/knowledge` |
 | Prompt assembly | `knowledge/buildKnowledge.ts`, `server/systemPrompt.ts` |
 | Tools | `server/tools.ts` |
 | Guards (BotID, limits, kill switch) | `server/guards.ts`, `server/redis.ts` |
@@ -31,10 +30,11 @@ All paths under `apps/web/src/features/ask-mr/` unless absolute.
 
 ## Adding facts
 
-- Third person ("Mahdi …"), one or two sentences per entry.
+- Edit `knowledge.json` in `mrashidi-data`, then seed ([mrashidi-d1-migration](../mrashidi-d1-migration/SKILL.md)). Third person, one or two sentences per entry.
 - An empty field is left out of the prompt, so Ask MR deflects to contact. Leave a field empty rather than guess.
-- Never add phone numbers, a personal email beyond the site's, residence or visa status, compensation, or availability details. `apps/web/tests/unit/ask-mr/knowledge.test.ts` enforces this; extend it when you add a new kind of field.
-- `roleNotes[].company` must match `company` in `apps/web/src/data/profile/workExperience.ts`.
+- Never add phone numbers, a personal email beyond the site's, residence or visa status, compensation, or availability details. `AskMrKnowledgeSchema` (`packages/types/src/knowledge.ts`) rejects them at seed time; extend it when you add a new kind of field.
+- `roleNotes[].company` must match `company` in `experience.json`.
+- Fact checks for `pnpm eval:ask-mr` live in `ask-mr-eval.json` in `mrashidi-data` (`MR_DATA_DIR` points at it); generic behaviour cases stay in `apps/web/scripts/ask-mr-eval.ts`.
 
 ## Changing prompt, tools, or model
 
