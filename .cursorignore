@@ -25,4 +25,4 @@ workbox-*.js.map
 .env.sentry-build-plugin
 
 # Optional exclude
-public/cv
+apps/web/public/cv

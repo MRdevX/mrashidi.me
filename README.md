@@ -21,14 +21,15 @@ A modern personal portfolio showcasing my work as a Software Engineer. Built wit
 
 **Backend**: AWS SES, Vercel Blob, Sentry, Pino
 
-**Quality & DX**: pnpm, Biome, Vitest, Playwright, Turbopack (`pnpm dev`)
+**Quality & DX**: pnpm workspaces, Turborepo, Biome, Vitest, Playwright, Turbopack (`pnpm dev`)
 
 ## 🏗 Architecture
 
-Feature-based organization with domain modules, full TypeScript, and server-side isolation.
+A pnpm + Turborepo monorepo. The site lives in `apps/web` (Next.js on Vercel); feature-based
+organization with domain modules, full TypeScript, and server-side isolation.
 
 ```
-src/
+apps/web/src/
 ├── app/                    # Next.js App Router (thin route files)
 ├── features/              # Feature slices: about, ask-mr, blog, contact, home, privacy, projects, resume
 ├── components/            # UI shared by two or more features
@@ -43,20 +44,19 @@ src/
 git clone https://github.com/mrdevx/mrashidi.me.git
 cd mrashidi.me
 pnpm install
-cp .env.example .env.local
+cp apps/web/.env.example apps/web/.env.local
 pnpm dev
 ```
 
 **Common verification** (run before pushing substantial changes):
 
-- `pnpm check` — Biome lint + format check
-- `pnpm test:run` — Vitest unit suite
+- `pnpm gate` — Biome, agent tooling, then typecheck + unit tests in every package (Turborepo)
 
 **Build**:
 
-- **`pnpm build`** — full production path: regenerates static sitemap XML + OG images, then Next build with **PWA** enabled.
-- **`pnpm build:fast`** — skips PWA, skips sitemap/OG regeneration (Next still serves **`/sitemap.xml`** from `src/app/sitemap.ts`; committed PNGs remain). Fastest realistic compile/smoke locally.
-- **`pnpm build:ci`** — alias of **`pnpm build:fast`** (used by GitHub Actions CI). **Production deploys should still run `pnpm build`** so PWA and image refresh stay wired.
+- **`pnpm build`** — full production path (Turborepo): regenerates static sitemap XML + OG images, then Next build with **PWA** enabled.
+- **`pnpm build:fast`** — skips PWA, skips sitemap/OG regeneration (Next still serves **`/sitemap.xml`** from `apps/web/src/app/sitemap.ts`; committed PNGs remain). Fastest realistic compile/smoke locally.
+- **`pnpm --filter @mrashidi/web build:ci`** — alias of **`build:fast`** (used by GitHub Actions CI). **Production deploys should still run `pnpm build`** so PWA and image refresh stay wired.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and local checks detail.
 

@@ -6,6 +6,6 @@ alwaysApply: false
 
 # Testing
 
-- **Unit tests:** Vitest in `tests/unit/`. Run: `pnpm test` (watch), `pnpm test:run`, `pnpm test:coverage`, `pnpm test:ui`.
-- **E2E tests:** Playwright in `tests/e2e/`. Run: `pnpm test:e2e`, `pnpm test:e2e:ui`, `pnpm test:e2e:debug`.
+- **Unit tests:** Vitest in `apps/web/tests/unit/`. Run: `pnpm test` (all packages), or in the web app `pnpm --filter @mrashidi/web test:watch|test:coverage|test:ui`.
+- **E2E tests:** Playwright in `apps/web/tests/e2e/`. Run: `pnpm test:e2e`, `pnpm test:e2e:ui`, `pnpm test:e2e:debug`.
 - Name a test after the guarantee it proves and test through public interfaces. Run `pnpm gate` before pushing.

@@ -8,7 +8,7 @@ alwaysApply: false
 
 - House rules, Project facts, and conventions live in `AGENTS.md`; library versions and docs in `docs/agent/stack.md`.
 - Next.js 16 changed APIs: read `node_modules/next/dist/docs/` before writing Next code.
-- Components under `src/app/` are RSC by default; mark `"use client"` only for hooks, browser APIs, or event handlers.
-- Route files stay thin and compose a feature from `src/features/<feature>/`.
+- Components under `apps/web/src/app/` are RSC by default; mark `"use client"` only for hooks, browser APIs, or event handlers.
+- Route files stay thin and compose a feature from `apps/web/src/features/<feature>/`.
 - Use path aliases: `@/`, `@app/`, `@components/`, `@features/`, `@lib/`.
-- Use shadcn/ui (new-york) primitives from `src/components/ui/` and CVA for variants.
+- Use shadcn/ui (new-york) primitives from `apps/web/src/components/ui/` and CVA for variants.

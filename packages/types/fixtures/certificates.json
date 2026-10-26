@@ -1,0 +1,24 @@
+[
+  {
+    "category": "Cloud & DevOps",
+    "certificates": [
+      {
+        "name": "Cloud Fundamentals",
+        "year": "2024",
+        "provider": "Example Academy",
+        "type": "Certificate of Completion",
+        "url": "https://example.com/cert/1"
+      },
+      {
+        "name": "Kubernetes Basics",
+        "year": "2022",
+        "provider": "Example Academy",
+        "type": "Certificate of Completion"
+      }
+    ]
+  },
+  {
+    "category": "Software Engineering",
+    "certificates": [{ "name": "Domain-Driven Design", "year": "2021", "provider": "Sample School", "type": "Course" }]
+  }
+]

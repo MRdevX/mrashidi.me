@@ -1,0 +1,22 @@
+{
+  "person": {
+    "name": "Jane Doe",
+    "title": "Software Engineer",
+    "location": "Exampleville",
+    "email": "hello@example.com",
+    "website": "https://example.com",
+    "twitterHandle": "@janedoe"
+  },
+  "social": {
+    "github": "https://github.com/janedoe",
+    "linkedin": "https://www.linkedin.com/in/janedoe",
+    "telegram": "https://t.me/janedoe",
+    "githubRepo": "https://github.com/janedoe/portfolio"
+  },
+  "site": {
+    "name": "JD Portfolio",
+    "title": "Jane Doe | Software Engineer",
+    "description": "Fixture profile for local development and tests. Backend engineer building APIs and services.",
+    "keywords": "Software Engineer, Backend, TypeScript, Node.js"
+  }
+}

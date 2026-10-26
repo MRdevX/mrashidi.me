@@ -58,3 +58,6 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0002](0002-feature-slices.md) | Organise code by feature slice under src/features | `accepted` | 2026-10-13 |
 | [DR-0003](0003-biome-only.md) | Lint and format with Biome only | `accepted` | 2025-08-27 |
 | [DR-0004](0004-ask-mr-grounded-public-knowledge.md) | Ground Ask MR only in public site data and a public knowledge file | `accepted` | 2026-10-13 |
+| [DR-0005](0005-turborepo-web-on-vercel-api-on-workers.md) | Split the site into a Turborepo with Next.js on Vercel and a Hono API on Workers | `accepted` | 2026-10-26 |
+| [DR-0006](0006-personal-data-in-d1.md) | Keep personal data in D1, seeded from a private repo | `accepted` | 2026-10-26 |
+| [DR-0007](0007-ask-mr-knowledge-from-d1.md) | Load Ask MR knowledge from the content API and guard it at seed time | `proposed` | 2026-10-26 |

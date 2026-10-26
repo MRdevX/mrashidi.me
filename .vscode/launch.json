@@ -5,14 +5,14 @@
       "name": "Next.js: debug server-side",
       "type": "node-terminal",
       "request": "launch",
-      "command": "pnpm dev"
+      "command": "pnpm --filter @mrashidi/web dev"
     },
     {
       "name": "Next.js: debug client-side",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
+      "webRoot": "${workspaceFolder}/apps/web",
       "sourceMaps": true,
       "sourceMapPathOverrides": {
         "webpack://_N_E/*": "${webRoot}/*",
@@ -24,7 +24,7 @@
       "name": "Next.js: debug full stack",
       "type": "node-terminal",
       "request": "launch",
-      "command": "pnpm dev",
+      "command": "pnpm --filter @mrashidi/web dev",
       "serverReadyAction": {
         "pattern": "- Local:.+(https?://.+)",
         "uriFormat": "%s",
@@ -36,7 +36,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["test", "--", "--inspect-brk", "--no-coverage", "--run"],
+      "runtimeArgs": ["--filter", "@mrashidi/web", "test", "--", "--inspect-brk", "--no-coverage"],
       "autoAttachChildProcesses": true,
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "console": "integratedTerminal",
@@ -48,7 +48,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["test", "--", "--inspect-brk", "--no-coverage", "--run", "${relativeFile}"],
+      "runtimeArgs": ["--filter", "@mrashidi/web", "test", "--", "--inspect-brk", "--no-coverage", "${file}"],
       "autoAttachChildProcesses": true,
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "console": "integratedTerminal",
@@ -60,7 +60,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["test:e2e:debug"],
+      "runtimeArgs": ["--filter", "@mrashidi/web", "test:e2e:debug"],
       "skipFiles": ["<node_internals>/**"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
@@ -70,7 +70,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["test:e2e:debug", "${relativeFile}"],
+      "runtimeArgs": ["--filter", "@mrashidi/web", "test:e2e:debug", "${file}"],
       "skipFiles": ["<node_internals>/**"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

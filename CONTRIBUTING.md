@@ -12,7 +12,7 @@ plus the project facts and specifics in [`AGENTS.md`](AGENTS.md). Before feature
 
 Use **Node** and **pnpm** versions that match [`package.json`](package.json) `engines`.
 
-- Copy environment template: `cp .env.example .env.local` then fill values as needed for local features (contact, blog, etc.).
+- Copy environment template: `cp apps/web/.env.example apps/web/.env.local` then fill values as needed for local features (contact, blog, etc.).
 - **`pnpm gate`** — Biome, agent tooling check, typecheck, and unit tests. Pre-push runs it; CI runs the same steps.
 - **`pnpm build:fast`** — Next.js production build only (quick smoke; skips PWA and does not run sitemap/OG generation).
 - **`pnpm build`** — Full production pipeline including sitemap and OG scripts; heavier and may require secrets those scripts expect.
