@@ -10,16 +10,17 @@ disable-model-invocation: false
 
 # Ask MR
 
-Ask MR answers only from the content API: the site content plus the `knowledge` section
-([DR-0007](../../../docs/decisions/0007-ask-mr-knowledge-from-d1.md)). Treat everything the model
+Ask MR answers only from the content API: the site content plus the knowledge context the API
+builds ([DR-0009](../../../docs/decisions/0009-api-owns-content-derivations.md)). Treat everything the model
 sees as public: a crafted prompt can extract it.
 
 ## Map
 
 | Part | Where |
 | ---- | ----- |
-| Extra facts | `knowledge.json` in the private `mrashidi-data` repo, served by `GET /v1/knowledge` |
-| Prompt assembly | `knowledge/buildKnowledge.ts`, `server/systemPrompt.ts` |
+| Extra facts | `knowledge.json` in the private `mrashidi-data` repo, read by the API |
+| Knowledge context | `apps/api/src/modules/ask-mr/domain/knowledge-context.ts`, served by `GET /v1/knowledge/context` |
+| Prompt assembly | `server/systemPrompt.ts` |
 | Tools | `server/tools.ts` |
 | Guards (BotID, limits, kill switch) | `server/guards.ts`, `server/redis.ts` |
 | Model call | `server/modelCall.ts`, model id from `ASK_MR_MODEL` |

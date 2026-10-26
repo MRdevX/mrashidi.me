@@ -51,7 +51,7 @@ Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <scrip
 - **Ask MR eval:** `pnpm eval:ask-mr`
 - **Dev:** `pnpm dev` (turbo, every app's `dev`); `pnpm dev:web`, `pnpm dev:api` (Wrangler on `:8787`)
 - **Infra:** `pnpm infra:plan:<root>` / `pnpm infra:apply:<root>` (`bootstrap`, `global`, `production`, `github`), wrapped in `op run --env-file infra/.env.op --`
-- **API data:** `pnpm --filter @mrashidi/api db:migrate:local`, then `db:seed` (fixtures; `--source <dir>` for real data); `pnpm check-migrations`
+- **API data:** `pnpm --filter @mrashidi/api db:migrate:local`, then `db:seed` (fixtures; `--source <dir>` for real data); `pnpm check-migrations`; `pnpm --filter @mrashidi/api fixtures:update` rewrites the read-model fixtures in `packages/types/fixtures/api/`
 
 ## Skills
 
@@ -119,9 +119,10 @@ These add to the house rules; none of them loosen one.
 
 - Next.js 16 changed APIs and conventions: read `apps/web/node_modules/next/dist/docs/` before writing Next code.
 - `apps/web/src/app/` stays thin: a route file composes a feature from `apps/web/src/features/<feature>/`.
-- Site content (profile, about, resume, projects) comes from the content API through `@/lib/content`: `useContent()` in client components, `getSiteContent()` / `getAskMrContent()` on the server. Fetches are tagged `content` and revalidate hourly or on `POST /api/revalidate`. Without `CONTENT_API_URL` the fixtures are served; tests render inside `ContentProvider` with them ([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
+- Site content (profile, about, resume, projects) comes from the content API through `@/lib/content`: `useContent()` in client components, `getSiteContent()` / `getAskMrContent()` on the server. Fetches are tagged `content` and revalidate hourly or on `POST /api/revalidate`. Without `CONTENT_API_URL` the fixtures are served (`fixtureSiteContent` in `@/lib/content/fixtures`); tests render inside `ContentProvider` with them ([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
+- Rules derived from content (experience durations, skill tiers and groups, featured skills, project slugs and years, the catalog overview, the Ask MR knowledge context) live in the API module's `domain/` and reach the web as read models; the web formats and filters them but does not re-derive them ([DR-0009](docs/decisions/0009-api-owns-content-derivations.md)).
 - JSON API routes wrap their handler in `createMiddleware` from `@/lib/api/middleware`. The Ask MR routes (`api/chat/**`) run the guards in `apps/web/src/features/ask-mr/server/` instead; `api/og` only renders an image.
-- Ask MR answers only from the content API: the site content plus the `knowledge` section from `/v1/knowledge` ([DR-0007](docs/decisions/0007-ask-mr-knowledge-from-d1.md)). Never add contact details beyond the site's, residence or visa status, compensation, or anything that could be misused; `AskMrKnowledgeSchema` in `packages/types` rejects it at seed time.
+- Ask MR answers only from the content API: the site content plus the knowledge context the API builds at `/v1/knowledge/context` ([DR-0009](docs/decisions/0009-api-owns-content-derivations.md)). Never add contact details beyond the site's, residence or visa status, compensation, or anything that could be misused; `AskMrKnowledgeSchema` in `packages/types` rejects it at seed time.
 - No personal data in this repo: real content lives in the private `mrashidi-data` repo. `pnpm check:personal-data` (in the gate) fails on known names from it, stored as hashes; after adding employers, clients or institutions there, run `node scripts/check-no-personal-data.mjs --update ../mrashidi-data`.
 - `TODO` needs a GitHub issue: `TODO(#123)`.
 - Commit scopes: the feature or area, e.g. `ask-mr`, `blog`, `resume`, `projects`, `contact`, `ui`, `api`, `deps`, `ci`, `agents`, `docs`.
