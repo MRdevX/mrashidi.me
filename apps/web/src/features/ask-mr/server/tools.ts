@@ -1,7 +1,8 @@
-import { type Content, firstName, type Project, projectSlug } from "@mrashidi/types";
+import { firstName, type ProjectEntry } from "@mrashidi/types";
 import { type InferUITools, tool, type UIDataTypes, type UIMessage } from "ai";
 import { z } from "zod";
 import { getAllPosts } from "@/features/blog/server";
+import type { SiteContent } from "@/lib/content";
 import { logger } from "@/lib/core";
 import { ASK_MR_LIMITS } from "../constants";
 
@@ -10,7 +11,7 @@ export interface AskMrProjectCard {
   title: string;
   description: string;
   stack: string[];
-  type: Project["type"];
+  type: ProjectEntry["type"];
   year?: string;
   githubUrl?: string;
   liveUrl?: string;
@@ -24,9 +25,9 @@ export interface AskMrBlogPost {
 
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 
-function toProjectCard(project: Project): AskMrProjectCard {
+function toProjectCard(project: ProjectEntry): AskMrProjectCard {
   return {
-    slug: projectSlug(project),
+    slug: project.slug,
     title: project.title,
     description: truncate(project.description, 180),
     stack: project.stack.slice(0, 6),
@@ -56,10 +57,10 @@ async function latestPosts(limit: number): Promise<AskMrBlogPost[]> {
 }
 
 /** Read-only tools: none of them changes server state; actions (sending a CV request) stay with the visitor. */
-export function createAskMrTools(content: Pick<Content, "profile" | "projects">) {
+export function createAskMrTools(content: Pick<SiteContent, "profile" | "projects">) {
   const { profile, projects } = content;
   const first = firstName(profile);
-  const projectsBySlug = new Map(projects.map((project) => [projectSlug(project), project]));
+  const projectsBySlug = new Map(projects.map((project) => [project.slug, project]));
 
   return {
     showProjects: tool({
@@ -70,7 +71,7 @@ export function createAskMrTools(content: Pick<Content, "profile" | "projects">)
       execute: async ({ slugs }) => {
         const cards = [...new Set(slugs)]
           .map((slug) => projectsBySlug.get(slug))
-          .filter((project): project is Project => project !== undefined)
+          .filter((project): project is ProjectEntry => project !== undefined)
           .map(toProjectCard);
         return { projects: cards };
       },

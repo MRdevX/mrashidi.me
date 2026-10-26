@@ -1,23 +1,21 @@
 import {
   AboutSchema,
-  type AskMrKnowledge,
-  AskMrKnowledgeSchema,
   CatalogOverviewSchema,
   CertificateCategorySchema,
-  type Content,
   EducationSchema,
   ExperienceEntrySchema,
+  KnowledgeContextSchema,
   ProfileSchema,
   ProjectEntrySchema,
   SkillCategorySchema,
   SkillsOverviewSchema,
 } from "@mrashidi/types";
-import { fixtureContent } from "@mrashidi/types/fixtures";
+import { fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
 import { cache } from "react";
 import { z } from "zod";
 import { getEnv } from "@/lib/core";
 import { fixtureSiteContent } from "./fixtures";
-import type { SiteContent } from "./types";
+import type { AskMrContent, SiteContent } from "./types";
 
 export const CONTENT_TAG = "content";
 const REVALIDATE_SECONDS = 3600;
@@ -64,15 +62,21 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
   return { profile, about, experience, education, certificates, skills, skillsOverview, projects, projectsOverview };
 });
 
-export const getAskMrKnowledge = cache(async (): Promise<AskMrKnowledge> => {
+const getKnowledgeContext = cache(async (): Promise<string> => {
   const base = contentApiUrl();
   if (!base) {
-    return fixtureContent.knowledge;
+    return fixtureKnowledgeContext.context;
   }
-  return fetchJson(base, "/v1/knowledge", AskMrKnowledgeSchema, getEnv("CONTENT_API_TOKEN"));
+  const { context } = await fetchJson(
+    base,
+    "/v1/knowledge/context",
+    KnowledgeContextSchema,
+    getEnv("CONTENT_API_TOKEN")
+  );
+  return context;
 });
 
-export async function getAskMrContent(): Promise<Content> {
-  const [site, knowledge] = await Promise.all([getSiteContent(), getAskMrKnowledge()]);
-  return { ...site, knowledge };
+export async function getAskMrContent(): Promise<AskMrContent> {
+  const [site, knowledgeContext] = await Promise.all([getSiteContent(), getKnowledgeContext()]);
+  return { ...site, knowledgeContext };
 }

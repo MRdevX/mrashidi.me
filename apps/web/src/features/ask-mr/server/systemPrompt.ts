@@ -1,6 +1,6 @@
-import { type Content, firstName, type Profile } from "@mrashidi/types";
+import { firstName, type Profile } from "@mrashidi/types";
+import type { AskMrContent } from "@/lib/content";
 import { ASK_MR_NAME, ASK_MR_TOOLS } from "../constants";
-import { buildKnowledge } from "../knowledge/buildKnowledge";
 
 /**
  * Persona and rules. Identical for every request until the content changes, so it can sit in the
@@ -44,8 +44,11 @@ export function buildInstructions(profile: Profile): string {
 - ${ASK_MR_TOOLS.suggestFollowUps}: ALWAYS call this last, after your answer, with 3 short follow-up questions (max 8 words each) the visitor might ask next, in the visitor's language. Only suggest questions the knowledge can answer.`;
 }
 
-export function buildKnowledgeBlock(content: Content): string {
-  return `# Knowledge about ${content.profile.person.name}\n\n${buildKnowledge(content)}`;
+export function buildKnowledgeBlock({
+  profile,
+  knowledgeContext,
+}: Pick<AskMrContent, "profile" | "knowledgeContext">): string {
+  return `# Knowledge about ${profile.person.name}\n\n${knowledgeContext}`;
 }
 
 /** Small, uncached per-request hint so answers and suggestions can fit the page the visitor is on. */
