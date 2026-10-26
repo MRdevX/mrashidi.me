@@ -1,9 +1,9 @@
 "use client";
 
-import type { WorkExperience } from "@mrashidi/types";
+import type { ExperienceEntry } from "@mrashidi/types";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Laptop } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { FilamentDivider, SectionHeader, SurfaceCard } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
 import { pageEnterTransition } from "@/lib/animations";
@@ -11,7 +11,7 @@ import { useContent } from "@/lib/content";
 import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
 import { Badge } from "./Badge";
-import { formatDuration, formatYearMonth, parsePeriod, toIsoMonth, type YearMonth } from "./period";
+import { formatDuration, formatIsoMonth } from "./period";
 import { accentTextClass } from "./styles";
 
 const ACHIEVEMENT_PREVIEW_COUNT = 3;
@@ -24,39 +24,19 @@ const cardPaddingClass = "p-5 sm:p-6";
 const railDotOffsetClass = "mt-[calc(1.25rem+1px)] sm:mt-[calc(1.5rem+1px)]";
 const jobTitleTextClass = "text-lg leading-snug sm:text-xl";
 
-/** Current month, resolved after mount so "Present" durations never mismatch the prerendered HTML. */
-function useCurrentYearMonth(): YearMonth | null {
-  const [now, setNow] = useState<YearMonth | null>(null);
-  useEffect(() => {
-    const date = new Date();
-    setNow({ year: date.getFullYear(), month: date.getMonth() + 1 });
-  }, []);
-  return now;
-}
-
-function JobPeriod({ period, now }: { period: string; now: YearMonth | null }) {
+function JobPeriod({ start, end, durationMonths }: Pick<ExperienceEntry, "start" | "end" | "durationMonths">) {
   const { getTextColor } = getThemeConfig();
-  const parsed = parsePeriod(period);
-  const className = cn("shrink-0 text-sm tabular-nums", getTextColor("secondary"));
-
-  if (!parsed) {
-    return <p className={className}>{period}</p>;
-  }
-
-  const end = parsed.end ?? now;
 
   return (
-    <p className={className}>
-      <time dateTime={toIsoMonth(parsed.start)}>{formatYearMonth(parsed.start)}</time>
+    <p className={cn("shrink-0 text-sm tabular-nums", getTextColor("secondary"))}>
+      <time dateTime={start}>{formatIsoMonth(start)}</time>
       {" – "}
-      {parsed.end ? <time dateTime={toIsoMonth(parsed.end)}>{formatYearMonth(parsed.end)}</time> : "Present"}
-      {end ? (
-        <span className={getTextColor("muted")}>
-          <span aria-hidden> · </span>
-          <span className="sr-only">, </span>
-          {formatDuration(parsed.start, end)}
-        </span>
-      ) : null}
+      {end ? <time dateTime={end}>{formatIsoMonth(end)}</time> : "Present"}
+      <span className={getTextColor("muted")}>
+        <span aria-hidden> · </span>
+        <span className="sr-only">, </span>
+        {formatDuration(durationMonths)}
+      </span>
     </p>
   );
 }
@@ -141,7 +121,7 @@ function Achievements({ items }: { items: string[] }) {
   );
 }
 
-function JobCard({ job, now }: { job: WorkExperience; now: YearMonth | null }) {
+function JobCard({ job }: { job: ExperienceEntry }) {
   const { getTextColor } = getThemeConfig();
 
   return (
@@ -158,7 +138,7 @@ function JobCard({ job, now }: { job: WorkExperience; now: YearMonth | null }) {
             >
               {job.title}
             </h3>
-            <JobPeriod period={job.period} now={now} />
+            <JobPeriod start={job.start} end={job.end} durationMonths={job.durationMonths} />
           </div>
           <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm sm:text-base">
             <span className={cn("font-medium", accentTextClass)}>{job.company}</span>
@@ -189,7 +169,6 @@ function JobCard({ job, now }: { job: WorkExperience; now: YearMonth | null }) {
 export function WorkExperienceSection() {
   const prefersReducedMotion = useReducedMotion();
   const { experience: workExperience } = useContent();
-  const now = useCurrentYearMonth();
 
   return (
     <section>
@@ -212,7 +191,7 @@ export function WorkExperienceSection() {
               </span>
             </div>
 
-            <JobCard job={job} now={now} />
+            <JobCard job={job} />
           </motion.li>
         ))}
       </ol>

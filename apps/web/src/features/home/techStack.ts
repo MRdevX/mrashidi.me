@@ -1,4 +1,4 @@
-import type { SkillCategory } from "@mrashidi/types";
+import type { TieredSkill } from "@mrashidi/types";
 import { getTechIcon, type TechStackItem } from "@/lib/tech";
 
 export function normalizeIconKey(skillName: string): string {
@@ -11,24 +11,13 @@ export function normalizeIconKey(skillName: string): string {
     .replace(/#/, "sharp");
 }
 
-export function getMainTechStack(skills: readonly SkillCategory[]): TechStackItem[] {
-  const mainStack: TechStackItem[] = [];
+function iconKeyOf(skillName: string): string {
+  const key = normalizeIconKey(skillName);
+  return key.includes("azure") ? "azure" : key;
+}
 
-  for (const category of skills) {
-    for (const skill of category.skills) {
-      if (skill.includeInMainStack) {
-        let iconKey = normalizeIconKey(skill.name);
-
-        if (iconKey.includes("azure")) {
-          iconKey = "azure";
-        }
-
-        if (getTechIcon(iconKey)) {
-          mainStack.push({ name: skill.name, iconKey });
-        }
-      }
-    }
-  }
-
-  return Array.from(new Map(mainStack.map((item) => [item.name, item])).values());
+export function getMainTechStack(featured: readonly TieredSkill[]): TechStackItem[] {
+  return featured
+    .map((skill) => ({ name: skill.name, iconKey: iconKeyOf(skill.name) }))
+    .filter((item) => getTechIcon(item.iconKey));
 }

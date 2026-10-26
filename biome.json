@@ -127,7 +127,8 @@
       "!**/.turbo",
       "!**/playwright-report",
       "!**/test-results",
-      "!**/tsconfig.tsbuildinfo"
+      "!**/tsconfig.tsbuildinfo",
+      "!packages/types/fixtures/api"
     ]
   }
 }

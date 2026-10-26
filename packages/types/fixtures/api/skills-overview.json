@@ -1,0 +1,172 @@
+{
+  "groups": [
+    {
+      "id": "backend",
+      "title": "Backend & APIs",
+      "skills": [
+        {
+          "name": "Node.js",
+          "tier": "core",
+          "category": "Frameworks"
+        },
+        {
+          "name": "NestJS",
+          "tier": "core",
+          "category": "Frameworks"
+        },
+        {
+          "name": "Hono",
+          "tier": "experienced",
+          "category": "Frameworks"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "title": "Data & Messaging",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "tier": "core",
+          "category": "Databases & ORMs"
+        },
+        {
+          "name": "Redis",
+          "tier": "experienced",
+          "category": "Databases & ORMs"
+        },
+        {
+          "name": "RabbitMQ",
+          "tier": "experienced",
+          "category": "Messaging"
+        }
+      ]
+    },
+    {
+      "id": "cloud",
+      "title": "Cloud & Infrastructure",
+      "skills": [
+        {
+          "name": "Docker",
+          "tier": "core",
+          "category": "DevOps & Infrastructure"
+        },
+        {
+          "name": "GCP",
+          "tier": "experienced",
+          "category": "Cloud"
+        },
+        {
+          "name": "Cloudflare",
+          "tier": "experienced",
+          "category": "Cloud"
+        },
+        {
+          "name": "Kubernetes",
+          "tier": "experienced",
+          "category": "DevOps & Infrastructure"
+        },
+        {
+          "name": "Terraform",
+          "tier": "experienced",
+          "category": "DevOps & Infrastructure"
+        },
+        {
+          "name": "Azure",
+          "tier": "familiar",
+          "category": "Cloud"
+        }
+      ]
+    },
+    {
+      "id": "languages",
+      "title": "Languages",
+      "skills": [
+        {
+          "name": "TypeScript",
+          "tier": "core",
+          "category": "Programming Languages"
+        },
+        {
+          "name": "JavaScript",
+          "tier": "core",
+          "category": "Programming Languages"
+        },
+        {
+          "name": "Python",
+          "tier": "core",
+          "category": "Programming Languages"
+        },
+        {
+          "name": "Go",
+          "tier": "familiar",
+          "category": "Programming Languages"
+        }
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "Testing & Security",
+      "skills": [
+        {
+          "name": "Vitest",
+          "tier": "experienced",
+          "category": "Testing"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Tools & Workflow",
+      "skills": [
+        {
+          "name": "Git",
+          "tier": "familiar",
+          "category": "Tools"
+        }
+      ]
+    }
+  ],
+  "featured": [
+    {
+      "name": "TypeScript",
+      "tier": "core",
+      "category": "Programming Languages"
+    },
+    {
+      "name": "JavaScript",
+      "tier": "core",
+      "category": "Programming Languages"
+    },
+    {
+      "name": "Python",
+      "tier": "core",
+      "category": "Programming Languages"
+    },
+    {
+      "name": "Node.js",
+      "tier": "core",
+      "category": "Frameworks"
+    },
+    {
+      "name": "NestJS",
+      "tier": "core",
+      "category": "Frameworks"
+    },
+    {
+      "name": "PostgreSQL",
+      "tier": "core",
+      "category": "Databases & ORMs"
+    },
+    {
+      "name": "GCP",
+      "tier": "experienced",
+      "category": "Cloud"
+    },
+    {
+      "name": "Docker",
+      "tier": "core",
+      "category": "DevOps & Infrastructure"
+    }
+  ]
+}

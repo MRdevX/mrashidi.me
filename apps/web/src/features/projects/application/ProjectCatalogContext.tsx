@@ -1,8 +1,9 @@
 "use client";
 
+import type { CatalogOverview } from "@mrashidi/types";
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useReducer, useState } from "react";
 import { useContent } from "@/lib/content";
-import { type CatalogQueryResult, describeCatalog, queryCatalog } from "../domain/catalog";
+import { type CatalogQueryResult, queryCatalog } from "../domain/catalog";
 import {
   countActiveFilters,
   DEFAULT_FILTERS,
@@ -54,7 +55,7 @@ const reducer = (state: CatalogState, action: CatalogAction): CatalogState => {
 };
 
 interface ProjectCatalog extends CatalogQueryResult {
-  overview: ReturnType<typeof describeCatalog>;
+  overview: CatalogOverview;
   filters: ProjectFilters;
   pageSize: number;
   visibleProjects: Project[];
@@ -73,8 +74,7 @@ interface ProjectCatalog extends CatalogQueryResult {
 const ProjectCatalogContext = createContext<ProjectCatalog | null>(null);
 
 export function ProjectCatalogProvider({ children }: { children: ReactNode }) {
-  const { projects } = useContent();
-  const overview = useMemo(() => describeCatalog(projects), [projects]);
+  const { projects, projectsOverview: overview } = useContent();
   const [state, dispatch] = useReducer(reducer, { filters: DEFAULT_FILTERS, visibleCount: PAGE_SIZE, hydrated: false });
   const [commitInfo, setCommitInfo] = useState<CommitInfoMap>(new Map());
 

@@ -1,4 +1,4 @@
-import { fixtureContent } from "@mrashidi/types/fixtures";
+import { fixtureContent, fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { ASK_MR_TOOLS } from "@/features/ask-mr/constants";
 import { buildInstructions, buildKnowledgeBlock, buildPageContext } from "@/features/ask-mr/server/systemPrompt";
@@ -38,7 +38,9 @@ describe("buildInstructions", () => {
 
 describe("buildKnowledgeBlock", () => {
   it("wraps the knowledge with a heading", () => {
-    expect(buildKnowledgeBlock(fixtureContent)).toMatch(new RegExp(`^# Knowledge about ${profile.person.name}`));
+    const block = buildKnowledgeBlock({ profile, knowledgeContext: fixtureKnowledgeContext.context });
+    expect(block).toMatch(new RegExp(`^# Knowledge about ${profile.person.name}`));
+    expect(block).toContain(fixtureKnowledgeContext.context);
   });
 });
 

@@ -1,4 +1,4 @@
-import { type Project, yearRange } from "./project";
+import type { Project } from "./project";
 
 export type ProjectSort = "recent" | "oldest" | "az";
 
@@ -11,8 +11,7 @@ const lastActivity = (project: Project, commitDates: CommitDates) => {
   if (commit) {
     return commit.date.getTime();
   }
-  const [, latest] = yearRange(project);
-  return latest ? new Date(latest, 11, 31).getTime() : 0;
+  return project.endYear ? new Date(project.endYear, 11, 31).getTime() : 0;
 };
 
 const byTitle = (a: Project, b: Project) => a.title.localeCompare(b.title);
@@ -22,7 +21,7 @@ export const sortProjects = (projects: Project[], sort: ProjectSort, commitDates
     case "az":
       return projects.sort(byTitle);
     case "oldest":
-      return projects.sort((a, b) => yearRange(a)[0] - yearRange(b)[0] || byTitle(a, b));
+      return projects.sort((a, b) => (a.startYear ?? 0) - (b.startYear ?? 0) || byTitle(a, b));
     default:
       return projects.sort((a, b) => lastActivity(b, commitDates) - lastActivity(a, commitDates) || byTitle(a, b));
   }

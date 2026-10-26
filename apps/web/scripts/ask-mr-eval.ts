@@ -10,10 +10,10 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import type { Content } from "@mrashidi/types";
 import { generateText } from "ai";
 import { z } from "zod";
 import { askMrCallOptions } from "@/features/ask-mr/server/modelCall";
+import type { AskMrContent } from "@/lib/content";
 import { getAskMrContent } from "@/lib/content/server";
 
 try {
@@ -113,7 +113,7 @@ interface Result {
   ms: number;
 }
 
-async function runCase(content: Content, test: EvalCase): Promise<Result> {
+async function runCase(content: AskMrContent, test: EvalCase): Promise<Result> {
   const started = Date.now();
   const result = await generateText(
     askMrCallOptions(content, [{ role: "user", content: test.question }], test.pathname ?? "/")

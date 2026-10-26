@@ -10,8 +10,8 @@ import { HomeTerminalSection } from "./HomeTerminalSection";
 import { getMainTechStack } from "./techStack";
 
 export function HomePage() {
-  const { skills } = useContent();
-  const techStack = getMainTechStack(skills);
+  const { skillsOverview } = useContent();
+  const techStack = getMainTechStack(skillsOverview.featured);
 
   return (
     <PageStaggerContainer>

@@ -1,9 +1,9 @@
-import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { parseAskMrError } from "@/features/ask-mr/client/errors";
 import { createSafeLink } from "@/features/ask-mr/client/links";
 import { starterQuestions } from "@/features/ask-mr/client/suggestions";
 import { parseAskCommand } from "@/features/home/terminal/utils";
+import { fixtureSiteContent as fixtureContent } from "@/lib/content/fixtures";
 
 const ORIGIN = "https://mrashidi.me";
 const safeLink = createSafeLink(fixtureContent);

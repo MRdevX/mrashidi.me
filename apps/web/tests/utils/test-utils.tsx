@@ -1,11 +1,9 @@
-import { fixtureContent } from "@mrashidi/types/fixtures";
 import { type RenderOptions, render } from "@testing-library/react";
 import type React from "react";
 import type { ReactElement } from "react";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ContentProvider, type SiteContent } from "@/lib/content";
-
-const { knowledge: _knowledge, ...fixtureSiteContent } = fixtureContent;
+import { fixtureSiteContent } from "@/lib/content/fixtures";
 
 export const testContent: SiteContent = fixtureSiteContent;
 

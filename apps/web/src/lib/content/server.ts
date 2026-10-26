@@ -1,20 +1,21 @@
 import {
   AboutSchema,
-  type AskMrKnowledge,
-  AskMrKnowledgeSchema,
+  CatalogOverviewSchema,
   CertificateCategorySchema,
-  type Content,
   EducationSchema,
+  ExperienceEntrySchema,
+  KnowledgeContextSchema,
   ProfileSchema,
-  ProjectSchema,
+  ProjectEntrySchema,
   SkillCategorySchema,
-  WorkExperienceSchema,
+  SkillsOverviewSchema,
 } from "@mrashidi/types";
-import { fixtureContent } from "@mrashidi/types/fixtures";
+import { fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
 import { cache } from "react";
 import { z } from "zod";
 import { getEnv } from "@/lib/core";
-import type { SiteContent } from "./types";
+import { fixtureSiteContent } from "./fixtures";
+import type { AskMrContent, SiteContent } from "./types";
 
 export const CONTENT_TAG = "content";
 const REVALIDATE_SECONDS = 3600;
@@ -44,30 +45,38 @@ async function fetchJson<T>(base: string, path: string, schema: z.ZodType<T>, to
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const base = contentApiUrl();
   if (!base) {
-    const { knowledge: _knowledge, ...publicContent } = fixtureContent;
-    return publicContent;
+    return fixtureSiteContent;
   }
-  const [profile, about, experience, education, certificates, skills, projects] = await Promise.all([
-    fetchJson(base, "/v1/profile", ProfileSchema),
-    fetchJson(base, "/v1/about", AboutSchema),
-    fetchJson(base, "/v1/experience", z.array(WorkExperienceSchema)),
-    fetchJson(base, "/v1/education", z.array(EducationSchema)),
-    fetchJson(base, "/v1/certificates", z.array(CertificateCategorySchema)),
-    fetchJson(base, "/v1/skills", z.array(SkillCategorySchema)),
-    fetchJson(base, "/v1/projects", z.array(ProjectSchema)),
-  ]);
-  return { profile, about, experience, education, certificates, skills, projects };
+  const [profile, about, experience, education, certificates, skills, skillsOverview, projects, projectsOverview] =
+    await Promise.all([
+      fetchJson(base, "/v1/profile", ProfileSchema),
+      fetchJson(base, "/v1/about", AboutSchema),
+      fetchJson(base, "/v1/experience", z.array(ExperienceEntrySchema)),
+      fetchJson(base, "/v1/education", z.array(EducationSchema)),
+      fetchJson(base, "/v1/certificates", z.array(CertificateCategorySchema)),
+      fetchJson(base, "/v1/skills", z.array(SkillCategorySchema)),
+      fetchJson(base, "/v1/skills/overview", SkillsOverviewSchema),
+      fetchJson(base, "/v1/projects", z.array(ProjectEntrySchema)),
+      fetchJson(base, "/v1/projects/overview", CatalogOverviewSchema),
+    ]);
+  return { profile, about, experience, education, certificates, skills, skillsOverview, projects, projectsOverview };
 });
 
-export const getAskMrKnowledge = cache(async (): Promise<AskMrKnowledge> => {
+const getKnowledgeContext = cache(async (): Promise<string> => {
   const base = contentApiUrl();
   if (!base) {
-    return fixtureContent.knowledge;
+    return fixtureKnowledgeContext.context;
   }
-  return fetchJson(base, "/v1/knowledge", AskMrKnowledgeSchema, getEnv("CONTENT_API_TOKEN"));
+  const { context } = await fetchJson(
+    base,
+    "/v1/knowledge/context",
+    KnowledgeContextSchema,
+    getEnv("CONTENT_API_TOKEN")
+  );
+  return context;
 });
 
-export async function getAskMrContent(): Promise<Content> {
-  const [site, knowledge] = await Promise.all([getSiteContent(), getAskMrKnowledge()]);
-  return { ...site, knowledge };
+export async function getAskMrContent(): Promise<AskMrContent> {
+  const [site, knowledgeContext] = await Promise.all([getSiteContent(), getKnowledgeContext()]);
+  return { ...site, knowledgeContext };
 }

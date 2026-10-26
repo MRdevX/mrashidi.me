@@ -1,0 +1,62 @@
+{
+  "projectCount": 12,
+  "openSourceCount": 4,
+  "stackCount": 13,
+  "topStacks": [
+    "TypeScript",
+    "PostgreSQL",
+    "Node.js",
+    "Redis",
+    "Cloudflare",
+    "NestJS",
+    "Docker",
+    "Go",
+    "Hono",
+    "JavaScript"
+  ],
+  "stackGroups": [
+    {
+      "name": "Languages",
+      "items": [
+        "TypeScript",
+        "JavaScript",
+        "Go",
+        "Rust",
+        "Python"
+      ]
+    },
+    {
+      "name": "Frameworks",
+      "items": [
+        "NestJS",
+        "Hono"
+      ]
+    },
+    {
+      "name": "Data & messaging",
+      "items": [
+        "PostgreSQL",
+        "Redis"
+      ]
+    },
+    {
+      "name": "Infra & DevOps",
+      "items": [
+        "Docker",
+        "Kubernetes"
+      ]
+    },
+    {
+      "name": "Platforms",
+      "items": [
+        "Node.js"
+      ]
+    },
+    {
+      "name": "More",
+      "items": [
+        "Cloudflare"
+      ]
+    }
+  ]
+}

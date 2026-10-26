@@ -1,7 +1,8 @@
+import type { SkillTier } from "@mrashidi/types";
 import { cva, type VariantProps } from "class-variance-authority";
 import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
-import { SKILL_TIER_META, type SkillTier } from "./aboutSkillsGrouped";
+import { SKILL_TIER_META } from "./aboutSkillsGrouped";
 
 /** Colours live in `.a11y-tech-chip*` (components.css) so they stay opaque for contrast checks. */
 const skillChipVariants = cva(

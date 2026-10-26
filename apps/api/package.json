@@ -14,6 +14,7 @@
     "dev": "wrangler dev",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "fixtures:update": "vitest run --update",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply mrashidi-db --local",
     "db:migrate:remote": "wrangler d1 migrations apply mrashidi-db --remote",
