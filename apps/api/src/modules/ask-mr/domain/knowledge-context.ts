@@ -1,6 +1,25 @@
-import { type Content, firstName, type Project, projectSlug } from "@mrashidi/types";
+import {
+  type About,
+  type AskMrKnowledge,
+  type CertificateCategory,
+  type Education,
+  firstName,
+  type Profile,
+  type ProjectEntry,
+  type SkillCategory,
+  type WorkExperience,
+} from "@mrashidi/types";
 
-export type KnowledgeSources = Content;
+export interface KnowledgeSources {
+  profile: Profile;
+  about: About;
+  experience: readonly WorkExperience[];
+  skills: readonly SkillCategory[];
+  projects: readonly ProjectEntry[];
+  certificates: readonly CertificateCategory[];
+  education: readonly Education[];
+  knowledge: AskMrKnowledge;
+}
 
 const filled = (value: string | undefined): value is string => Boolean(value?.trim());
 
@@ -65,7 +84,7 @@ function skillsSection({ skills, knowledge }: KnowledgeSources): string {
   return section("Skills", joinBlocks([legend, lines.join("\n"), fromCv], "\n"));
 }
 
-function projectLine(project: Project): string {
+function projectLine(project: ProjectEntry): string {
   const kind =
     project.type === "client"
       ? `Client project${filled(project.clientName) ? ` for ${project.clientName}` : ""}`
@@ -78,7 +97,7 @@ function projectLine(project: Project): string {
   ].filter(filled);
   return joinBlocks(
     [
-      `## ${project.title} [slug: ${projectSlug(project)}]`,
+      `## ${project.title} [slug: ${project.slug}]`,
       meta.join(" · "),
       project.description,
       project.highlights?.length ? bullets(project.highlights) : "",
@@ -152,8 +171,7 @@ function extraSection(sources: KnowledgeSources): string {
   );
 }
 
-/** Serializes everything Ask MR may know about the site owner into one compact markdown block. */
-export function buildKnowledge(sources: KnowledgeSources): string {
+export function buildKnowledgeContext(sources: KnowledgeSources): string {
   return joinBlocks([
     profileSection(sources),
     experienceSection(sources),

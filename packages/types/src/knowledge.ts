@@ -38,3 +38,7 @@ export const AskMrKnowledgeSchema = z
   });
 
 export type AskMrKnowledge = z.infer<typeof AskMrKnowledgeSchema>;
+
+export const KnowledgeContextSchema = z.object({ context: z.string().min(1) });
+
+export type KnowledgeContext = z.infer<typeof KnowledgeContextSchema>;

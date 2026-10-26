@@ -1,9 +1,11 @@
 import { z } from "zod";
 import { type Content, ContentSchema } from "../src/content";
+import { KnowledgeContextSchema } from "../src/knowledge";
 import { CatalogOverviewSchema, ProjectEntrySchema } from "../src/project";
 import { ExperienceEntrySchema, SkillsOverviewSchema } from "../src/resume";
 import about from "./about.json" with { type: "json" };
 import experienceReadModel from "./api/experience.json" with { type: "json" };
+import knowledgeContextReadModel from "./api/knowledge-context.json" with { type: "json" };
 import projectsReadModel from "./api/projects.json" with { type: "json" };
 import projectsOverviewReadModel from "./api/projects-overview.json" with { type: "json" };
 import skillsOverviewReadModel from "./api/skills-overview.json" with { type: "json" };
@@ -32,3 +34,5 @@ export const fixtureReadModels = {
   projects: z.array(ProjectEntrySchema).parse(projectsReadModel),
   projectsOverview: CatalogOverviewSchema.parse(projectsOverviewReadModel),
 };
+
+export const fixtureKnowledgeContext = KnowledgeContextSchema.parse(knowledgeContextReadModel);
