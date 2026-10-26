@@ -46,6 +46,8 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+# 1Password references only, no values.
+!infra/.env.op
 
 # vercel
 .vercel

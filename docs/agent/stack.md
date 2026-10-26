@@ -7,6 +7,8 @@ when you bump a major or minor, update the row in the same PR.
 | Library | Version | Official docs | House conventions |
 | ------- | ------- | ------------- | ----------------- |
 | Turborepo | 2.11 | [turborepo.com/docs](https://turborepo.com/docs) | Tasks in root `turbo.json`. A package-level task override replaces the root one, so it re-declares `dependsOn: ["^build"]`. Workspaces are `apps/*` and `packages/*` ([DR-0005](../decisions/0005-turborepo-web-on-vercel-api-on-workers.md)). |
+| Terraform | 1.17 | [developer.hashicorp.com/terraform/docs](https://developer.hashicorp.com/terraform/docs) | `infra/`, version in `infra/.terraform-version`. State in R2 through the S3 backend. Commit `.terraform.lock.hcl` with `linux_amd64` and `darwin_arm64` hashes (`terraform providers lock`). |
+| Terraform providers | cloudflare 5.28, vercel 5.24, github 6.13, onepassword 3.4 | [registry.terraform.io](https://registry.terraform.io/) | Import existing resources with `import` blocks; never apply an import whose plan shows changes. |
 | Hono | 4.13 | [hono.dev/docs](https://hono.dev/docs/) | `apps/api` only. One composition root (`src/app.ts`); per-route middleware, not router-wide `use()`. |
 | Drizzle ORM / Kit | 0.45 / 0.31 | [orm.drizzle.team/docs](https://orm.drizzle.team/docs/get-started/d1-new) | D1 (SQLite) with `casing: "snake_case"`. Kit only generates migrations; Wrangler applies them. `drizzle-orm` is hoisted in `pnpm-workspace.yaml` because Kit imports it undeclared. |
 | Wrangler | 4.153 | [developers.cloudflare.com/workers/wrangler](https://developers.cloudflare.com/workers/wrangler/) | `apps/api/wrangler.toml`. `compatibility_date` must not be newer than the workerd in `@cloudflare/vitest-pool-workers`, or Worker tests fail to start. |

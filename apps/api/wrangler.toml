@@ -15,7 +15,7 @@ ALLOWED_ORIGINS = "https://mrashidi.me,https://www.mrashidi.me"
 [[d1_databases]]
 binding = "DB"
 database_name = "mrashidi-db"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "fdf97f4f-fe5c-491c-95b7-3ba3337415b6"
 migrations_dir = "migrations"
 
 [observability]

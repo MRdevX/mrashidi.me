@@ -132,6 +132,7 @@ import {
 import { VscAzure, VscAzureDevops, VscVscode } from "react-icons/vsc";
 
 const createSvgIcon = (src: string, alt: string) => {
+  // biome-ignore lint/correctness/noComponentHookFactories: called once per icon at module load, never during render
   const SvgIconComponent = (props: { className?: string }) => (
     <Image src={src} className={props.className} alt={alt} width={20} height={20} style={{ color: "currentColor" }} />
   );
@@ -140,6 +141,7 @@ const createSvgIcon = (src: string, alt: string) => {
 };
 
 const createEmojiIcon = (emoji: string, label: string) => {
+  // biome-ignore lint/correctness/noComponentHookFactories: called once per icon at module load, never during render
   const EmojiIconComponent = ({ className }: { className?: string }) => (
     <span className={className} role="img" aria-label={label}>
       {emoji}

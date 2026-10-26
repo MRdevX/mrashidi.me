@@ -61,3 +61,4 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0005](0005-turborepo-web-on-vercel-api-on-workers.md) | Split the site into a Turborepo with Next.js on Vercel and a Hono API on Workers | `accepted` | 2026-10-26 |
 | [DR-0006](0006-personal-data-in-d1.md) | Keep personal data in D1, seeded from a private repo | `accepted` | 2026-10-26 |
 | [DR-0007](0007-ask-mr-knowledge-from-d1.md) | Load Ask MR knowledge from the content API and guard it at seed time | `proposed` | 2026-10-26 |
+| [DR-0008](0008-apply-on-merge-behind-approval.md) | Apply infra and deploy the API on merge behind an approval gate | `accepted` | 2026-10-26 |

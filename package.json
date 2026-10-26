@@ -24,7 +24,16 @@
     "reinstall": "pnpm clean && pnpm install",
     "check-migrations": "node scripts/check-migrations.mjs",
     "dev:api": "pnpm --filter @mrashidi/api dev",
-    "dev:web": "pnpm --filter @mrashidi/web dev"
+    "dev:web": "pnpm --filter @mrashidi/web dev",
+    "infra:plan:bootstrap": "terraform -chdir=infra/bootstrap plan",
+    "infra:apply:bootstrap": "terraform -chdir=infra/bootstrap apply",
+    "infra:plan:global": "terraform -chdir=infra/live/global plan",
+    "infra:apply:global": "terraform -chdir=infra/live/global apply",
+    "infra:plan:production": "terraform -chdir=infra/live/production plan",
+    "infra:apply:production": "terraform -chdir=infra/live/production apply",
+    "infra:plan:github": "terraform -chdir=infra/live/github plan",
+    "infra:apply:github": "terraform -chdir=infra/live/github apply",
+    "infra:import-dns": "node infra/scripts/fetch-zone-import.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.3",
