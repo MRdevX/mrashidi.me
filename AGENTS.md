@@ -7,9 +7,9 @@ monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.m
 | Path | Package | What |
 | ---- | ------- | ---- |
 | `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
+| `packages/types/` | `@mrashidi/types` | Zod content contract (profile, about, resume, projects, Ask MR knowledge) and the fake fixture dataset (`@mrashidi/types/fixtures`) |
 
-The Hono API on Cloudflare Workers (`apps/api/`), shared packages (`packages/*`), and Terraform
-(`infra/`) land in later phases; personal data moves to D1
+The Hono API on Cloudflare Workers (`apps/api/`) and Terraform (`infra/`) land in later phases; personal data moves to D1
 ([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
 
 ## Stack
