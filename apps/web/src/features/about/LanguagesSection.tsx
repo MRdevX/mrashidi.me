@@ -2,19 +2,20 @@
 
 import { motion } from "framer-motion";
 import { getThemeConfig } from "@/config/theme.config";
-import { personalInfo } from "@/data";
 import { slideInVariants } from "@/lib/animations";
+import { useContent } from "@/lib/content";
 import { useAboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
 
 export function LanguagesSection() {
   const { getTextColor, getBackgroundColor } = getThemeConfig();
+  const { about } = useContent();
   const cardSurface = useAboutCardSurface();
 
   return (
     <AboutSection delay={0.8} iconName="Languages" title="Languages">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {personalInfo.languages.map((lang, index) => (
+        {about.languages.map((lang, index) => (
           <motion.div
             key={lang.language}
             className={cardSurface}

@@ -1,11 +1,12 @@
 "use client";
 
+import type { Certificate } from "@mrashidi/types";
 import { motion, useReducedMotion } from "framer-motion";
 import { BadgeCheck, ExternalLink } from "lucide-react";
 import { SectionHeader, SurfaceCard } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
-import { type Certificate, certificates } from "@/data";
 import { pageEnterTransition } from "@/lib/animations";
+import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { accentTextClass } from "./styles";
 
@@ -61,6 +62,7 @@ function CertificateRow({ cert }: { cert: Certificate }) {
 
 export function CertificatesSection() {
   const { getTextColor } = getThemeConfig();
+  const { certificates } = useContent();
   const prefersReducedMotion = useReducedMotion();
 
   return (

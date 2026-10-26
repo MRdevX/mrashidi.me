@@ -1,3 +1,4 @@
+import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import {
   generateBreadcrumbSchema,
@@ -6,9 +7,11 @@ import {
   generateWebsiteSchema,
 } from "@/lib/structuredData";
 
+const { profile } = fixtureContent;
+
 describe("structured data generators", () => {
   it("generatePersonSchema returns Person JSON-LD", () => {
-    const schema = generatePersonSchema();
+    const schema = generatePersonSchema(profile);
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Person");
     expect(schema.name.length).toBeGreaterThan(0);
@@ -17,14 +20,14 @@ describe("structured data generators", () => {
   });
 
   it("generateWebsiteSchema returns WebSite JSON-LD", () => {
-    const schema = generateWebsiteSchema();
+    const schema = generateWebsiteSchema(profile);
     expect(schema["@type"]).toBe("WebSite");
     expect(schema.url.length).toBeGreaterThan(0);
     expect(schema.author["@type"]).toBe("Person");
   });
 
   it("generateOrganizationSchema returns Organization JSON-LD", () => {
-    const schema = generateOrganizationSchema();
+    const schema = generateOrganizationSchema(profile);
     expect(schema["@type"]).toBe("Organization");
     expect(schema.contactPoint["@type"]).toBe("ContactPoint");
   });

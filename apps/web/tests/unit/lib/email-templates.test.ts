@@ -1,3 +1,4 @@
+import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { getTemplateConfig } from "@/lib/services/email/config";
 import { createEmailTemplate } from "@/lib/services/email/renderer";
@@ -16,7 +17,7 @@ const sampleResume = {
 };
 
 describe("createEmailTemplate", () => {
-  const config = getTemplateConfig();
+  const config = getTemplateConfig(fixtureContent.profile);
 
   it("renders contact-admin HTML with brand color, preview cue, and submission fields", async () => {
     const { html, text } = await createEmailTemplate(sampleContact, "contact-admin", config);

@@ -1,16 +1,15 @@
-import { config } from "@/data";
+import type { Content, Profile } from "@mrashidi/types";
 import { ASK_MR_NAME, ASK_MR_TOOLS } from "../constants";
-import { buildKnowledge } from "../knowledge/buildKnowledge";
-
-const { person } = config;
+import { buildKnowledge, firstName } from "../knowledge/buildKnowledge";
 
 /**
- * Persona and rules. Static per deploy so it can sit in the cached prompt prefix together with
- * the knowledge block; per-request context (current page) goes in `buildPageContext`.
+ * Persona and rules. Identical for every request until the content changes, so it can sit in the
+ * cached prompt prefix together with the knowledge block; per-request context (current page) goes in `buildPageContext`.
  */
-export function buildInstructions(): string {
+export function buildInstructions(profile: Profile): string {
+  const { person } = profile;
   const name = person.name;
-  const first = name.split(" ")[0];
+  const first = firstName({ profile });
 
   return `You are ${ASK_MR_NAME}, the AI assistant on ${name}'s personal website (${person.website}). Visitors — mostly recruiters, hiring managers and engineers — ask you about ${first}'s experience, skills, projects, writing and how to work with him.
 
@@ -45,12 +44,12 @@ export function buildInstructions(): string {
 - ${ASK_MR_TOOLS.suggestFollowUps}: ALWAYS call this last, after your answer, with 3 short follow-up questions (max 8 words each) the visitor might ask next, in the visitor's language. Only suggest questions the knowledge can answer.`;
 }
 
-export function buildKnowledgeBlock(): string {
-  return `# Knowledge about ${person.name}\n\n${buildKnowledge()}`;
+export function buildKnowledgeBlock(content: Content): string {
+  return `# Knowledge about ${content.profile.person.name}\n\n${buildKnowledge(content)}`;
 }
 
 /** Small, uncached per-request hint so answers and suggestions can fit the page the visitor is on. */
-export function buildPageContext(pathname: string | undefined): string {
+export function buildPageContext(profile: Profile, pathname: string | undefined): string {
   const page = pathname && /^\/[\w\-/]*$/.test(pathname) ? pathname : "/";
-  return `The visitor opened the chat on the page "${page}" of ${person.website}.`;
+  return `The visitor opened the chat on the page "${page}" of ${profile.person.website}.`;
 }

@@ -1,41 +1,8 @@
-import {
-  type CertificateCategory,
-  type Education,
-  type PersonalInfo,
-  type SiteConfig,
-  type SkillCategory,
-  certificates as siteCertificates,
-  config as siteConfig,
-  education as siteEducation,
-  personalInfo as sitePersonalInfo,
-  skills as siteSkills,
-  workExperience as siteWorkExperience,
-  type WorkExperience,
-} from "@/data";
-import { type Project, projectSlug, projects as siteProjects } from "@/features/projects";
-import { type AskMrKnowledge, askMrKnowledge } from "./askMrKnowledge";
+import { type Content, type Project, projectSlug } from "@mrashidi/types";
 
-export interface KnowledgeSources {
-  config: SiteConfig;
-  personalInfo: PersonalInfo;
-  workExperience: readonly WorkExperience[];
-  skills: readonly SkillCategory[];
-  certificates: readonly CertificateCategory[];
-  education: readonly Education[];
-  projects: readonly Project[];
-  extra: AskMrKnowledge;
-}
+export type KnowledgeSources = Content;
 
-export const defaultKnowledgeSources: KnowledgeSources = {
-  config: siteConfig,
-  personalInfo: sitePersonalInfo,
-  workExperience: siteWorkExperience,
-  skills: siteSkills,
-  certificates: siteCertificates,
-  education: siteEducation,
-  projects: siteProjects,
-  extra: askMrKnowledge,
-};
+export const firstName = (sources: Pick<Content, "profile">): string => sources.profile.person.name.split(" ")[0];
 
 const filled = (value: string | undefined): value is string => Boolean(value?.trim());
 
@@ -49,8 +16,8 @@ const section = (title: string, body: string): string => (body.trim() ? `# ${tit
 
 const joinBlocks = (blocks: readonly string[], separator = "\n\n"): string => blocks.filter(filled).join(separator);
 
-function profileSection({ config, personalInfo }: KnowledgeSources): string {
-  const { person, social, site } = config;
+function profileSection({ profile, about }: KnowledgeSources): string {
+  const { person, social, site } = profile;
   return section(
     "Profile",
     joinBlocks(
@@ -58,20 +25,20 @@ function profileSection({ config, personalInfo }: KnowledgeSources): string {
         `Name: ${person.name}. Title: ${person.title}. Based in ${person.location}.`,
         `Website: ${person.website} · Email: ${person.email} · GitHub: ${social.github} · LinkedIn: ${social.linkedin} · Telegram: ${social.telegram} · Website source code: ${social.githubRepo}`,
         `Summary: ${site.description}`,
-        `Bio (his own words): ${personalInfo.bio}`,
-        `Contact note: ${personalInfo.contactDescription}`,
-        `Spoken languages: ${personalInfo.languages.map((l) => `${l.language}: ${l.level}`).join("; ")}.`,
+        `Bio (his own words): ${about.bio.map((segment) => segment.text).join("")}`,
+        `Contact note: ${about.contactDescription}`,
+        `Spoken languages: ${about.languages.map((l) => `${l.language}: ${l.level}`).join("; ")}.`,
       ],
       "\n"
     )
   );
 }
 
-function experienceSection({ workExperience, extra }: KnowledgeSources): string {
-  const roles = workExperience
-    .filter((role) => !extra.hiddenRoles.includes(role.company))
+function experienceSection({ experience, knowledge }: KnowledgeSources): string {
+  const roles = experience
+    .filter((role) => !knowledge.hiddenRoles.includes(role.company))
     .map((role) => {
-      const notes = extra.roleNotes.find((n) => n.company === role.company)?.highlights ?? [];
+      const notes = knowledge.roleNotes.find((n) => n.company === role.company)?.highlights ?? [];
       const achievements = [...role.achievements, ...notes];
       return joinBlocks(
         [
@@ -87,15 +54,15 @@ function experienceSection({ workExperience, extra }: KnowledgeSources): string 
   return section("Work experience (newest first)", joinBlocks(roles));
 }
 
-function skillsSection({ skills, extra }: KnowledgeSources): string {
+function skillsSection({ skills, knowledge }: KnowledgeSources): string {
   const legend =
     "Levels: proficient = used in production or central to a role; experienced = shipped in a live project or older role; familiar = light use. No level means listed without a rating.";
   const lines = skills.map(
     ({ category, skills: items }) =>
       `- ${category}: ${items.map((s) => (s.level ? `${s.name} (${s.level})` : s.name)).join(", ")}`
   );
-  const fromCv = extra.extraSkills.some(filled)
-    ? `Also on his CV (no level given):\n${bullets(extra.extraSkills)}`
+  const fromCv = knowledge.extraSkills.some(filled)
+    ? `Also on his CV (no level given):\n${bullets(knowledge.extraSkills)}`
     : "";
   return section("Skills", joinBlocks([legend, lines.join("\n"), fromCv], "\n"));
 }
@@ -129,8 +96,8 @@ function projectsSection({ projects }: KnowledgeSources): string {
   return section(`Projects (${projects.length})`, joinBlocks(projects.map(projectLine)));
 }
 
-function extraProjectsSection({ extra }: KnowledgeSources): string {
-  const blocks = extra.extraProjects.map((p) =>
+function extraProjectsSection({ knowledge }: KnowledgeSources): string {
+  const blocks = knowledge.extraProjects.map((p) =>
     joinBlocks([`## ${p.title} (${p.year})`, p.summary, `Stack: ${p.stack.join(", ")}`], "\n")
   );
   return section("More projects from his CV (not on the projects page, so no project card)", joinBlocks(blocks));
@@ -154,13 +121,14 @@ function educationSection({ education }: KnowledgeSources): string {
   return section("Education", lines.join("\n"));
 }
 
-function extraSection({ extra }: KnowledgeSources): string {
+function extraSection(sources: KnowledgeSources): string {
+  const { knowledge: extra } = sources;
   const labelled = (label: string, value: string) => (filled(value) ? `- ${label}: ${value.trim()}` : "");
   const list = (label: string, values: readonly string[]) =>
     values.some(filled) ? `${label}:\n${bullets(values, "  ")}` : "";
 
   return section(
-    "Additional facts from Mahdi",
+    `Additional facts from ${firstName(sources)}`,
     joinBlocks(
       [
         joinBlocks(
@@ -186,8 +154,8 @@ function extraSection({ extra }: KnowledgeSources): string {
   );
 }
 
-/** Serializes everything Ask MR may know about Mahdi into one compact markdown block. */
-export function buildKnowledge(sources: KnowledgeSources = defaultKnowledgeSources): string {
+/** Serializes everything Ask MR may know about the site owner into one compact markdown block. */
+export function buildKnowledge(sources: KnowledgeSources): string {
   return joinBlocks([
     profileSection(sources),
     experienceSection(sources),

@@ -1,5 +1,4 @@
-import { certificates, config, personalInfo, skills, workExperience } from "@/data";
-import { projects } from "@/features/projects";
+import type { SiteContent } from "@/lib/content";
 import { AVAILABLE_COMMANDS, TERMINAL_COMMAND_CLICK_EVENT } from "./constants";
 import { TerminalBadge, TerminalLink, TerminalListItem } from "./TerminalPrimitives";
 
@@ -8,7 +7,7 @@ const ACHIEVEMENTS_PER_ROLE = 3;
 const ACHIEVEMENT_ROLE_LIMIT = 2;
 const CERTIFICATE_CATEGORY_LIMIT = 8;
 
-export const SkillsByLevel = () =>
+export const SkillsByLevel = ({ skills }: Pick<SiteContent, "skills">) =>
   skills.map((cat) => {
     const skillsByLevel = {
       expert: cat.skills.filter((s) => s.level === "expert"),
@@ -35,8 +34,8 @@ export const SkillsByLevel = () =>
     );
   });
 
-export const renderWorkExperience = (limit?: number) => {
-  const experiences = limit ? workExperience.slice(0, limit) : workExperience;
+export const renderWorkExperience = ({ experience }: SiteContent, limit?: number) => {
+  const experiences = limit ? experience.slice(0, limit) : experience;
 
   return experiences.map((exp) => (
     <div key={`${exp.title}-${exp.company}-${exp.period}`} className="mb-4">
@@ -55,7 +54,7 @@ export const renderWorkExperience = (limit?: number) => {
   ));
 };
 
-export const renderProjects = (limit?: number) => {
+export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
   const projectList = limit ? projects.slice(0, limit) : projects;
 
   return projectList.map((project) => (
@@ -85,34 +84,34 @@ export const renderProjects = (limit?: number) => {
   ));
 };
 
-export const renderContactInfo = () => (
+export const renderContactInfo = ({ profile, about }: SiteContent) => (
   <div className="space-y-2">
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Email:</span>
-      <TerminalLink href={`mailto:${config.person.email}`}>{config.person.email}</TerminalLink>
+      <TerminalLink href={`mailto:${profile.person.email}`}>{profile.person.email}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">GitHub:</span>
-      <TerminalLink href={config.social.github}>{config.social.github.replace("https://", "")}</TerminalLink>
+      <TerminalLink href={profile.social.github}>{profile.social.github.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">LinkedIn:</span>
-      <TerminalLink href={config.social.linkedin}>{config.social.linkedin.replace("https://", "")}</TerminalLink>
+      <TerminalLink href={profile.social.linkedin}>{profile.social.linkedin.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Location:</span>
-      <span className="text-green-400">{config.person.location}</span>
+      <span className="text-green-400">{profile.person.location}</span>
     </div>
     <div className="flex items-center gap-2">
       <span className="text-orange-500">Languages:</span>
       <span className="text-green-400">
-        {personalInfo.languages.map((lang) => `${lang.language} (${lang.level})`).join(", ")}
+        {about.languages.map((lang) => `${lang.language} (${lang.level})`).join(", ")}
       </span>
     </div>
   </div>
 );
 
-export const renderCertificates = () => {
+export const renderCertificates = ({ certificates }: SiteContent) => {
   const allCertificates = certificates.slice(0, CERTIFICATE_CATEGORY_LIMIT).flatMap((category) =>
     category.certificates.map((cert) => (
       <TerminalListItem key={`${category.category}-${cert.name}-${cert.year}`} className="text-green-400">
@@ -124,8 +123,8 @@ export const renderCertificates = () => {
   return <ul className="space-y-1">{allCertificates}</ul>;
 };
 
-export const renderAchievements = () => {
-  const achievements = workExperience
+export const renderAchievements = ({ experience }: SiteContent) => {
+  const achievements = experience
     .slice(0, ACHIEVEMENT_ROLE_LIMIT)
     .flatMap((exp) =>
       exp.achievements

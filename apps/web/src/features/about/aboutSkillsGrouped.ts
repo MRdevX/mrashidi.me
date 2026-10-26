@@ -1,5 +1,4 @@
-import type { SkillLevel } from "@mrashidi/types";
-import { skills } from "@/data";
+import type { SkillCategory, SkillLevel } from "@mrashidi/types";
 
 export type SkillTier = "core" | "experienced" | "familiar";
 
@@ -85,7 +84,7 @@ export function matchesSkillFilter(tier: SkillTier, filter: SkillFilter): boolea
   return true;
 }
 
-function getAllTieredSkills(): TieredSkill[] {
+function getAllTieredSkills(skills: readonly SkillCategory[]): TieredSkill[] {
   const seen = new Set<string>();
   const result: TieredSkill[] = [];
 
@@ -102,8 +101,8 @@ function getAllTieredSkills(): TieredSkill[] {
   return result;
 }
 
-export function getSkillGroups(): SkillGroup[] {
-  const allSkills = getAllTieredSkills();
+export function getSkillGroups(skills: readonly SkillCategory[]): SkillGroup[] {
+  const allSkills = getAllTieredSkills(skills);
 
   return SKILL_GROUP_DEFINITIONS.map(({ id, title, categories }) => ({
     id,
@@ -114,7 +113,7 @@ export function getSkillGroups(): SkillGroup[] {
   })).filter((group) => group.skills.length > 0);
 }
 
-export function getPrimaryStack(): TieredSkill[] {
-  const byName = new Map(getAllTieredSkills().map((skill) => [skill.name, skill]));
+export function getPrimaryStack(skills: readonly SkillCategory[]): TieredSkill[] {
+  const byName = new Map(getAllTieredSkills(skills).map((skill) => [skill.name, skill]));
   return PRIMARY_STACK.flatMap((name) => byName.get(name) ?? []);
 }

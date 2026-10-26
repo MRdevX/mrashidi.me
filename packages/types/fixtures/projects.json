@@ -15,10 +15,11 @@
     "description": "Fixture project: streaming ingestion into a warehouse.",
     "stack": ["Python", "Redis", "Kubernetes"],
     "visibility": "private",
-    "year": "2021–2022",
+    "year": "2021\u20132022",
     "type": "client",
     "clientName": "Globex",
-    "role": "Backend Engineer"
+    "role": "Backend Engineer",
+    "highlights": ["Fixture highlight for Event Pipeline"]
   },
   {
     "title": "Edge Notes",
@@ -27,7 +28,8 @@
     "liveUrl": "https://notes.example.com",
     "visibility": "public",
     "year": "2025",
-    "type": "personal"
+    "type": "personal",
+    "highlights": ["Fixture highlight for Edge Notes"]
   },
   {
     "title": "Billing Dashboard",
@@ -36,7 +38,8 @@
     "visibility": "private",
     "year": "2023",
     "type": "client",
-    "clientName": "Acme Corp"
+    "clientName": "Acme Corp",
+    "highlights": ["Fixture highlight for Billing Dashboard"]
   },
   {
     "title": "CLI Toolkit",
@@ -46,7 +49,8 @@
     "visibility": "public",
     "openSource": true,
     "year": "2020",
-    "type": "personal"
+    "type": "personal",
+    "highlights": ["Fixture highlight for CLI Toolkit"]
   },
   {
     "title": "Image Resizer",
@@ -54,7 +58,8 @@
     "stack": ["Node.js", "Docker"],
     "visibility": "public",
     "year": "2019",
-    "type": "personal"
+    "type": "personal",
+    "highlights": ["Fixture highlight for Image Resizer"]
   },
   {
     "title": "Survey App",
@@ -63,7 +68,8 @@
     "visibility": "private",
     "year": "2018",
     "type": "client",
-    "clientName": "Initech"
+    "clientName": "Initech",
+    "highlights": ["Fixture highlight for Survey App"]
   },
   {
     "title": "Rate Limiter",
@@ -73,6 +79,47 @@
     "visibility": "public",
     "openSource": true,
     "year": "2022",
+    "type": "personal",
+    "highlights": ["Fixture highlight for Rate Limiter"]
+  },
+  {
+    "title": "Queue Worker",
+    "description": "Fixture project: background jobs with retries.",
+    "highlights": ["Dead-letter queue for failed jobs"],
+    "stack": ["NestJS", "Redis", "TypeScript"],
+    "visibility": "public",
+    "openSource": true,
+    "githubUrl": "https://github.com/janedoe/queue-worker",
+    "year": "2023",
+    "type": "personal"
+  },
+  {
+    "title": "Log Shipper",
+    "description": "Fixture project: ships logs from edge nodes.",
+    "highlights": ["Batches and compresses log lines"],
+    "stack": ["Rust"],
+    "visibility": "public",
+    "year": "2024",
+    "type": "personal"
+  },
+  {
+    "title": "Booking API",
+    "description": "Fixture project: appointment booking for a clinic.",
+    "highlights": ["Double-booking guard in the database"],
+    "stack": ["Node.js", "PostgreSQL"],
+    "visibility": "private",
+    "year": "2021",
+    "type": "client",
+    "clientName": "Globex"
+  },
+  {
+    "title": "Status Page",
+    "description": "Fixture project: public status page with uptime history.",
+    "highlights": ["Static rendering with hourly refresh"],
+    "stack": ["TypeScript", "Cloudflare"],
+    "visibility": "public",
+    "liveUrl": "https://status.example.com",
+    "year": "2025",
     "type": "personal"
   }
 ]

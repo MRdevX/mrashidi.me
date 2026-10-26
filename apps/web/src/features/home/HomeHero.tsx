@@ -4,7 +4,7 @@ import type { Variants } from "framer-motion";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { SocialButtonsRow } from "@/components/ui";
-import { config } from "@/data";
+import { useContent } from "@/lib/content";
 import { TypingAnimation } from "./TypingAnimation";
 
 type HomeHeroProps = {
@@ -12,16 +12,17 @@ type HomeHeroProps = {
 };
 
 export function HomeHero({ variants }: HomeHeroProps) {
+  const { profile } = useContent();
   return (
     <motion.div className="hero-section content-section relative overflow-hidden" variants={variants}>
       <div className="hero-background" />
       <div className="hero-gradient-bg absolute inset-0 animate-gradient-shift bg-gradient-to-br from-orange-500/10 via-transparent to-orange-400/5" />
       <div className="relative z-10">
-        <h1 className="cyberpunk-h1">{config.person.name}</h1>
+        <h1 className="cyberpunk-h1">{profile.person.name}</h1>
         <p className="hero-subtitle text-body">
           <TypingAnimation
             strings={[
-              config.person.title,
+              profile.person.title,
               "Cloud Practitioner",
               "Backend & Systems Engineer",
               "Open Source Contributor",
@@ -32,10 +33,10 @@ export function HomeHero({ variants }: HomeHeroProps) {
             className="font-terminal text-orange-400"
           />
         </p>
-        <p className="hero-description text-body">{config.site.description}</p>
+        <p className="hero-description text-body">{profile.site.description}</p>
         <p className="hero-location text-body">
           <MapPin className="icon-primary size-5" aria-hidden />
-          {config.person.location}
+          {profile.person.location}
         </p>
 
         <SocialButtonsRow />

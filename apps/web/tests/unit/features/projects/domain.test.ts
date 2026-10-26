@@ -1,10 +1,12 @@
+import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { describeCatalog, queryCatalog } from "@/features/projects/domain/catalog";
 import { createProjectMatcher, DEFAULT_FILTERS, toggleStack } from "@/features/projects/domain/filters";
 import type { Project } from "@/features/projects/domain/project";
 import { sortProjects } from "@/features/projects/domain/sort";
 import { countStackUsage, groupStacks, topStacks } from "@/features/projects/domain/stack";
-import { projects } from "@/features/projects/infrastructure/projectData";
+
+const { projects } = fixtureContent;
 
 const project = (over: Partial<Project> = {}): Project => ({
   title: "Alpha App",

@@ -1,4 +1,4 @@
-import { skills } from "@/data";
+import type { SkillCategory } from "@mrashidi/types";
 import { getTechIcon, type TechStackItem } from "@/lib/tech";
 
 export function normalizeIconKey(skillName: string): string {
@@ -11,7 +11,7 @@ export function normalizeIconKey(skillName: string): string {
     .replace(/#/, "sharp");
 }
 
-export function getMainTechStack(): TechStackItem[] {
+export function getMainTechStack(skills: readonly SkillCategory[]): TechStackItem[] {
   const mainStack: TechStackItem[] = [];
 
   for (const category of skills) {

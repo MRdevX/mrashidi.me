@@ -119,6 +119,7 @@ These add to the house rules; none of them loosen one.
 
 - Next.js 16 changed APIs and conventions: read `apps/web/node_modules/next/dist/docs/` before writing Next code.
 - `apps/web/src/app/` stays thin: a route file composes a feature from `apps/web/src/features/<feature>/`.
+- Site content (profile, about, resume, projects) comes from the content API through `@/lib/content`: `useContent()` in client components, `getSiteContent()` / `getAskMrContent()` on the server. Fetches are tagged `content` and revalidate hourly or on `POST /api/revalidate`. Without `CONTENT_API_URL` the fixtures are served; tests render inside `ContentProvider` with them ([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
 - JSON API routes wrap their handler in `createMiddleware` from `@/lib/api/middleware`. The Ask MR routes (`api/chat/**`) run the guards in `apps/web/src/features/ask-mr/server/` instead; `api/og` only renders an image.
 - Ask MR answers only from site data plus `apps/web/src/features/ask-mr/knowledge/askMrKnowledge.ts`, which is public. Never add contact details beyond the site's, residence or visa status, compensation, or anything that could be misused; `apps/web/tests/unit/ask-mr/knowledge.test.ts` guards this.
 - `TODO` needs a GitHub issue: `TODO(#123)`.

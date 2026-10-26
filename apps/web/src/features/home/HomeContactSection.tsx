@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { CyberpunkButton, MotionSection, SectionHeader } from "@/components/ui";
-import { personalInfo } from "@/data";
+import { useContent } from "@/lib/content";
 
 type HomeContactSectionProps = {
   variants: Variants;
@@ -13,18 +13,14 @@ type HomeContactSectionProps = {
 };
 
 export function HomeContactSection({ variants, reducedMotion }: HomeContactSectionProps) {
+  const { about } = useContent();
   return (
     <MotionSection className="text-center" variants={variants}>
       <div className="contact-section content-section">
         <div className="contact-section-background" />
         <div className="contact-content">
-          <SectionHeader
-            iconName="MessageCircle"
-            title={personalInfo.contactCta}
-            size="lg"
-            className="justify-center"
-          />
-          <p className="contact-description text-body">{personalInfo.contactDescription}</p>
+          <SectionHeader iconName="MessageCircle" title={about.contactCta} size="lg" className="justify-center" />
+          <p className="contact-description text-body">{about.contactDescription}</p>
           <motion.div
             className="inline-block"
             {...(!reducedMotion ? { whileHover: { scale: 1.05 }, whileTap: { scale: 0.95 } } : {})}

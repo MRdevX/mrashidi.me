@@ -38,3 +38,17 @@ execFileSync(
   ["exec", "wrangler", "d1", "execute", "mrashidi-db", values.remote ? "--remote" : "--local", `--file=${file}`],
   { stdio: "inherit" }
 );
+
+const revalidateUrl = process.env.REVALIDATE_URL;
+const revalidateSecret = process.env.REVALIDATE_SECRET;
+if (values.remote && revalidateUrl && revalidateSecret) {
+  const res = await fetch(revalidateUrl, { method: "POST", headers: { Authorization: `Bearer ${revalidateSecret}` } });
+  console.log(`Revalidated the site content cache: ${res.status}`);
+  if (!res.ok) {
+    process.exit(1);
+  }
+} else if (values.remote) {
+  console.log(
+    "Set REVALIDATE_URL and REVALIDATE_SECRET to refresh the site now; otherwise it refreshes within an hour."
+  );
+}

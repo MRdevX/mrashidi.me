@@ -74,3 +74,5 @@ const config: SiteConfig = {
 export { config };
 
 export const siteConfig = config.ui;
+
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mrashidi.me";

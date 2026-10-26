@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import { BookOpen, FileText, FolderOpen, Home, MessageSquare, User } from "lucide-react";
-import { config } from "./config";
 
 export interface NavigationItem {
   name: string;
@@ -23,7 +22,6 @@ export const mobileNavigationItems = navigationItems.filter((item) => item.showI
 export const desktopNavigationItems = navigationItems.filter((item) => item.showInDesktop);
 
 export const githubLink = {
-  url: config.social.githubRepo,
   label: "Open Source",
   mobileLabel: "View Code",
   ariaLabel: "View source code on GitHub",

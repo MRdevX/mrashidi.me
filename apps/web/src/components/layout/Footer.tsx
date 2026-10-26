@@ -1,7 +1,9 @@
+"use client";
+
 import { Mail } from "lucide-react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { config } from "@/data";
+import { useContent } from "@/lib/content";
 
 interface SocialLinkProps {
   href: string;
@@ -25,23 +27,24 @@ function SocialLink({ href, icon, ariaLabel, isEmail = false }: SocialLinkProps)
 }
 
 export function Footer() {
+  const { profile } = useContent();
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
     {
-      href: config.social.github,
+      href: profile.social.github,
       icon: <FaGithub className="size-6" aria-hidden />,
-      ariaLabel: `Visit ${config.person.name}'s GitHub Profile`,
+      ariaLabel: `Visit ${profile.person.name}'s GitHub Profile`,
     },
     {
-      href: config.social.linkedin,
+      href: profile.social.linkedin,
       icon: <FaLinkedin className="size-6" aria-hidden />,
-      ariaLabel: `Visit ${config.person.name}'s LinkedIn Profile`,
+      ariaLabel: `Visit ${profile.person.name}'s LinkedIn Profile`,
     },
     {
-      href: `mailto:${config.person.email}`,
+      href: `mailto:${profile.person.email}`,
       icon: <Mail className="size-6" aria-hidden />,
-      ariaLabel: `Email ${config.person.name}`,
+      ariaLabel: `Email ${profile.person.name}`,
       isEmail: true,
     },
   ];
@@ -56,7 +59,7 @@ export function Footer() {
         </div>
         <div className="flex flex-col items-center gap-2">
           <span className="text-muted-foreground block text-center text-sm">
-            © {currentYear} {config.person.name}. All rights reserved.
+            © {currentYear} {profile.person.name}. All rights reserved.
           </span>
           <Link
             href="/privacy"

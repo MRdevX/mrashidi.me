@@ -1,5 +1,5 @@
+import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
-import { skills } from "@/data";
 import {
   getPrimaryStack,
   getSkillGroups,
@@ -11,8 +11,10 @@ import {
 } from "@/features/about/aboutSkillsGrouped";
 import { getTechIcon } from "@/lib/tech";
 
+const { skills } = fixtureContent;
+
 describe("getSkillGroups", () => {
-  const groups = getSkillGroups();
+  const groups = getSkillGroups(skills);
   const grouped = groups.flatMap((group) => group.skills.map((skill) => skill.name));
 
   it("maps every data category to a display group", () => {
@@ -57,6 +59,6 @@ describe("tiers and filters", () => {
 
 describe("getPrimaryStack", () => {
   it("resolves every listed skill", () => {
-    expect(getPrimaryStack().map((skill) => skill.name)).toEqual([...PRIMARY_STACK]);
+    expect(getPrimaryStack(skills).map((skill) => skill.name)).toEqual([...PRIMARY_STACK]);
   });
 });

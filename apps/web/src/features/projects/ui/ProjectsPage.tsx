@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { PageHeader, PageStaggerContainer, PageWrapper } from "@/components/ui";
+import { useContent } from "@/lib/content";
 import { ProjectCatalogProvider } from "../application/ProjectCatalogContext";
 import type { Project } from "../domain/project";
 import { findProjectBySlug, onOpenProjectRequest, readProjectParam } from "../infrastructure/projectDeepLink";
@@ -13,16 +14,17 @@ import { ProjectGrid } from "./results/ProjectGrid";
 import { ProjectStats } from "./results/ProjectStats";
 
 export function ProjectsPage() {
+  const { projects } = useContent();
   const [openProject, setOpenProject] = useState<Project | null>(null);
 
   // Deep links (`/projects?project=<slug>`) and same-page requests from Ask MR's project cards.
   useEffect(() => {
-    const initial = findProjectBySlug(readProjectParam(window.location.search));
+    const initial = findProjectBySlug(projects, readProjectParam(window.location.search));
     if (initial) {
       setOpenProject(initial);
     }
-    return onOpenProjectRequest((slug) => setOpenProject(findProjectBySlug(slug)));
-  }, []);
+    return onOpenProjectRequest((slug) => setOpenProject(findProjectBySlug(projects, slug)));
+  }, [projects]);
 
   return (
     <ProjectCatalogProvider>

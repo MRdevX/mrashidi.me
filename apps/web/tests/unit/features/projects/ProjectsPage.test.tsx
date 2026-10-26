@@ -1,7 +1,6 @@
-import { fireEvent, render, screen, within } from "@tests/utils/test-utils";
+import { fireEvent, render, screen, testContent, within } from "@tests/utils/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ProjectsPage } from "@/features/projects";
-import { projects } from "@/features/projects/infrastructure/projectData";
 
 vi.mock("framer-motion", () => ({
   motion: {
@@ -14,6 +13,7 @@ vi.mock("@/features/projects/infrastructure/github", () => ({
   getLatestCommitInfo: vi.fn().mockResolvedValue(null),
 }));
 
+const { projects } = testContent;
 const status = () => screen.getByRole("status");
 const filterBar = () => screen.getByRole("region", { name: "Filter projects" });
 

@@ -1,13 +1,14 @@
-import { config } from "@/data";
+import type { Profile } from "@mrashidi/types";
+import { SITE_URL } from "@/data";
 import type { ITemplateConfig } from "./types";
 
-export const getTemplateConfig = (): ITemplateConfig => ({
-  companyName: config.person.name,
-  companyWebsite: config.site.url,
+export const getTemplateConfig = ({ person, social }: Profile): ITemplateConfig => ({
+  companyName: person.name,
+  companyWebsite: SITE_URL,
   socialLinks: {
-    github: config.social.github,
-    linkedin: config.social.linkedin,
-    telegram: config.social.telegram,
+    github: social.github,
+    linkedin: social.linkedin,
+    telegram: social.telegram,
   },
-  footerText: config.person.title,
+  footerText: person.title,
 });
