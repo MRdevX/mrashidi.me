@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.16](https://github.com/MRdevX/mrashidi.me/compare/v0.2.15...v0.2.16) (2026-10-26)
+
+
+### Continuous Integration
+
+* verify the deployed Worker version instead of curling behind Bot Fight Mode ([d716f06](https://github.com/MRdevX/mrashidi.me/commit/d716f064b709d7989d21c65db331ff21f4fff07d))
+
+
+### Documentation
+
+* explain how Bot Fight Mode shapes API checks ([988813b](https://github.com/MRdevX/mrashidi.me/commit/988813b25b64bee01e6c7112afabb18dc193a9eb))
+
 ### [0.2.15](https://github.com/MRdevX/mrashidi.me/compare/v0.2.14...v0.2.15) (2026-10-26)
 
 
