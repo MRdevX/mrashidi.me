@@ -29,7 +29,8 @@ read-only API; a staging Worker and D1 would double the infra for no reviewer.
 - `infra.yml`: PRs run fmt, validate and plan for `global` and `production` and comment the plan
   without saving it (`-out` would embed secrets). Push to `main` applies both roots one at a time.
 - `deploy-api.yml`: push to `main` touching `apps/api`, `packages/types` or the lockfile runs the
-  Worker tests, remote D1 migrations, `wrangler deploy`, the `CONTENT_API_TOKEN` secret and a smoke check.
+  Worker tests, remote D1 migrations, the `CONTENT_API_TOKEN` secret, `wrangler deploy`, and a check that
+  the deployed version serves all traffic (not an HTTP probe; see Bot Fight Mode in `docs/infrastructure.md`).
 - Both jobs use the `deploy-gate` environment (required reviewer: the owner, protected branches only),
   managed by `live/github`. It is not named `production`: GitHub environment names are
   case-insensitive and Vercel's integration already owns `Production` for its deployment records.

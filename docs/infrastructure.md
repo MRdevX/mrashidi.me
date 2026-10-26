@@ -64,6 +64,18 @@ on this repo with Secrets, Variables, Environments and Administration write, sto
 
 After that, merges to `main` apply Terraform and deploy the API through `infra.yml` and `deploy-api.yml`.
 
+## Bot Fight Mode
+
+Bot Fight Mode is on for the zone and stays on. On the Free plan it applies to every hostname,
+`api.mrashidi.me` included, and cannot be skipped by rule, so it challenges non-browser requests from
+datacenter IPs. Consequences:
+
+- `deploy-api.yml` does not curl the API: GitHub runners get 403. It checks with
+  `wrangler deployments status` that the version it deployed serves 100% of traffic.
+- Vercel's server-side fetches currently pass. If one is ever challenged, the fetch fails and Next keeps
+  serving the last cached page; reseeding or the hourly revalidation retries.
+- Smoke-test the API from your own machine: `curl https://api.mrashidi.me/health`.
+
 ## Rollback
 
 - Worker: `pnpm --filter @mrashidi/api exec wrangler rollback`.

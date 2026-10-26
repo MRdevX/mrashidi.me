@@ -18,7 +18,8 @@ Binding rules: [DR-0005](../../../docs/decisions/0005-turborepo-web-on-vercel-ap
 - Infra: change `infra/`, open a PR, read the plan comment from `infra.yml`; merging applies after
   the `deploy-gate` approval.
 - API: merge changes under `apps/api` or `packages/types`; `deploy-api.yml` tests, migrates,
-  deploys and smoke-checks after approval.
+  deploys and checks the new version serves 100% after approval. It cannot curl the API: Bot Fight
+  Mode challenges runner IPs. Probe from your machine instead.
 - Web: Vercel deploys `main` on its own.
 
 ## Local Terraform
