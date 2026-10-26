@@ -31,7 +31,8 @@ function contentApiUrl(): string | null {
   return null;
 }
 
-async function fetchJson<T>(base: string, path: string, schema: z.ZodType<T>, token?: string): Promise<T> {
+async function fetchJson<T>(base: string, path: string, schema: z.ZodType<T>): Promise<T> {
+  const token = getEnv("CONTENT_API_TOKEN");
   const res = await fetch(`${base}${path}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
     next: { tags: [CONTENT_TAG], revalidate: REVALIDATE_SECONDS },
@@ -67,12 +68,7 @@ const getKnowledgeContext = cache(async (): Promise<string> => {
   if (!base) {
     return fixtureKnowledgeContext.context;
   }
-  const { context } = await fetchJson(
-    base,
-    "/v1/knowledge/context",
-    KnowledgeContextSchema,
-    getEnv("CONTENT_API_TOKEN")
-  );
+  const { context } = await fetchJson(base, "/v1/knowledge/context", KnowledgeContextSchema);
   return context;
 });
 

@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import { secureHeaders } from "hono/secure-headers";
 import type { HonoEnv } from "#bindings";
@@ -8,23 +7,12 @@ import { createProfileContext, profileRoutes } from "#modules/profile/index.ts";
 import { createProjectContext, projectRoutes } from "#modules/projects/index.ts";
 import { createResumeContext, resumeRoutes } from "#modules/resume/index.ts";
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
-
-const VERCEL_PREVIEW = /^https:\/\/mrashidi-[a-z0-9-]+-notablenomads\.vercel\.app$/;
-
-function isAllowedOrigin(origin: string, allowed: string): boolean {
-  return allowed.split(",").includes(origin) || VERCEL_PREVIEW.test(origin);
-}
+import { requireContentToken } from "#shared/http/require-content-token.ts";
 
 const app = new Hono<HonoEnv>();
 
 app.use(secureHeaders());
-app.use(
-  "/v1/*",
-  cors({
-    origin: (origin, c) => (isAllowedOrigin(origin, c.env.ALLOWED_ORIGINS) ? origin : null),
-    allowMethods: ["GET"],
-  })
-);
+app.use("/v1/*", requireContentToken);
 
 app.get("/health", (c) => c.json({ status: "ok" }));
 app.route("/v1", profileRoutes(createProfileContext));

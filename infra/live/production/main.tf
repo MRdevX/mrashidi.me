@@ -1,5 +1,6 @@
 locals {
-  api_hostname = "api.mrashidi.me"
+  api_hostname     = "api.mrashidi.me"
+  api_workers_host = "mrashidi-api.${var.workers_subdomain}.workers.dev"
 }
 
 resource "cloudflare_d1_database" "content" {
@@ -60,7 +61,7 @@ resource "vercel_project_domain" "www" {
 resource "vercel_project_environment_variable" "content_api_url" {
   project_id = vercel_project.web.id
   key        = "CONTENT_API_URL"
-  value      = "https://${local.api_hostname}"
+  value      = "https://${local.api_workers_host}"
   target     = ["production", "preview", "development"]
   sensitive  = false
 }

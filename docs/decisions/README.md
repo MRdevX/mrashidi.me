@@ -63,3 +63,4 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0007](0007-ask-mr-knowledge-from-d1.md) | Load Ask MR knowledge from the content API and guard it at seed time | `superseded` | 2026-10-26 |
 | [DR-0008](0008-apply-on-merge-behind-approval.md) | Apply infra and deploy the API on merge behind an approval gate | `accepted` | 2026-10-26 |
 | [DR-0009](0009-api-owns-content-derivations.md) | Derive content read models in the API, render them in the web app | `accepted` | 2026-10-26 |
+| [DR-0010](0010-private-content-api-over-workers-dev.md) | Serve the content API privately to Vercel over workers.dev | `accepted` | 2026-10-26 |

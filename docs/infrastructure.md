@@ -37,7 +37,7 @@ Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner cre
 | `TF_R2_ACCESS_KEY_ID`, `TF_R2_SECRET_ACCESS_KEY` | R2 S3 key pair, Object Read & Write on `mrashidi-tf-state` only |
 | `TF_VERCEL_API_TOKEN` | Vercel token scoped to the notablenomads team |
 | `GITHUB_TERRAFORM_PAT` | Fine-grained PAT on this repo: Administration, Environments, Secrets, Variables write; read by `live/github` only, not copied to GitHub |
-| `CONTENT_API_TOKEN` | Random 32+ bytes; bearer for `GET /v1/knowledge`, set on the Worker and on Vercel |
+| `CONTENT_API_TOKEN` | Random 32+ bytes; bearer for every `/v1` route, set on the Worker and on Vercel |
 | `REVALIDATE_SECRET` | Random 32+ bytes; the seed script sends it to the web app's revalidate route (Phase 5) |
 
 Locally, Terraform reads the same values with `op run --env-file infra/.env.op -- <command>`, so values
@@ -66,15 +66,15 @@ After that, merges to `main` apply Terraform and deploy the API through `infra.y
 
 ## Bot Fight Mode
 
-Bot Fight Mode is on for the zone and stays on. On the Free plan it applies to every hostname,
+Bot Fight Mode is on for the zone and stays on. On the Free plan it applies to every proxied hostname,
 `api.mrashidi.me` included, and cannot be skipped by rule, so it challenges non-browser requests from
-datacenter IPs. Consequences:
+datacenter IPs ([DR-0010](decisions/0010-private-content-api-over-workers-dev.md)). Consequences:
 
-- `deploy-api.yml` does not curl the API: GitHub runners get 403. It checks with
+- The Vercel server calls the API on `mrashidi-api.safeman612.workers.dev`, which is outside the
+  zone. Every `/v1` route there needs `Authorization: Bearer $CONTENT_API_TOKEN`; `/health` is open.
+- `deploy-api.yml` does not curl the API: GitHub runners get 403 on `api.mrashidi.me`. It checks with
   `wrangler deployments status` that the version it deployed serves 100% of traffic.
-- Vercel's server-side fetches currently pass. If one is ever challenged, the fetch fails and Next keeps
-  serving the last cached page; reseeding or the hourly revalidation retries.
-- Smoke-test the API from your own machine: `curl https://api.mrashidi.me/health`.
+- Smoke-test against the workers.dev host: `curl https://mrashidi-api.safeman612.workers.dev/health`.
 
 ## Rollback
 

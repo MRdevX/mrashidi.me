@@ -12,7 +12,6 @@ export default defineConfig({
       miniflare: {
         bindings: {
           CONTENT_API_TOKEN: "test-token",
-          ALLOWED_ORIGINS: "https://mrashidi.me",
           TEST_MIGRATIONS: migrations,
         },
       },
