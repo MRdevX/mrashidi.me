@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.18](https://github.com/MRdevX/mrashidi.me/compare/v0.2.17...v0.2.18) (2026-10-26)
+
+
+### Bug Fixes
+
+* **ci:** pass the content API variables to the web build ([6caf7de](https://github.com/MRdevX/mrashidi.me/commit/6caf7defc4f40f34ad3aa42ff1fef3cf5f3011b1))
+
 ### [0.2.17](https://github.com/MRdevX/mrashidi.me/compare/v0.2.16...v0.2.17) (2026-10-26)
 
 
