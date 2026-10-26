@@ -23,24 +23,24 @@ layered shape, or a shared file into its only consumer's slice, is its own PR
 ## Dead code
 
 `pnpm dlx knip --no-progress`, then confirm each hit with `rg`. Not dead, even when knip says so:
-`src/app/**` route, page, layout, and metadata files, `src/instrumentation*.ts`,
-`sentry.*.config.ts`, `sentry-shared.ts`, and `scripts/*` run from `package.json`. An export used
+`apps/web/src/app/**` route, page, layout, and metadata files, `apps/web/src/instrumentation*.ts`,
+`sentry.*.config.ts`, `sentry-shared.ts`, and `apps/web/scripts/*` run from `package.json`. An export used
 only by its own tests is dead: delete the export and those tests together.
 
 ## Checklist
 
 - [ ] Imports use `@/`, `@app/`, `@components/`, `@features/`, `@lib/`, never `../../`
 - [ ] One feature imports another only through its `index.ts`
-- [ ] Files in `src/components/`, `src/lib/`, `src/hooks/` with one consumer → note them for a slice move; don't move inside a feature PR
-- [ ] One Upstash Redis client and one HTTP client (`ky` through `src/lib/fetcher.ts`) per concern, not a new one per feature
-- [ ] Constants and copy have one home: `src/config/`, `src/data/`, or the feature; not repeated in a component
+- [ ] Files in `apps/web/src/components/`, `apps/web/src/lib/`, `apps/web/src/hooks/` with one consumer → note them for a slice move; don't move inside a feature PR
+- [ ] One Upstash Redis client and one HTTP client (`ky` through `apps/web/src/lib/fetcher.ts`) per concern, not a new one per feature
+- [ ] Constants and copy have one home: `apps/web/src/config/`, `apps/web/src/data/`, or the feature; not repeated in a component
 - [ ] `"use client"` only where hooks, browser APIs, or handlers need it; server-only code never reachable from a client component
 - [ ] `logger` from `@lib/core`, not `console`, in app code
 - [ ] `AGENTS.md`, `docs/agent/stack.md`, and `README.md` still match the code you changed
 
 ## Verify
 
-`pnpm gate`. If you touched pages, routes, or `src/components/ui/`, also `pnpm build:fast`.
+`pnpm gate`. If you touched pages, routes, or `apps/web/src/components/ui/`, also `pnpm build:fast`.
 
 ## Do not
 

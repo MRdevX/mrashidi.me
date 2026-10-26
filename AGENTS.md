@@ -1,8 +1,16 @@
 # Project context for AI agents
 
 Personal site and portfolio for Mahdi Rashidi at [mrashidi.me](https://mrashidi.me): about, CV,
-projects, blog (Medium RSS), contact, and the Ask MR chat assistant. One Next.js app, deployed
-on Vercel.
+projects, blog (Medium RSS), contact, and the Ask MR chat assistant. A pnpm + Turborepo
+monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.md)):
+
+| Path | Package | What |
+| ---- | ------- | ---- |
+| `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
+
+The Hono API on Cloudflare Workers (`apps/api/`), shared packages (`packages/*`), and Terraform
+(`infra/`) land in later phases; personal data moves to D1
+([DR-0006](docs/decisions/0006-personal-data-in-d1.md)).
 
 ## Stack
 
@@ -10,14 +18,16 @@ on Vercel.
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind v4, shadcn/ui (new-york, RSC), CVA, clsx/tailwind-merge
 - **Lint & format:** Biome only (no ESLint or Prettier)
-- **Tests:** Vitest (unit, `tests/unit/`), Playwright (E2E, `tests/e2e/`)
+- **Monorepo:** pnpm workspaces, Turborepo (`turbo.json`), shared `tsconfig.base.json`
+- **Tests:** Vitest (unit, `apps/web/tests/unit/`), Playwright (E2E, `apps/web/tests/e2e/`)
 - **Other:** Vercel AI SDK (Ask MR), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (next-pwa)
 
 Pinned versions, official docs, and house conventions per library: [docs/agent/stack.md](docs/agent/stack.md).
 
 ## Path aliases
 
-Use these in imports instead of relative paths (from `tsconfig.json`):
+Inside `apps/web`, use these in imports instead of relative paths (from `apps/web/tsconfig.json`).
+Paths in the rest of this file are from the repo root.
 
 - `@/` → `src/`
 - `@app/*` → `src/app/*`
@@ -27,13 +37,16 @@ Use these in imports instead of relative paths (from `tsconfig.json`):
 
 ## Commands
 
-- **Gate:** `pnpm gate` (Biome, agent tooling, typecheck, unit tests). Pre-push runs it.
+Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <script>`.
+
+- **Gate:** `pnpm gate` (Biome, agent tooling, then `turbo run typecheck test`). Pre-push runs
+  it. `pnpm gate:affected` limits turbo to packages changed against `origin/main`.
 - **Lint/format:** `pnpm check`; `pnpm check:fix` to fix.
-- **Unit tests:** `pnpm test` (watch), `pnpm test:run`, `pnpm test:coverage`
-- **E2E:** `pnpm test:e2e`, `pnpm test:e2e:ui`, `pnpm test:e2e:debug`
-- **Build:** `pnpm build:fast` (no PWA, no sitemap/OG generation); `pnpm build` (full)
+- **Unit tests:** `pnpm test` (all packages); watch with `pnpm --filter @mrashidi/web test:watch`
+- **E2E:** `pnpm test:e2e`; UI/debug modes via `pnpm --filter @mrashidi/web test:e2e:ui|test:e2e:debug`
+- **Build:** `pnpm build:fast` (web, no PWA, no sitemap/OG generation); `pnpm build` (turbo, full)
 - **Ask MR eval:** `pnpm eval:ask-mr`
-- **Dev:** `pnpm dev` (Turbopack)
+- **Dev:** `pnpm dev` (turbo, every app's `dev`)
 
 ## Skills
 
@@ -87,8 +100,8 @@ the rules into your global agent config.
 | Gate | `pnpm gate` (pre-push runs it) |
 | Issue reference | `- Fixes #123`, one line per issue, in the `References` section |
 | Extra PR sections | `References`, last |
-| Endpoint sources | `src/app/api/**/route.ts` |
-| Slice layout | `src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`, `@/features/home/server`, `@/features/projects/server`) that client code never imports. Shared UI in `src/components/`, shared logic in `src/lib/` |
+| Endpoint sources | `apps/web/src/app/api/**/route.ts` |
+| Slice layout | Web: `apps/web/src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `apps/web/src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`, `@/features/home/server`, `@/features/projects/server`) that client code never imports. Shared UI in `apps/web/src/components/`, shared logic in `apps/web/src/lib/`; code with consumers in two apps goes to `packages/<name>/` |
 | Decision records | `docs/decisions/`, files `NNNN-short-slug.md` |
 | Stack doc | [`docs/agent/stack.md`](docs/agent/stack.md) |
 
@@ -96,10 +109,10 @@ the rules into your global agent config.
 
 These add to the house rules; none of them loosen one.
 
-- Next.js 16 changed APIs and conventions: read `node_modules/next/dist/docs/` before writing Next code.
-- `src/app/` stays thin: a route file composes a feature from `src/features/<feature>/`.
-- JSON API routes wrap their handler in `createMiddleware` from `@/lib/api/middleware`. The Ask MR routes (`api/chat/**`) run the guards in `src/features/ask-mr/server/` instead; `api/og` only renders an image.
-- Ask MR answers only from site data plus `src/features/ask-mr/knowledge/askMrKnowledge.ts`, which is public. Never add contact details beyond the site's, residence or visa status, compensation, or anything that could be misused; `tests/unit/ask-mr/knowledge.test.ts` guards this.
+- Next.js 16 changed APIs and conventions: read `apps/web/node_modules/next/dist/docs/` before writing Next code.
+- `apps/web/src/app/` stays thin: a route file composes a feature from `apps/web/src/features/<feature>/`.
+- JSON API routes wrap their handler in `createMiddleware` from `@/lib/api/middleware`. The Ask MR routes (`api/chat/**`) run the guards in `apps/web/src/features/ask-mr/server/` instead; `api/og` only renders an image.
+- Ask MR answers only from site data plus `apps/web/src/features/ask-mr/knowledge/askMrKnowledge.ts`, which is public. Never add contact details beyond the site's, residence or visa status, compensation, or anything that could be misused; `apps/web/tests/unit/ask-mr/knowledge.test.ts` guards this.
 - `TODO` needs a GitHub issue: `TODO(#123)`.
 - Commit scopes: the feature or area, e.g. `ask-mr`, `blog`, `resume`, `projects`, `contact`, `ui`, `api`, `deps`, `ci`, `agents`, `docs`.
 - Releases are automatic: `auto-release.yml` runs standard-version on `main` and writes `CHANGELOG.md`. Don't bump the version or edit the changelog by hand.

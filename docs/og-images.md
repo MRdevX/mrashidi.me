@@ -19,7 +19,7 @@ Generate static OG images for common pages:
 pnpm generate-og-images
 ```
 
-This creates images in `/public/`:
+This creates images in `apps/web/public/`:
 - `og-image.png` - Homepage
 - `og-about.png` - About page
 - `og-projects.png` - Projects page
@@ -71,9 +71,9 @@ export const metadata = {
 ## Customization
 
 To modify the design, edit the shared template:
-- **Shared Template**: `src/components/og-template.tsx` (for Next.js/API routes)
-- **Script Template**: `scripts/og-template.jsx` (for Node.js scripts)
-- **Generation Script**: `scripts/generate-og-images.jsx` (main script for static generation)
+- **Shared Template**: `apps/web/src/components/og-template.tsx` (for Next.js/API routes)
+- **Script Template**: `apps/web/scripts/og-template.jsx` (for Node.js scripts)
+- **Generation Script**: `apps/web/scripts/generate-og-images.jsx` (main script for static generation)
 
 Both templates use the same React-based styling approach with your brand colors. The shared template ensures consistency between static and dynamic generation.
 
@@ -86,6 +86,6 @@ The `OgImageTemplate` component accepts three props:
 
 ### Making Changes
 
-1. **Update the shared template** in `src/components/og-template.tsx`
-2. **Sync changes** to `scripts/og-template.jsx` (Node.js version)
-3. **Test both** static generation (`scripts/generate-og-images.jsx`) and API route
+1. **Update the shared template** in `apps/web/src/components/og-template.tsx`
+2. **Sync changes** to `apps/web/scripts/og-template.jsx` (Node.js version)
+3. **Test both** static generation (`apps/web/scripts/generate-og-images.jsx`) and API route

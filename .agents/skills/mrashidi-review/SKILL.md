@@ -31,8 +31,8 @@ Report as a pass/fail table after the house-review findings.
 | ---- | ----- |
 | PR body | [Template](../../../.github/pull_request_template.md) sections in order; Breaking Changes and Affected Endpoints only when the diff warrants them; `Fixes #n` one per line in References; no agent attribution |
 | Commits | One line each, conventional, no body or trailers; cleanup in its own commit |
-| Slices | New code in `src/features/<feature>/`; route files thin; no import into another feature except its `index.ts` ([DR-0002](../../../docs/decisions/0002-feature-slices.md)) |
-| Endpoints | Every changed `src/app/api/**/route.ts` listed under Affected Endpoints; input validated with Zod at the route |
+| Slices | New code in `apps/web/src/features/<feature>/`; route files thin; no import into another feature except its `index.ts` ([DR-0002](../../../docs/decisions/0002-feature-slices.md)) |
+| Endpoints | Every changed `apps/web/src/app/api/**/route.ts` listed under Affected Endpoints; input validated with Zod at the route |
 | Ask MR | `askMrKnowledge.ts` or the system prompt changed → nothing private added ([DR-0004](../../../docs/decisions/0004-ask-mr-grounded-public-knowledge.md)), knowledge tests pass, `pnpm eval:ask-mr` run or explained |
 | Pages | A page added, renamed, or removed → metadata in `pageMetadataConfigs`, sitemap and OG images regenerated |
 | Vendored rules | `.agents/house-rules.md` and `.agents/skills/house-*` changed only through `pnpm house-rules:sync`, with the lock file |

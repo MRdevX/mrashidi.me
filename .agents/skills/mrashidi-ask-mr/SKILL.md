@@ -11,7 +11,7 @@ disable-model-invocation: false
 # Ask MR
 
 Ask MR answers only from public site data plus
-`src/features/ask-mr/knowledge/askMrKnowledge.ts`
+`apps/web/src/features/ask-mr/knowledge/askMrKnowledge.ts`
 ([DR-0004](../../../docs/decisions/0004-ask-mr-grounded-public-knowledge.md)). The repo is open
 source, so everything the model sees is public.
 
@@ -24,17 +24,17 @@ source, so everything the model sees is public.
 | Tools | `server/tools.ts` |
 | Guards (BotID, limits, kill switch) | `server/guards.ts`, `server/redis.ts` |
 | Model call | `server/modelCall.ts`, model id from `ASK_MR_MODEL` |
-| Routes | `src/app/api/chat/route.ts`, `src/app/api/chat/feedback/route.ts` |
-| UI | `ui/`, `client/`; terminal `ask` command in `src/features/home/terminal/` |
+| Routes | `apps/web/src/app/api/chat/route.ts`, `apps/web/src/app/api/chat/feedback/route.ts` |
+| UI | `ui/`, `client/`; terminal `ask` command in `apps/web/src/features/home/terminal/` |
 
-All paths under `src/features/ask-mr/` unless absolute.
+All paths under `apps/web/src/features/ask-mr/` unless absolute.
 
 ## Adding facts
 
 - Third person ("Mahdi …"), one or two sentences per entry.
 - An empty field is left out of the prompt, so Ask MR deflects to contact. Leave a field empty rather than guess.
-- Never add phone numbers, a personal email beyond the site's, residence or visa status, compensation, or availability details. `tests/unit/ask-mr/knowledge.test.ts` enforces this; extend it when you add a new kind of field.
-- `roleNotes[].company` must match `company` in `src/data/profile/workExperience.ts`.
+- Never add phone numbers, a personal email beyond the site's, residence or visa status, compensation, or availability details. `apps/web/tests/unit/ask-mr/knowledge.test.ts` enforces this; extend it when you add a new kind of field.
+- `roleNotes[].company` must match `company` in `apps/web/src/data/profile/workExperience.ts`.
 
 ## Changing prompt, tools, or model
 
@@ -44,5 +44,5 @@ All paths under `src/features/ask-mr/` unless absolute.
 
 ## Verify
 
-`pnpm gate`, then `pnpm test:e2e tests/e2e/ask-mr.spec.ts`. Locally the chat needs
+`pnpm gate`, then `pnpm test:e2e apps/web/tests/e2e/ask-mr.spec.ts`. Locally the chat needs
 `AI_GATEWAY_API_KEY`; without Upstash the limits fall back to memory.
