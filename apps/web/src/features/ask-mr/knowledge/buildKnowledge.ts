@@ -1,8 +1,6 @@
-import { type Content, type Project, projectSlug } from "@mrashidi/types";
+import { type Content, firstName, type Project, projectSlug } from "@mrashidi/types";
 
 export type KnowledgeSources = Content;
-
-export const firstName = (sources: Pick<Content, "profile">): string => sources.profile.person.name.split(" ")[0];
 
 const filled = (value: string | undefined): value is string => Boolean(value?.trim());
 
@@ -128,7 +126,7 @@ function extraSection(sources: KnowledgeSources): string {
     values.some(filled) ? `${label}:\n${bullets(values, "  ")}` : "";
 
   return section(
-    `Additional facts from ${firstName(sources)}`,
+    `Additional facts from ${firstName(sources.profile)}`,
     joinBlocks(
       [
         joinBlocks(

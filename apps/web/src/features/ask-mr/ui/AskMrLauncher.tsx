@@ -1,7 +1,9 @@
 "use client";
 
+import { firstName } from "@mrashidi/types";
 import { Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { ASK_MR_NAME } from "../constants";
 import { useAskMr } from "./AskMrProvider";
@@ -34,6 +36,7 @@ function useOncePerSession(): boolean {
 export function AskMrLauncher() {
   const { isOpen, open } = useAskMr();
   const isMac = useIsMac();
+  const name = firstName(useContent().profile);
   const pulse = useOncePerSession();
 
   return (
@@ -42,7 +45,7 @@ export function AskMrLauncher() {
       onClick={() => open({ source: "launcher" })}
       aria-haspopup="dialog"
       aria-expanded={isOpen}
-      aria-label={`Open ${ASK_MR_NAME}, an AI assistant about Mahdi`}
+      aria-label={`Open ${ASK_MR_NAME}, an AI assistant about ${name}`}
       className={cn(
         "ask-mr-launcher fixed right-4 z-[60] inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-white/90 text-sm font-semibold text-gray-900 shadow-[0_8px_30px_-8px_rgb(0_0_0/0.35),0_0_24px_-6px_rgb(255_95_31/0.6)] backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:bg-gray-900/90 dark:text-white",
         "bottom-[calc(6rem+env(safe-area-inset-bottom,0px))] size-12 justify-center sm:bottom-6 sm:right-6 sm:size-auto sm:px-4 sm:py-2.5",

@@ -1,10 +1,12 @@
 "use client";
 
+import { firstName } from "@mrashidi/types";
 import { Mail, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { FaLinkedin, FaTelegram } from "react-icons/fa";
 import { trackAskMr } from "@/features/ask-mr/client/analytics";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
+import { useContent } from "@/lib/content";
 import { CardShell, cardButtonClass } from "./CardShell";
 
 interface ContactCardProps {
@@ -16,10 +18,11 @@ interface ContactCardProps {
 }
 
 export function ContactCard({ contactPath, email, linkedin, telegram, onNavigate }: ContactCardProps) {
+  const name = firstName(useContent().profile);
   const track = () => trackAskMr("ask_mr_tool_click", { tool: "contactHandoff" });
 
   return (
-    <CardShell title="Reach Mahdi directly">
+    <CardShell title={`Reach ${name} directly`}>
       <div className="flex flex-wrap gap-2">
         <Link
           href={contactPath}

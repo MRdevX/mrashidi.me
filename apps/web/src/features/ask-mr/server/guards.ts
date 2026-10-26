@@ -21,8 +21,8 @@ const MESSAGES: Record<AskMrErrorCode, string> = {
   invalid: "That message couldn't be sent. Please try rephrasing it.",
   bot: "Automated traffic isn't allowed.",
   rate_limited: "You're sending messages quickly. Please wait a moment.",
-  budget_exhausted: "Ask MR is resting for today. You can still reach Mahdi directly.",
-  disabled: "Ask MR is offline right now. You can still reach Mahdi directly.",
+  budget_exhausted: "Ask MR is resting for today. You can still get in touch through the contact page.",
+  disabled: "Ask MR is offline right now. You can still get in touch through the contact page.",
   server: "Ask MR hit a snag. Please try again.",
 };
 

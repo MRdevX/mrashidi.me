@@ -17,7 +17,6 @@ export const TERMINAL_COMMAND_CLICK_EVENT = "terminal-command-click";
 export const TERMINAL_CONSTANTS = {
   HEIGHT: "600px",
   WELCOME_MESSAGE: "Welcome! Type 'help' to see available commands.",
-  AI_WELCOME_MESSAGE: "Hi, I'm MR, an AI that knows Mahdi's work. Ask me anything, or type 'help' for commands.",
   DEFAULT_PLACEHOLDER: "Type 'help' for available commands...",
   AI_PLACEHOLDER: "Type a question or 'help'…",
   NOT_FOUND_MESSAGE: 'Command not found. Type "help" for available commands.',
@@ -63,3 +62,6 @@ export const TERMINAL_STYLES = {
     MUTED: "text-gray-500 dark:text-gray-600",
   },
 } as const;
+
+export const aiWelcomeMessage = (name: string) =>
+  `Hi, I'm MR, an AI that knows ${name}'s work. Ask me anything, or type 'help' for commands.`;

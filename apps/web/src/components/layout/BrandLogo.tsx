@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getThemeConfig } from "@/config/theme.config";
+import { useContent } from "@/lib/content";
 import { detectDeviceCapabilities } from "@/lib/utils/performance";
 
 export const BrandLogo = () => {
+  const { profile } = useContent();
   const { getSectionTitle, getColor } = getThemeConfig();
   const [isLowPerformance, setIsLowPerformance] = useState(false);
 
@@ -16,7 +18,7 @@ export const BrandLogo = () => {
   }, []);
 
   return (
-    <Link href="/" className="flex items-center shrink-0 group" aria-label="Mahdi Rashidi - Home">
+    <Link href="/" className="flex items-center shrink-0 group" aria-label={`${profile.person.name} - Home`}>
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: -20 }}

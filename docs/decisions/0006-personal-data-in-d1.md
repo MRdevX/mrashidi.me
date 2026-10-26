@@ -56,10 +56,10 @@ publishing it as source, not to hide it.
 
 ## Implementation
 
-- [ ] `packages/types/`, `packages/types/fixtures/`
-- [ ] `apps/api/src/modules/content/`, `apps/api/migrations/`, `apps/api/scripts/seed.ts`
-- [ ] `apps/web/src/lib/content/`; delete `apps/web/src/data/profile/`
-- [ ] `scripts/check-no-personal-data.mjs`
+- [x] `packages/types/`, `packages/types/fixtures/`
+- [x] `apps/api/src/modules/content/`, `apps/api/migrations/`, `apps/api/scripts/seed.ts`
+- [x] `apps/web/src/lib/content/`; deleted `apps/web/src/data/profile/`
+- [x] `scripts/check-no-personal-data.mjs` (hashed phrases; `CHANGELOG.md` skipped because it mirrors history)
 
 ## Revisit when
 

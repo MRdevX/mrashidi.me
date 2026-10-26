@@ -1,7 +1,9 @@
 "use client";
 
+import { firstName } from "@mrashidi/types";
 import { ArrowUp, Square } from "lucide-react";
 import { type FormEvent, type KeyboardEvent, type RefObject, useLayoutEffect, useState } from "react";
+import { useContent } from "@/lib/content";
 import { ASK_MR_LIMITS } from "../constants";
 import { VoiceButton } from "./VoiceButton";
 
@@ -17,6 +19,7 @@ const MAX_HEIGHT = 140;
 
 export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: ComposerProps) {
   const [draft, setDraft] = useState("");
+  const name = firstName(useContent().profile);
   const remaining = ASK_MR_LIMITS.maxMessageChars - draft.length;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: re-measure whenever the draft changes
@@ -49,7 +52,7 @@ export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: Compose
     <form onSubmit={submit} className="border-t border-gray-200 p-3 dark:border-white/10">
       <div className="flex items-end gap-1 rounded-xl border border-gray-300 bg-white px-2 py-1.5 transition-colors focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/25 dark:border-white/15 dark:bg-black/40">
         <label htmlFor="ask-mr-input" className="sr-only">
-          Ask a question about Mahdi
+          Ask a question about {name}
         </label>
         <textarea
           id="ask-mr-input"
@@ -59,7 +62,7 @@ export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: Compose
           maxLength={ASK_MR_LIMITS.maxMessageChars}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={onKeyDown}
-          placeholder="Ask about Mahdi's work…"
+          placeholder={`Ask about ${name}'s work…`}
           disabled={disabled}
           enterKeyHint="send"
           autoComplete="off"
@@ -87,7 +90,7 @@ export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: Compose
         )}
       </div>
       <div className="mt-1.5 flex justify-between px-1 text-[11px] text-gray-500">
-        <span>AI answers from Mahdi's portfolio · may be inaccurate</span>
+        <span>AI answers from {name}'s portfolio · may be inaccurate</span>
         {remaining < 200 ? (
           <span aria-live="polite" className={remaining < 50 ? "text-amber-600" : undefined}>
             {remaining}

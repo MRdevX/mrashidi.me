@@ -54,10 +54,10 @@ describe("parseAskMrError", () => {
 
 describe("starterQuestions", () => {
   it("tailors questions to the current section", () => {
-    expect(starterQuestions("/projects")).toContain("What's his most complex project?");
-    expect(starterQuestions("/projects/anything")).toContain("What's his most complex project?");
-    expect(starterQuestions("/")).toContain("What does Mahdi work on these days?");
-    expect(starterQuestions(null).length).toBeGreaterThan(0);
+    expect(starterQuestions("/projects", "Jane")).toContain("What's his most complex project?");
+    expect(starterQuestions("/projects/anything", "Jane")).toContain("What's his most complex project?");
+    expect(starterQuestions("/", "Jane")).toContain("What does Jane work on these days?");
+    expect(starterQuestions(null, "Jane").length).toBeGreaterThan(0);
   });
 });
 

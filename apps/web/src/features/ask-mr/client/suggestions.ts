@@ -1,5 +1,5 @@
-const DEFAULT = [
-  "What does Mahdi work on these days?",
+const defaults = (name: string) => [
+  `What does ${name} work on these days?`,
   "What's his strongest tech stack?",
   "Tell me about a project he led",
   "Is he open to new opportunities?",
@@ -14,7 +14,7 @@ const BY_ROUTE: Record<string, string[]> = {
   ],
   "/resume": [
     "Summarize his leadership experience",
-    "What did he do at inno2fleet?",
+    "What was his most recent role?",
     "Which industries has he worked in?",
     "Can I get his CV?",
   ],
@@ -28,7 +28,7 @@ const BY_ROUTE: Record<string, string[]> = {
   "/contact": ["How can I hire him?", "Is he open to freelance work?", "What's the best way to reach him?"],
 };
 
-export function starterQuestions(pathname: string | null): string[] {
+export function starterQuestions(pathname: string | null, name: string): string[] {
   const route = pathname ? `/${pathname.split("/")[1] ?? ""}` : "/";
-  return BY_ROUTE[route] ?? DEFAULT;
+  return BY_ROUTE[route] ?? defaults(name);
 }

@@ -34,7 +34,7 @@ const request = (body: unknown) =>
 const validBody = {
   conversationId: "6f1c1f9e-8f39-4d61-9a6e-3b8f0f6c2d11",
   pathname: "/projects",
-  messages: [user("u1", "Has Mahdi used Kafka?")],
+  messages: [user("u1", "Has Jane used Kafka?")],
 };
 
 describe("sanitizeMessages", () => {
