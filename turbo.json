@@ -7,13 +7,13 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_*"],
+      "env": ["NEXT_PUBLIC_*", "CONTENT_API_URL", "CONTENT_API_TOKEN"],
       "inputs": ["$TURBO_DEFAULT$", ".env*", "!**/*.md", "!tests/**", "!vitest.config.*", "!playwright.config.*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "build:fast": {
       "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_*"],
+      "env": ["NEXT_PUBLIC_*", "CONTENT_API_URL", "CONTENT_API_TOKEN"],
       "inputs": ["$TURBO_DEFAULT$", ".env*", "!**/*.md", "!tests/**", "!vitest.config.*", "!playwright.config.*"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
