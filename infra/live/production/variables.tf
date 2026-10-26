@@ -1,5 +1,5 @@
 variable "cloudflare_api_token" {
-  description = "Cloudflare API token: D1 edit, Workers custom domains edit, Zone read on mrashidi.me."
+  description = "Cloudflare API token: D1 edit, Workers Scripts edit (for custom domains), DNS and Workers Routes edit on mrashidi.me."
   type        = string
   sensitive   = true
 }

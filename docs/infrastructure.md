@@ -33,7 +33,7 @@ Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner cre
 | 1Password item / GitHub secret | What it is |
 | ------------------------------ | ---------- |
 | `CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi deploy": Account · Workers Scripts edit, D1 edit, Account Settings read; Zone `mrashidi.me` · Workers Routes edit; used by `deploy-api.yml` |
-| `TF_CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi terraform": Account · D1 edit, Workers R2 Storage edit, Workers Scripts read; Zone `mrashidi.me` · DNS edit, Workers Routes edit, Zone read. Also used by `bootstrap` |
+| `TF_CLOUDFLARE_API_TOKEN` | Cloudflare "mrashidi terraform": Account · D1 edit, Workers R2 Storage edit, Workers Scripts edit (attaching a Worker custom domain needs it); Zone `mrashidi.me` · DNS edit, Workers Routes edit, Zone read. Also used by `bootstrap` |
 | `TF_R2_ACCESS_KEY_ID`, `TF_R2_SECRET_ACCESS_KEY` | R2 S3 key pair, Object Read & Write on `mrashidi-tf-state` only |
 | `TF_VERCEL_API_TOKEN` | Vercel token scoped to the notablenomads team |
 | `GITHUB_TERRAFORM_PAT` | Fine-grained PAT on this repo: Administration, Environments, Secrets, Variables write; read by `live/github` only, not copied to GitHub |
