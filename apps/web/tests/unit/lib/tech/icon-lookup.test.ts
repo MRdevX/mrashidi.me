@@ -1,6 +1,7 @@
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { getMainTechStack } from "@/features/home/techStack";
+import { fixtureSiteContent } from "@/lib/content/fixtures";
 import { getTechIcon } from "@/lib/tech";
 
 const { experience, projects, skills } = fixtureContent;
@@ -45,7 +46,9 @@ describe("getTechIcon", () => {
   });
 
   it("resolves every main stack icon key to its icon", () => {
-    expect(lookupTable(getMainTechStack(skills).map((item) => item.iconKey))).toMatchInlineSnapshot(`
+    expect(
+      lookupTable(getMainTechStack(fixtureSiteContent.skillsOverview.featured).map((item) => item.iconKey))
+    ).toMatchInlineSnapshot(`
       {
         "docker": "SiDocker text-blue-500",
         "gcp": "SiGooglecloud text-blue-400",

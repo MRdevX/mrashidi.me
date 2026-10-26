@@ -9,6 +9,7 @@ import {
   ProfileSchema,
   ProjectSchema,
   SkillCategorySchema,
+  SkillsOverviewSchema,
 } from "@mrashidi/types";
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { cache } from "react";
@@ -47,16 +48,17 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
   if (!base) {
     return fixtureSiteContent;
   }
-  const [profile, about, experience, education, certificates, skills, projects] = await Promise.all([
+  const [profile, about, experience, education, certificates, skills, skillsOverview, projects] = await Promise.all([
     fetchJson(base, "/v1/profile", ProfileSchema),
     fetchJson(base, "/v1/about", AboutSchema),
     fetchJson(base, "/v1/experience", z.array(ExperienceEntrySchema)),
     fetchJson(base, "/v1/education", z.array(EducationSchema)),
     fetchJson(base, "/v1/certificates", z.array(CertificateCategorySchema)),
     fetchJson(base, "/v1/skills", z.array(SkillCategorySchema)),
+    fetchJson(base, "/v1/skills/overview", SkillsOverviewSchema),
     fetchJson(base, "/v1/projects", z.array(ProjectSchema)),
   ]);
-  return { profile, about, experience, education, certificates, skills, projects };
+  return { profile, about, experience, education, certificates, skills, skillsOverview, projects };
 });
 
 export const getAskMrKnowledge = cache(async (): Promise<AskMrKnowledge> => {

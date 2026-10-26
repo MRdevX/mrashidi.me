@@ -1,5 +1,6 @@
 "use client";
 
+import type { SkillGroupId } from "@mrashidi/types";
 import type { LucideIcon } from "lucide-react";
 import {
   Activity,
@@ -21,14 +22,11 @@ import { cn } from "@/lib/utils";
 import { AboutCardSurface } from "./AboutCardSurface";
 import { AboutSection } from "./AboutSection";
 import {
-  getPrimaryStack,
-  getSkillGroups,
   matchesSkillFilter,
   SKILL_FILTERS,
   SKILL_TIER_META,
   SKILL_TIERS,
   type SkillFilter,
-  type SkillGroupId,
 } from "./aboutSkillsGrouped";
 import { SkillChip, SkillTierSwatch } from "./SkillChip";
 
@@ -68,9 +66,9 @@ function CardHeading({ Icon, title, meta }: { Icon: LucideIcon; title: string; m
 
 export function SkillsSection() {
   const { getTextColor } = getThemeConfig();
-  const { skills } = useContent();
-  const skillGroups = getSkillGroups(skills);
-  const primaryStackSkills = getPrimaryStack(skills);
+  const {
+    skillsOverview: { groups: skillGroups, featured: primaryStackSkills },
+  } = useContent();
   const allSkills = skillGroups.flatMap((group) => group.skills);
   const [filter, setFilter] = useState<SkillFilter>("all");
 

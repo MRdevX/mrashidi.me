@@ -1,6 +1,6 @@
-import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
 import { getMainTechStack, normalizeIconKey } from "@/features/home/techStack";
+import { fixtureSiteContent } from "@/lib/content/fixtures";
 
 describe("normalizeIconKey", () => {
   it("lowercases and removes dots and spaces", () => {
@@ -20,8 +20,8 @@ describe("normalizeIconKey", () => {
 });
 
 describe("getMainTechStack", () => {
-  it("returns deduplicated items with name and resolvable iconKey", () => {
-    const stack = getMainTechStack(fixtureContent.skills);
+  it("returns featured skills with a resolvable iconKey", () => {
+    const stack = getMainTechStack(fixtureSiteContent.skillsOverview.featured);
     expect(stack.length).toBeGreaterThan(0);
     const names = stack.map((s) => s.name);
     expect(new Set(names).size).toBe(names.length);
