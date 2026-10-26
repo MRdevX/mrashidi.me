@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { projectSlug } from "../src/project";
 import { fixtureContent } from "./index";
 
 describe("fixture content", () => {
@@ -6,8 +7,8 @@ describe("fixture content", () => {
     expect(fixtureContent.profile.person.name).toBe("Jane Doe");
   });
 
-  it("gives every project a unique title so slugs stay unique", () => {
-    const titles = fixtureContent.projects.map((p) => p.title.toLowerCase());
-    expect(new Set(titles).size).toBe(titles.length);
+  it("gives every project a unique slug", () => {
+    const slugs = fixtureContent.projects.map(projectSlug);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 });

@@ -17,3 +17,12 @@ export const ProjectSchema = z.object({
 
 export type Project = z.infer<typeof ProjectSchema>;
 export type ProjectType = Project["type"];
+
+export const projectSlug = (project: Pick<Project, "title">): string =>
+  project.title
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-");
