@@ -25,6 +25,8 @@ hoistPattern:
   - "*biome*"
   - "*eslint*"
   - "*prettier*"
+  # Libraries such as react-icons import React types they do not declare; they must resolve @types/react.
+  - "@types/*"
 
 # Only build dependencies that need native compilation
 onlyBuiltDependencies:

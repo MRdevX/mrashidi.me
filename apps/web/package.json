@@ -16,7 +16,7 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "generate-sitemap": "NODE_NO_WARNINGS=1 tsx scripts/generate-sitemap.ts",
     "generate-og-images": "tsx scripts/generate-og-images.jsx",
     "eval:ask-mr": "NODE_NO_WARNINGS=1 tsx scripts/ask-mr-eval.ts",
