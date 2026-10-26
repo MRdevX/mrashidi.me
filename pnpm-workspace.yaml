@@ -14,6 +14,7 @@ overrides:
   # @vercel/og 0.11 auto-installs sharp 0.34 (libvips/libheif CVEs); 1.0.x ships without hb.wasm.
   sharp: ">=0.35.4"
   zod: ">=4.6.6"
+  undici@7: "^7.30.1"
 
 # Optimize dependency resolution for faster installs
 resolutionMode: "lowest-direct"
