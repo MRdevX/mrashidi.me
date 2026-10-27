@@ -1,6 +1,11 @@
 import type { BlogPost } from "@mrashidi/types";
 
+export interface BlogSnapshot {
+  posts: BlogPost[];
+  fetchedAt: Date;
+}
+
 export interface BlogSnapshotRepository {
-  getPosts(): Promise<BlogPost[] | null>;
+  getSnapshot(): Promise<BlogSnapshot | null>;
   savePosts(posts: readonly BlogPost[], fetchedAt: Date): Promise<void>;
 }

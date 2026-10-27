@@ -1,15 +1,32 @@
-import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
-import { pageOf } from "../domain/blog-post.ts";
-import type { BlogSnapshotRepository } from "../domain/blog-snapshot-repository.ts";
+import { isStale, pageOf } from "../domain/blog-post.ts";
+import type { BlogSnapshot, BlogSnapshotRepository } from "../domain/blog-snapshot-repository.ts";
 
-export function createBlogQueries(repository: BlogSnapshotRepository) {
+export function createBlogQueries(
+  repository: BlogSnapshotRepository,
+  refresh: (now: Date) => Promise<void>,
+  clock: () => Date = () => new Date()
+) {
+  async function freshSnapshot(): Promise<BlogSnapshot> {
+    const now = clock();
+    const snapshot = await repository.getSnapshot();
+    if (snapshot && !isStale(snapshot.fetchedAt, now)) {
+      return snapshot;
+    }
+    try {
+      await refresh(now);
+    } catch (error) {
+      if (!snapshot) {
+        throw error;
+      }
+      console.error(error);
+      return snapshot;
+    }
+    return (await repository.getSnapshot()) ?? { posts: [], fetchedAt: now };
+  }
+
   return {
     async page(page: number, limit: number) {
-      const posts = await repository.getPosts();
-      if (!posts) {
-        throw new ContentNotFoundError("Blog posts");
-      }
-      return pageOf(posts, page, limit);
+      return pageOf((await freshSnapshot()).posts, page, limit);
     },
   };
 }

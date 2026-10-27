@@ -3,6 +3,7 @@ import { fixtureContent } from "@mrashidi/types/fixtures";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createDb } from "#db/index.ts";
 import { snapshots } from "#db/schema.ts";
+import { createBlogQueries } from "../src/modules/blog/application/blog-queries.ts";
 import { createRefreshBlog } from "../src/modules/blog/application/refresh-blog.ts";
 import {
   EXCERPT_LENGTH,
@@ -108,10 +109,6 @@ describe("blog refresh and routes", () => {
     await createDb(env.DB).delete(snapshots);
   });
 
-  it("answers 404 before the first refresh", async () => {
-    expect((await authedApi("/v1/blog/posts")).status).toBe(404);
-  });
-
   it("serves refreshed posts, matching the read-model fixture", async () => {
     await refresh({ items: async () => FEED_ITEMS });
 
@@ -142,6 +139,56 @@ describe("blog refresh and routes", () => {
         },
       })
     ).rejects.toThrow("Medium down");
-    expect(await repository().getPosts()).toHaveLength(FEED_ITEMS.length);
+    expect((await repository().getSnapshot())?.posts).toHaveLength(FEED_ITEMS.length);
+  });
+});
+
+describe("blog queries", () => {
+  const SIX_HOURS = 6 * 60 * 60 * 1000;
+  const failingFeed: FeedGateway = {
+    items: async () => {
+      throw new Error("Medium down");
+    },
+  };
+  const queries = (gateway: FeedGateway, now = NOW) =>
+    createBlogQueries(
+      repository(),
+      (at) => createRefreshBlog(gateway, repository())({ profileUrl: fixtureContent.profile.social.medium, now: at }),
+      () => now
+    );
+
+  beforeEach(async () => {
+    await createDb(env.DB).delete(snapshots);
+  });
+
+  it("fetches the feed on the first request", async () => {
+    expect(await queries({ items: async () => FEED_ITEMS }).page(1, 50)).toMatchObject({ total: 7 });
+  });
+
+  it("serves a fresh snapshot without fetching the feed", async () => {
+    await refresh({ items: async () => FEED_ITEMS });
+    const items = vi.fn(async () => [item(8)]);
+
+    expect(await queries({ items }, new Date(NOW.getTime() + SIX_HOURS - 1)).page(1, 50)).toMatchObject({ total: 7 });
+    expect(items).not.toHaveBeenCalled();
+  });
+
+  it("refetches a stale snapshot", async () => {
+    await refresh({ items: async () => FEED_ITEMS });
+
+    expect(
+      await queries({ items: async () => [...FEED_ITEMS, item(8)] }, new Date(NOW.getTime() + SIX_HOURS)).page(1, 50)
+    ).toMatchObject({ total: 8 });
+  });
+
+  it("serves the stale snapshot when the feed fails", async () => {
+    await refresh({ items: async () => FEED_ITEMS });
+    vi.spyOn(console, "error").mockImplementation(() => {});
+
+    expect(await queries(failingFeed, new Date(NOW.getTime() + SIX_HOURS)).page(1, 50)).toMatchObject({ total: 7 });
+  });
+
+  it("fails when there is no snapshot and the feed fails", async () => {
+    await expect(queries(failingFeed).page(1, 50)).rejects.toThrow("Medium down");
   });
 });

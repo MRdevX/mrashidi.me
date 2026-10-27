@@ -10,6 +10,15 @@ export async function readSnapshot<T>(db: Db, key: SnapshotKey, schema: z.ZodTyp
   return row ? schema.parse(row.data) : null;
 }
 
+export async function readTimedSnapshot<T>(
+  db: Db,
+  key: SnapshotKey,
+  schema: z.ZodType<T>
+): Promise<{ data: T; fetchedAt: Date } | null> {
+  const row = await db.query.snapshots.findFirst({ where: eq(snapshots.key, key) });
+  return row ? { data: schema.parse(row.data), fetchedAt: row.fetchedAt } : null;
+}
+
 export async function writeSnapshot(db: Db, key: SnapshotKey, data: unknown, fetchedAt: Date): Promise<void> {
   await db
     .insert(snapshots)
