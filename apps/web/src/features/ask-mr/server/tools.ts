@@ -1,8 +1,8 @@
 import { firstName, type ProjectEntry } from "@mrashidi/types";
 import { type InferUITools, tool, type UIDataTypes, type UIMessage } from "ai";
 import { z } from "zod";
-import { getAllPosts } from "@/features/blog/server";
 import type { SiteContent } from "@/lib/content";
+import { getBlogPosts } from "@/lib/content/server";
 import { logger } from "@/lib/core";
 import { ASK_MR_LIMITS } from "../constants";
 
@@ -38,22 +38,9 @@ function toProjectCard(project: ProjectEntry): AskMrProjectCard {
   };
 }
 
-const BLOG_CACHE_MS = 10 * 60 * 1000;
-let blogCache: { at: number; posts: AskMrBlogPost[] } | null = null;
-
 async function latestPosts(limit: number): Promise<AskMrBlogPost[]> {
-  if (!blogCache || Date.now() - blogCache.at > BLOG_CACHE_MS) {
-    const { posts } = await getAllPosts(1, ASK_MR_LIMITS.maxBlogPosts);
-    blogCache = {
-      at: Date.now(),
-      posts: posts.map((post) => ({
-        title: post.title,
-        url: post.url,
-        publishedAt: new Date(post.publishedAt).toISOString(),
-      })),
-    };
-  }
-  return blogCache.posts.slice(0, limit);
+  const { posts } = await getBlogPosts(1, limit);
+  return posts.map(({ title, url, publishedAt }) => ({ title, url, publishedAt }));
 }
 
 /** Read-only tools: none of them changes server state; actions (sending a CV request) stay with the visitor. */
