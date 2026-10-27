@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.21](https://github.com/MRdevX/mrashidi.me/compare/v0.2.20...v0.2.21) (2026-10-27)
+
+
+### Bug Fixes
+
+* **blog:** fetch the Medium feed on request when the snapshot is missing or stale ([a632727](https://github.com/MRdevX/mrashidi.me/commit/a632727c88cbdb16130d704258832777198a0e6d))
+
 ### [0.2.20](https://github.com/MRdevX/mrashidi.me/compare/v0.2.19...v0.2.20) (2026-10-27)
 
 
