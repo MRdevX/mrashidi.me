@@ -1,11 +1,7 @@
 import type { BlogPost } from "@mrashidi/types";
-
-export interface BlogSnapshot {
-  posts: BlogPost[];
-  fetchedAt: Date;
-}
+import type { Timed } from "#shared/snapshot-read-through.ts";
 
 export interface BlogSnapshotRepository {
-  getSnapshot(): Promise<BlogSnapshot | null>;
+  getPosts(): Promise<Timed<BlogPost[]> | null>;
   savePosts(posts: readonly BlogPost[], fetchedAt: Date): Promise<void>;
 }

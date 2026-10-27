@@ -34,8 +34,8 @@ const FEED_ITEMS = [1, 2, 3, 4, 5, 6, 7].map((n) =>
 );
 
 const repository = () => createD1BlogSnapshotRepository(createDb(env.DB));
-const refresh = (gateway: FeedGateway) =>
-  createRefreshBlog(gateway, repository())({ profileUrl: fixtureContent.profile.social.medium, now: NOW });
+const refresh = (gateway: FeedGateway, now = new Date()) =>
+  createRefreshBlog(gateway, repository())({ profileUrl: fixtureContent.profile.social.medium, now });
 
 describe("blog domain", () => {
   it("finds the RSS feed for both Medium profile URL styles", () => {
@@ -139,56 +139,39 @@ describe("blog refresh and routes", () => {
         },
       })
     ).rejects.toThrow("Medium down");
-    expect((await repository().getSnapshot())?.posts).toHaveLength(FEED_ITEMS.length);
+    expect((await repository().getPosts())?.data).toHaveLength(FEED_ITEMS.length);
   });
 });
 
 describe("blog queries", () => {
-  const SIX_HOURS = 6 * 60 * 60 * 1000;
-  const failingFeed: FeedGateway = {
-    items: async () => {
-      throw new Error("Medium down");
-    },
-  };
-  const queries = (gateway: FeedGateway, now = NOW) =>
+  const queries = (gateway: FeedGateway, background: (work: Promise<unknown>) => void = () => {}) =>
     createBlogQueries(
       repository(),
-      (at) => createRefreshBlog(gateway, repository())({ profileUrl: fixtureContent.profile.social.medium, now: at }),
-      () => now
+      (now) => refresh(gateway, now),
+      background,
+      () => NOW
     );
 
   beforeEach(async () => {
     await createDb(env.DB).delete(snapshots);
   });
 
-  it("fetches the feed on the first request", async () => {
+  it("fetches and saves the feed on the first request", async () => {
     expect(await queries({ items: async () => FEED_ITEMS }).page(1, 50)).toMatchObject({ total: 7 });
+    expect((await repository().getPosts())?.fetchedAt).toEqual(NOW);
   });
 
-  it("serves a fresh snapshot without fetching the feed", async () => {
-    await refresh({ items: async () => FEED_ITEMS });
-    const items = vi.fn(async () => [item(8)]);
+  it("serves stale posts and saves the new feed in the background", async () => {
+    await refresh({ items: async () => FEED_ITEMS }, new Date(0));
+    const queued: Promise<unknown>[] = [];
 
-    expect(await queries({ items }, new Date(NOW.getTime() + SIX_HOURS - 1)).page(1, 50)).toMatchObject({ total: 7 });
-    expect(items).not.toHaveBeenCalled();
-  });
+    const page = await queries({ items: async () => [...FEED_ITEMS, item(8)] }, (work) => queued.push(work)).page(
+      1,
+      50
+    );
+    await Promise.all(queued);
 
-  it("refetches a stale snapshot", async () => {
-    await refresh({ items: async () => FEED_ITEMS });
-
-    expect(
-      await queries({ items: async () => [...FEED_ITEMS, item(8)] }, new Date(NOW.getTime() + SIX_HOURS)).page(1, 50)
-    ).toMatchObject({ total: 8 });
-  });
-
-  it("serves the stale snapshot when the feed fails", async () => {
-    await refresh({ items: async () => FEED_ITEMS });
-    vi.spyOn(console, "error").mockImplementation(() => {});
-
-    expect(await queries(failingFeed, new Date(NOW.getTime() + SIX_HOURS)).page(1, 50)).toMatchObject({ total: 7 });
-  });
-
-  it("fails when there is no snapshot and the feed fails", async () => {
-    await expect(queries(failingFeed).page(1, 50)).rejects.toThrow("Medium down");
+    expect(page.total).toBe(7);
+    expect((await repository().getPosts())?.data).toHaveLength(8);
   });
 });

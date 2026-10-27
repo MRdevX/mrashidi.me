@@ -1,16 +1,40 @@
-import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
+import type { Contributions } from "@mrashidi/types";
+import { type Background, readThrough } from "#shared/snapshot-read-through.ts";
 import type { GitHubSnapshotRepository } from "../domain/github-snapshot-repository.ts";
+import type { RepoActivity } from "../domain/repo-activity.ts";
 
-export function createGitHubQueries(repository: GitHubSnapshotRepository) {
+export interface GitHubRefresh {
+  contributions(now: Date): Promise<Contributions>;
+  repoActivity(now: Date): Promise<RepoActivity>;
+}
+
+export function createGitHubQueries(
+  repository: GitHubSnapshotRepository,
+  refresh: GitHubRefresh,
+  background: Background,
+  clock: () => Date = () => new Date()
+) {
   return {
-    async contributions() {
-      const contributions = await repository.getContributions();
-      if (!contributions) {
-        throw new ContentNotFoundError("GitHub contributions");
+    contributions: () =>
+      readThrough({
+        read: repository.getContributions,
+        refresh: refresh.contributions,
+        now: clock(),
+        background,
+      }),
+    async repoActivity(): Promise<RepoActivity> {
+      try {
+        return await readThrough({
+          read: repository.getRepoActivity,
+          refresh: refresh.repoActivity,
+          now: clock(),
+          background,
+        });
+      } catch (error) {
+        console.error(error);
+        return {};
       }
-      return contributions;
     },
-    repoActivity: async () => (await repository.getRepoActivity()) ?? {},
   };
 }
 

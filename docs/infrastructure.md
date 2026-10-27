@@ -22,7 +22,7 @@ behind the `deploy-gate` environment's approval ([DR-0008](decisions/0008-apply-
 | Terraform `live/global` | Every DNS record in the zone except custom-domain records |
 | Terraform `live/production` | D1 `mrashidi-db`, Worker custom domain `api.mrashidi.me`, Vercel project settings and domains, the env vars `CONTENT_API_URL`, `CONTENT_API_TOKEN`, `REVALIDATE_SECRET` |
 | Terraform `live/github` | GitHub Actions secrets and variables, the `deploy-gate` environment |
-| Wrangler | Worker code and bindings (`apps/api/wrangler.toml`), Worker secrets `CONTENT_API_TOKEN` and `GH_API_TOKEN`, the cron trigger that refreshes GitHub and Medium snapshots ([DR-0011](decisions/0011-api-owns-external-sources-on-cron.md)), D1 migrations |
+| Wrangler | Worker code and bindings (`apps/api/wrangler.toml`), Worker secrets `CONTENT_API_TOKEN` and `GH_API_TOKEN`, D1 migrations. No Cron Triggers: snapshots refresh on request ([DR-0012](decisions/0012-refresh-external-sources-on-request.md)) |
 | By hand | API tokens, R2 S3 keys, 1Password items; R2 bucket `mrashidi-me-bucket` and its `s3.mrashidi.me` domain (outside Terraform) |
 | Vercel dashboard | Every other web env var (AI Gateway, Upstash, SES, Sentry, reCAPTCHA, Blob) |
 
@@ -38,7 +38,7 @@ Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner cre
 | `TF_VERCEL_API_TOKEN` | Vercel token scoped to the notablenomads team |
 | `GITHUB_TERRAFORM_PAT` | Fine-grained PAT on this repo: Administration, Environments, Secrets, Variables write; read by `live/github` only, not copied to GitHub |
 | `CONTENT_API_TOKEN` | Random 32+ bytes; bearer for every `/v1` route, set on the Worker and on Vercel |
-| `GH_API_TOKEN` | Fine-grained GitHub PAT, read-only on public repositories; the Worker's cron uses it for the GraphQL API (commit activity, contributions). Vercel no longer needs `GH_REST_API_TOKEN` |
+| `GH_API_TOKEN` | Fine-grained GitHub PAT, read-only on public repositories; the Worker uses it for the GraphQL API when it refreshes snapshots on request (commit activity, contributions). Vercel no longer needs `GH_REST_API_TOKEN` |
 | `REVALIDATE_SECRET` | Random 32+ bytes; the seed script sends it to the web app's revalidate route (Phase 5) |
 
 Locally, Terraform reads the same values with `op run --env-file infra/.env.op -- <command>`, so values

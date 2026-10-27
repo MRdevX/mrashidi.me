@@ -4,7 +4,11 @@ import { fixtureContent } from "@mrashidi/types/fixtures";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createDb } from "#db/index.ts";
 import { snapshots } from "#db/schema.ts";
-import { createRefreshGitHub } from "../src/modules/github/application/refresh-github.ts";
+import { createGitHubQueries } from "../src/modules/github/application/github-queries.ts";
+import {
+  createRefreshContributions,
+  createRefreshRepoActivity,
+} from "../src/modules/github/application/refresh-github.ts";
 import { contributionWindow } from "../src/modules/github/domain/contribution-window.ts";
 import type { GitHubGateway } from "../src/modules/github/domain/github-gateway.ts";
 import { parseGitHubLogin, parseRepoRef } from "../src/modules/github/domain/repo-ref.ts";
@@ -39,11 +43,24 @@ function fakeGateway(overrides: Partial<GitHubGateway> = {}): GitHubGateway {
 }
 
 const repository = () => createD1GitHubSnapshotRepository(createDb(env.DB));
-const refresh = (gateway: GitHubGateway) =>
-  createRefreshGitHub(
-    gateway,
-    repository()
-  )({ profileUrl: fixtureContent.profile.social.github, repoUrls: [repoUrl], now: NOW });
+const refreshContributions = (gateway: GitHubGateway, now: Date) =>
+  createRefreshContributions(gateway, repository())({ profileUrl: fixtureContent.profile.social.github, now });
+const refreshRepoActivity = (gateway: GitHubGateway, now: Date) =>
+  createRefreshRepoActivity(gateway, repository())({ repoUrls: [repoUrl], now });
+const refresh = async (gateway: GitHubGateway, now = new Date()) => {
+  await refreshContributions(gateway, now);
+  await refreshRepoActivity(gateway, now);
+};
+const queries = (gateway: GitHubGateway) =>
+  createGitHubQueries(
+    repository(),
+    {
+      contributions: (now) => refreshContributions(gateway, now),
+      repoActivity: (now) => refreshRepoActivity(gateway, now),
+    },
+    () => {},
+    () => NOW
+  );
 
 describe("GitHub domain", () => {
   it("reads owner and name from repository URLs and ignores other hosts", () => {
@@ -128,10 +145,6 @@ describe("GitHub refresh and routes", () => {
     await createDb(env.DB).delete(snapshots);
   });
 
-  it("answers 404 for contributions before the first refresh", async () => {
-    expect((await authedApi("/v1/github/contributions")).status).toBe(404);
-  });
-
   it("serves the refreshed contributions, matching the read-model fixture", async () => {
     await refresh(fakeGateway());
 
@@ -158,20 +171,19 @@ describe("GitHub refresh and routes", () => {
     });
   });
 
-  it("keeps saving one source when the other fails, then reports the failure", async () => {
-    await refresh(fakeGateway());
+  it("fetches and saves contributions on the first request", async () => {
+    expect(await queries(fakeGateway()).contributions()).toEqual(fakeContributions());
+    expect(await repository().getContributions()).toEqual({ data: fakeContributions(), fetchedAt: NOW });
+  });
+
+  it("answers no repo activity when GitHub fails before the first snapshot", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
     const failing = fakeGateway({
-      contributions: async () => {
+      latestCommits: async () => {
         throw new Error("GitHub down");
       },
-      latestCommits: async () => ({ [repoUrl]: { hash: "fff999", committedAt: "2026-03-03T00:00:00.000Z" } }),
     });
 
-    await expect(refresh(failing)).rejects.toThrow("GitHub refresh failed");
-
-    expect(await repository().getContributions()).toEqual(fakeContributions());
-    expect(await repository().getRepoActivity()).toEqual({
-      [repoUrl]: { hash: "fff999", committedAt: "2026-03-03T00:00:00.000Z" },
-    });
+    expect(await queries(failing).repoActivity()).toEqual({});
   });
 });
