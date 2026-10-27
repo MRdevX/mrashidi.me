@@ -5,18 +5,24 @@
     "location": "Exampleville",
     "email": "hello@example.com",
     "website": "https://example.com",
-    "twitterHandle": "@janedoe"
+    "twitterHandle": "@janedoe",
+    "worksFor": "Freelance"
   },
   "social": {
     "github": "https://github.com/janedoe",
     "linkedin": "https://www.linkedin.com/in/janedoe",
     "telegram": "https://t.me/janedoe",
-    "githubRepo": "https://github.com/janedoe/portfolio"
+    "githubRepo": "https://github.com/janedoe/portfolio",
+    "medium": "https://medium.com/@janedoe"
   },
   "site": {
     "name": "JD Portfolio",
     "title": "Jane Doe | Software Engineer",
     "description": "Fixture profile for local development and tests. Backend engineer building APIs and services.",
     "keywords": "Software Engineer, Backend, TypeScript, Node.js"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "description": "Have a question or want to discuss a potential project? Feel free to reach out using the form below. I'll get back to you as soon as possible."
   }
 }
