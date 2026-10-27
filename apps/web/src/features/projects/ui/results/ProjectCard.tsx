@@ -16,8 +16,8 @@ type ProjectCardProps = {
 };
 
 export function ProjectCard({ project, onOpen }: ProjectCardProps) {
-  const { filters, commitInfo, toggleStack } = useProjectCatalog();
-  const commit = project.githubUrl ? commitInfo.get(project.githubUrl) : undefined;
+  const { filters, toggleStack } = useProjectCatalog();
+  const commit = project.latestCommit;
   const hiddenStackCount = project.stack.length - VISIBLE_STACK;
   const meta = [project.type === "client" ? project.clientName : "Personal", project.role].filter(Boolean).join(" · ");
   const links = [
@@ -80,8 +80,8 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
             {project.openSource ? "Open source" : "Private"}
           </span>
           {commit ? (
-            <span className="truncate font-terminal text-xs" title={formatDate(commit.date)}>
-              Updated {formatRelativeTime(commit.date)}
+            <span className="truncate font-terminal text-xs" title={formatDate(commit.committedAt)}>
+              Updated {formatRelativeTime(commit.committedAt)}
             </span>
           ) : null}
         </div>

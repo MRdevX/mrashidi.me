@@ -9,10 +9,6 @@ vi.mock("framer-motion", () => ({
   useReducedMotion: () => false,
 }));
 
-vi.mock("@/features/projects/infrastructure/github", () => ({
-  getLatestCommitInfo: vi.fn().mockResolvedValue(null),
-}));
-
 const { projects } = testContent;
 const status = () => screen.getByRole("status");
 const filterBar = () => screen.getByRole("region", { name: "Filter projects" });
@@ -20,7 +16,6 @@ const filterBar = () => screen.getByRole("region", { name: "Filter projects" });
 describe("ProjectsPage", () => {
   beforeEach(() => {
     window.history.replaceState(null, "", "/projects");
-    window.localStorage.clear();
   });
 
   it("shows the first page of projects and loads more on demand", () => {
