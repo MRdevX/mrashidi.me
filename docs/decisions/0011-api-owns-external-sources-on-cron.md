@@ -2,10 +2,10 @@
 id: 0011
 title: Fetch GitHub and Medium in the API on a cron, serve them from D1
 issues: []
-status: accepted
+status: superseded
 date: 2026-10-27
 supersedes: []
-superseded_by: []
+superseded_by: ["DR-0012"]
 related: [DR-0005, DR-0009, DR-0010]
 areas: [api, app, infra]
 ---
