@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.22](https://github.com/MRdevX/mrashidi.me/compare/v0.2.21...v0.2.22) (2026-10-27)
+
+
+### Features
+
+* **api:** refresh GitHub and Medium snapshots on request and drop the cron ([8938847](https://github.com/MRdevX/mrashidi.me/commit/893884753277f922f3451e500b459a0658c87a01))
+
+
+### Documentation
+
+* supersede DR-0011 with on-request snapshot refresh ([2190ae4](https://github.com/MRdevX/mrashidi.me/commit/2190ae46adc5abb58f00c00984e77911bde14a5b))
+
 ### [0.2.21](https://github.com/MRdevX/mrashidi.me/compare/v0.2.20...v0.2.21) (2026-10-27)
 
 
