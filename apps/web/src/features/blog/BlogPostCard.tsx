@@ -54,7 +54,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
             <p
               className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} line-clamp-3 transition-colors`}
             >
-              {post.content}
+              {post.excerpt}
             </p>
           </div>
           <BlogPostCardFooter publishedAt={post.publishedAt} />

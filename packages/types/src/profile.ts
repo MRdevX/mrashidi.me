@@ -8,18 +8,24 @@ export const ProfileSchema = z.object({
     email: z.email(),
     website: z.url(),
     twitterHandle: z.string(),
+    worksFor: z.string().min(1),
   }),
   social: z.object({
     github: z.url(),
     linkedin: z.url(),
     telegram: z.url(),
     githubRepo: z.url(),
+    medium: z.url(),
   }),
   site: z.object({
     name: z.string().min(1),
     title: z.string().min(1),
     description: z.string().min(1),
     keywords: z.string(),
+  }),
+  contact: z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
   }),
 });
 

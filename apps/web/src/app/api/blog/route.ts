@@ -1,17 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getAllPosts } from "@/features/blog/server";
 import { corsPreflight, createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
-
-export const runtime = "nodejs";
+import { getBlogPosts } from "@/lib/content/server";
 
 async function handleBlogPosts(_request: NextRequest, pagination: { page: number; limit: number }) {
-  const result = await getAllPosts(pagination.page, pagination.limit);
+  const { posts, total } = await getBlogPosts(pagination.page, pagination.limit);
 
-  return createSuccessResponse(result.posts, {
-    fromCache: result.fromCache,
-    total: result.total,
+  return createSuccessResponse(posts, {
+    total,
     page: pagination.page,
     limit: pagination.limit,
   });

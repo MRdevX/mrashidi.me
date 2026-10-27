@@ -1,7 +1,7 @@
 import type { CatalogOverview } from "@mrashidi/types";
 import { createProjectMatcher, type ProjectFilters, type ProjectTypeFilter } from "./filters";
 import type { Project } from "./project";
-import { type CommitDates, sortProjects } from "./sort";
+import { sortProjects } from "./sort";
 import { countStackUsage, type StackFacet, type StackFacetGroup } from "./stack";
 
 export interface CatalogQueryResult {
@@ -14,8 +14,7 @@ export interface CatalogQueryResult {
 export const queryCatalog = (
   projects: readonly Project[],
   overview: CatalogOverview,
-  filters: ProjectFilters,
-  commitDates: CommitDates
+  filters: ProjectFilters
 ): CatalogQueryResult => {
   const matchesIgnoringType = createProjectMatcher(filters, { ignoreType: true });
   const typeCounts: Record<ProjectTypeFilter, number> = { all: 0, personal: 0, client: 0 };
@@ -40,7 +39,7 @@ export const queryCatalog = (
   };
 
   return {
-    results: sortProjects(results, filters.sort, commitDates),
+    results: sortProjects(results, filters.sort),
     typeCounts,
     topFacets: overview.topStacks.map(toFacet),
     groupFacets: overview.stackGroups.map((group) => ({ name: group.name, items: group.items.map(toFacet) })),

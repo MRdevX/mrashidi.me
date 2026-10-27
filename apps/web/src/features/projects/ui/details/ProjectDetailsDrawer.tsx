@@ -3,7 +3,6 @@
 import { ChevronLeft, ChevronRight, ExternalLink, GitCommit, Lock } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { useProjectCatalog } from "@/features/projects/application/ProjectCatalogContext";
-import { createCommitUrl } from "@/features/projects/domain/commit";
 import type { Project } from "@/features/projects/domain/project";
 import { formatDate, formatRelativeTime } from "@/features/projects/ui/shared/dates";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
@@ -27,9 +26,9 @@ export function ProjectDetailsDrawer({ project, onSelect }: ProjectDetailsDrawer
 }
 
 function ProjectDetails({ project, onSelect }: { project: Project; onSelect: (project: Project) => void }) {
-  const { results, commitInfo } = useProjectCatalog();
+  const { results } = useProjectCatalog();
   const index = results.indexOf(project);
-  const commit = project.githubUrl ? commitInfo.get(project.githubUrl) : undefined;
+  const commit = project.latestCommit;
   const facts = [
     { label: "Role", value: project.role },
     { label: "Timeline", value: project.year },
@@ -122,11 +121,11 @@ function ProjectDetails({ project, onSelect }: { project: Project; onSelect: (pr
           </ul>
         </section>
 
-        {commit && project.githubUrl ? (
+        {commit ? (
           <p className={cn("flex flex-wrap items-center gap-2 font-terminal text-xs", styles.textSecondary)}>
-            <span title={formatDate(commit.date)}>Last commit {formatRelativeTime(commit.date)}</span>
+            <span title={formatDate(commit.committedAt)}>Last commit {formatRelativeTime(commit.committedAt)}</span>
             <a
-              href={createCommitUrl(project.githubUrl, commit.hash)}
+              href={commit.url}
               target="_blank"
               rel="noopener noreferrer"
               className={cn("flex items-center gap-1 hover:underline", styles.focusRing)}

@@ -18,3 +18,9 @@ export const workExperience = sqliteTable("work_experience", {
   data: text({ mode: "json" }).notNull(),
   updatedAt: integer({ mode: "timestamp" }).notNull(),
 });
+
+export const snapshots = sqliteTable("snapshots", {
+  key: text().primaryKey(),
+  data: text({ mode: "json" }).notNull(),
+  fetchedAt: integer({ mode: "timestamp" }).notNull(),
+});

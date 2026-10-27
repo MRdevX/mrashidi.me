@@ -38,6 +38,7 @@ variable "secret_names" {
     "TF_R2_SECRET_ACCESS_KEY",
     "TF_VERCEL_API_TOKEN",
     "CONTENT_API_TOKEN",
+    "GH_API_TOKEN",
     "REVALIDATE_SECRET",
   ]
 }

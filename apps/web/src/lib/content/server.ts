@@ -1,7 +1,11 @@
 import {
   AboutSchema,
+  type BlogPostPage,
+  BlogPostPageSchema,
   CatalogOverviewSchema,
   CertificateCategorySchema,
+  type Contributions,
+  ContributionsSchema,
   EducationSchema,
   ExperienceEntrySchema,
   KnowledgeContextSchema,
@@ -10,7 +14,7 @@ import {
   SkillCategorySchema,
   SkillsOverviewSchema,
 } from "@mrashidi/types";
-import { fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
+import { fixtureBlogPosts, fixtureGitHubContributions, fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
 import { cache } from "react";
 import { z } from "zod";
 import { getEnv } from "@/lib/core";
@@ -71,6 +75,20 @@ const getKnowledgeContext = cache(async (): Promise<string> => {
   const { context } = await fetchJson(base, "/v1/knowledge/context", KnowledgeContextSchema);
   return context;
 });
+
+export async function getGitHubContributions(): Promise<Contributions> {
+  const base = contentApiUrl();
+  return base ? fetchJson(base, "/v1/github/contributions", ContributionsSchema) : fixtureGitHubContributions;
+}
+
+export async function getBlogPosts(page: number, limit: number): Promise<BlogPostPage> {
+  const base = contentApiUrl();
+  if (!base) {
+    const start = (page - 1) * limit;
+    return { posts: fixtureBlogPosts.posts.slice(start, start + limit), total: fixtureBlogPosts.total };
+  }
+  return fetchJson(base, `/v1/blog/posts?page=${page}&limit=${limit}`, BlogPostPageSchema);
+}
 
 export async function getAskMrContent(): Promise<AskMrContent> {
   const [site, knowledgeContext] = await Promise.all([getSiteContent(), getKnowledgeContext()]);

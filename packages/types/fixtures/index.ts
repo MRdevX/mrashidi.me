@@ -1,10 +1,14 @@
 import { z } from "zod";
+import { BlogPostPageSchema } from "../src/blog";
 import { type Content, ContentSchema } from "../src/content";
+import { ContributionsSchema } from "../src/github";
 import { KnowledgeContextSchema } from "../src/knowledge";
 import { CatalogOverviewSchema, ProjectEntrySchema } from "../src/project";
 import { ExperienceEntrySchema, SkillsOverviewSchema } from "../src/resume";
 import about from "./about.json" with { type: "json" };
+import blogPostsReadModel from "./api/blog-posts.json" with { type: "json" };
 import experienceReadModel from "./api/experience.json" with { type: "json" };
+import githubContributionsReadModel from "./api/github-contributions.json" with { type: "json" };
 import knowledgeContextReadModel from "./api/knowledge-context.json" with { type: "json" };
 import projectsReadModel from "./api/projects.json" with { type: "json" };
 import projectsOverviewReadModel from "./api/projects-overview.json" with { type: "json" };
@@ -36,3 +40,7 @@ export const fixtureReadModels = {
 };
 
 export const fixtureKnowledgeContext = KnowledgeContextSchema.parse(knowledgeContextReadModel);
+
+export const fixtureGitHubContributions = ContributionsSchema.parse(githubContributionsReadModel);
+
+export const fixtureBlogPosts = BlogPostPageSchema.parse(blogPostsReadModel);

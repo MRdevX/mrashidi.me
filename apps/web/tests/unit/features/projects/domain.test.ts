@@ -9,6 +9,8 @@ const project = (over: Partial<Project> = {}): Project => ({
   slug: "alpha-app",
   startYear: null,
   endYear: null,
+  latestCommit: null,
+  lastActivityAt: null,
   title: "Alpha App",
   description: "A tool for betas",
   stack: ["TypeScript", "React"],
@@ -17,8 +19,6 @@ const project = (over: Partial<Project> = {}): Project => ({
   openSource: true,
   ...over,
 });
-
-const NO_COMMITS = new Map();
 
 describe("createProjectMatcher", () => {
   const client = project({
@@ -51,23 +51,29 @@ describe("createProjectMatcher", () => {
 });
 
 describe("sortProjects", () => {
-  const older = project({ title: "Beta", startYear: 2020, endYear: 2021 });
-  const newer = project({ title: "Alpha", startYear: 2025, endYear: 2025 });
+  const older = project({ title: "Beta", startYear: 2020, endYear: 2021, lastActivityAt: "2021-12-31T00:00:00.000Z" });
+  const newer = project({ title: "Alpha", startYear: 2025, endYear: 2025, lastActivityAt: "2025-12-31T00:00:00.000Z" });
 
-  it("sorts by latest commit, falling back to the latest year", () => {
-    const withCommit = project({ title: "Gamma", startYear: 2021, endYear: 2021, githubUrl: "https://github.com/o/g" });
-    const commits = new Map([["https://github.com/o/g", { date: new Date("2026-03-01") }]]);
+  it("sorts by last activity, undated projects last", () => {
+    const active = project({
+      title: "Gamma",
+      startYear: 2021,
+      endYear: 2021,
+      lastActivityAt: "2026-03-01T00:00:00.000Z",
+    });
+    const undated = project({ title: "Delta" });
 
-    expect(sortProjects([older, newer, withCommit], "recent", commits).map((p) => p.title)).toEqual([
+    expect(sortProjects([undated, older, newer, active], "recent").map((p) => p.title)).toEqual([
       "Gamma",
       "Alpha",
       "Beta",
+      "Delta",
     ]);
   });
 
   it("sorts oldest first and alphabetically", () => {
-    expect(sortProjects([newer, older], "oldest", NO_COMMITS).map((p) => p.title)).toEqual(["Beta", "Alpha"]);
-    expect(sortProjects([older, newer], "az", NO_COMMITS).map((p) => p.title)).toEqual(["Alpha", "Beta"]);
+    expect(sortProjects([newer, older], "oldest").map((p) => p.title)).toEqual(["Beta", "Alpha"]);
+    expect(sortProjects([older, newer], "az").map((p) => p.title)).toEqual(["Alpha", "Beta"]);
   });
 });
 
@@ -86,12 +92,11 @@ describe("queryCatalog", () => {
   };
 
   it("counts types across the other filters and marks dead-end stacks", () => {
-    const { results, typeCounts, topFacets } = queryCatalog(
-      catalog,
-      overview,
-      { ...DEFAULT_FILTERS, type: "personal", stacks: ["Go"] },
-      NO_COMMITS
-    );
+    const { results, typeCounts, topFacets } = queryCatalog(catalog, overview, {
+      ...DEFAULT_FILTERS,
+      type: "personal",
+      stacks: ["Go"],
+    });
 
     expect(results.map((p) => p.title)).toEqual(["One"]);
     expect(typeCounts).toEqual({ all: 2, personal: 1, client: 1 });

@@ -12,15 +12,6 @@ export const API_CONFIG = {
     THRESHOLD: 0.5,
     VERIFY_URL: "https://www.google.com/recaptcha/api/siteverify",
   },
-  MEDIUM: {
-    USER_AGENT: "Mozilla/5.0 (compatible; BlogFetcher/1.0)",
-    ACCEPT_HEADER: "application/xml",
-  },
-  GITHUB: {
-    BASE_URL: "https://api.github.com",
-    GRAPHQL_URL: "https://api.github.com/graphql",
-    USERNAME: "mrdevx",
-  },
   RATE_LIMIT: {
     CONTACT_FORM: {
       requests: 5,

@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { CONTRIBUTIONS_TTL_SECONDS, fetchContributions } from "@/features/home/server";
 import { createMiddleware } from "@/lib/api/middleware";
+import { getGitHubContributions } from "@/lib/content/server";
 
-const STALE_WHILE_REVALIDATE_SECONDS = 3_600;
+const CONTRIBUTIONS_TTL_SECONDS = 3_600;
+const STALE_WHILE_REVALIDATE_SECONDS = 86_400;
 
 async function handler(): Promise<NextResponse> {
-  return NextResponse.json(await fetchContributions());
+  return NextResponse.json(await getGitHubContributions());
 }
 
 export const GET = createMiddleware("generalApi")

@@ -17,7 +17,9 @@
     "type": "personal",
     "slug": "order-service",
     "startYear": 2024,
-    "endYear": 2024
+    "endYear": 2024,
+    "latestCommit": null,
+    "lastActivityAt": "2024-12-31T00:00:00.000Z"
   },
   {
     "title": "Event Pipeline",
@@ -37,7 +39,9 @@
     "role": "Backend Engineer",
     "slug": "event-pipeline",
     "startYear": 2021,
-    "endYear": 2022
+    "endYear": 2022,
+    "latestCommit": null,
+    "lastActivityAt": "2022-12-31T00:00:00.000Z"
   },
   {
     "title": "Edge Notes",
@@ -56,7 +60,9 @@
     "type": "personal",
     "slug": "edge-notes",
     "startYear": 2025,
-    "endYear": 2025
+    "endYear": 2025,
+    "latestCommit": null,
+    "lastActivityAt": "2025-12-31T00:00:00.000Z"
   },
   {
     "title": "Billing Dashboard",
@@ -75,7 +81,9 @@
     "clientName": "Acme Corp",
     "slug": "billing-dashboard",
     "startYear": 2023,
-    "endYear": 2023
+    "endYear": 2023,
+    "latestCommit": null,
+    "lastActivityAt": "2023-12-31T00:00:00.000Z"
   },
   {
     "title": "CLI Toolkit",
@@ -93,7 +101,9 @@
     "type": "personal",
     "slug": "cli-toolkit",
     "startYear": 2020,
-    "endYear": 2020
+    "endYear": 2020,
+    "latestCommit": null,
+    "lastActivityAt": "2020-12-31T00:00:00.000Z"
   },
   {
     "title": "Image Resizer",
@@ -110,7 +120,9 @@
     "type": "personal",
     "slug": "image-resizer",
     "startYear": 2019,
-    "endYear": 2019
+    "endYear": 2019,
+    "latestCommit": null,
+    "lastActivityAt": "2019-12-31T00:00:00.000Z"
   },
   {
     "title": "Survey App",
@@ -128,7 +140,9 @@
     "clientName": "Initech",
     "slug": "survey-app",
     "startYear": 2018,
-    "endYear": 2018
+    "endYear": 2018,
+    "latestCommit": null,
+    "lastActivityAt": "2018-12-31T00:00:00.000Z"
   },
   {
     "title": "Rate Limiter",
@@ -147,7 +161,9 @@
     "type": "personal",
     "slug": "rate-limiter",
     "startYear": 2022,
-    "endYear": 2022
+    "endYear": 2022,
+    "latestCommit": null,
+    "lastActivityAt": "2022-12-31T00:00:00.000Z"
   },
   {
     "title": "Queue Worker",
@@ -167,7 +183,9 @@
     "type": "personal",
     "slug": "queue-worker",
     "startYear": 2023,
-    "endYear": 2023
+    "endYear": 2023,
+    "latestCommit": null,
+    "lastActivityAt": "2023-12-31T00:00:00.000Z"
   },
   {
     "title": "Log Shipper",
@@ -183,7 +201,9 @@
     "type": "personal",
     "slug": "log-shipper",
     "startYear": 2024,
-    "endYear": 2024
+    "endYear": 2024,
+    "latestCommit": null,
+    "lastActivityAt": "2024-12-31T00:00:00.000Z"
   },
   {
     "title": "Booking API",
@@ -201,7 +221,9 @@
     "clientName": "Globex",
     "slug": "booking-api",
     "startYear": 2021,
-    "endYear": 2021
+    "endYear": 2021,
+    "latestCommit": null,
+    "lastActivityAt": "2021-12-31T00:00:00.000Z"
   },
   {
     "title": "Status Page",
@@ -219,6 +241,8 @@
     "type": "personal",
     "slug": "status-page",
     "startYear": 2025,
-    "endYear": 2025
+    "endYear": 2025,
+    "latestCommit": null,
+    "lastActivityAt": "2025-12-31T00:00:00.000Z"
   }
 ]

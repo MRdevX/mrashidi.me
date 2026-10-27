@@ -1,5 +1,6 @@
 import type { Profile } from "@mrashidi/types";
 import { SITE_URL } from "@/data";
+import type { SiteContent } from "@/lib/content";
 
 export interface PersonSchema {
   "@context": "https://schema.org";
@@ -22,7 +23,7 @@ export interface PersonSchema {
   alumniOf: {
     "@type": "Organization";
     name: string;
-  };
+  }[];
 }
 
 export interface WebsiteSchema {
@@ -63,7 +64,11 @@ export interface OrganizationSchema {
   };
 }
 
-export function generatePersonSchema(profile: Profile): PersonSchema {
+export function generatePersonSchema({
+  profile,
+  education,
+  skillsOverview,
+}: Pick<SiteContent, "profile" | "education" | "skillsOverview">): PersonSchema {
   const [locality, country = ""] = profile.person.location.split(",").map((part) => part.trim());
   return {
     "@context": "https://schema.org",
@@ -77,25 +82,13 @@ export function generatePersonSchema(profile: Profile): PersonSchema {
       addressLocality: locality,
       addressCountry: country,
     },
-    sameAs: [profile.social.github, profile.social.linkedin, profile.social.telegram],
+    sameAs: [profile.social.github, profile.social.linkedin, profile.social.telegram, profile.social.medium],
     worksFor: {
       "@type": "Organization",
-      name: "Freelance",
+      name: profile.person.worksFor,
     },
-    knowsAbout: [
-      "Software Engineering",
-      "Backend Development",
-      "Node.js",
-      "TypeScript",
-      "Cloud Architecture",
-      "System Design",
-      "API Development",
-      "Database Design",
-    ],
-    alumniOf: {
-      "@type": "Organization",
-      name: "Software Engineering Education",
-    },
+    knowsAbout: skillsOverview.featured.map((skill) => skill.name),
+    alumniOf: education.map(({ institution }) => ({ "@type": "Organization", name: institution })),
   };
 }
 

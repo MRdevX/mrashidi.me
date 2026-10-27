@@ -64,3 +64,4 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0008](0008-apply-on-merge-behind-approval.md) | Apply infra and deploy the API on merge behind an approval gate | `accepted` | 2026-10-26 |
 | [DR-0009](0009-api-owns-content-derivations.md) | Derive content read models in the API, render them in the web app | `accepted` | 2026-10-26 |
 | [DR-0010](0010-private-content-api-over-workers-dev.md) | Serve the content API privately to Vercel over workers.dev | `accepted` | 2026-10-26 |
+| [DR-0011](0011-api-owns-external-sources-on-cron.md) | Fetch GitHub and Medium in the API on a cron, serve them from D1 | `accepted` | 2026-10-27 |

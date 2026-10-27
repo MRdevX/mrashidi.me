@@ -14,11 +14,12 @@ interface StructuredDataProps {
 }
 
 export default async function StructuredData({ type, path, title }: StructuredDataProps) {
-  const { profile } = await getSiteContent();
+  const content = await getSiteContent();
+  const { profile } = content;
   const getSchema = () => {
     switch (type) {
       case "person":
-        return generatePersonSchema(profile);
+        return generatePersonSchema(content);
       case "website":
         return generateWebsiteSchema(profile);
       case "organization":
