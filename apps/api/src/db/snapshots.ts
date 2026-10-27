@@ -3,7 +3,7 @@ import type { z } from "zod";
 import type { Db } from "./index.ts";
 import { snapshots } from "./schema.ts";
 
-export type SnapshotKey = "github.contributions" | "github.repo-activity";
+export type SnapshotKey = "blog.posts" | "github.contributions" | "github.repo-activity";
 
 export async function readSnapshot<T>(db: Db, key: SnapshotKey, schema: z.ZodType<T>): Promise<T | null> {
   const row = await db.query.snapshots.findFirst({ where: eq(snapshots.key, key) });

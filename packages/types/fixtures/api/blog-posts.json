@@ -1,0 +1,51 @@
+{
+  "posts": [
+    {
+      "title": "Post 7",
+      "url": "https://medium.com/@janedoe/post-7",
+      "publishedAt": "2026-01-07T00:00:00.000Z",
+      "imageUrl": "https://cdn.example.com/post-7.png",
+      "excerpt": "Notes from building service number 7. It covers queues, retries and the boring parts that keep APIs up."
+    },
+    {
+      "title": "Post 6",
+      "url": "https://medium.com/@janedoe/post-6",
+      "publishedAt": "2026-01-06T00:00:00.000Z",
+      "excerpt": "Notes from building service number 6. It covers queues, retries and the boring parts that keep APIs up."
+    },
+    {
+      "title": "Post 5",
+      "url": "https://medium.com/@janedoe/post-5",
+      "publishedAt": "2026-01-05T00:00:00.000Z",
+      "imageUrl": "https://cdn.example.com/post-5.png",
+      "excerpt": "Notes from building service number 5. It covers queues, retries and the boring parts that keep APIs up."
+    },
+    {
+      "title": "Post 4",
+      "url": "https://medium.com/@janedoe/post-4",
+      "publishedAt": "2026-01-04T00:00:00.000Z",
+      "excerpt": "Notes from building service number 4. It covers queues, retries and the boring parts that keep APIs up."
+    },
+    {
+      "title": "Post 3",
+      "url": "https://medium.com/@janedoe/post-3",
+      "publishedAt": "2026-01-03T00:00:00.000Z",
+      "imageUrl": "https://cdn.example.com/post-3.png",
+      "excerpt": "Notes from building service number 3. It covers queues, retries and the boring parts that keep APIs up."
+    },
+    {
+      "title": "Post 2",
+      "url": "https://medium.com/@janedoe/post-2",
+      "publishedAt": "2026-01-02T00:00:00.000Z",
+      "excerpt": "Notes from building service number 2. It covers queues, retries and the boring parts that keep APIs up."
+    },
+    {
+      "title": "Post 1",
+      "url": "https://medium.com/@janedoe/post-1",
+      "publishedAt": "2026-01-01T00:00:00.000Z",
+      "imageUrl": "https://cdn.example.com/post-1.png",
+      "excerpt": "Notes from building service number 1. It covers queues, retries and the boring parts that keep APIs up."
+    }
+  ],
+  "total": 7
+}

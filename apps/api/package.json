@@ -25,6 +25,7 @@
   "dependencies": {
     "@mrashidi/types": "workspace:*",
     "drizzle-orm": "^0.45.4",
+    "fast-xml-parser": "^5.11.2",
     "hono": "^4.13.14",
     "zod": "catalog:"
   },
