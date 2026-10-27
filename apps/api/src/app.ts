@@ -6,7 +6,7 @@ import { createKnowledgeContext, knowledgeRoutes } from "#modules/ask-mr/index.t
 import { blogRoutes, createBlogContext } from "#modules/blog/index.ts";
 import { createGitHubContext, githubRoutes } from "#modules/github/index.ts";
 import { createProfileContext, profileRoutes } from "#modules/profile/index.ts";
-import { createProjectContext, projectRoutes } from "#modules/projects/index.ts";
+import { createProjectContext, createProjectRepoUrls, projectRoutes } from "#modules/projects/index.ts";
 import { createResumeContext, resumeRoutes } from "#modules/resume/index.ts";
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
 import { requireContentToken } from "#shared/http/require-content-token.ts";
@@ -21,7 +21,10 @@ app.route("/v1", profileRoutes(createProfileContext));
 app.route("/v1", resumeRoutes(createResumeContext));
 app.route("/v1", projectRoutes(createProjectContext));
 app.route("/v1", knowledgeRoutes(createKnowledgeContext));
-app.route("/v1", githubRoutes(createGitHubContext));
+app.route(
+  "/v1",
+  githubRoutes((env, background) => createGitHubContext(env, background, createProjectRepoUrls(env.DB)))
+);
 app.route("/v1", blogRoutes(createBlogContext));
 
 app.notFound((c) => c.json({ error: "Not found" }, 404));

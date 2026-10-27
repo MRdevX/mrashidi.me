@@ -1,20 +1,12 @@
 import { eq } from "drizzle-orm";
 import type { z } from "zod";
+import type { Timed } from "#shared/snapshot-read-through.ts";
 import type { Db } from "./index.ts";
 import { snapshots } from "./schema.ts";
 
 export type SnapshotKey = "blog.posts" | "github.contributions" | "github.repo-activity";
 
-export async function readSnapshot<T>(db: Db, key: SnapshotKey, schema: z.ZodType<T>): Promise<T | null> {
-  const row = await db.query.snapshots.findFirst({ where: eq(snapshots.key, key) });
-  return row ? schema.parse(row.data) : null;
-}
-
-export async function readTimedSnapshot<T>(
-  db: Db,
-  key: SnapshotKey,
-  schema: z.ZodType<T>
-): Promise<{ data: T; fetchedAt: Date } | null> {
+export async function readSnapshot<T>(db: Db, key: SnapshotKey, schema: z.ZodType<T>): Promise<Timed<T> | null> {
   const row = await db.query.snapshots.findFirst({ where: eq(snapshots.key, key) });
   return row ? { data: schema.parse(row.data), fetchedAt: row.fetchedAt } : null;
 }
