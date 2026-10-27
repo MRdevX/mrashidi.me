@@ -109,7 +109,7 @@ the rules into your global agent config.
 | Issue reference | `- Fixes #123`, one line per issue, in the `References` section |
 | Extra PR sections | `References`, last |
 | Endpoint sources | `apps/web/src/app/api/**/route.ts`, `apps/api/src/modules/*/http/*.ts` |
-| Slice layout | API: `apps/api/src/modules/<module>/{domain,application,infrastructure,http}/`, composed in `apps/api/src/app.ts`. Web: `apps/web/src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `apps/web/src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`, `@/features/home/server`, `@/features/projects/server`) that client code never imports. Shared UI in `apps/web/src/components/`, shared logic in `apps/web/src/lib/`; code with consumers in two apps goes to `packages/<name>/` |
+| Slice layout | API: `apps/api/src/modules/<module>/{domain,application,infrastructure,http}/`, composed in `apps/api/src/app.ts` (routes) and `apps/api/src/scheduled.ts` (cron refreshes). Web: `apps/web/src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `apps/web/src/features/projects/`); Ask MR splits `client/`, `server/`, `knowledge/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry (`@/features/blog/server`) that client code never imports. Shared UI in `apps/web/src/components/`, shared logic in `apps/web/src/lib/`; code with consumers in two apps goes to `packages/<name>/` |
 | Decision records | `docs/decisions/`, files `NNNN-short-slug.md` |
 | Stack doc | [`docs/agent/stack.md`](docs/agent/stack.md) |
 
