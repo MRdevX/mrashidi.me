@@ -43,3 +43,9 @@ export function mediumFeedUrl(profileUrl: string): string | null {
     return null;
   }
 }
+
+export const SNAPSHOT_MAX_AGE_MS = 6 * 60 * 60 * 1000;
+
+export function isStale(fetchedAt: Date, now: Date): boolean {
+  return now.getTime() - fetchedAt.getTime() >= SNAPSHOT_MAX_AGE_MS;
+}
