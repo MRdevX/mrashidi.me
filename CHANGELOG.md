@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.20](https://github.com/MRdevX/mrashidi.me/compare/v0.2.19...v0.2.20) (2026-10-27)
+
+
+### Features
+
+* **api:** refresh GitHub activity on a cron and serve it from D1 ([0ff7176](https://github.com/MRdevX/mrashidi.me/commit/0ff7176a54c5f59a1633e18da03d97d0a1138ac4))
+* **api:** refresh the Medium feed on a cron and serve posts from D1 ([c389837](https://github.com/MRdevX/mrashidi.me/commit/c3898372a5babac2c1ce995584d2376abd1a2ee3))
+
+
+### Documentation
+
+* **api:** record why the API fetches GitHub and Medium on a cron ([c5040a7](https://github.com/MRdevX/mrashidi.me/commit/c5040a716a8dbaa99c5582a41903ba9ca168530f))
+
+
+### Code Refactoring
+
+* **blog:** read posts from the content API and drop the RSS parser ([a0856da](https://github.com/MRdevX/mrashidi.me/commit/a0856da4fd3187585049073cee43e5927c15f07f))
+* **profile:** read contact copy and JSON-LD facts from content ([1d52b4a](https://github.com/MRdevX/mrashidi.me/commit/1d52b4a92cd793ea8966ca7bac8d48c3e0c4a39b))
+* **projects:** read commit activity and contributions from the content API ([d07376f](https://github.com/MRdevX/mrashidi.me/commit/d07376f0e20b616e4c582c6a7ecadb23bc3a8cb2))
+
 ### [0.2.19](https://github.com/MRdevX/mrashidi.me/compare/v0.2.18...v0.2.19) (2026-10-26)
 
 
