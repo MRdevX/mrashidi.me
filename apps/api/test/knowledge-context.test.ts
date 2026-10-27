@@ -4,7 +4,10 @@ import { buildKnowledgeContext, type KnowledgeSources } from "../src/modules/ask
 import { toProjectEntry } from "../src/modules/projects/domain/project-entry.ts";
 
 const { experience, knowledge: extra, profile } = fixtureContent;
-const sources: KnowledgeSources = { ...fixtureContent, projects: fixtureContent.projects.map(toProjectEntry) };
+const sources: KnowledgeSources = {
+  ...fixtureContent,
+  projects: fixtureContent.projects.map((project) => toProjectEntry(project)),
+};
 const withKnowledge = (knowledge: Partial<KnowledgeSources["knowledge"]>) =>
   buildKnowledgeContext({ ...sources, knowledge: { ...extra, ...knowledge } });
 

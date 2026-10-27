@@ -15,10 +15,18 @@ export const ProjectSchema = z.object({
   role: z.string().optional(),
 });
 
+export const LatestCommitSchema = z.object({
+  hash: z.string().min(1),
+  committedAt: z.iso.datetime(),
+  url: z.url(),
+});
+
 export const ProjectEntrySchema = ProjectSchema.extend({
   slug: z.string().min(1),
   startYear: z.number().int().nullable(),
   endYear: z.number().int().nullable(),
+  latestCommit: LatestCommitSchema.nullable(),
+  lastActivityAt: z.iso.datetime().nullable(),
 });
 
 export const StackGroupSchema = z.object({
@@ -36,6 +44,7 @@ export const CatalogOverviewSchema = z.object({
 
 export type Project = z.infer<typeof ProjectSchema>;
 export type ProjectType = Project["type"];
+export type LatestCommit = z.infer<typeof LatestCommitSchema>;
 export type ProjectEntry = z.infer<typeof ProjectEntrySchema>;
 export type StackGroup = z.infer<typeof StackGroupSchema>;
 export type CatalogOverview = z.infer<typeof CatalogOverviewSchema>;

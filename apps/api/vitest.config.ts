@@ -12,6 +12,7 @@ export default defineConfig({
       miniflare: {
         bindings: {
           CONTENT_API_TOKEN: "test-token",
+          GH_API_TOKEN: "test-github-token",
           TEST_MIGRATIONS: migrations,
         },
       },

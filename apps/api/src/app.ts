@@ -3,6 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { secureHeaders } from "hono/secure-headers";
 import type { HonoEnv } from "#bindings";
 import { createKnowledgeContext, knowledgeRoutes } from "#modules/ask-mr/index.ts";
+import { createGitHubContext, githubRoutes } from "#modules/github/index.ts";
 import { createProfileContext, profileRoutes } from "#modules/profile/index.ts";
 import { createProjectContext, projectRoutes } from "#modules/projects/index.ts";
 import { createResumeContext, resumeRoutes } from "#modules/resume/index.ts";
@@ -19,6 +20,7 @@ app.route("/v1", profileRoutes(createProfileContext));
 app.route("/v1", resumeRoutes(createResumeContext));
 app.route("/v1", projectRoutes(createProjectContext));
 app.route("/v1", knowledgeRoutes(createKnowledgeContext));
+app.route("/v1", githubRoutes(createGitHubContext));
 
 app.notFound((c) => c.json({ error: "Not found" }, 404));
 app.onError((error, c) => {

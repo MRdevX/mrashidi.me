@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { api } from "./api.ts";
 
 describe("app", () => {
-  it.each(["/v1/profile", "/v1/projects", "/v1/knowledge", "/v1/knowledge/context"])(
+  it.each(["/v1/profile", "/v1/projects", "/v1/knowledge", "/v1/knowledge/context", "/v1/github/contributions"])(
     "%s requires the content API token",
     async (path) => {
       expect((await api(path)).status).toBe(401);

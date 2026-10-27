@@ -2,17 +2,21 @@ import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
 import { describeCatalog } from "../domain/catalog.ts";
 import { toProjectEntry } from "../domain/project-entry.ts";
 import type { ProjectRepository } from "../domain/project-repository.ts";
+import type { RepoActivityReader } from "../domain/repo-activity-reader.ts";
 
-export function createProjectQueries(repository: ProjectRepository) {
+export function createProjectQueries(repository: ProjectRepository, activity: RepoActivityReader) {
   return {
-    list: async () => (await repository.list()).map(toProjectEntry),
+    async list() {
+      const [projects, commits] = await Promise.all([repository.list(), activity.latestCommits()]);
+      return projects.map((project) => toProjectEntry(project, commits));
+    },
     overview: async () => describeCatalog(await repository.list()),
     async bySlug(slug: string) {
-      const project = await repository.getBySlug(slug);
+      const [project, commits] = await Promise.all([repository.getBySlug(slug), activity.latestCommits()]);
       if (!project) {
         throw new ContentNotFoundError(`Project "${slug}"`);
       }
-      return toProjectEntry(project);
+      return toProjectEntry(project, commits);
     },
   };
 }

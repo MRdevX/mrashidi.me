@@ -1,5 +1,5 @@
 # Deploys @mrashidi/api to Cloudflare Workers after the deploy-gate environment's approval:
-# Worker tests, remote D1 migrations, the CONTENT_API_TOKEN secret, wrangler deploy, then a check that the
+# Worker tests, remote D1 migrations, the CONTENT_API_TOKEN and GH_API_TOKEN secrets, wrangler deploy, then a check that the
 # version this run deployed serves 100% of traffic. Not an HTTP probe: Bot Fight Mode on the zone challenges
 # requests from runner IPs (docs/infrastructure.md).
 
@@ -53,6 +53,12 @@ jobs:
         env:
           CONTENT_API_TOKEN: ${{ secrets.CONTENT_API_TOKEN }}
         run: printf '%s' "$CONTENT_API_TOKEN" | pnpm exec wrangler secret put CONTENT_API_TOKEN
+
+      - name: Set GH_API_TOKEN
+        working-directory: apps/api
+        env:
+          GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+        run: printf '%s' "$GH_API_TOKEN" | pnpm exec wrangler secret put GH_API_TOKEN
 
       - name: Deploy Worker
         id: deploy

@@ -1,0 +1,27 @@
+import type { Bindings } from "#bindings";
+import { createGitHubRefresh } from "#modules/github/index.ts";
+import { createProfileContext } from "#modules/profile/index.ts";
+import { createProjectContext } from "#modules/projects/index.ts";
+
+async function refreshGitHub(env: Bindings, now: Date) {
+  const [profile, projects] = await Promise.all([
+    createProfileContext(env.DB).profile(),
+    createProjectContext(env.DB).list(),
+  ]);
+  await createGitHubRefresh(
+    env.DB,
+    env.GH_API_TOKEN
+  )({
+    profileUrl: profile.social.github,
+    repoUrls: projects.flatMap((project) => (project.githubUrl ? [project.githubUrl] : [])),
+    now,
+  });
+}
+
+export async function refreshExternalSources(env: Bindings, now: Date): Promise<void> {
+  const results = await Promise.allSettled([refreshGitHub(env, now)]);
+  const failures = results.flatMap((result) => (result.status === "rejected" ? [result.reason] : []));
+  if (failures.length > 0) {
+    throw new AggregateError(failures, "External source refresh failed");
+  }
+}

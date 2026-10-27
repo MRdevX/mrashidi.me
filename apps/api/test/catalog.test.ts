@@ -54,4 +54,16 @@ describe("project entry", () => {
   it("derives the slug from the title", () => {
     expect(toProjectEntry(project({ title: "Alpha App" })).slug).toBe("alpha-app");
   });
+
+  it("dates activity by the latest commit, else by the end of the last year", () => {
+    const repo = project({ year: "2021–2022", githubUrl: "https://github.com/o/r/" });
+    expect(toProjectEntry(repo)).toMatchObject({ latestCommit: null, lastActivityAt: "2022-12-31T00:00:00.000Z" });
+    expect(
+      toProjectEntry(repo, { "https://github.com/o/r/": { hash: "abc", committedAt: "2024-05-01T00:00:00.000Z" } })
+    ).toMatchObject({
+      latestCommit: { hash: "abc", committedAt: "2024-05-01T00:00:00.000Z", url: "https://github.com/o/r/commit/abc" },
+      lastActivityAt: "2024-05-01T00:00:00.000Z",
+    });
+    expect(toProjectEntry(project()).lastActivityAt).toBeNull();
+  });
 });
