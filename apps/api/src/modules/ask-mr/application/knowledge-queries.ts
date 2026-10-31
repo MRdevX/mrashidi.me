@@ -2,7 +2,7 @@ import type { KnowledgeContext } from "@mrashidi/types";
 import type { ProfileQueries } from "#modules/profile/index.ts";
 import type { ProjectQueries } from "#modules/projects/index.ts";
 import type { ResumeQueries } from "#modules/resume/index.ts";
-import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
+import { orNotFound } from "#shared/content-not-found-error.ts";
 import { buildKnowledgeContext } from "../domain/knowledge-context.ts";
 import type { KnowledgeRepository } from "./ports.ts";
 
@@ -14,11 +14,7 @@ export interface SiteContentQueries {
 
 export function createKnowledgeQueries(repository: KnowledgeRepository, site: SiteContentQueries) {
   async function knowledge() {
-    const found = await repository.getKnowledge();
-    if (!found) {
-      throw new ContentNotFoundError("Knowledge");
-    }
-    return found;
+    return orNotFound(await repository.getKnowledge(), "Knowledge");
   }
 
   return {
