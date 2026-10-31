@@ -1,6 +1,6 @@
 /**
  * Canonical colors for transactional email HTML (Tailwind/CSS variables are not available at send time).
- * Primary matches `--primary` / `tailwind.config.ts` (#ff5f1f).
+ * Primary matches `--primary` in `src/styles/theme.css`.
  */
 export const emailTheme = {
   primary: "#ff5f1f",

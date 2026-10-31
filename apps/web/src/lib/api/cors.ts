@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { reflectedCorsOrigin } from "@/lib/api/cors-allowlist";
 import { API_CONFIG } from "@/lib/core";
 
-/** Vary ACAO responses when reflecting origin (shared caches). */
 const CORS_VARY = "Origin";
 
 function mergeVaryHeader(existing: string | null, directives: string): string {

@@ -60,11 +60,6 @@ interface ChatRequest {
 
 const ALLOWED_PART = (type: string) => type === "text" || type === "step-start" || type.startsWith("tool-");
 
-/**
- * Normalizes visitor-supplied history: drops `system` turns and non-text/tool parts (no file uploads),
- * keeps the last N messages starting at a user turn, and enforces per-message size limits.
- * Returns `null` when the latest message isn't a valid user question.
- */
 export function sanitizeMessages(messages: z.infer<typeof messageSchema>[]): UIMessage[] | null {
   const cleaned = messages
     .filter((m) => m.role !== "system")
@@ -92,7 +87,6 @@ export function sanitizeMessages(messages: z.infer<typeof messageSchema>[]): UIM
 
 const todayKey = () => `askmr:budget:${new Date().toISOString().slice(0, 10)}`;
 
-/** Atomically counts this request against the global daily budget. */
 async function consumeDailyBudget(): Promise<boolean> {
   const redis = getAskMrRedis();
   if (!redis) {

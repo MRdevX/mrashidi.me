@@ -18,15 +18,15 @@ when you bump a major or minor, update the row in the same PR.
 | TypeScript | 7.0 | [typescriptlang.org/docs](https://www.typescriptlang.org/docs/) | Strict. Import through the path aliases in `AGENTS.md`. |
 | Tailwind CSS | 4.3 | [tailwindcss.com/docs](https://tailwindcss.com/docs) | Theme tokens in `apps/web/src/styles/variables.css` and `theme.css`. Variants with CVA, class merging with `cn` from `@lib/utils`. |
 | shadcn/ui | new-york, RSC | [ui.shadcn.com/docs](https://ui.shadcn.com/docs) | Primitives in `apps/web/src/components/ui/`; config in `components.json`. |
-| Biome | 2.5 | [biomejs.dev](https://biomejs.dev/reference/configuration/) | The only linter and formatter ([DR-0003](../decisions/0003-biome-only.md)). `pnpm check` / `pnpm check:fix`. |
+| Biome | 2.6 | [biomejs.dev](https://biomejs.dev/reference/configuration/) | The only linter and formatter ([DR-0003](../decisions/0003-biome-only.md)). `pnpm check` / `pnpm check:fix`. |
 | Vercel AI SDK (`ai`, `@ai-sdk/react`) | 7.0 / 4.0 | [ai-sdk.dev/docs](https://ai-sdk.dev/docs/introduction) | Ask MR only. Model id from `ASK_MR_MODEL` through the AI Gateway ([DR-0004](../decisions/0004-ask-mr-grounded-public-knowledge.md)). |
 | Upstash Redis / Ratelimit | 1.39 / 2.2 | [upstash.com/docs/redis](https://upstash.com/docs/redis/overall/getstarted) | Rate limits for contact, resume, and Ask MR. Falls back to in-memory when Redis is not configured. |
 | Zod | 4.6 | [zod.dev](https://zod.dev) | Zod 4 API. Validates untrusted input once at the route boundary; schemas in `apps/web/src/lib/validation/`. |
-| React Hook Form | 7.90 | [react-hook-form.com](https://react-hook-form.com/docs) | Contact and resume request forms, with the Zod resolver. |
-| Framer Motion | 14.1 | [motion.dev/docs/react](https://motion.dev/docs/react) | Shared variants in `apps/web/src/lib/animations.ts`. Respect reduced motion. |
-| ky | 2.2 | [github.com/sindresorhus/ky](https://github.com/sindresorhus/ky) | Outbound HTTP: `apps/web/src/lib/fetcher.ts` on the client, the Medium feed in `apps/web/src/features/blog/server/`. |
+| React Hook Form | 7.91 | [react-hook-form.com](https://react-hook-form.com/docs) | Contact and resume request forms, with the Zod resolver. |
+| Framer Motion | 14.6 | [motion.dev/docs/react](https://motion.dev/docs/react) | Shared variants in `apps/web/src/lib/animations.ts`. Respect reduced motion. |
+| fast-xml-parser | 5.11 | [github.com/NaturalIntelligence/fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) | `apps/api` only: the Medium RSS feed in `apps/api/src/modules/blog/infrastructure/medium-feed-gateway.ts`. `item` is always parsed as an array. |
 | pino | 10.4 | [getpino.io](https://getpino.io) | Through `logger` in `@lib/core`, never `console` in app code. |
-| Sentry (`@sentry/nextjs`) | 11.6 | [docs.sentry.io/platforms/javascript/guides/nextjs](https://docs.sentry.io/platforms/javascript/guides/nextjs/) | Shared options in `sentry-shared.ts`; hooks in `apps/web/src/instrumentation*.ts`. |
+| Sentry (`@sentry/nextjs`) | 11.9 | [docs.sentry.io/platforms/javascript/guides/nextjs](https://docs.sentry.io/platforms/javascript/guides/nextjs/) | Shared options in `sentry-shared.ts`; hooks in `apps/web/src/instrumentation*.ts`. |
 | Vercel Blob / Analytics / Speed Insights | 2.8 / 2.0 | [vercel.com/docs](https://vercel.com/docs) | Blob holds the CV PDF behind `api/cv/**`. |
 | next-pwa | 5.6 | [github.com/shadowwalker/next-pwa](https://github.com/shadowwalker/next-pwa) | Disabled with `SKIP_PWA=true` (`pnpm build:fast`). |
 | Vitest | 5.0 | [vitest.dev](https://vitest.dev/guide/) | Unit tests in `apps/web/tests/unit/`, mirroring `apps/web/src/`. |
