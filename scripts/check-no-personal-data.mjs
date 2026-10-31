@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const HASHES_FILE = join(root, "scripts", "personal-data-hashes.json");
-// Names that are public on purpose: the owner's own company and sibling projects named in the docs.
-const PUBLIC_NAMES = new Set(["notable nomads", "targela", "r4zzle"]);
+// Names that are public on purpose: the owner's own company, sibling projects named in the docs, and clients who agreed to be named.
+const PUBLIC_NAMES = new Set(["notable nomads", "targela", "r4zzle", "klt mühendislik"]);
 
 // Generated from commit history, which keeps its old messages (DR-0006 leaves history as is).
 const SKIPPED_FILES = new Set(["CHANGELOG.md", "pnpm-lock.yaml", "scripts/personal-data-hashes.json"]);
