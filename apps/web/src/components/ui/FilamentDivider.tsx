@@ -11,7 +11,6 @@ type FilamentDividerProps = {
   symmetric?: boolean;
 };
 
-/** Brand-orange gradient rule; styles live in `.filament-line*` (components.css). */
 export function FilamentDivider({
   className,
   lineClassName,

@@ -5,7 +5,6 @@ const EnvSchema = z.object({
   NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
   /** Optional comma-separated browser origins for APIs using `.cors()` — each entry must include a scheme (`https://...`). */
   CORS_ALLOWED_ORIGINS: z.string().optional(),
-  /** GitHub REST API PAT for server routes (not `GITHUB_*` — reserved on Vercel). */
   SENTRY_DSN: z.string().optional(),
   SENTRY_ORG: z.string().optional(),
   SENTRY_PROJECT: z.string().optional(),
