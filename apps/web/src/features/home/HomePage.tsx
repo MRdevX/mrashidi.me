@@ -17,7 +17,7 @@ export function HomePage() {
     <PageStaggerContainer>
       {({ itemVariants, prefersReducedMotion }) => (
         <>
-          <HomeHero variants={itemVariants} />
+          <HomeHero />
           <HomeTerminalSection variants={itemVariants} />
           <HomeTechStackSection variants={itemVariants} techStack={techStack} />
           <HomeContributionSection variants={itemVariants} />

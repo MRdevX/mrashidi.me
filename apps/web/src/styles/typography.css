@@ -1,50 +1,7 @@
 @layer utilities {
-  .cyberpunk-h1 {
-    font-size: 3rem;
-    line-height: 1.1;
-    font-weight: 600;
-    font-family: var(--font-cyberpunk);
-    text-transform: none;
-    letter-spacing: 0.02em;
-    color: hsl(var(--primary));
-    text-shadow: 0 0 24px hsl(var(--primary) / 0.22);
-  }
-
-  .dark .cyberpunk-h1 {
-    color: hsl(var(--brand-text));
-    text-shadow: 0 0 28px hsl(var(--primary) / 0.28);
-  }
-
-  @media (min-width: 768px) {
-    .cyberpunk-h1 {
-      font-size: 3.75rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .cyberpunk-h1 {
-      font-size: 4.5rem;
-    }
-  }
-
   .text-body {
     color: hsl(var(--foreground));
     font-family: var(--font-albert);
     line-height: 1.75;
-  }
-
-  @keyframes cyberpunk-glow-balanced {
-    0% {
-      text-shadow: 0 0 20px hsl(var(--primary) / 0.18);
-    }
-    100% {
-      text-shadow: 0 0 32px hsl(var(--primary) / 0.32);
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .cyberpunk-h1 {
-      animation: cyberpunk-glow-balanced 5s ease-in-out infinite alternate;
-    }
   }
 }

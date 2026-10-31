@@ -402,57 +402,6 @@
       content: "...";
     }
   }
-
-  .animate-gradient-shift {
-    background:
-      linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, transparent 45%, hsl(var(--primary) / 0.04) 100%),
-      linear-gradient(45deg, hsl(var(--primary) / 0.04) 0%, transparent 55%, rgba(251, 146, 60, 0.05) 100%),
-      linear-gradient(225deg, rgba(251, 146, 60, 0.03) 0%, transparent 65%, hsl(var(--primary) / 0.04) 100%);
-    background-size:
-      300% 300%,
-      400% 400%,
-      350% 350%;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .animate-gradient-shift {
-      animation: gradient-shift 24s ease-in-out infinite;
-    }
-  }
-
-  @keyframes gradient-shift {
-    0%,
-    100% {
-      background-position:
-        0% 0%,
-        0% 0%,
-        0% 0%;
-    }
-    20% {
-      background-position:
-        30% 20%,
-        20% 30%,
-        10% 40%;
-    }
-    40% {
-      background-position:
-        60% 40%,
-        40% 60%,
-        30% 20%;
-    }
-    60% {
-      background-position:
-        40% 60%,
-        60% 40%,
-        50% 30%;
-    }
-    80% {
-      background-position:
-        20% 30%,
-        30% 20%,
-        40% 10%;
-    }
-  }
 }
 
 @keyframes project-drawer-in {

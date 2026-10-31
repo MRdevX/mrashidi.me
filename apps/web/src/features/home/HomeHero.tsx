@@ -1,46 +1,35 @@
 "use client";
 
-import type { Variants } from "framer-motion";
-import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { SocialButtonsRow } from "@/components/ui";
 import { useContent } from "@/lib/content";
 import { TypingAnimation } from "./TypingAnimation";
 
-type HomeHeroProps = {
-  variants: Variants;
-};
-
-export function HomeHero({ variants }: HomeHeroProps) {
+export function HomeHero() {
   const { profile } = useContent();
   return (
-    <motion.div className="hero-section content-section relative overflow-hidden" variants={variants}>
-      <div className="hero-background" />
-      <div className="hero-gradient-bg absolute inset-0 animate-gradient-shift bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
-      <div className="relative z-10">
-        <h1 className="cyberpunk-h1">{profile.person.name}</h1>
-        <p className="hero-subtitle text-body">
-          <TypingAnimation
-            strings={[
-              profile.person.title,
-              "Cloud Practitioner",
-              "Backend & Systems Engineer",
-              "Open Source Contributor",
-            ]}
-            typeSpeed={80}
-            deleteSpeed={40}
-            pauseAtEnd={1500}
-            className="font-terminal text-brand-text"
-          />
-        </p>
-        <p className="hero-description text-body">{profile.site.description}</p>
-        <p className="hero-location text-body">
-          <MapPin className="icon-primary size-5" aria-hidden />
-          {profile.person.location}
-        </p>
-
-        <SocialButtonsRow />
-      </div>
-    </motion.div>
+    <section className="hero-section">
+      <h1 className="hero-name">{profile.person.name}</h1>
+      <p className="hero-subtitle text-body">
+        <TypingAnimation
+          strings={[
+            profile.person.title,
+            "Cloud Practitioner",
+            "Backend & Systems Engineer",
+            "Open Source Contributor",
+          ]}
+          typeSpeed={80}
+          deleteSpeed={40}
+          pauseAtEnd={1500}
+          className="font-terminal text-brand-text"
+        />
+      </p>
+      <p className="hero-description text-body">{profile.site.description}</p>
+      <p className="hero-location text-body">
+        <MapPin className="icon-primary size-5" aria-hidden />
+        {profile.person.location}
+      </p>
+      <SocialButtonsRow className="md:[&_.social-buttons-container]:justify-start" />
+    </section>
   );
 }
