@@ -7,8 +7,7 @@ import { createRefreshContributions, createRefreshRepoActivity } from "./applica
 import { createD1GitHubSnapshotRepository } from "./infrastructure/d1-github-snapshot-repository.ts";
 import { createGraphQLGitHubGateway } from "./infrastructure/graphql-github-gateway.ts";
 
-export type { GitHubQueries } from "./application/github-queries.ts";
-export type { RepoActivity, RepoCommit } from "./domain/repo-activity.ts";
+export type { RepoCommit } from "./domain/repo-activity.ts";
 export { githubRoutes } from "./http/github-routes.ts";
 
 export function createGitHubContext(env: Bindings, background: Background, repoUrls: () => Promise<readonly string[]>) {

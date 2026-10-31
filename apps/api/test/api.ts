@@ -1,6 +1,6 @@
 import { exports } from "cloudflare:workers";
 
-export const CONTENT_TOKEN = "test-token";
+const CONTENT_TOKEN = "test-token";
 
 export const api = (path: string, init?: RequestInit) => exports.default.fetch(`https://api.test${path}`, init);
 
