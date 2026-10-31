@@ -1,5 +1,4 @@
-# Next.js recommended modern browser targets
-# Based on Next.js 15+ defaults and Baseline Widely Available
+# Modern browser targets (Baseline Widely Available)
 chrome >= 64
 edge >= 79
 firefox >= 67
