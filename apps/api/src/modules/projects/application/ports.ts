@@ -1,5 +1,5 @@
 import type { Project } from "@mrashidi/types";
-import type { RepoCommit } from "../domain/repo-activity-reader.ts";
+import type { RepoCommit } from "#modules/github/index.ts";
 
 export interface ProjectRepository {
   list(): Promise<Project[]>;
