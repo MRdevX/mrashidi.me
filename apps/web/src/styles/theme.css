@@ -3,6 +3,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --font-albert: "Albert Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-terminal: "JetBrains Mono", ui-monospace, monospace;
+  --font-cyberpunk: "Exo 2", Orbitron, sans-serif;
+
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
 

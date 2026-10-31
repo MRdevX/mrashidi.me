@@ -73,7 +73,7 @@
   }
 
   .code-block {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-terminal);
     background: rgba(248, 250, 252, 0.9);
     padding: 1rem;
     border-radius: 4px;

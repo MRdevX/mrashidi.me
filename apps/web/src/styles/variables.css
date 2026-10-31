@@ -4,15 +4,6 @@
 @import "@fontsource/exo-2" layer(base);
 
 :root {
-  --font-cyberpunk: "Exo 2", Orbitron, sans-serif;
-  --font-terminal: JetBrains Mono, monospace;
-  --font-albert: Albert Sans, sans-serif;
-  --font-family-cyberpunk: var(--font-cyberpunk);
-  --font-family-terminal: var(--font-terminal);
-  --font-family-albert: var(--font-albert);
-}
-
-:root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 245, 245, 245;
