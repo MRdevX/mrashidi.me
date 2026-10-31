@@ -19,8 +19,8 @@ const GLYPHS = "アイウエオカキクケコサシスセソタチツテトナ�
 const ATLAS_COLUMNS = 8;
 const ATLAS_CELL_PX = 64;
 const GLYPH_COUNT = 420;
-const FIELD = { width: 70, height: 44, near: 6, far: -60 };
-const OPACITY = { dark: 0.16, light: 0.13 };
+const FIELD = { width: 60, height: 40, near: 6, far: -36 };
+const OPACITY = { dark: 0.55, light: 0.4 };
 
 const vertexShader = /* glsl */ `
   attribute float glyph;
@@ -37,9 +37,10 @@ const vertexShader = /* glsl */ `
     p.y = mod(p.y + ${(FIELD.height / 2).toFixed(1)} - uTime * speed * 0.35, ${FIELD.height.toFixed(1)}) - ${(FIELD.height / 2).toFixed(1)};
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
-    gl_PointSize = uSize * (12.0 / -mv.z);
+    float viewDistance = -mv.z;
+    gl_PointSize = clamp(uSize * 14.0 / viewDistance, 6.0, 44.0);
     vGlyph = glyph;
-    vFade = smoothstep(${(-FIELD.far).toFixed(1)}, 20.0, -mv.z) * smoothstep(0.5, 6.0, -mv.z);
+    vFade = (1.0 - smoothstep(28.0, 46.0, viewDistance)) * smoothstep(1.0, 5.0, viewDistance);
   }
 `;
 
@@ -111,7 +112,7 @@ function Field({ theme }: { theme: "light" | "dark" }) {
       uAtlas: { value: createAtlas() },
       uColor: { value: new Color() },
       uOpacity: { value: OPACITY.dark },
-      uSize: { value: 22 },
+      uSize: { value: 30 },
       uTime: { value: 0 },
     }),
     []
