@@ -17,7 +17,7 @@ import { useContributions } from "./useContributions";
 
 const ContributionSkyline = dynamic(() => import("./skyline/ContributionSkyline"), {
   ssr: false,
-  loading: () => <div className="h-[300px]" aria-hidden="true" />,
+  loading: () => <div className="h-[260px]" aria-hidden="true" />,
 });
 
 type GraphView = "2d" | "3d";
@@ -111,7 +111,7 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
   const { data, loading, error } = useContributions();
   const [tooltip, setTooltip] = useState<TooltipState>(null);
   const render3D = useRender3D();
-  const [view, setView] = useState<GraphView>("3d");
+  const [view, setView] = useState<GraphView>("2d");
   const show3D = render3D && view === "3d";
 
   const contributions = data ? computeDynamicLevels(data.contributions) : [];

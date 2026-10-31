@@ -9,13 +9,16 @@ async function supports3D(page: Page): Promise<boolean> {
   );
 }
 
-test("desktop shows the contribution skyline and switches back to the 2D graph", async ({ page }, testInfo) => {
+test("desktop opens the 2D graph and shows the skyline on request", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "3D runs on desktop Chromium only");
   await page.goto("/");
   test.skip(!(await supports3D(page)), "this machine has no WebGL2 or too few cores");
 
   await contributionGraph(page).scrollIntoViewIfNeeded();
-  await expect(viewToggle(page, "3d")).toHaveAttribute("aria-pressed", "true");
+  await expect(viewToggle(page, "2d")).toHaveAttribute("aria-pressed", "true");
+  await expect(contributionGraph(page)).toHaveJSProperty("tagName", "svg");
+
+  await viewToggle(page, "3d").click();
   await expect(contributionGraph(page).locator("canvas")).toBeVisible();
 
   await viewToggle(page, "2d").click();
