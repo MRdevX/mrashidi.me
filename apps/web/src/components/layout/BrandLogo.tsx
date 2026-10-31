@@ -9,7 +9,7 @@ import { detectDeviceCapabilities } from "@/lib/utils/performance";
 
 export const BrandLogo = () => {
   const { profile } = useContent();
-  const { getSectionTitle, getColor } = getThemeConfig();
+  const { getSectionTitle, brandHex } = getThemeConfig();
   const [isLowPerformance, setIsLowPerformance] = useState(false);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const BrandLogo = () => {
             !isLowPerformance
               ? {
                   scale: 1.02,
-                  textShadow: `0 0 4px ${getColor("primary")}66`,
+                  textShadow: `0 0 4px ${brandHex}66`,
                 }
               : {}
           }
