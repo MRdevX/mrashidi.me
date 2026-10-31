@@ -56,7 +56,7 @@ workers, such as troika text in drei, would fail.
   - The contribution history becomes a distinctive piece built from real data.
   - The gate and the in-view pause keep the cost off phones and off-screen canvases.
 - **Costs:**
-  - About 190 KB gzipped of async JavaScript on capable desktops.
+  - About 245 KB gzipped of async JavaScript (one chunk) on capable desktops.
   - Two rendering paths, 2D and 3D, to keep in step.
   - Both scenes need visual checks; unit tests cover only their pure layout and gating code.
 - **Accepted risks:** some GPUs pass the WebGL2 check but render slowly. The DPR cap, instancing
