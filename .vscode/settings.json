@@ -97,7 +97,7 @@
     "*.ts": "${capture}.test.ts, ${capture}.spec.ts, ${capture}.d.ts",
     "*.tsx": "${capture}.test.tsx, ${capture}.spec.tsx, ${capture}.stories.tsx",
     "package.json": "package-lock.json, pnpm-lock.yaml, .npmrc, .pnpmrc, pnpm-workspace.yaml, .nvmrc",
-    "next.config.*": "next-env.d.ts, postcss.config.*, tailwind.config.*",
+    "next.config.*": "next-env.d.ts, postcss.config.*",
     "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo, next-env.d.ts",
     ".env": ".env.*, .env.example, .env.local, .env.sentry-build-plugin",
     "README.md": "CHANGELOG.md, CONTRIBUTING.md, AGENTS.md, LICENSE"
