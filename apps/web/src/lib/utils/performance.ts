@@ -1,10 +1,11 @@
 export function detectDeviceCapabilities() {
   if (typeof window === "undefined") {
-    return { isLowEnd: false, shouldDisableEffects: false };
+    return { isLowEnd: false, shouldDisableEffects: false, supportsWebGL2: false };
   }
 
   const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  const gl2 = canvas.getContext("webgl2");
+  const gl = gl2 ?? canvas.getContext("webgl");
 
   const isLowEnd =
     !gl ||
@@ -15,5 +16,7 @@ export function detectDeviceCapabilities() {
     isLowEnd &&
     (navigator.hardwareConcurrency <= 1 || /Android 4|iPhone OS [1-6]|iPad.*OS [1-6]/i.test(navigator.userAgent));
 
-  return { isLowEnd, shouldDisableEffects };
+  gl?.getExtension("WEBGL_lose_context")?.loseContext();
+
+  return { isLowEnd, shouldDisableEffects, supportsWebGL2: gl2 !== null };
 }
