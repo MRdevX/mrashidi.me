@@ -94,14 +94,6 @@
   animation: ask-mr-launcher-pulse 1.8s ease-out 1.5s 2;
 }
 
-/* The full-screen mobile panel would otherwise sit under the Buy Me a Coffee button (z-index 9999999). */
-@media (max-width: 639px) {
-  html[data-ask-mr-open] #bmc-wbtn {
-    /* biome-ignore lint/complexity/noImportantStyles: the widget sets inline styles */
-    display: none !important;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ai-border::before,
   .ai-border::after,

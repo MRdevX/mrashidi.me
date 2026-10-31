@@ -27,3 +27,12 @@ html.dark #bmc-close-btn {
   background-color: hsl(var(--secondary)) !important;
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.35) !important;
 }
+
+/* Phones: the bottom corners belong to the theme toggle and Ask MR; the footer links to the page instead. */
+@media (max-width: 639px) {
+  #bmc-wbtn,
+  #bmc-wbtn + div {
+    /* biome-ignore lint/complexity/noImportantStyles: the widget sets inline styles */
+    display: none !important;
+  }
+}
