@@ -4,6 +4,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { SquarePen, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useContent } from "@/lib/content";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import { ASK_MR_NAME } from "../constants";
 import { messageText } from "../messageText";
@@ -15,7 +16,7 @@ import { ErrorBanner } from "./ErrorBanner";
 import { MessageList } from "./MessageList";
 import { TypingIndicator } from "./TypingIndicator";
 import { useAskMrChat } from "./useAskMrChat";
-import { useMediaQuery, useVisualViewportHeight } from "./useMediaQuery";
+import { useVisualViewportHeight } from "./useVisualViewportHeight";
 
 const headerButton =
   "inline-flex size-9 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-black/5 hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:opacity-40 dark:text-gray-400 dark:hover:bg-white/10 ";
