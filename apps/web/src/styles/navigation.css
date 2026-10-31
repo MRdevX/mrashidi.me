@@ -95,11 +95,7 @@
   }
 
   .bottom-nav-item-icon.active {
-    color: rgb(234 88 12);
-  }
-
-  .dark .bottom-nav-item-icon.active {
-    color: rgb(251 146 60);
+    color: hsl(var(--brand-text));
   }
 
   .bottom-nav-item-icon.inactive {
@@ -120,11 +116,7 @@
   }
 
   .bottom-nav-item-text.active {
-    color: rgb(234 88 12);
-  }
-
-  .dark .bottom-nav-item-text.active {
-    color: rgb(251 146 60);
+    color: hsl(var(--brand-text));
   }
 
   .bottom-nav-item-text.inactive {
