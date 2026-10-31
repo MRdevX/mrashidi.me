@@ -4,7 +4,7 @@ import {
   InvalidWorkPeriodError,
   parseWorkPeriod,
   toIsoMonth,
-} from "../src/modules/resume/domain/work-period.ts";
+} from "#modules/resume/domain/work-period.ts";
 
 const now = { year: 2026, month: 10 };
 

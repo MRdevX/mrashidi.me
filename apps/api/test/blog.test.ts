@@ -3,8 +3,8 @@ import { fixtureContent } from "@mrashidi/types/fixtures";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createDb } from "#db/index.ts";
 import { snapshots } from "#db/schema.ts";
-import { createBlogQueries } from "../src/modules/blog/application/blog-queries.ts";
-import { createRefreshBlog } from "../src/modules/blog/application/refresh-blog.ts";
+import { createBlogQueries } from "#modules/blog/application/blog-queries.ts";
+import { createRefreshBlog } from "#modules/blog/application/refresh-blog.ts";
 import {
   EXCERPT_LENGTH,
   type FeedItem,
@@ -12,10 +12,10 @@ import {
   pageOf,
   toBlogPosts,
   toExcerpt,
-} from "../src/modules/blog/domain/blog-post.ts";
-import type { FeedGateway } from "../src/modules/blog/domain/feed-gateway.ts";
-import { createD1BlogSnapshotRepository } from "../src/modules/blog/infrastructure/d1-blog-snapshot-repository.ts";
-import { createMediumFeedGateway, readHtml } from "../src/modules/blog/infrastructure/medium-feed-gateway.ts";
+} from "#modules/blog/domain/blog-post.ts";
+import type { FeedGateway } from "#modules/blog/domain/feed-gateway.ts";
+import { createD1BlogSnapshotRepository } from "#modules/blog/infrastructure/d1-blog-snapshot-repository.ts";
+import { createMediumFeedGateway, readHtml } from "#modules/blog/infrastructure/medium-feed-gateway.ts";
 import { authedApi } from "./api.ts";
 
 const FIXTURES = "../../../packages/types/fixtures/api";

@@ -1,6 +1,6 @@
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
-import { describeSkills, SKILL_GROUPS, skillTier } from "../src/modules/resume/domain/skills.ts";
+import { describeSkills, SKILL_GROUPS, skillTier } from "#modules/resume/domain/skills.ts";
 
 const { skills } = fixtureContent;
 const TIER_ORDER = ["core", "experienced", "familiar"];

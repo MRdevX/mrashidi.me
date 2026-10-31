@@ -1,7 +1,7 @@
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
-import { buildKnowledgeContext, type KnowledgeSources } from "../src/modules/ask-mr/domain/knowledge-context.ts";
-import { toProjectEntry } from "../src/modules/projects/domain/project-entry.ts";
+import { buildKnowledgeContext, type KnowledgeSources } from "#modules/ask-mr/domain/knowledge-context.ts";
+import { toProjectEntry } from "#modules/projects/domain/project-entry.ts";
 
 const { experience, knowledge: extra, profile } = fixtureContent;
 const sources: KnowledgeSources = {
