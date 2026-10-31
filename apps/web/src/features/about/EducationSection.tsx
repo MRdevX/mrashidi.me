@@ -14,12 +14,12 @@ function InstitutionBlock({ edu }: { edu: Education }) {
   return edu.url ? (
     <button
       type="button"
-      className={`relative z-10 mt-2 flex cursor-pointer items-center hover:text-orange-400 ${secondaryRow}`}
+      className={`relative z-10 mt-2 flex cursor-pointer items-center hover:text-brand-text ${secondaryRow}`}
       onClick={() => window.open(edu.url, "_blank")}
       aria-label={`${edu.institution} (opens in new tab)`}
     >
       <span>{edu.institution}</span>
-      <ExternalLink className="ml-2 size-4 shrink-0 text-orange-500" aria-hidden />
+      <ExternalLink className="ml-2 size-4 shrink-0 text-brand-text" aria-hidden />
     </button>
   ) : (
     <div className={`relative z-10 mt-2 flex items-center ${secondaryRow}`}>
@@ -38,9 +38,7 @@ export function EducationSection() {
         <AboutCardSurface key={edu.degree + edu.institution} className="mb-4">
           <div className="relative z-10 flex items-center justify-between">
             <div className="min-w-0 flex-1">
-              <h3 className="text-xl font-bold text-orange-500 transition-colors group-hover:text-orange-400">
-                {edu.degree}
-              </h3>
+              <h3 className="text-xl font-bold text-brand-text">{edu.degree}</h3>
               <InstitutionBlock edu={edu} />
             </div>
             <div className={`ml-4 shrink-0 text-right text-sm ${getTextColor("secondary")}`}>

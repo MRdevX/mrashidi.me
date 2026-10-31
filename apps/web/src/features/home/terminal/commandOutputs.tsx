@@ -19,13 +19,13 @@ export const SkillsByLevel = ({ skills }: Pick<SiteContent, "skills">) =>
 
     return (
       <div key={cat.category}>
-        <span className="text-orange-400">{cat.category}</span>
+        <span className="text-brand-text">{cat.category}</span>
         {Object.entries(skillsByLevel).map(
           ([level, levelSkills]) =>
             levelSkills.length > 0 && (
               <div key={level} className="ml-2">
-                <span className="text-green-400 capitalize">{level}: </span>
-                <span className="text-gray-200">{levelSkills.map((s) => s.name).join(", ")}</span>
+                <span className="text-terminal capitalize">{level}: </span>
+                <span className="text-gray-800 dark:text-gray-200">{levelSkills.map((s) => s.name).join(", ")}</span>
               </div>
             )
         )}
@@ -39,14 +39,14 @@ export const renderWorkExperience = ({ experience }: SiteContent, limit?: number
 
   return experiences.map((exp) => (
     <div key={`${exp.title}-${exp.company}-${exp.period}`} className="mb-4">
-      <p className="text-orange-500 font-bold">{exp.title}</p>
-      <p className="text-green-400">{exp.company}</p>
-      <p className="text-gray-400">
+      <p className="text-brand-text font-bold">{exp.title}</p>
+      <p className="text-terminal">{exp.company}</p>
+      <p className="text-gray-600 dark:text-gray-400">
         • {exp.location} ({exp.employmentType})
       </p>
-      <p className="text-gray-400">• {exp.period}</p>
+      <p className="text-gray-600 dark:text-gray-400">• {exp.period}</p>
       {exp.achievements.slice(0, ACHIEVEMENTS_PER_ROLE).map((achievement) => (
-        <p key={`achievement-${achievement}`} className="text-gray-400">
+        <p key={`achievement-${achievement}`} className="text-gray-600 dark:text-gray-400">
           • {achievement}
         </p>
       ))}
@@ -59,9 +59,9 @@ export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
 
   return projectList.map((project) => (
     <div key={project.title} className="mb-4">
-      <p className="text-orange-500 font-bold">{project.title}</p>
-      <p className="text-gray-400">{project.description}</p>
-      <p className="text-green-400 text-sm">Tech: {project.stack.join(", ")}</p>
+      <p className="text-brand-text font-bold">{project.title}</p>
+      <p className="text-gray-600 dark:text-gray-400">{project.description}</p>
+      <p className="text-terminal text-sm">Tech: {project.stack.join(", ")}</p>
       <div className="flex gap-2 text-xs mt-1 items-center">
         <TerminalBadge variant={project.visibility === "public" ? "public" : "private"}>
           {project.visibility}
@@ -70,12 +70,12 @@ export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
           {project.type}
         </TerminalBadge>
         {project.githubUrl && (
-          <TerminalLink href={project.githubUrl} className="text-orange-400 underline">
+          <TerminalLink href={project.githubUrl} className="text-brand-text underline">
             GitHub
           </TerminalLink>
         )}
         {project.liveUrl && (
-          <TerminalLink href={project.liveUrl} className="text-green-400 underline">
+          <TerminalLink href={project.liveUrl} className="text-terminal underline">
             Live
           </TerminalLink>
         )}
@@ -87,24 +87,24 @@ export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
 export const renderContactInfo = ({ profile, about }: SiteContent) => (
   <div className="space-y-2">
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">Email:</span>
+      <span className="text-brand-text">Email:</span>
       <TerminalLink href={`mailto:${profile.person.email}`}>{profile.person.email}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">GitHub:</span>
+      <span className="text-brand-text">GitHub:</span>
       <TerminalLink href={profile.social.github}>{profile.social.github.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">LinkedIn:</span>
+      <span className="text-brand-text">LinkedIn:</span>
       <TerminalLink href={profile.social.linkedin}>{profile.social.linkedin.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">Location:</span>
-      <span className="text-green-400">{profile.person.location}</span>
+      <span className="text-brand-text">Location:</span>
+      <span className="text-terminal">{profile.person.location}</span>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">Languages:</span>
-      <span className="text-green-400">
+      <span className="text-brand-text">Languages:</span>
+      <span className="text-terminal">
         {about.languages.map((lang) => `${lang.language} (${lang.level})`).join(", ")}
       </span>
     </div>
@@ -114,7 +114,7 @@ export const renderContactInfo = ({ profile, about }: SiteContent) => (
 export const renderCertificates = ({ certificates }: SiteContent) => {
   const allCertificates = certificates.slice(0, CERTIFICATE_CATEGORY_LIMIT).flatMap((category) =>
     category.certificates.map((cert) => (
-      <TerminalListItem key={`${category.category}-${cert.name}-${cert.year}`} className="text-green-400">
+      <TerminalListItem key={`${category.category}-${cert.name}-${cert.year}`} className="text-terminal">
         {cert.name} ({cert.year})
       </TerminalListItem>
     ))
@@ -137,12 +137,12 @@ export const renderAchievements = ({ experience }: SiteContent) => {
 
 export const HelpCommandOutput = () => (
   <div className="mt-2">
-    <p className="text-orange-500 font-bold mb-2">Available commands:</p>
+    <p className="text-brand-text font-bold mb-2">Available commands:</p>
     {Object.entries(AVAILABLE_COMMANDS).map(([cmd, desc]) => (
       <div key={cmd} className="grid grid-cols-[120px_1fr] gap-2 mt-1 group">
         <button
           type="button"
-          className="text-green-400 font-bold group-hover:text-green-300 transition-colors cursor-pointer hover:underline bg-transparent border-none p-0 text-left"
+          className="text-terminal font-bold transition-colors cursor-pointer hover:underline bg-transparent border-none p-0 text-left"
           onClick={() => {
             window.dispatchEvent(new CustomEvent(TERMINAL_COMMAND_CLICK_EVENT, { detail: { command: cmd } }));
           }}
@@ -150,7 +150,9 @@ export const HelpCommandOutput = () => (
         >
           {cmd}
         </button>
-        <span className="text-gray-400 group-hover:text-gray-300 transition-colors">{desc}</span>
+        <span className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors">
+          {desc}
+        </span>
       </div>
     ))}
   </div>

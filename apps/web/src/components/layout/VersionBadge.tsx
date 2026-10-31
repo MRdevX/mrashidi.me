@@ -46,14 +46,14 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
     ? {
         as: "a" as const,
         className:
-          "flex items-center py-2 pl-3 pr-4 text-base font-medium border-l-4 border-transparent text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 hover:border-orange-500 hover:bg-gray-100/50 dark:hover:bg-gray-800/30 focus-visible:outline-offset-4 focus-visible:outline-orange-500",
+          "flex items-center py-2 pl-3 pr-4 text-base font-medium border-l-4 border-transparent text-gray-600 dark:text-gray-400 hover:text-brand-text hover:border-primary hover:bg-gray-100/50 dark:hover:bg-gray-800/30 focus-visible:outline-offset-4 focus-visible:outline-primary",
       }
     : {};
 
   const desktopProps = !isMobile
     ? {
         className:
-          "hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-300/50 dark:border-gray-600/50 rounded-lg backdrop-blur-sm hover:bg-gray-200/80 dark:hover:bg-gray-700/80 hover:border-orange-500/50 dark:hover:border-orange-400/50 transition-all duration-200 focus-visible:outline-offset-4 focus-visible:outline-orange-500",
+          "hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-300/50 dark:border-gray-600/50 rounded-lg backdrop-blur-sm hover:bg-gray-200/80 dark:hover:bg-gray-700/80 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-200 focus-visible:outline-offset-4 focus-visible:outline-primary",
         whileHover: motionOk ? { scale: 1.05 } : undefined,
         whileTap: motionOk ? { scale: 0.95 } : undefined,
         onHoverStart: () => setIsHovered(true),
@@ -71,7 +71,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
         animate={{ rotate: motionOk && isHovered ? 360 : 0 }}
         transition={{ duration: motionOk ? 0.55 : 0, ease: "easeInOut" }}
       >
-        <GitBranch className="w-3 h-3 text-orange-600 dark:text-orange-400" />
+        <GitBranch className="w-3 h-3 text-brand-text " />
       </motion.div>
 
       <motion.span
@@ -106,7 +106,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
         href={profile.social.githubRepo}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${githubLink.ariaLabel} - Version ${version} (opens in new tab)`}
+        aria-label={`v${version}: ${githubLink.ariaLabel} (opens in new tab)`}
         {...mobileProps}
       >
         {linkContent}
@@ -119,7 +119,7 @@ export const VersionBadge = ({ variant = "desktop" }: VersionBadgeProps) => {
       href={profile.social.githubRepo}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${githubLink.ariaLabel} - Version ${version} (opens in new tab)`}
+      aria-label={`v${version}: ${githubLink.ariaLabel} (opens in new tab)`}
       {...desktopProps}
     >
       {linkContent}

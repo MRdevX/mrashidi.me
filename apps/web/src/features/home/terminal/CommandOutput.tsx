@@ -24,7 +24,7 @@ const TerminalSpinner = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-green-400 font-mono">{SPINNER_FRAMES[frame]}</span>
+      <span className="text-terminal font-mono">{SPINNER_FRAMES[frame]}</span>
       <span className={TERMINAL_STYLES.TEXT.SECONDARY}>Processing...</span>
     </div>
   );
@@ -58,7 +58,7 @@ const TypewriterText = ({
       {displayedText}
       {currentIndex < text.length && (
         <motion.span
-          className="text-green-400 animate-pulse"
+          className="text-terminal animate-pulse"
           animate={{ opacity: [1, 0, 1] }}
           transition={{ duration: 0.8, repeat: Infinity }}
         >

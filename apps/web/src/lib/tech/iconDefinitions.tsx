@@ -359,7 +359,7 @@ export const ICON_DEFINITIONS: Record<string, IconDefinition> = {
   pyqt: { Icon: SiQt, colorClass: "text-green-600" },
 
   zod: { Icon: SiZod, colorClass: "text-blue-500" },
-  nats: { Icon: SiNatsdotio, colorClass: "text-white-500" },
+  nats: { Icon: SiNatsdotio, colorClass: "text-sky-500" },
   graphileworker: { Icon: GraphileWorkerIcon, colorClass: "text-orange-600" },
 
   default: { Icon: FaTools, colorClass: "text-gray-400" },

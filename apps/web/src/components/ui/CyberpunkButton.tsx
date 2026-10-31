@@ -18,7 +18,7 @@ export const CyberpunkButton = React.forwardRef<HTMLButtonElement, CyberpunkButt
   (
     {
       className,
-      variant = "default",
+      variant = "neon",
       animate = false,
       loading: _loading,
       icon,

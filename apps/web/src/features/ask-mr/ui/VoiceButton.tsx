@@ -99,8 +99,8 @@ export function VoiceButton({ onTranscript, baseText, disabled }: VoiceButtonPro
       aria-label={listening ? "Stop dictation" : "Dictate a question"}
       aria-pressed={listening}
       className={cn(
-        "inline-flex size-10 shrink-0 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-black/5 hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 disabled:opacity-40 dark:hover:bg-white/10 dark:hover:text-orange-400",
-        listening && "bg-orange-500/15 text-orange-600 dark:text-orange-400"
+        "inline-flex size-10 shrink-0 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-black/5 hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:opacity-40 dark:hover:bg-white/10 ",
+        listening && "bg-primary/15 text-brand-text "
       )}
     >
       {listening ? <MicOff className="size-4" aria-hidden /> : <Mic className="size-4" aria-hidden />}

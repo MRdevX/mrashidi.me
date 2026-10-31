@@ -50,7 +50,7 @@ export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: Compose
 
   return (
     <form onSubmit={submit} className="border-t border-gray-200 p-3 dark:border-white/10">
-      <div className="flex items-end gap-1 rounded-xl border border-gray-300 bg-white px-2 py-1.5 transition-colors focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-500/25 dark:border-white/15 dark:bg-black/40">
+      <div className="flex items-end gap-1 rounded-xl border border-gray-300 bg-white px-2 py-1.5 transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25 dark:border-white/15 dark:bg-black/40">
         <label htmlFor="ask-mr-input" className="sr-only">
           Ask a question about {name}
         </label>
@@ -74,7 +74,7 @@ export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: Compose
             type="button"
             onClick={onStop}
             aria-label="Stop generating"
-            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
           >
             <Square className="size-3.5 fill-current" aria-hidden />
           </button>
@@ -83,7 +83,7 @@ export function Composer({ inputRef, isBusy, disabled, onSend, onStop }: Compose
             type="submit"
             aria-label="Send"
             disabled={!draft.trim() || disabled}
-            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-500 text-white shadow-[0_0_16px_-4px_rgb(255_95_31/0.8)] transition-colors hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 disabled:bg-gray-300 disabled:shadow-none dark:disabled:bg-white/10"
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-[0_0_16px_-4px_hsl(var(--primary)/0.8)] transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:bg-gray-300 disabled:shadow-none dark:disabled:bg-white/10"
           >
             <ArrowUp className="size-4" aria-hidden />
           </button>

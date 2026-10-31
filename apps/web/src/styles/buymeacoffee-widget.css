@@ -6,7 +6,7 @@ html.dark #bmc-wbtn + div {
   background-color: hsl(var(--card)) !important;
   color: hsl(var(--popover-foreground)) !important;
   border: 1px solid hsl(var(--border) / 0.85) !important;
-  font-family: var(--font-albert), ui-sans-serif, system-ui, sans-serif !important;
+  font-family: var(--font-albert) !important;
   box-shadow:
     0 8px 40px rgb(0 0 0 / 0.35),
     0 0 0 1px hsl(var(--border) / 0.35) !important;
@@ -26,4 +26,13 @@ html.dark body > div:has(#bmc-iframe) {
 html.dark #bmc-close-btn {
   background-color: hsl(var(--secondary)) !important;
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.35) !important;
+}
+
+/* Phones: the bottom corners belong to the theme toggle and Ask MR; the footer links to the page instead. */
+@media (max-width: 639px) {
+  #bmc-wbtn,
+  #bmc-wbtn + div {
+    /* biome-ignore lint/complexity/noImportantStyles: the widget sets inline styles */
+    display: none !important;
+  }
 }

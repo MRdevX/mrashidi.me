@@ -12,7 +12,6 @@ import { getTechIcon } from "@/lib/tech";
 import { cn } from "@/lib/utils";
 import { Badge } from "./Badge";
 import { formatDuration, formatIsoMonth } from "./period";
-import { accentTextClass } from "./styles";
 
 const ACHIEVEMENT_PREVIEW_COUNT = 3;
 
@@ -103,8 +102,7 @@ function Achievements({ items }: { items: string[] }) {
           aria-controls={listId}
           onClick={() => setExpanded((open) => !open)}
           className={cn(
-            "mt-3 inline-flex min-h-[2.75rem] cursor-pointer items-center gap-1.5 rounded-md px-1 text-sm font-medium transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-            accentTextClass
+            "mt-3 inline-flex min-h-[2.75rem] cursor-pointer items-center gap-1.5 rounded-md px-1 text-sm font-medium transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 text-brand-text"
           )}
         >
           {expanded ? "Show less" : `Show ${hiddenCount} more`}
@@ -141,7 +139,7 @@ function JobCard({ job }: { job: ExperienceEntry }) {
             <JobPeriod start={job.start} end={job.end} durationMonths={job.durationMonths} />
           </div>
           <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm sm:text-base">
-            <span className={cn("font-medium", accentTextClass)}>{job.company}</span>
+            <span className={"font-medium text-brand-text"}>{job.company}</span>
             <span aria-hidden className={getTextColor("muted")}>
               ·
             </span>

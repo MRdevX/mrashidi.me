@@ -16,11 +16,9 @@ export function BlogPostCardFooter({ publishedAt }: BlogPostCardFooterProps) {
         <span className={`whitespace-nowrap text-sm ${getTextColor("muted")}`}>
           {new Date(publishedAt).toLocaleDateString()}
         </span>
-        <span className="shrink-0 rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-600 dark:text-orange-400">
-          Blog Post
-        </span>
+        <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-xs text-brand-text ">Blog Post</span>
       </div>
-      <span className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-orange-500 transition-colors group-hover:text-orange-400">
+      <span className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-brand-text">
         Read More
         <ArrowRight className="size-4 shrink-0" aria-hidden />
       </span>

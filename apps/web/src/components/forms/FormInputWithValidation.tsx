@@ -65,7 +65,7 @@ export function FormInputWithValidation<T extends Record<string, unknown>>({
   return (
     <div>
       <label htmlFor={fieldId} className={`block mb-2 text-sm font-medium ${getTextColor("primary")}`}>
-        {label} {required && <span className="text-orange-500">*</span>}
+        {label} {required && <span className="text-brand-text">*</span>}
       </label>
       {multiline ? (
         <div className="relative">

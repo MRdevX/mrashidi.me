@@ -9,7 +9,7 @@ import { detectDeviceCapabilities } from "@/lib/utils/performance";
 
 export const BrandLogo = () => {
   const { profile } = useContent();
-  const { getSectionTitle, getColor } = getThemeConfig();
+  const { getSectionTitle, brandHex } = getThemeConfig();
   const [isLowPerformance, setIsLowPerformance] = useState(false);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const BrandLogo = () => {
   }, []);
 
   return (
-    <Link href="/" className="flex items-center shrink-0 group" aria-label={`${profile.person.name} - Home`}>
+    <Link href="/" className="flex items-center shrink-0 group" aria-label={`MR, ${profile.person.name}: home`}>
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: -20 }}
@@ -31,7 +31,7 @@ export const BrandLogo = () => {
             !isLowPerformance
               ? {
                   scale: 1.02,
-                  textShadow: `0 0 4px ${getColor("primary")}66`,
+                  textShadow: `0 0 4px ${brandHex}66`,
                 }
               : {}
           }
@@ -44,7 +44,7 @@ export const BrandLogo = () => {
         {!isLowPerformance && (
           <>
             <motion.div
-              className="absolute -inset-1 bg-orange-500/10 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="absolute -inset-1 bg-primary/10 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               initial={false}
             />
           </>

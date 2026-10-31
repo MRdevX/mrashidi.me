@@ -1,9 +1,10 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { Coffee, Mail } from "lucide-react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useContent } from "@/lib/content";
+import { BUY_ME_A_COFFEE_ID } from "./BuyMeACoffeeWidget";
 
 interface SocialLinkProps {
   href: string;
@@ -61,6 +62,16 @@ export function Footer() {
           <span className="text-muted-foreground block text-center text-sm">
             © {currentYear} {profile.person.name}. All rights reserved.
           </span>
+          <a
+            href={`https://www.buymeacoffee.com/${BUY_ME_A_COFFEE_ID}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-primary inline-flex items-center gap-1.5 text-xs underline-offset-4 hover:underline duration-150"
+          >
+            <Coffee className="size-3.5" aria-hidden />
+            Buy me a coffee
+            <span className="sr-only">(opens in new tab)</span>
+          </a>
           <Link
             href="/privacy"
             className="text-muted-foreground hover:text-primary text-xs underline-offset-4 hover:underline duration-150"

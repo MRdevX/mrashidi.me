@@ -14,7 +14,7 @@ export const CyberpunkDialogContent = React.forwardRef<
   return (
     <DialogContent ref={ref} className={cn(variants.dialog.content, className)} {...props}>
       <div className="relative">
-        <div className="absolute inset-0 rounded-lg bg-linear-to-r from-orange-500/20 via-transparent to-orange-500/20 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        <div className="absolute inset-0 rounded-lg bg-linear-to-r from-primary/20 via-transparent to-primary/20 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         {children}
       </div>
     </DialogContent>

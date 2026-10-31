@@ -14,7 +14,7 @@ export function EmptyState({ onAsk }: { onAsk: (question: string) => void }) {
   return (
     <div className="flex h-full flex-col justify-end gap-4 pb-2">
       <div>
-        <div className="mb-3 inline-flex size-10 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-500">
+        <div className="mb-3 inline-flex size-10 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 text-brand-text">
           <Sparkles className="size-5" aria-hidden />
         </div>
         <p className="font-semibold text-gray-900 dark:text-white">Hi! I'm Ask MR.</p>

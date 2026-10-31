@@ -71,7 +71,7 @@ export function SectionHeader({
       animate={{ opacity: 1, y: 0 }}
       transition={pageEnterTransition(prefersReducedMotion, { delay })}
     >
-      <Icon className={`${sizeClasses[size]} text-orange-500`} aria-hidden />
+      <Icon className={`${sizeClasses[size]} text-brand-text`} aria-hidden />
       <HeadingTag className={`${titleSizes[size]} font-bold ${getSectionTitle()}`}>{title}</HeadingTag>
     </motion.div>
   );

@@ -3,7 +3,7 @@ import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 
 export const TerminalSection = ({ title, children }: { title: string; children: ReactNode }) => (
   <div className="mt-2 space-y-2">
-    <p className="text-orange-500 font-bold">{title}</p>
+    <p className="text-brand-text font-bold">{title}</p>
     {children}
   </div>
 );
@@ -11,7 +11,7 @@ export const TerminalSection = ({ title, children }: { title: string; children: 
 export const TerminalLink = ({
   href,
   children,
-  className = "text-green-400 hover:underline",
+  className = "text-terminal hover:underline",
 }: {
   href: string;
   children: ReactNode;
@@ -25,17 +25,17 @@ export const TerminalLink = ({
 
 export const TerminalListItem = ({
   children,
-  className = "text-gray-400",
+  className = "text-gray-600 dark:text-gray-400",
 }: {
   children: ReactNode;
   className?: string;
 }) => <li className={className}>• {children}</li>;
 
 const BADGE_VARIANTS = {
-  public: "bg-[#10b981] text-white",
+  public: "bg-emerald-700 text-white",
   private: "bg-gray-700 text-gray-300",
-  personal: "bg-[#3b82f6] text-white",
-  professional: "bg-[#ff5f1f] text-white",
+  personal: "bg-blue-700 text-white",
+  professional: "bg-orange-700 text-white",
   default: "bg-gray-700 text-gray-300",
 } as const;
 

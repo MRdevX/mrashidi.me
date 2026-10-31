@@ -59,7 +59,7 @@ const nextConfig = {
               "img-src 'self' data: https: blob:",
               "media-src 'self' https:",
               "connect-src 'self' https: wss: https://www.google.com https://mrdevx.medium.com https://medium.com https://*.medium.com https://www.buymeacoffee.com https://buymeacoffee.com",
-              "frame-src 'self' https://git-graph.vercel.app https://adplist.org https://www.google.com https://www.buymeacoffee.com https://buymeacoffee.com",
+              "frame-src 'self' https://adplist.org https://www.google.com https://www.buymeacoffee.com https://buymeacoffee.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

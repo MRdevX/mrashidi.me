@@ -12,7 +12,7 @@ export function DateBadge({ icon, label, value }: { icon: React.ReactNode; label
 export function SummaryCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
     <div className="glass-card flex flex-col gap-2 p-4">
-      <div className="flex items-center gap-2 text-orange-500">{icon}</div>
+      <div className="flex items-center gap-2 text-brand-text">{icon}</div>
       <p className="text-sm font-semibold text-foreground">{title}</p>
       <p className="text-xs leading-relaxed text-muted-foreground">{desc}</p>
     </div>
@@ -31,7 +31,7 @@ export function PolicyCard({
   return (
     <div className="glass-card p-6">
       <div className="mb-4 flex items-center gap-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-brand-text">
           {icon}
         </span>
         <h2 className="text-lg font-semibold text-foreground">{title}</h2>
@@ -44,7 +44,7 @@ export function PolicyCard({
 export function Bullet({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex gap-2">
-      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden />
+      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
       <span>{children}</span>
     </li>
   );
@@ -56,9 +56,9 @@ export function ProviderCard({ name: providerName, desc, href }: { name: string;
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col gap-1 rounded-lg border border-border bg-muted/30 p-3 transition-colors hover:border-orange-500/40 hover:bg-orange-500/5"
+      className="group flex flex-col gap-1 rounded-lg border border-border bg-muted/30 p-3 transition-colors hover:border-primary/40 hover:bg-primary/5"
     >
-      <span className="flex items-center gap-1.5 text-sm font-medium text-foreground group-hover:text-orange-500">
+      <span className="flex items-center gap-1.5 text-sm font-medium text-foreground group-hover:text-brand-text">
         {providerName}
         <ExternalLink className="h-3 w-3 opacity-50" aria-hidden />
       </span>
@@ -70,7 +70,7 @@ export function ProviderCard({ name: providerName, desc, href }: { name: string;
 export function RightCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
     <div className="flex gap-3 rounded-lg border border-border bg-muted/20 p-3">
-      <span className="mt-0.5 shrink-0 text-orange-500">{icon}</span>
+      <span className="mt-0.5 shrink-0 text-brand-text">{icon}</span>
       <div>
         <p className="text-sm font-semibold text-foreground">{title}</p>
         <p className="mt-0.5 text-xs text-muted-foreground">{desc}</p>

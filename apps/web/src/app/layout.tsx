@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { AskMrProvider } from "@/features/ask-mr";
 import { ContentProvider } from "@/lib/content";
 import { getSiteContent } from "@/lib/content/server";
-import { inter } from "@/lib/fonts";
+import { fontVariables } from "@/lib/fonts";
 import { generateRootMetadata, generateViewport } from "@/lib/metadata";
 
 const AnalyticsWrapper = lazy(() =>
@@ -49,11 +49,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const content = await getSiteContent();
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={fontVariables}>
       <head>
         <HeadMeta />
       </head>
-      <body className={`${inter.className} min-h-screen relative`}>
+      <body className="min-h-screen relative">
         <ThemeProvider>
           <ContentProvider content={content}>
             <AskMrProvider>

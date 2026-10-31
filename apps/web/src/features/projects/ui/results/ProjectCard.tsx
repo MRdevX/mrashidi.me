@@ -39,7 +39,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
             <button
               type="button"
               onClick={() => onOpen(project)}
-              className={cn("text-left hover:text-orange-700 dark:hover:text-orange-400", styles.focusRing)}
+              className={cn("text-left hover:text-brand-text ", styles.focusRing)}
             >
               {project.title}
             </button>

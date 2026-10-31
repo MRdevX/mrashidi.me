@@ -15,7 +15,7 @@ interface TerminalInputProps {
 
 const TerminalCursor = ({ isVisible }: { isVisible: boolean }) => (
   <motion.span
-    className="text-green-400 font-mono"
+    className="text-terminal font-mono"
     animate={{ opacity: isVisible ? 1 : 0 }}
     transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
   >
@@ -67,7 +67,7 @@ export function TerminalInput({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <Terminal className="w-4 h-4 text-green-400" />
+        <Terminal className="w-4 h-4 text-terminal" />
         <span className={TERMINAL_STYLES.PROMPT}>$</span>
       </motion.div>
       <div className="flex items-center flex-1">

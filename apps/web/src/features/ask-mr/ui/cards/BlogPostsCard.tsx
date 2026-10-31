@@ -12,7 +12,7 @@ export function BlogPostsCard({ posts, onNavigate }: { posts: AskMrBlogPost[]; o
   if (posts.length === 0) {
     return (
       <CardShell title="Blog">
-        <Link href="/blog" onClick={onNavigate} className="text-sm text-orange-600 underline dark:text-orange-400">
+        <Link href="/blog" onClick={onNavigate} className="text-sm text-brand-text underline ">
           Browse all posts on the blog page
         </Link>
       </CardShell>
@@ -29,7 +29,7 @@ export function BlogPostsCard({ posts, onNavigate }: { posts: AskMrBlogPost[]; o
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackAskMr("ask_mr_tool_click", { tool: "getLatestPosts" })}
-              className="block rounded py-2 text-sm hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 dark:hover:text-orange-400"
+              className="block rounded py-2 text-sm hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 "
             >
               <span className="font-medium text-gray-900 dark:text-gray-100">{post.title}</span>
               <time dateTime={post.publishedAt} className="mt-0.5 block font-terminal text-[11px] text-gray-500">

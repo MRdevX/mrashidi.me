@@ -18,11 +18,8 @@ export function HeadMeta() {
       <meta name="mobile-web-app-capable" content={siteConfig.mobileWebAppCapable ? "yes" : "no"} />
       <meta name="application-name" content={siteConfig.appName} />
 
-      <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://cdn-images-1.medium.com" />
       <link rel="dns-prefetch" href="https://miro.medium.com" />
-      <link rel="dns-prefetch" href="https://git-graph.vercel.app" />
 
       <StructuredData type="person" />
       <StructuredData type="website" />

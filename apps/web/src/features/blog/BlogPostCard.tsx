@@ -47,9 +47,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           </div>
         ) : null}
         <div className="relative z-10 flex min-h-0 flex-1 flex-col gap-4">
-          <h2 className="line-clamp-2 shrink-0 text-xl font-bold text-orange-500 transition-colors group-hover:text-orange-400">
-            {post.title}
-          </h2>
+          <h2 className="line-clamp-2 shrink-0 text-xl font-bold text-brand-text">{post.title}</h2>
           <div className="flex min-h-[3lh] min-w-0 flex-1 flex-col">
             <p
               className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} line-clamp-3 transition-colors`}

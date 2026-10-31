@@ -1,8 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { useRender3D } from "@/lib/three/useRender3D";
 import { detectDeviceCapabilities } from "@/lib/utils/performance";
+
+const GlyphField3D = dynamic(() => import("./background/GlyphField3D"), { ssr: false });
+
+function useIdle(enabled: boolean): boolean {
+  const [idle, setIdle] = useState(false);
+
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    if ("requestIdleCallback" in window) {
+      const handle = window.requestIdleCallback(() => setIdle(true), { timeout: 3000 });
+      return () => window.cancelIdleCallback(handle);
+    }
+    const handle = setTimeout(() => setIdle(true), 1500);
+    return () => clearTimeout(handle);
+  }, [enabled]);
+
+  return idle;
+}
 
 interface Particle {
   x: number;
@@ -20,6 +42,8 @@ export function BackgroundEffects() {
   const [shouldDisableEffects, setShouldDisableEffects] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const lastFrameTime = useRef(0);
+  const render3D = useRender3D();
+  const idle = useIdle(render3D);
 
   const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
 
@@ -59,7 +83,7 @@ export function BackgroundEffects() {
   }, []);
 
   useEffect(() => {
-    if (!mounted || prefersReducedMotion || shouldDisableEffects) {
+    if (!mounted || prefersReducedMotion || shouldDisableEffects || render3D) {
       return;
     }
 
@@ -137,7 +161,7 @@ export function BackgroundEffects() {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrame);
     };
-  }, [isDark, mounted, isLowPerformance, prefersReducedMotion, shouldDisableEffects]);
+  }, [isDark, mounted, isLowPerformance, prefersReducedMotion, shouldDisableEffects, render3D]);
 
   if (!mounted) {
     return null;
@@ -154,18 +178,22 @@ export function BackgroundEffects() {
 
   return (
     <>
-      <canvas
-        ref={canvasRef}
-        className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
-          isLowPerformance
-            ? isDark
-              ? "opacity-[0.06]"
-              : "opacity-[0.03]"
-            : isDark
-              ? "opacity-[0.09]"
-              : "opacity-[0.05]"
-        }`}
-      />
+      {render3D ? (
+        idle && <GlyphField3D />
+      ) : (
+        <canvas
+          ref={canvasRef}
+          className={`fixed top-0 left-0 w-full h-full pointer-events-none z-0 ${
+            isLowPerformance
+              ? isDark
+                ? "opacity-[0.06]"
+                : "opacity-[0.03]"
+              : isDark
+                ? "opacity-[0.09]"
+                : "opacity-[0.05]"
+          }`}
+        />
+      )}
 
       <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-black/12 to-transparent dark:from-slate-950/50 pointer-events-none z-0" />
       <div className="fixed bottom-0 left-0 w-full h-28 bg-gradient-to-t from-black/12 to-transparent dark:from-slate-950/50 pointer-events-none z-0" />

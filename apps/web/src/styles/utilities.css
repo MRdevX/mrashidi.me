@@ -49,11 +49,11 @@
   }
 
   .social-link:hover {
-    color: rgb(249 115 22);
+    color: hsl(var(--brand-text));
   }
 
   .social-link:hover svg {
-    filter: drop-shadow(0 0 8px var(--neon-orange));
+    filter: drop-shadow(0 0 8px hsl(var(--primary)));
   }
 
   @media (max-width: 640px) {

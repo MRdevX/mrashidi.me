@@ -95,11 +95,7 @@
   }
 
   .bottom-nav-item-icon.active {
-    color: rgb(234 88 12);
-  }
-
-  .dark .bottom-nav-item-icon.active {
-    color: rgb(251 146 60);
+    color: hsl(var(--brand-text));
   }
 
   .bottom-nav-item-icon.inactive {
@@ -120,11 +116,7 @@
   }
 
   .bottom-nav-item-text.active {
-    color: rgb(234 88 12);
-  }
-
-  .dark .bottom-nav-item-text.active {
-    color: rgb(251 146 60);
+    color: hsl(var(--brand-text));
   }
 
   .bottom-nav-item-text.inactive {
@@ -202,14 +194,14 @@
     transform: translateY(-2px);
     box-shadow:
       0 6px 25px -4px rgb(0 0 0 / 0.2),
-      0 0 20px rgba(255, 95, 31, 0.2);
+      0 0 20px hsl(var(--primary) / 0.2);
     background-color: rgb(255 255 255 / 0.95);
   }
 
   .dark .floating-action-btn-container:hover {
     box-shadow:
       0 6px 25px -4px rgb(0 0 0 / 0.4),
-      0 0 20px rgba(255, 95, 31, 0.3);
+      0 0 20px hsl(var(--primary) / 0.3);
     background-color: rgb(31 41 55 / 0.95);
   }
 

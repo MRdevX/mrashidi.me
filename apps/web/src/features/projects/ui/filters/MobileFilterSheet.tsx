@@ -26,7 +26,7 @@ export function MobileFilterSheet() {
       <SlidersHorizontal className="size-4" aria-hidden />
       Filters
       {activeFilterCount > 0 ? (
-        <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-orange-700 px-1.5 font-terminal text-xs font-semibold text-white dark:bg-orange-500 dark:text-black">
+        <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-orange-700 px-1.5 font-terminal text-xs font-semibold text-white dark:bg-primary dark:text-black">
           {activeFilterCount}
           <span className="sr-only"> active</span>
         </span>

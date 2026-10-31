@@ -4,7 +4,7 @@ export function TypingIndicator() {
       {[0, 150, 300].map((delay) => (
         <span
           key={delay}
-          className="size-1.5 animate-pulse rounded-full bg-orange-500 motion-reduce:animate-none"
+          className="size-1.5 animate-pulse rounded-full bg-primary motion-reduce:animate-none"
           style={{ animationDelay: `${delay}ms` }}
         />
       ))}

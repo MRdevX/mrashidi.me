@@ -14,7 +14,7 @@ interface MessageActionsProps {
 }
 
 const iconButton =
-  "inline-flex size-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-black/5 hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 dark:hover:bg-white/10 dark:hover:text-orange-400";
+  "inline-flex size-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-black/5 hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 dark:hover:bg-white/10 ";
 
 export function MessageActions({ text, messageId, conversationId, onRegenerate }: MessageActionsProps) {
   const [copied, setCopied] = useState(false);
@@ -55,7 +55,7 @@ export function MessageActions({ text, messageId, conversationId, onRegenerate }
       ) : null}
       <button
         type="button"
-        className={cn(iconButton, rating === "up" && "text-orange-600 dark:text-orange-400")}
+        className={cn(iconButton, rating === "up" && "text-brand-text ")}
         onClick={() => rate("up")}
         aria-label="Helpful answer"
         aria-pressed={rating === "up"}
@@ -64,7 +64,7 @@ export function MessageActions({ text, messageId, conversationId, onRegenerate }
       </button>
       <button
         type="button"
-        className={cn(iconButton, rating === "down" && "text-orange-600 dark:text-orange-400")}
+        className={cn(iconButton, rating === "down" && "text-brand-text ")}
         onClick={() => rate("down")}
         aria-label="Unhelpful answer"
         aria-pressed={rating === "down"}

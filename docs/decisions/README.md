@@ -66,3 +66,4 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0010](0010-private-content-api-over-workers-dev.md) | Serve the content API privately to Vercel over workers.dev | `accepted` | 2026-10-26 |
 | [DR-0011](0011-api-owns-external-sources-on-cron.md) | Fetch GitHub and Medium in the API on a cron, serve them from D1 | `superseded` | 2026-10-27 |
 | [DR-0012](0012-refresh-external-sources-on-request.md) | Refresh GitHub and Medium snapshots on request instead of on a cron | `accepted` | 2026-10-27 |
+| [DR-0013](0013-webgl-effects-as-progressive-enhancement.md) | Add WebGL effects with three and React Three Fiber as progressive enhancement | `accepted` | 2026-10-31 |
