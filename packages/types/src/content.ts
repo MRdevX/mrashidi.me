@@ -17,4 +17,3 @@ export const ContentSchema = z.object({
 });
 
 export type Content = z.infer<typeof ContentSchema>;
-export type ContentSection = keyof Content;
