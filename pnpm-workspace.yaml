@@ -31,8 +31,6 @@ hoist: true
 hoistPattern:
   - "*typescript*"
   - "*biome*"
-  - "*eslint*"
-  - "*prettier*"
   # Libraries such as react-icons import React types they do not declare; they must resolve @types/react.
   - "@types/*"
   # drizzle-kit imports drizzle-orm at runtime without declaring it as a dependency.
