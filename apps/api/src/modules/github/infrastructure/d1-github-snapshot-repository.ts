@@ -1,7 +1,7 @@
 import { ContributionsSchema } from "@mrashidi/types";
 import type { Db } from "#db/index.ts";
 import { readSnapshot, writeSnapshot } from "#db/snapshots.ts";
-import type { GitHubSnapshotRepository } from "../domain/github-snapshot-repository.ts";
+import type { GitHubSnapshotRepository } from "../application/ports.ts";
 import { RepoActivitySchema } from "../domain/repo-activity.ts";
 
 export function createD1GitHubSnapshotRepository(db: Db): GitHubSnapshotRepository {

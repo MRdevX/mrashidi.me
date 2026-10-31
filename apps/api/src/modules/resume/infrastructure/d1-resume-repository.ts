@@ -4,7 +4,7 @@ import { z } from "zod";
 import type { Db } from "#db/index.ts";
 import { workExperience } from "#db/schema.ts";
 import { readSection } from "#db/sections.ts";
-import type { ResumeRepository } from "../domain/resume-repository.ts";
+import type { ResumeRepository } from "../application/ports.ts";
 
 export function createD1ResumeRepository(db: Db): ResumeRepository {
   return {

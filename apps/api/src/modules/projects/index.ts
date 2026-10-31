@@ -2,8 +2,8 @@ import type { Bindings } from "#bindings";
 import { createDb } from "#db/index.ts";
 import { createGitHubContext } from "#modules/github/index.ts";
 import type { Background } from "#shared/snapshot-read-through.ts";
+import type { ProjectRepository } from "./application/ports.ts";
 import { createProjectQueries } from "./application/project-queries.ts";
-import type { ProjectRepository } from "./domain/project-repository.ts";
 import { createD1ProjectRepository } from "./infrastructure/d1-project-repository.ts";
 
 export type { ProjectQueries } from "./application/project-queries.ts";

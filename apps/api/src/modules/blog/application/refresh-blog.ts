@@ -1,7 +1,6 @@
 import type { BlogPost } from "@mrashidi/types";
 import { mediumFeedUrl, toBlogPosts } from "../domain/blog-post.ts";
-import type { BlogSnapshotRepository } from "../domain/blog-snapshot-repository.ts";
-import type { FeedGateway } from "../domain/feed-gateway.ts";
+import type { BlogSnapshotRepository, FeedGateway } from "./ports.ts";
 
 export interface RefreshBlogInput {
   profileUrl: string;

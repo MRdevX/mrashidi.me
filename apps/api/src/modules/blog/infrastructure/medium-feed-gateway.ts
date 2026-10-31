@@ -1,6 +1,6 @@
 import { XMLParser } from "fast-xml-parser";
+import type { FeedGateway } from "../application/ports.ts";
 import type { FeedItem } from "../domain/blog-post.ts";
-import type { FeedGateway } from "../domain/feed-gateway.ts";
 
 const USER_AGENT = "Mozilla/5.0 (compatible; mrashidi-api/1.0)";
 const BLOCK_ELEMENTS = "p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, pre, br";

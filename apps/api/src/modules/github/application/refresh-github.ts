@@ -1,9 +1,8 @@
 import type { Contributions } from "@mrashidi/types";
 import { contributionWindow } from "../domain/contribution-window.ts";
-import type { GitHubGateway } from "../domain/github-gateway.ts";
-import type { GitHubSnapshotRepository } from "../domain/github-snapshot-repository.ts";
 import type { RepoActivity } from "../domain/repo-activity.ts";
 import { parseGitHubLogin, parseRepoRef, type RepoRef } from "../domain/repo-ref.ts";
+import type { GitHubGateway, GitHubSnapshotRepository } from "./ports.ts";
 
 export interface RefreshContributionsInput {
   profileUrl: string;

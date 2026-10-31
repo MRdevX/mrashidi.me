@@ -4,7 +4,7 @@ import type { ProjectQueries } from "#modules/projects/index.ts";
 import type { ResumeQueries } from "#modules/resume/index.ts";
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
 import { buildKnowledgeContext } from "../domain/knowledge-context.ts";
-import type { KnowledgeRepository } from "../domain/knowledge-repository.ts";
+import type { KnowledgeRepository } from "./ports.ts";
 
 export interface SiteContentQueries {
   profile: ProfileQueries;

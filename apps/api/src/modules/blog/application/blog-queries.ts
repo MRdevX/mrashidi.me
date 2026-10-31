@@ -1,7 +1,7 @@
 import type { BlogPost } from "@mrashidi/types";
 import { type Background, readThrough } from "#shared/snapshot-read-through.ts";
 import { pageOf } from "../domain/blog-post.ts";
-import type { BlogSnapshotRepository } from "../domain/blog-snapshot-repository.ts";
+import type { BlogSnapshotRepository } from "./ports.ts";
 
 export function createBlogQueries(
   repository: BlogSnapshotRepository,

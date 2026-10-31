@@ -1,7 +1,7 @@
 import type { Contributions } from "@mrashidi/types";
 import { type Background, readThrough } from "#shared/snapshot-read-through.ts";
-import type { GitHubSnapshotRepository } from "../domain/github-snapshot-repository.ts";
 import type { RepoActivity } from "../domain/repo-activity.ts";
+import type { GitHubSnapshotRepository } from "./ports.ts";
 
 export interface GitHubRefresh {
   contributions(now: Date): Promise<Contributions>;

@@ -1,8 +1,8 @@
 import type { ExperienceEntry } from "@mrashidi/types";
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
-import type { ResumeRepository } from "../domain/resume-repository.ts";
 import { describeSkills } from "../domain/skills.ts";
 import { durationMonths, parseWorkPeriod, toIsoMonth, yearMonthOf } from "../domain/work-period.ts";
+import type { ResumeRepository } from "./ports.ts";
 
 export function createResumeQueries(repository: ResumeRepository) {
   async function skills() {

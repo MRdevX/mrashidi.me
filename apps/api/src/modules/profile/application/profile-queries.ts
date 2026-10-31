@@ -1,5 +1,5 @@
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
-import type { ProfileRepository } from "../domain/profile-repository.ts";
+import type { ProfileRepository } from "./ports.ts";
 
 export function createProfileQueries(repository: ProfileRepository) {
   return {
