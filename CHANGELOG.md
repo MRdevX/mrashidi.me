@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.23](https://github.com/MRdevX/mrashidi.me/compare/v0.2.22...v0.2.23) (2026-10-31)
+
+
+### Build System
+
+* **web:** declare the Vitest coverage provider ([c0a7f37](https://github.com/MRdevX/mrashidi.me/commit/c0a7f37d28056af7ad0b1780abdb4ea0976fc88b))
+
+
+### Tests
+
+* **types:** move the projectSlug test into project.test.ts ([2686099](https://github.com/MRdevX/mrashidi.me/commit/2686099b84954abebe6394f40e769b5ba9efad63))
+
+
+### Code Refactoring
+
+* **api:** import sources through # aliases in tests ([cf77ace](https://github.com/MRdevX/mrashidi.me/commit/cf77ace3d5453b1acd1a858a80ee1d7d7c3560b9))
+* **api:** move repository and gateway ports into application/ports.ts ([3a0c082](https://github.com/MRdevX/mrashidi.me/commit/3a0c082387006a0a0d2edcd7bdabd52ad37456fa))
+* **api:** move the repo activity schema into the D1 adapter ([6364d66](https://github.com/MRdevX/mrashidi.me/commit/6364d6601b91910441dd7b440a83702c6b6a1f12))
+* **api:** remove dead exports ([4468438](https://github.com/MRdevX/mrashidi.me/commit/4468438310df9ebe86137b18647b82b9403aec9b))
+* **api:** reuse the github RepoCommit type in projects ([febb985](https://github.com/MRdevX/mrashidi.me/commit/febb98565ed578d1553d197a397657af123869f5))
+* **api:** share orNotFound for missing content ([ba6479b](https://github.com/MRdevX/mrashidi.me/commit/ba6479b11c3fdae69e8600cb8387d9ecaaa08b84))
+* **api:** throw domain errors for unreadable content and map them in onError ([adc1207](https://github.com/MRdevX/mrashidi.me/commit/adc1207b4b2a56400c7ab292a21726128c56e66a))
+* **api:** wire every module once per request in app.ts ([fe01eaa](https://github.com/MRdevX/mrashidi.me/commit/fe01eaa043f84d42ad817241165cfb882538b3ec))
+* **types:** remove the unused ContentSection type ([be946b6](https://github.com/MRdevX/mrashidi.me/commit/be946b6a550444d750d848a00a421bb8b34137d0))
+
+
+### Documentation
+
+* **agents:** describe application ports and the single composition root in the API skill ([c3cb3be](https://github.com/MRdevX/mrashidi.me/commit/c3cb3be5899a06692207ec9413deae5914b4eabf))
+* fix stale slice layout, stack versions, and OG image guide ([52514e0](https://github.com/MRdevX/mrashidi.me/commit/52514e00b596ef6f14d01b5286295270f2caa4eb))
+
 ### [0.2.22](https://github.com/MRdevX/mrashidi.me/compare/v0.2.21...v0.2.22) (2026-10-27)
 
 
