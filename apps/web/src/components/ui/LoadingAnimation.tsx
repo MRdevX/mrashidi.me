@@ -16,7 +16,7 @@ const LoadingAnimation = ({
   text = "Loading...",
   fullScreen = false,
 }: LoadingAnimationProps) => {
-  const { colors, getTextColor } = getThemeConfig();
+  const { getTextColor } = getThemeConfig();
 
   const sizeValues = {
     small: {
@@ -34,9 +34,9 @@ const LoadingAnimation = ({
   };
 
   const colorValues = {
-    orange: `bg-[${colors.primary.DEFAULT}]`,
-    green: `bg-[${colors.success.DEFAULT}]`,
-    blue: `bg-[${colors.info.DEFAULT}]`,
+    orange: "bg-primary",
+    green: "bg-emerald-500",
+    blue: "bg-blue-500",
     white: "bg-white",
   };
 
