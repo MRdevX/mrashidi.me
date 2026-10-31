@@ -1,6 +1,8 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
+import { useRender3D } from "@/lib/three/useRender3D";
 import { cn } from "@/lib/utils";
 import {
   buildCalendar,
@@ -12,6 +14,13 @@ import {
   type Level,
 } from "./contributionCalendar";
 import { useContributions } from "./useContributions";
+
+const ContributionSkyline = dynamic(() => import("./skyline/ContributionSkyline"), {
+  ssr: false,
+  loading: () => <div className="h-[300px]" aria-hidden="true" />,
+});
+
+type GraphView = "2d" | "3d";
 
 type TooltipState = {
   day: ContributionDay;
@@ -72,6 +81,28 @@ function GraphSkeleton() {
   );
 }
 
+function GraphViewToggle({ view, onChange }: { view: GraphView; onChange: (view: GraphView) => void }) {
+  return (
+    <fieldset className="flex rounded-md border border-primary/20 p-0.5 font-mono text-[11px]">
+      <legend className="sr-only">Graph view</legend>
+      {(["2d", "3d"] as const).map((option) => (
+        <button
+          key={option}
+          type="button"
+          aria-pressed={view === option}
+          onClick={() => onChange(option)}
+          className={cn(
+            "rounded px-2 py-0.5 uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            view === option ? "bg-primary text-black" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          {option}
+        </button>
+      ))}
+    </fieldset>
+  );
+}
+
 export type ContributionGraphProps = {
   className?: string;
 };
@@ -79,6 +110,9 @@ export type ContributionGraphProps = {
 export function ContributionGraph({ className }: ContributionGraphProps) {
   const { data, loading, error } = useContributions();
   const [tooltip, setTooltip] = useState<TooltipState>(null);
+  const render3D = useRender3D();
+  const [view, setView] = useState<GraphView>("3d");
+  const show3D = render3D && view === "3d";
 
   const contributions = data ? computeDynamicLevels(data.contributions) : [];
   const { weeks, monthLabels } = buildCalendar(contributions);
@@ -118,88 +152,100 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
 
           {!loading && !error && data && (
             <div className="flex w-full flex-col gap-2">
-              <svg
-                viewBox={`0 0 ${svgWidth} ${SVG_HEIGHT_PX}`}
-                width="100%"
-                aria-label={`${data.total.toLocaleString()} GitHub contributions in the last year`}
-                role="img"
-                onMouseMove={(e) => {
-                  const day = findDayUnderPointer(e.currentTarget, e.clientX, e.clientY, weeks);
-                  setTooltip((prev) =>
-                    prev?.day.date === day?.date ? prev : day ? { day, x: e.clientX, y: e.clientY } : null
-                  );
-                }}
-                onMouseLeave={() => setTooltip(null)}
-              >
-                <defs>
-                  <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur stdDeviation="2.5" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
+              {show3D ? (
+                <ContributionSkyline
+                  contributions={data.contributions}
+                  label={`${data.total.toLocaleString()} GitHub contributions in the last year`}
+                />
+              ) : (
+                <svg
+                  viewBox={`0 0 ${svgWidth} ${SVG_HEIGHT_PX}`}
+                  width="100%"
+                  aria-label={`${data.total.toLocaleString()} GitHub contributions in the last year`}
+                  role="img"
+                  onMouseMove={(e) => {
+                    const day = findDayUnderPointer(e.currentTarget, e.clientX, e.clientY, weeks);
+                    setTooltip((prev) =>
+                      prev?.day.date === day?.date ? prev : day ? { day, x: e.clientX, y: e.clientY } : null
+                    );
+                  }}
+                  onMouseLeave={() => setTooltip(null)}
+                >
+                  <defs>
+                    <filter id="neon-glow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="2.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
 
-                {monthLabels.map(({ weekIndex, label }) => (
-                  <text
-                    key={`${label}-${weekIndex}`}
-                    x={weekIndex * STEP_PX}
-                    y={LABEL_HEIGHT_PX - 4}
-                    fontSize={10}
-                    fontFamily="monospace"
-                    className="fill-muted-foreground"
-                  >
-                    {label}
-                  </text>
-                ))}
+                  {monthLabels.map(({ weekIndex, label }) => (
+                    <text
+                      key={`${label}-${weekIndex}`}
+                      x={weekIndex * STEP_PX}
+                      y={LABEL_HEIGHT_PX - 4}
+                      fontSize={10}
+                      fontFamily="monospace"
+                      className="fill-muted-foreground"
+                    >
+                      {label}
+                    </text>
+                  ))}
 
-                {weeks.map((week, wi) => {
-                  const firstRealDay = week.find(Boolean);
-                  if (!firstRealDay) {
-                    return null;
-                  }
+                  {weeks.map((week, wi) => {
+                    const firstRealDay = week.find(Boolean);
+                    if (!firstRealDay) {
+                      return null;
+                    }
 
-                  return (
-                    <g key={firstRealDay.date}>
-                      {week.map((day, di) =>
-                        day ? (
-                          <rect
-                            key={day.date}
-                            x={wi * STEP_PX}
-                            y={LABEL_HEIGHT_PX + di * STEP_PX}
-                            width={CELL_PX}
-                            height={CELL_PX}
-                            rx={3}
-                            ry={3}
-                            fill={LEVEL_FILL[day.level]}
-                            filter={day.level === 6 ? "url(#neon-glow)" : undefined}
-                          >
-                            <title>{`${formatContributionCount(day.count)} on ${formatContributionDate(day.date)}`}</title>
-                          </rect>
-                        ) : null
-                      )}
-                    </g>
-                  );
-                })}
-              </svg>
+                    return (
+                      <g key={firstRealDay.date}>
+                        {week.map((day, di) =>
+                          day ? (
+                            <rect
+                              key={day.date}
+                              x={wi * STEP_PX}
+                              y={LABEL_HEIGHT_PX + di * STEP_PX}
+                              width={CELL_PX}
+                              height={CELL_PX}
+                              rx={3}
+                              ry={3}
+                              fill={LEVEL_FILL[day.level]}
+                              filter={day.level === 6 ? "url(#neon-glow)" : undefined}
+                            >
+                              <title>{`${formatContributionCount(day.count)} on ${formatContributionDate(day.date)}`}</title>
+                            </rect>
+                          ) : null
+                        )}
+                      </g>
+                    );
+                  })}
+                </svg>
+              )}
 
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-mono text-muted-foreground" style={{ fontSize: 11 }}>
                   {data.total.toLocaleString()} contributions in the last year
                 </span>
-                <div className="ml-auto flex items-center gap-1">
-                  <span className="mr-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>
-                    Less
-                  </span>
-                  {([0, 1, 2, 3, 4, 5, 6] as const).map((lvl) => (
-                    <svg key={lvl} width={CELL_PX} height={CELL_PX} aria-hidden="true">
-                      <rect width={CELL_PX} height={CELL_PX} rx={3} ry={3} fill={LEVEL_FILL[lvl]} />
-                    </svg>
-                  ))}
-                  <span className="ml-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>
-                    More
-                  </span>
+                <div className="ml-auto flex items-center gap-3">
+                  {!show3D && (
+                    <div className="flex items-center gap-1">
+                      <span className="mr-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>
+                        Less
+                      </span>
+                      {([0, 1, 2, 3, 4, 5, 6] as const).map((lvl) => (
+                        <svg key={lvl} width={CELL_PX} height={CELL_PX} aria-hidden="true">
+                          <rect width={CELL_PX} height={CELL_PX} rx={3} ry={3} fill={LEVEL_FILL[lvl]} />
+                        </svg>
+                      ))}
+                      <span className="ml-1 font-mono text-muted-foreground" style={{ fontSize: 10 }}>
+                        More
+                      </span>
+                    </div>
+                  )}
+                  {render3D && <GraphViewToggle view={view} onChange={setView} />}
                 </div>
               </div>
             </div>
