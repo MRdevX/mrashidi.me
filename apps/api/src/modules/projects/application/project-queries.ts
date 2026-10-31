@@ -17,4 +17,8 @@ export function createProjectQueries(repository: ProjectRepository, activity: Re
   };
 }
 
+export function createProjectRepoUrls(repository: ProjectRepository) {
+  return async () => (await repository.list()).flatMap((project) => (project.githubUrl ? [project.githubUrl] : []));
+}
+
 export type ProjectQueries = ReturnType<typeof createProjectQueries>;
