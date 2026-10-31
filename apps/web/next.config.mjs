@@ -28,8 +28,6 @@ const nextConfig = {
   productionBrowserSourceMaps: process.env.SOURCE_BROWSER_MAPS === "true",
   compress: true,
 
-  serverExternalPackages: ["pino", "pino-pretty", "thread-stream"],
-
   images: {
     remotePatterns: [
       {
