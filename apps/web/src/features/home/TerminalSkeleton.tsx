@@ -14,17 +14,17 @@ export function TerminalSkeleton() {
 
       <div className="flex-1 p-4 space-y-3">
         <div className="flex items-center gap-2">
-          <span className="text-green-400 font-mono">$</span>
+          <span className="text-terminal font-mono">$</span>
           <Skeleton className="h-4 w-48" />
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-green-400 font-mono">$</span>
+          <span className="text-terminal font-mono">$</span>
           <Skeleton className="h-4 w-32" />
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-green-400 font-mono">$</span>
+          <span className="text-terminal font-mono">$</span>
           <Skeleton className="h-4 w-40" />
         </div>
 

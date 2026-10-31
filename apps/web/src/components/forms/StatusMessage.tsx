@@ -29,8 +29,8 @@ export function StatusMessage({ status }: StatusMessageProps) {
     <div
       className={`mb-6 p-4 rounded-md flex items-start space-x-3 ${
         status.type === "success"
-          ? "bg-green-900/20 text-green-400 border border-green-500/30"
-          : "bg-red-900/20 text-red-400 border border-red-500/30"
+          ? "bg-green-900/20 text-green-700 dark:text-green-400 border border-green-500/30"
+          : "bg-red-900/20 text-red-700 dark:text-red-400 border border-red-500/30"
       }`}
       role="alert"
     >

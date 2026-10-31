@@ -23,6 +23,7 @@
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-brand-text: hsl(var(--brand-text));
+  --color-terminal: var(--terminal-green);
 
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));

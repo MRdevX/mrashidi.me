@@ -32,7 +32,7 @@ const renderRecentPosts = (posts: BlogPost[]) =>
   posts.length > 0 ? (
     <ul className="space-y-1">
       {posts.map((post) => (
-        <li key={post.url} className="text-gray-400">
+        <li key={post.url} className="text-gray-600 dark:text-gray-400">
           • <TerminalLink href={post.url}>{post.title}</TerminalLink>
           <span className="text-gray-500 text-xs ml-2">({new Date(post.publishedAt).toLocaleDateString()})</span>
         </li>
@@ -48,7 +48,7 @@ const commandHandlers: Record<CommandType, (content: SiteContent) => ReactElemen
   ask: () => (
     <div className="mt-2 space-y-1">
       <p>
-        Usage: <span className="text-green-400">ask &lt;question&gt;</span>
+        Usage: <span className="text-terminal">ask &lt;question&gt;</span>
       </p>
       <p className="text-gray-500">e.g. ask has he worked with Kubernetes?</p>
     </div>
@@ -63,7 +63,7 @@ const commandHandlers: Record<CommandType, (content: SiteContent) => ReactElemen
   experience: (content) => <div className="mt-2 space-y-4">{renderWorkExperience(content)}</div>,
 
   skills: ({ skills }) => (
-    <div className="font-mono text-sm text-gray-200 mt-2">
+    <div className="font-mono text-sm text-gray-800 dark:text-gray-200 mt-2">
       <SkillsByLevel skills={skills} />
     </div>
   ),
