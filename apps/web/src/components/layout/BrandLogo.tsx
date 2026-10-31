@@ -18,7 +18,7 @@ export const BrandLogo = () => {
   }, []);
 
   return (
-    <Link href="/" className="flex items-center shrink-0 group" aria-label={`${profile.person.name} - Home`}>
+    <Link href="/" className="flex items-center shrink-0 group" aria-label={`MR, ${profile.person.name}: home`}>
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: -20 }}

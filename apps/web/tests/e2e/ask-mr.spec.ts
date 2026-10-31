@@ -43,7 +43,7 @@ async function mockChat(page: Page, body = uiStream("Jane led a zero-downtime da
 }
 
 const panel = (page: Page) => page.getByRole("dialog", { name: /Ask MR/ });
-const launcher = (page: Page) => page.getByRole("button", { name: /Open Ask MR/ });
+const launcher = (page: Page) => page.getByRole("button", { name: /open an AI assistant/ });
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
