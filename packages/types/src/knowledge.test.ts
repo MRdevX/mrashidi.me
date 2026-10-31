@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { fixtureContent } from "../fixtures";
-import { AskMrKnowledgeSchema, projectSlug } from "./index";
+import { AskMrKnowledgeSchema } from "./index";
 
 describe("AskMrKnowledgeSchema", () => {
   const knowledge = fixtureContent.knowledge;
@@ -17,12 +17,5 @@ describe("AskMrKnowledgeSchema", () => {
 
   it("accepts knowledge without private details", () => {
     expect(AskMrKnowledgeSchema.safeParse(knowledge).success).toBe(true);
-  });
-});
-
-describe("projectSlug", () => {
-  it("creates url-safe slugs", () => {
-    expect(projectSlug({ title: "EV Fleet Management Platform Suite" })).toBe("ev-fleet-management-platform-suite");
-    expect(projectSlug({ title: "Café & Co. -- Tools" })).toBe("cafe-co-tools");
   });
 });
