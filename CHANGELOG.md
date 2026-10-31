@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.25](https://github.com/MRdevX/mrashidi.me/compare/v0.2.24...v0.2.25) (2026-10-31)
+
+
+### Features
+
+* **home:** break the hero out of its card ([85f0aec](https://github.com/MRdevX/mrashidi.me/commit/85f0aec5675cf0919c7a018aa2bf1e11a3efd9c9))
+* **home:** open the contribution graph in 2D and show the skyline on request ([c3a598e](https://github.com/MRdevX/mrashidi.me/commit/c3a598e0c0067974e3f135d641221c0258794989))
+* **home:** render GitHub contributions as a 3D skyline ([bf91d92](https://github.com/MRdevX/mrashidi.me/commit/bf91d9298ad24fac4c67315d8596ac7c24322457))
+* **home:** show tech stack icons in monochrome until hover ([8ca46c2](https://github.com/MRdevX/mrashidi.me/commit/8ca46c2ddb18a31c5e9893429b8ef83910d48e76))
+* **ui:** add a brand text token and drop the overridden orange palette ([d0e990d](https://github.com/MRdevX/mrashidi.me/commit/d0e990d39e83e7fe24ffd73f1e3ff59a325e8139))
+* **ui:** add a WebGL capability gate and in-view rendering ([3d40510](https://github.com/MRdevX/mrashidi.me/commit/3d40510c8cc565415a5ec8208cfa12302bb24ebf))
+* **ui:** replace the glyph rain with a 3D glyph field on capable desktops ([7da9f5a](https://github.com/MRdevX/mrashidi.me/commit/7da9f5ae3d1dd8bea921cf45548c14dcc1bfc915))
+
+
+### Bug Fixes
+
+* **home:** frame the contribution skyline to its canvas ([86b6ac9](https://github.com/MRdevX/mrashidi.me/commit/86b6ac9304e71d08b98bde6ff5fcb83b0f9a022e))
+* **ui:** give the loading dots a colour Tailwind can compile ([ee3af96](https://github.com/MRdevX/mrashidi.me/commit/ee3af961724a76b8fcff1dd06bb5e444964462d1))
+* **ui:** make the background glyph field visible ([67b35f5](https://github.com/MRdevX/mrashidi.me/commit/67b35f5748e4e2b40341bec341c9768cb0eaef17))
+* **ui:** meet text contrast in light mode ([a7276bf](https://github.com/MRdevX/mrashidi.me/commit/a7276bf4273cd19595e095c55a9905841fd8e6c5))
+* **ui:** meet text contrast on the active mobile nav item in light mode ([f4d582e](https://github.com/MRdevX/mrashidi.me/commit/f4d582e558f1e7337d339747b9952ff94c3317a3))
+* **ui:** put visible text in the accessible names of the logo, version link and Ask MR launcher ([8367976](https://github.com/MRdevX/mrashidi.me/commit/8367976ecb0f9b405192ceb3773e66e363c08ed4))
+* **ui:** register the site font utilities in the Tailwind theme ([3ba90a5](https://github.com/MRdevX/mrashidi.me/commit/3ba90a510dec8ad723a4b0f9c63f5984e5e3418a))
+* **ui:** stop the coffee widget covering the terminal and mobile buttons ([1daa16d](https://github.com/MRdevX/mrashidi.me/commit/1daa16d96cfba7e3c95011565874ddb46891aaf2))
+
+
+### Build System
+
+* **deps:** add three and react-three-fiber ([cd4510e](https://github.com/MRdevX/mrashidi.me/commit/cd4510e3664bd8115466e8ea9be053b4fc1e6297))
+
+
+### Code Refactoring
+
+* **ui:** load site fonts with next/font ([0443eba](https://github.com/MRdevX/mrashidi.me/commit/0443ebaf4db3bf56a14569418b07ecfccb3de1d8))
+* **ui:** move useMediaQuery to the shared hooks ([4132692](https://github.com/MRdevX/mrashidi.me/commit/4132692df33be10ad82431b9f252c8f690d41545))
+* **ui:** remove unused theme variants and typography classes ([5d82f41](https://github.com/MRdevX/mrashidi.me/commit/5d82f4161b3f3d713a07e6a182caf629afc9afc4))
+
+
+### Tests
+
+* **e2e:** audit accessibility in light mode too ([688544d](https://github.com/MRdevX/mrashidi.me/commit/688544d469acd88a376a3cbcb7da1f49f50f2991))
+* **e2e:** cover the 3D gate, reduced motion and mobile corners on the home page ([87964d8](https://github.com/MRdevX/mrashidi.me/commit/87964d8f0f9dbc121cf1a3af28cb02e072a1d0db))
+
+
+### Documentation
+
+* **docs:** correct the WebGL chunk size in DR-0013 ([145638f](https://github.com/MRdevX/mrashidi.me/commit/145638fa253ed3aa1d6d980afd711e66a5ecf5ef))
+* **docs:** record WebGL effects as progressive enhancement ([da0af25](https://github.com/MRdevX/mrashidi.me/commit/da0af257751469d7396aa16318ee50993e9d9c26))
+
 ### [0.2.24](https://github.com/MRdevX/mrashidi.me/compare/v0.2.23...v0.2.24) (2026-10-31)
 
 ### [0.2.23](https://github.com/MRdevX/mrashidi.me/compare/v0.2.22...v0.2.23) (2026-10-31)
