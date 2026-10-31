@@ -16,6 +16,13 @@ export type SkylineLayout = {
 export const SKYLINE_STEP = 1.25;
 export const SKYLINE_MIN_HEIGHT = 0.15;
 export const SKYLINE_MAX_HEIGHT = 6;
+export const SKYLINE_CAMERA_FOV = 35;
+export const SKYLINE_CAMERA_ELEVATION = (30 * Math.PI) / 180;
+
+const WIDTH_MARGIN = 1.22;
+// Near bars sit closer to the camera than the scene centre, so perspective makes the
+// orthographic height estimate fall short.
+const HEIGHT_MARGIN = 1.45;
 
 const DAYS_PER_WEEK = 7;
 const MS_PER_DAY = 86_400_000;
@@ -61,4 +68,13 @@ export function buildSkyline(days: ContributionDay[]): SkylineLayout {
   });
 
   return { bars, width, depth };
+}
+
+export function skylineCameraDistance({ width, depth }: SkylineLayout, aspect: number): number {
+  const viewSlope = 2 * Math.tan(((SKYLINE_CAMERA_FOV / 2) * Math.PI) / 180);
+  const projectedHeight =
+    depth * Math.sin(SKYLINE_CAMERA_ELEVATION) + SKYLINE_MAX_HEIGHT * Math.cos(SKYLINE_CAMERA_ELEVATION);
+  const fitWidth = (width * WIDTH_MARGIN) / (viewSlope * aspect);
+  const fitHeight = (projectedHeight * HEIGHT_MARGIN) / viewSlope;
+  return Math.max(fitWidth, fitHeight);
 }

@@ -6,6 +6,7 @@ import {
   SKYLINE_MAX_HEIGHT,
   SKYLINE_MIN_HEIGHT,
   SKYLINE_STEP,
+  skylineCameraDistance,
 } from "@/features/home/skyline/skylineLayout";
 
 const day = (date: string, count: number): ContributionDay => ({ date, count, level: count === 0 ? 0 : 2 });
@@ -52,5 +53,18 @@ describe("buildSkyline", () => {
   it("keeps later days in place when a day is missing", () => {
     const { bars } = buildSkyline([day("2026-01-05", 1), day("2026-01-07", 1)]);
     expect(bars[1]?.z).toBe((bars[0]?.z ?? 0) + 2 * SKYLINE_STEP);
+  });
+});
+
+describe("skylineCameraDistance", () => {
+  const year = { bars: [], width: 52 * SKYLINE_STEP, depth: 6 * SKYLINE_STEP };
+
+  it("moves the camera closer on a wider canvas", () => {
+    expect(skylineCameraDistance(year, 4)).toBeLessThan(skylineCameraDistance(year, 3));
+  });
+
+  it("frames a short history by height, not width", () => {
+    const fewWeeks = { bars: [], width: 2 * SKYLINE_STEP, depth: 6 * SKYLINE_STEP };
+    expect(skylineCameraDistance(fewWeeks, 4)).toBe(skylineCameraDistance(fewWeeks, 8));
   });
 });

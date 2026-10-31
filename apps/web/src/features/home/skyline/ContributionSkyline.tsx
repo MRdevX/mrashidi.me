@@ -1,12 +1,20 @@
 "use client";
 
-import { type ThreeEvent, useFrame } from "@react-three/fiber";
+import { type ThreeEvent, useFrame, useThree } from "@react-three/fiber";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { BoxGeometry, Color, type Group, type InstancedMesh, MathUtils, Matrix4, Quaternion, Vector3 } from "three";
 import { useTheme } from "@/context/ThemeContext";
 import { SceneCanvas } from "@/lib/three/SceneCanvas";
 import { type ContributionDay, formatContributionCount, formatContributionDate } from "../contributionCalendar";
-import { buildSkyline, type SkylineBar, type SkylineLayout } from "./skylineLayout";
+import {
+  buildSkyline,
+  SKYLINE_CAMERA_ELEVATION,
+  SKYLINE_CAMERA_FOV,
+  SKYLINE_MAX_HEIGHT,
+  type SkylineBar,
+  type SkylineLayout,
+  skylineCameraDistance,
+} from "./skylineLayout";
 
 const LEVEL_COLORS = {
   dark: ["#232833", "#6b3418", "#a8461b", "#e2561d", "#ff7a3d"],
@@ -14,12 +22,28 @@ const LEVEL_COLORS = {
 } as const;
 
 const BAR_FOOTPRINT = 0.82;
-const MIN_CAMERA_SPAN = 30;
 
 type HoveredBar = { bar: SkylineBar; x: number; y: number } | null;
 
 function levelColor(palette: readonly string[], level: number): string {
   return palette[Math.min(level, palette.length - 1)] ?? palette[0] ?? "#000000";
+}
+
+function CameraRig({ layout }: { layout: SkylineLayout }) {
+  const camera = useThree((state) => state.camera);
+  const aspect = useThree((state) => state.size.width / Math.max(state.size.height, 1));
+
+  useLayoutEffect(() => {
+    const distance = skylineCameraDistance(layout, aspect);
+    camera.position.set(
+      0,
+      distance * Math.sin(SKYLINE_CAMERA_ELEVATION),
+      distance * Math.cos(SKYLINE_CAMERA_ELEVATION)
+    );
+    camera.lookAt(0, SKYLINE_MAX_HEIGHT / 5, 0);
+  }, [camera, layout, aspect]);
+
+  return null;
 }
 
 function Bars({
@@ -93,17 +117,12 @@ type ContributionSkylineProps = {
 export default function ContributionSkyline({ contributions, label }: ContributionSkylineProps) {
   const { resolvedTheme } = useTheme();
   const layout = useMemo(() => buildSkyline(contributions), [contributions]);
-  const span = Math.max(layout.width, MIN_CAMERA_SPAN);
   const [hovered, setHovered] = useState<HoveredBar>(null);
 
   return (
     <div className="relative" role="img" aria-label={label}>
-      <SceneCanvas
-        className="h-[300px] w-full"
-        flat
-        camera={{ position: [0, span * 0.4, span * 0.7], fov: 35 }}
-        onCreated={({ camera }) => camera.lookAt(0, 0, 0)}
-      >
+      <SceneCanvas className="h-[260px] w-full" flat camera={{ fov: SKYLINE_CAMERA_FOV }}>
+        <CameraRig layout={layout} />
         <ambientLight intensity={resolvedTheme === "dark" ? 0.75 : 1.1} />
         <directionalLight position={[20, 40, 25]} intensity={1.6} />
         <Bars layout={layout} palette={LEVEL_COLORS[resolvedTheme]} onHover={setHovered} />
