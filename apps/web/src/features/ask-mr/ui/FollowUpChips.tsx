@@ -28,7 +28,7 @@ export function FollowUpChips({
             type="button"
             disabled={disabled}
             onClick={() => onSelect(question)}
-            className="min-h-9 rounded-full border border-orange-500/30 bg-orange-500/5 px-3 py-1.5 text-left text-xs text-orange-700 transition-colors hover:border-orange-500 hover:bg-orange-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 disabled:cursor-not-allowed disabled:opacity-50 dark:text-orange-300"
+            className="min-h-9 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-left text-xs text-brand-text transition-colors hover:border-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-50 dark:text-orange-300"
           >
             {question}
           </button>

@@ -35,8 +35,8 @@
     background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 95, 31, 0.2);
-    box-shadow: 0 8px 32px rgba(255, 95, 31, 0.1);
+    border: 1px solid hsl(var(--primary) / 0.2);
+    box-shadow: 0 8px 32px hsl(var(--primary) / 0.1);
   }
 
   .dark .glass-effect {
@@ -46,7 +46,7 @@
 
   .terminal-window {
     background: rgba(248, 250, 252, 0.96);
-    border: 1px solid rgba(255, 95, 31, 0.35);
+    border: 1px solid hsl(var(--primary) / 0.35);
     border-radius: 10px;
     box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
     padding: 20px;
@@ -57,7 +57,7 @@
 
   .dark .terminal-window {
     background: rgba(17, 19, 24, 0.96);
-    border-color: rgba(255, 95, 31, 0.28);
+    border-color: hsl(var(--primary) / 0.28);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   }
 
@@ -68,7 +68,7 @@
     left: 0;
     right: 0;
     height: 25px;
-    background: linear-gradient(90deg, var(--neon-orange) 0%, rgba(251, 146, 60, 0.85) 100%);
+    background: linear-gradient(90deg, hsl(var(--primary)) 0%, rgba(251, 146, 60, 0.85) 100%);
     opacity: 0.75;
   }
 
@@ -77,7 +77,7 @@
     background: rgba(248, 250, 252, 0.9);
     padding: 1rem;
     border-radius: 4px;
-    border-left: 3px solid var(--neon-orange);
+    border-left: 3px solid hsl(var(--primary));
     position: relative;
   }
 
@@ -91,19 +91,19 @@
     top: 0;
     right: 1rem;
     font-size: 0.8rem;
-    color: var(--neon-orange);
+    color: hsl(var(--primary));
     opacity: 0.8;
   }
 
   .terminal-card {
-    background: rgba(255, 95, 31, 0.1);
-    border: 1px solid var(--neon-orange);
+    background: hsl(var(--primary) / 0.1);
+    border: 1px solid hsl(var(--primary));
     border-radius: 4px;
     transition: all 0.3s ease;
   }
 
   .terminal-card:hover {
-    box-shadow: 0 0 15px var(--neon-orange);
+    box-shadow: 0 0 15px hsl(var(--primary));
     transform: translateY(-2px);
   }
 
@@ -152,10 +152,10 @@
   .feature-card:hover {
     transform: translateY(-4px) scale(1.02);
     box-shadow:
-      0 0 20px rgba(255, 95, 31, 0.2),
-      0 0 40px rgba(255, 95, 31, 0.1),
-      0 0 60px rgba(255, 95, 31, 0.05);
-    border-color: var(--neon-orange);
+      0 0 20px hsl(var(--primary) / 0.2),
+      0 0 40px hsl(var(--primary) / 0.1),
+      0 0 60px hsl(var(--primary) / 0.05);
+    border-color: hsl(var(--primary));
   }
 
   /* Tall, text-heavy cards: keep the glow but don't lift/scale (avoids text blur and layout shift) */
@@ -209,7 +209,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 95, 31, 0.1), transparent 40%);
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      hsl(var(--primary) / 0.1),
+      transparent 40%
+    );
     z-index: 1;
     opacity: 0;
     transition: opacity 0.2s;
@@ -227,32 +231,32 @@
     font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.3s;
-    background: linear-gradient(45deg, rgba(255, 95, 31, 0.1), rgba(255, 95, 31, 0.2));
-    border: 1px solid rgba(255, 95, 31, 0.2);
+    background: linear-gradient(45deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.2));
+    border: 1px solid hsl(var(--primary) / 0.2);
   }
 
   .tech-badge:hover {
     transform: translateY(-2px) rotate(2deg);
-    background: linear-gradient(45deg, rgba(255, 95, 31, 0.2), rgba(255, 95, 31, 0.3));
+    background: linear-gradient(45deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.3));
   }
 
   .glitch-image {
     position: relative;
     animation: neonPulse 4s ease-in-out infinite;
     box-shadow:
-      0 0 20px rgba(255, 95, 31, 0.5),
-      0 0 40px rgba(255, 95, 31, 0.3),
-      0 0 60px rgba(255, 95, 31, 0.2);
+      0 0 20px hsl(var(--primary) / 0.5),
+      0 0 40px hsl(var(--primary) / 0.3),
+      0 0 60px hsl(var(--primary) / 0.2);
     transition: all 0.3s ease-in-out;
   }
 
   .glitch-image:hover {
-    border-color: rgba(255, 95, 31, 0.8);
+    border-color: hsl(var(--primary) / 0.8);
     box-shadow:
-      0 0 30px rgba(255, 95, 31, 0.8),
-      0 0 60px rgba(255, 95, 31, 0.5),
-      0 0 90px rgba(255, 95, 31, 0.3),
-      inset 0 0 20px rgba(255, 95, 31, 0.2);
+      0 0 30px hsl(var(--primary) / 0.8),
+      0 0 60px hsl(var(--primary) / 0.5),
+      0 0 90px hsl(var(--primary) / 0.3),
+      inset 0 0 20px hsl(var(--primary) / 0.2);
   }
 
   .glitch-image::before {
@@ -262,7 +266,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255, 95, 31, 0.3), transparent 40%);
+    background: radial-gradient(
+      400px circle at var(--mouse-x) var(--mouse-y),
+      hsl(var(--primary) / 0.3),
+      transparent 40%
+    );
     z-index: 1;
     opacity: 0;
     transition: opacity 0.3s;
@@ -279,8 +287,8 @@
       0deg,
       transparent,
       transparent 2px,
-      rgba(255, 95, 31, 0.05) 2px,
-      rgba(255, 95, 31, 0.05) 4px
+      hsl(var(--primary) / 0.05) 2px,
+      hsl(var(--primary) / 0.05) 4px
     );
     animation: scanLines 3s linear infinite;
   }
@@ -291,14 +299,14 @@
       radial-gradient(
         circle at 100% 150%,
         var(--background-dark) 24%,
-        var(--neon-orange) 25%,
+        hsl(var(--primary)) 25%,
         var(--background-dark) 28%
       ),
-      radial-gradient(circle at 0 150%, var(--background-dark) 24%, var(--neon-orange) 25%, var(--background-dark) 28%),
-      radial-gradient(circle at 50% 100%, var(--neon-orange) 10%, var(--background-dark) 11%),
-      radial-gradient(circle at 100% 50%, var(--neon-orange) 5%, var(--background-dark) 6%),
-      radial-gradient(circle at 0% 50%, var(--neon-orange) 5%, var(--background-dark) 6%),
-      radial-gradient(circle at 50% 0%, var(--neon-orange) 10%, var(--background-dark) 11%);
+      radial-gradient(circle at 0 150%, var(--background-dark) 24%, hsl(var(--primary)) 25%, var(--background-dark) 28%),
+      radial-gradient(circle at 50% 100%, hsl(var(--primary)) 10%, var(--background-dark) 11%),
+      radial-gradient(circle at 100% 50%, hsl(var(--primary)) 5%, var(--background-dark) 6%),
+      radial-gradient(circle at 0% 50%, hsl(var(--primary)) 5%, var(--background-dark) 6%),
+      radial-gradient(circle at 50% 0%, hsl(var(--primary)) 10%, var(--background-dark) 11%);
     background-size: 10px 10px;
   }
 }
@@ -331,27 +339,27 @@ html.dark .a11y-tech-chip:hover {
 /* Skill proficiency tiers (About page). Hover rules repeat the selector weight of `.a11y-tech-chip:hover`. */
 html:not(.dark) .a11y-tech-chip--core {
   background-color: #fff7ed;
-  border-color: #ff5f1f;
+  border-color: hsl(var(--primary));
   color: #c2410c;
 }
 
 html:not(.dark) .a11y-tech-chip--core:hover {
   background-color: #ffedd5;
   color: #9a3412;
-  box-shadow: 0 0 20px rgba(255, 95, 31, 0.3);
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
 }
 
 html.dark .a11y-tech-chip--core {
   background-color: #2a1c16;
-  border-color: rgb(255 95 31 / 0.6);
+  border-color: hsl(var(--primary) / 0.6);
   color: #fb923c;
 }
 
 html.dark .a11y-tech-chip--core:hover {
   background-color: #2a1c16;
-  border-color: #ff5f1f;
+  border-color: hsl(var(--primary));
   color: #fdba74;
-  box-shadow: 0 0 20px rgba(255, 95, 31, 0.3);
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
 }
 
 html:not(.dark) .a11y-tech-chip--familiar {

@@ -16,7 +16,7 @@ export function HomeHero({ variants }: HomeHeroProps) {
   return (
     <motion.div className="hero-section content-section relative overflow-hidden" variants={variants}>
       <div className="hero-background" />
-      <div className="hero-gradient-bg absolute inset-0 animate-gradient-shift bg-gradient-to-br from-orange-500/10 via-transparent to-orange-400/5" />
+      <div className="hero-gradient-bg absolute inset-0 animate-gradient-shift bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
       <div className="relative z-10">
         <h1 className="cyberpunk-h1">{profile.person.name}</h1>
         <p className="hero-subtitle text-body">
@@ -30,7 +30,7 @@ export function HomeHero({ variants }: HomeHeroProps) {
             typeSpeed={80}
             deleteSpeed={40}
             pauseAtEnd={1500}
-            className="font-terminal text-orange-400"
+            className="font-terminal text-brand-text"
           />
         </p>
         <p className="hero-description text-body">{profile.site.description}</p>

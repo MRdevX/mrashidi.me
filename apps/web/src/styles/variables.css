@@ -1,32 +1,15 @@
 :root {
-  --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 245, 245, 245;
-  --neon-orange: #ff5f1f;
-  --neon-blue: #94a3b8;
-  --neon-purple: #64748b;
   --terminal-green: #047857;
   --terminal-green-glow: rgb(4 120 87 / 0.32);
   --background-dark: #ffffff;
-  --foreground-neon: rgba(255, 95, 31, 0.8);
 }
 
 .dark {
-  --foreground-rgb: 248, 250, 252;
   --background-start-rgb: 17, 19, 24;
   --background-end-rgb: 12, 14, 18;
-  --neon-orange: #ff5f1f;
-  --neon-blue: #64748b;
-  --neon-purple: #475569;
   --terminal-green: #4ade80;
   --terminal-green-glow: rgb(74 222 128 / 0.32);
   --background-dark: #111318;
-  --foreground-neon: rgba(255, 95, 31, 0.75);
-}
-
-:root {
-  --color-orange-400: rgb(251 146 60);
-  --color-orange-500: rgb(249 115 22);
-  --color-orange-600: rgb(234 88 12);
-  --color-orange-700: rgb(194 65 12);
 }

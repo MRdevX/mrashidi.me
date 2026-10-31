@@ -27,11 +27,11 @@ export function ProjectCards({ projects, onNavigate }: ProjectCardsProps) {
         {projects.map((project) => (
           <li
             key={project.slug}
-            className="group relative rounded-md border border-gray-200 bg-white p-3 transition-colors hover:border-orange-500/60 dark:border-white/10 dark:bg-black/30"
+            className="group relative rounded-md border border-gray-200 bg-white p-3 transition-colors hover:border-primary/60 dark:border-white/10 dark:bg-black/30"
           >
             <button
               type="button"
-              className="text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-md focus-visible:after:ring-2 focus-visible:after:ring-orange-500/60"
+              className="text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-md focus-visible:after:ring-2 focus-visible:after:ring-primary/60"
               onClick={() => {
                 trackAskMr("ask_mr_tool_click", { tool: "showProjects" });
                 onNavigate();
@@ -43,7 +43,7 @@ export function ProjectCards({ projects, onNavigate }: ProjectCardsProps) {
               }}
             >
               <span className="flex items-baseline justify-between gap-2">
-                <span className="font-semibold text-gray-900 group-hover:text-orange-600 dark:text-white dark:group-hover:text-orange-400">
+                <span className="font-semibold text-gray-900 group-hover:text-brand-text dark:text-white ">
                   {project.title}
                 </span>
                 {project.year ? (
@@ -59,7 +59,7 @@ export function ProjectCards({ projects, onNavigate }: ProjectCardsProps) {
               {project.stack.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded border border-orange-500/20 bg-orange-500/5 px-1.5 py-0.5 font-terminal text-[10px] text-orange-700 dark:text-orange-300"
+                  className="rounded border border-primary/20 bg-primary/5 px-1.5 py-0.5 font-terminal text-[10px] text-brand-text dark:text-orange-300"
                 >
                   {tech}
                 </span>
@@ -70,7 +70,7 @@ export function ProjectCards({ projects, onNavigate }: ProjectCardsProps) {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative z-10 inline-flex size-9 items-center justify-center rounded-md text-gray-500 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60"
+                    className="relative z-10 inline-flex size-9 items-center justify-center rounded-md text-gray-500 hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
                     aria-label={`${project.title} on GitHub`}
                   >
                     <FaGithub className="size-4" aria-hidden />
@@ -82,7 +82,7 @@ export function ProjectCards({ projects, onNavigate }: ProjectCardsProps) {
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative z-10 inline-flex size-9 items-center justify-center rounded-md text-gray-500 hover:text-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60"
+                    className="relative z-10 inline-flex size-9 items-center justify-center rounded-md text-gray-500 hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
                     aria-label={`${project.title} live site`}
                   >
                     <ArrowUpRight className="size-4" aria-hidden />

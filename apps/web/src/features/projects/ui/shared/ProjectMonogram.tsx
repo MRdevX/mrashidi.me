@@ -19,7 +19,7 @@ export function ProjectMonogram({ title, size = "md" }: { title: string; size?: 
       aria-hidden
       className={cn(
         SIZE_CLASSES[size],
-        "flex shrink-0 items-center justify-center border border-gray-200 bg-gray-50 font-terminal font-semibold text-orange-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-orange-400"
+        "flex shrink-0 items-center justify-center border border-gray-200 bg-gray-50 font-terminal font-semibold text-brand-text dark:border-white/10 dark:bg-white/[0.04]"
       )}
     >
       {initials(title)}

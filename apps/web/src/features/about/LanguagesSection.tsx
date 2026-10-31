@@ -24,9 +24,7 @@ export function LanguagesSection() {
           >
             <div className="relative z-10">
               <div className="mb-2 flex justify-between">
-                <span className="font-semibold text-orange-500 transition-colors group-hover:text-orange-400">
-                  {lang.language}
-                </span>
+                <span className="font-semibold text-brand-text">{lang.language}</span>
                 <span
                   className={`${getTextColor("secondary")} group-hover:${getTextColor("primary")} transition-colors`}
                 >
@@ -35,7 +33,7 @@ export function LanguagesSection() {
               </div>
               <div className={`h-2.5 w-full rounded-full ${getBackgroundColor("muted")}`}>
                 <motion.div
-                  className="h-2.5 rounded-full bg-orange-500"
+                  className="h-2.5 rounded-full bg-primary"
                   initial={{ width: 0 }}
                   animate={{ width: `${lang.progress}%` }}
                   transition={{ duration: 1, delay: 1.2 + index * 0.1 }}

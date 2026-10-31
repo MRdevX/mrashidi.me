@@ -19,7 +19,7 @@ export const SkillsByLevel = ({ skills }: Pick<SiteContent, "skills">) =>
 
     return (
       <div key={cat.category}>
-        <span className="text-orange-400">{cat.category}</span>
+        <span className="text-brand-text">{cat.category}</span>
         {Object.entries(skillsByLevel).map(
           ([level, levelSkills]) =>
             levelSkills.length > 0 && (
@@ -39,7 +39,7 @@ export const renderWorkExperience = ({ experience }: SiteContent, limit?: number
 
   return experiences.map((exp) => (
     <div key={`${exp.title}-${exp.company}-${exp.period}`} className="mb-4">
-      <p className="text-orange-500 font-bold">{exp.title}</p>
+      <p className="text-brand-text font-bold">{exp.title}</p>
       <p className="text-green-400">{exp.company}</p>
       <p className="text-gray-400">
         • {exp.location} ({exp.employmentType})
@@ -59,7 +59,7 @@ export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
 
   return projectList.map((project) => (
     <div key={project.title} className="mb-4">
-      <p className="text-orange-500 font-bold">{project.title}</p>
+      <p className="text-brand-text font-bold">{project.title}</p>
       <p className="text-gray-400">{project.description}</p>
       <p className="text-green-400 text-sm">Tech: {project.stack.join(", ")}</p>
       <div className="flex gap-2 text-xs mt-1 items-center">
@@ -70,7 +70,7 @@ export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
           {project.type}
         </TerminalBadge>
         {project.githubUrl && (
-          <TerminalLink href={project.githubUrl} className="text-orange-400 underline">
+          <TerminalLink href={project.githubUrl} className="text-brand-text underline">
             GitHub
           </TerminalLink>
         )}
@@ -87,23 +87,23 @@ export const renderProjects = ({ projects }: SiteContent, limit?: number) => {
 export const renderContactInfo = ({ profile, about }: SiteContent) => (
   <div className="space-y-2">
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">Email:</span>
+      <span className="text-brand-text">Email:</span>
       <TerminalLink href={`mailto:${profile.person.email}`}>{profile.person.email}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">GitHub:</span>
+      <span className="text-brand-text">GitHub:</span>
       <TerminalLink href={profile.social.github}>{profile.social.github.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">LinkedIn:</span>
+      <span className="text-brand-text">LinkedIn:</span>
       <TerminalLink href={profile.social.linkedin}>{profile.social.linkedin.replace("https://", "")}</TerminalLink>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">Location:</span>
+      <span className="text-brand-text">Location:</span>
       <span className="text-green-400">{profile.person.location}</span>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-orange-500">Languages:</span>
+      <span className="text-brand-text">Languages:</span>
       <span className="text-green-400">
         {about.languages.map((lang) => `${lang.language} (${lang.level})`).join(", ")}
       </span>
@@ -137,7 +137,7 @@ export const renderAchievements = ({ experience }: SiteContent) => {
 
 export const HelpCommandOutput = () => (
   <div className="mt-2">
-    <p className="text-orange-500 font-bold mb-2">Available commands:</p>
+    <p className="text-brand-text font-bold mb-2">Available commands:</p>
     {Object.entries(AVAILABLE_COMMANDS).map(([cmd, desc]) => (
       <div key={cmd} className="grid grid-cols-[120px_1fr] gap-2 mt-1 group">
         <button

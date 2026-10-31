@@ -62,41 +62,41 @@ const SEMANTIC_COLORS = {
 
 const COMPONENT_VARIANTS = {
   button: {
-    neon: "font-albert font-semibold tracking-tight text-orange-500 border border-orange-500/80 bg-transparent hover:bg-orange-500 hover:text-black transition-colors duration-200 px-6 py-3 text-base rounded-md",
+    neon: "font-albert font-semibold tracking-tight text-brand-text border border-primary/80 bg-transparent hover:bg-primary hover:text-black transition-colors duration-200 px-6 py-3 text-base rounded-md",
     primary:
-      "font-albert font-semibold tracking-tight bg-orange-500 hover:bg-orange-600 text-black border border-orange-600/90 px-6 py-3 text-base rounded-md shadow-sm",
+      "font-albert font-semibold tracking-tight bg-primary hover:bg-primary/90 text-black border border-primary/90 px-6 py-3 text-base rounded-md shadow-sm",
     secondary:
       "font-albert font-medium tracking-tight bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-600/80 px-6 py-3 text-base rounded-md",
     ghost:
       "font-albert font-medium tracking-tight bg-transparent hover:bg-gray-800/80 text-gray-300 border border-gray-600/60 px-6 py-3 text-base rounded-md",
     default:
-      "font-albert font-semibold tracking-tight bg-orange-500 hover:bg-orange-600 text-black border border-orange-600/90 px-6 py-3 text-base rounded-md",
+      "font-albert font-semibold tracking-tight bg-primary hover:bg-primary/90 text-black border border-primary/90 px-6 py-3 text-base rounded-md",
     outline:
-      "font-albert font-semibold tracking-tight border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-black px-6 py-3 text-base rounded-md",
+      "font-albert font-semibold tracking-tight border border-primary text-brand-text hover:bg-primary hover:text-black px-6 py-3 text-base rounded-md",
     destructive:
       "font-albert font-semibold tracking-tight bg-red-600 hover:bg-red-700 text-white border border-red-700/90 px-6 py-3 text-base rounded-md",
-    link: "font-albert font-medium text-orange-500 underline-offset-4 hover:underline px-6 py-3 text-base",
+    link: "font-albert font-medium text-brand-text underline-offset-4 hover:underline px-6 py-3 text-base",
   },
   input: {
     default:
-      "bg-white/50 dark:bg-gray-900/50 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:border-orange-500 focus:ring-orange-500/50",
-    neon: "bg-white/30 dark:bg-gray-900/40 border border-orange-500/25 text-gray-800 dark:text-orange-400 placeholder-gray-500 dark:placeholder-orange-500/50 focus:border-orange-500 focus:ring-orange-500/40 rounded-md",
+      "bg-white/50 dark:bg-gray-900/50 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:border-primary focus:ring-primary/50",
+    neon: "bg-white/30 dark:bg-gray-900/40 border border-primary/25 text-gray-800 dark:text-brand-text placeholder-gray-500 dark:placeholder-primary/50 focus:border-primary focus:ring-primary/40 rounded-md",
     terminal:
       "bg-gray-50 dark:bg-black border-2 border-green-500/30 text-gray-800 dark:text-green-400 placeholder-gray-500 dark:placeholder-green-500/50 focus:border-green-500 focus:ring-green-500/50 font-terminal",
   },
   textarea: {
     default:
-      "bg-white/50 dark:bg-gray-900/50 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:border-orange-500 focus:ring-orange-500/50",
-    neon: "bg-white/30 dark:bg-gray-900/40 border border-orange-500/25 text-gray-800 dark:text-orange-400 placeholder-gray-500 dark:placeholder-orange-500/50 focus:border-orange-500 focus:ring-orange-500/40 rounded-md",
+      "bg-white/50 dark:bg-gray-900/50 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-500 focus:border-primary focus:ring-primary/50",
+    neon: "bg-white/30 dark:bg-gray-900/40 border border-primary/25 text-gray-800 dark:text-brand-text placeholder-gray-500 dark:placeholder-primary/50 focus:border-primary focus:ring-primary/40 rounded-md",
     terminal:
       "bg-gray-50 dark:bg-black border-2 border-green-500/30 text-gray-800 dark:text-green-400 placeholder-gray-500 dark:placeholder-green-500/50 focus:border-green-500 focus:ring-green-500/50 font-terminal",
   },
   badge: {
-    default: "bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-500/30 hover:bg-orange-500/30",
+    default: "bg-primary/20 text-brand-text border-primary/30 hover:bg-primary/30",
     secondary: "bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-600/30 hover:bg-gray-800/80",
     destructive: "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30 hover:bg-red-500/30",
-    outline: "border-orange-500/50 text-orange-700 dark:text-orange-400 hover:bg-orange-500/20",
-    neon: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/40",
+    outline: "border-primary/50 text-brand-text hover:bg-primary/20",
+    neon: "bg-primary/10 text-brand-text border border-primary/40",
     tech: "bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30 hover:bg-blue-500/30",
     status: "bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30 hover:bg-green-500/30",
   },
@@ -109,14 +109,14 @@ const COMPONENT_VARIANTS = {
     content:
       "bg-white/95 dark:bg-[hsl(222_14%_9%/0.97)] backdrop-blur-lg border border-gray-200 dark:border-white/10 shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
     header: "border-b border-gray-200 dark:border-white/10 pb-4",
-    title: "text-orange-500 font-albert font-semibold text-xl tracking-tight",
+    title: "text-brand-text font-albert font-semibold text-xl tracking-tight",
     description: "text-gray-600 dark:text-gray-400 font-albert",
     footer: "border-t border-gray-200 dark:border-white/10 pt-4",
   },
 } as const;
 
 const PATTERNS = {
-  sectionTitle: "text-3xl font-semibold text-orange-500 font-albert tracking-tight",
+  sectionTitle: "text-3xl font-semibold text-brand-text font-albert tracking-tight",
   card: "feature-card group",
 } as const;
 

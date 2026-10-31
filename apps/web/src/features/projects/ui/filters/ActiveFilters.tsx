@@ -45,7 +45,7 @@ export function ActiveFilters() {
           onClick={tag.remove}
           aria-label={tag.removeLabel}
           className={cn(
-            "flex h-8 items-center gap-1.5 rounded-full border border-orange-600/50 bg-orange-50 pr-2 pl-3 font-albert text-[13px] text-orange-950 hover:border-orange-600 dark:border-orange-500/45 dark:bg-orange-500/10 dark:text-orange-100 dark:hover:border-orange-500",
+            "flex h-8 items-center gap-1.5 rounded-full border border-primary/50 bg-orange-50 pr-2 pl-3 font-albert text-[13px] text-orange-950 hover:border-primary/90 dark:border-primary/45 dark:bg-primary/10 dark:text-orange-100 dark:hover:border-primary",
             styles.focusRing
           )}
         >

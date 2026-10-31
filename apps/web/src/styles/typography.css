@@ -6,13 +6,13 @@
     font-family: var(--font-cyberpunk);
     text-transform: none;
     letter-spacing: 0.02em;
-    color: #ff5f1f;
-    text-shadow: 0 0 24px rgba(255, 95, 31, 0.22);
+    color: hsl(var(--primary));
+    text-shadow: 0 0 24px hsl(var(--primary) / 0.22);
   }
 
   .dark .cyberpunk-h1 {
-    color: #ff7a3d;
-    text-shadow: 0 0 28px rgba(255, 95, 31, 0.28);
+    color: hsl(var(--brand-text));
+    text-shadow: 0 0 28px hsl(var(--primary) / 0.28);
   }
 
   @media (min-width: 768px) {
@@ -152,10 +152,10 @@
 
   @keyframes cyberpunk-glow-balanced {
     0% {
-      text-shadow: 0 0 20px rgba(255, 95, 31, 0.18);
+      text-shadow: 0 0 20px hsl(var(--primary) / 0.18);
     }
     100% {
-      text-shadow: 0 0 32px rgba(255, 95, 31, 0.32);
+      text-shadow: 0 0 32px hsl(var(--primary) / 0.32);
     }
   }
 

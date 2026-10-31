@@ -3,7 +3,7 @@ import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 
 export const TerminalSection = ({ title, children }: { title: string; children: ReactNode }) => (
   <div className="mt-2 space-y-2">
-    <p className="text-orange-500 font-bold">{title}</p>
+    <p className="text-brand-text font-bold">{title}</p>
     {children}
   </div>
 );

@@ -22,7 +22,7 @@ const BlogOutput = ({ children }: { children: ReactNode }) => (
     <p className="mb-4">Visit my blog for articles on backend development and cloud architecture:</p>
     <TerminalLink href="/blog">mrashidi.me/blog</TerminalLink>
     <div className="mt-4 space-y-2">
-      <p className="text-orange-500 font-bold">Recent Articles:</p>
+      <p className="text-brand-text font-bold">Recent Articles:</p>
       {children}
     </div>
   </div>
@@ -98,7 +98,7 @@ const commandHandlers: Record<CommandType, (content: SiteContent) => ReactElemen
   "view-source": ({ profile }) => (
     <div className="mt-2 space-y-2">
       <p>This website is open source! 🎉</p>
-      <p className="text-orange-500 font-bold">Repository:</p>
+      <p className="text-brand-text font-bold">Repository:</p>
       <TerminalLink href={profile.social.githubRepo}>{profile.social.githubRepo.replace("https://", "")}</TerminalLink>
       <p className="text-gray-500 text-sm mt-2">Built with Next.js, TypeScript, and Tailwind CSS</p>
       <p className="text-gray-500 text-sm">Features: Interactive terminal, GitHub integration, blog posts</p>

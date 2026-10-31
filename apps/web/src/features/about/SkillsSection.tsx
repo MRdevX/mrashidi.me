@@ -44,9 +44,9 @@ const GROUP_ICONS: Record<SkillGroupId, LucideIcon> = {
 };
 
 const filterButtonClass =
-  "inline-flex h-11 shrink-0 items-center gap-2 rounded-lg border px-4 font-terminal text-xs uppercase tracking-[0.06em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500";
+  "inline-flex h-11 shrink-0 items-center gap-2 rounded-lg border px-4 font-terminal text-xs uppercase tracking-[0.06em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 const filterOnClass =
-  "border-orange-600 bg-orange-50 text-orange-950 dark:border-orange-500 dark:bg-orange-500/15 dark:text-orange-100";
+  "border-primary/90 bg-orange-50 text-orange-950 dark:border-primary dark:bg-primary/15 dark:text-orange-100";
 const filterOffClass =
   "border-gray-300 bg-white text-gray-800 hover:border-gray-400 dark:border-white/15 dark:bg-[#0b0d11] dark:text-gray-200 dark:hover:border-white/30";
 

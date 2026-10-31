@@ -8,7 +8,6 @@ import { getThemeConfig } from "@/config/theme.config";
 import { pageEnterTransition } from "@/lib/animations";
 import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import { accentTextClass } from "./styles";
 
 const certRowClass = "flex h-full items-start gap-3 rounded-lg border p-3 transition-colors duration-200";
 
@@ -30,7 +29,7 @@ function CertificateRow({ cert }: { cert: Certificate }) {
       <div className="flex shrink-0 flex-col items-end gap-1.5 text-xs">
         <span className={cn("tabular-nums", getTextColor("muted"))}>{cert.year}</span>
         {cert.url ? (
-          <span className={cn("inline-flex items-center gap-1 font-medium", accentTextClass)}>
+          <span className="inline-flex items-center gap-1 font-medium text-brand-text">
             Verify
             <ExternalLink className="size-3" aria-hidden />
             <span className="sr-only">(opens in new tab)</span>

@@ -60,7 +60,7 @@ export function MessageList({ children, contentKey, sendKey }: MessageListProps)
         <button
           type="button"
           onClick={() => scrollToBottom("smooth")}
-          className="absolute bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-md hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 dark:border-white/10 dark:bg-gray-900 dark:text-gray-200"
+          className="absolute bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-md hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 dark:border-white/10 dark:bg-gray-900 dark:text-gray-200"
         >
           <ArrowDown className="size-3.5" aria-hidden />
           Jump to latest

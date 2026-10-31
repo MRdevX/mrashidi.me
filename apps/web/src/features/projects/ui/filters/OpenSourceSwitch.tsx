@@ -22,7 +22,7 @@ export function OpenSourceSwitch() {
         aria-hidden
         className={cn(
           "relative inline-block h-5 w-9 rounded-full transition-colors",
-          checked ? "bg-orange-600 dark:bg-orange-500" : "bg-gray-300 dark:bg-white/15"
+          checked ? "bg-primary/90 dark:bg-primary" : "bg-gray-300 dark:bg-white/15"
         )}
       >
         <span

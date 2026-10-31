@@ -11,8 +11,8 @@ const createComponents = (content: SiteContent): Components => {
   const safeLink = createSafeLink(content);
   return {
     p: ({ children }) => <p className="leading-relaxed [&:not(:first-child)]:mt-2">{children}</p>,
-    ul: ({ children }) => <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-orange-500">{children}</ul>,
-    ol: ({ children }) => <ol className="mt-2 list-decimal space-y-1 pl-5 marker:text-orange-500">{children}</ol>,
+    ul: ({ children }) => <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-brand-text">{children}</ul>,
+    ol: ({ children }) => <ol className="mt-2 list-decimal space-y-1 pl-5 marker:text-brand-text">{children}</ol>,
     li: ({ children }) => <li className="leading-relaxed">{children}</li>,
     strong: ({ children }) => <strong className="font-semibold text-gray-900 dark:text-white">{children}</strong>,
     code: ({ children }) => (
@@ -24,7 +24,7 @@ const createComponents = (content: SiteContent): Components => {
         return <span>{children}</span>;
       }
       const className =
-        "font-medium text-orange-600 underline decoration-orange-500/40 underline-offset-2 hover:decoration-orange-500 dark:text-orange-400";
+        "font-medium text-brand-text underline decoration-primary/40 underline-offset-2 hover:decoration-primary ";
       return link.external ? (
         <a href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
           {children}

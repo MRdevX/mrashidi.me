@@ -28,7 +28,15 @@
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: conic-gradient(from var(--ai-angle), #ff5f1f, #fdba74, transparent 40%, #ff5f1f 70%, #4ade80, #ff5f1f);
+  background: conic-gradient(
+    from var(--ai-angle),
+    hsl(var(--primary)),
+    #fdba74,
+    transparent 40%,
+    hsl(var(--primary)) 70%,
+    #4ade80,
+    hsl(var(--primary))
+  );
   animation: ai-border-spin 4s linear infinite;
 }
 
@@ -73,12 +81,12 @@
   100% {
     box-shadow:
       0 8px 30px -8px rgb(0 0 0 / 0.35),
-      0 0 0 0 rgb(255 95 31 / 0.55);
+      0 0 0 0 hsl(var(--primary) / 0.55);
   }
   50% {
     box-shadow:
       0 8px 30px -8px rgb(0 0 0 / 0.35),
-      0 0 0 10px rgb(255 95 31 / 0);
+      0 0 0 10px hsl(var(--primary) / 0);
   }
 }
 

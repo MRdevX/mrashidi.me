@@ -88,7 +88,7 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
       {/* Fixed tooltip — uses viewport coords, never clipped by overflow */}
       {tooltip && (
         <div
-          className="pointer-events-none fixed z-50 rounded-lg border border-orange-500/20 bg-background/95 px-3 py-2 text-xs shadow-xl backdrop-blur-sm"
+          className="pointer-events-none fixed z-50 rounded-lg border border-primary/20 bg-background/95 px-3 py-2 text-xs shadow-xl backdrop-blur-sm"
           style={{
             left: tooltip.x + 14,
             top: tooltip.y < 70 ? tooltip.y + 18 : tooltip.y - 52,
@@ -101,11 +101,11 @@ export function ContributionGraph({ className }: ContributionGraphProps) {
 
       <div
         className={cn(
-          "glass-card-no-shadow relative w-full overflow-hidden rounded-xl border border-orange-500/10 p-4 shadow-lg lg:p-6",
+          "glass-card-no-shadow relative w-full overflow-hidden rounded-xl border border-primary/10 p-4 shadow-lg lg:p-6",
           className
         )}
       >
-        <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-br from-orange-500/4 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 rounded-xl bg-linear-to-br from-primary/4 via-transparent to-transparent" />
 
         <div className="relative z-10 pb-1">
           {loading && <GraphSkeleton />}

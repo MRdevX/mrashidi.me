@@ -44,7 +44,7 @@ export const BrandLogo = () => {
         {!isLowPerformance && (
           <>
             <motion.div
-              className="absolute -inset-1 bg-orange-500/10 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="absolute -inset-1 bg-primary/10 rounded-md blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               initial={false}
             />
           </>

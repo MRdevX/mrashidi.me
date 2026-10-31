@@ -42,13 +42,13 @@ export async function PrivacyPage() {
             />
           </div>
 
-          <div className="glass-card border-l-4 border-l-orange-500 p-6">
+          <div className="glass-card border-l-4 border-l-primary p-6">
             <p className="text-sm leading-relaxed text-muted-foreground">
               This Privacy Policy describes how <span className="font-semibold text-foreground">{name}</span> ("we",
               "us", or "our") collects, uses, and shares information about you when you use the{" "}
               <span className="font-semibold text-foreground">MR Portfolio</span> website and Progressive Web App (PWA)
               available at{" "}
-              <Link href={website} className="text-orange-500 hover:underline">
+              <Link href={website} className="text-brand-text hover:underline">
                 {website}
               </Link>{" "}
               (the "Service"). By using the Service, you agree to the practices described in this policy.
@@ -249,7 +249,7 @@ export async function PrivacyPage() {
             </div>
             <p className="mt-4">
               To exercise any right, email us at{" "}
-              <a href={`mailto:${email}`} className="font-medium text-orange-500 hover:underline">
+              <a href={`mailto:${email}`} className="font-medium text-brand-text hover:underline">
                 {email}
               </a>
               . We will respond within <strong className="text-foreground">30 days</strong>.
@@ -287,9 +287,9 @@ export async function PrivacyPage() {
             </p>
           </PolicyCard>
 
-          <div className="glass-card border border-orange-500/30 p-6">
+          <div className="glass-card border border-primary/30 p-6">
             <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-brand-text">
                 <Mail className="h-5 w-5" />
               </span>
               <h2 className="text-lg font-semibold text-foreground">11. Contact Us</h2>
@@ -299,22 +299,22 @@ export async function PrivacyPage() {
             </p>
             <address className="not-italic space-y-2 text-sm">
               <div className="flex items-center gap-2 text-foreground">
-                <Users className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
+                <Users className="h-4 w-4 text-brand-text shrink-0" aria-hidden />
                 <span className="font-semibold">{name}</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
-                <MapPin className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
+                <MapPin className="h-4 w-4 text-brand-text shrink-0" aria-hidden />
                 <span>{location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
-                <a href={`mailto:${email}`} className="text-orange-500 hover:underline">
+                <Mail className="h-4 w-4 text-brand-text shrink-0" aria-hidden />
+                <a href={`mailto:${email}`} className="text-brand-text hover:underline">
                   {email}
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4 text-orange-500 shrink-0" aria-hidden />
-                <Link href={website} className="text-orange-500 hover:underline">
+                <Globe className="h-4 w-4 text-brand-text shrink-0" aria-hidden />
+                <Link href={website} className="text-brand-text hover:underline">
                   {website}
                 </Link>
               </div>

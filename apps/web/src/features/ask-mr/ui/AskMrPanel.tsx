@@ -18,7 +18,7 @@ import { useAskMrChat } from "./useAskMrChat";
 import { useMediaQuery, useVisualViewportHeight } from "./useMediaQuery";
 
 const headerButton =
-  "inline-flex size-9 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-black/5 hover:text-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/60 disabled:opacity-40 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-orange-400";
+  "inline-flex size-9 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-black/5 hover:text-brand-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:opacity-40 dark:text-gray-400 dark:hover:bg-white/10 ";
 
 export function AskMrPanel() {
   const { isOpen, close, pendingPrompt, consumePrompt } = useAskMr();
@@ -96,22 +96,22 @@ export function AskMrPanel() {
           className={cn(
             "ask-mr-panel fixed z-[70] flex flex-col overflow-hidden bg-white/95 text-gray-900 shadow-2xl backdrop-blur-xl outline-none dark:bg-[hsl(222_14%_7%/0.96)] dark:text-gray-100",
             "inset-x-0 top-0 h-[100dvh]",
-            "sm:inset-auto sm:right-6 sm:bottom-6 sm:h-[min(680px,calc(100dvh-7rem))] sm:w-[420px] sm:rounded-2xl sm:border sm:border-orange-500/25 sm:shadow-[0_24px_64px_-16px_rgb(0_0_0/0.45),0_0_0_1px_rgb(255_95_31/0.08),0_0_40px_-12px_rgb(255_95_31/0.35)]"
+            "sm:inset-auto sm:right-6 sm:bottom-6 sm:h-[min(680px,calc(100dvh-7rem))] sm:w-[420px] sm:rounded-2xl sm:border sm:border-primary/25 sm:shadow-[0_24px_64px_-16px_rgb(0_0_0/0.45),0_0_0_1px_hsl(var(--primary)/0.08),0_0_40px_-12px_hsl(var(--primary)/0.35)]"
           )}
         >
           <header className="flex items-center gap-3 border-b border-gray-200 px-4 py-3 dark:border-white/10">
             <div className="flex min-w-0 flex-1 items-center gap-2">
               <Dialog.Title className="font-terminal text-base font-bold tracking-tight">
-                <span className="text-orange-500">&gt;_</span> {ASK_MR_NAME}
+                <span className="text-brand-text">&gt;_</span> {ASK_MR_NAME}
               </Dialog.Title>
-              <span className="rounded border border-orange-500/40 px-1 font-terminal text-[10px] font-semibold uppercase text-orange-600 dark:text-orange-400">
+              <span className="rounded border border-primary/40 px-1 font-terminal text-[10px] font-semibold uppercase text-brand-text ">
                 AI
               </span>
               <span className="flex items-center gap-1.5 text-xs text-gray-500" aria-live="polite">
                 <span
                   className={cn(
                     "size-2 rounded-full",
-                    isBusy ? "animate-pulse bg-orange-500 motion-reduce:animate-none" : "bg-emerald-500"
+                    isBusy ? "animate-pulse bg-primary motion-reduce:animate-none" : "bg-emerald-500"
                   )}
                   aria-hidden
                 />

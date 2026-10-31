@@ -10,7 +10,7 @@ import { ProfileImage } from "./ProfileImage";
 const bioStyleClasses: Record<AboutBioStyle, string> = {
   prominent: "font-semibold tracking-tight text-foreground",
   subtle: "italic text-muted-foreground",
-  brand: "font-medium text-orange-600 dark:text-orange-400",
+  brand: "font-medium text-brand-text ",
 };
 
 export function BioSection() {
