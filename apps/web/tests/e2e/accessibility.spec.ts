@@ -2,13 +2,6 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import type { Result } from "axe-core";
 
-/** Theme applies `dark` on <html> after client mount; axe must run after it matches tokens used by components. */
-test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
-    localStorage.setItem("theme", "dark");
-  });
-});
-
 const routes = [
   { path: "/", name: "home" },
   { path: "/projects", name: "projects" },
@@ -17,6 +10,8 @@ const routes = [
   { path: "/about", name: "about" },
   { path: "/resume", name: "resume" },
 ] as const;
+
+const themes = ["dark", "light"] as const;
 
 function formatViolations(violations: Result[]): string {
   if (violations.length === 0) {
@@ -33,18 +28,34 @@ function formatViolations(violations: Result[]): string {
     .join("\n\n");
 }
 
-for (const { path, name } of routes) {
-  test(`no automatic WCAG A/AA violations on ${name}`, async ({ page }) => {
-    await page.goto(path, { waitUntil: "load" });
-    await expect(page.locator("main")).toBeVisible();
-    await expect
-      .poll(async () => page.evaluate(() => document.documentElement.classList.contains("dark")), {
-        timeout: 15_000,
-      })
-      .toBe(true);
+for (const theme of themes) {
+  test.describe(`${theme} theme`, () => {
+    /** The theme class lands after mount and colours transition to it; axe must wait for both. */
+    test.beforeEach(async ({ page }) => {
+      await page.addInitScript((value) => {
+        localStorage.setItem("theme", value);
+      }, theme);
+    });
 
-    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+    for (const { path, name } of routes) {
+      test(`no automatic WCAG A/AA violations on ${name}`, async ({ page }) => {
+        await page.goto(path, { waitUntil: "load" });
+        await expect(page.locator("main")).toBeVisible();
+        await expect
+          .poll(async () => page.evaluate(() => document.documentElement.classList.contains("dark")), {
+            timeout: 15_000,
+          })
+          .toBe(theme === "dark");
+        await expect
+          .poll(async () =>
+            page.evaluate(() => document.getAnimations().filter((a) => a instanceof CSSTransition).length)
+          )
+          .toBe(0);
 
-    expect(results.violations, formatViolations(results.violations)).toEqual([]);
+        const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+
+        expect(results.violations, formatViolations(results.violations)).toEqual([]);
+      });
+    }
   });
 }
