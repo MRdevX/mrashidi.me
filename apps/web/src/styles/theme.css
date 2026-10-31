@@ -2,11 +2,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-  --font-albert: "Albert Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-terminal: "JetBrains Mono", ui-monospace, monospace;
-  --font-cyberpunk: "Exo 2", Orbitron, sans-serif;
+@theme inline {
+  --font-sans: var(--font-albert-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-albert: var(--font-albert-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-terminal: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-cyberpunk: var(--font-exo-2), sans-serif;
+}
 
+@theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
 

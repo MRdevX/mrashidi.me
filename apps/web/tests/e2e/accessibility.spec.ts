@@ -43,10 +43,7 @@ for (const { path, name } of routes) {
       })
       .toBe(true);
 
-    const results = await new AxeBuilder({ page })
-      .exclude('[title="GitHub Contribution Graph"]') // third-party embed; scroll container not fixable cross-origin
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
+    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
 
     expect(results.violations, formatViolations(results.violations)).toEqual([]);
   });
