@@ -17,11 +17,11 @@ disable-model-invocation: false
 ## Layers (`apps/api/src/modules/<module>/`)
 
 1. **Contract:** request and response shapes are Zod schemas in `packages/types/src/`. Add the schema there first.
-2. **Domain:** the port and the rules derived from content in `domain/` (plain TypeScript, no Hono or Drizzle imports). The web renders the resulting read model; it does not re-derive it.
-3. **Infrastructure:** the Drizzle implementation in `infrastructure/`. Parse every row with the schema before returning it.
-4. **Application:** one query or command per function in `application/`; throw a named error for "not found".
+2. **Domain:** the rules derived from content in `domain/` (plain TypeScript, no Hono or Drizzle imports). The web renders the resulting read model; it does not re-derive it.
+3. **Infrastructure:** the Drizzle implementation of a port in `infrastructure/`. Parse every row with the schema before returning it; a schema that only validates stored rows lives in the adapter.
+4. **Application:** the repository and gateway ports in `application/ports.ts`, then one query or command per function. Missing content goes through `orNotFound` (`#shared/content-not-found-error.ts`); unreadable stored content throws a domain error that extends `InvalidContentError`.
 5. **HTTP:** the route in `http/`, with per-route middleware (`cacheControl`), never router-wide `use()`, because routers share the `/v1` mount. `src/app.ts` requires the content token on all of `/v1/*` ([DR-0010](../../../docs/decisions/0010-private-content-api-over-workers-dev.md)); tests call `authedApi` from `test/api.ts`. Map new errors in `src/app.ts` `onError`.
-6. Export the module's public surface from its `index.ts`; `src/app.ts` is the only composition root. A module reads another only through that module's `index.ts`.
+6. Export the module's public surface from its `index.ts`: queries, adapters, routes. A module takes its ports and other modules' queries as dependencies and builds no adapters; `src/app.ts` is the only composition root and wires every module once per request on one `createDb`. A module reads another only through that module's `index.ts`.
 7. Change responses additively: add fields or routes. Remove one only after the web build that stopped reading it is live, since the Worker and the site deploy separately.
 
 Imports inside the API use `#app`, `#bindings`, `#db/*`, `#modules/*`, `#shared/*` with `.ts` extensions.
