@@ -1,9 +1,8 @@
 import type { Contributions } from "@mrashidi/types";
 import { contributionWindow } from "../domain/contribution-window.ts";
-import type { GitHubGateway } from "../domain/github-gateway.ts";
-import type { GitHubSnapshotRepository } from "../domain/github-snapshot-repository.ts";
 import type { RepoActivity } from "../domain/repo-activity.ts";
-import { parseGitHubLogin, parseRepoRef, type RepoRef } from "../domain/repo-ref.ts";
+import { InvalidGitHubProfileUrlError, parseGitHubLogin, parseRepoRef, type RepoRef } from "../domain/repo-ref.ts";
+import type { GitHubGateway, GitHubSnapshotRepository } from "./ports.ts";
 
 export interface RefreshContributionsInput {
   profileUrl: string;
@@ -19,7 +18,7 @@ export function createRefreshContributions(gateway: GitHubGateway, repository: G
   return async ({ profileUrl, now }: RefreshContributionsInput): Promise<Contributions> => {
     const login = parseGitHubLogin(profileUrl);
     if (!login) {
-      throw new Error(`Not a GitHub profile URL: ${profileUrl}`);
+      throw new InvalidGitHubProfileUrlError(profileUrl);
     }
     const contributions = await gateway.contributions(login, contributionWindow(now));
     await repository.saveContributions(contributions, now);

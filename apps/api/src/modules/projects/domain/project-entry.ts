@@ -1,7 +1,7 @@
 import { type LatestCommit, type Project, type ProjectEntry, projectSlug } from "@mrashidi/types";
-import type { RepoCommit } from "./repo-activity-reader.ts";
+import type { RepoCommit } from "#modules/github/index.ts";
 
-export function commitUrl(repoUrl: string, hash: string): string {
+function commitUrl(repoUrl: string, hash: string): string {
   return `${repoUrl.replace(/\/+$/, "")}/commit/${hash}`;
 }
 

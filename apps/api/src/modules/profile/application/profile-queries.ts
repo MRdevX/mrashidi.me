@@ -1,19 +1,21 @@
-import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
-import type { ProfileRepository } from "../domain/profile-repository.ts";
+import type { Profile } from "@mrashidi/types";
+import { orNotFound } from "#shared/content-not-found-error.ts";
+import type { ProfileRepository } from "./ports.ts";
 
 export function createProfileQueries(repository: ProfileRepository) {
+  async function profile() {
+    return orNotFound(await repository.getProfile(), "Profile");
+  }
+
   return {
-    async profile() {
-      return (await repository.getProfile()) ?? notFound("Profile");
+    profile,
+    async socialUrl(network: keyof Profile["social"]) {
+      return (await profile()).social[network];
     },
     async about() {
-      return (await repository.getAbout()) ?? notFound("About");
+      return orNotFound(await repository.getAbout(), "About");
     },
   };
-}
-
-function notFound(what: string): never {
-  throw new ContentNotFoundError(what);
 }
 
 export type ProfileQueries = ReturnType<typeof createProfileQueries>;

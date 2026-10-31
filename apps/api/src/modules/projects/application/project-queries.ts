@@ -1,8 +1,7 @@
-import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
+import { orNotFound } from "#shared/content-not-found-error.ts";
 import { describeCatalog } from "../domain/catalog.ts";
 import { toProjectEntry } from "../domain/project-entry.ts";
-import type { ProjectRepository } from "../domain/project-repository.ts";
-import type { RepoActivityReader } from "../domain/repo-activity-reader.ts";
+import type { ProjectRepository, RepoActivityReader } from "./ports.ts";
 
 export function createProjectQueries(repository: ProjectRepository, activity: RepoActivityReader) {
   return {
@@ -13,12 +12,13 @@ export function createProjectQueries(repository: ProjectRepository, activity: Re
     overview: async () => describeCatalog(await repository.list()),
     async bySlug(slug: string) {
       const [project, commits] = await Promise.all([repository.getBySlug(slug), activity.latestCommits()]);
-      if (!project) {
-        throw new ContentNotFoundError(`Project "${slug}"`);
-      }
-      return toProjectEntry(project, commits);
+      return toProjectEntry(orNotFound(project, `Project "${slug}"`), commits);
     },
   };
+}
+
+export function createProjectRepoUrls(repository: ProjectRepository) {
+  return async () => (await repository.list()).flatMap((project) => (project.githubUrl ? [project.githubUrl] : []));
 }
 
 export type ProjectQueries = ReturnType<typeof createProjectQueries>;

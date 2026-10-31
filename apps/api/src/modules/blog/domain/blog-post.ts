@@ -1,4 +1,5 @@
 import type { BlogPost, BlogPostPage } from "@mrashidi/types";
+import { InvalidContentError } from "#shared/invalid-content-error.ts";
 
 export const EXCERPT_LENGTH = 280;
 
@@ -29,6 +30,13 @@ export function toBlogPosts(items: readonly FeedItem[]): BlogPost[] {
 export function pageOf(posts: readonly BlogPost[], page: number, limit: number): BlogPostPage {
   const start = (page - 1) * limit;
   return { posts: posts.slice(start, start + limit), total: posts.length };
+}
+
+export class InvalidMediumProfileUrlError extends InvalidContentError {
+  constructor(profileUrl: string) {
+    super(`Not a Medium profile URL: ${profileUrl}`);
+    this.name = "InvalidMediumProfileUrlError";
+  }
 }
 
 export function mediumFeedUrl(profileUrl: string): string | null {

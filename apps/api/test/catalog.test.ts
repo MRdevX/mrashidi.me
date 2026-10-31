@@ -1,8 +1,8 @@
 import type { Project } from "@mrashidi/types";
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
-import { countStackUsage, describeCatalog, groupStacks, topStacks } from "../src/modules/projects/domain/catalog.ts";
-import { toProjectEntry } from "../src/modules/projects/domain/project-entry.ts";
+import { countStackUsage, describeCatalog, groupStacks, topStacks } from "#modules/projects/domain/catalog.ts";
+import { toProjectEntry } from "#modules/projects/domain/project-entry.ts";
 
 const project = (over: Partial<Project> = {}): Project => ({
   title: "Alpha App",

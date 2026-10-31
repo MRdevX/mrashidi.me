@@ -1,5 +1,5 @@
 import type { ContributionLevel } from "@mrashidi/types";
-import type { GitHubGateway } from "../domain/github-gateway.ts";
+import type { GitHubGateway } from "../application/ports.ts";
 import type { RepoActivity } from "../domain/repo-activity.ts";
 
 const GRAPHQL_URL = "https://api.github.com/graphql";

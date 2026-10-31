@@ -4,3 +4,10 @@ export class ContentNotFoundError extends Error {
     this.name = "ContentNotFoundError";
   }
 }
+
+export function orNotFound<T>(value: T | null, what: string): T {
+  if (value === null) {
+    throw new ContentNotFoundError(what);
+  }
+  return value;
+}

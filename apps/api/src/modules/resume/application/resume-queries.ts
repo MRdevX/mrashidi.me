@@ -1,12 +1,12 @@
 import type { ExperienceEntry } from "@mrashidi/types";
-import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
-import type { ResumeRepository } from "../domain/resume-repository.ts";
+import { orNotFound } from "#shared/content-not-found-error.ts";
 import { describeSkills } from "../domain/skills.ts";
 import { durationMonths, parseWorkPeriod, toIsoMonth, yearMonthOf } from "../domain/work-period.ts";
+import type { ResumeRepository } from "./ports.ts";
 
 export function createResumeQueries(repository: ResumeRepository) {
   async function skills() {
-    return (await repository.getSkills()) ?? notFound("Skills");
+    return orNotFound(await repository.getSkills(), "Skills");
   }
 
   return {
@@ -27,16 +27,12 @@ export function createResumeQueries(repository: ResumeRepository) {
       return describeSkills(await skills());
     },
     async education() {
-      return (await repository.getEducation()) ?? notFound("Education");
+      return orNotFound(await repository.getEducation(), "Education");
     },
     async certificates() {
-      return (await repository.getCertificates()) ?? notFound("Certificates");
+      return orNotFound(await repository.getCertificates(), "Certificates");
     },
   };
-}
-
-function notFound(what: string): never {
-  throw new ContentNotFoundError(what);
 }
 
 export type ResumeQueries = ReturnType<typeof createResumeQueries>;

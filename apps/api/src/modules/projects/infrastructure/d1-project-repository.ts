@@ -2,7 +2,7 @@ import { ProjectSchema } from "@mrashidi/types";
 import { asc, eq } from "drizzle-orm";
 import type { Db } from "#db/index.ts";
 import { projects } from "#db/schema.ts";
-import type { ProjectRepository } from "../domain/project-repository.ts";
+import type { ProjectRepository } from "../application/ports.ts";
 
 export function createD1ProjectRepository(db: Db): ProjectRepository {
   return {

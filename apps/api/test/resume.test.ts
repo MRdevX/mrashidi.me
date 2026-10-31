@@ -1,5 +1,9 @@
+import { env } from "cloudflare:workers";
 import { fixtureContent } from "@mrashidi/types/fixtures";
+import { eq } from "drizzle-orm";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { createDb } from "#db/index.ts";
+import { workExperience } from "#db/schema.ts";
 import { authedApi } from "./api.ts";
 
 const FIXTURES = "../../../packages/types/fixtures/api";
@@ -37,5 +41,22 @@ describe("resume", () => {
     await expect(`${JSON.stringify(await res.json(), null, 2)}\n`).toMatchFileSnapshot(
       `${FIXTURES}/skills-overview.json`
     );
+  });
+
+  it("answers 500 with the reason when a stored work period is unreadable", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const db = createDb(env.DB);
+    const [role] = fixtureContent.experience;
+    await db
+      .update(workExperience)
+      .set({ data: { ...role, period: "Foo 2015 – Present" } })
+      .where(eq(workExperience.position, 0));
+    try {
+      const res = await authedApi("/v1/experience");
+      expect(res.status).toBe(500);
+      expect(await res.json()).toEqual({ error: 'Unreadable work period "Foo 2015 – Present"' });
+    } finally {
+      await db.update(workExperience).set({ data: role }).where(eq(workExperience.position, 0));
+    }
   });
 });
