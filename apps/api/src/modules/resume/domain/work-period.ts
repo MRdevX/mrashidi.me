@@ -1,3 +1,5 @@
+import { InvalidContentError } from "#shared/invalid-content-error.ts";
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
 
 export interface YearMonth {
@@ -10,7 +12,7 @@ export interface WorkPeriod {
   end: YearMonth | null;
 }
 
-export class InvalidWorkPeriodError extends Error {
+export class InvalidWorkPeriodError extends InvalidContentError {
   constructor(period: string) {
     super(`Unreadable work period "${period}"`);
     this.name = "InvalidWorkPeriodError";

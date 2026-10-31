@@ -8,7 +8,7 @@ import { createGitHubQueries } from "#modules/github/application/github-queries.
 import type { GitHubGateway } from "#modules/github/application/ports.ts";
 import { createRefreshContributions, createRefreshRepoActivity } from "#modules/github/application/refresh-github.ts";
 import { contributionWindow } from "#modules/github/domain/contribution-window.ts";
-import { parseGitHubLogin, parseRepoRef } from "#modules/github/domain/repo-ref.ts";
+import { InvalidGitHubProfileUrlError, parseGitHubLogin, parseRepoRef } from "#modules/github/domain/repo-ref.ts";
 import { createD1GitHubSnapshotRepository } from "#modules/github/infrastructure/d1-github-snapshot-repository.ts";
 import { createGraphQLGitHubGateway } from "#modules/github/infrastructure/graphql-github-gateway.ts";
 import { authedApi } from "./api.ts";
@@ -166,6 +166,12 @@ describe("GitHub refresh and routes", () => {
       },
       lastActivityAt: "2026-03-01T10:00:00.000Z",
     });
+  });
+
+  it("rejects a profile URL that is not on GitHub", async () => {
+    await expect(
+      createRefreshContributions(fakeGateway(), repository())({ profileUrl: "https://example.com/janedoe", now: NOW })
+    ).rejects.toThrow(InvalidGitHubProfileUrlError);
   });
 
   it("fetches and saves contributions on the first request", async () => {

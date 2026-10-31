@@ -9,6 +9,7 @@ import { createRefreshBlog } from "#modules/blog/application/refresh-blog.ts";
 import {
   EXCERPT_LENGTH,
   type FeedItem,
+  InvalidMediumProfileUrlError,
   mediumFeedUrl,
   pageOf,
   toBlogPosts,
@@ -107,6 +108,15 @@ describe("Medium feed gateway", () => {
 describe("blog refresh and routes", () => {
   beforeEach(async () => {
     await createDb(env.DB).delete(snapshots);
+  });
+
+  it("rejects a profile URL that is not on Medium", async () => {
+    await expect(
+      createRefreshBlog(
+        { items: async () => FEED_ITEMS },
+        repository()
+      )({ profileUrl: "https://example.com/@janedoe", now: NOW })
+    ).rejects.toThrow(InvalidMediumProfileUrlError);
   });
 
   it("serves refreshed posts, matching the read-model fixture", async () => {

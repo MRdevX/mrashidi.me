@@ -27,6 +27,7 @@ import { createD1ResumeRepository, createResumeQueries, resumeRoutes } from "#mo
 import { ContentNotFoundError } from "#shared/content-not-found-error.ts";
 import { background } from "#shared/http/background.ts";
 import { requireContentToken } from "#shared/http/require-content-token.ts";
+import { InvalidContentError } from "#shared/invalid-content-error.ts";
 
 function createModules(c: Context<HonoEnv>) {
   const db = createDb(c.env.DB);
@@ -91,6 +92,10 @@ app.notFound((c) => c.json({ error: "Not found" }, 404));
 app.onError((error, c) => {
   if (error instanceof ContentNotFoundError) {
     return c.json({ error: error.message }, 404);
+  }
+  if (error instanceof InvalidContentError) {
+    console.error(error);
+    return c.json({ error: error.message }, 500);
   }
   if (error instanceof HTTPException) {
     return error.getResponse();
