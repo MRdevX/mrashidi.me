@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.27](https://github.com/MRdevX/mrashidi.me/compare/v0.2.26...v0.2.27) (2026-11-01)
+
+
+### Bug Fixes
+
+* **ask-mr:** allow 60s for multi-step chat turns ([905dc3a](https://github.com/MRdevX/mrashidi.me/commit/905dc3a9f3772d1088bec69b4894dc140f08d69d))
+
 ### [0.2.26](https://github.com/MRdevX/mrashidi.me/compare/v0.2.25...v0.2.26) (2026-11-01)
 
 
