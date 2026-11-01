@@ -35,12 +35,12 @@
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.23.0",
-    "@cloudflare/workers-types": "^5.20261026.1",
-    "@types/node": "^26.6.5",
+    "@cloudflare/workers-types": "^5.20261030.1",
+    "@types/node": "^26.6.6",
     "drizzle-kit": "^0.31.11",
     "tsx": "^4.23.15",
     "typescript": "catalog:",
     "vitest": "^4.1.10",
-    "wrangler": "^4.153.0"
+    "wrangler": "^4.156.0"
   }
 }
