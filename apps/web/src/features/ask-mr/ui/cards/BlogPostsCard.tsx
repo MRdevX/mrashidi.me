@@ -1,8 +1,8 @@
 "use client";
 
+import type { AskMrBlogPost } from "@mrashidi/types";
 import Link from "next/link";
 import { trackAskMr } from "@/features/ask-mr/client/analytics";
-import type { AskMrBlogPost } from "@/features/ask-mr/server/tools";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { CardShell } from "./CardShell";
 

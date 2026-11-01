@@ -1,2 +1,2 @@
 export { ContentProvider, useContent } from "./ContentProvider";
-export type { AskMrContent, SiteContent } from "./types";
+export type { SiteContent } from "./types";

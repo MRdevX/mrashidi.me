@@ -1,5 +1,6 @@
 import {
   AboutSchema,
+  type AskMrChatRequest,
   type BlogPostPage,
   BlogPostPageSchema,
   CatalogOverviewSchema,
@@ -8,18 +9,17 @@ import {
   ContributionsSchema,
   EducationSchema,
   ExperienceEntrySchema,
-  KnowledgeContextSchema,
   ProfileSchema,
   ProjectEntrySchema,
   SkillCategorySchema,
   SkillsOverviewSchema,
 } from "@mrashidi/types";
-import { fixtureBlogPosts, fixtureGitHubContributions, fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
+import { fixtureBlogPosts, fixtureGitHubContributions } from "@mrashidi/types/fixtures";
 import { cache } from "react";
 import { z } from "zod";
 import { getEnv } from "@/lib/core";
 import { fixtureSiteContent } from "./fixtures";
-import type { AskMrContent, SiteContent } from "./types";
+import type { SiteContent } from "./types";
 
 export const CONTENT_TAG = "content";
 const REVALIDATE_SECONDS = 3600;
@@ -67,15 +67,6 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
   return { profile, about, experience, education, certificates, skills, skillsOverview, projects, projectsOverview };
 });
 
-const getKnowledgeContext = cache(async (): Promise<string> => {
-  const base = contentApiUrl();
-  if (!base) {
-    return fixtureKnowledgeContext.context;
-  }
-  const { context } = await fetchJson(base, "/v1/knowledge/context", KnowledgeContextSchema);
-  return context;
-});
-
 export async function getGitHubContributions(): Promise<Contributions> {
   const base = contentApiUrl();
   return base ? fetchJson(base, "/v1/github/contributions", ContributionsSchema) : fixtureGitHubContributions;
@@ -90,7 +81,18 @@ export async function getBlogPosts(page: number, limit: number): Promise<BlogPos
   return fetchJson(base, `/v1/blog/posts?page=${page}&limit=${limit}`, BlogPostPageSchema);
 }
 
-export async function getAskMrContent(): Promise<AskMrContent> {
-  const [site, knowledgeContext] = await Promise.all([getSiteContent(), getKnowledgeContext()]);
-  return { ...site, knowledgeContext };
+/** Forwards an Ask MR turn to the API, which owns the model; `null` without a content API (fixture mode). */
+export async function postAskMrChat(chat: AskMrChatRequest, signal: AbortSignal): Promise<Response | null> {
+  const base = contentApiUrl();
+  if (!base) {
+    return null;
+  }
+  const token = getEnv("CONTENT_API_TOKEN");
+  return fetch(`${base}/v1/ask-mr/chat`, {
+    method: "POST",
+    headers: { "content-type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    body: JSON.stringify(chat),
+    signal,
+    cache: "no-store",
+  });
 }

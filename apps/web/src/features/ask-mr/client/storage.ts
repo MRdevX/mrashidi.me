@@ -1,4 +1,4 @@
-import type { AskMrUIMessage } from "../server/tools";
+import type { AskMrUIMessage } from "../types";
 
 const MESSAGES_KEY = "ask-mr:messages";
 const CONVERSATION_KEY = "ask-mr:conversation";

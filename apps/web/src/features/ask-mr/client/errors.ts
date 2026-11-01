@@ -1,4 +1,4 @@
-import type { AskMrErrorBody, AskMrErrorCode } from "../types";
+import type { AskMrErrorBody, AskMrErrorCode } from "@mrashidi/types";
 
 export interface AskMrClientError {
   code: AskMrErrorCode;

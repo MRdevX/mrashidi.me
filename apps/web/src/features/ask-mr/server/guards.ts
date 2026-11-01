@@ -1,11 +1,16 @@
-import type { UIMessage } from "ai";
+import {
+  ASK_MR_ERROR_MESSAGES,
+  type AskMrChatRequest,
+  AskMrChatRequestSchema,
+  type AskMrErrorBody,
+  type AskMrErrorCode,
+  type AskMrMessage,
+} from "@mrashidi/types";
 import { checkBotId } from "botid/server";
-import { z } from "zod";
 import { getEnv, logger } from "@/lib/core";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/lib/services/rate-limit";
 import { ASK_MR_LIMITS } from "../constants";
 import { messageText } from "../messageText";
-import type { AskMrErrorBody, AskMrErrorCode } from "../types";
 import { getAskMrRedis } from "./redis";
 
 const STATUS: Record<AskMrErrorCode, number> = {
@@ -17,17 +22,12 @@ const STATUS: Record<AskMrErrorCode, number> = {
   server: 500,
 };
 
-const MESSAGES: Record<AskMrErrorCode, string> = {
-  invalid: "That message couldn't be sent. Please try rephrasing it.",
-  bot: "Automated traffic isn't allowed.",
-  rate_limited: "You're sending messages quickly. Please wait a moment.",
-  budget_exhausted: "Ask MR is resting for today. You can still get in touch through the contact page.",
-  disabled: "Ask MR is offline right now. You can still get in touch through the contact page.",
-  server: "Ask MR hit a snag. Please try again.",
-};
-
 export function askMrErrorResponse(code: AskMrErrorCode, retryAfter?: number): Response {
-  const body: AskMrErrorBody = { error: code, message: MESSAGES[code], ...(retryAfter ? { retryAfter } : {}) };
+  const body: AskMrErrorBody = {
+    error: code,
+    message: ASK_MR_ERROR_MESSAGES[code],
+    ...(retryAfter ? { retryAfter } : {}),
+  };
   return Response.json(body, {
     status: STATUS[code],
     headers: {
@@ -38,32 +38,12 @@ export function askMrErrorResponse(code: AskMrErrorCode, retryAfter?: number): R
   });
 }
 
-const partSchema = z.looseObject({ type: z.string() });
-
-const messageSchema = z.looseObject({
-  id: z.string().min(1).max(100),
-  role: z.enum(["user", "assistant", "system"]),
-  parts: z.array(partSchema).max(40),
-});
-
-const chatRequestSchema = z.object({
-  messages: z.array(messageSchema).min(1).max(ASK_MR_LIMITS.maxRequestMessages),
-  conversationId: z.uuid(),
-  pathname: z.string().max(200).optional(),
-});
-
-interface ChatRequest {
-  messages: UIMessage[];
-  conversationId: string;
-  pathname?: string;
-}
-
 const ALLOWED_PART = (type: string) => type === "text" || type === "step-start" || type.startsWith("tool-");
 
-export function sanitizeMessages(messages: z.infer<typeof messageSchema>[]): UIMessage[] | null {
+export function sanitizeMessages(messages: AskMrMessage[]): AskMrMessage[] | null {
   const cleaned = messages
     .filter((m) => m.role !== "system")
-    .map((m) => ({ ...m, parts: m.parts.filter((p) => ALLOWED_PART(p.type)) }) as UIMessage);
+    .map((m) => ({ ...m, parts: m.parts.filter((p) => ALLOWED_PART(p.type)) }));
 
   const last = cleaned.at(-1);
   if (last?.role !== "user") {
@@ -144,7 +124,7 @@ async function isBotRequest(): Promise<boolean> {
   }
 }
 
-export type GuardResult = { ok: true; body: ChatRequest } | { ok: false; response: Response };
+export type GuardResult = { ok: true; body: AskMrChatRequest } | { ok: false; response: Response };
 
 /** Runs every check before any model tokens are spent, cheapest first. */
 export async function guardChatRequest(request: Request): Promise<GuardResult> {
@@ -158,7 +138,7 @@ export async function guardChatRequest(request: Request): Promise<GuardResult> {
   } catch {
     return { ok: false, response: askMrErrorResponse("invalid") };
   }
-  const parsed = chatRequestSchema.safeParse(json);
+  const parsed = AskMrChatRequestSchema.safeParse(json);
   if (!parsed.success) {
     return { ok: false, response: askMrErrorResponse("invalid") };
   }

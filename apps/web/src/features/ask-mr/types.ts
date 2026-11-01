@@ -1,11 +1,6 @@
-/** Error codes returned by `/api/chat` as JSON (non-streamed) so the UI can show a specific message. */
-export type AskMrErrorCode = "invalid" | "bot" | "rate_limited" | "budget_exhausted" | "disabled" | "server";
+import type { AskMrMessageMetadata, AskMrToolSet } from "@mrashidi/types";
+import type { UIDataTypes, UIMessage } from "ai";
 
-export interface AskMrErrorBody {
-  error: AskMrErrorCode;
-  message: string;
-  /** Seconds until the visitor may try again (rate limits only). */
-  retryAfter?: number;
-}
+export type AskMrUIMessage = UIMessage<AskMrMessageMetadata, UIDataTypes, AskMrToolSet>;
 
 export type AskMrFeedbackRating = "up" | "down";
