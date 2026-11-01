@@ -67,3 +67,4 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0011](0011-api-owns-external-sources-on-cron.md) | Fetch GitHub and Medium in the API on a cron, serve them from D1 | `superseded` | 2026-10-27 |
 | [DR-0012](0012-refresh-external-sources-on-request.md) | Refresh GitHub and Medium snapshots on request instead of on a cron | `accepted` | 2026-10-27 |
 | [DR-0013](0013-webgl-effects-as-progressive-enhancement.md) | Add WebGL effects with three and React Three Fiber as progressive enhancement | `accepted` | 2026-10-31 |
+| [DR-0014](0014-ask-mr-on-workers-ai.md) | Run the Ask MR model on Workers AI inside the API Worker | `accepted` | 2026-11-01 |
