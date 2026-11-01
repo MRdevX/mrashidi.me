@@ -26,7 +26,7 @@ A weekly scheduled run plans `main` and fails if a live resource drifted from it
 | Terraform `live/github` | GitHub Actions secrets and variables, the `deploy-gate` environment |
 | Wrangler | Worker code and bindings (`apps/api/wrangler.toml`, including the Workers AI `AI` binding for Ask MR, which needs no Terraform resource), Worker secrets `CONTENT_API_TOKEN` and `GH_API_TOKEN`, D1 migrations. No Cron Triggers: snapshots refresh on request ([DR-0012](decisions/0012-refresh-external-sources-on-request.md)) |
 | By hand | API tokens, R2 S3 keys, 1Password items; R2 bucket `mrashidi-me-bucket` and its `s3.mrashidi.me` domain (outside Terraform) |
-| Vercel dashboard | Every other web env var (Ask MR limits, Upstash, SES, Sentry, reCAPTCHA, Blob) |
+| Vercel dashboard | Every other web env var (Ask MR limits, Upstash, SES, Sentry, reCAPTCHA, Blob, `CV_LINK_SECRET`) |
 
 Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner creates and deletes that record.
 

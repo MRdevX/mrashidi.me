@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
 import { StatusMessage } from "@/components/forms/StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
-import { useContent } from "@/lib/content";
 import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
 import {
   CyberpunkDialog,
@@ -25,7 +24,6 @@ interface ResumeRequestModalProps {
 }
 
 export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestModalProps) {
-  const { profile } = useContent();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
@@ -50,20 +48,13 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
     setIsSubmitting(true);
 
     try {
-      const downloadLink = document.createElement("a");
-      downloadLink.href = "/api/cv/download";
-      downloadLink.download = `${profile.person.name.replaceAll(" ", "_")}_CV.pdf`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-
       const success = await onSubmit(data);
 
       if (success) {
         form.reset();
         setSubmitStatus({
           type: "success",
-          message: "CV downloaded! Check your email for confirmation.",
+          message: "Sent! Check your inbox for the download link.",
         });
 
         setTimeout(() => {
@@ -73,7 +64,7 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
       } else {
         setSubmitStatus({
           type: "error",
-          message: "CV downloaded but email failed. Please try again.",
+          message: "We could not send the email. Please try again.",
         });
       }
     } catch (_error) {
@@ -107,7 +98,7 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
         <CyberpunkDialogHeader>
           <CyberpunkDialogTitle>Request Resume</CyberpunkDialogTitle>
           <DialogDescription>
-            Enter your details to download the CV. You will receive a confirmation email.
+            Enter your details and we will email you a download link that works for 24 hours.
           </DialogDescription>
         </CyberpunkDialogHeader>
 
@@ -140,7 +131,7 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
               variant="neon"
               className="w-full"
             >
-              {isSubmitting ? "Processing..." : "Download CV"}
+              {isSubmitting ? "Sending..." : "Email me the CV"}
             </CyberpunkButton>
           </CyberpunkDialogFooter>
         </form>

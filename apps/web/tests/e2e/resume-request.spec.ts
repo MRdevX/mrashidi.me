@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import { expect, test } from "@playwright/test";
 
 test.describe("Resume Request", () => {
@@ -19,7 +17,7 @@ test.describe("Resume Request", () => {
     await expect(page.getByRole("dialog")).not.toBeVisible();
   });
 
-  test("should fill and submit CV request form", async ({ page }) => {
+  test("emails a CV link without downloading in the browser", async ({ page }) => {
     await page.route("**/api/resume", async (route) => {
       await route.fulfill({
         status: 200,
@@ -28,16 +26,10 @@ test.describe("Resume Request", () => {
       });
     });
 
-    await page.route("**/api/cv/download", async (route) => {
-      const pdfBuffer = fs.readFileSync(path.join(__dirname, "../fixtures/sample.pdf"));
-      await route.fulfill({
-        status: 200,
-        contentType: "application/pdf",
-        headers: {
-          "content-length": pdfBuffer.length.toString(),
-        },
-        body: pdfBuffer,
-      });
+    let downloadRequested = false;
+    await page.route("**/api/cv/download**", async (route) => {
+      downloadRequested = true;
+      await route.abort();
     });
 
     await page.goto("/resume");
@@ -50,8 +42,9 @@ test.describe("Resume Request", () => {
     await page.getByLabel("Email Address").fill("john@example.com");
     await page.getByLabel("Company (Optional)").fill("Test Company");
 
-    await page.getByRole("button", { name: "Download CV" }).click();
+    await page.getByRole("button", { name: "Email me the CV" }).click();
 
-    await expect(page.getByText("CV downloaded! Check your email for confirmation.", { exact: true })).toBeVisible();
+    await expect(page.getByText("Sent! Check your inbox for the download link.", { exact: true })).toBeVisible();
+    expect(downloadRequested).toBe(false);
   });
 });

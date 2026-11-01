@@ -20,11 +20,11 @@ const validateFile = async (file: File | null): Promise<File> => {
   return file;
 };
 
-const logSuccess = (url: string, file: File) => {
+const logSuccess = (pathname: string, file: File) => {
   logger.info({
     operation: "cvUpload",
     status: "success",
-    url,
+    pathname,
     fileName: file.name,
     fileSize: file.size,
   });
@@ -33,14 +33,14 @@ const logSuccess = (url: string, file: File) => {
 async function handleCVUpload(request: NextRequest) {
   const formData = await request.formData();
   const file = await validateFile(formData.get("file") as File);
-  const url = await uploadCV(file);
+  const pathname = await uploadCV(file);
 
-  logSuccess(url, file);
+  logSuccess(pathname, file);
 
   return NextResponse.json({
     success: true,
     message: "CV uploaded and replaced successfully",
-    url,
+    pathname,
   });
 }
 

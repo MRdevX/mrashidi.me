@@ -30,7 +30,7 @@ when you bump a major or minor, update the row in the same PR.
 | fast-xml-parser | 5.11 | [github.com/NaturalIntelligence/fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) | `apps/api` only: the Medium RSS feed in `apps/api/src/modules/blog/infrastructure/medium-feed-gateway.ts`. `item` is always parsed as an array. |
 | pino | 10.4 | [getpino.io](https://getpino.io) | Through `logger` in `@lib/core`, never `console` in app code. |
 | Sentry (`@sentry/nextjs`) | 11.9 | [docs.sentry.io/platforms/javascript/guides/nextjs](https://docs.sentry.io/platforms/javascript/guides/nextjs/) | Shared options in `sentry-shared.ts`; hooks in `apps/web/src/instrumentation*.ts`. |
-| Vercel Blob / Analytics / Speed Insights | 2.8 / 2.0 | [vercel.com/docs](https://vercel.com/docs) | Blob holds the CV PDF behind `api/cv/**`. |
+| Vercel Blob / Analytics / Speed Insights | 2.8 / 2.0 | [vercel.com/docs](https://vercel.com/docs) | Blob holds the CV PDF as a private blob. `POST /api/resume` emails a link signed with `CV_LINK_SECRET` that expires after 24h; `GET /api/cv/download?token=` checks it and streams the PDF. Nothing else serves the file. |
 | Serwist (`@serwist/turbopack`) | 9.5 | [serwist.pages.dev/docs/next/turbo](https://serwist.pages.dev/docs/next/turbo) | Worker source `apps/web/src/lib/pwa/sw.ts`, served at `/serwist/sw.js` by `app/serwist/[path]/route.ts`; registration is off in `next dev`. |
 | Vitest | 5.0 | [vitest.dev](https://vitest.dev/guide/) | Unit tests in `apps/web/tests/unit/`, mirroring `apps/web/src/`. |
 | Playwright | 1.64 | [playwright.dev/docs](https://playwright.dev/docs/intro) | E2E in `apps/web/tests/e2e/`; run locally, not in CI. |
