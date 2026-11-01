@@ -1,7 +1,8 @@
 import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { APIError, handleError, logError } from "@/lib/errors";
+import { ZodError } from "zod";
+import { APIError, handleError, logError, ValidationError } from "@/lib/errors";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/lib/services/rate-limit";
 import { extractPaginationParams, type PaginationParams } from "@/lib/utils/pagination";
 import { handleCorsPreflight, isCorsPreflight, withCors } from "./cors";
@@ -90,11 +91,30 @@ function authMiddleware(token: string | (() => string)): (handler: ApiHandler) =
   };
 }
 
+async function readJsonBody(request: NextRequest): Promise<unknown> {
+  try {
+    return await request.json();
+  } catch {
+    throw new ValidationError("Request body is not valid JSON");
+  }
+}
+
+function validateBody<T>(validator: (data: unknown) => T, body: unknown): T {
+  try {
+    return validator(body);
+  } catch (error) {
+    if (!(error instanceof ZodError)) {
+      throw error;
+    }
+    const fields = Object.fromEntries(error.issues.map((issue) => [issue.path.join("."), issue.message]));
+    throw new ValidationError("Validation failed", fields);
+  }
+}
+
 function validationMiddleware<T>(validator: (data: unknown) => T): (handler: ValidationHandler<T>) => ApiHandler {
   return (handler: ValidationHandler<T>): ApiHandler => {
     return async (request: NextRequest) => {
-      const body = await request.json();
-      const validatedData = validator(body);
+      const validatedData = validateBody(validator, await readJsonBody(request));
       return await handler(request, validatedData);
     };
   };

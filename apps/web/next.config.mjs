@@ -7,6 +7,15 @@ const withBundleAnalyzer =
     ? (await import("@next/bundle-analyzer")).default({ enabled: true })
     : (config) => config;
 
+const REQUIRED_PRODUCTION_ENV = ["CV_LINK_SECRET"];
+
+if (process.env.VERCEL_ENV === "production") {
+  const missing = REQUIRED_PRODUCTION_ENV.filter((key) => !process.env[key]);
+  if (missing.length > 0) {
+    throw new Error(`Missing production env: ${missing.join(", ")}. Set them in the Vercel dashboard.`);
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
