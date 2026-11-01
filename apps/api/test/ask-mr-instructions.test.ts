@@ -1,7 +1,11 @@
 import { fixtureContent, fixtureKnowledgeContext } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
-import { ASK_MR_TOOLS } from "@/features/ask-mr/constants";
-import { buildInstructions, buildKnowledgeBlock, buildPageContext } from "@/features/ask-mr/server/systemPrompt";
+import {
+  ASK_MR_TOOLS,
+  buildInstructions,
+  buildKnowledgeBlock,
+  buildPageContext,
+} from "#modules/ask-mr/domain/instructions.ts";
 
 const { profile } = fixtureContent;
 
@@ -14,10 +18,16 @@ describe("buildInstructions", () => {
   });
 
   it("covers every off-limits topic", () => {
-    expect(prompt).toMatch(/Salary, rates/);
+    expect(prompt).toMatch(/Rates, salary or pricing: never give or estimate numbers/);
     expect(prompt).toMatch(/Personal life/);
     expect(prompt).toMatch(/employers and clients/);
     expect(prompt).toMatch(/Tasks unrelated/);
+  });
+
+  it("mentions availability only when asked, plainly and without bold", () => {
+    expect(prompt).toContain("only when the visitor asks about it");
+    expect(prompt).toContain("no bold");
+    expect(prompt).toContain("Don't suggest questions about availability, hiring or rates");
   });
 
   it("guards against prompt injection and prompt leaks", () => {
@@ -38,7 +48,7 @@ describe("buildInstructions", () => {
 
 describe("buildKnowledgeBlock", () => {
   it("wraps the knowledge with a heading", () => {
-    const block = buildKnowledgeBlock({ profile, knowledgeContext: fixtureKnowledgeContext.context });
+    const block = buildKnowledgeBlock(profile, fixtureKnowledgeContext.context);
     expect(block).toMatch(new RegExp(`^# Knowledge about ${profile.person.name}`));
     expect(block).toContain(fixtureKnowledgeContext.context);
   });

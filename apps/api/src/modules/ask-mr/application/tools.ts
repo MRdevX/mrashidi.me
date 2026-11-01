@@ -1,27 +1,16 @@
-import { firstName, type ProjectEntry } from "@mrashidi/types";
-import { type InferUITools, tool, type UIDataTypes, type UIMessage } from "ai";
+import {
+  type AskMrBlogPost,
+  type AskMrProjectCard,
+  type AskMrToolSet,
+  firstName,
+  type Profile,
+  type ProjectEntry,
+} from "@mrashidi/types";
+import { type Tool, tool } from "ai";
 import { z } from "zod";
-import type { SiteContent } from "@/lib/content";
-import { getBlogPosts } from "@/lib/content/server";
-import { logger } from "@/lib/core";
-import { ASK_MR_LIMITS } from "../constants";
 
-export interface AskMrProjectCard {
-  slug: string;
-  title: string;
-  description: string;
-  stack: string[];
-  type: ProjectEntry["type"];
-  year?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-}
-
-export interface AskMrBlogPost {
-  title: string;
-  url: string;
-  publishedAt: string;
-}
+export const MAX_BLOG_POSTS = 5;
+const FOLLOW_UP_COUNT = 3;
 
 const truncate = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 
@@ -38,14 +27,16 @@ function toProjectCard(project: ProjectEntry): AskMrProjectCard {
   };
 }
 
-async function latestPosts(limit: number): Promise<AskMrBlogPost[]> {
-  const { posts } = await getBlogPosts(1, limit);
-  return posts.map(({ title, url, publishedAt }) => ({ title, url, publishedAt }));
+export interface AskMrToolSources {
+  profile: Profile;
+  projects: ProjectEntry[];
+  latestPosts: (limit: number) => Promise<AskMrBlogPost[]>;
 }
 
+type AskMrTools = { [K in keyof AskMrToolSet]: Tool<AskMrToolSet[K]["input"], AskMrToolSet[K]["output"]> };
+
 /** Read-only tools: none of them changes server state; actions (sending a CV request) stay with the visitor. */
-export function createAskMrTools(content: Pick<SiteContent, "profile" | "projects">) {
-  const { profile, projects } = content;
+export function createAskMrTools({ profile, projects, latestPosts }: AskMrToolSources): AskMrTools {
   const first = firstName(profile);
   const projectsBySlug = new Map(projects.map((project) => [project.slug, project]));
 
@@ -55,17 +46,16 @@ export function createAskMrTools(content: Pick<SiteContent, "profile" | "project
       inputSchema: z.object({
         slugs: z.array(z.string()).min(1).max(3).describe("Project slugs, most relevant first"),
       }),
-      execute: async ({ slugs }) => {
-        const cards = [...new Set(slugs)]
+      execute: async ({ slugs }) => ({
+        projects: [...new Set(slugs)]
           .map((slug) => projectsBySlug.get(slug))
           .filter((project): project is ProjectEntry => project !== undefined)
-          .map(toProjectCard);
-        return { projects: cards };
-      },
+          .map(toProjectCard),
+      }),
     }),
 
     contactHandoff: tool({
-      description: `Show ${first}'s contact options when a visitor wants to hire or collaborate, discuss rates, or asks something only ${first} can answer.`,
+      description: `Show ${first}'s contact options when a visitor wants to hire or collaborate, discuss terms, or asks something only ${first} can answer.`,
       inputSchema: z.object({
         reason: z.enum(["hire", "collaborate", "question", "other"]).describe("Why the visitor wants to get in touch"),
       }),
@@ -87,14 +77,14 @@ export function createAskMrTools(content: Pick<SiteContent, "profile" | "project
     getLatestPosts: tool({
       description: `Fetch ${first}'s latest blog posts from Medium (title, link, date).`,
       inputSchema: z.object({
-        limit: z.number().int().min(1).max(ASK_MR_LIMITS.maxBlogPosts).default(3),
+        limit: z.number().int().min(1).max(MAX_BLOG_POSTS).default(3),
       }),
-      execute: async ({ limit }) => {
+      execute: async ({ limit }): Promise<AskMrToolSet["getLatestPosts"]["output"]> => {
         try {
           return { posts: await latestPosts(limit), available: true };
         } catch (error) {
-          logger.error({ error: String(error) }, "Ask MR: blog lookup failed");
-          return { posts: [] as AskMrBlogPost[], available: false };
+          console.error("Ask MR: blog lookup failed", error);
+          return { posts: [], available: false };
         }
       },
     }),
@@ -102,12 +92,9 @@ export function createAskMrTools(content: Pick<SiteContent, "profile" | "project
     suggestFollowUps: tool({
       description: "Offer short follow-up questions. Always call this last, after the answer text.",
       inputSchema: z.object({
-        questions: z.array(z.string().max(80)).min(1).max(ASK_MR_LIMITS.followUpCount),
+        questions: z.array(z.string().max(80)).min(1).max(FOLLOW_UP_COUNT),
       }),
       execute: async ({ questions }) => ({ questions }),
     }),
   };
 }
-
-type AskMrTools = InferUITools<ReturnType<typeof createAskMrTools>>;
-export type AskMrUIMessage = UIMessage<unknown, UIDataTypes, AskMrTools>;

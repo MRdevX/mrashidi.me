@@ -1,12 +1,12 @@
 "use client";
 
+import { ASK_MR_NAME } from "@mrashidi/types";
 import * as Dialog from "@radix-ui/react-dialog";
 import { SquarePen, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useContent } from "@/lib/content";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
-import { ASK_MR_NAME } from "../constants";
 import { messageText } from "../messageText";
 import { useAskMr } from "./AskMrProvider";
 import { ChatMessage } from "./ChatMessage";

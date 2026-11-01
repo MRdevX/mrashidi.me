@@ -22,9 +22,9 @@ behind the `deploy-gate` environment's approval ([DR-0008](decisions/0008-apply-
 | Terraform `live/global` | Every DNS record in the zone except custom-domain records |
 | Terraform `live/production` | D1 `mrashidi-db`, Worker custom domain `api.mrashidi.me`, Vercel project settings and domains, the env vars `CONTENT_API_URL`, `CONTENT_API_TOKEN`, `REVALIDATE_SECRET` |
 | Terraform `live/github` | GitHub Actions secrets and variables, the `deploy-gate` environment |
-| Wrangler | Worker code and bindings (`apps/api/wrangler.toml`), Worker secrets `CONTENT_API_TOKEN` and `GH_API_TOKEN`, D1 migrations. No Cron Triggers: snapshots refresh on request ([DR-0012](decisions/0012-refresh-external-sources-on-request.md)) |
+| Wrangler | Worker code and bindings (`apps/api/wrangler.toml`, including the Workers AI `AI` binding for Ask MR, which needs no Terraform resource), Worker secrets `CONTENT_API_TOKEN` and `GH_API_TOKEN`, D1 migrations. No Cron Triggers: snapshots refresh on request ([DR-0012](decisions/0012-refresh-external-sources-on-request.md)) |
 | By hand | API tokens, R2 S3 keys, 1Password items; R2 bucket `mrashidi-me-bucket` and its `s3.mrashidi.me` domain (outside Terraform) |
-| Vercel dashboard | Every other web env var (AI Gateway, Upstash, SES, Sentry, reCAPTCHA, Blob) |
+| Vercel dashboard | Every other web env var (Ask MR limits, Upstash, SES, Sentry, reCAPTCHA, Blob) |
 
 Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner creates and deletes that record.
 

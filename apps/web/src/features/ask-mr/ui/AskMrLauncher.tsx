@@ -1,11 +1,10 @@
 "use client";
 
-import { firstName } from "@mrashidi/types";
+import { ASK_MR_NAME, firstName } from "@mrashidi/types";
 import { Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import { ASK_MR_NAME } from "../constants";
 import { useAskMr } from "./AskMrProvider";
 
 const PULSE_KEY = "ask-mr:pulsed";

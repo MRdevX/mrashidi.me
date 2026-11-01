@@ -8,7 +8,7 @@
     "build:fast": "pnpm --filter @mrashidi/web build:fast",
     "test": "turbo run test",
     "test:e2e": "pnpm --filter @mrashidi/web test:e2e",
-    "eval:ask-mr": "pnpm --filter @mrashidi/web eval:ask-mr",
+    "eval:ask-mr": "pnpm --filter @mrashidi/api eval:ask-mr",
     "typecheck": "turbo run typecheck",
     "check": "biome check .",
     "check:fix": "biome check --write .",

@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@tests/utils/test-utils";
 import { createRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { AskMrUIMessage } from "@/features/ask-mr/server/tools";
+import type { AskMrUIMessage } from "@/features/ask-mr/types";
 import { ChatMessage } from "@/features/ask-mr/ui/ChatMessage";
 import { Composer } from "@/features/ask-mr/ui/Composer";
 import { ErrorBanner } from "@/features/ask-mr/ui/ErrorBanner";

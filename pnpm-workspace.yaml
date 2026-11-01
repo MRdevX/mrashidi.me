@@ -3,6 +3,7 @@ packages:
   - "packages/*"
 
 catalog:
+  ai: ^7.0.152
   typescript: 7.0.2
   vitest: ^5.0.5
   zod: ^4.6.7
@@ -51,6 +52,8 @@ strictPeerDependencies: false
 autoInstallPeers: true
 allowBuilds:
   '@sentry/cli': true
+  # Its postinstall only prints a funding banner.
+  core-js-pure: false
   esbuild: true
   sharp: true
   workerd: true

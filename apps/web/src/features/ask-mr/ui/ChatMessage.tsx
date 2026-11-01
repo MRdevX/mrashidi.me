@@ -1,7 +1,7 @@
 "use client";
 
 import { messageText } from "../messageText";
-import type { AskMrUIMessage } from "../server/tools";
+import type { AskMrUIMessage } from "../types";
 import { BlogPostsCard } from "./cards/BlogPostsCard";
 import { CardSkeleton } from "./cards/CardShell";
 import { ContactCard } from "./cards/ContactCard";

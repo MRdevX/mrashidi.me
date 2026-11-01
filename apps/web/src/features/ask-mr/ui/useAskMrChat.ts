@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { trackAskMr } from "../client/analytics";
 import { parseAskMrError } from "../client/errors";
 import { getConversationId, loadMessages, resetConversation, saveMessages } from "../client/storage";
-import type { AskMrUIMessage } from "../server/tools";
+import type { AskMrUIMessage } from "../types";
 
 export interface UseAskMrChatOptions {
   /** Separate chats (e.g. the terminal) don't touch the panel's sessionStorage. */

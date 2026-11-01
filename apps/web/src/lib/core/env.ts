@@ -36,9 +36,7 @@ const EnvSchema = z.object({
   NEXT_PUBLIC_APP_VERSION: z.string().optional(),
 
   /** Vercel AI Gateway key for local dev; on Vercel the gateway authenticates via OIDC instead. */
-  AI_GATEWAY_API_KEY: z.string().optional(),
-  ASK_MR_MODEL: z.string().default("anthropic/claude-haiku-5.5"),
-  ASK_MR_DAILY_BUDGET: z.coerce.number().int().positive().default(1000),
+  ASK_MR_DAILY_BUDGET: z.coerce.number().int().positive().default(120),
   ASK_MR_ENABLED: z.stringbool().default(true),
   /** Hides the Ask MR UI when "false" (read directly from `process.env` in client code). */
   NEXT_PUBLIC_ASK_MR_ENABLED: z.stringbool().default(true),
@@ -73,8 +71,6 @@ export const env = EnvSchema.parse({
   REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
   VERCEL_ENV: process.env.VERCEL_ENV,
   NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION,
-  AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
-  ASK_MR_MODEL: process.env.ASK_MR_MODEL,
   ASK_MR_DAILY_BUDGET: process.env.ASK_MR_DAILY_BUDGET,
   ASK_MR_ENABLED: process.env.ASK_MR_ENABLED,
   NEXT_PUBLIC_ASK_MR_ENABLED: process.env.NEXT_PUBLIC_ASK_MR_ENABLED,

@@ -1,5 +1,6 @@
 export interface Bindings {
   DB: D1Database;
+  AI: Ai;
   CONTENT_API_TOKEN: string;
   GH_API_TOKEN: string;
 }

@@ -1,10 +1,10 @@
 "use client";
 
+import type { AskMrProjectCard } from "@mrashidi/types";
 import { ArrowUpRight } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
 import { trackAskMr } from "@/features/ask-mr/client/analytics";
-import type { AskMrProjectCard } from "@/features/ask-mr/server/tools";
 import { PROJECTS_PATH, projectHref, requestOpenProject } from "@/features/projects";
 import { NewTabSrOnly } from "@/lib/a11y/new-tab-hint";
 import { CardShell } from "./CardShell";

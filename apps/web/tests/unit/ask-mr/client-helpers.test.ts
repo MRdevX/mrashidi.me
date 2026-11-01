@@ -59,6 +59,15 @@ describe("starterQuestions", () => {
     expect(starterQuestions("/", "Jane")).toContain("What does Jane work on these days?");
     expect(starterQuestions(null, "Jane").length).toBeGreaterThan(0);
   });
+
+  it.each(["/", "/projects", "/resume", "/about", "/blog", "/contact"])(
+    "never suggests availability, hiring or rates on %s",
+    (pathname) => {
+      for (const question of starterQuestions(pathname, "Jane")) {
+        expect(question).not.toMatch(/opportunit|availab|freelance|hire|rate|salary/i);
+      }
+    }
+  );
 });
 
 describe("parseAskCommand", () => {

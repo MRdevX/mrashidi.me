@@ -7,7 +7,7 @@ monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.m
 | Path | Package | What |
 | ---- | ------- | ---- |
 | `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
-| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`, `workers.dev` for Vercel), read-only `/v1/*` routes behind `CONTENT_API_TOKEN` |
+| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`, `workers.dev` for Vercel), read-only `/v1/*` routes behind `CONTENT_API_TOKEN`, and the Ask MR model call on Workers AI (`POST /v1/ask-mr/chat`) |
 | `infra/` | — | Terraform: zone DNS, D1, `api.mrashidi.me`, Vercel project, GitHub secrets ([docs/infrastructure.md](docs/infrastructure.md)) |
 | `packages/types/` | `@mrashidi/types` | Zod content contract (profile, about, resume, projects, Ask MR knowledge) and the fake fixture dataset (`@mrashidi/types/fixtures`) |
 
@@ -21,9 +21,9 @@ Personal data moves to D1
 - **Styling:** Tailwind v4, shadcn/ui (new-york, RSC), CVA, clsx/tailwind-merge
 - **Lint & format:** Biome only (no ESLint or Prettier)
 - **Monorepo:** pnpm workspaces, Turborepo (`turbo.json`), shared `tsconfig.base.json`
-- **API:** Hono on Cloudflare Workers, D1 with Drizzle, Wrangler; Worker tests with `@cloudflare/vitest-pool-workers`
+- **API:** Hono on Cloudflare Workers, D1 with Drizzle, Workers AI (Ask MR), Wrangler; Worker tests with `@cloudflare/vitest-pool-workers`
 - **Tests:** Vitest (unit, `apps/web/tests/unit/`), Playwright (E2E, `apps/web/tests/e2e/`)
-- **Other:** Vercel AI SDK (Ask MR), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (next-pwa)
+- **Other:** Vercel AI SDK (Ask MR, model on Workers AI), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (next-pwa)
 
 Pinned versions, official docs, and house conventions per library: [docs/agent/stack.md](docs/agent/stack.md).
 
@@ -48,7 +48,7 @@ Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <scrip
 - **Unit tests:** `pnpm test` (all packages); watch with `pnpm --filter @mrashidi/web test:watch`
 - **E2E:** `pnpm test:e2e`; UI/debug modes via `pnpm --filter @mrashidi/web test:e2e:ui|test:e2e:debug`
 - **Build:** `pnpm build:fast` (web, no PWA, no sitemap/OG generation); `pnpm build` (turbo, full)
-- **Ask MR eval:** `pnpm eval:ask-mr`
+- **Ask MR eval:** `pnpm eval:ask-mr` (against `pnpm dev:api`; spends Workers AI neurons)
 - **Dev:** `pnpm dev` (turbo, every app's `dev`); `pnpm dev:web`, `pnpm dev:api` (Wrangler on `:8787`)
 - **Infra:** `pnpm infra:plan:<root>` / `pnpm infra:apply:<root>` (`bootstrap`, `global`, `production`, `github`), wrapped in `op run --env-file infra/.env.op --`
 - **API data:** `pnpm --filter @mrashidi/api db:migrate:local`, then `db:seed` (fixtures; `--source <dir>` for real data); `pnpm check-migrations`; `pnpm --filter @mrashidi/api fixtures:update` rewrites the read-model fixtures in `packages/types/fixtures/api/`

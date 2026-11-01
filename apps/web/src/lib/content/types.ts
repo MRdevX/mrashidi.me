@@ -6,5 +6,3 @@ export type SiteContent = Omit<Content, "knowledge" | "experience" | "projects">
   projects: ProjectEntry[];
   projectsOverview: CatalogOverview;
 };
-
-export type AskMrContent = SiteContent & { knowledgeContext: string };
