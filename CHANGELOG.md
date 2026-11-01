@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.28](https://github.com/MRdevX/mrashidi.me/compare/v0.2.27...v0.2.28) (2026-11-01)
+
+
+### Bug Fixes
+
+* **infra:** quarantine mail that fails DMARC ([e3f3fa4](https://github.com/MRdevX/mrashidi.me/commit/e3f3fa4b5d6e3c033510203c8a51ec41cb933c77))
+* **infra:** remove dead cPanel DNS records and serve the apex straight from Vercel ([81ac209](https://github.com/MRdevX/mrashidi.me/commit/81ac209f5f0b2ab5db22d2ec5d019bfa735c9b4a))
+
+
+### Build System
+
+* **infra:** require Terraform 1.17 or a later 1.x in every root ([832530e](https://github.com/MRdevX/mrashidi.me/commit/832530ee1f886249367edb9c1446b5f67b225ab0))
+
+
+### Code Refactoring
+
+* **infra:** drop import blocks that are already applied ([a88f952](https://github.com/MRdevX/mrashidi.me/commit/a88f952db3ff4c59213a530b8a73f608649fc771))
+* **infra:** share one R2 backend config across the live roots ([f2d9be6](https://github.com/MRdevX/mrashidi.me/commit/f2d9be6ef8a151f0c3302d8d9f820d182cf23a8a))
+
+
+### Continuous Integration
+
+* **deps:** let Dependabot propose Terraform provider updates ([cbbbbdd](https://github.com/MRdevX/mrashidi.me/commit/cbbbbdd66949b4fd3dc885c0c00386a866c6575a))
+* **infra:** show the plan before the apply approval, lint every root and check drift weekly ([b79a104](https://github.com/MRdevX/mrashidi.me/commit/b79a104ee890eac69b273b435b43f5b4a29c7cec))
+* **infra:** skip the plan on fork and Dependabot PRs that get no secrets ([8862df1](https://github.com/MRdevX/mrashidi.me/commit/8862df15647e2bcfc42668cfc41ff8bfb0493c30))
+
+
+### Documentation
+
+* **infra:** describe the shared backend, the pre-approval plan, drift checks and DNS ownership ([f8ebda4](https://github.com/MRdevX/mrashidi.me/commit/f8ebda4103d247bdeb1f028c17cef0e6d8094b81))
+
 ### [0.2.27](https://github.com/MRdevX/mrashidi.me/compare/v0.2.26...v0.2.27) (2026-11-01)
 
 
