@@ -11,7 +11,9 @@ Terraform for mrashidi.me. Accounts, ownership, tokens, first-run order and roll
 | `live/github/` | `github/terraform.tfstate` | GitHub Actions secrets, variables, `deploy-gate` environment |
 
 Terraform version: [`.terraform-version`](.terraform-version). Not a pnpm workspace; use
-`pnpm infra:plan:<root>` / `pnpm infra:apply:<root>` or `terraform -chdir=…`. Run `init` once per root.
+`pnpm infra:init|plan|apply:<root>` or `terraform -chdir=…`. Run init once per root; the live roots
+share the R2 backend settings in [`backend.r2.hcl`](backend.r2.hcl) (`init -backend-config=../../backend.r2.hcl`).
+CI lints every root with `terraform fmt`, `validate` and TFLint ([`.tflint.hcl`](.tflint.hcl)).
 Wrap commands in `op run --env-file infra/.env.op --` so the inputs come from 1Password.
 
 An import or a refactor is applied only after its plan shows no changes beyond the imports.
