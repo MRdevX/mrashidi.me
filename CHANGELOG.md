@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.32](https://github.com/MRdevX/mrashidi.me/compare/v0.2.31...v0.2.32) (2026-11-01)
+
+
+### Bug Fixes
+
+* **api:** answer 400 instead of 500 for invalid or malformed request bodies ([26db917](https://github.com/MRdevX/mrashidi.me/commit/26db917e43fd6e45409ee586daf04a1a070c1c00))
+
+
+### Build System
+
+* pass CV_LINK_SECRET through to the web build ([b17a05f](https://github.com/MRdevX/mrashidi.me/commit/b17a05f1eec2c43766f658698c98b7d59f68cdcb))
+* **web:** fail production builds when CV_LINK_SECRET is missing ([ab29479](https://github.com/MRdevX/mrashidi.me/commit/ab2947913b35c919c6ee0ab266978cc284c29153))
+
+
+### Tests
+
+* **resume:** cover 400 answers in the mail route tests ([5c8abdc](https://github.com/MRdevX/mrashidi.me/commit/5c8abdc5bb9020a1746e33dffba12c51f99251e9))
+
 ### [0.2.31](https://github.com/MRdevX/mrashidi.me/compare/v0.2.30...v0.2.31) (2026-11-01)
 
 
