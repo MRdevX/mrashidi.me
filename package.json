@@ -2,6 +2,7 @@
   "name": "mrashidi.me",
   "version": "0.2.28",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",

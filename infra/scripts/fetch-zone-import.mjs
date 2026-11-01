@@ -4,6 +4,7 @@ import { join } from "node:path";
 
 const ZONE_ID = "e4e27fbd7bfea8bd87ea5094e8373279";
 const ZONE_NAME = "mrashidi.me";
+const RECORD_ID = /^[0-9a-f]{32}$/;
 // Owned by a Worker or an R2 bucket custom domain, which create and delete their own DNS records.
 const CUSTOM_DOMAIN_HOSTS = new Set(["api.mrashidi.me", "s3.mrashidi.me"]);
 
@@ -45,6 +46,9 @@ for (const record of await listRecords()) {
   if (CUSTOM_DOMAIN_HOSTS.has(record.name) || record.meta?.read_only) {
     console.log(`skip ${record.type} ${record.name} (custom domain)`);
     continue;
+  }
+  if (!RECORD_ID.test(record.id)) {
+    throw new Error(`Unexpected DNS record id ${JSON.stringify(record.id)} for ${record.name}`);
   }
   const key = slugFor(record);
   dnsRecords[key] = {

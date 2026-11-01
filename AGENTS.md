@@ -23,7 +23,7 @@ Personal data moves to D1
 - **Monorepo:** pnpm workspaces, Turborepo (`turbo.json`), shared `tsconfig.base.json`
 - **API:** Hono on Cloudflare Workers, D1 with Drizzle, Workers AI (Ask MR), Wrangler; Worker tests with `@cloudflare/vitest-pool-workers`
 - **Tests:** Vitest (unit, `apps/web/tests/unit/`), Playwright (E2E, `apps/web/tests/e2e/`)
-- **Other:** Vercel AI SDK (Ask MR, model on Workers AI), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (next-pwa)
+- **Other:** Vercel AI SDK (Ask MR, model on Workers AI), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (Serwist)
 
 Pinned versions, official docs, and house conventions per library: [docs/agent/stack.md](docs/agent/stack.md).
 
@@ -47,7 +47,7 @@ Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <scrip
 - **Lint/format:** `pnpm check`; `pnpm check:fix` to fix.
 - **Unit tests:** `pnpm test` (all packages); watch with `pnpm --filter @mrashidi/web test:watch`
 - **E2E:** `pnpm test:e2e`; UI/debug modes via `pnpm --filter @mrashidi/web test:e2e:ui|test:e2e:debug`
-- **Build:** `pnpm build:fast` (web, no PWA, no sitemap/OG generation); `pnpm build` (turbo, full)
+- **Build:** `pnpm build:fast` (web, no sitemap/OG generation); `pnpm build` (turbo, full)
 - **Ask MR eval:** `pnpm eval:ask-mr` (against `pnpm dev:api`; spends Workers AI neurons)
 - **Dev:** `pnpm dev` (turbo, every app's `dev`); `pnpm dev:web`, `pnpm dev:api` (Wrangler on `:8787`)
 - **Infra:** `pnpm infra:plan:<root>` / `pnpm infra:apply:<root>` (`bootstrap`, `global`, `production`, `github`), wrapped in `op run --env-file infra/.env.op --`

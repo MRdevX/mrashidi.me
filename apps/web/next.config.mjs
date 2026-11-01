@@ -1,6 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs/config";
+import { withSerwist } from "@serwist/turbopack";
 import { withBotId } from "botid/next/config";
-import withPWA from "next-pwa";
 
 const withBundleAnalyzer =
   process.env.ANALYZE === "true"
@@ -103,53 +103,7 @@ const nextConfig = {
   },
 };
 
-const pwaConfig =
-  process.env.SKIP_PWA === "true"
-    ? (config) => config
-    : withPWA({
-        dest: "public",
-        register: true,
-        skipWaiting: true,
-        disable: process.env.NODE_ENV === "development",
-
-        exclude: [
-          /\.map$/,
-          /_manifest\.js$/,
-          /\.(jpg|jpeg|png|gif|webp|svg|ico)$/,
-          /\.(txt|xml|json)$/,
-          /\.(woff|woff2|ttf|eot)$/,
-          /sw\.js$/,
-          /workbox-.*\.js$/,
-          /\.ts$/,
-          /\.tsx$/,
-          /\.js\.map$/,
-          /\.css\.map$/,
-        ],
-
-        buildExcludes: [
-          /middleware-manifest\.json$/,
-          /build-manifest\.json$/,
-          /react-loadable-manifest\.json$/,
-          /\.js\.map$/,
-          /\.css\.map$/,
-        ],
-
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "google-fonts",
-              expiration: {
-                maxEntries: 5,
-                maxAgeSeconds: 60 * 60 * 24 * 30,
-              },
-            },
-          },
-        ],
-      });
-
-const config = withBotId(withBundleAnalyzer(pwaConfig(nextConfig)));
+const config = withBotId(withBundleAnalyzer(withSerwist(nextConfig)));
 
 export default withSentryConfig(config, {
   org: "notable-nomads",

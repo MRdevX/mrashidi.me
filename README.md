@@ -55,8 +55,8 @@ pnpm dev
 **Build**:
 
 - **`pnpm build`** — full production path (Turborepo): regenerates static sitemap XML + OG images, then Next build with **PWA** enabled.
-- **`pnpm build:fast`** — skips PWA, skips sitemap/OG regeneration (Next still serves **`/sitemap.xml`** from `apps/web/src/app/sitemap.ts`; committed PNGs remain). Fastest realistic compile/smoke locally.
-- **`pnpm --filter @mrashidi/web build:ci`** — alias of **`build:fast`** (used by GitHub Actions CI). **Production deploys should still run `pnpm build`** so PWA and image refresh stay wired.
+- **`pnpm build:fast`** — skips sitemap/OG regeneration (Next still serves **`/sitemap.xml`** from `apps/web/src/app/sitemap.ts`; committed PNGs remain). Fastest realistic compile/smoke locally.
+- **`pnpm --filter @mrashidi/web build:ci`** — alias of **`build:fast`** (used by GitHub Actions CI). **Production deploys should still run `pnpm build`** so sitemap and OG images are regenerated.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and local checks detail.
 
@@ -99,6 +99,11 @@ We use [Semantic Versioning](https://semver.org/) and [Conventional Commits](htt
 
 - **Local dry-run** (preview next version and changelog): `pnpm release --dry-run`
 - **Commit format:** See [CONTRIBUTING.md](CONTRIBUTING.md) for the required commit message format.
+
+## License
+
+The code is [MIT](LICENSE). The site's content (profile, CV, projects, Ask MR knowledge) is not part
+of this repository and is not covered by that license.
 
 ## 📞 Contact
 

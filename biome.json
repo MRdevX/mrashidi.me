@@ -121,8 +121,6 @@
       "!**/coverage",
       "!**/.git",
       "!**/next-env.d.ts",
-      "!**/public/sw.js",
-      "!**/public/workbox-*.js",
       "!**/public/*.js.map",
       "!**/.turbo",
       "!**/playwright-report",
