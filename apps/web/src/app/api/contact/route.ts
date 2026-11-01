@@ -1,30 +1,23 @@
 import type { ContactMessage } from "@mrashidi/types";
 import type { NextRequest } from "next/server";
+import { sendContactMessage } from "@/features/contact/server";
 import { createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
-import { getEmailService } from "@/lib/services/factory";
 import { verifyRecaptcha } from "@/lib/services/recaptcha";
 import { validateContactFormAPI } from "@/lib/validation";
 
-async function handleContactForm(_request: NextRequest, formData: ContactMessage & { recaptchaToken: string }) {
+async function handleContactForm(
+  _request: NextRequest,
+  { recaptchaToken, ...message }: ContactMessage & { recaptchaToken: string }
+) {
   try {
-    await verifyRecaptcha(formData.recaptchaToken);
+    await verifyRecaptcha(recaptchaToken);
   } catch (_error) {
     throw new APIError("reCAPTCHA verification failed", 400);
   }
 
-  const emailService = getEmailService();
-  const emailSent = await emailService.sendContactFormEmail({
-    name: formData.name,
-    email: formData.email,
-    subject: formData.subject,
-    message: formData.message,
-  });
-
-  if (!emailSent) {
-    throw new APIError("Failed to send email", 500);
-  }
+  await sendContactMessage(message);
 
   return createSuccessResponse({ message: "Message sent successfully" });
 }

@@ -81,18 +81,23 @@ export async function getBlogPosts(page: number, limit: number): Promise<BlogPos
   return fetchJson(base, `/v1/blog/posts?page=${page}&limit=${limit}`, BlogPostPageSchema);
 }
 
-/** Forwards an Ask MR turn to the API, which owns the model; `null` without a content API (fixture mode). */
-export async function postAskMrChat(chat: AskMrChatRequest, signal: AbortSignal): Promise<Response | null> {
+/** `null` without a content API (fixture mode). */
+export async function postContentApi(path: string, body: unknown, signal?: AbortSignal): Promise<Response | null> {
   const base = contentApiUrl();
   if (!base) {
     return null;
   }
   const token = getEnv("CONTENT_API_TOKEN");
-  return fetch(`${base}/v1/ask-mr/chat`, {
+  return fetch(`${base}${path}`, {
     method: "POST",
     headers: { "content-type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-    body: JSON.stringify(chat),
+    body: JSON.stringify(body),
     signal,
     cache: "no-store",
   });
+}
+
+/** Forwards an Ask MR turn to the API, which owns the model. */
+export function postAskMrChat(chat: AskMrChatRequest, signal: AbortSignal): Promise<Response | null> {
+  return postContentApi("/v1/ask-mr/chat", chat, signal);
 }
