@@ -181,7 +181,7 @@ jobs:
           {
             echo "## Build passed"
             echo ""
-            echo "- Command: \`pnpm --filter @mrashidi/web build:ci\` (= \`build:fast\`: no asset pregeneration, **PWA off**)."
+            echo "- Command: \`pnpm --filter @mrashidi/web build:ci\` (= \`build:fast\`: no asset pregeneration)."
             echo "- Production deploy should use \`pnpm build\` (assets + **PWA**)."
             CACHE_HIT="${{ steps.next-cache.outputs.cache-hit }}"
             if [ "$CACHE_HIT" = 'true' ]; then

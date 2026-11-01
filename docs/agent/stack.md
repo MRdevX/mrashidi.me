@@ -31,7 +31,7 @@ when you bump a major or minor, update the row in the same PR.
 | pino | 10.4 | [getpino.io](https://getpino.io) | Through `logger` in `@lib/core`, never `console` in app code. |
 | Sentry (`@sentry/nextjs`) | 11.9 | [docs.sentry.io/platforms/javascript/guides/nextjs](https://docs.sentry.io/platforms/javascript/guides/nextjs/) | Shared options in `sentry-shared.ts`; hooks in `apps/web/src/instrumentation*.ts`. |
 | Vercel Blob / Analytics / Speed Insights | 2.8 / 2.0 | [vercel.com/docs](https://vercel.com/docs) | Blob holds the CV PDF behind `api/cv/**`. |
-| next-pwa | 5.6 | [github.com/shadowwalker/next-pwa](https://github.com/shadowwalker/next-pwa) | Disabled with `SKIP_PWA=true` (`pnpm build:fast`). |
+| Serwist (`@serwist/turbopack`) | 9.5 | [serwist.pages.dev/docs/next/turbo](https://serwist.pages.dev/docs/next/turbo) | Worker source `apps/web/src/lib/pwa/sw.ts`, served at `/serwist/sw.js` by `app/serwist/[path]/route.ts`; registration is off in `next dev`. |
 | Vitest | 5.0 | [vitest.dev](https://vitest.dev/guide/) | Unit tests in `apps/web/tests/unit/`, mirroring `apps/web/src/`. |
 | Playwright | 1.64 | [playwright.dev/docs](https://playwright.dev/docs/intro) | E2E in `apps/web/tests/e2e/`; run locally, not in CI. |
 | standard-version | via `npx` | [github.com/conventional-changelog/standard-version](https://github.com/conventional-changelog/standard-version) | Run only by `auto-release.yml`; config in `.versionrc.json`. |
