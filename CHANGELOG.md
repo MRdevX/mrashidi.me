@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.30](https://github.com/MRdevX/mrashidi.me/compare/v0.2.29...v0.2.30) (2026-11-01)
+
+
+### Features
+
+* **resume:** email an expiring CV link instead of downloading directly ([27e5da0](https://github.com/MRdevX/mrashidi.me/commit/27e5da0729641f38c243aadcf0580ae8b48bf85d))
+
 ### [0.2.29](https://github.com/MRdevX/mrashidi.me/compare/v0.2.28...v0.2.29) (2026-11-01)
 
 
