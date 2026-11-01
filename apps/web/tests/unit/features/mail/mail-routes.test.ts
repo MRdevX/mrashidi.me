@@ -28,12 +28,14 @@ const message = {
   message: "I would like to talk about a project.",
 };
 
-const request = (path: string, body: unknown) =>
+const rawRequest = (path: string, body: string) =>
   new NextRequest(`https://mrashidi.me${path}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(body),
+    body,
   });
+
+const request = (path: string, body: unknown) => rawRequest(path, JSON.stringify(body));
 
 beforeEach(() => {
   mocks.postContentApi.mockReset();
@@ -89,5 +91,20 @@ describe("POST /api/resume", () => {
       email: "jane@example.com",
       cvUrl: "https://mrashidi.me/api/cv/download?token=signed",
     });
+  });
+
+  it("answers 400 with the failing fields for an invalid request and sends nothing", async () => {
+    const res = await postResume(request("/api/resume", {}));
+
+    expect(res.status).toBe(400);
+    expect(Object.keys((await res.json()).fields)).toEqual(expect.arrayContaining(["name", "email"]));
+    expect(mocks.postContentApi).not.toHaveBeenCalled();
+  });
+
+  it("answers 400 for a body that is not JSON", async () => {
+    const res = await postResume(rawRequest("/api/resume", "not json"));
+
+    expect(res.status).toBe(400);
+    expect(mocks.postContentApi).not.toHaveBeenCalled();
   });
 });
