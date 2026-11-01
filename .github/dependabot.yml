@@ -40,6 +40,37 @@ updates:
       - dependency-name: "typescript"
         versions: ["<7"]
 
+  - package-ecosystem: "terraform"
+    directories:
+      - "/infra/bootstrap"
+      - "/infra/live/*"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 2
+    assignees:
+      - "mrdevx"
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+    groups:
+      terraform-providers:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
