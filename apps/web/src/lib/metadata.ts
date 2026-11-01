@@ -132,11 +132,11 @@ export const pageMetadataConfigs = (profile: Profile) =>
     contact: {
       page: "contact",
       title: "Contact",
-      description: `Get in touch with ${profile.person.name}, a ${profile.person.title} based in ${profile.person.location}. Available for freelance work, collaboration, and technical discussions.`,
+      description: `Get in touch with ${profile.person.name}, a ${profile.person.title} based in ${profile.person.location}. Software consulting, project work and technical discussions.`,
       keywords: [
         profile.person.name,
         "contact",
-        "freelance",
+        "software consulting",
         "software engineer",
         "collaboration",
         profile.person.location,
