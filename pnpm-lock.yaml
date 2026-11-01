@@ -62,6 +62,9 @@ importers:
       '@mrashidi/types':
         specifier: workspace:*
         version: link:../../packages/types
+      '@react-email/render':
+        specifier: ^2.2.0
+        version: 2.2.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       agents:
         specifier: ^0.32.0
         version: 0.32.0(@ai-sdk/provider@4.0.35)(@ai-sdk/react@4.0.161(react@19.3.1)(zod@4.6.7))(@babel/core@7.29.7)(@babel/runtime@7.29.10)(@modelcontextprotocol/client@2.4.0)(ai@7.0.157(zod@4.6.7))(react@19.3.1)(rolldown@1.2.15)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))(zod@4.6.7)
@@ -77,6 +80,15 @@ importers:
       hono:
         specifier: ^4.13.14
         version: 4.13.14
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
+      react-dom:
+        specifier: ^19.3.1
+        version: 19.3.1(react@19.3.1)
+      react-email:
+        specifier: ^6.11.6
+        version: 6.11.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       zod:
         specifier: '>=4.6.6'
         version: 4.6.7
@@ -90,6 +102,9 @@ importers:
       '@types/node':
         specifier: ^26.6.5
         version: 26.6.5
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
       drizzle-kit:
         specifier: ^0.31.11
         version: 0.31.11
@@ -540,11 +555,6 @@ packages:
   '@babel/helpers@7.29.10':
     resolution: {integrity: sha512-EMCx3AGZ3WfAl6ht7AyQoPm2Lh+BGYEMdc4Q6Hf7uSCDOZFuLq44qNwL+iaim8VlyYhRAo4X43+weadK8ZB4Yg==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/parser@7.29.11':
-    resolution: {integrity: sha512-OZ6+oaK7GMyg3IfCpj8JOmn8n+w2rJbDT0LLfVDTLb1ZFeKDh3AiNELgCMUw175IJHSkLl74hG0M0VLsvx+gag==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
 
   '@babel/parser@7.29.12':
     resolution: {integrity: sha512-WJ7JBp/Q4+z/ImydtI7jS6NVco5++632ExBemSX+Ysb+G1lCwQ5BVo3SY+jGGOcZXI4ZccbZSUSJLNBW6eEpJg==}
@@ -6388,10 +6398,6 @@ snapshots:
       '@babel/template': 7.29.7
       '@babel/types': 7.29.11
 
-  '@babel/parser@7.29.11':
-    dependencies:
-      '@babel/types': 7.29.11
-
   '@babel/parser@7.29.12':
     dependencies:
       '@babel/types': 7.29.11
@@ -9627,7 +9633,7 @@ snapshots:
 
   magicast@0.5.5:
     dependencies:
-      '@babel/parser': 7.29.11
+      '@babel/parser': 7.29.12
       '@babel/types': 7.29.11
       source-map-js: 1.2.2
 

@@ -25,6 +25,13 @@ import {
   createGraphQLGitHubGateway,
   githubRoutes,
 } from "#modules/github/index.ts";
+import {
+  createMailCommands,
+  createResendMailer,
+  MailDeliveryError,
+  type Mailer,
+  mailRoutes,
+} from "#modules/mail/index.ts";
 import { createD1ProfileRepository, createProfileQueries, profileRoutes } from "#modules/profile/index.ts";
 import {
   createD1ProjectRepository,
@@ -40,6 +47,7 @@ import { InvalidContentError } from "#shared/invalid-content-error.ts";
 
 export interface AppAdapters {
   askMrModel: (env: Bindings) => (conversationId: string) => LanguageModel;
+  mailer: (env: Bindings) => Mailer;
 }
 
 function createModules(c: Context<HonoEnv>, adapters: AppAdapters) {
@@ -77,6 +85,7 @@ function createModules(c: Context<HonoEnv>, adapters: AppAdapters) {
       knowledge,
       blog,
     }),
+    mail: createMailCommands({ mailer: adapters.mailer(c.env), profile, owner: c.env.MAIL_TO }),
   };
 }
 
@@ -116,6 +125,11 @@ export function createApp(adapters: AppAdapters) {
     blogRoutes((c) => createModules(c, adapters).blog)
   );
 
+  app.route(
+    "/v1",
+    mailRoutes((c) => createModules(c, adapters).mail)
+  );
+
   app.notFound((c) => c.json({ error: "Not found" }, 404));
   app.onError((error, c) => {
     if (error instanceof ContentNotFoundError) {
@@ -124,6 +138,10 @@ export function createApp(adapters: AppAdapters) {
     if (error instanceof InvalidContentError) {
       console.error(error);
       return c.json({ error: error.message }, 500);
+    }
+    if (error instanceof MailDeliveryError) {
+      console.error(error);
+      return c.json({ error: "Mail delivery failed" }, 502);
     }
     if (error instanceof HTTPException) {
       return error.getResponse();
@@ -135,4 +153,7 @@ export function createApp(adapters: AppAdapters) {
   return app;
 }
 
-export default createApp({ askMrModel: (env) => createWorkersAiModel(env.AI) });
+export default createApp({
+  askMrModel: (env) => createWorkersAiModel(env.AI),
+  mailer: (env) => createResendMailer({ token: env.RESEND_API_TOKEN, from: env.MAIL_FROM }),
+});

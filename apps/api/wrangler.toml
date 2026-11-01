@@ -6,6 +6,10 @@ workers_dev = true
 preview_urls = false
 upload_source_maps = true
 
+[vars]
+MAIL_FROM = "no-reply@mrashidi.me"
+MAIL_TO = "contact@mrashidi.me"
+
 [dev]
 port = 8787
 
