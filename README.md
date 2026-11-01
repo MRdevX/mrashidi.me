@@ -100,6 +100,11 @@ We use [Semantic Versioning](https://semver.org/) and [Conventional Commits](htt
 - **Local dry-run** (preview next version and changelog): `pnpm release --dry-run`
 - **Commit format:** See [CONTRIBUTING.md](CONTRIBUTING.md) for the required commit message format.
 
+## License
+
+The code is [MIT](LICENSE). The site's content (profile, CV, projects, Ask MR knowledge) is not part
+of this repository and is not covered by that license.
+
 ## 📞 Contact
 
 - **GitHub**: [@mrdevx](https://github.com/mrdevx)
