@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.31](https://github.com/MRdevX/mrashidi.me/compare/v0.2.30...v0.2.31) (2026-11-01)
+
+
+### Features
+
+* **api:** send contact and CV emails through Resend ([627844c](https://github.com/MRdevX/mrashidi.me/commit/627844cd6ef02f886fb68a8d3aae08f77a90766d))
+* **contact:** send contact and CV emails through the API ([c82d628](https://github.com/MRdevX/mrashidi.me/commit/c82d628713f40d2836a7c2d1c0d2e0907955a5c3))
+
+
+### Code Refactoring
+
+* **contact:** remove the Amazon SES email service from the web app ([233acf1](https://github.com/MRdevX/mrashidi.me/commit/233acf133420b63f4cc3da529bdaf22b86da82ac))
+* **types:** share the contact and CV request schemas between web and API ([33aafc8](https://github.com/MRdevX/mrashidi.me/commit/33aafc831e265909027c7792587ad7c904fa399c))
+
+
+### Documentation
+
+* **decisions:** send transactional email from the API through Resend ([0dd4b9b](https://github.com/MRdevX/mrashidi.me/commit/0dd4b9b0429880e136e3e53dc44f737b79a93a6c))
+* describe Resend email from the API ([03df299](https://github.com/MRdevX/mrashidi.me/commit/03df29937174278e84c905a47079f625f6830fc7))
+
+
+### Continuous Integration
+
+* **api:** set the Resend token as a Worker secret on deploy ([f7d3040](https://github.com/MRdevX/mrashidi.me/commit/f7d3040b966334cef2884bfc46d633a7b81d9337))
+* **infra:** adopt the Resend DNS records into Terraform ([233faff](https://github.com/MRdevX/mrashidi.me/commit/233faff5a7181a497d4d562bdef6edc0b325f786))
+
 ### [0.2.30](https://github.com/MRdevX/mrashidi.me/compare/v0.2.29...v0.2.30) (2026-11-01)
 
 
