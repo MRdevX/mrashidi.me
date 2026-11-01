@@ -15,8 +15,9 @@ Binding rules: [DR-0005](../../../docs/decisions/0005-turborepo-web-on-vercel-ap
 
 ## Normal path
 
-- Infra: change `infra/`, open a PR, read the plan comment from `infra.yml`; merging applies after
-  the `deploy-gate` approval.
+- Infra: change `infra/`, open a PR, read the plan comment from `infra.yml`; merging plans again
+  (job summary of each `Plan` job) and applies after the `deploy-gate` approval. Read that plan before
+  approving. A failed weekly run means drift: someone changed a dashboard; plan locally and reconcile.
 - API: merge changes under `apps/api` or `packages/types`; `deploy-api.yml` tests, migrates,
   deploys and checks the new version serves 100% after approval. It cannot curl the API: Bot Fight
   Mode challenges runner IPs. Probe from your machine instead.
@@ -25,8 +26,9 @@ Binding rules: [DR-0005](../../../docs/decisions/0005-turborepo-web-on-vercel-ap
 ## Local Terraform
 
 Wrap every command in `op run --env-file infra/.env.op --`; never paste a token into a shell or
-file. `init` once per root. Show the plan to the owner before any `apply`. An import is applied only
-when its plan has no changes besides the imports. `live/github` runs only locally, with
+file. Init once per root with `pnpm infra:init:<root>` (it passes the shared
+`infra/backend.r2.hcl`). Show the plan to the owner before any `apply`. An import is applied only
+when its plan has no changes besides the imports; delete the `import` blocks once applied. `live/github` runs only locally, with
 `OP_ACCOUNT=my.1password.com` so the 1Password provider signs in through the desktop app.
 
 ## Content

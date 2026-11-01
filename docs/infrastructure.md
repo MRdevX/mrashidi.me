@@ -4,6 +4,8 @@ The site runs on two platforms ([DR-0005](decisions/0005-turborepo-web-on-vercel
 `apps/web` on Vercel, `apps/api` on Cloudflare Workers with D1. Terraform under [`infra/`](../infra/README.md)
 owns the standing resources; Wrangler deploys Worker code. Changes plan on PRs and apply on merge
 behind the `deploy-gate` environment's approval ([DR-0008](decisions/0008-apply-on-merge-behind-approval.md)).
+The merge run plans first in ungated jobs, so the plan is in the run's job summaries before you approve.
+A weekly scheduled run plans `main` and fails if a live resource drifted from it.
 
 ## Accounts
 
@@ -28,6 +30,11 @@ behind the `deploy-gate` environment's approval ([DR-0008](decisions/0008-apply-
 
 Never add a custom-domain hostname (`api`, `s3`) to `dns_records`: its owner creates and deletes that record.
 
+To add a record, add an entry to `infra/live/global/dns_records.auto.tfvars.json` with a new slug key
+and a `comment` naming the service that needs it, then open a PR. To adopt records created in the
+dashboard, run `pnpm infra:import-dns`: it rewrites the JSON and `imports.tf`; delete `imports.tf` once applied.
+The apex and `www` are DNS-only: Vercel serves them and issues their certificates.
+
 ## Tokens and secrets
 
 | 1Password item / GitHub secret | What it is |
@@ -51,10 +58,12 @@ on this repo with Secrets, Variables, Environments and Administration write, sto
 
 1. Create the vault items and tokens above.
 2. `pnpm infra:apply:bootstrap` (R2 write comes from the terraform token), then create the R2 S3 key pair.
-3. `terraform -chdir=infra/live/github init`, then `pnpm infra:apply:github`.
-4. `pnpm infra:import-dns`, review the diff, `terraform -chdir=infra/live/global init`,
+3. `pnpm infra:init:github`, then `pnpm infra:apply:github`.
+4. `pnpm infra:import-dns`, review the diff, `pnpm infra:init:global`,
    `pnpm infra:plan:global` must show only imports, then apply.
-5. `terraform -chdir=infra/live/production apply -var api_worker_deployed=false` creates D1 and imports the
+5. `pnpm infra:init:production`. Restore the Vercel `import` blocks from commit `0fcc2d7`
+   (`infra/live/production/imports.tf`), then
+   `terraform -chdir=infra/live/production apply -var api_worker_deployed=false` creates D1 and imports the
    Vercel project (plan must show no Vercel changes besides the three env vars). Put the
    `d1_database_id` output into `apps/api/wrangler.toml`.
 6. From `apps/api`: `pnpm db:migrate:remote`, `pnpm exec wrangler deploy`, `wrangler secret put CONTENT_API_TOKEN`, `wrangler secret put GH_API_TOKEN`.
@@ -76,6 +85,13 @@ datacenter IPs ([DR-0010](decisions/0010-private-content-api-over-workers-dev.md
 - `deploy-api.yml` does not curl the API: GitHub runners get 403 on `api.mrashidi.me`. It checks with
   `wrangler deployments status` that the version it deployed serves 100% of traffic.
 - Smoke-test against the workers.dev host: `curl https://mrashidi-api.safeman612.workers.dev/health`.
+
+## Bootstrap state
+
+`infra/bootstrap` keeps its state on the workstation that ran it, because it creates the bucket the
+other roots store state in. If that file is lost, recreate it with
+`terraform -chdir=infra/bootstrap import cloudflare_r2_bucket.state 7a13fd636e452aa1f621cc114645e586/mrashidi-tf-state/default`;
+the bucket has `prevent_destroy`, so a plan from empty state cannot delete it.
 
 ## Rollback
 
