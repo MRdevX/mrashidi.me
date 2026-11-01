@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.29](https://github.com/MRdevX/mrashidi.me/compare/v0.2.28...v0.2.29) (2026-11-01)
+
+
+### Features
+
+* **ui:** serve the service worker with Serwist instead of next-pwa ([a58fba1](https://github.com/MRdevX/mrashidi.me/commit/a58fba19fb9ac5c3b4f73feac8a8127578ce825a))
+
+
+### Bug Fixes
+
+* **deps:** force patched serialize-javascript, glob and minimatch ([7f2dbfa](https://github.com/MRdevX/mrashidi.me/commit/7f2dbfaeafc1f03ec904b50a8040453d6beaac13))
+* **infra:** reject DNS record ids that would break the generated import blocks ([f993e20](https://github.com/MRdevX/mrashidi.me/commit/f993e2027fc39cefb75d18e3d5db1d7f0fbf9688))
+
+
+### Continuous Integration
+
+* move Dependabot auto-merge write permissions to the job ([f461975](https://github.com/MRdevX/mrashidi.me/commit/f461975ba0ceb6b88ac38efd94d61e2b98d03b84))
+* pin every action to a commit SHA ([e3ede1e](https://github.com/MRdevX/mrashidi.me/commit/e3ede1e231c79cc20e84068b7610a75116b64764))
+
+
+### Documentation
+
+* describe the Serwist service worker and drop the PWA-off build notes ([196247f](https://github.com/MRdevX/mrashidi.me/commit/196247fe4269f92e4081b3e7b650c2a8348abf30))
+* license the code under MIT ([0f54a2e](https://github.com/MRdevX/mrashidi.me/commit/0f54a2e1513a391e852fae3376bd5035cbdaf31d))
+* replace the template security policy with the real reporting process ([cc8fc1c](https://github.com/MRdevX/mrashidi.me/commit/cc8fc1c8cdf55935bf78a6855c06b1e48f90a91c))
+
 ### [0.2.28](https://github.com/MRdevX/mrashidi.me/compare/v0.2.27...v0.2.28) (2026-11-01)
 
 
