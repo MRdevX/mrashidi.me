@@ -1,7 +1,9 @@
 # Terraform for the Cloudflare zone, D1, the API custom domain and the Vercel project (infra/).
-# PRs plan global and production and comment the plan; a push to main applies both behind the
-# deploy-gate environment's approval (DR-0008). live/github is applied only from a workstation:
-# it writes the secrets this workflow runs with.
+# Every run lints all roots and plans global and production into the job summary; PRs also get the
+# plan as a comment. A push to main applies both behind the deploy-gate environment's approval
+# (DR-0008), after the ungated plan jobs, so the approver reads the plan before approving. A weekly
+# run fails when main has drifted from the live resources. live/github is applied only from a
+# workstation: it writes the secrets this workflow runs with.
 
 name: Infra
 
@@ -12,6 +14,8 @@ on:
   push:
     branches: [main]
     paths: ["infra/**", ".github/workflows/infra.yml", ".github/actions/terraform/**"]
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -34,9 +38,37 @@ env:
   TF_INPUT: "false"
 
 jobs:
+  lint:
+    name: Lint
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./.github/actions/terraform
+
+      - uses: terraform-linters/setup-tflint@v6
+        with:
+          tflint_version: v0.65.0
+
+      - name: Format check
+        run: terraform -chdir=infra fmt -recursive -check -diff
+
+      - name: Validate
+        run: |
+          for root in bootstrap live/global live/production live/github; do
+            terraform -chdir="infra/$root" init -backend=false -lockfile=readonly -input=false >/dev/null
+            terraform -chdir="infra/$root" validate -no-color
+          done
+
+      # --recursive reads --config relative to each module, so pass it absolute.
+      - name: TFLint
+        working-directory: infra
+        run: tflint --recursive --config "$PWD/.tflint.hcl"
+
   plan:
     name: Plan (${{ matrix.root }})
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -50,28 +82,44 @@ jobs:
       - uses: actions/checkout@v7
 
       - uses: ./.github/actions/terraform
-        with:
-          root: ${{ matrix.root }}
 
-      - name: Format check
-        run: terraform -chdir=infra fmt -recursive -check -diff
-
-      - name: Validate
-        run: terraform -chdir=infra/live/${{ matrix.root }} validate
+      - name: Init
+        run: terraform -chdir=infra/live/${{ matrix.root }} init -lockfile=readonly -backend-config=../../backend.r2.hcl
 
       # No -out: a saved plan embeds secret values and must never become an artifact.
       - name: Plan
         id: plan
+        env:
+          ROOT: ${{ matrix.root }}
+          EVENT: ${{ github.event_name }}
         run: |
-          set -o pipefail
-          terraform -chdir=infra/live/${{ matrix.root }} plan -no-color 2>&1 | tee plan.txt
+          set +e -o pipefail
+          terraform -chdir="infra/live/$ROOT" plan -no-color -lock-timeout=5m -detailed-exitcode 2>&1 | tee plan.txt
+          code=$?
+          set -e
+          summary=$(grep -E '^(Plan:|No changes)' plan.txt | head -1)
           {
             echo 'summary<<PLANEOF'
-            grep -E '^(Plan:|No changes)' plan.txt | head -1
+            echo "$summary"
             echo PLANEOF
           } >> "$GITHUB_OUTPUT"
+          {
+            echo "### Terraform plan — \`$ROOT\`"
+            echo
+            echo "**${summary:-see log}**"
+            echo
+            echo '```terraform'
+            head -c 60000 plan.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" -eq 1 ]; then exit 1; fi
+          if [ "$code" -eq 2 ] && [ "$EVENT" = schedule ]; then
+            echo "::error::$ROOT has drifted from main: $summary"
+            exit 1
+          fi
 
       - name: Comment plan on PR
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v9
         env:
           ROOT: ${{ matrix.root }}
@@ -109,7 +157,8 @@ jobs:
 
   apply:
     name: Apply (${{ matrix.root }})
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [lint, plan]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: deploy-gate
@@ -121,8 +170,9 @@ jobs:
       - uses: actions/checkout@v7
 
       - uses: ./.github/actions/terraform
-        with:
-          root: ${{ matrix.root }}
+
+      - name: Init
+        run: terraform -chdir=infra/live/${{ matrix.root }} init -lockfile=readonly -backend-config=../../backend.r2.hcl
 
       - name: Apply
-        run: terraform -chdir=infra/live/${{ matrix.root }} apply -auto-approve -no-color
+        run: terraform -chdir=infra/live/${{ matrix.root }} apply -auto-approve -no-color -lock-timeout=5m
