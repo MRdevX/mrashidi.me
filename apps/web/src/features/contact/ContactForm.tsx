@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type ContactMessage, ContactMessageSchema } from "@mrashidi/types";
 import { motion } from "framer-motion";
 import { FileText, Mail, MessageSquare, Send, User } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +13,6 @@ import { StatusMessage } from "@/components/forms/StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
 import { getThemeConfig } from "@/config/theme.config";
 import { logger } from "@/lib/core";
-import { type ContactFormData, contactFormSchema } from "@/lib/validation";
 import { type SubmitStatus, submitContactForm } from "./submitContactForm";
 
 export function ContactForm() {
@@ -25,8 +25,8 @@ export function ContactForm() {
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+  const form = useForm<ContactMessage>({
+    resolver: zodResolver(ContactMessageSchema),
     mode: "onBlur",
     defaultValues: {
       name: "",
@@ -36,7 +36,7 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
+  const onSubmit: SubmitHandler<ContactMessage> = async (data) => {
     setSubmitStatus({ type: null, message: "" });
     setIsSubmitting(true);
 

@@ -1,7 +1,7 @@
+import type { CvRequestForm } from "@mrashidi/types";
 import { logger } from "@/lib/core";
-import type { ResumeRequestData } from "@/lib/validation";
 
-export async function submitResumeRequest(data: ResumeRequestData): Promise<boolean> {
+export async function submitResumeRequest(data: CvRequestForm): Promise<boolean> {
   try {
     const response = await fetch("/api/resume", {
       method: "POST",

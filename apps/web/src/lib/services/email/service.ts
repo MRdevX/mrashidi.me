@@ -1,7 +1,7 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import type { ContactMessage, CvRequestForm } from "@mrashidi/types";
 import { getSiteContent } from "@/lib/content/server";
 import { getEnv, getRequiredEnv, logger } from "@/lib/core";
-import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
 import { getTemplateConfig } from "./config";
 import { createEmailTemplate } from "./renderer";
 import type { EmailTemplateData } from "./types";
@@ -28,7 +28,7 @@ export class EmailService {
     this.toEmail = getEnv("EMAIL_TO_ADDRESS") || "contact@mrashidi.me";
   }
 
-  async sendContactFormEmail(data: ContactFormData): Promise<boolean> {
+  async sendContactFormEmail(data: ContactMessage): Promise<boolean> {
     try {
       logger.info({ operation: "sendContactFormEmail", status: "started" });
       const templateConfig = await this.templateConfig();
@@ -67,7 +67,7 @@ export class EmailService {
     }
   }
 
-  async sendResumeRequestEmail(data: ResumeRequestData, cvUrl: string): Promise<boolean> {
+  async sendResumeRequestEmail(data: CvRequestForm, cvUrl: string): Promise<boolean> {
     try {
       logger.info({ operation: "sendResumeRequestEmail", status: "started" });
       const templateConfig = await this.templateConfig();

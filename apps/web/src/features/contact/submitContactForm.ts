@@ -1,11 +1,11 @@
-import type { ContactFormData } from "@/lib/validation";
+import type { ContactMessage } from "@mrashidi/types";
 
 export type SubmitStatus = {
   type: "success" | "error" | null;
   message: string;
 };
 
-export async function submitContactForm(data: ContactFormData, recaptchaToken: string): Promise<SubmitStatus> {
+export async function submitContactForm(data: ContactMessage, recaptchaToken: string): Promise<SubmitStatus> {
   const response = await fetch("/api/contact", {
     method: "POST",
     headers: {

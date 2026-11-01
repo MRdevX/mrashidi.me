@@ -1,14 +1,14 @@
+import { ContactMessageSchema } from "@mrashidi/types";
 import { describe, expect, it } from "vitest";
 import { ZodError } from "zod";
 import {
   blogSearchSchema,
-  contactFormSchema,
   projectFilterSchema,
   validateContactFormAPI,
   validateResumeRequestAPI,
 } from "@/lib/validation/types";
 
-describe("contactFormSchema", () => {
+describe("ContactMessageSchema", () => {
   const valid = {
     name: "Jane Doe",
     email: "Jane@Example.COM",
@@ -17,20 +17,20 @@ describe("contactFormSchema", () => {
   };
 
   it("parses and normalizes valid payload", () => {
-    const data = contactFormSchema.parse(valid);
+    const data = ContactMessageSchema.parse(valid);
     expect(data.email).toBe("jane@example.com");
     expect(data.name).toBe("Jane Doe");
   });
 
   it("rejects invalid names and short fields", () => {
     expect(() =>
-      contactFormSchema.parse({
+      ContactMessageSchema.parse({
         ...valid,
         name: "X",
       })
     ).toThrow(ZodError);
     expect(() =>
-      contactFormSchema.parse({
+      ContactMessageSchema.parse({
         ...valid,
         message: "short",
       })
@@ -38,7 +38,7 @@ describe("contactFormSchema", () => {
   });
 });
 
-describe("resumeRequestSchema", () => {
+describe("validateResumeRequestAPI", () => {
   it("allows optional company", () => {
     const data = validateResumeRequestAPI({
       name: "Jane Doe",

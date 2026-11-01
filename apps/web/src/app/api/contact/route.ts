@@ -1,12 +1,13 @@
+import type { ContactMessage } from "@mrashidi/types";
 import type { NextRequest } from "next/server";
 import { createMiddleware } from "@/lib/api/middleware";
 import { createSuccessResponse } from "@/lib/api/response";
 import { APIError } from "@/lib/errors";
 import { getEmailService } from "@/lib/services/factory";
 import { verifyRecaptcha } from "@/lib/services/recaptcha";
-import { type ContactFormData, validateContactFormAPI } from "@/lib/validation";
+import { validateContactFormAPI } from "@/lib/validation";
 
-async function handleContactForm(_request: NextRequest, formData: ContactFormData & { recaptchaToken: string }) {
+async function handleContactForm(_request: NextRequest, formData: ContactMessage & { recaptchaToken: string }) {
   try {
     await verifyRecaptcha(formData.recaptchaToken);
   } catch (_error) {
