@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, Section } from "react-email";
-import { emailTheme } from "../theme";
+import { emailTheme } from "../theme.ts";
 
 interface CallToActionButtonProps {
   href: string;

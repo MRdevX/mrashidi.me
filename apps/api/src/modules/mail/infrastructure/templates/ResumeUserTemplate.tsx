@@ -1,16 +1,22 @@
-import { BaseEmailTemplate, CallToActionButton, EmailGreeting, EmailParagraph, EmailSignature } from "../components";
-import type { EmailTemplateData, ITemplateConfig } from "../types";
+import type { MailBrand, MailTemplateData } from "../../domain/outbound-email.ts";
+import {
+  BaseEmailTemplate,
+  CallToActionButton,
+  EmailGreeting,
+  EmailParagraph,
+  EmailSignature,
+} from "./components/index.ts";
 
 interface ResumeUserTemplateProps {
-  data: EmailTemplateData;
-  templateConfig: ITemplateConfig;
+  data: MailTemplateData;
+  brand: MailBrand;
 }
 
-export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateProps) {
+export function ResumeUserTemplate({ data, brand }: ResumeUserTemplateProps) {
   return (
     <BaseEmailTemplate
       preview="Here is your link to download my CV. It works for 24 hours."
-      templateConfig={templateConfig}
+      brand={brand}
       title="Your Copy of My CV"
     >
       <EmailGreeting>Hi {data.name},</EmailGreeting>
@@ -27,7 +33,7 @@ export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateP
         things I&apos;ve built.
       </EmailParagraph>
 
-      <CallToActionButton href={templateConfig.companyWebsite}>Check Out My Portfolio</CallToActionButton>
+      <CallToActionButton href={brand.website}>Check Out My Portfolio</CallToActionButton>
 
       <EmailParagraph>
         Have questions or want to discuss opportunities? I&apos;d love to hear from you — use the contact form on my
@@ -37,7 +43,7 @@ export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateP
       <EmailSignature>
         Looking forward to connecting!
         <br />
-        <strong>{templateConfig.companyName.split(" ")[0]}</strong>
+        <strong>{brand.name.split(" ")[0]}</strong>
       </EmailSignature>
     </BaseEmailTemplate>
   );

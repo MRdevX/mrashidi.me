@@ -1,15 +1,15 @@
 import { Body, Container, Head, Hr, Html, Link, Preview, Section, Text } from "react-email";
-import { emailAlbertSansStylesheetHref, emailDarkModeStyles, emailTheme } from "../theme";
-import type { ITemplateConfig } from "../types";
+import type { MailBrand } from "../../../domain/outbound-email.ts";
+import { emailAlbertSansStylesheetHref, emailDarkModeStyles, emailTheme } from "../theme.ts";
 
 interface BaseEmailTemplateProps {
   title: string;
   preview: string;
   children: React.ReactNode;
-  templateConfig: ITemplateConfig;
+  brand: MailBrand;
 }
 
-export function BaseEmailTemplate({ title, preview, children, templateConfig }: BaseEmailTemplateProps) {
+export function BaseEmailTemplate({ title, preview, children, brand }: BaseEmailTemplateProps) {
   return (
     <Html lang="en">
       <Head>
@@ -25,7 +25,7 @@ export function BaseEmailTemplate({ title, preview, children, templateConfig }: 
 
           <Section className="dark-mode-header" style={headerStyle}>
             <Text className="dark-mode-brand" style={brandStyle}>
-              {templateConfig.companyName}
+              {brand.name}
             </Text>
             <Text className="dark-mode-title" style={titleStyle}>
               {title}
@@ -39,20 +39,20 @@ export function BaseEmailTemplate({ title, preview, children, templateConfig }: 
           <Section className="dark-mode-footer" style={footerStyle}>
             <Hr className="dark-mode-hr" style={hrStyle} />
             <Text className="dark-mode-footer-text" style={footerTextStyle}>
-              <Link className="dark-mode-link" href={templateConfig.socialLinks.github} style={linkStyle}>
+              <Link className="dark-mode-link" href={brand.social.github} style={linkStyle}>
                 GitHub
               </Link>
               {" • "}
-              <Link className="dark-mode-link" href={templateConfig.socialLinks.linkedin} style={linkStyle}>
+              <Link className="dark-mode-link" href={brand.social.linkedin} style={linkStyle}>
                 LinkedIn
               </Link>
               {" • "}
-              <Link className="dark-mode-link" href={templateConfig.socialLinks.telegram} style={linkStyle}>
+              <Link className="dark-mode-link" href={brand.social.telegram} style={linkStyle}>
                 Telegram
               </Link>
             </Text>
             <Text className="dark-mode-subtext" style={footerSubTextStyle}>
-              {templateConfig.footerText}
+              {brand.tagline}
             </Text>
           </Section>
         </Container>

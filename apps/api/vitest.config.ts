@@ -15,6 +15,7 @@ export default defineConfig({
         bindings: {
           CONTENT_API_TOKEN: "test-token",
           GH_API_TOKEN: "test-github-token",
+          RESEND_API_TOKEN: "test-resend-token",
           TEST_MIGRATIONS: migrations,
         },
       },

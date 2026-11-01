@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Text } from "react-email";
-import { emailTheme } from "../theme";
+import { emailTheme } from "../theme.ts";
 
 interface TextChildProps {
   children: ReactNode;

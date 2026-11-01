@@ -3,6 +3,9 @@ export interface Bindings {
   AI: Ai;
   CONTENT_API_TOKEN: string;
   GH_API_TOKEN: string;
+  RESEND_API_TOKEN: string;
+  MAIL_FROM: string;
+  MAIL_TO: string;
 }
 
 export interface HonoEnv {

@@ -1,5 +1,5 @@
 import { Section, Text } from "react-email";
-import { emailTheme } from "../theme";
+import { emailTheme } from "../theme.ts";
 
 interface MessageBoxProps {
   label: string;

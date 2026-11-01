@@ -1,5 +1,5 @@
 import { Column, Row, Section, Text } from "react-email";
-import { emailTheme } from "../theme";
+import { emailTheme } from "../theme.ts";
 
 interface InfoRowProps {
   label: string;

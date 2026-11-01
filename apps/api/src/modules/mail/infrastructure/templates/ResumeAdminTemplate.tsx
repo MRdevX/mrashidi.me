@@ -1,18 +1,18 @@
 import { Text } from "react-email";
-import { BaseEmailTemplate, InfoRow } from "../components";
-import { emailTheme } from "../theme";
-import type { EmailTemplateData, ITemplateConfig } from "../types";
+import type { MailBrand, MailTemplateData } from "../../domain/outbound-email.ts";
+import { BaseEmailTemplate, InfoRow } from "./components/index.ts";
+import { emailTheme } from "./theme.ts";
 
 interface ResumeAdminTemplateProps {
-  data: EmailTemplateData;
-  templateConfig: ITemplateConfig;
+  data: MailTemplateData;
+  brand: MailBrand;
 }
 
-export function ResumeAdminTemplate({ data, templateConfig }: ResumeAdminTemplateProps) {
+export function ResumeAdminTemplate({ data, brand }: ResumeAdminTemplateProps) {
   return (
     <BaseEmailTemplate
       preview="Someone just requested your CV from the portfolio."
-      templateConfig={templateConfig}
+      brand={brand}
       title="Someone Requested Your CV"
     >
       <InfoRow label="Name" value={data.name} />

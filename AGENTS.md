@@ -7,7 +7,7 @@ monorepo ([DR-0005](docs/decisions/0005-turborepo-web-on-vercel-api-on-workers.m
 | Path | Package | What |
 | ---- | ------- | ---- |
 | `apps/web/` | `@mrashidi/web` | The Next.js site, deployed on Vercel (Root Directory `apps/web`) |
-| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`, `workers.dev` for Vercel), read-only `/v1/*` routes behind `CONTENT_API_TOKEN`, and the Ask MR model call on Workers AI (`POST /v1/ask-mr/chat`) |
+| `apps/api/` | `@mrashidi/api` | Hono content API on Cloudflare Workers with D1 (`api.mrashidi.me`, `workers.dev` for Vercel), read-only `/v1/*` routes behind `CONTENT_API_TOKEN`, the Ask MR model call on Workers AI (`POST /v1/ask-mr/chat`), and contact and CV email through Resend (`POST /v1/mail/*`) |
 | `infra/` | — | Terraform: zone DNS, D1, `api.mrashidi.me`, Vercel project, GitHub secrets ([docs/infrastructure.md](docs/infrastructure.md)) |
 | `packages/types/` | `@mrashidi/types` | Zod content contract (profile, about, resume, projects, Ask MR knowledge) and the fake fixture dataset (`@mrashidi/types/fixtures`) |
 
@@ -23,7 +23,7 @@ Personal data moves to D1
 - **Monorepo:** pnpm workspaces, Turborepo (`turbo.json`), shared `tsconfig.base.json`
 - **API:** Hono on Cloudflare Workers, D1 with Drizzle, Workers AI (Ask MR), Wrangler; Worker tests with `@cloudflare/vitest-pool-workers`
 - **Tests:** Vitest (unit, `apps/web/tests/unit/`), Playwright (E2E, `apps/web/tests/e2e/`)
-- **Other:** Vercel AI SDK (Ask MR, model on Workers AI), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (Serwist)
+- **Other:** Vercel AI SDK (Ask MR, model on Workers AI), Resend and React Email (in the API), Upstash Redis, Sentry, Vercel (Analytics, Speed Insights, Blob), PWA (Serwist)
 
 Pinned versions, official docs, and house conventions per library: [docs/agent/stack.md](docs/agent/stack.md).
 

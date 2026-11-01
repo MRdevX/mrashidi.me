@@ -37,7 +37,7 @@ const body = {
 };
 
 async function chat(model: LanguageModel, payload: unknown = body, token = "test-token") {
-  const app = createApp({ askMrModel: () => () => model });
+  const app = createApp({ askMrModel: () => () => model, mailer: () => ({ send: async () => {} }) });
   const ctx = createExecutionContext();
   const res = await app.request(
     "/v1/ask-mr/chat",

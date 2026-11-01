@@ -1,16 +1,22 @@
-import { BaseEmailTemplate, CallToActionButton, EmailGreeting, EmailParagraph, EmailSignature } from "../components";
-import type { EmailTemplateData, ITemplateConfig } from "../types";
+import type { MailBrand, MailTemplateData } from "../../domain/outbound-email.ts";
+import {
+  BaseEmailTemplate,
+  CallToActionButton,
+  EmailGreeting,
+  EmailParagraph,
+  EmailSignature,
+} from "./components/index.ts";
 
 interface ContactUserTemplateProps {
-  data: EmailTemplateData;
-  templateConfig: ITemplateConfig;
+  data: MailTemplateData;
+  brand: MailBrand;
 }
 
-export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplateProps) {
+export function ContactUserTemplate({ data, brand }: ContactUserTemplateProps) {
   return (
     <BaseEmailTemplate
       preview="Your message arrived — replies usually come within a day or two."
-      templateConfig={templateConfig}
+      brand={brand}
       title="Message Received"
     >
       <EmailGreeting>Hi {data.name},</EmailGreeting>
@@ -29,12 +35,12 @@ export function ContactUserTemplate({ data, templateConfig }: ContactUserTemplat
         While you&apos;re waiting, feel free to take a look at my portfolio for recent projects.
       </EmailParagraph>
 
-      <CallToActionButton href={templateConfig.companyWebsite}>Check Out My Work</CallToActionButton>
+      <CallToActionButton href={brand.website}>Check Out My Work</CallToActionButton>
 
       <EmailSignature>
         Looking forward to connecting!
         <br />
-        <strong>{templateConfig.companyName.split(" ")[0]}</strong>
+        <strong>{brand.name.split(" ")[0]}</strong>
       </EmailSignature>
     </BaseEmailTemplate>
   );

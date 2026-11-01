@@ -1,16 +1,16 @@
-import { BaseEmailTemplate, InfoRow, MessageBox } from "../components";
-import type { EmailTemplateData, ITemplateConfig } from "../types";
+import type { MailBrand, MailTemplateData } from "../../domain/outbound-email.ts";
+import { BaseEmailTemplate, InfoRow, MessageBox } from "./components/index.ts";
 
 interface ContactAdminTemplateProps {
-  data: EmailTemplateData;
-  templateConfig: ITemplateConfig;
+  data: MailTemplateData;
+  brand: MailBrand;
 }
 
-export function ContactAdminTemplate({ data, templateConfig }: ContactAdminTemplateProps) {
+export function ContactAdminTemplate({ data, brand }: ContactAdminTemplateProps) {
   return (
     <BaseEmailTemplate
       preview="New website message — name, email, and full details below."
-      templateConfig={templateConfig}
+      brand={brand}
       title="New Message from Your Website"
     >
       <InfoRow label="Name" value={data.name} />

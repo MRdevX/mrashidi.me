@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type CvRequestForm, CvRequestFormSchema } from "@mrashidi/types";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { FormInputWithValidation } from "@/components/forms/FormInputWithValidation";
 import { StatusMessage } from "@/components/forms/StatusMessage";
 import { CyberpunkButton } from "@/components/ui";
-import { type ResumeRequestData, resumeRequestSchema } from "@/lib/validation";
 import {
   CyberpunkDialog,
   CyberpunkDialogContent,
@@ -20,7 +20,7 @@ import { DialogDescription } from "./dialog";
 interface ResumeRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: ResumeRequestData) => Promise<boolean>;
+  onSubmit: (data: CvRequestForm) => Promise<boolean>;
 }
 
 export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestModalProps) {
@@ -33,8 +33,8 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
     message: "",
   });
 
-  const form = useForm<ResumeRequestData>({
-    resolver: zodResolver(resumeRequestSchema),
+  const form = useForm<CvRequestForm>({
+    resolver: zodResolver(CvRequestFormSchema),
     mode: "onBlur",
     defaultValues: {
       name: "",
@@ -43,7 +43,7 @@ export function ResumeRequestModal({ isOpen, onClose, onSubmit }: ResumeRequestM
     },
   });
 
-  const handleSubmit: SubmitHandler<ResumeRequestData> = async (data) => {
+  const handleSubmit: SubmitHandler<CvRequestForm> = async (data) => {
     setSubmitStatus({ type: null, message: "" });
     setIsSubmitting(true);
 

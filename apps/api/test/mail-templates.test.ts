@@ -1,7 +1,7 @@
 import { fixtureContent } from "@mrashidi/types/fixtures";
 import { describe, expect, it } from "vitest";
-import { getTemplateConfig } from "@/lib/services/email/config";
-import { createEmailTemplate } from "@/lib/services/email/renderer";
+import { mailBrand } from "#modules/mail/domain/outbound-email.ts";
+import { renderEmail } from "#modules/mail/infrastructure/render-email.tsx";
 
 const sampleContact = {
   name: "Jane Tester",
@@ -16,11 +16,11 @@ const sampleResume = {
   company: "Acme Labs",
 };
 
-describe("createEmailTemplate", () => {
-  const config = getTemplateConfig(fixtureContent.profile);
+describe("renderEmail", () => {
+  const brand = mailBrand(fixtureContent.profile);
 
   it("renders contact-admin HTML with brand color, preview cue, and submission fields", async () => {
-    const { html, text } = await createEmailTemplate(sampleContact, "contact-admin", config);
+    const { html, text } = await renderEmail("contact-admin", sampleContact, brand);
 
     expect(html).toContain("#ff5f1f");
     expect(html).not.toContain("#ff6b35");
@@ -34,20 +34,20 @@ describe("createEmailTemplate", () => {
   });
 
   it("renders contact-user HTML with acknowledgment and CTA target", async () => {
-    const { html, text } = await createEmailTemplate(sampleContact, "contact-user", config);
+    const { html, text } = await renderEmail("contact-user", sampleContact, brand);
 
     expect(html).toContain("#ff5f1f");
     expect(html).toContain("Your message arrived");
     expect(html).toContain("Hi ");
     expect(html).toContain("Jane Tester");
-    expect(html).toContain(config.companyWebsite);
+    expect(html).toContain(brand.website);
 
     expect(text).toContain("Jane Tester");
-    expect(text).toContain(config.companyWebsite);
+    expect(text).toContain(brand.website);
   });
 
   it("renders resume-admin HTML with company row and notice", async () => {
-    const { html } = await createEmailTemplate(sampleResume, "resume-admin", config);
+    const { html } = await renderEmail("resume-admin", sampleResume, brand);
 
     expect(html).toContain("#ff5f1f");
     expect(html).toContain("requested your CV");
@@ -57,25 +57,19 @@ describe("createEmailTemplate", () => {
 
   it("renders resume-user HTML with the expiring download link", async () => {
     const cvUrl = "https://mrashidi.me/api/cv/download?token=123.abc";
-    const { html, text } = await createEmailTemplate({ ...sampleResume, cvUrl }, "resume-user", config);
+    const { html, text } = await renderEmail("resume-user", { ...sampleResume, cvUrl }, brand);
 
     expect(html).toContain("#ff5f1f");
     expect(html).toContain(cvUrl);
     expect(html).toContain("24 hours");
     expect(html).toContain("Alex Resume");
-    expect(html).toContain(config.companyWebsite);
+    expect(html).toContain(brand.website);
 
     expect(text).toContain("Alex Resume");
   });
 
-  it("throws for unknown template type", async () => {
-    await expect(createEmailTemplate(sampleContact, "unknown-template", config)).rejects.toThrow(
-      /Unknown template type/
-    );
-  });
-
   it("loads Albert Sans with one stylesheet link instead of inlined @font-face blocks", async () => {
-    const { html } = await createEmailTemplate(sampleContact, "contact-admin", config);
+    const { html } = await renderEmail("contact-admin", sampleContact, brand);
 
     expect(html).toContain("fonts.googleapis.com/css2?family=Albert+Sans");
     expect(html).not.toContain("@font-face");

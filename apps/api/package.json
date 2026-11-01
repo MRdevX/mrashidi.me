@@ -26,17 +26,22 @@
   "dependencies": {
     "@ai-sdk/provider": "^4.0.35",
     "@mrashidi/types": "workspace:*",
+    "@react-email/render": "^2.2.0",
     "agents": "^0.32.0",
     "ai": "catalog:",
     "drizzle-orm": "^0.45.4",
     "fast-xml-parser": "^5.11.2",
     "hono": "^4.13.14",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-email": "^6.11.6",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.23.0",
     "@cloudflare/workers-types": "^5.20261026.1",
     "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
     "drizzle-kit": "^0.31.11",
     "tsx": "^4.23.15",
     "typescript": "catalog:",
