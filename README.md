@@ -11,7 +11,7 @@ A modern personal portfolio showcasing my work as a Software Engineer. Built wit
 - **Project Filtering**: Regex search with dynamic technology categorization
 - **Blog Integration**: Medium RSS feed with intelligent preloading
 - **Email System**: AWS SES with React Email templates and reCAPTCHA protection
-- **Resume Download**: Automated CV delivery via Vercel Blob
+- **Resume Request**: The CV PDF is emailed as a 24-hour signed link to a private Vercel Blob
 - **PWA Support**: Progressive Web App with offline capabilities
 - **SEO Optimized**: Meta tags, sitemap generation, and structured data
 

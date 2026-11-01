@@ -26,7 +26,7 @@ const EnvSchema = z.object({
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
 
-  BLOB_STORE_URL: z.string().url().optional(),
+  CV_LINK_SECRET: z.string().min(32).optional(),
   CV_UPLOAD_TOKEN: z.string().optional(),
   /** Content API (apps/api). Unset outside Vercel production means the fixture dataset is served. */
   CONTENT_API_URL: z.string().url().optional(),
@@ -64,7 +64,7 @@ export const env = EnvSchema.parse({
   EMAIL_TO_ADDRESS: process.env.EMAIL_TO_ADDRESS,
   UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
   UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-  BLOB_STORE_URL: process.env.BLOB_STORE_URL,
+  CV_LINK_SECRET: process.env.CV_LINK_SECRET,
   CV_UPLOAD_TOKEN: process.env.CV_UPLOAD_TOKEN,
   CONTENT_API_URL: process.env.CONTENT_API_URL,
   CONTENT_API_TOKEN: process.env.CONTENT_API_TOKEN,

@@ -4,6 +4,7 @@ import { getEnv, getRequiredEnv, logger } from "@/lib/core";
 import type { ContactFormData, ResumeRequestData } from "@/lib/validation";
 import { getTemplateConfig } from "./config";
 import { createEmailTemplate } from "./renderer";
+import type { EmailTemplateData } from "./types";
 
 export class EmailService {
   private readonly sesClient: SESClient;
@@ -66,14 +67,14 @@ export class EmailService {
     }
   }
 
-  async sendResumeRequestEmail(data: ResumeRequestData): Promise<boolean> {
+  async sendResumeRequestEmail(data: ResumeRequestData, cvUrl: string): Promise<boolean> {
     try {
       logger.info({ operation: "sendResumeRequestEmail", status: "started" });
       const templateConfig = await this.templateConfig();
 
       const adminSuccess = await this.sendEmail(
         this.toEmail,
-        `Resume Request from ${data.name}`,
+        `CV Request from ${data.name}`,
         data,
         "resume-admin",
         templateConfig
@@ -81,8 +82,8 @@ export class EmailService {
 
       const userSuccess = await this.sendEmail(
         data.email,
-        `Thanks for downloading my CV! Let's connect - ${templateConfig.companyName}`,
-        data,
+        `Your copy of my CV - ${templateConfig.companyName}`,
+        { ...data, cvUrl },
         "resume-user",
         templateConfig
       );
@@ -112,7 +113,7 @@ export class EmailService {
   private async sendEmail(
     to: string,
     subject: string,
-    data: ContactFormData | ResumeRequestData,
+    data: EmailTemplateData,
     templateType: string,
     templateConfig: ReturnType<typeof getTemplateConfig>
   ): Promise<boolean> {

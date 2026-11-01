@@ -15,4 +15,5 @@ export interface EmailTemplateData {
   subject?: string;
   message?: string;
   company?: string;
+  cvUrl?: string;
 }

@@ -9,15 +9,18 @@ interface ResumeUserTemplateProps {
 export function ResumeUserTemplate({ data, templateConfig }: ResumeUserTemplateProps) {
   return (
     <BaseEmailTemplate
-      preview="Thanks for downloading — explore the portfolio and reach out anytime."
+      preview="Here is your link to download my CV. It works for 24 hours."
       templateConfig={templateConfig}
-      title="Resume Request Confirmation"
+      title="Your Copy of My CV"
     >
       <EmailGreeting>Hi {data.name},</EmailGreeting>
 
       <EmailParagraph>
-        Thanks for downloading my CV! I hope it gives you a good overview of my background and experience.
+        Thanks for your interest! Use the button below to download my CV. The link works for 24 hours; after that you
+        can request a new one on my site.
       </EmailParagraph>
+
+      {data.cvUrl ? <CallToActionButton href={data.cvUrl}>Download CV</CallToActionButton> : null}
 
       <EmailParagraph>
         If you want to learn more, my portfolio has detailed information about projects, tech stack highlights, and

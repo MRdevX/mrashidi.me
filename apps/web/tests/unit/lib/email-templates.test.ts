@@ -50,16 +50,18 @@ describe("createEmailTemplate", () => {
     const { html } = await createEmailTemplate(sampleResume, "resume-admin", config);
 
     expect(html).toContain("#ff5f1f");
-    expect(html).toContain("downloaded your CV");
+    expect(html).toContain("requested your CV");
     expect(html).toContain("Acme Labs");
     expect(html).toContain("Alex Resume");
   });
 
-  it("renders resume-user HTML with confirmation copy", async () => {
-    const { html, text } = await createEmailTemplate(sampleResume, "resume-user", config);
+  it("renders resume-user HTML with the expiring download link", async () => {
+    const cvUrl = "https://mrashidi.me/api/cv/download?token=123.abc";
+    const { html, text } = await createEmailTemplate({ ...sampleResume, cvUrl }, "resume-user", config);
 
     expect(html).toContain("#ff5f1f");
-    expect(html).toContain("Thanks for downloading");
+    expect(html).toContain(cvUrl);
+    expect(html).toContain("24 hours");
     expect(html).toContain("Alex Resume");
     expect(html).toContain(config.companyWebsite);
 
