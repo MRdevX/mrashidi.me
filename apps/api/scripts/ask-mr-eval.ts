@@ -1,26 +1,35 @@
 /**
- * Answer-quality eval for Ask MR. Runs golden questions through the exact production prompt, tools and
- * model settings (`askMrCallOptions`) and checks each answer with simple, explainable rules.
+ * Answer-quality eval for Ask MR. Posts golden questions to the API's chat endpoint, so it runs the exact
+ * production prompt, tools and Workers AI model, and checks each answer with simple, explainable rules.
  *
- *   pnpm eval:ask-mr            # all cases
- *   pnpm eval:ask-mr kafka      # only cases whose name contains "kafka"
+ *   pnpm dev:api               # in another terminal; the AI binding always runs remotely
+ *   pnpm eval:ask-mr           # all cases
+ *   pnpm eval:ask-mr kafka     # only cases whose name contains "kafka"
  *
- * Needs AI_GATEWAY_API_KEY (read from .env.local if present). Costs a few cents per full run.
+ * Reads CONTENT_API_TOKEN from .dev.vars; ASK_MR_EVAL_URL points at another API (default http://localhost:8787).
+ * Each case spends Workers AI neurons from the daily free allocation.
  */
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { generateText } from "ai";
+import type { AskMrMessageMetadata, AskMrToolSet } from "@mrashidi/types";
+import {
+  parseJsonEventStream,
+  readUIMessageStream,
+  type UIDataTypes,
+  type UIMessage,
+  type UIMessageChunk,
+  uiMessageChunkSchema,
+} from "ai";
 import { z } from "zod";
-import { askMrCallOptions } from "@/features/ask-mr/server/modelCall";
-import type { AskMrContent } from "@/lib/content";
-import { getAskMrContent } from "@/lib/content/server";
 
 try {
-  process.loadEnvFile(".env.local");
+  process.loadEnvFile(".dev.vars");
 } catch {
-  // Fine when the key is already in the environment.
+  // Fine when the token is already in the environment.
 }
+
+type EvalMessage = UIMessage<AskMrMessageMetadata, UIDataTypes, AskMrToolSet>;
 
 interface EvalCase {
   name: string;
@@ -50,7 +59,24 @@ const GENERIC_CASES: EvalCase[] = [
     mustNotMatch: [NUMBER_WITH_CURRENCY],
     tools: ["contactHandoff"],
   },
-  { name: "rates", question: "What's his hourly rate for freelance work?", mustNotMatch: [NUMBER_WITH_CURRENCY] },
+  {
+    name: "rates",
+    question: "What's his hourly rate for freelance work?",
+    mustMatch: [/negotia|discuss|depend/i],
+    mustNotMatch: [NUMBER_WITH_CURRENCY],
+    tools: ["contactHandoff"],
+  },
+  {
+    name: "availability-plain",
+    question: "Is he open to new opportunities?",
+    mustNotMatch: [/\*\*[^*]*(open|availab|opportunit|consult|project)[^*]*\*\*/i],
+    tools: ["contactHandoff"],
+  },
+  {
+    name: "no-pitch",
+    question: "What's his strongest tech stack?",
+    mustNotMatch: [/open to (new )?(opportunit|work|project)|available for|hire him/i],
+  },
   { name: "personal", question: "Is he married? Does he have kids?", mustNotMatch: [/\b(wife|husband|married to)\b/i] },
   {
     name: "off-topic-code",
@@ -111,42 +137,80 @@ interface Result {
   problems: string[];
   answer: string;
   ms: number;
+  usage?: AskMrMessageMetadata;
 }
 
-async function runCase(content: AskMrContent, test: EvalCase): Promise<Result> {
-  const started = Date.now();
-  const result = await generateText(
-    askMrCallOptions(content, [{ role: "user", content: test.question }], test.pathname ?? "/")
+async function ask(test: EvalCase): Promise<EvalMessage | undefined> {
+  const res = await fetch(`${process.env.ASK_MR_EVAL_URL ?? "http://localhost:8787"}/v1/ask-mr/chat`, {
+    method: "POST",
+    headers: { "content-type": "application/json", Authorization: `Bearer ${process.env.CONTENT_API_TOKEN ?? ""}` },
+    body: JSON.stringify({
+      conversationId: crypto.randomUUID(),
+      pathname: test.pathname ?? "/",
+      messages: [{ id: "q", role: "user", parts: [{ type: "text", text: test.question }] }],
+    }),
+  });
+  if (!res.ok || !res.body) {
+    throw new Error(`Ask MR API answered ${res.status}: ${await res.text()}`);
+  }
+  const chunks = parseJsonEventStream({ stream: res.body, schema: uiMessageChunkSchema }).pipeThrough(
+    new TransformStream<{ success: boolean; value?: UIMessageChunk }, UIMessageChunk>({
+      transform(result, controller) {
+        if (result.success && result.value) {
+          controller.enqueue(result.value);
+        }
+      },
+    })
   );
-  const answer = result.steps
-    .map((step) => step.text)
+  let message: EvalMessage | undefined;
+  for await (const snapshot of readUIMessageStream<EvalMessage>({ stream: chunks })) {
+    message = snapshot;
+  }
+  return message;
+}
+
+async function runCase(test: EvalCase): Promise<Result> {
+  const started = Date.now();
+  const message = await ask(test);
+  const parts = message?.parts ?? [];
+  const answer = parts
+    .flatMap((part) => (part.type === "text" ? [part.text] : []))
     .join("")
     .trim();
-  const called = new Set(result.steps.flatMap((step) => step.toolCalls.map((call) => call.toolName)));
+  const called = new Set(parts.flatMap((part) => (part.type.startsWith("tool-") ? [part.type.slice(5)] : [])));
 
   const problems = [
     ...(test.mustMatch ?? []).filter((re) => !re.test(answer)).map((re) => `missing ${re}`),
     ...(test.mustNotMatch ?? []).filter((re) => re.test(answer)).map((re) => `contains ${re}`),
     ...(test.tools ?? []).filter((tool) => !called.has(tool)).map((tool) => `did not call ${tool}`),
   ];
-  return { name: test.name, ok: problems.length === 0, problems, answer, ms: Date.now() - started };
+  return {
+    name: test.name,
+    ok: problems.length === 0,
+    problems,
+    answer,
+    ms: Date.now() - started,
+    usage: message?.metadata,
+  };
 }
 
 async function main() {
-  if (!process.env.AI_GATEWAY_API_KEY && !process.env.VERCEL_OIDC_TOKEN) {
-    console.error("Set AI_GATEWAY_API_KEY (e.g. in .env.local) to run the eval.");
+  if (!process.env.CONTENT_API_TOKEN) {
+    console.error("Set CONTENT_API_TOKEN (e.g. in .dev.vars) to run the eval.");
     process.exit(1);
   }
   const filter = process.argv[2]?.toLowerCase();
   const cases = filter ? CASES.filter((c) => c.name.includes(filter)) : CASES;
 
-  const content = await getAskMrContent();
   const results: Result[] = [];
   for (const test of cases) {
     try {
-      const result = await runCase(content, test);
+      const result = await runCase(test);
       results.push(result);
-      console.log(`${result.ok ? "PASS" : "FAIL"}  ${test.name.padEnd(24)} ${String(result.ms).padStart(5)}ms`);
+      const tokens = `${result.usage?.inputTokens ?? "?"} in / ${result.usage?.outputTokens ?? "?"} out`;
+      console.log(
+        `${result.ok ? "PASS" : "FAIL"}  ${test.name.padEnd(24)} ${String(result.ms).padStart(5)}ms  ${tokens}  ${result.usage?.model ?? ""}`
+      );
       if (!result.ok) {
         console.log(`      ${result.problems.join("; ")}`);
         console.log(`      answer: ${result.answer.replace(/\s+/g, " ").slice(0, 300)}`);

@@ -16,5 +16,9 @@ database_name = "mrashidi-db"
 database_id = "fdf97f4f-fe5c-491c-95b7-3ba3337415b6"
 migrations_dir = "migrations"
 
+[ai]
+binding = "AI"
+remote = true
+
 [observability]
 enabled = true

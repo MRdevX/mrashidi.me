@@ -8,6 +8,8 @@ export default defineConfig({
   plugins: [
     cloudflareTest({
       main: "./src/index.ts",
+      // Tests inject a mock model; nothing may reach Workers AI.
+      remoteBindings: false,
       wrangler: { configPath: "./wrangler.toml" },
       miniflare: {
         bindings: {

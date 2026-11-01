@@ -20,10 +20,14 @@
     "db:migrate:remote": "wrangler d1 migrations apply mrashidi-db --remote",
     "db:seed": "tsx scripts/seed.ts",
     "cf:deploy": "pnpm db:migrate:remote && wrangler deploy",
-    "clean": "rm -rf .wrangler .turbo"
+    "clean": "rm -rf .wrangler .turbo",
+    "eval:ask-mr": "NODE_NO_WARNINGS=1 tsx scripts/ask-mr-eval.ts"
   },
   "dependencies": {
+    "@ai-sdk/provider": "^4.0.35",
     "@mrashidi/types": "workspace:*",
+    "agents": "^0.32.0",
+    "ai": "catalog:",
     "drizzle-orm": "^0.45.4",
     "fast-xml-parser": "^5.11.2",
     "hono": "^4.13.14",

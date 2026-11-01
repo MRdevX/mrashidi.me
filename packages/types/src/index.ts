@@ -1,4 +1,5 @@
 export * from "./about";
+export * from "./ask-mr-chat";
 export * from "./blog";
 export * from "./content";
 export * from "./github";
