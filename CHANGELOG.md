@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.26](https://github.com/MRdevX/mrashidi.me/compare/v0.2.25...v0.2.26) (2026-11-01)
+
+
+### Features
+
+* **api:** answer Ask MR on free Workers AI ([d6ab3b4](https://github.com/MRdevX/mrashidi.me/commit/d6ab3b4e34f6e3feb60463fa619e7f133d18bf23))
+* **ask-mr:** keep availability and hiring out of the starter questions ([782831e](https://github.com/MRdevX/mrashidi.me/commit/782831e5c7059b27c1e4ef7f461384972e6fc75b))
+* **ask-mr:** proxy web chat to the API and drop the AI Gateway model call ([d248e81](https://github.com/MRdevX/mrashidi.me/commit/d248e81016c977cd5ed77fda93da66d104dcd974))
+
+
+### Documentation
+
+* **ask-mr:** describe Ask MR on Workers AI in the stack, infra and skill docs ([a39c1c7](https://github.com/MRdevX/mrashidi.me/commit/a39c1c7c930e86a2a8edb3dca636cdf7a378a1f3))
+* **ask-mr:** record the move to Workers AI in the API Worker ([4a0f7db](https://github.com/MRdevX/mrashidi.me/commit/4a0f7db925da9a94e69f9518adf9a94d0350df36))
+
 ### [0.2.25](https://github.com/MRdevX/mrashidi.me/compare/v0.2.24...v0.2.25) (2026-10-31)
 
 
