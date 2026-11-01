@@ -8,6 +8,7 @@
     "build": {
       "dependsOn": ["^build"],
       "env": ["NEXT_PUBLIC_*", "CONTENT_API_URL", "CONTENT_API_TOKEN"],
+      "passThroughEnv": ["CV_LINK_SECRET"],
       "inputs": ["$TURBO_DEFAULT$", ".env*", "!**/*.md", "!tests/**", "!vitest.config.*", "!playwright.config.*"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
