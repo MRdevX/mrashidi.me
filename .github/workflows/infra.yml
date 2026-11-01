@@ -67,8 +67,12 @@ jobs:
         working-directory: infra
         run: tflint --recursive --config "$PWD/.tflint.hcl"
 
+  # Fork and Dependabot PRs get no Actions secrets; Lint still covers them and main plans after merge.
   plan:
     name: Plan (${{ matrix.root }})
+    if: >-
+      github.event_name != 'pull_request' ||
+      (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
