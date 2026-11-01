@@ -39,6 +39,7 @@ variable "secret_names" {
     "TF_VERCEL_API_TOKEN",
     "CONTENT_API_TOKEN",
     "GH_API_TOKEN",
+    "RESEND_API_TOKEN",
     "REVALIDATE_SECRET",
   ]
 }
