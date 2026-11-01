@@ -21,4 +21,4 @@ runs:
 
     - name: Init
       shell: bash
-      run: terraform -chdir=infra/live/${{ inputs.root }} init -lockfile=readonly
+      run: terraform -chdir=infra/live/${{ inputs.root }} init -lockfile=readonly -backend-config=../../backend.r2.hcl
