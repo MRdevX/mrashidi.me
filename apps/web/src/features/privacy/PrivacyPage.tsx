@@ -152,9 +152,9 @@ export async function PrivacyPage() {
                 href="https://sentry.io/privacy/"
               />
               <ProviderCard
-                name="AWS SES"
-                desc="Email delivery for contact form. Content transmitted securely."
-                href="https://aws.amazon.com/privacy/"
+                name="Resend"
+                desc="Email delivery for the contact form and CV requests. Content transmitted securely."
+                href="https://resend.com/legal/privacy-policy"
               />
               <ProviderCard
                 name="Vercel AI Gateway"

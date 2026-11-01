@@ -10,16 +10,16 @@ A modern personal portfolio showcasing my work as a Software Engineer. Built wit
 - **GitHub Integration**: Real-time repository display and contribution graph
 - **Project Filtering**: Regex search with dynamic technology categorization
 - **Blog Integration**: Medium RSS feed with intelligent preloading
-- **Email System**: AWS SES with React Email templates and reCAPTCHA protection
+- **Email System**: Resend from the API Worker, React Email templates, reCAPTCHA and rate limits
 - **Resume Request**: The CV PDF is emailed as a 24-hour signed link to a private Vercel Blob
 - **PWA Support**: Progressive Web App with offline capabilities
 - **SEO Optimized**: Meta tags, sitemap generation, and structured data
 
 ## 🛠 Tech Stack
 
-**Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, React Hook Form, SWR, React Email
+**Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, React Hook Form, SWR
 
-**Backend**: AWS SES, Vercel Blob, Sentry, Pino
+**Backend**: Hono on Cloudflare Workers, D1, Resend with React Email, Vercel Blob, Sentry, Pino
 
 **Quality & DX**: pnpm workspaces, Turborepo, Biome, Vitest, Playwright, Turbopack (`pnpm dev`)
 
@@ -33,7 +33,7 @@ apps/web/src/
 ├── app/                    # Next.js App Router (thin route files)
 ├── features/              # Feature slices: about, ask-mr, blog, contact, home, privacy, projects, resume
 ├── components/            # UI shared by two or more features
-├── lib/                   # Shared logic: API middleware, errors, email, rate limiting
+├── lib/                   # Shared logic: API middleware, errors, rate limiting
 ├── config/                # Theme tokens
 └── data/                  # Static profile data
 ```
@@ -62,25 +62,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and local checks d
 
 ## 📧 Email System
 
-Modern email templates built with React Email:
-
-- **Component-based templates** with responsive design
-- **AWS SES integration** for reliable delivery
-- **Friendly, casual tone** for better engagement
-- **Server-side rendering** of React components to HTML/text
-
-```typescript
-export function ContactUserTemplate({ data, templateConfig }) {
-  return (
-    <BaseEmailTemplate title="Message Received" templateConfig={templateConfig}>
-      <Text style={greetingStyle}>Hey {data.name}! 👋</Text>
-      <CallToActionButton href={templateConfig.companyWebsite}>
-        Check Out My Work
-      </CallToActionButton>
-    </BaseEmailTemplate>
-  );
-}
-```
+The contact form and CV requests are emailed by the API Worker (`apps/api/src/modules/mail/`)
+through Resend, with React Email templates rendered in the Worker. The web routes keep the rate
+limits and reCAPTCHA and call the private `/v1/mail/*` routes
+([DR-0015](docs/decisions/0015-email-from-api-via-resend.md)).
 
 ## 🔒 Security & Quality
 
