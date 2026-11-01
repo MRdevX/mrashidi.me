@@ -5,7 +5,7 @@ import { postAskMrChat } from "@/lib/content/server";
 import { handleError, logError } from "@/lib/errors";
 
 export const runtime = "nodejs";
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 export async function POST(request: Request): Promise<Response> {
   const guard = await guardChatRequest(request);
