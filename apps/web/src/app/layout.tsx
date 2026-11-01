@@ -1,3 +1,4 @@
+import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata, Viewport } from "next";
 import "@/styles/index.css";
 import { lazy, Suspense } from "react";
@@ -54,30 +55,32 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <HeadMeta />
       </head>
       <body className="min-h-screen relative">
-        <ThemeProvider>
-          <ContentProvider content={content}>
-            <AskMrProvider>
-              <Suspense fallback={null}>
-                <BackgroundEffects />
-              </Suspense>
-              <Suspense fallback={null}>
-                <BlogPreloader />
-              </Suspense>
-              <Navbar />
-              <MainContent>{children}</MainContent>
-              <Suspense fallback={null}>
-                <Footer />
-              </Suspense>
-              <Suspense fallback={null}>
-                <BottomNavigation />
-              </Suspense>
-              <Suspense fallback={null}>
-                <AnalyticsWrapper />
-              </Suspense>
-              <BuyMeACoffeeWidget />
-            </AskMrProvider>
-          </ContentProvider>
-        </ThemeProvider>
+        <SerwistProvider swUrl="/serwist/sw.js" disable={process.env.NODE_ENV === "development"}>
+          <ThemeProvider>
+            <ContentProvider content={content}>
+              <AskMrProvider>
+                <Suspense fallback={null}>
+                  <BackgroundEffects />
+                </Suspense>
+                <Suspense fallback={null}>
+                  <BlogPreloader />
+                </Suspense>
+                <Navbar />
+                <MainContent>{children}</MainContent>
+                <Suspense fallback={null}>
+                  <Footer />
+                </Suspense>
+                <Suspense fallback={null}>
+                  <BottomNavigation />
+                </Suspense>
+                <Suspense fallback={null}>
+                  <AnalyticsWrapper />
+                </Suspense>
+                <BuyMeACoffeeWidget />
+              </AskMrProvider>
+            </ContentProvider>
+          </ThemeProvider>
+        </SerwistProvider>
       </body>
     </html>
   );

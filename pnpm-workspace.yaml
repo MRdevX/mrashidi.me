@@ -54,6 +54,8 @@ strictPeerDependencies: false
 autoInstallPeers: true
 allowBuilds:
   '@sentry/cli': true
+  # Its postinstall only checks the native binary loads and falls back to @swc/wasm.
+  '@swc/core': false
   # Its postinstall only prints a funding banner.
   core-js-pure: false
   esbuild: true
@@ -63,7 +65,7 @@ allowBuilds:
 auditConfig:
   ignoreGhsas:
     # braces <=3.0.3 stack-exhaustion DoS on deeply nested patterns; no patched
-    # release exists. Only reached via build-time globbing (next-pwa, fast-glob)
+    # release exists. Only reached via build-time globbing (fast-glob)
     # with repo-controlled patterns. Remove once braces ships a fix.
     - GHSA-vfj7-8cjw-p6xm
 
