@@ -1,14 +1,14 @@
 import type { CvRequestForm } from "@mrashidi/types";
 import { logger } from "@/lib/core";
 
-export async function submitResumeRequest(data: CvRequestForm): Promise<boolean> {
+export async function submitResumeRequest(data: CvRequestForm, recaptchaToken: string): Promise<boolean> {
   try {
     const response = await fetch("/api/resume", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, recaptchaToken }),
     });
 
     if (response.ok) {

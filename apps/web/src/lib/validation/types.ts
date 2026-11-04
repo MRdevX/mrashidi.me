@@ -14,9 +14,10 @@ export const projectFilterSchema = z.object({
   type: z.enum(["all", "personal", "client"]).default("all"),
 });
 
-const contactFormAPISchema = ContactMessageSchema.extend({
-  recaptchaToken: z.string().min(1, "reCAPTCHA token is required"),
-});
+const recaptchaToken = z.string().min(1, "reCAPTCHA token is required").max(4096);
+
+const contactFormAPISchema = ContactMessageSchema.extend({ recaptchaToken });
+const resumeRequestAPISchema = CvRequestFormSchema.extend({ recaptchaToken });
 
 export const validateContactFormAPI = (data: unknown) => contactFormAPISchema.parse(data);
-export const validateResumeRequestAPI = (data: unknown) => CvRequestFormSchema.parse(data);
+export const validateResumeRequestAPI = (data: unknown) => resumeRequestAPISchema.parse(data);

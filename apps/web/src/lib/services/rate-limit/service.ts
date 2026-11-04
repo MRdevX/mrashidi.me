@@ -87,6 +87,16 @@ const rateLimiters = redis
         prefix: "ratelimit:resume",
       }),
 
+      mailRecipient: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
+          API_CONFIG.RATE_LIMIT.MAIL_RECIPIENT.requests,
+          API_CONFIG.RATE_LIMIT.MAIL_RECIPIENT.window
+        ),
+        analytics: true,
+        prefix: "ratelimit:mail-recipient",
+      }),
+
       cvUpload: new Ratelimit({
         redis,
         limiter: Ratelimit.slidingWindow(
@@ -144,6 +154,11 @@ const rateLimiters = redis
         "resumeRequest",
         API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
         API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
+      ),
+      mailRecipient: createInMemoryRateLimit(
+        "mailRecipient",
+        API_CONFIG.RATE_LIMIT.MAIL_RECIPIENT.requests,
+        API_CONFIG.RATE_LIMIT.MAIL_RECIPIENT.window
       ),
       cvUpload: createInMemoryRateLimit(
         "cvUpload",

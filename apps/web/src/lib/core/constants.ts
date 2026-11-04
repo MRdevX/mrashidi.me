@@ -15,11 +15,15 @@ export const API_CONFIG = {
   RATE_LIMIT: {
     CONTACT_FORM: {
       requests: 5,
-      window: "1 m",
+      window: "1 h",
     },
     RESUME_REQUEST: {
       requests: 5,
-      window: "1 m",
+      window: "1 h",
+    },
+    MAIL_RECIPIENT: {
+      requests: 3,
+      window: "1 d",
     },
     CV_UPLOAD: {
       requests: 3,

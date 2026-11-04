@@ -3,14 +3,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   postContentApi: vi.fn(),
   verifyRecaptcha: vi.fn(),
+  checkRateLimit: vi.fn(),
 }));
 
 vi.mock("@/lib/content/server", () => ({ postContentApi: mocks.postContentApi }));
 vi.mock("@/lib/services/recaptcha", () => ({ verifyRecaptcha: mocks.verifyRecaptcha }));
 vi.mock("@/lib/services/rate-limit", () => ({
-  checkRateLimit: vi
-    .fn()
-    .mockResolvedValue({ success: true, limit: 5, remaining: 4, reset: new Date(Date.now() + 60_000) }),
+  checkRateLimit: mocks.checkRateLimit,
   getClientIdentifier: () => "1.2.3.4",
 }));
 vi.mock("@/features/resume/server/cvLink", () => ({
@@ -40,7 +39,13 @@ const request = (path: string, body: unknown) => rawRequest(path, JSON.stringify
 beforeEach(() => {
   mocks.postContentApi.mockReset();
   mocks.verifyRecaptcha.mockReset().mockResolvedValue(undefined);
+  mocks.checkRateLimit.mockReset().mockResolvedValue(allowed);
 });
+
+const allowed = { success: true, limit: 5, remaining: 4, reset: new Date(Date.now() + 60_000) };
+
+const limitedFor = (limiter: string) => (name: string) =>
+  Promise.resolve(name === limiter ? { ...allowed, success: false, remaining: 0 } : allowed);
 
 describe("POST /api/contact", () => {
   it("forwards the message to the API mail route without the reCAPTCHA token", async () => {
@@ -77,15 +82,28 @@ describe("POST /api/contact", () => {
     expect(res.status).toBe(400);
     expect(mocks.postContentApi).not.toHaveBeenCalled();
   });
+
+  it("sends nothing once the recipient has had today's share of emails", async () => {
+    mocks.checkRateLimit.mockImplementation(limitedFor("mailRecipient"));
+
+    const res = await postContact(request("/api/contact", { ...message, recaptchaToken: "token" }));
+
+    expect(res.status).toBe(429);
+    expect(mocks.checkRateLimit).toHaveBeenCalledWith("mailRecipient", "jane@example.com");
+    expect(mocks.postContentApi).not.toHaveBeenCalled();
+  });
 });
 
 describe("POST /api/resume", () => {
   it("sends the API a freshly signed CV link", async () => {
     mocks.postContentApi.mockResolvedValue(new Response(null, { status: 202 }));
 
-    const res = await postResume(request("/api/resume", { name: "Jane Doe", email: "jane@example.com" }));
+    const res = await postResume(
+      request("/api/resume", { name: "Jane Doe", email: "jane@example.com", recaptchaToken: "token" })
+    );
 
     expect(res.status).toBe(200);
+    expect(mocks.verifyRecaptcha).toHaveBeenCalledWith("token", "cv_request");
     expect(mocks.postContentApi).toHaveBeenCalledWith("/v1/mail/cv-request", {
       name: "Jane Doe",
       email: "jane@example.com",
@@ -98,6 +116,36 @@ describe("POST /api/resume", () => {
 
     expect(res.status).toBe(400);
     expect(Object.keys((await res.json()).fields)).toEqual(expect.arrayContaining(["name", "email"]));
+    expect(mocks.postContentApi).not.toHaveBeenCalled();
+  });
+
+  it("sends nothing without a reCAPTCHA token", async () => {
+    const res = await postResume(request("/api/resume", { name: "Jane Doe", email: "jane@example.com" }));
+
+    expect(res.status).toBe(400);
+    expect(mocks.verifyRecaptcha).not.toHaveBeenCalled();
+    expect(mocks.postContentApi).not.toHaveBeenCalled();
+  });
+
+  it("sends nothing when reCAPTCHA fails", async () => {
+    mocks.verifyRecaptcha.mockRejectedValue(new Error("low score"));
+
+    const res = await postResume(
+      request("/api/resume", { name: "Jane Doe", email: "jane@example.com", recaptchaToken: "token" })
+    );
+
+    expect(res.status).toBe(400);
+    expect(mocks.postContentApi).not.toHaveBeenCalled();
+  });
+
+  it("sends nothing once the recipient has had today's share of emails", async () => {
+    mocks.checkRateLimit.mockImplementation(limitedFor("mailRecipient"));
+
+    const res = await postResume(
+      request("/api/resume", { name: "Jane Doe", email: "jane@example.com", recaptchaToken: "token" })
+    );
+
+    expect(res.status).toBe(429);
     expect(mocks.postContentApi).not.toHaveBeenCalled();
   });
 
