@@ -7,120 +7,99 @@ vi.mock("@/lib/core", async () => {
   return {
     ...actual,
     getRequiredEnv: vi.fn(() => "test-secret-key"),
-    logger: {
-      warn: vi.fn(),
-    },
   };
 });
 
+vi.mock("@/lib/api/cors-allowlist", () => ({
+  isSiteHostname: (hostname: string) => hostname === "mrashidi.me",
+}));
+
 global.fetch = vi.fn();
 
-describe("reCAPTCHA Service", () => {
+const verdict = (overrides: Record<string, unknown> = {}) =>
+  ({
+    ok: true,
+    json: async () => ({
+      success: true,
+      score: 0.9,
+      action: "contact",
+      challenge_ts: "2024-01-01T00:00:00Z",
+      hostname: "mrashidi.me",
+      ...overrides,
+    }),
+  }) as Response;
+
+describe("verifyRecaptcha", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  describe("verifyRecaptcha", () => {
-    it("should return true for fallback mode", async () => {
-      const result = await verifyRecaptcha("no-recaptcha");
-      expect(result).toBe(true);
-    });
+  it("accepts a passing verdict for the expected action and site", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict());
 
-    it("should verify valid token successfully", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          score: 0.9,
-          action: "submit",
-          challenge_ts: "2024-01-01T00:00:00Z",
-          hostname: "example.com",
-        }),
-      } as Response);
+    await expect(verifyRecaptcha("valid-token", "contact")).resolves.toBeUndefined();
+    expect(fetch).toHaveBeenCalledWith(
+      "https://www.google.com/recaptcha/api/siteverify",
+      expect.objectContaining({
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      })
+    );
+  });
 
-      const result = await verifyRecaptcha("valid-token");
-      expect(result).toBe(true);
-      expect(fetch).toHaveBeenCalledWith(
-        "https://www.google.com/recaptcha/api/siteverify",
-        expect.objectContaining({
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        })
-      );
-    });
+  it("has no token that skips verification", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict({ success: false }));
 
-    it("should throw NetworkError when fetch fails", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: false,
-        status: 500,
-      } as Response);
+    await expect(verifyRecaptcha("no-recaptcha", "contact")).rejects.toThrow(ValidationError);
+    expect(fetch).toHaveBeenCalledOnce();
+  });
 
-      await expect(verifyRecaptcha("token")).rejects.toThrow(NetworkError);
-    });
+  it("rejects a token issued for another action", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict({ action: "login" }));
 
-    it("should throw ValidationError when verification fails", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: false,
-          "error-codes": ["invalid-input-response"],
-        }),
-      } as Response);
+    await expect(verifyRecaptcha("token", "contact")).rejects.toThrow(ValidationError);
+  });
 
-      await expect(verifyRecaptcha("invalid-token")).rejects.toThrow(ValidationError);
-    });
+  it("rejects a token solved on another site", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict({ hostname: "evil.example" }));
 
-    it("should throw ValidationError when score is below threshold", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          score: 0.3,
-          action: "submit",
-          challenge_ts: "2024-01-01T00:00:00Z",
-          hostname: "example.com",
-        }),
-      } as Response);
+    await expect(verifyRecaptcha("token", "contact")).rejects.toThrow(ValidationError);
+  });
 
-      await expect(verifyRecaptcha("low-score-token")).rejects.toThrow(ValidationError);
-    });
+  it("throws NetworkError when Google cannot be reached", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({ ok: false, status: 500 } as Response);
 
-    it("should accept score at threshold", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          score: 0.5,
-          action: "submit",
-          challenge_ts: "2024-01-01T00:00:00Z",
-          hostname: "example.com",
-        }),
-      } as Response);
+    await expect(verifyRecaptcha("token", "contact")).rejects.toThrow(NetworkError);
+  });
 
-      const result = await verifyRecaptcha("threshold-token");
-      expect(result).toBe(true);
-    });
+  it("rejects a failed verification", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict({ success: false }));
 
-    it("should send correct request body", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          score: 0.9,
-          action: "submit",
-          challenge_ts: "2024-01-01T00:00:00Z",
-          hostname: "example.com",
-        }),
-      } as Response);
+    await expect(verifyRecaptcha("invalid-token", "contact")).rejects.toThrow(ValidationError);
+  });
 
-      await verifyRecaptcha("test-token");
+  it("rejects a score below the threshold", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict({ score: 0.3 }));
 
-      expect(fetch).toHaveBeenCalledWith(
-        expect.any(String),
-        expect.objectContaining({
-          body: "secret=test-secret-key&response=test-token",
-        })
-      );
-    });
+    await expect(verifyRecaptcha("low-score-token", "contact")).rejects.toThrow(ValidationError);
+  });
+
+  it("accepts a score at the threshold", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict({ score: 0.5 }));
+
+    await expect(verifyRecaptcha("threshold-token", "contact")).resolves.toBeUndefined();
+  });
+
+  it("form-encodes the token so it cannot add fields to the request", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(verdict());
+
+    await verifyRecaptcha("abc&remoteip=1.2.3.4", "contact");
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: "secret=test-secret-key&response=abc%26remoteip%3D1.2.3.4",
+      })
+    );
   });
 });

@@ -140,3 +140,10 @@ if (isProduction && !isNextProductionBuildPhase()) {
 export function reflectedCorsOrigin(requestOriginHeader: string | null): string | null {
   return reflectOriginAgainstAllowlist(requestOriginHeader, corsAllowedOriginsGlobal);
 }
+
+const withoutWww = (hostname: string) => hostname.replace(/^www\./, "");
+
+export function isSiteHostname(hostname: string): boolean {
+  const bare = withoutWww(hostname);
+  return [...corsAllowedOriginsGlobal].some((origin) => withoutWww(new URL(origin).hostname) === bare);
+}

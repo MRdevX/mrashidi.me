@@ -12,7 +12,7 @@ async function handleContactForm(
   { recaptchaToken, ...message }: ContactMessage & { recaptchaToken: string }
 ) {
   try {
-    await verifyRecaptcha(recaptchaToken);
+    await verifyRecaptcha(recaptchaToken, "contact");
   } catch (_error) {
     throw new APIError("reCAPTCHA verification failed", 400);
   }

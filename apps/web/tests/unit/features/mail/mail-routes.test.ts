@@ -49,7 +49,7 @@ describe("POST /api/contact", () => {
     const res = await postContact(request("/api/contact", { ...message, recaptchaToken: "token" }));
 
     expect(res.status).toBe(200);
-    expect(mocks.verifyRecaptcha).toHaveBeenCalledWith("token");
+    expect(mocks.verifyRecaptcha).toHaveBeenCalledWith("token", "contact");
     expect(mocks.postContentApi).toHaveBeenCalledWith("/v1/mail/contact", message);
   });
 
