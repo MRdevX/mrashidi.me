@@ -16,6 +16,27 @@ if (process.env.VERCEL_ENV === "production") {
   }
 }
 
+const RECAPTCHA = "https://www.google.com https://www.gstatic.com";
+const BUY_ME_A_COFFEE = "https://www.buymeacoffee.com https://buymeacoffee.com";
+
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  // React Refresh evaluates code in development only.
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} ${RECAPTCHA} https://cdnjs.buymeacoffee.com`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self'",
+  `connect-src 'self' ${RECAPTCHA} ${BUY_ME_A_COFFEE}`,
+  `frame-src 'self' https://adplist.org ${RECAPTCHA} ${BUY_ME_A_COFFEE}`,
+  "worker-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -57,56 +78,20 @@ const nextConfig = {
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.buymeacoffee.com https://unpkg.com https://www.google.com https://www.gstatic.com",
-              "script-src-elem 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.buymeacoffee.com https://unpkg.com https://www.google.com https://www.gstatic.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-              "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "img-src 'self' data: https: blob:",
-              "media-src 'self' https:",
-              "connect-src 'self' https: wss: https://www.google.com https://mrdevx.medium.com https://medium.com https://*.medium.com https://www.buymeacoffee.com https://buymeacoffee.com",
-              "frame-src 'self' https://adplist.org https://www.google.com https://www.buymeacoffee.com https://buymeacoffee.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'",
-              "upgrade-insecure-requests",
-            ].join("; "),
-          },
-
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(self), geolocation=(), payment=()",
-          },
-
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains; preload",
-          },
+          { key: "Content-Security-Policy", value: CONTENT_SECURITY_POLICY },
+          // BotID frames its own same-origin route, so framing is limited to the site, not denied.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(self), geolocation=(), payment=()" },
+          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" },
         ],
+      },
+      {
+        // Serwist's runtime cache refetches cross-origin images from inside the worker, and the
+        // worker's own CSP governs those fetches.
+        source: "/serwist/:path*",
+        headers: [{ key: "Content-Security-Policy", value: "default-src 'self'; connect-src 'self' https:" }],
       },
     ];
   },
