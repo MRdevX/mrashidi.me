@@ -54,6 +54,12 @@ jobs:
           CONTENT_API_TOKEN: ${{ secrets.CONTENT_API_TOKEN }}
         run: printf '%s' "$CONTENT_API_TOKEN" | pnpm exec wrangler secret put CONTENT_API_TOKEN
 
+      - name: Set CONTENT_API_READ_TOKEN
+        working-directory: apps/api
+        env:
+          CONTENT_API_READ_TOKEN: ${{ secrets.CONTENT_API_READ_TOKEN }}
+        run: printf '%s' "$CONTENT_API_READ_TOKEN" | pnpm exec wrangler secret put CONTENT_API_READ_TOKEN
+
       - name: Set GH_API_TOKEN
         working-directory: apps/api
         env:

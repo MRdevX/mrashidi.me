@@ -11,7 +11,13 @@ variable "vercel_api_token" {
 }
 
 variable "content_api_token" {
-  description = "Bearer token for every /v1 route; the same value is the Worker secret CONTENT_API_TOKEN."
+  description = "Bearer token for every /v1 route, given to production only; the same value is the Worker secret CONTENT_API_TOKEN."
+  type        = string
+  sensitive   = true
+}
+
+variable "content_api_read_token" {
+  description = "Bearer token for GET /v1 routes only, given to preview deployments; the same value is the Worker secret CONTENT_API_READ_TOKEN."
   type        = string
   sensitive   = true
 }

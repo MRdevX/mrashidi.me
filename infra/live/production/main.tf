@@ -70,8 +70,20 @@ resource "vercel_project_environment_variable" "content_api_token" {
   project_id = vercel_project.web.id
   key        = "CONTENT_API_TOKEN"
   value      = var.content_api_token
-  target     = ["production", "preview"]
+  target     = ["production"]
   sensitive  = true
+}
+
+# Previews read content but cannot send mail or call the model.
+resource "vercel_project_environment_variable" "content_api_read_token" {
+  project_id = vercel_project.web.id
+  key        = "CONTENT_API_TOKEN"
+  value      = var.content_api_read_token
+  target     = ["preview"]
+  sensitive  = true
+
+  # The full token must leave the preview target before this one can take its place.
+  depends_on = [vercel_project_environment_variable.content_api_token]
 }
 
 resource "vercel_project_environment_variable" "revalidate_secret" {

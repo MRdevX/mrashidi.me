@@ -33,6 +33,7 @@ env:
   TF_VAR_cloudflare_api_token: ${{ secrets.TF_CLOUDFLARE_API_TOKEN }}
   TF_VAR_vercel_api_token: ${{ secrets.TF_VERCEL_API_TOKEN }}
   TF_VAR_content_api_token: ${{ secrets.CONTENT_API_TOKEN }}
+  TF_VAR_content_api_read_token: ${{ secrets.CONTENT_API_READ_TOKEN }}
   TF_VAR_revalidate_secret: ${{ secrets.REVALIDATE_SECRET }}
   TF_IN_AUTOMATION: "true"
   TF_INPUT: "false"
