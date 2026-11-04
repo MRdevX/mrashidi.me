@@ -38,12 +38,19 @@ export function askMrErrorResponse(code: AskMrErrorCode, retryAfter?: number): R
   });
 }
 
-const ALLOWED_PART = (type: string) => type === "text" || type === "step-start" || type.startsWith("tool-");
+// Tool parts and part metadata from the browser are dropped: the model must only see tool results the
+// API produced itself, never ones a visitor wrote into the history.
+function textParts(message: AskMrMessage): AskMrMessage["parts"] {
+  return message.parts.flatMap((part) =>
+    part.type === "text" && typeof part.text === "string" ? [{ type: "text", text: part.text }] : []
+  );
+}
 
 export function sanitizeMessages(messages: AskMrMessage[]): AskMrMessage[] | null {
   const cleaned = messages
     .filter((m) => m.role !== "system")
-    .map((m) => ({ ...m, parts: m.parts.filter((p) => ALLOWED_PART(p.type)) }));
+    .map((m) => ({ id: m.id, role: m.role, parts: textParts(m) }))
+    .filter((m) => m.parts.length > 0);
 
   const last = cleaned.at(-1);
   if (last?.role !== "user") {
