@@ -47,9 +47,8 @@ export const API_CONFIG = {
     },
   },
   CORS: {
-    ALLOWED_ORIGINS: ["*"],
-    ALLOWED_METHODS: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
-    ALLOWED_HEADERS: ["*"],
+    ALLOWED_METHODS: ["GET", "HEAD", "OPTIONS"],
+    ALLOWED_HEADERS: ["Content-Type"],
     MAX_AGE: 86400,
   },
 } as const;
