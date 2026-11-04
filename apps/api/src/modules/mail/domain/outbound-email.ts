@@ -48,7 +48,7 @@ export function contactEmails(message: ContactMessage, owner: string, brand: Mai
       to: message.email,
       subject: `Thanks for reaching out, ${message.name}! | ${brand.name}`,
       template: "contact-user",
-      data: message,
+      data: { name: message.name, email: message.email },
     },
   ];
 }

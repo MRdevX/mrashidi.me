@@ -46,6 +46,15 @@ describe("renderEmail", () => {
     expect(text).toContain(brand.website);
   });
 
+  it("keeps the visitor's subject and message out of the contact-user reply", async () => {
+    const { html, text } = await renderEmail("contact-user", sampleContact, brand);
+
+    for (const output of [html, text]) {
+      expect(output).not.toContain(sampleContact.subject);
+      expect(output).not.toContain(sampleContact.message);
+    }
+  });
+
   it("renders resume-admin HTML with company row and notice", async () => {
     const { html } = await renderEmail("resume-admin", sampleResume, brand);
 
