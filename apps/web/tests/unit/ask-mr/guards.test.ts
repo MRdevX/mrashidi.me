@@ -136,6 +136,25 @@ describe("guardChatRequest", () => {
     expect(mocks.checkRateLimit).not.toHaveBeenCalled();
   });
 
+  it("treats a failed BotID check as a bot", async () => {
+    mocks.checkBotId.mockRejectedValue(new Error("BotID down"));
+
+    const result = await guardChatRequest(request(validBody));
+
+    expect(result.ok).toBe(false);
+    expect(!result.ok && result.response.status).toBe(403);
+    expect(mocks.checkRateLimit).not.toHaveBeenCalled();
+  });
+
+  it("answers 503 when the rate limiter cannot run", async () => {
+    mocks.checkRateLimit.mockRejectedValue(new Error("Redis down"));
+
+    const result = await guardChatRequest(request(validBody));
+
+    expect(result.ok).toBe(false);
+    expect(!result.ok && result.response.status).toBe(503);
+  });
+
   it("returns 429 with retryAfter when rate limited", async () => {
     mocks.checkRateLimit.mockResolvedValue({
       success: false,

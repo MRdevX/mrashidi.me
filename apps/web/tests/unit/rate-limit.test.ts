@@ -35,57 +35,26 @@ describe("Rate Limiting Service", () => {
   });
 
   describe("getClientIdentifier", () => {
-    it("should extract IP from x-forwarded-for header", () => {
-      const request = new Request("https://example.com", {
-        headers: {
-          "x-forwarded-for": "192.168.1.1, 10.0.0.1",
-        },
-      });
+    it("uses the address Vercel puts in x-real-ip", () => {
+      const request = new Request("https://example.com", { headers: { "x-real-ip": "192.168.1.2" } });
 
-      const identifier = getClientIdentifier(request);
-      expect(identifier).toBe("192.168.1.1");
+      expect(getClientIdentifier(request)).toBe("192.168.1.2");
     });
 
-    it("should extract IP from x-real-ip header", () => {
+    it("ignores client-supplied forwarding headers", () => {
       const request = new Request("https://example.com", {
         headers: {
+          "x-forwarded-for": "6.6.6.6",
+          "cf-connecting-ip": "7.7.7.7",
           "x-real-ip": "192.168.1.2",
         },
       });
 
-      const identifier = getClientIdentifier(request);
-      expect(identifier).toBe("192.168.1.2");
+      expect(getClientIdentifier(request)).toBe("192.168.1.2");
     });
 
-    it("should extract IP from cf-connecting-ip header", () => {
-      const request = new Request("https://example.com", {
-        headers: {
-          "cf-connecting-ip": "192.168.1.3",
-        },
-      });
-
-      const identifier = getClientIdentifier(request);
-      expect(identifier).toBe("192.168.1.3");
-    });
-
-    it("should fallback to unknown when no IP headers are present", () => {
-      const request = new Request("https://example.com");
-
-      const identifier = getClientIdentifier(request);
-      expect(identifier).toBe("unknown");
-    });
-
-    it("should prioritize x-forwarded-for over other headers", () => {
-      const request = new Request("https://example.com", {
-        headers: {
-          "x-forwarded-for": "192.168.1.1",
-          "x-real-ip": "192.168.1.2",
-          "cf-connecting-ip": "192.168.1.3",
-        },
-      });
-
-      const identifier = getClientIdentifier(request);
-      expect(identifier).toBe("192.168.1.1");
+    it("falls back to unknown without x-real-ip", () => {
+      expect(getClientIdentifier(new Request("https://example.com"))).toBe("unknown");
     });
   });
 
