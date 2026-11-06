@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/data";
 import { env, isDevelopment, isProduction } from "@/lib/core";
 import { logger } from "@/lib/core/logger";
 
@@ -145,5 +146,5 @@ const withoutWww = (hostname: string) => hostname.replace(/^www\./, "");
 
 export function isSiteHostname(hostname: string): boolean {
   const bare = withoutWww(hostname);
-  return [...corsAllowedOriginsGlobal].some((origin) => withoutWww(new URL(origin).hostname) === bare);
+  return [SITE_URL, ...corsAllowedOriginsGlobal].some((origin) => withoutWww(new URL(origin).hostname) === bare);
 }
