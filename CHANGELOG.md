@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.33](https://github.com/MRdevX/mrashidi.me/compare/v0.2.32...v0.2.33) (2026-11-06)
+
+
+### Bug Fixes
+
+* **api:** allow only GET and Content-Type in CORS responses ([be3f8d7](https://github.com/MRdevX/mrashidi.me/commit/be3f8d730a169a194600655be34598f5ddec4081))
+* **api:** fail closed when the guards on mail and Ask MR cannot run ([511d573](https://github.com/MRdevX/mrashidi.me/commit/511d573ee606e83d415844fecd1a143a7aacdccd))
+* **api:** stop reporting environment and uptime from health and version ([e605c13](https://github.com/MRdevX/mrashidi.me/commit/e605c137d6d5e00afd0cc016e9354959d8ab0254))
+* **ask-mr:** forward only the text of earlier turns to the model ([e2613b4](https://github.com/MRdevX/mrashidi.me/commit/e2613b47b01e4b4d6142cb5b74c01fc62e91d09d))
+* **contact:** accept reCAPTCHA tokens from the default site host ([275ab65](https://github.com/MRdevX/mrashidi.me/commit/275ab6536dfea4b20a01abc31949e10e4a0f9295))
+* **contact:** keep the visitor's own text out of the auto-reply ([fb9fc76](https://github.com/MRdevX/mrashidi.me/commit/fb9fc763ec0d532e125cd2a082c26619f59d8a90))
+* **contact:** verify every reCAPTCHA token for its action and site ([420b486](https://github.com/MRdevX/mrashidi.me/commit/420b486d580143e8c42f3430b5a16df5afe1e125))
+* **deps:** force patched satori and fflate under @vercel/og ([3e954e4](https://github.com/MRdevX/mrashidi.me/commit/3e954e4112f45642bc0c0fe149a43aa20632cdce))
+* **infra:** give preview deployments a read-only content API token ([f06bc29](https://github.com/MRdevX/mrashidi.me/commit/f06bc290e554e0b81eaaa50ba3240d9d2b68a838))
+* **infra:** refuse to plan with an empty preview content token ([8693147](https://github.com/MRdevX/mrashidi.me/commit/8693147cefa9db2f83a3765f9325355cc901fdea))
+* **resume:** require reCAPTCHA and cap emails per recipient on the mail forms ([571e03b](https://github.com/MRdevX/mrashidi.me/commit/571e03b5ce7eee35541a6bc34b13e566d7037a59))
+* **ui:** drop unsafe-eval and open CDN hosts from the content security policy ([541b07c](https://github.com/MRdevX/mrashidi.me/commit/541b07cd3fc69c492fb4fa7bced752a567929f21))
+* **ui:** remove the unused runtime OG image route ([242395b](https://github.com/MRdevX/mrashidi.me/commit/242395bc1eed796bd8fc60e324caab7cfc91b39e))
+
+
+### Documentation
+
+* describe the production rate-limit fallback ([9b73955](https://github.com/MRdevX/mrashidi.me/commit/9b73955c2292d2a259f6ff2f4343578433fbed71))
+
+
+### Tests
+
+* **resume:** stub reCAPTCHA in the CV request E2E spec ([ec7920a](https://github.com/MRdevX/mrashidi.me/commit/ec7920a70a58e9ac3b9889a8d1278f8446fd7d5a))
+
 ### [0.2.32](https://github.com/MRdevX/mrashidi.me/compare/v0.2.31...v0.2.32) (2026-11-01)
 
 
