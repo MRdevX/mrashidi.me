@@ -22,8 +22,7 @@ export function ContactUserTemplate({ data, brand }: ContactUserTemplateProps) {
       <EmailGreeting>Hi {data.name},</EmailGreeting>
 
       <EmailParagraph>
-        Thanks for getting in touch! I received your message{data.subject ? ` about "${data.subject}"` : ""} and wanted
-        to let you know it came through perfectly.
+        Thanks for getting in touch! I received your message and wanted to let you know it came through perfectly.
       </EmailParagraph>
 
       <EmailParagraph>

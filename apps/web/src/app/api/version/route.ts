@@ -10,10 +10,7 @@ async function handleVersion(_request: NextRequest) {
     const packageJsonPath = path.join(process.cwd(), "package.json");
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 
-    return NextResponse.json({
-      version: packageJson.version,
-      timestamp: new Date().toISOString(),
-    });
+    return NextResponse.json({ version: packageJson.version });
   } catch (_error) {
     throw new APIError("Failed to read version information", 500);
   }

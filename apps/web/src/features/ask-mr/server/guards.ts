@@ -7,7 +7,7 @@ import {
   type AskMrMessage,
 } from "@mrashidi/types";
 import { checkBotId } from "botid/server";
-import { getEnv, logger } from "@/lib/core";
+import { getEnv, isProduction, logger } from "@/lib/core";
 import { checkRateLimit, getClientIdentifier, type RateLimiterType } from "@/lib/services/rate-limit";
 import { ASK_MR_LIMITS } from "../constants";
 import { messageText } from "../messageText";
@@ -38,12 +38,19 @@ export function askMrErrorResponse(code: AskMrErrorCode, retryAfter?: number): R
   });
 }
 
-const ALLOWED_PART = (type: string) => type === "text" || type === "step-start" || type.startsWith("tool-");
+// Tool parts and part metadata from the browser are dropped: the model must only see tool results the
+// API produced itself, never ones a visitor wrote into the history.
+function textParts(message: AskMrMessage): AskMrMessage["parts"] {
+  return message.parts.flatMap((part) =>
+    part.type === "text" && typeof part.text === "string" ? [{ type: "text", text: part.text }] : []
+  );
+}
 
 export function sanitizeMessages(messages: AskMrMessage[]): AskMrMessage[] | null {
   const cleaned = messages
     .filter((m) => m.role !== "system")
-    .map((m) => ({ ...m, parts: m.parts.filter((p) => ALLOWED_PART(p.type)) }));
+    .map((m) => ({ id: m.id, role: m.role, parts: textParts(m) }))
+    .filter((m) => m.parts.length > 0);
 
   const last = cleaned.at(-1);
   if (last?.role !== "user") {
@@ -70,7 +77,7 @@ const todayKey = () => `askmr:budget:${new Date().toISOString().slice(0, 10)}`;
 async function consumeDailyBudget(): Promise<boolean> {
   const redis = getAskMrRedis();
   if (!redis) {
-    return true;
+    return !isProduction;
   }
   try {
     const key = `${todayKey()}:requests`;
@@ -80,9 +87,8 @@ async function consumeDailyBudget(): Promise<boolean> {
     }
     return used <= getEnv("ASK_MR_DAILY_BUDGET");
   } catch (error) {
-    // Fail open: a Redis outage shouldn't take the chat down; per-IP limits still apply.
     logger.error({ error: String(error) }, "Ask MR: budget check failed");
-    return true;
+    return false;
   }
 }
 
@@ -104,7 +110,13 @@ export async function recordDailyTokens(tokens: number | undefined): Promise<voi
 export async function checkLimits(request: Request, limiters: readonly RateLimiterType[]): Promise<Response | null> {
   const identifier = getClientIdentifier(request);
   for (const limiter of limiters) {
-    const result = await checkRateLimit(limiter, identifier);
+    const result = await checkRateLimit(limiter, identifier).catch((error: unknown) => {
+      logger.error({ error: String(error), limiter }, "Ask MR: rate limit check failed");
+      return null;
+    });
+    if (!result) {
+      return askMrErrorResponse("disabled");
+    }
     if (!result.success) {
       const retryAfter = Math.max(1, Math.ceil((result.reset.getTime() - Date.now()) / 1000));
       return askMrErrorResponse("rate_limited", retryAfter);
@@ -120,7 +132,7 @@ async function isBotRequest(): Promise<boolean> {
     return verification.isBot;
   } catch (error) {
     logger.error({ error: String(error) }, "Ask MR: BotID check failed");
-    return false;
+    return true;
   }
 }
 

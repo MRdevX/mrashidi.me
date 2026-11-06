@@ -12,6 +12,7 @@ vi.mock("@/lib/core/logger", () => ({
 import {
   canonicalOrigin,
   computeCorsAllowedOrigins,
+  isSiteHostname,
   parseCommaSeparatedOrigins,
   reflectOriginAgainstAllowlist,
 } from "@/lib/api/cors-allowlist";
@@ -63,5 +64,17 @@ describe("reflectOriginAgainstAllowlist", () => {
 
   it("returns null for unknown origins", () => {
     expect(reflectOriginAgainstAllowlist("https://evil.example", allow)).toBeNull();
+  });
+});
+
+describe("isSiteHostname", () => {
+  it("accepts the site's own host with and without www, even without NEXT_PUBLIC_SITE_URL", () => {
+    expect(isSiteHostname("mrashidi.me")).toBe(true);
+    expect(isSiteHostname("www.mrashidi.me")).toBe(true);
+  });
+
+  it("rejects other hosts", () => {
+    expect(isSiteHostname("evil.example")).toBe(false);
+    expect(isSiteHostname("mrashidi.me.evil.example")).toBe(false);
   });
 });

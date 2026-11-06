@@ -69,3 +69,4 @@ repo; this folder covers this site's choices, including how it adopts them
 | [DR-0013](0013-webgl-effects-as-progressive-enhancement.md) | Add WebGL effects with three and React Three Fiber as progressive enhancement | `accepted` | 2026-10-31 |
 | [DR-0014](0014-ask-mr-on-workers-ai.md) | Run the Ask MR model on Workers AI inside the API Worker | `accepted` | 2026-11-01 |
 | [DR-0015](0015-email-from-api-via-resend.md) | Send transactional email from the API Worker through Resend | `accepted` | 2026-11-01 |
+| [DR-0016](0016-read-only-content-token-for-previews.md) | Give preview deployments a read-only content API token | `accepted` | 2026-11-04 |

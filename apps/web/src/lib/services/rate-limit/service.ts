@@ -1,200 +1,97 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import { API_CONFIG, logger } from "@/lib/core";
+import { API_CONFIG, isProduction, logger } from "@/lib/core";
+import { APIError } from "@/lib/errors";
 import { getRedis } from "@/lib/services/redis";
 
+const { RATE_LIMIT } = API_CONFIG;
+
+const LIMITERS = {
+  contactForm: { ...RATE_LIMIT.CONTACT_FORM, prefix: "contact", spends: true },
+  resumeRequest: { ...RATE_LIMIT.RESUME_REQUEST, prefix: "resume", spends: true },
+  mailRecipient: { ...RATE_LIMIT.MAIL_RECIPIENT, prefix: "mail-recipient", spends: true },
+  cvUpload: { ...RATE_LIMIT.CV_UPLOAD, prefix: "cv", spends: false },
+  generalApi: { ...RATE_LIMIT.GENERAL_API, prefix: "api", spends: false },
+  askMr: { ...RATE_LIMIT.ASK_MR, prefix: "askmr", spends: true },
+  askMrDaily: { ...RATE_LIMIT.ASK_MR_DAILY, prefix: "askmr-daily", spends: true },
+  askMrFeedback: { ...RATE_LIMIT.ASK_MR_FEEDBACK, prefix: "askmr-feedback", spends: false },
+} as const;
+
+export type RateLimiterType = keyof typeof LIMITERS;
+
+type Duration = `${number} ${"s" | "m" | "h" | "d"}`;
+
+interface LimitResult {
+  success: boolean;
+  limit: number;
+  remaining: number;
+  reset: Date;
+}
+
+const UNIT_MS = { s: 1_000, m: 60_000, h: 3_600_000, d: 86_400_000 } as const;
+
+function windowMs(window: Duration): number {
+  const [value, unit] = window.split(" ") as [string, keyof typeof UNIT_MS];
+  return Number(value) * UNIT_MS[unit];
+}
+
+const inMemoryLimits = new Map<string, { count: number; resetTime: number }>();
+
+function limitInMemory(type: RateLimiterType, identifier: string): LimitResult {
+  const { requests, window } = LIMITERS[type];
+  const now = Date.now();
+  const key = `${type}:${identifier}`;
+  const entry = inMemoryLimits.get(key);
+
+  if (!entry || now >= entry.resetTime) {
+    const resetTime = now + windowMs(window);
+    inMemoryLimits.set(key, { count: 1, resetTime });
+    return { success: true, limit: requests, remaining: requests - 1, reset: new Date(resetTime) };
+  }
+
+  if (entry.count >= requests) {
+    return { success: false, limit: requests, remaining: 0, reset: new Date(entry.resetTime) };
+  }
+
+  entry.count++;
+  return { success: true, limit: requests, remaining: requests - entry.count, reset: new Date(entry.resetTime) };
+}
+
 const redis = getRedis();
-if (redis) {
-  logger.info("Redis rate limiting initialized successfully");
-} else {
+
+const redisLimiters = redis
+  ? (Object.fromEntries(
+      Object.entries(LIMITERS).map(([type, { requests, window, prefix }]) => [
+        type,
+        new Ratelimit({
+          redis,
+          limiter: Ratelimit.slidingWindow(requests, window),
+          analytics: true,
+          prefix: `ratelimit:${prefix}`,
+        }),
+      ])
+    ) as Record<RateLimiterType, Ratelimit>)
+  : null;
+
+if (!redisLimiters) {
   logger.warn("Redis not available, using in-memory rate limiting fallback");
 }
 
-interface RateLimitEntry {
-  count: number;
-  resetTime: number;
+// Vercel sets x-real-ip to the connecting address and overwrites any value the client sends.
+export function getClientIdentifier(request: Request): string {
+  return request.headers.get("x-real-ip") ?? "unknown";
 }
 
-const inMemoryLimits = new Map<string, RateLimitEntry>();
-
-function parseWindow(window: string): number {
-  const match = window.match(/^(\d+)\s*(s|m|h|d)$/);
-  if (!match) {
-    return 60000;
+export async function checkRateLimit(type: RateLimiterType, identifier: string): Promise<LimitResult> {
+  if (redisLimiters) {
+    const result = await redisLimiters[type].limit(identifier);
+    return { success: result.success, limit: result.limit, remaining: result.remaining, reset: new Date(result.reset) };
   }
 
-  const value = parseInt(match[1], 10);
-  const unit = match[2];
+  // An in-memory count only covers one serverless instance, so it caps nothing that costs money.
+  if (isProduction && LIMITERS[type].spends) {
+    logger.error({ limiter: type }, "Refusing a rate-limited request: Upstash Redis is not configured");
+    throw new APIError("This service is temporarily unavailable", 503);
+  }
 
-  const multipliers: Record<string, number> = {
-    s: 1000,
-    m: 60000,
-    h: 3600000,
-    d: 86400000,
-  };
-
-  return value * (multipliers[unit] || 1000);
-}
-
-function createInMemoryRateLimit(limiterName: string, requests: number, window: string) {
-  const windowMs = parseWindow(window);
-
-  return {
-    limit: async (identifier: string) => {
-      const now = Date.now();
-      const key = `${limiterName}:${identifier}`;
-      const entry = inMemoryLimits.get(key);
-
-      if (!entry || now >= entry.resetTime) {
-        const resetTime = now + windowMs;
-        inMemoryLimits.set(key, { count: 1, resetTime });
-        return {
-          success: true,
-          limit: requests,
-          remaining: requests - 1,
-          reset: new Date(resetTime),
-        };
-      }
-
-      if (entry.count >= requests) {
-        return { success: false, limit: requests, remaining: 0, reset: new Date(entry.resetTime) };
-      }
-
-      entry.count++;
-      return { success: true, limit: requests, remaining: requests - entry.count, reset: new Date(entry.resetTime) };
-    },
-  };
-}
-
-const rateLimiters = redis
-  ? {
-      contactForm: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(
-          API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
-          API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
-        ),
-        analytics: true,
-        prefix: "ratelimit:contact",
-      }),
-
-      resumeRequest: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(
-          API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
-          API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
-        ),
-        analytics: true,
-        prefix: "ratelimit:resume",
-      }),
-
-      cvUpload: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(
-          API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
-          API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
-        ),
-        analytics: true,
-        prefix: "ratelimit:cv",
-      }),
-
-      generalApi: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(
-          API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
-          API_CONFIG.RATE_LIMIT.GENERAL_API.window
-        ),
-        analytics: true,
-        prefix: "ratelimit:api",
-      }),
-
-      askMr: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(API_CONFIG.RATE_LIMIT.ASK_MR.requests, API_CONFIG.RATE_LIMIT.ASK_MR.window),
-        analytics: true,
-        prefix: "ratelimit:askmr",
-      }),
-
-      askMrDaily: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(
-          API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
-          API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
-        ),
-        analytics: true,
-        prefix: "ratelimit:askmr-daily",
-      }),
-
-      askMrFeedback: new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(
-          API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
-          API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
-        ),
-        analytics: true,
-        prefix: "ratelimit:askmr-feedback",
-      }),
-    }
-  : {
-      contactForm: createInMemoryRateLimit(
-        "contactForm",
-        API_CONFIG.RATE_LIMIT.CONTACT_FORM.requests,
-        API_CONFIG.RATE_LIMIT.CONTACT_FORM.window
-      ),
-      resumeRequest: createInMemoryRateLimit(
-        "resumeRequest",
-        API_CONFIG.RATE_LIMIT.RESUME_REQUEST.requests,
-        API_CONFIG.RATE_LIMIT.RESUME_REQUEST.window
-      ),
-      cvUpload: createInMemoryRateLimit(
-        "cvUpload",
-        API_CONFIG.RATE_LIMIT.CV_UPLOAD.requests,
-        API_CONFIG.RATE_LIMIT.CV_UPLOAD.window
-      ),
-      generalApi: createInMemoryRateLimit(
-        "generalApi",
-        API_CONFIG.RATE_LIMIT.GENERAL_API.requests,
-        API_CONFIG.RATE_LIMIT.GENERAL_API.window
-      ),
-      askMr: createInMemoryRateLimit(
-        "askMr",
-        API_CONFIG.RATE_LIMIT.ASK_MR.requests,
-        API_CONFIG.RATE_LIMIT.ASK_MR.window
-      ),
-      askMrDaily: createInMemoryRateLimit(
-        "askMrDaily",
-        API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.requests,
-        API_CONFIG.RATE_LIMIT.ASK_MR_DAILY.window
-      ),
-      askMrFeedback: createInMemoryRateLimit(
-        "askMrFeedback",
-        API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.requests,
-        API_CONFIG.RATE_LIMIT.ASK_MR_FEEDBACK.window
-      ),
-    };
-
-export type RateLimiterType = keyof typeof rateLimiters;
-
-export function getClientIdentifier(request: Request): string {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  const realIp = request.headers.get("x-real-ip");
-  const cfConnectingIp = request.headers.get("cf-connecting-ip");
-
-  const ip = forwardedFor?.split(",")[0] || realIp || cfConnectingIp;
-
-  return ip || "unknown";
-}
-
-export async function checkRateLimit(
-  rateLimiterType: RateLimiterType,
-  identifier: string
-): Promise<{ success: boolean; limit: number; remaining: number; reset: Date }> {
-  const rateLimiter = rateLimiters[rateLimiterType];
-  const result = await rateLimiter.limit(identifier);
-
-  return {
-    success: result.success,
-    limit: result.limit,
-    remaining: result.remaining,
-    reset: new Date(result.reset),
-  };
+  return limitInMemory(type, identifier);
 }

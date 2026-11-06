@@ -113,10 +113,6 @@ async function generateAllImages() {
   console.log("• Responsive layout optimized for social media");
   console.log("• Lightweight @vercel/og implementation");
   console.log("• Ready for production use");
-  console.log("\n🚀 Dynamic OG Images:");
-  console.log("• API route created: /api/og");
-  console.log("• Usage: /api/og?title=Custom&subtitle=Title&description=Text");
-  console.log("• Perfect for dynamic content and blog posts");
 }
 
 try {

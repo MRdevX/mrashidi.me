@@ -49,5 +49,7 @@ export default defineConfig({
     timeout: process.env.CI ? 180_000 : 120_000,
     stdout: "pipe",
     stderr: "pipe",
+    // The forms only render with a site key; specs stub Google's script, so any value works.
+    env: { NEXT_PUBLIC_RECAPTCHA_SITE_KEY: "e2e-site-key" },
   },
 });

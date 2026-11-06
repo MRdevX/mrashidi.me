@@ -43,6 +43,7 @@ describe("validateResumeRequestAPI", () => {
     const data = validateResumeRequestAPI({
       name: "Jane Doe",
       email: "jane@example.com",
+      recaptchaToken: "token",
     });
     expect(data.company).toBeUndefined();
   });
@@ -52,8 +53,13 @@ describe("validateResumeRequestAPI", () => {
       name: "Jane Doe",
       email: "jane@example.com",
       company: "  Acme  ",
+      recaptchaToken: "token",
     });
     expect(data.company).toBe("Acme");
+  });
+
+  it("requires recaptcha token", () => {
+    expect(() => validateResumeRequestAPI({ name: "Jane Doe", email: "jane@example.com" })).toThrow();
   });
 });
 

@@ -45,7 +45,7 @@ export function ContactForm() {
         throw new Error("reCAPTCHA is not available");
       }
 
-      const recaptchaToken = await executeRecaptcha("submit");
+      const recaptchaToken = await executeRecaptcha("contact");
       const status = await submitContactForm(data, recaptchaToken);
       if (status.type === "success") {
         form.reset();

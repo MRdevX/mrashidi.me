@@ -54,6 +54,7 @@ describe("POST /v1/mail/contact", () => {
     const [owner, visitor] = batches[0].emails;
     expect(owner).toMatchObject({ to: env.MAIL_TO, replyTo: "visitor@example.com", template: "contact-admin" });
     expect(visitor).toMatchObject({ to: "visitor@example.com", template: "contact-user" });
+    expect(visitor.data).toEqual({ name: contact.name, email: "visitor@example.com" });
     expect(visitor.replyTo).toBeUndefined();
     expect(batches[0].brand.name).toBe(fixtureContent.profile.person.name);
   });

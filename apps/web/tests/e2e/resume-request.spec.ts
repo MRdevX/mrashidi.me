@@ -18,7 +18,16 @@ test.describe("Resume Request", () => {
   });
 
   test("emails a CV link without downloading in the browser", async ({ page }) => {
+    await page.route("https://www.google.com/recaptcha/**", (route) =>
+      route.fulfill({
+        contentType: "text/javascript",
+        body: 'window.grecaptcha = { ready: (cb) => cb(), execute: () => Promise.resolve("e2e-token") };',
+      })
+    );
+
+    let sentToken: unknown;
     await page.route("**/api/resume", async (route) => {
+      sentToken = route.request().postDataJSON().recaptchaToken;
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -46,5 +55,6 @@ test.describe("Resume Request", () => {
 
     await expect(page.getByText("Sent! Check your inbox for the download link.", { exact: true })).toBeVisible();
     expect(downloadRequested).toBe(false);
+    expect(sentToken).toBe("e2e-token");
   });
 });

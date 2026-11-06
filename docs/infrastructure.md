@@ -22,9 +22,9 @@ A weekly scheduled run plans `main` and fails if a live resource drifted from it
 | Owner | Owns |
 | ----- | ---- |
 | Terraform `live/global` | Every DNS record in the zone except custom-domain records |
-| Terraform `live/production` | D1 `mrashidi-db`, Worker custom domain `api.mrashidi.me`, Vercel project settings and domains, the env vars `CONTENT_API_URL`, `CONTENT_API_TOKEN`, `REVALIDATE_SECRET` |
+| Terraform `live/production` | D1 `mrashidi-db`, Worker custom domain `api.mrashidi.me`, Vercel project settings and domains, the env vars `CONTENT_API_URL`, `CONTENT_API_TOKEN` (the read-only token on previews), `REVALIDATE_SECRET` |
 | Terraform `live/github` | GitHub Actions secrets and variables, the `deploy-gate` environment |
-| Wrangler | Worker code and bindings (`apps/api/wrangler.toml`, including the Workers AI `AI` binding for Ask MR, which needs no Terraform resource), Worker secrets `CONTENT_API_TOKEN`, `GH_API_TOKEN` and `RESEND_API_TOKEN`, the `MAIL_FROM` and `MAIL_TO` vars, D1 migrations. No Cron Triggers: snapshots refresh on request ([DR-0012](decisions/0012-refresh-external-sources-on-request.md)) |
+| Wrangler | Worker code and bindings (`apps/api/wrangler.toml`, including the Workers AI `AI` binding for Ask MR, which needs no Terraform resource), Worker secrets `CONTENT_API_TOKEN`, `CONTENT_API_READ_TOKEN`, `GH_API_TOKEN` and `RESEND_API_TOKEN`, the `MAIL_FROM` and `MAIL_TO` vars, D1 migrations. No Cron Triggers: snapshots refresh on request ([DR-0012](decisions/0012-refresh-external-sources-on-request.md)) |
 | By hand | API tokens, R2 S3 keys, 1Password items; R2 bucket `mrashidi-me-bucket` and its `s3.mrashidi.me` domain (outside Terraform) |
 | Vercel dashboard | Every other web env var (Ask MR limits, Upstash, Sentry, reCAPTCHA, Blob, `CV_LINK_SECRET`) |
 
@@ -44,7 +44,8 @@ The apex and `www` are DNS-only: Vercel serves them and issues their certificate
 | `TF_R2_ACCESS_KEY_ID`, `TF_R2_SECRET_ACCESS_KEY` | R2 S3 key pair, Object Read & Write on `mrashidi-tf-state` only |
 | `TF_VERCEL_API_TOKEN` | Vercel token scoped to the notablenomads team |
 | `GITHUB_TERRAFORM_PAT` | Fine-grained PAT on this repo: Administration, Environments, Secrets, Variables write; read by `live/github` only, not copied to GitHub |
-| `CONTENT_API_TOKEN` | Random 32+ bytes; bearer for every `/v1` route, set on the Worker and on Vercel |
+| `CONTENT_API_TOKEN` | Random 32+ bytes; bearer for every `/v1` route, set on the Worker and on Vercel production |
+| `CONTENT_API_READ_TOKEN` | Random 32+ bytes; bearer for `GET /v1` routes only, set on the Worker and as `CONTENT_API_TOKEN` on Vercel previews, so a preview cannot send mail or call Workers AI ([DR-0016](decisions/0016-read-only-content-token-for-previews.md)) |
 | `GH_API_TOKEN` | Fine-grained GitHub PAT, read-only on public repositories; the Worker uses it for the GraphQL API when it refreshes snapshots on request (commit activity, contributions). Vercel no longer needs `GH_REST_API_TOKEN` |
 | `RESEND_API_TOKEN` | Resend API key with sending access only, for `mrashidi.me`; the Worker's `mail` module sends the contact and CV emails with it ([DR-0015](decisions/0015-email-from-api-via-resend.md)). Locally it goes in `apps/api/.dev.vars` |
 | `REVALIDATE_SECRET` | Random 32+ bytes; the seed script sends it to the web app's revalidate route (Phase 5) |
@@ -67,7 +68,7 @@ on this repo with Secrets, Variables, Environments and Administration write, sto
    `terraform -chdir=infra/live/production apply -var api_worker_deployed=false` creates D1 and imports the
    Vercel project (plan must show no Vercel changes besides the three env vars). Put the
    `d1_database_id` output into `apps/api/wrangler.toml`.
-6. From `apps/api`: `pnpm db:migrate:remote`, `pnpm exec wrangler deploy`, `wrangler secret put CONTENT_API_TOKEN`, `wrangler secret put GH_API_TOKEN`, `wrangler secret put RESEND_API_TOKEN`.
+6. From `apps/api`: `pnpm db:migrate:remote`, `pnpm exec wrangler deploy`, `wrangler secret put CONTENT_API_TOKEN`, `wrangler secret put CONTENT_API_READ_TOKEN`, `wrangler secret put GH_API_TOKEN`, `wrangler secret put RESEND_API_TOKEN`.
 7. `pnpm infra:apply:production` attaches `api.mrashidi.me`.
 8. `pnpm --filter @mrashidi/api db:seed --source ../mrashidi-data --remote` loads the real content. With
    `REVALIDATE_URL=https://www.mrashidi.me/api/revalidate` and `REVALIDATE_SECRET` set, it also refreshes the

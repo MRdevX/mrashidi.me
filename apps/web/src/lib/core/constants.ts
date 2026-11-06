@@ -15,11 +15,15 @@ export const API_CONFIG = {
   RATE_LIMIT: {
     CONTACT_FORM: {
       requests: 5,
-      window: "1 m",
+      window: "1 h",
     },
     RESUME_REQUEST: {
       requests: 5,
-      window: "1 m",
+      window: "1 h",
+    },
+    MAIL_RECIPIENT: {
+      requests: 3,
+      window: "1 d",
     },
     CV_UPLOAD: {
       requests: 3,
@@ -43,9 +47,8 @@ export const API_CONFIG = {
     },
   },
   CORS: {
-    ALLOWED_ORIGINS: ["*"],
-    ALLOWED_METHODS: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
-    ALLOWED_HEADERS: ["*"],
+    ALLOWED_METHODS: ["GET", "HEAD", "OPTIONS"],
+    ALLOWED_HEADERS: ["Content-Type"],
     MAX_AGE: 86400,
   },
 } as const;
