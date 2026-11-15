@@ -84,7 +84,7 @@ Section rules:
 
 - No agent attribution lines, no emoji, no em dashes, no marketing words.
 - No narration of how you got there, no self-review, no file-by-file list.
-- Code identifiers in backticks. Keep the whole body under about 40 lines.
+- Code identifiers in backticks.
 
 ## 5. Open
 
@@ -94,3 +94,11 @@ gh pr create --base main --title "<title>" --body-file <scratch>/pr-body.md
 
 To update an open PR: `gh pr edit <number> --body-file <scratch>/pr-body.md`. Done when
 `gh pr view --json title,body` shows the house format and nothing else.
+
+In a Claude Code cloud session (`CLAUDE_CODE_REMOTE=true`) the GitHub proxy rejects `gh pr` and
+`gh issue`, which use GraphQL. Use the session's GitHub tools, or the REST API:
+
+```bash
+gh api repos/{owner}/{repo}/pulls -f base=main -f head="$(git branch --show-current)" \
+  -f title="<title>" -F body=@<scratch>/pr-body.md
+```
