@@ -1,12 +1,13 @@
 {
   "source": "github.com/MRdevX/house-rules",
-  "commit": "cb31173c34681fa469408c6d1c6810e2407bafc4",
+  "commit": "a4f974c848db52e3bc3a4f45a09423a45b07e3a6",
   "files": {
-    ".agents/house-rules.md": "2ccabc5b042c045b06a65a305efe908a46949a03160ab5d2dc0bb4f50716d0e7",
+    ".agents/house-rules.md": "49a8f4322d515b8731b67c0fcf79b7f3453d1b8b828fcf3425971e23454be5ae",
+    ".agents/cloud-session-start.sh": "2c498095de6fd79daa7c6b8298a328ed675582aecc6f55e7cfab71e5bff1f1af",
     ".agents/skills/house-cleanup/SKILL.md": "b605fc9f92bbc2d839f549dd10dcdf55cd2fb688a4d1d237de168b01912f771d",
     ".agents/skills/house-comments/SKILL.md": "a4190cf2fc6f0c641199ed15370cf1869d38fb0827e3955eae30b802c8af67eb",
     ".agents/skills/house-decision/SKILL.md": "ed58f2c5694164ae5ef7ecd0993032d3f9ef02cbabc8f8b752a9479a312174eb",
-    ".agents/skills/house-pr/SKILL.md": "ee8caf6e7a792b32d52d0c430a599b75297b2058ef864a43633a8fb5d485fc27",
+    ".agents/skills/house-pr/SKILL.md": "b7b417fd2af106348e9742d42945acc7ee0f115e90f3e984da688e236435637a",
     ".agents/skills/house-review/SKILL.md": "8e318811b65d39faf73fdd5d55f1e37c0333a71fb57ec972c16419891e627988"
   }
 }

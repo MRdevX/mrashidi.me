@@ -101,7 +101,22 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
 - Never commit secrets, `.env` files, or generated credentials.
 - Pull requests use the house format. Skill: `house-pr`. Review with `house-review`.
 
-## 8. Project facts the house skills read
+## 8. Local machine: reuse, then clean up
+
+- One machine, one set of shared resources: the package store, build caches, the local
+  database container, simulators, and emulators. Every project, worktree, and agent reuses
+  them. Never create a copy per feature, ticket, or worktree.
+- Simulators and emulators are the generic named devices in **Devices** in Project facts.
+  Create one only when that named device is missing, under that exact name. Shut down the
+  devices you booted when you finish.
+- Build output stays inside the worktree. Point tools that default to a global folder there
+  (for example Xcode's `-derivedDataPath`), so removing the worktree frees the disk.
+- Whatever creates a worktree, branch, container, or database removes it once the work is
+  merged or dropped. Uncommitted or unpushed work is never removed automatically; report it.
+- Each project has one cleanup command, the **Cleanup** in Project facts. It lists what it
+  would remove by default and removes only when asked.
+
+## 9. Project facts the house skills read
 
 Each project's `AGENTS.md` has a **Project facts** section with:
 
@@ -114,3 +129,5 @@ Each project's `AGENTS.md` has a **Project facts** section with:
 | Slice layout | API `src/modules/<context>/`, web `features/<feature>/` |
 | Decision records | `docs/decisions/`, files named `NNNN-short-slug.md` |
 | Stack doc | `docs/agent/stack.md` |
+| Devices | iOS `iPhone 17` simulator, Android `Pixel_Phone` emulator, or none |
+| Cleanup | `pnpm agents:clean` (dry run), `--yes` to remove |
