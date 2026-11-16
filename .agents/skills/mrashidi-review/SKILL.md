@@ -1,7 +1,7 @@
 ---
 name: mrashidi-review
 description: >-
-  Reviews a mrashidi.me branch or PR: house-review against the house rules and
+  Reviews a mrashidi.me branch or PR: mr-review against the house rules and
   accepted records, then the site gates: PR template, slices, Ask MR privacy,
   endpoints, sitemap and OG images, vendored rules. Use when reviewing a PR, a
   branch, or work in progress before merging.
@@ -10,7 +10,7 @@ disable-model-invocation: false
 
 # mrashidi.me review
 
-A front end for [house-review](../house-review/SKILL.md). It supplies the inputs, then adds the
+A front end for [mr-review](../mr-review/SKILL.md). It supplies the inputs, then adds the
 gates the generic pass does not check.
 
 ## 1. Inputs
@@ -21,11 +21,11 @@ gates the generic pass does not check.
 
 ## 2. House review
 
-Run [house-review](../house-review/SKILL.md) with those inputs.
+Run [mr-review](../mr-review/SKILL.md) with those inputs.
 
 ## 3. Site gates
 
-Report as a pass/fail table after the house-review findings.
+Report as a pass/fail table after the mr-review findings.
 
 | Gate | Check |
 | ---- | ----- |

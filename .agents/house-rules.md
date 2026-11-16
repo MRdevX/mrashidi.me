@@ -54,7 +54,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
   contract text (OpenAPI, Zod descriptions) are not comments and stay.
 - `TODO` needs an issue reference (`TODO(#123)`, `TODO(MAS-123)`), or it is deleted.
 - Knowledge removed from comments goes to a test name, a decision record, or a docs page.
-- Skill: `house-comments`.
+- Skill: `mr-comments`.
 
 ## 4. Frameworks: official docs first
 
@@ -74,7 +74,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
   re-derive. Not for routine features, fixes, copy, or dependency bumps.
 - Records are immutable once accepted. Current behaviour is described in `docs/`, which is
   rewritten in place.
-- Skill: `house-decision`.
+- Skill: `mr-decision`.
 
 ## 6. Leave it better: boy-scout refactoring
 
@@ -84,7 +84,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
   one commit.
 - Stay inside the files and slice the task touches. Repo-wide refactors happen only when
   cleanup is the task.
-- Skill: `house-cleanup`.
+- Skill: `mr-cleanup`.
 
 ## 7. Change hygiene
 
@@ -99,7 +99,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
 - Run the project gate before pushing. Never skip hooks or force-push the default branch unless
   asked.
 - Never commit secrets, `.env` files, or generated credentials.
-- Pull requests use the house format. Skill: `house-pr`. Review with `house-review`.
+- Pull requests use the house format. Skill: `mr-pr`. Review with `mr-review`.
 
 ## 8. Local machine: reuse, then clean up
 
@@ -131,3 +131,4 @@ Each project's `AGENTS.md` has a **Project facts** section with:
 | Stack doc | `docs/agent/stack.md` |
 | Devices | iOS `iPhone 17` simulator, Android `Pixel_Phone` emulator, or none |
 | Cleanup | `pnpm agents:clean` (dry run), `--yes` to remove |
+| Ticket loop | `docs/agent/ticket-loop.md` (skill `mr-ticket-loop`), or none |

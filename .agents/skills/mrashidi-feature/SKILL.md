@@ -11,7 +11,7 @@ disable-model-invocation: false
 
 ## Before you start
 
-- Search [`docs/decisions/`](../../../docs/decisions/README.md) for the area ([house-decision](../house-decision/SKILL.md)).
+- Search [`docs/decisions/`](../../../docs/decisions/README.md) for the area ([mr-decision](../mr-decision/SKILL.md)).
 - Read the Next.js 16 guide for the API you use in `node_modules/next/dist/docs/`, and the pinned docs in [stack.md](../../../docs/agent/stack.md).
 
 ## Slice
@@ -41,4 +41,4 @@ disable-model-invocation: false
 
 ## Verify
 
-`pnpm gate`, then `pnpm build:fast`. Open the page with `pnpm dev`. PR body with [house-pr](../house-pr/SKILL.md).
+`pnpm gate`, then `pnpm build:fast`. Open the page with `pnpm dev`. PR body with [mr-pr](../mr-pr/SKILL.md).

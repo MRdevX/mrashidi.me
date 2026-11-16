@@ -46,7 +46,7 @@ Never delete a record.
 3. Add a row to the index below in the same commit.
 4. Link the record from the issue or PR that prompted it.
 
-Skill: `house-decision`. The house rules have their own records (HR-NNNN) in the house-rules
+Skill: `mr-decision`. The house rules have their own records (HR-NNNN) in the house-rules
 repo; this folder covers this site's choices, including how it adopts them
 ([DR-0001](0001-adopt-shared-house-rules.md)).
 

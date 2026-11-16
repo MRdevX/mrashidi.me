@@ -1,7 +1,7 @@
 ---
 name: mrashidi-cleanup
 description: >-
-  The mrashidi.me checklist that runs after house-cleanup: path aliases, slice
+  The mrashidi.me checklist that runs after mr-cleanup: path aliases, slice
   leaks, single-consumer shared code, duplicated clients and helpers, client
   boundaries, doc accuracy. Use when cleaning up, refactoring, removing dead
   code, or tidying site files a change already touches.
@@ -10,7 +10,7 @@ disable-model-invocation: false
 
 # mrashidi.me cleanup
 
-Run [house-cleanup](../house-cleanup/SKILL.md) first: scope, dead code, the house rules, one
+Run [mr-cleanup](../mr-cleanup/SKILL.md) first: scope, dead code, the house rules, one
 commit per kind of cleanup, no behaviour change. This skill adds the checks only this site has.
 
 ## Scope

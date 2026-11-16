@@ -125,7 +125,7 @@ async function checkHouseRules(skills) {
   }
   for (const skill of skills.filter((name) => name.startsWith("house-"))) {
     if (!files[`.agents/skills/${skill}/SKILL.md`]) {
-      errors.push(`house-* skill not in ${HOUSE_RULES_LOCK}: ${skill}: add it upstream, then sync`);
+      errors.push(`mr-* skill not in ${HOUSE_RULES_LOCK}: ${skill}: add it upstream, then sync`);
     }
   }
   const agents = await readFile(join(root, "AGENTS.md"), "utf8");

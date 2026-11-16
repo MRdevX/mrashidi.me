@@ -47,7 +47,7 @@ chore(deps): bump next to 16.1.6
 
 ## Pull requests
 
-PR bodies follow [`.github/pull_request_template.md`](.github/pull_request_template.md); the `house-pr` skill writes one.
+PR bodies follow [`.github/pull_request_template.md`](.github/pull_request_template.md); the `mr-pr` skill writes one.
 
 ## Releases
 

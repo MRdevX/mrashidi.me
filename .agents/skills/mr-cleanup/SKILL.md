@@ -1,5 +1,5 @@
 ---
-name: house-cleanup
+name: mr-cleanup
 description: >-
   Boy-scout refactoring to the house rules: dead code, unused dependencies, comments,
   duplication, naming, layer leaks. Use when cleaning up, refactoring, removing dead
@@ -46,7 +46,7 @@ flags, and commented-out code. Done when knip's remaining findings are each veri
 
 Work through the scope against `house-rules.md`:
 
-- [ ] Comments fail the bar → delete or move the knowledge (skill `house-comments`)
+- [ ] Comments fail the bar → delete or move the knowledge (skill `mr-comments`)
 - [ ] Layer leaks: domain or application importing framework, ORM, or HTTP code
 - [ ] Slice leaks: one feature importing another feature's internals
 - [ ] Real duplication (third copy, or copies that must change together) → one home

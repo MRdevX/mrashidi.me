@@ -1,5 +1,5 @@
 ---
-name: house-review
+name: mr-review
 description: >-
   Reviews a branch or PR against the house rules and the project's accepted decision
   records. Use when reviewing a PR, a branch, or work in progress before merging.
@@ -26,12 +26,12 @@ Done when you can state what the change is meant to do in one sentence.
 | Decisions | It contradicts an accepted record without superseding it |
 | Slices and layers | Domain imports framework code; a slice reaches into another's internals; validation outside the boundary |
 | Simplicity | Speculative options or abstractions; one-caller indirection; duplicated knowledge |
-| Comments | Any added comment fails the bar in `house-comments` |
+| Comments | Any added comment fails the bar in `mr-comments` |
 | Dead code | Unused exports, files, deps, or commented-out code added or left in touched files |
 | Framework use | An API that is deprecated or off-convention for the pinned version |
 | Tests | New behaviour has no test, or tests assert implementation details |
 | Hygiene | Cleanup mixed into a behaviour commit; a commit message that is not a single conventional line, has a body or trailers, or carries agent attribution |
-| PR body | Not the `house-pr` format or the project's PR template; endpoints, breaking changes, or the project's issue references missing |
+| PR body | Not the `mr-pr` format or the project's PR template; endpoints, breaking changes, or the project's issue references missing |
 
 Read the code around each change, not just the hunk. Done when every row has been applied to
 every changed file.

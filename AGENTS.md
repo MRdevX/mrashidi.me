@@ -62,11 +62,11 @@ Shared skills (vendored from house-rules, never edit here):
 
 | Skill | Use for |
 | ----- | ------- |
-| `house-pr` | PR title and body in the house format |
-| `house-review` | Reviewing a branch or PR against the house rules and decision records |
-| `house-decision` | Finding binding decisions; writing a decision record |
-| `house-comments` | The comment bar |
-| `house-cleanup` | Dead code, duplication, naming, layer leaks |
+| `mr-pr` | PR title and body in the house format |
+| `mr-review` | Reviewing a branch or PR against the house rules and decision records |
+| `mr-decision` | Finding binding decisions; writing a decision record |
+| `mr-comments` | The comment bar |
+| `mr-cleanup` | Dead code, duplication, naming, layer leaks |
 
 Project skills (each runs after or around its `house-*` counterpart):
 
@@ -74,8 +74,8 @@ Project skills (each runs after or around its `house-*` counterpart):
 | ----- | ------- |
 | `mrashidi-feature` | Adding a page, section, or API route as a feature slice |
 | `mrashidi-ask-mr` | Changing Ask MR knowledge, prompt, tools, guards, or UI |
-| `mrashidi-cleanup` | Site checks after `house-cleanup` |
-| `mrashidi-review` | `house-review` plus the site gates |
+| `mrashidi-cleanup` | Site checks after `mr-cleanup` |
+| `mrashidi-review` | `mr-review` plus the site gates |
 | `mrashidi-api-endpoint` | Adding or changing a route on the Hono API |
 | `mrashidi-d1-migration` | Changing the D1 schema; seeding content |
 | `mrashidi-deploy` | Terraform, API deploys, production seeding, rollback |
@@ -112,6 +112,9 @@ the rules into your global agent config.
 | Slice layout | API: `apps/api/src/modules/<module>/{domain,application,infrastructure,http}/`, composed in `apps/api/src/app.ts`. Web: `apps/web/src/features/<feature>/`. Layered slices use `domain/`, `application/`, `infrastructure/`, `ui/` (see `apps/web/src/features/projects/`); Ask MR splits `client/`, `server/`, `ui/`. Server-only code in a flat slice sits behind a `server` entry that client code never imports. Shared UI in `apps/web/src/components/`, shared logic in `apps/web/src/lib/`; code with consumers in two apps goes to `packages/<name>/` |
 | Decision records | `docs/decisions/`, files `NNNN-short-slug.md` |
 | Stack doc | [`docs/agent/stack.md`](docs/agent/stack.md) |
+| Devices | none |
+| Cleanup | none |
+| Ticket loop | none |
 
 ### mrashidi.me specifics
 
@@ -131,7 +134,7 @@ These add to the house rules; none of them loosen one.
 ## Pull requests
 
 Every PR body follows [`.github/pull_request_template.md`](.github/pull_request_template.md);
-skill **house-pr** writes it. Overview, What Changed (`Area | Before | After`), Breaking
+skill **mr-pr** writes it. Overview, What Changed (`Area | Before | After`), Breaking
 Changes and Affected Endpoints only when they apply, How to Test ending with `pnpm gate`, then
 References.
 

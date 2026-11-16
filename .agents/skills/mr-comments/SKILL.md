@@ -1,5 +1,5 @@
 ---
-name: house-comments
+name: mr-comments
 description: >-
   The house comment bar: code carries no comment unless it says something the code
   cannot. Use when writing or reviewing code, and when adding, stripping, or judging
