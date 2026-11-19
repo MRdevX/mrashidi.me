@@ -123,7 +123,7 @@ async function checkHouseRules(skills) {
       errors.push(`Vendored house file edited: ${file}: change it in the house-rules repo, then pnpm house-rules:sync`);
     }
   }
-  for (const skill of skills.filter((name) => name.startsWith("house-"))) {
+  for (const skill of skills.filter((name) => name.startsWith("mr-"))) {
     if (!files[`.agents/skills/${skill}/SKILL.md`]) {
       errors.push(`mr-* skill not in ${HOUSE_RULES_LOCK}: ${skill}: add it upstream, then sync`);
     }
@@ -169,7 +169,7 @@ const linkedFiles = [
   ...ruleFiles,
   ".agents/house-rules.md",
   ...skills
-    .filter((skill) => skill.startsWith(PROJECT_SKILL_PREFIX) || skill.startsWith("house-"))
+    .filter((skill) => skill.startsWith(PROJECT_SKILL_PREFIX) || skill.startsWith("mr-"))
     .map((skill) => `.agents/skills/${skill}/SKILL.md`),
   ...(await listMarkdown("docs/agent")),
   ...(await listMarkdown("docs/decisions")),
