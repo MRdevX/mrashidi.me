@@ -35,7 +35,7 @@ Report as a pass/fail table after the mr-review findings.
 | Endpoints | Every changed `apps/web/src/app/api/**/route.ts` listed under Affected Endpoints; input validated with Zod at the route |
 | Ask MR | `askMrKnowledge.ts` or the system prompt changed → nothing private added ([DR-0004](../../../docs/decisions/0004-ask-mr-grounded-public-knowledge.md)), knowledge tests pass, `pnpm eval:ask-mr` run or explained |
 | Pages | A page added, renamed, or removed → metadata in `pageMetadataConfigs`, sitemap and OG images regenerated |
-| Vendored rules | `.agents/house-rules.md` and `.agents/skills/house-*` changed only through `pnpm house-rules:sync`, with the lock file |
+| Vendored rules | `.agents/house-rules.md` and `.agents/skills/mr-*` changed only through `pnpm house-rules:sync`, with the lock file |
 | Gate | How to Test ends with `pnpm gate`; `gh pr checks` green |
 
 ## Output

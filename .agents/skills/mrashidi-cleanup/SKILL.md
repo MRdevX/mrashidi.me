@@ -45,4 +45,4 @@ only by its own tests is dead: delete the export and those tests together.
 ## Do not
 
 - Restyle or merge UI primitives (`Cyberpunk*`, shadcn, `SurfaceCard`) in a cleanup commit; visible changes need their own PR
-- Edit `.agents/house-rules.md` or `.agents/skills/house-*`
+- Edit `.agents/house-rules.md` or `.agents/skills/mr-*`

@@ -57,32 +57,10 @@ Run from the repo root. Per-package scripts: `pnpm --filter @mrashidi/web <scrip
 
 Skills live in `.agents/skills/`; `.claude/skills` and `.cursor/skills` are symlinks to it.
 `pnpm check:agent-tooling` checks the links, the frontmatter, and the vendored house files.
-
-Shared skills (vendored from house-rules, never edit here):
-
-| Skill | Use for |
-| ----- | ------- |
-| `mr-pr` | PR title and body in the house format |
-| `mr-review` | Reviewing a branch or PR against the house rules and decision records |
-| `mr-decision` | Finding binding decisions; writing a decision record |
-| `mr-comments` | The comment bar |
-| `mr-cleanup` | Dead code, duplication, naming, layer leaks |
-
-Project skills (each runs after or around its `house-*` counterpart):
-
-| Skill | Use for |
-| ----- | ------- |
-| `mrashidi-feature` | Adding a page, section, or API route as a feature slice |
-| `mrashidi-ask-mr` | Changing Ask MR knowledge, prompt, tools, guards, or UI |
-| `mrashidi-cleanup` | Site checks after `mr-cleanup` |
-| `mrashidi-review` | `mr-review` plus the site gates |
-| `mrashidi-api-endpoint` | Adding or changing a route on the Hono API |
-| `mrashidi-d1-migration` | Changing the D1 schema; seeding content |
-| `mrashidi-deploy` | Terraform, API deploys, production seeding, rollback |
-
-Third-party skills (`code-review`, `codebase-design`, `diagnosing-bugs`, `tdd`, `grilling`,
-`research`, `writing-for-agents`, `resolving-merge-conflicts`, `design-taste-frontend`,
-`redesign-existing-projects`) are vendored with their source and hash in `skills-lock.json`.
+`mr-*` skills are vendored from house-rules (never edit here); each `mrashidi-*` project skill
+runs after or around its `mr-*` counterpart. Third-party skills are vendored with their source
+and hash in `skills-lock.json`; `design-taste-frontend` is long, so it loads only when invoked
+by name.
 
 ## Decision records
 
@@ -96,7 +74,7 @@ This project follows the shared house rules, vendored into `.agents/` from
 
 @.agents/house-rules.md
 
-Never edit `.agents/house-rules.md` or `.agents/skills/house-*`: change them in the house-rules
+Never edit `.agents/house-rules.md` or `.agents/skills/mr-*`: change them in the house-rules
 repo, then run `pnpm house-rules:sync` (it clones or pulls `~/.house-rules`; set
 `HOUSE_RULES_DIR=<checkout>` to sync from a local checkout). `pnpm house-rules:install` links
 the rules into your global agent config.
