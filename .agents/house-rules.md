@@ -43,18 +43,10 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
 ## 3. Comments: none by default
 
 - New code ships without comments. A comment is allowed only for something the code cannot
-  say and that costs real time to get wrong:
-  - a constraint from outside the file (platform limit, vendor behaviour, wire format),
-  - why the obvious approach was rejected,
-  - deliberate ordering or timing that looks accidental,
-  - a value that is intentionally empty, null, or disabled.
-- Doc blocks follow the same bar. A doc block that restates the name is deleted.
-- Before writing a comment, try a better name, an extracted function, or a named constant.
-- Tool directives (`biome-ignore`, `@ts-expect-error`, triple-slash references) and API
-  contract text (OpenAPI, Zod descriptions) are not comments and stay.
+  say and that costs real time to get wrong (an outside constraint, a rejected obvious approach,
+  deliberate ordering, an intentionally empty value). Doc blocks follow the same bar.
 - `TODO` needs an issue reference (`TODO(#123)`, `TODO(MAS-123)`), or it is deleted.
-- Knowledge removed from comments goes to a test name, a decision record, or a docs page.
-- Skill: `house-comments`.
+- The full bar, and what is not a comment: skill `mr-comments`.
 
 ## 4. Frameworks: official docs first
 
@@ -74,7 +66,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
   re-derive. Not for routine features, fixes, copy, or dependency bumps.
 - Records are immutable once accepted. Current behaviour is described in `docs/`, which is
   rewritten in place.
-- Skill: `house-decision`.
+- Skill: `mr-decision`.
 
 ## 6. Leave it better: boy-scout refactoring
 
@@ -84,7 +76,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
   one commit.
 - Stay inside the files and slice the task touches. Repo-wide refactors happen only when
   cleanup is the task.
-- Skill: `house-cleanup`.
+- Skill: `mr-cleanup`.
 
 ## 7. Change hygiene
 
@@ -99,7 +91,7 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
 - Run the project gate before pushing. Never skip hooks or force-push the default branch unless
   asked.
 - Never commit secrets, `.env` files, or generated credentials.
-- Pull requests use the house format. Skill: `house-pr`. Review with `house-review`.
+- Pull requests use the house format. Skill: `mr-pr`. Review with `mr-review`.
 
 ## 8. Local machine: reuse, then clean up
 
@@ -131,3 +123,4 @@ Each project's `AGENTS.md` has a **Project facts** section with:
 | Stack doc | `docs/agent/stack.md` |
 | Devices | iOS `iPhone 17` simulator, Android `Pixel_Phone` emulator, or none |
 | Cleanup | `pnpm agents:clean` (dry run), `--yes` to remove |
+| Ticket loop | `docs/agent/ticket-loop.md` (skill `mr-ticket-loop`), or none |

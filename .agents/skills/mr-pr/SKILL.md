@@ -1,5 +1,5 @@
 ---
-name: house-pr
+name: mr-pr
 description: >-
   Writes the pull request title and body in the house format: overview, before/after
   change table, breaking changes, affected endpoints, how to test, plus the project's

@@ -14,7 +14,7 @@ areas: [app, api, ask-mr, ci, tooling]
 
 > mrashidi.me follows the shared house rules in [`.agents/house-rules.md`](../../.agents/house-rules.md):
 > vertical slices, KISS/DRY/YAGNI, no comments by default, official docs first, decision records,
-> boy-scout cleanup, one-line commits, and one PR format. The rules and the `house-*` skills are
+> boy-scout cleanup, one-line commits, and one PR format. The rules and the `mr-*` skills are
 > copied in by `pnpm house-rules:sync` and never edited here; `pnpm check:agent-tooling` fails if
 > the copy drifts. Project specifics live in **Project facts** in [`AGENTS.md`](../../AGENTS.md).
 
@@ -33,7 +33,7 @@ how this repo adopts them.
 
 ## Decision
 
-- `.agents/house-rules.md` and `.agents/skills/house-*` are vendored copies with sha256 hashes in
+- `.agents/house-rules.md` and `.agents/skills/mr-*` are vendored copies with sha256 hashes in
   `.agents/house-rules.lock.json`. Change the house-rules repo, then `pnpm house-rules:sync`.
 - `pnpm check:agent-tooling` runs in `pnpm gate`, pre-push, and CI. It fails on a hash mismatch,
   a missing `@.agents/house-rules.md` import in `AGENTS.md`, broken skill symlinks, bad skill

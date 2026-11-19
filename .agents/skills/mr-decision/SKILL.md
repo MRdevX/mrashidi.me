@@ -1,5 +1,5 @@
 ---
-name: house-decision
+name: mr-decision
 description: >-
   Reads and writes decision records (DR-NNNN) in docs/decisions. Use when starting
   feature work, when a change is hard to reverse or cross-cutting, or when an accepted
