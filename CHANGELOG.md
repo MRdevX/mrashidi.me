@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.35](https://github.com/MRdevX/mrashidi.me/compare/v0.2.34...v0.2.35) (2026-11-19)
+
+
+### Bug Fixes
+
+* **agents:** check mr-* skills in the agent tooling check ([d6b30fa](https://github.com/MRdevX/mrashidi.me/commit/d6b30fa93614784d78b5711b3b0adacdafecae4d))
+
+
+### Build System
+
+* **deps:** bump the terraform-providers group across 3 directories with 1 update ([#229](https://github.com/MRdevX/mrashidi.me/issues/229)) ([2bdcad4](https://github.com/MRdevX/mrashidi.me/commit/2bdcad4e17798ab7cf2389f7a5d086fa4cb82515))
+
+
+### Documentation
+
+* **agents:** drop the skills tables and rename house-* references to mr-* ([da14d83](https://github.com/MRdevX/mrashidi.me/commit/da14d83b9b9a7ab04df33aec8007a9d20f9dc10b))
+
 ### [0.2.34](https://github.com/MRdevX/mrashidi.me/compare/v0.2.33...v0.2.34) (2026-11-15)
 
 
