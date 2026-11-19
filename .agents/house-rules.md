@@ -43,18 +43,10 @@ copy into `.agents/` with `house-rules sync`; edit the source repo, never the co
 ## 3. Comments: none by default
 
 - New code ships without comments. A comment is allowed only for something the code cannot
-  say and that costs real time to get wrong:
-  - a constraint from outside the file (platform limit, vendor behaviour, wire format),
-  - why the obvious approach was rejected,
-  - deliberate ordering or timing that looks accidental,
-  - a value that is intentionally empty, null, or disabled.
-- Doc blocks follow the same bar. A doc block that restates the name is deleted.
-- Before writing a comment, try a better name, an extracted function, or a named constant.
-- Tool directives (`biome-ignore`, `@ts-expect-error`, triple-slash references) and API
-  contract text (OpenAPI, Zod descriptions) are not comments and stay.
+  say and that costs real time to get wrong (an outside constraint, a rejected obvious approach,
+  deliberate ordering, an intentionally empty value). Doc blocks follow the same bar.
 - `TODO` needs an issue reference (`TODO(#123)`, `TODO(MAS-123)`), or it is deleted.
-- Knowledge removed from comments goes to a test name, a decision record, or a docs page.
-- Skill: `mr-comments`.
+- The full bar, and what is not a comment: skill `mr-comments`.
 
 ## 4. Frameworks: official docs first
 
