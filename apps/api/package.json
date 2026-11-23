@@ -24,17 +24,17 @@
     "eval:ask-mr": "NODE_NO_WARNINGS=1 tsx scripts/ask-mr-eval.ts"
   },
   "dependencies": {
-    "@ai-sdk/provider": "^4.0.38",
+    "@ai-sdk/provider": "^4.0.39",
     "@mrashidi/types": "workspace:*",
     "@react-email/render": "^2.3.1",
-    "agents": "^0.33.0",
+    "agents": "^0.34.0",
     "ai": "catalog:",
     "drizzle-orm": "^0.45.4",
     "fast-xml-parser": "^5.12.1",
-    "hono": "^4.13.18",
+    "hono": "^4.13.19",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-email": "^6.11.13",
+    "react-email": "^6.11.16",
     "zod": "catalog:"
   },
   "devDependencies": {
