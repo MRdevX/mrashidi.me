@@ -1,0 +1,13 @@
+{
+  "commit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "event": "APPROVE",
+  "body": "Thanks for the retry test, it covers the exact race.\n\nApproving; a few non-blocking suggestions:\n\n1. **Suggestion (non-blocking): failed cleans never reach Sentry** (`clean.ts` line 42)",
+  "comments": [
+    {
+      "path": "clean.ts",
+      "line": 42,
+      "side": "RIGHT",
+      "body": "**Suggestion (non-blocking):** if a queue can't be cleaned, it's only logged and the job still completes, so nothing reaches Sentry.\n\nReport it before moving on:\n\n```suggestion\n      Sentry.captureException(error);\n```\n\nFrom reading the code, not the logs."
+    }
+  ]
+}

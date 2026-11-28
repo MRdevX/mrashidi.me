@@ -124,3 +124,24 @@ Each project's `AGENTS.md` has a **Project facts** section with:
 | Devices | iOS `iPhone 17` simulator, Android `Pixel_Phone` emulator, or none |
 | Cleanup | `pnpm agents:clean` (dry run), `--yes` to remove |
 | Ticket loop | `docs/agent/ticket-loop.md` (skill `mr-ticket-loop`), or none |
+
+Optional rows, for the ticket, investigation and review skills. Leave out what a project does not
+use:
+
+| Fact | Example |
+| ---- | ------- |
+| Tracker | `linear` team `MAS`; `github` issues; or `jira` site `<site>.atlassian.net`, cloudId `<uuid>`, project `ABC` |
+| Error tracker | `sentry` org `<slug>`, or none |
+| Logs | provider and query, e.g. `gcloud logging read --project=<id>` or `wrangler tail`, or none |
+| Environments | name, URL, how to tell which version is live; mark the ones agents may only read |
+| Consumers | apps and repos that call this one, and the files that form the contract |
+| Worktrees | command that creates and removes a worktree, or `git worktree` |
+| Review evals | folder with reference reviews and `SCORES.md` for `/mr-review eval`, or none |
+
+A repo you cannot commit agent files to (an employer's or a client's) keeps the same table in an
+untracked `CLAUDE.local.md`, and facts shared by every repo of one owner go in a `CLAUDE.md` in
+their parent folder. Skills read facts from whichever is loaded.
+
+Skills in this repo stay generic: no employer, client, product, host, ticket or person names. A
+detail that is true for one owner only is a Project fact, never skill text
+([HR-0011](https://github.com/MRdevX/house-rules/blob/main/decisions/0011-global-install-and-local-facts.md)).
