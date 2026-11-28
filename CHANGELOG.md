@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for commit guidelines.
 
+### [0.2.36](https://github.com/MRdevX/mrashidi.me/compare/v0.2.35...v0.2.36) (2026-11-28)
+
+
+### Continuous Integration
+
+* **deps:** bump the github-actions group with 5 updates ([#233](https://github.com/MRdevX/mrashidi.me/issues/233)) ([6ce2834](https://github.com/MRdevX/mrashidi.me/commit/6ce283413748f7ca468afdffad1f4e2b0553b29f))
+
+
+### Build System
+
+* **deps:** bump vercel/vercel ([#236](https://github.com/MRdevX/mrashidi.me/issues/236)) ([78192c7](https://github.com/MRdevX/mrashidi.me/commit/78192c7db3a496ae9922a68252d6f20ad96b692e))
+
 ### [0.2.35](https://github.com/MRdevX/mrashidi.me/compare/v0.2.34...v0.2.35) (2026-11-19)
 
 
