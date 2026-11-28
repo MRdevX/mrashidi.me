@@ -19,8 +19,8 @@ to the default branch.
 
 ## 2. Review
 
-Spawn the `mr-reviewer` subagent on the diff against `origin/main`. Fix every finding it marks
-`must`, or say why not. Leave `consider` findings to the user.
+Spawn the `mr-standards` subagent on the diff against `origin/main`. Fix every finding it marks
+**HARD**, or say why not. Leave **JUDGEMENT** and **SMELL** findings to the user.
 
 ## 3. Gate
 
