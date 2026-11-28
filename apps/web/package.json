@@ -65,19 +65,19 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.14.0",
+    "@axe-core/playwright": "^4.14.1",
     "@next/bundle-analyzer": "^16.4.6",
     "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4.3.5",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.12",
-    "@types/node": "^26.6.6",
-    "@types/react": "^19.3.0",
+    "@testing-library/user-event": "^14.6.13",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.187.0",
-    "@vitest/coverage-v8": "^5.1.0",
-    "@vitest/ui": "^5.1.0",
+    "@vitest/coverage-v8": "^5.1.2",
+    "@vitest/ui": "^5.1.2",
     "axe-core": "^4.14.1",
     "esbuild": "^0.28.2",
     "fast-glob": "^3.3.3",
@@ -86,7 +86,7 @@
     "tailwindcss": "^4.3.5",
     "tsx": "^4.23.15",
     "typescript": "catalog:",
-    "vite": "^8.3.8",
+    "vite": "^8.4.0",
     "vitest": "catalog:"
   }
 }
